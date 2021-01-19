@@ -1,0 +1,234 @@
+<html>
+
+<body>
+
+	<?php
+	
+	$link = 		mysql_connect('localhost', 'imcrea_admin', 'Caracter15');
+	mysql_select_db('imcrea_boletines', $link);
+	
+
+	// RECUPERO DATOS DE EL FORMULARIO 
+	// DE ACTUACCION
+	
+	$actuar = $_POST["actuar"];
+	$opcion = $_POST["opcion"];
+	$nombres = $_POST["nombres"];
+	$apellidos = $_POST["apellidos"];
+	$logros = $_POST["Logros"];
+	$year = $_POST["year"];
+	$grados = $_POST["grados"];
+	$fecha = $_POST["fechas"];
+	$cedula = $_POST["cedulas"];
+	$correo = $_POST["correos"];
+	$telefono = $_POST["telefonos"];
+	$area = $_POST["areas"];
+	$id_g = $_POST["id_g"];
+	$curso = $_POST["curso"];
+	$docente = $_POST["docente"];  
+	$mes = date("m");
+	$fecha_fin = $_POST["fecha_fin"];
+	
+	
+	// COMIENZO A GENERAR TABLA
+	
+	echo  "<table rules='all' border='1' width = '800' align= 'center' >";
+
+	// VERIFICO LA OPCION SELECCIONADA EN LA TABLA PARA INGREASAR 
+	// 1 - CONSULTAR
+	// 2 - ADICCIONAR
+	// 3 - ELIMINAR
+	// 4 - EDITAR
+	
+	
+	switch ($actuar) {
+						
+						case 1:	// CASO CONSULTAR
+						//echo "\n realizando al consulta";
+										switch($opcion) {
+											
+											case 1:
+											//echo "\n a alumnos";
+													$q1 = "SELECT *
+															FROM alumnos a INNER JOIN 
+															matricula m ON m.id_alumno = a.id
+															WHERE a.nombres like '%".$nombres."%' 
+															AND a.apellidos like '%".$apellidos."%'
+															AND m.year ='".$year."'
+															AND m.grado like'%".$grados."%'";
+															
+															
+															
+										 			$q1x = mysql_query($q1, $link) or die('Consulta fallida q1: ' . mysql_error());;
+													
+													echo "<tr><td colspan='1', width = '10%' ><font size = 2>CODIGO</font></td>";													
+													echo "<td colspan='1', width = '30%' ><font size = 2>NOMBRE</font></td>";
+													echo "<td colspan='1', width = '30%' ><font size = 2>APELLIDOS</font></td>";
+													echo "<td colspan='1', width = '20%' ><font size = 2>GRADO</font></td>";
+													echo "<td colspan='1', width = '10%' ><font size = 2>AÑO</font></td></tr>";
+
+													while($dato1 = mysql_fetch_array($q1x)) {
+													echo "<tr><td colspan='1', width = '10%' ><font size = 2>".$dato1['id']."</font></td>\n";													
+													echo "<td colspan='1', width = '30%' ><font size = 2>".$dato1['nombres']."</font></td>\n";
+													echo "<td colspan='1', width = '30%' ><font size = 2>".$dato1['apellidos']."</font></td>\n";
+													echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['grado']."</font></td>\n";
+													echo "<td colspan='1', width = '10%' ><font size = 2>".$dato1['year']."</font></td></tr>\n";
+													}
+													
+													break;
+													
+											case 2:
+											//echo "\n a docentes";
+											
+													$q1 = "SELECT * FROM docentes WHERE nombres like '%".$nombres."%' AND apellidos like '%".$apellidos."%'";
+													$q1x = mysql_query($q1, $link) or die('Consulta fallida q1: ' . mysql_error());;
+
+													echo "<tr><td colspan='1', width = '10%' ><font size = 2>CODIGO</font></td>";													
+													echo "<td colspan='1', width = '45%' ><font size = 2>NOMBRE</font></td>";
+													echo "<td colspan='1', width = '45%' ><font size = 2>APELLIDOS</font></td></tr>";
+													
+
+													while($dato1 = mysql_fetch_array($q1x)) {
+													echo "<tr><td colspan='1', width = '10%' ><font size = 2>".$dato1['id']."</font></td>\n";													
+													echo "<td colspan='1', width = '45%' ><font size = 2>".$dato1['nombres']."</font></td>\n";
+													echo "<td colspan='1', width = '45%' ><font size = 2>".$dato1['apellidos']."</font></td></tr>\n";
+						
+													}
+													
+													break;		
+											
+											
+											case 3:
+											//echo "\n a materias";
+											
+													$q1 = "SELECT * FROM materia";
+													$q1x = mysql_query($q1, $link) or die('Consulta fallida q1: ' . mysql_error());;
+
+													echo "<tr><td colspan='1', width = '4%' ><font size = 2>CODIGO</font></td>";													
+													echo "<td colspan='1', width = '24%' ><font size = 2>MATERIA</font></td>";
+													echo "<td colspan='1', width = '24%' ><font size = 2>AREA</font></td>";
+													echo "<td colspan='1', width = '24%' ><font size = 2>CODIGO DE AREA</font></td>";
+													echo "<td colspan='1', width = '24%' ><font size = 2>INTENSIDAD HORARIA</font></td></tr>";
+													
+													
+													while($dato1 = mysql_fetch_array($q1x)) {
+													echo "<tr><td colspan='1', width = '20%' ><font size = 2>".$dato1['id']."</font></td>\n";													
+													echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['materia']."</font></td>\n";
+													echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['area']."</font></td>\n";
+													echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['id_a']."</font></td>\n";
+													echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['ih']."</font></td></tr>\n";
+													}
+													
+													break;
+											
+											case 5:
+											//echo "\n a logros";
+											
+													$q1 = "SELECT * FROM logros WHERE logro like '%".$logros."%' ORDER BY id";
+													$q1x = mysql_query($q1, $link) or die('Consulta fallida q1: ' . mysql_error());;
+
+													echo "<tr><td colspan='1', width = '10%' ><font size = 2>CODIGO</font></td>";													
+													echo "<td colspan='1', width = '80%' ><font size = 2>LOGRO</font></td>";
+													echo "<td colspan='1', width = '10%' ><font size = 2>MATERIA</font></td></tr>";
+													
+													
+													while($dato1 = mysql_fetch_array($q1x)) {
+													echo "<tr><td colspan='1', width = '10%' ><font size = 2>".$dato1['id']."</font></td>\n";													
+													echo "<td colspan='1', width = '80%' ><font size = 2>".$dato1['logro']."</font></td>\n";
+													echo "<td colspan='1', width = '10%' ><font size = 2>".$dato1['id_materia']."</font></td></tr>\n";
+													}
+													
+													break;
+													
+											case 9:
+											// Requisitos de la materia
+											
+													$q1 = "SELECT grado, materia FROM ( requisitos R INNER JOIN grados G ON R.id_g = G.id) 
+													INNER JOIN  materia M ON M.id = R.id WHERE id_g =".$id_g ;
+													$q1x = mysql_query($q1, $link) or die('Consulta fallida q1: ' . mysql_error());;
+
+													echo "<tr><td colspan='1', width = '10%' ><font size = 2>GRADO</font></td>";													
+													echo "<td colspan='1', width = '10%' ><font size = 2>MATERIA</font></td></tr>";
+													
+													
+													while($dato1 = mysql_fetch_array($q1x)) {
+													echo "<tr><td colspan='1', width = '10%' ><font size = 2>".$dato1['grado']."</font></td>\n";													
+													echo "<td colspan='1', width = '10%' ><font size = 2>".$dato1['materia']."</font></td></tr>\n";
+													}
+													
+											break;
+										}
+									
+						break;
+						
+						
+						case 2:
+						
+							switch($opcion) {
+											
+											case 1:
+														$q1 = "INSERT INTO alumnos (nombres, apellidos, cedula, fecha,telefono, correo) 
+														VALUES ('".$nombres."', '".$apellidos."', '".$cedula."', '".$fecha."', '".$telefono."', '".$correo."')";
+														
+														//VALUES (".$nombres.", ".$apellidos.", ".$cedula.", ".$fecha.", ".$telefono.", ".$correo.")";
+														
+														$q1x = mysql_query($q1, $link) or die('Consulta fallida al insertar tabla alumnos: ' . mysql_error());
+														
+														echo "Se ingreso el estudiante : ".$nombres." ".$apellidos."\n Cedula : ".$cedula."\n fecha : ".$fecha."\n Telefono: ".$telefono."\n Correo :".$correo;
+											break;
+														
+											case 2:
+														$q1 = "INSERT INTO docentes (nombres, apellidos, cedula, fecha,celular, correo, materias) 
+														VALUES ('".$nombres."', '".$apellidos."', '".$cedula."', '".$fecha."', '".$telefono."', '".$correo."', '".$area."')";
+														
+														$q1x = mysql_query($q1, $link) or die('Consulta fallida al insertar tabla docentes: ' . mysql_error());
+														
+														echo "Se ingreso el docente : ".$nombres." ".$apellidos."\n Cedula : ".$cedula."\n fecha : ".$fecha."\n Telefono: ".$telefono."\n Correo :".$correo;
+											break;
+											
+											case 3:
+											
+											case 4:
+											
+											case 5:
+											
+											case 6:											
+											
+											case 8:
+													$q1 = "INSERT INTO matricula_docente (id_g, id_m , id_d, year,mes, fecha) 
+													VALUES ('".$id_g."', '".$curso."', '".$docente."', '".$year."', '".$mes."', '".$fecha_fin."')";
+														
+														$q1x = mysql_query($q1, $link) or die('Consulta fallida al insertar tabla matricula docentes: ' . mysql_error());
+														
+														echo "Se ingreso el docente : ".$id_g." ".$curso."\n Cedula : ".$docente."\n fecha : ".$year."\n Telefono: ".$mes."\n Correo :".$fecha_fin;
+											break;
+											
+											
+											case 9:
+													$q1 = "INSERT INTO requisitos (id_g, id_m )
+															VALUES ('".$id_g."', '".$curso."')";
+														
+														$q1x = mysql_query($q1, $link) or die('Consulta fallida al insertar tabla matricula docentes: ' . mysql_error());
+														
+														echo "Se ingreso el requisito para el grado: ".$id_g." en el curso ".$curso;
+											break;			
+										}
+										
+								
+								break;
+						case 3:
+								//$p3 = $nota;
+								break;
+						case 4:
+								//$p4 = $nota;
+								break;
+						}	
+						
+
+ 	echo  "</table>";
+ 
+ 		
+	?>
+</body>
+	
+</html>

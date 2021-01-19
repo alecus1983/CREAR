@@ -1,0 +1,139 @@
+<?php
+	require_once 'conexion.php';
+	$link = conectar();
+	// mysqli_query ($link,"SET NAMES 'utf8'");
+
+
+
+	// Pagina transitoria para generar los resultados a actualizar
+	// RECUPERO DATOS DE EL FORMULARIO
+	// DE ACTUACCION
+
+
+	// Parametros de entrada
+	// grado
+	$grado = $_POST["id_gs"];
+	// y año
+	$ano = date("Y");
+	// identificador de materia
+	$id_m = $_POST["id_ms"];
+	// identificador de un corte
+	$corte = $_POST["corte"];
+	$periodo = $_POST["periodo"];
+	$jornada = $_POST['id_jornada'];
+
+	$bk= "#FFFFFF";// variable de color de fondo de tabla
+	$fondo = true;
+
+
+	// buscando tabla de materias
+	$q = "select * from materia where id_materia = ".$id_m;
+	$qx	= mysqli_query($link, $q) or die('Consulta fallida tabla materias: ' . mysql_error());
+	$m = mysqli_fetch_array($qx);
+	echo "<br> Materia: <b>".$m['materia']."</b>";
+
+
+	// buscando tabla grados
+	$q = "select * from grados where id_grado = ".$grado;
+	$qx	= mysqli_query($link, $q ) or die('Consulta fallida tabla grados: ' . mysql_error());
+	$g = mysqli_fetch_array($qx);
+	echo "<br> Grado: <b>".$g['grado']."</b>";
+
+	// buscando tabla de jornada
+	$q = "select * from jornada where id_jornada = ".$jornada;
+	$qx	= mysqli_query($link, $q) or die('Consulta fallida tabla jornada: ' . mysql_error());
+	$j = mysqli_fetch_array($qx);
+	echo "<br> Jornada: <b>".$j['jornada']."</b>";
+
+	// se establece el periodos
+	echo "<br> Periodo: <b>".$periodo."</b>";
+	// se toma el valor del corte
+	echo "<br> Corte: <b>".$corte."</b><br><br>";
+
+	echo "<form name='notas' id='notas'>";
+	echo "<table align= 'center' width = '100%' border='0'>";
+
+	// consulta que  retorna los alumnos  matriculados en un año dentro de un grado
+	// para una jornada especifica
+
+	$q1 = "SELECT * FROM alumnos A INNER JOIN matricula M ON A.id_alumno = M.id_alumno
+	WHERE M.id_grado = ".$grado." AND M.year = ".$ano." AND M.id_jornada = $jornada ORDER BY A.apellidos";
+	// ejecuto la consulta
+	$q1x = mysqli_query($link, $q1) or die('Consulta fallida q1: ' . mysql_error());;
+
+	echo "<tr ><td  colspan='1', width = '60%' ><font style='color: white;' ><b>NOMBRE</b></font></td>";
+	echo "<td colspan='1', width = '20%' ><font size = 3>NOTA</font></td>";
+	echo "<td colspan='1', width = '20%' ><font size = 3>LOGRO</font></td></tr>";
+
+	echo "<tr><td></td>".
+		  "<td><input type = 'button' value='=' class='igual' id='igual_nota' onclick='igual_notas();' ></td>".
+			"<td><input type = 'button' value='=' class='igual' id='igual_logro'></td></tr>";
+			// contador
+	$ii = 1;
+	
+	
+	// estructura para la seleccion del primer alumno
+	$dato1 = mysqli_fetch_array($q1x);
+	// consulta de notas para el alumno
+	$q2 = "SELECT * FROM calificaciones WHERE".
+				"  year = ".$ano.
+				" AND periodo = ".$periodo.
+				" AND corte = '".$corte."'".
+				" AND id_materia = ".$id_m.
+				" AND id_alumno = ".$dato1["id_alumno"];
+
+	// se ejecuta la consulta
+	$q2x = mysqli_query($link, $q2) or die('Consulta fallida  de notas: ' . mysql_error());
+	// se extraen los datos
+	$dato2 = mysqli_fetch_array($q2x);
+
+	echo "<tr  >";
+	echo "<td colspan='1', width = '60%' ><font size = 2>"
+	.$dato1['apellidos']." ".$dato1['nombres']."</font></td>";
+
+	echo "<td width = '20%' > <input type='number' step='0.1' max='5' min='0' style='width: 40px;'  id='master_nota' name='nota[]' class='notas'"
+	." value='".$dato2['nota']."'></td>\n";
+	echo "<td width = '20%' > <input type='text' style='width: 40px;' name='logro[]' id='master_logro' class='logros'"
+	." value='".$dato2['id_logro']."'>";
+	echo "<input type='hidden' name='codigo[]' class='codigos' value=".$dato1['id_alumno']."></td></tr>";
+	
+	// estructura de repeticion para explorar uno por cada alumno
+	while($dato1 = mysqli_fetch_array($q1x)) {
+
+		// consulta de notas para el alumno
+		$q2 = "SELECT * FROM calificaciones WHERE".
+				"  year = ".$ano.
+				" AND periodo = ".$periodo.
+				" AND corte = '".$corte."'".
+				" AND id_materia = ".$id_m.
+				" AND id_alumno = ".$dato1["id_alumno"];
+
+
+
+		// se ejecuta la consulta
+		$q2x = mysqli_query($link, $q2) or die('Consulta fallida  de notas: ' . mysql_error());
+		// se extraen los datos
+		$dato2 = mysqli_fetch_array($q2x);
+
+		echo "<tr  >";
+		echo "<td colspan='1', width = '60%' ><font size = 2>"
+		.$dato1['apellidos']." ".$dato1['nombres']."</font></td>";
+
+		echo "<td width = '20%' > <input type='number' step='0.1' max='5' min='0' style='width: 40px;'  name='nota[]' class='notas'"
+		." value='".$dato2['nota']."'></td>\n";
+		echo "<td width = '20%' > <input type='text' style='width: 40px;' name='logro[]' class='logros'"
+		." value='".$dato2['id_logro']."'>";
+		echo "<input type='hidden' name='codigo[]' class='codigos' value=".$dato1['id_alumno']."></td></tr>";
+
+	}
+
+
+	echo	"</table>";
+
+	echo "</form>";
+
+	//Mysql_free_result() se usa para liberar la memoria empleada al realizar una consulta
+	desconectar($link);
+
+   exit ();
+?>

@@ -1,0 +1,134 @@
+<?
+
+session_start();
+////////////////////////////////////////////////////////////////////////
+//
+// DESCRIPCION
+//
+// este fichero  se encarga de generar los registros por estudiante para
+// los distintos periodos academicos que cursa
+// en la actualidad el estudiante cursa cuatro priodos y 2 cortes
+// los periodos se identifican del 1 al 4 y los cortes son A y F
+//
+///////////////////////////////////////////////////////////////////////
+
+// fichero de conexion con la base de datos en php
+require_once 'conexion.php';
+$link = conectar();	
+
+// variable que recibel el codigo del grado
+$grado = $_POST["id_gs"];
+// obtiene el año actual
+$ano = date("Y");
+
+// se genera cabecera para la tabla a mostrar los cambios realizados a los alumnos
+
+
+// ciclo for para editar los periodos genera una repeticion por cada periodo
+	
+for($i= 1; $i <= 5 ; $i++) {
+    echo "<br><h2>Periodo $i </h2><br><br>";
+    // consulta para obtener todas las materias del grado	
+    $q1 = "SELECT * FROM materia M INNER JOIN requisitos R ON R.id_m = M.id 
+    WHERE R.id_g = ".$grado." ORDER BY M.id";
+	
+    // se hace la consulta en la base de datos
+    $q1x = mysql_query($q1, $link) or die('Consulta materias - requisitos fallida : ' . mysql_error());
+	
+    // ciclo de repeticion que recupera el codigo de las materas asignadas a cada grado
+    while($materias_grado = mysql_fetch_array($q1x)) {
+		
+        //  se almacenan las materias de un grado especifico
+		
+        $id_m = $materias_grado["id_m"];
+        
+        echo "<br><h4>materia $id_m </h4><br><br>";
+        //CONSULTA LOS ALUMNOS MATRICULADOS EN UN AÑO Y GRADO
+		
+        $q2 = "SELECT * FROM alumnos A INNER JOIN matricula M ON A.id = M.id_alumno
+		WHERE M.grado = ".$grado." AND M.year ='".$ano."' ORDER BY A.id";
+		
+        // ejecuta la consulta en una base de datos
+        $q2x = mysql_query($q2, $link) or die('Consulta alumnos matricula fallida: ' . mysql_error());
+        
+        // ciclo de repeticion que recupera los alumnos matriculados en un año y grado
+        while($alumnos_grado = mysql_fetch_array($q2x)) {
+			
+            $id_a = $alumnos_grado["id_alumno"];
+			
+            echo "codigo alumno $id_a ";
+            // CONSULTA LOS REGISTROS DE CALIFICACIONES EN EL AÑO PERIODO MATERIA Y ALUMNO
+        
+            $q3 = "SELECT count(id) FROM calificaciones	WHERE year = '".$ano."' 
+            AND periodo =".$i." 
+            AND id_materia =".$id_m."
+            AND id_alumno =".$id_a;
+				
+            // realiza la consulta en la matrix de calificaiones
+				
+            $q3x = mysql_query($q3, $link) or die('Consulta calificaciones fallida : '. mysql_error());
+            // recupera las calificaciones  obtenidas para el alumno en cuestion
+            $data = mysql_fetch_array($q3x);
+            // cuenta cuantas calificacions tiene para el año
+            $numero = $data[0];
+            
+            echo "numero de registros: $numero <br>";
+				
+            // Cosulto si el grado  que  se ingreso es preescolar se insertaran tres logros por cada ALUMNO, MATERIA, GRADO, AÑO
+            if ($grado ==7 || $grado == 8 || $grado == 9) 	
+            {
+                
+                if ($numero < 3)
+                {
+                    $ii=0;
+                    
+                    for ( $ii = $numero; $ii<3 ; $ii++){
+                    
+                        $q4 = "INSERT INTO calificaciones (id_alumno, id_materia, periodo, year) 
+                        VALUES ('".$id_a."', '".$id_m."', '".$i."', '".$ano."')";
+                        // ejecuto la consulta en la base de datos
+                        $q4x = mysql_query($q4, $link) or die('Error al insertar calificaciones : '. mysql_error());
+                        echo "consulta:<font color='green'> $q4 </font><br>"; 
+                     
+                    echo "<font color='blue'>insertando registro $ii</font><br>"; 
+                    }
+                }
+                
+                else {
+                    echo "<font color='red'>hay demasiados registros</font><br>";
+                }
+                
+            }
+            else {
+                
+                if($numero == 0) {
+				
+		// creo nuevas calificaciones para el estudiante en la materia espesífica
+		
+		// creo la coonsulata para crear las calificaciones
+		$q4 = "INSERT INTO calificaciones (id_alumno, id_materia, periodo, year) 
+		VALUES ('".$id_a."', '".$id_m."', '".$i."', '".$ano."')";
+                echo "<font color='green'>consulta: $q4 </font><br>";
+		// ejecuto la consulta en la base de datos
+		$q4x = mysql_query($q4, $link) or die('Error al insertar calificaciones : '. mysql_error());
+				
+		}
+		else {
+                    echo "<font color='red'>registro lleno </font><br>";
+		//  si ya esta creada la materia para el alumno espesífico  muestro los resultados
+            
+		}
+            }
+            
+            
+        }
+                 
+							
+						
+    }
+				
+            
+}
+    
+    desconectar($link);
+?>

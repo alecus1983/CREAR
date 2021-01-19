@@ -1,0 +1,42 @@
+<?php
+// esta funcion se encarga de conectar la base de datos con la 
+// aplicacion PHP
+
+function conectar(){
+    // variable que almacena la url del servidor 
+    $server = "localhost";  // variable que almacena el nombre usuario 
+    $usuario = "imcrea_admin";
+    // variable que almacena la contraseña
+    $pass = "Caracter15";
+    // variable que almacena el nombre de la base de datos
+    $BD = "imcrea_data";
+    //variable que guarda la conexión de la base de datos
+    $link = mysql_connect($server, $usuario, $pass); 
+    // si no se realizo la conexion 
+    if ( !$link ) {
+        die( 'No se pudo conectar a la base de datos: ' . mysql_error() );}
+    // se selecciona la base de datos
+    mysql_select_db($BD, $link)or die('no se pudo seleccionar la base de datos: ' . mysql_error());;	
+	
+    //Comprobamos si la conexión ha tenido exito
+    if(!$link) { 
+        echo 'Ha sucedido un error inexperado en la conexion de la base de datos<br>'; 
+    } 
+    //devolvemos el objeto de conexión para usarlo en las consultas
+    
+    return $link; 
+}
+/*Desconectar la conexion a la base de datos*/
+function desconectar($conexion){
+    //Cierra la conexión y guarda el estado de la operación en una variable
+    $close = mysql_close($conexion); 
+    //Comprobamos si se ha cerrado la conexión correctamente
+    if(!$close){  
+        echo 'Ha sucedido un error inexperado en la desconexion de la base de datos<br>'; 
+    }    
+    //devuelve el estado del cierre de conexión
+    return $close;         
+}
+
+
+?>

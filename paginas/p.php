@@ -1,0 +1,9 @@
+<?
+
+?>
+<script>
+alert("hola");
+
+</script>
+<?
+?>

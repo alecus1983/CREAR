@@ -1,0 +1,71 @@
+<!-- Formulario  -->
+<form id="inscribir" class="inscribir" >
+    <div id="t1_inscribir" class="titulo_formulario" > Datos personales: </div> <div >  </div>
+    <div id="d1_inscribir" class="regilla">
+
+      <div id="d11" class="text_formulario" ><span class="parrafo">Nombres</span></div>
+      <div id="d12"><input id="nombres" class="tag_formulario" type="text" placeholder="nombres" minlength="4" maxlength="40" onchange="validar_nombres();" required></input></div>
+      <div id="d13"class="text_formulario"><span class="parrafo ">Apellidos</span></div>
+      <div id="d14"><input  id="apellidos" class="tag_formulario" type="text" placeholder="apellidos" minlength="5" maxlength="40" onchange="validar_apellidos();" required></input></div>
+      <div id="d13"class="text_formulario"><span class="parrafo ">Fecha de nacimiento</span></div>
+      <div id="d14"><input  id="nacimiento" class="tag_formulario" type="date" onchange="validar_nacimiento"></input></div>
+      <div id="d15"class="text_formulario"><span class="parrafo">C&eacute;dula</span></div>
+      <div id="d16"><input id="cedula" class="tag_formulario" type="text" placeholder="c&eacute;dula" minlength="8" maxlength="12" ></input></div>
+      <div id="d17"class="text_formulario"><span class="parrafo">Correo</span></div>
+      <div id="d18" ><input id="correo" class="tag_formulario" type="email" placeholder="correo electr&oacute;nico" required></input></div>
+      <div id="d19"class="text_formulario"><span class="parrafo">Tel&eacute;fono</span></div>
+      <div id="d110" ><input id="telefono" class="tag_formulario" type="text" placeholder="n&uacute;mero telef&oacute;nico" minlength="7" maxlength="12" ></input></div>
+
+    </div>
+
+
+    <div id="t2_inscribir" class="titulo_formulario"> Programa de int&eacute;s: </div> <div >  </div>
+
+    <div id="d2_inscribir" class="regilla">
+      <div id="d21" class="text_formulario"
+      style="position: relative;">
+        <span class="parrafo text_formulario_1">Tipo </span>
+      </div>
+      <div id="d22" class="tag_formulario">
+        <select id="escolaridad" style="width: 100%;"
+          class="tag_formulario" onchange="lista(); validar_escolaridad();" >
+          <option value="-1">Seleccione</option>
+          <option value="4">T&eacute;cnico</option>
+          <option value="5">Cursos cortos</option>
+        </select>
+      </div>
+      <div id="d23" class="text_formulario"
+      style="position: relative;">
+        <span class="parrafo text_formulario_1">Programa </span></div>
+      <div id="d24" class="tag_formulario">
+        <select id="programa" style="width: 100%;"
+        class="tag_formulario" onclick="lista_cursos();" onchange="validar_escolaridad()">
+          <option value="-1">Seleccione</option>
+        </select>
+      </div>
+      <div id="d25" style="display: none; position: relative;" class="text_formulario">
+        <span class="parrafo text_formulario_1">Curso </span></div>
+      <div id="d26" style="display: none;" class="tag_formulario">
+        <select id="curso" style="width: 100%;" class="tag_formulario" onchange="validar_escolaridad()">
+          <option value="-1">Seleccione</option>
+        </select>
+      </div>
+      <div id="d27" style="position: relative;" class="text_formulario">
+        <span class="parrafo text_formulario_1">Otro</span></div>
+      <div id="d28"><textarea id="otro" rows="2"
+        class="tag_formulario "
+        style="background-color: transparent; width: 95%"
+        placeholder="Escriba aqui el nombre de otro progrograma de su inter&eacute;s"></textarea></div>
+  </div>
+
+  <div id="formulario_mensaje" style="height:80px; span:10px;"> </div>
+  <div style="display: flex;">
+
+<input  type="button" class="boton_formulario"
+  value="Inscribir" onclick="inscribir();"  >
+
+
+</div>
+  
+
+</form>

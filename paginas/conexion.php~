@@ -1,0 +1,51 @@
+<?php
+// esta funcion se encarga de conectar la base de datos con la 
+// aplicacion PHP
+
+function conectar(){
+            // variable que almacena la url del servidor 
+            $server = "localhost";
+            // variable que almacena el nombre usuario 
+            $usuario = "imcrea_admin";
+            // variable que almacena la contraseña
+            $pass = "Caracter15";
+            // variable que almacena el nombre de la base de datos
+            $BD = "imcrea_data";
+            //variable que guarda la conexión de la base de datos
+            
+            
+            
+            $link = new mysqli($server, $usuario, $pass, $BD);
+				/** comprobacion de la conexion */
+				if (mysqli_connect_errno()) {
+    				printf("Fallo en la conexion: %s\n", mysqli_connect_error());
+    				exit();
+				}
+				
+				/** cambio del juego de caracteres a utf8 */
+				if (!$mysqli->set_charset("utf8")) {
+    				printf("Error cambiando el juego de caracteres utf8: %s\n", $mysqli->error);
+				} else {
+    				printf("Juego de caracteres actual: %s\n", $mysqli->character_set_name());
+				}
+				
+				
+				
+           
+            //devolvemos el objeto de conexión para usarlo en las consultas  
+            return $link; 
+}
+    /*Desconectar la conexion a la base de datos*/
+    function desconectar($conexion){
+            //Cierra la conexión y guarda el estado de la operación en una variable
+            $close = mysqli_close($conexion); 
+            //Comprobamos si se ha cerrado la conexión correctamente
+            if(!$close){  
+               echo 'Ha sucedido un error inexperado en la desconexion de la base de datos<br>'; 
+            }    
+            //devuelve el estado del cierre de conexión
+            return $close;         
+    }
+    
+    
+?>

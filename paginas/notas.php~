@@ -1,0 +1,58 @@
+<?php
+	require_once 'conexion.php';	
+	$link = conectar();	
+	
+	// Parametros de entrada
+	// grado
+	$grado = $_POST["id_gs"];
+	// y año
+	$ano = $_POST['year'];
+	// identificador de materia
+	$id_materia = $_POST["id_ms"];
+	// identificador de un corte
+	$corte = $_POST["corte"];
+	$periodo = $_POST["periodo"];
+	$id_docente = $_POST['id_docente'];
+	
+	$notas = json_decode($_POST['nota'], True);
+	$logros = json_decode($_POST['logro'], True);
+	$codigos = json_decode($_POST['codigo'], True);
+		
+	//echo "<br>periodo :".$periodo;
+	//echo "<br>corte :".$corte;
+	//echo "<br>año :".$ano;
+	//echo "<br>id_materia :".$id_materia;
+	//echo "<br>id_docente :".$id_docente;
+	//echo "<br> notas :".$notas[0]['value'];
+	//echo "<br> logros :".$logros[0]['value'];
+	//echo "<br> codigo :".$codigos[0]['value'];
+	
+	$l= 0;
+	
+
+   
+   foreach ($notas as $r){
+   	
+   $q2 = "UPDATE calificaciones SET".
+				" nota = ".$notas[$l]['value'].
+				", id_logro = ".$logros[$l]['value'].
+				", id_docente = ".$id_docente.
+				" WHERE id_alumno = ".$codigos[$l]['value'].
+				" AND  corte = '".$corte."'".
+				" AND id_materia = ".$id_materia.
+				" AND year = ".$ano.
+				" AND periodo = ".$periodo;
+				
+				echo "<br><br>consulta :".$q2;
+				$l++;
+				
+	$q2x = mysql_query($q2, $link) or die('Consulta fallida  de notas: ' . mysql_error());
+				// se extraen los datos
+	if($q2x) {
+		echo "<br> Consulta relizada con exito<br>";			
+  }
+  }  
+	desconectar($link);
+   
+   exit ();
+?>
