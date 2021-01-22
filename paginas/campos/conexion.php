@@ -9,36 +9,36 @@ function conectar()
 
 // Dirección o IP del servidor MySQL
 $host = "localhost";
- 
+
 // Puerto del servidor MySQL
 $puerto = "3306";
- 
+
 // Nombre de usuario del servidor MySQL
 $usuario = "imcrea_admin";
- 
+
 // Contraseña del usuario
-$contrasena = "Caracter15";
- 
+$contrasena = "conezioncrear21";
+
 // Nombre de la base de datos
 $baseDeDatos ="imcrea_data";
 
 //echo $host." - ".$puerto." - ".$usuario." - ".$contrasena." - ".$baseDeDatos;
 
 
-    
-    if (!($link = mysqli_connect($host, $usuario, $contrasena , $baseDeDatos))) 
-    { 
-        //echo "Error conectando a la base de datos.<br>"; 
-        exit(); 
+
+    if (!($link = mysqli_connect($host, $usuario, $contrasena , $baseDeDatos)))
+    {
+        //echo "Error conectando a la base de datos.<br>";
+        exit();
     }
     else
     {
         //echo "Listo, estamos conectados.<br>";
     }
-    if (!mysqli_select_db($link, $baseDeDatos)) 
-    { 
-        //echo "Error seleccionando la base de datos.<br>"; 
-        exit(); 
+    if (!mysqli_select_db($link, $baseDeDatos))
+    {
+        //echo "Error seleccionando la base de datos.<br>";
+        exit();
     }
     else
     {
@@ -46,7 +46,7 @@ $baseDeDatos ="imcrea_data";
     }
     return $link;
     return 0;
-} 
+}
 
 
     function desconectar($conexion){

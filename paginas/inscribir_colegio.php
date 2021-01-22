@@ -70,6 +70,9 @@ $vivecon = $_POST['vivecon'];
 $nombre_padre = $_POST['apellido_padre'];
 
 
+$curpo = "Se realizó la inscripcion  del estudiante $nombre_estudiante
+$apellido_estudiante al grado ".
+          "";
 /**
 * This example shows settings to use when sending via Google's Gmail servers.
 * This uses traditional id & password authentication - look at the gmail_xoauth.phps
@@ -77,17 +80,7 @@ $nombre_padre = $_POST['apellido_padre'];
 * The IMAP section shows how to save this message to the 'Sent Mail' folder using IMAP commands.
 */
 
-
-//Create a new PHPMailer instance
-$mail = new PHPMailer(true);
-
-// To load the French version
-$mail->setLanguage('es', '/PHPMailer/language');
-
-//echo "Inscripcion del estudiante : ".$nombre_estudiante;
-
-//Tell PHPMailer to use SMTP
-$mail->isSMTP();
+//
 
 // //Enable SMTP debugging
 // // 0 = off (for production use)
@@ -95,41 +88,56 @@ $mail->isSMTP();
 // // 2 = client and server messages
 // $mail->SMTPDebug = 4;
 
+$mail = new PHPMailer();
+    $mail->SMTPSecure = 'tls';
+    $mail->Username = "imcreativo@hotmail.com";
+    $mail->Password = "imc3459404801";
+    $mail->AddAddress("imcreativo@hotmail.com");
+    $mail->FromName = "My Name";
+    $mail->Subject = "My Subject";
+    $mail->Body = "My Body";
+    $mail->Host = "smtp.live.com";
+    $mail->Port = 587;
+    $mail->IsSMTP();
+    $mail->SMTPAuth = true;
+    $mail->From = $mail->Username;
+    $mail->Send();
 
 // $mail->isSMTP();                                      // Usar SMTP
-// 	 $mail->Host = '';  // Especificar el servidor SMTP reemplazando por el nombre del servidor donde esta alojada su cuenta
-// 	 $mail->SMTPAuth = true;                               // Habilitar autenticacion SMTP
-// 	 $mail->Username = 'alejandr@imcreativo.edu.co';                 // Nombre de usuario SMTP donde debe ir la cuenta de correo a utilizar para el envio
-// 	 $mail->Password = 'Caracter_13';                           // Clave SMTP donde debe ir la clave de la cuenta de correo a utilizar para el envio
-// 	 $mail->SMTPSecure = 'tls';                            // Habilitar encriptacion
-// 	 $mail->Port = 587;                                    // Puerto SMTP
-// 	 $mail->Timeout       =   30;
-// 	 $mail->AuthType = 'LOGIN';
-
-
-// 	//Recipients
-
-// 	$mail->setFrom('alejandro@imcreativo.edu.co');     //Direccion de correo remitente (DEBE SER EL MISMO "Username")
-// 	$mail->addAddress($correo);     // Agregar el destinatario
-// 	$mail->addReplyTo('alejanro@imcreativo.edu.co');     //Direccion de correo para respuestas
-
-// 	//Content
-// 	$mail->isHTML(true);
-// 	$mail->Subject = 'INSCRIPCION MUNDO CREATIVO';
-// 	$mail->AltBody = 'This is a plain-text message body';
-
-
-// 	//send the message, check for errors
+// $mail->Host = '';  // Especificar el servidor SMTP reemplazando por el nombre del servidor donde esta alojada su cuenta
+// $mail->SMTPAuth = true;                               // Habilitar autenticacion SMTP
+// $mail->Username = 'alejandr@imcreativo.edu.co';                 // Nombre de usuario SMTP donde debe ir la cuenta de correo a utilizar para el envio
+// $mail->Password = 'Caracter_13';                           // Clave SMTP donde debe ir la clave de la cuenta de correo a utilizar para el envio
+// $mail->SMTPSecure = 'tls';                            // Habilitar encriptacion
+// $mail->Port = 587;                                    // Puerto SMTP
+// $mail->Timeout       =   30;
+// $mail->AuthType = 'LOGIN';
+//
+//
+// // 	//Recipients
+//
+// $mail->setFrom('alejandro@imcreativo.edu.co');     //Direccion de correo remitente (DEBE SER EL MISMO "Username")
+// $mail->addAddress($correo_estudiante);     // Agregar el destinatario
+// $mail->addReplyTo('alejanro@imcreativo.edu.co');     //Direccion de correo para respuestas
+//
+// // 	//Content
+// $mail->isHTML(true);
+// $mail->Subject = 'INSCRIPCION MUNDO CREATIVO';
+// $mail->Body = "hello";
+// $mail->AltBody = 'This is a plain-text message body';
+//
+//
+// // 	//send the message, check for errors
 // if (!$mail->send()) {
-//     echo 'Mailer Error: ' . $mail->ErrorInfo;
-// } else {
-//     echo 'Message sent!';
+//    echo 'Mailer Error: ' . $mail->ErrorInfo;
+//  } else {
+//    echo 'Message sent!';
 //     //Section 2: IMAP
 //     //Uncomment these to save your message in the 'Sent Mail' folder.
 //     #if (save_mail($mail)) {
 //     #    echo "Message saved!";
 //     #}
-// }
+//}
 
 // //Section 2: IMAP
 // //IMAP commands requires the PHP IMAP Extension, found at: https://php.net/manual/en/imap.setup.php
@@ -150,8 +158,8 @@ $mail->isSMTP();
 //     return $result;
 // }
 
-// 		//echo "<br>Se ingresaron con exito";
-// 		desconectar($link);
+echo "<br>Se ingresaron con exito";
+desconectar($link);
 
 
 ?>

@@ -25,7 +25,7 @@
 	// grado
 	$grado = $_POST["id_gs"];
 	// y año
-	$ano = date("Y");
+	$ano = $_POST["years"];//date("Y");
 	// identificador de materia
 	$id_m = $_POST["id_ms"];
 	// identificador de un corte

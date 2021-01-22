@@ -58,7 +58,7 @@ $q1x = mysqli_query( $link, $q1) or die('no se encuentra el grado: ' . mysqli_er
 
 	//Mysql_free_result() se usa para liberar la memoria empleada al realizar una consulta
 	desconectar($link);
-   exit ();
+  // exit ();
 
 
 

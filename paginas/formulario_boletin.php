@@ -392,7 +392,8 @@ if(!isset($_SESSION['usuario']))
         "id_gs": $("#id_g").val(),
         "corte": $("#corte").val(),
         "periodo": $("#periodos").val(),
-        "id_jornada": $("#jornada").val()
+        "id_jornada": $("#jornada").val(),
+        "years": $("#years").val()
       });
       // borro el contenido mostrado en el resultado
       $("#resultado").html("");
@@ -2061,11 +2062,11 @@ if(!isset($_SESSION['usuario']))
         echo "<input type= 'hidden' id= 'id_docentes' name= 'id_docentes' value= '".$id_docente."' >"
         ?>
       </div>
-      <p>Introduzca la acci&oacute;n requerida  del siguiente men&uacute;</p> 
+      <p>Introduzca la acci&oacute;n requerida  del siguiente men&uacute;</p>
 
       <div class="parametros">
-         
-        
+
+
           <label class="etiqueta_formulario"> A&ntilde;o </label>
           <!-- Este campo muestra la variable ano la cual contiene por defecto el aÃ±o reciente -->
           <!-- se conecta a la base de datos y recupera los  valores introduccidos en la tabla de calificaciones -->
