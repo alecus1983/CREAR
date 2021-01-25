@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+
+<?php
+require 'conexion.php';
+?>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -26,27 +30,27 @@
     <i class="fas fa-angle-up"></i>
   </div>
 
-    <nav class="navbar">
-      <div class="max-width">
-        <div class="content_logo">
-          <span id="imagen_logo" style="width: 60px; height: 60px;background-size: contain;"></span>
-          <span class="logo" style="margin-left: 1rem;"><a href="#">MUNDO CREATIVO</a></span>
-        </div>
-
-        <ul class="menu" style="margin: 0px;">
-          <li><a href="#home" class="menu-btn, b_home">Home</a></li>
-          <li><a href="#about" class="menu-btn, b_noticias">Noticias</a></li>
-          <li><a href="#services" class="menu-btn,  b_colegio">Colegio</a></li>
-          <li><a href="#skills" class="menu-btn,  b_tecnicos">Tecnios</a></li>
-          <li><a href="#teams" class="menu-btn, b_docentes">Docentes</a></li>
-          <li><a href="#contactos" class="menu-btn ,  b_contact">Contact</a></li>
-          <li><a href="#" class="menu-btn,  b_login">Login</a></li>
-        </ul>
-        <div class="menu-btn">
-          <i class="fas fa-bars"></i>
-        </div>
+  <nav class="navbar">
+    <div class="max-width">
+      <div class="content_logo">
+        <span id="imagen_logo" style="width: 60px; height: 60px;background-size: contain;"></span>
+        <span class="logo" style="margin-left: 1rem;"><a href="#">MUNDO CREATIVO</a></span>
       </div>
-    </nav>
+
+      <ul class="menu" style="margin: 0px;">
+        <li><a href="#home" class="menu-btn, b_home">Home</a></li>
+        <li><a href="#about" class="menu-btn, b_noticias">Noticias</a></li>
+        <li><a href="#services" class="menu-btn,  b_colegio">Colegio</a></li>
+        <li><a href="#skills" class="menu-btn,  b_tecnicos">Tecnios</a></li>
+        <li><a href="#teams" class="menu-btn, b_docentes">Docentes</a></li>
+        <li><a href="#contactos" class="menu-btn ,  b_contact">Contact</a></li>
+        <li><a href="#" class="menu-btn,  b_login">Login</a></li>
+      </ul>
+      <div class="menu-btn">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
 
 
   <!-- home section start -->
@@ -66,7 +70,7 @@
     <div class="max-width">
 
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-xs-0 col-sm-1 col-md-4 col-lg-4">
           <!-- <div class="nav nav-pills flex-column" id="v-pills-tab">
           <a class="active" data-toggle="pill" href="#v-pills-home"><button type="button" class="btn btn-outline-primary boton_grado">PRE ESCOLAR</button></a>
           <a data-toggle="pill" href="#v-pills-profile"><button type="button" class="btn btn-outline-secondary boton_grado" >PARVULOS</button></a>
@@ -75,7 +79,7 @@
         </div> -->
       </div>
 
-      <div class="col-sm-8">
+      <div class="col-sx-12 col-sm-9 col-md-6 col-lg-7">
 
         <?php
         setlocale(LC_ALL,"es_CO");
@@ -85,10 +89,11 @@
 
         <br><br><h2>FORMULARIO DE INSCRIPCIÓN</h2>
         <br>
-        <p class="parrafo">En el siguiente formulario usted podrá realizar el trámite de pre matrícula concerniente al siguiente año lectivo.
+        <p >En el siguiente formulario usted podrá realizar el trámite de pre matrícula concerniente al siguiente año lectivo.
           Por favor llene los siguientes campos:</p>
 
-          <!-- Formulario -->
+
+
           <form id="inscribir_primaria">
             <!-- seccion de estudiantes -->
             <div>
@@ -96,58 +101,81 @@
                 <font color=#555>Informaci&oacute;n del estudiante</font>
               </h3>
             </div>
-            <div id="datos_estudiantes" class="regilla" style="background-color: #fdf7af;padding: 2%; border-radius: 10px;">
+            <div id="datos_estudiantes" class="form-group">
               <!-- nombres -->
-              <div id="d11" class="text_formulario">
-                <label class="parrafo">Nombres</label>
-              </div>
-              <div id="d12">
-                <input id="nombre_estudiante" class="tag_formulario" maxlength="40" required="" type="text"
+              <div id="d11" class="form-group">
+                <label for="nombre_estudiante">Nombres</label>
+                <input id="nombre_estudiante" class="form_estudiante form-control" maxlength="40" required="" type="text"
                 placeholder="nombres" />
               </div>
               <!-- Apellidos -->
-              <div id="d13" class="text_formulario">
-                <label class="parrafo ">Apellidos</label>
-              </div>
-              <div id="d14">
-                <input id="apellido_estudiante" class="tag_formulario" maxlength="40" required="" type="text"
+              <div class="form-group">
+                <label for="apellido_estudiante">Apellidos</label>
+                <input id="apellido_estudiante" class="form_estudiante form-control" maxlength="40" required="" type="text"
                 placeholder="apellidos" />
               </div>
 
               <!-- Fecha de nacimiento -->
-              <div id="d13" class="text_formulario">
-                <label class="parrafo ">Fecha de nacimiento</label>
-              </div>
-              <div id="d14"><input id="nacimiento" class="tag_formulario" type="date" required />
+              <div id="d13" class="form-group">
+                <label from="nacimento">Fecha de nacimiento</label>
+                <input id="nacimiento" class="form_estudiante form-control" type="date" required />
               </div>
 
               <!-- Ciudad de nacimiento-->
-              <div> <label class="parrafo"> Ciudad de nacimiento</label>
-              </div>
-              <div> <input id="ciudad_nacimiento" type="text" maxlength="30" placeholder="ciudad de nacimiento" required>
+              <div class="form-group">
+                <label from="ciudad_nacimiento"> Ciudad de nacimiento</label>
+                <input id="ciudad_nacimiento" class="form_estudiante form-control" type="text"
+                maxlength="30" placeholder="ciudad de nacimiento" required>
               </div>
 
-              <!-- Correo-->
-              <div id="d17" class="text_formulario">
-                <label class="parrafo">Correo</label>
+              <!-- nivel de escolaridad , preescolar, primaria  .. -->
+              <div class="form-group">
+                <label from="escolaridad">Escolaridad</label>
+                <?php
+                //rutina para actualizar los niveles de escolridad
+                // en este caso los correspondientes a
+                // preescolar , primaria  y Bachillerato
+                // conexion con la base de datos
+                $link = conectar();
+                // script de conexion
+                $q = "select * from escolaridad where id_escolaridad < 4";
+                // se ejecuta la consulta
+                $reg=mysqli_query($link, $q) or ("No se encontro los datos de la tabla de escolaridad:".mysqli_error());
+
+                echo "<select class='form_estudiante form-control' id='escolaridad' onchange='actualizar_grados_escolaridad();' required>";
+                echo "<option value=''>Seleccione...</option>";
+
+                while($dato = mysqli_fetch_array($reg))
+                {
+                  // recupero el nombre
+                  $id = $dato["id_escolaridad"];
+                  $escolaridad = $dato["escolaridad"];
+                  echo "<option value = $id>$escolaridad</option>";
+                }
+                echo "</select>";
+                ?>
               </div>
-              <div id="d18"><input id="correo_estudiante" class="tag_formulario" required="" type="email"
-                placeholder="correo electrónico" />
+              <!-- grado del estudiane,  depende de lo que se halla seleccionado
+              como nivel de escolaridad-->
+              <div class="form-group">
+                <label from="grado">Grado</label>
+                <select class='form_estudiante form-control' id='grados_escolaridad' required>;
+                <option value=''>Seleccione...</option>
+                </select>
               </div>
+
+
 
               <!-- telefono -->
-              <div id="d19" class="text_formulario">
-                <label class="parrafo">Teléfono</label>
-              </div>
-              <div id="d10"><input id="telefono" class="tag_formulario" maxlength="12" type="tel"
+              <div id="d19" class="form-group">
+                <label from="telefono">Teléfono</label>
+                <input id="telefono" class="form_estudiante form-control" maxlength="12" type="tel"
                 placeholder="número telefónico" required />
               </div>
 
               <!-- tipo de indentificacion -->
-              <div id="d20" class="text_formulario"> <label>Tipo de indentificación</label>
-              </div>
-              <div id="d21">
-                <select id="tipo_identificacion" required="">
+              <div id="d20" class="form-group"> <label>Tipo de indentificación</label>
+                <select class="form_estudiante form-control" id="tipo_identificacion" required="">
                   <option value="">Seleccione...</option>
                   <option value="CC">cédula de ciudadanía</option>
                   <option value="CE">cédula de extranjería</option>
@@ -155,280 +183,264 @@
                   <option value="NUIP">NUIP</option>
                 </select>
               </div>
+
               <!-- numero de identificacion-->
-              <div id="d22" class="text_formulario">
-                <label class="parrafo">Número de documento</label>
-              </div>
-              <div id="d23"><input id="cedula" class="tag_formulario" maxlength="12" type="text"
+              <div id="d22" class="form-group">
+                <label from="documento_estudiante">Número de documento</label>
+                <input id="documento_estudiante" class="form_estudiante form-control" maxlength="12" type="text"
                 placeholder="número de documento" required />
               </div>
 
               <!-- lugar de expedicion-->
-              <div id="d24"><label>Lugar de expedici&oacute;n</label>
-              </div>
-              <div id="d25"> <input id="lugar_exp_estudiante" type="text" class="tag_formulario"
+              <div id="d24" class="form-group">
+                <label from="lugar_exp_estudiante">Lugar de expedici&oacute;n</label>
+                <input id="lugar_exp_estudiante" type="text" class="form_estudiante form-control"
                 placeholder="lugar de expedición" required></input>
               </div>
 
-              <div id="d26"><label class="parrafo">G&eacute;nero: </label>
+              <!-- genero del estudiante -->
+              <div id="d26" class="form-group">
+                <label from="genero" >G&eacute;nero: </label>
+                <select name="genero" id="genero" class="form_estudiante form-control" required>
+                  <option value="">Seleccione...</option>
+                  <option value="M">masculino</option>
+                  <option value="F">femenino</option>
+                </select>
               </div>
-              <div id="d27"> <select name="genero" id="genero" required>
+
+              <!-- grupo rh -->
+              <div id="28" class="form-group"> <label > Grupo RH</label>
+                <select name="gruporh" id="gruporh" class="form_estudiante form-control" required>
+                  <option value="">Seleccione...</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
+              </div>
+
+              <!-- Sisben -->
+              <div id="30" class="form-group">
+                <label >Sisben</label>
+                <select name="nivelsisben" id="nivelsisben" class="form_estudiante form-control" required>
+                  <option value="">Seleccione...</option>
+                  <option value="99">No tiene</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+
+              <!-- Direccion de residencia -->
+              <div id="32" class="form-group"> <label > Direcci&oacute;n de residencia:</label>
+                <input id="direccion_estudiante" type="text" class="form_estudiante form-control" placeholder="direccion de residencia" required>
+              </div>
+
+              <!-- Barrio -->
+              <div id="34" class="form-group"> <label from="barrio" > Barrio:</label>
+                <input id="barrio" class="form_estudiante form-control" name="barrio" type="text" placeholder="barrio" maxlength="40" required>
+              </div>
+
+              <!-- Estrato-->
+              <div id="36" class="form-group">
+                <label from_"estrato" > Estrato </label>
+                <select  name="estrato" class="form_estudiante form-control" id="estrato" required>
+                  <option value="">Seleccione...</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+              
+              <!-- Vive con-->
+              <div id="38" class="form-group"> <label > Vive con : </label>
+              </div>
+              <div id="39"> <select name="vivecon" id="vivecon" class="form_estudiante form-control">
                 <option value="">Seleccione...</option>
-                <option value="M">masculino</option>
-                <option value="F">femenino</option>
+                <option value="padres">ambos padres</option>
+                <option value="padre">padre</option>
+                <option value="madre">madre</option>
+                <option value="abuelos">abuelos</option>
+                <option value="hermanos">hermanos</option>
+                <option value="tios">tíos</option>
+                <option value="otro">otro</option>
               </select>
             </div>
+          </div>
 
-            <!-- grupo rh -->
-            <div id="28" class="text_formulario"> <label class="parrafo"> Grupo RH</label>
-            </div>
-            <div id="29"> <select name="gruporh" id="gruporh" required>
+          <!-- Formulario del padre -->
+
+
+          <div style="margin-top: 50px;">
+            <h3>
+              <font color="blue">Informaci&oacute;n del padre</font>
+            </h3>
+          </div>
+
+          <div id="datos_padre" class="form-group"
+          style="border: solid 3px blue;padding: 2%;border-radius: 10px; margin-top: 20px;">
+          <div id="d40" class="form-group">
+            <label from="nombre_padre" >Nombres</label>
+            <input id="nombre_padre" class="form_padres form-control" maxlength="40" required="" type="text"
+            placeholder="nombres" />
+          </div>
+
+          <!-- Apellidos -->
+          <div id="d42" class="form-group">
+            <label from="apellido_padre">Apellidos</label>
+            <input id="apellido_padre" class="form_padres form-control" maxlength="40" required="" type="text"
+            placeholder="apellidos" />
+          </div>
+
+
+          <!-- Correo-->
+          <div id="d44" class="form-group">
+            <label from="correo_padre">Correo</label>
+            <input id="correo_padre" class="form_padres form-control" required="" type="email"
+            placeholder="correo electrónico" />
+          </div>
+
+          <!-- telefono -->
+          <div id="d46" class="form-group">
+            <label from="telefono_padre" >Teléfono</label>
+
+            <input id="telefono_padre" class="form_padres form-control" maxlength="12" type="tel"
+            placeholder="número telefónico" required />
+          </div>
+
+          <!-- tipo de indentificacion -->
+          <div id="d48" class="form-group">
+            <label from="tipo_identificacion_padre">Tipo de indentificación</label>
+            <select id="tipo_identificacion_padre" class="form_padres form-control" required="">
               <option value="">Seleccione...</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
+              <option value="CC">cédula de ciudadanía.</option>
+              <option value="CE">cédula de extranjería.</option>
+              <option value="NUIP">NUIP</option>
             </select>
           </div>
 
-          <!-- Sisben -->
-          <div id="30" class="text_formulario"> <label class="parrafo"> Sisben</label>
-          </div>
-          <div id="31"> <select name="nivelsisben" id="nivelsisben" required>
-            <option value="">Seleccione...</option>
-            <option value="99">No tiene</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-          </select> </div>
-
-          <!-- Direccion de residencia -->
-          <div id="32" class="text_formulario"> <label class="parrafo"> Direcci&oacute;n de residencia:</label>
-          </div>
-          <div id="33"> <input id="direccion_estudiante" type="text" class="tag_formulario" placeholder="direccion de residencia" required>
+          <!-- documento-->
+          <div id="d50" class="form-group">
+            <label from="documento_padre" >N&uacute;mero del documento</label>
+            <input id="documento_padre" class="form_padres form-control" maxlength="12" type="text"
+            placeholder="número de documento" required />
           </div>
 
-          <!-- Barrio -->
-          <div id="34" class="text_formulario"> <label class="parrafo"> </label> Barrio:
-          </div>
-          <div id="35"> <input id="barrio" name="barrio" type="text" placeholder="barrio" maxlength="40" required>
-          </div>
-
-          <!-- Estrato-->
-          <div id="36" class="text_formulario"> <label class="parrafo"> Estrato </label> </div>
-          <div id="37"> <select name="estrato" id="estrato" required>
-            <option value="">Seleccione...</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-          </select>
+          <!-- lugar de expedicion-->
+          <div id="52" class="form-group">
+            <label from="lugar_exp_padre">Lugar de expedici&oacute;n</label>
+            <input id="lugar_exp_padre" type="text" class="form_padres form-control"
+            placeholder="lugar de expedición" required>
+          </input>
         </div>
-        <!-- Vive con-->
-        <div id="38" class="text_formulario"> <label class="parrafo"> Vive con : </label>
+
+        <!-- Direccion de residencia -->
+        <div id="54" class="form-group">
+          <label from="direccion_padre" > Direcci&oacute;n de residencia:</label>
+          <input id="direccion_padre" type="text" class="form_padres form-control"
+          placeholder="direccion de residencia" required>
         </div>
-        <div id="39"> <select name="vivecon" id="vivecon">
+
+        <!-- Barrio -->
+        <div id="56" class="form-group">
+          <label from="barrio_padre">Barrio: </label>
+          <input id="barrio_padre" name="barrio_padre" class="form_padres form-control" type="text" placeholder="barrio" maxlength="40"
+          required>
+        </div>
+
+
+      </div>
+
+
+      <!-- Formulario de la madre -->
+      <div style="margin-top: 50px;">
+        <h3>
+          <font color="tomato"> Informaci&oacute;n de la madre</font>
+        </h3>
+      </div>
+
+
+      <div id="datos_madre" class="regilla"
+      style="border: solid 3px tomato;padding: 2%;border-radius: 10px; margin-top: 20px;">
+      <div id="d60" class="form-group">
+        <label from="nombre_madre" >Nombres</label>
+        <input id="nombre_madre" class="form_padres form-control" maxlength="40" required="" type="text"
+        placeholder="nombres" />
+      </div>
+      <!-- Apellidos -->
+      <div id="d62" class="form-group">
+        <label from="apellido_madre">Apellidos</label>
+        <input id="apellido_madre" class="form_padres form-control" maxlength="40" required="" type="text"
+        placeholder="apellidos" />
+      </div>
+
+
+      <!-- Correo-->
+      <div id="d64" class="form-group">
+        <label from="correo_madre">Correo</label>
+        <input id="correo_madre" class="form_padres form-control" required="" type="email"
+        placeholder="correo electrónico" />
+      </div>
+
+      <!-- telefono -->
+      <div id="d66" class="form-group">
+        <label from="telefono_madre">Teléfono</label>
+        <input id="telefono_madre" class="form_padres form-control" maxlength="12" type="tel"
+        placeholder="número telefónico" required />
+      </div>
+
+      <!-- tipo de indentificacion -->
+      <div id="d68" class="form-group"> <label from="tipo_identificacion_madre">Tipo de indentificación</label>
+        <select id="tipo_identificacion_madre" class="form_padres form-control" required="">
           <option value="">Seleccione...</option>
-          <option value="padres">ambos padres</option>
-          <option value="padre">padre</option>
-          <option value="madre">madre</option>
-          <option value="abuelos">abuelos</option>
-          <option value="hermanos">hermanos</option>
-          <option value="tios">tíos</option>
-          <option value="otro">otro</option>
+          <option value="CC">Cédula de ciudadania</option>
+          <option value="CE">Cédula de extranjer&iacute;a </option>
+          <option value="NUIP">NUIP</option>
         </select>
       </div>
-    </div>
 
-    <!-- Formulario del padre -->
-
-
-    <div style="margin-top: 50px;">
-      <h3>
-        <font color="blue">Informaci&oacute;n del padre</font>
-      </h3>
-    </div>
-
-    <div id="datos_padre" class="regilla"
-    style="border: solid 3px blue;padding: 2%;border-radius: 10px; margin-top: 20px;">
-    <div id="d40" class="text_formulario">
-      <label class="parrafo">Nombres</label>
-    </div>
-    <div id="d41">
-      <input id="nombre_padre" class="tag_formulario" maxlength="40" required="" type="text"
-      placeholder="nombres" />
-    </div>
-    <!-- Apellidos -->
-    <div id="d42" class="text_formulario">
-      <label class="parrafo ">Apellidos</label>
-    </div>
-    <div id="d43">
-      <input id="apellido_padre" class="tag_formulario" maxlength="40" required="" type="text"
-      placeholder="apellidos" />
-    </div>
-
-
-    <!-- Correo-->
-    <div id="d44" class="text_formulario">
-      <label class="parrafo">Correo</label>
-    </div>
-    <div id="d45"><input id="correo_padre" class="tag_formulario" required="" type="email"
-      placeholder="correo electrónico" />
-    </div>
-
-    <!-- telefono -->
-    <div id="d46" class="text_formulario">
-      <label class="parrafo">Teléfono</label>
-    </div>
-    <div id="d47"><input id="telefono_padre" class="tag_formulario" maxlength="12" type="tel"
-      placeholder="número telefónico" required />
-    </div>
-
-    <!-- tipo de indentificacion -->
-    <div id="d48" class="text_formulario"> <label>Tipo de indentificación</label>
-    </div>
-    <div id="d49">
-
-      <select id="tipo_identificacion_padre" required="">
-        <option value="">Seleccione...</option>
-        <option value="CC">cédula de ciudadanía.</option>
-        <option value="CE">cédula de extranjería.</option>
-        <option value="RC">registro civil</option>
-        <option value="NUIP">NUIP</option>
-      </select>
-    </div>
-    <!-- cedula-->
-    <div id="d50" class="text_formulario">
-      <label class="parrafo">Numero del documento</label></div>
-      <div id="d51"><input id="cedula_padre" class="tag_formulario" maxlength="12" type="text"
+      <!-- documento de la madre-->
+      <div id="d70" class="form-group">
+        <label from="documento_madre">N&uacute;mero de documento</label>
+        <input id="documento_madre" class="form_padres form-control" maxlength="12" type="text"
         placeholder="número de documento" required />
       </div>
 
       <!-- lugar de expedicion-->
-      <div id="52"><label>Lugar de expedici&oacute;n</label>
-      </div>
-      <div id="53"> <input id="lugar_exp_padre" type="text" class="tag_formulario" placeholder="lugar de expedición"
-        required></input>
+      <div id="72" class="form-group">
+        <label from="lugar_exp_madre" >Lugar de expedici&oacute;n</label>
+        <input id="lugar_exp_madre" type="text" class="form_padres form-control"
+        placeholder="lugar de expedición" required></input>
       </div>
 
       <!-- Direccion de residencia -->
-      <div id="54" class="text_formulario"> <label class="parrafo"> Direccion de residencia:</label> </div>
-      <div id="55"> <input id="direccion_padre" type="text" class="tag_formulario"
+      <div id="74" class="form-group">
+        <label form="direccion_madre"> Direccion de residencia:</label>
+        <input id="direccion_madre" type="text" class="form_padres form-control"
         placeholder="direccion de residencia" required>
       </div>
 
       <!-- Barrio -->
-      <div id="56" class="text_formulario"> <label class="parrafo"> </label> Barrio:
+      <div id="76" class="form-group"> <label from="barrio_madre">Barrio: </label>
+        <input id="barrio_madre" name="barrio_madre" type="text" class="form_padres form-contol"
+        placeholder="barrio" maxlength="40" required>
       </div>
-      <div id="57"> <input id="barrio_padre" name="barrio_padre" type="text" placeholder="barrio" maxlength="40"
-        required>
-      </div>
-
 
     </div>
+  </form>
 
-
-    <!-- Formulario de la madre -->
-    <div style="margin-top: 50px;">
-      <h3>
-        <font color="tomato"> Informaci&oacute;n de la madre</font>
-      </h3>
-    </div>
-    <div id="d1_inscribir" class="regilla"
-    style="border: solid 3px tomato;padding: 2%;border-radius: 10px; margin-top: 20px;">
-    <div id="d60" class="text_formulario">
-      <label class="parrafo">Nombres</label>
-    </div>
-    <div id="d61">
-      <input id="nombre_madre" class="tag_formulario" maxlength="40" required="" type="text"
-      placeholder="nombres" />
-    </div>
-    <!-- Apellidos -->
-    <div id="d62" class="text_formulario">
-      <label class="parrafo ">Apellidos</label>
-    </div>
-    <div id="d63">
-      <input id="apellido_madre" class="tag_formulario" maxlength="40" required="" type="text"
-      placeholder="apellidos" />
-    </div>
-
-
-    <!-- Correo-->
-    <div id="d64" class="text_formulario">
-      <label class="parrafo">Correo</label>
-    </div>
-    <div id="d65"><input id="correo_madre" class="tag_formulario" required="" type="email"
-      placeholder="correo electrónico" />
-    </div>
-
-    <!-- telefono -->
-    <div id="d66" class="text_formulario">
-      <label class="parrafo">Teléfono</label>
-    </div>
-    <div id="d67"><input id="telefono_madre" class="tag_formulario" maxlength="12" type="tel"
-      placeholder="número telefónico" required />
-    </div>
-
-    <!-- tipo de indentificacion -->
-    <div id="d68" class="text_formulario"> <label>Tipo de indentificación</label>
-    </div>
-    <div id="d69">
-
-      <select id="tipo_identificacion_madre" required="">
-        <option value="">Seleccione...</option>
-        <option value="CC">Cédula de ciudadania</option>
-        <option value="CE">Cédula de extranjer&iacute;a </option>
-        <option value="RC">Registro Civil</option>
-        <option value="NUIP">NUIP</option>
-      </select>
-    </div>
-    <!-- cedula-->
-    <div id="d70" class="text_formulario">
-      <label class="parrafo">Numero de documento</label>
-    </div>
-    <div id="d71"><input id="cedula_madre" class="tag_formulario" maxlength="12" type="text"
-      placeholder="número de documento" required />
-    </div>
-
-    <!-- lugar de expedicion-->
-    <div id="72"><label>Lugar de expedici&oacute;n</label>
-    </div>
-    <div id="73"> <input id="lugar_exp_madre" type="text" class="tag_formulario"
-      placeholder="lugar de expedición" required></input>
-    </div>
-
-
-    <!-- Direccion de residencia -->
-    <div id="74" class="text_formulario"> <label class="parrafo"> Direccion de residencia:</label>
-    </div>
-    <div id="75"> <input id="direccion_madre" type="text" class="tag_formulario"
-      placeholder="direccion de residencia" required>
-    </div>
-
-    <!-- Barrio -->
-    <div id="76" class="text_formulario"> <label class="parrafo"> </label> Barrio:
-    </div>
-    <div id="77" > <input id="barrio_madre" name="barrio_madre" type="text"
-      placeholder="barrio" maxlength="40" required>
-    </div>
-
-    <div style="margin-top: 20px;">
-    </div>
-
-  </div>
-</form>
-
-<br>
-<input class="boton_formulario" type="button" value="Inscribir" onclick="enviar_matricula()"/>
+  <br>
+  <input class="boton_formulario" type="button" value="Inscribir" onclick="enviar_matricula()"/>
 
 </div>
 

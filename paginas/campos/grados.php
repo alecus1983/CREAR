@@ -41,7 +41,7 @@ $q1x = mysqli_query( $link, $q1) or die('no se encuentra el grado: ' . mysqli_er
 
 
 	//recupero el arreglo generado en el resultado
-	while($dato1 = mysqli_fetch_array($q1x))
+	while($dato1 = mysqli_fetch_array($q1x, MYSQLI_NUM))
 	{
 	// recupero el nombre
 	$id = $dato1["id_grado"];

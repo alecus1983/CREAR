@@ -193,7 +193,7 @@ if(!isset($_SESSION['usuario']))
     $usuario = $_SESSION['usuario'];
     // se almacena una variable tipo consulta
     $reg=mysqli_query( $link, "select * from docentes where cedula ='".$usuario."'" ) or
-    die("Problemas  encontrar el usuario:".mysql_error());
+    die("Problemas  encontrar el usuario:".mysqli_error());
 
 
     //Validamos si el nombre del administrador existe en la base de datos o es correcto

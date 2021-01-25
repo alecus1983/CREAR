@@ -25,3 +25,15 @@
     padding: 2rem;
     font-size: 1.3rem;
 }
+
+.form_estudiante{
+    color: steelblue;
+  }
+
+ 
+.form_estudiante:focus{
+    color: #1515ff;
+  } 
+.form_padres:focus{
+    font-weight: bold;
+}
