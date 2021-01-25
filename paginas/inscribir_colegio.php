@@ -110,7 +110,7 @@ $direccion_madre = $_POST["direccion_madre"];
 // barrio de la madre
 $barrio_madre = $_POST["barrio_madre"];
 
-$now = time();
+$now = date("m/d/Y g:i a");  
 // Datos para realizar la inscripción
 
 
@@ -127,7 +127,7 @@ $q2 = "INSERT INTO inscritos
   id_grado,
   telefono,
   tipo_identificacion,
-  documento_esudiante,
+  documento_estudiante,
   lugar_exp_estudiante,
   genero,
   gruporh,
@@ -154,7 +154,6 @@ $q2 = "INSERT INTO inscritos
   tipo_identificacion_madre,
   documento_madre,
   lugar_exp_madre,
-  direccion_madre,
   direccion_madre,
   barrio_madre,
   fecha
@@ -195,7 +194,6 @@ $q2 = "INSERT INTO inscritos
     "', '".$tipo_identificacion_madre.
     "', '".$documento_madre.
     "', '".$lugar_exp_madre.
-    "', '".$direccion_madre.
     "', '".$direccion_madre.
     "', '".$barrio_madre.
     "', '".$now.
