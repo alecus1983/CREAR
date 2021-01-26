@@ -29,7 +29,7 @@ require_once 'conexion.php';
 // //conexion a la base de datos
 $link = conectar();
 // zona horaria
-date_default_timezone_set('UTC');
+date_default_timezone_set('America/Bogota');
 //
 //
 //
@@ -110,7 +110,7 @@ $direccion_madre = $_POST["direccion_madre"];
 // barrio de la madre
 $barrio_madre = $_POST["barrio_madre"];
 
-$now = date("m/d/Y g:i a");  
+$now = date("Y-m-d g:i");
 // Datos para realizar la inscripción
 
 
@@ -197,56 +197,60 @@ $q2 = "INSERT INTO inscritos
     "', '".$direccion_madre.
     "', '".$barrio_madre.
     "', '".$now.
-    "' )";
+     "' )";
+
 
     // muestro la consulta
-    echo $q2;
+    //echo $q2;
+    $res = $link->query($q2);
 
-    // se ejecuta la consulta
-    $q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas: ' . mysqli_error($link));
-    // si la consulta es exitosa
+    $qx = $link->query("SELECT max(id) as cantidad FROM  inscritos");
+    $dato = $qx->fetch_array();
 
-    // obtengo el codigo de la inscripcion
-
-    $q = "SELECT max(id) FROM  inscritos i ";
-    // ejecuto la consulta
-    $qx = mysqli($link,$q) or die ('no se pudo conectar con la base de datos:'.mysql_error($link));
+    //$qx = mysqli( $link, $q);// or die ('no se pudo conectar con la base de datos:'.mysql_error());
     // recupero el dato de la consulta como un array
-    $dato = mysqli_fetch_array($qx,MYSQLI_NUM);
+
+    //$dato = mysqli_fetch_array($qx,'MYSQLI_NUM');
 
 
     // Envio de correo electronico
 
-    $cuerpo = "Se realizó la inscripción número [".$dato[0]."],  del estudiante $nombre_estudiante
-    $apellido_estudiante al grado $ngrado, nacido en  en $ciudad_nacimiento
-    número de documneto $documento_estudiante, declarando los siguientes
-    datos :
+    $cuerpo = "<p>Se realiz&oacute; la inscripci&oacute;n n&uacute;mero <b>[".$dato[0]."]</b>,  del estudiante <b><font color='blue'>$nombre_estudiante
+    $apellido_estudiante </font></b> al grado $ngrado, nacido en  en $ciudad_nacimiento
+    n&uacute;mero de documneto $documento_estudiante, declarando los siguientes
+    datos :</p>
+    <ul>
+    <li>Nombre del estudiante: $nombre_estudiante $apellido_estudiante
+    <li>Fecha de nacimiento: $nacimiento en $ciudad_nacimiento
+    <li>Direcci&oacute;n: $direccion_estudiante / $barrio
+    <li>Estrato: $estrato
+    <li>Grupo sanguineo: $gruporh
+    <li>Vive con: $vivecon
+    </ul>
+    <br>
+    <b>INFORMACI&Oacute;N DEL PADRE</b>
+    <ul>
 
-    Nombre del estudiante: $nombre_estudiante $apellido_estudiante
-    Fecha de nacimiento: $nacimiento en $ciudad_nacimiento
-    Dirección: $direccion_estudiante / $barrio
-    Estrato: $estrato
-    Grupo sanguineo: $gruporh
-    Vive con: $vivecon
+    <li>Nombre : $nombre_padre $apellido_padre
+    <li>Correo : $correo_padre
+    <li>Telefono: $telefono_padre
+    <li>N&uacute;mero de documento: $documento_padre , $lugar_exp_padre
+    <li>Direcci&oacute;n : $direccion_padre \ $barrio_padre
+    </ul>
+    <br>
 
-    INFORMACIÓN DEL PADRE
+    <b>INFORMACI&Oacute;N DE LA MADRE</b>
 
-    Nombre : $nombre_padre $apellido_padre
-    Correo : $correo_padre
-    Telefono: $telefono_padre
-    Número de documento: $documento_padre , $lugar_exp_padre
-    Dirección : $direccion_padre \ $barrio_padre
-
-    INFORMACIÓN DE LA MADRE
-
-    Nombre : $nombre_madre $apellido_madre
-    Correo : $correo_madre
-    Telefono: $telefono_madre
-    Número de documento: $documento_madre , $lugar_exp_madre
-    Dirección : $direccion_madre \ $barrio_madre
+    <ul>
+    <li>Nombre : $nombre_madre $apellido_madre
+    <li>Correo : $correo_madre
+    <li>Telefono: $telefono_madre
+    <li>N&uacute;mero de documento: $documento_madre , $lugar_exp_madre
+    <li>Direcci&oacute;n : $direccion_madre \ $barrio_madre
+    </ul>
     ";
 
-    echo $cuerpo;
+    //echo $cuerpo;
 
     // //Enable SMTP debugging
     // // 0 = off (for production use)
@@ -266,6 +270,7 @@ $q2 = "INSERT INTO inscritos
       $mail->FromName = "Mundo Creativo";
       $mail->Subject = "INSCRIPCI&Oacute;N Instituto Mundo Creativo";
       $mail->Body = $cuerpo;
+      $mail->IsHTML(true);
       $mail->Host = "smtp.live.com";
       $mail->Port = 587;
       $mail->IsSMTP();
@@ -283,8 +288,9 @@ $q2 = "INSERT INTO inscritos
       $mail->Password = "imc3459404801";
       $mail->AddAddress($correo_padre);
       $mail->FromName = "Mundo Creativo";
-      $mail->Subject = "INSCRIPCI&Oacute;N Instituto Mundo Creativo";
+      $mail->Subject = utf8_decode("INSCRIPCIÓN Instituto Mundo Creativo [".$dato[0]."]");
       $mail->Body = $cuerpo;
+      $mail->IsHTML(true);
       $mail->Host = "smtp.live.com";
       $mail->Port = 587;
       $mail->IsSMTP();
@@ -293,60 +299,6 @@ $q2 = "INSERT INTO inscritos
       $mail->Send();
     }
 
-    // $mail->isSMTP();                                      // Usar SMTP
-    // $mail->Host = '';  // Especificar el servidor SMTP reemplazando por el nombre del servidor donde esta alojada su cuenta
-    // $mail->SMTPAuth = true;                               // Habilitar autenticacion SMTP
-    // $mail->Username = 'alejandr@imcreativo.edu.co';                 // Nombre de usuario SMTP donde debe ir la cuenta de correo a utilizar para el envio
-    // $mail->Password = 'Caracter_13';                           // Clave SMTP donde debe ir la clave de la cuenta de correo a utilizar para el envio
-    // $mail->SMTPSecure = 'tls';                            // Habilitar encriptacion
-    // $mail->Port = 587;                                    // Puerto SMTP
-    // $mail->Timeout       =   30;
-    // $mail->AuthType = 'LOGIN';
-    //
-    //
-    // // 	//Recipients
-    //
-    // $mail->setFrom('alejandro@imcreativo.edu.co');     //Direccion de correo remitente (DEBE SER EL MISMO "Username")
-    // $mail->addAddress($correo_estudiante);     // Agregar el destinatario
-    // $mail->addReplyTo('alejanro@imcreativo.edu.co');     //Direccion de correo para respuestas
-    //
-    // // 	//Content
-    // $mail->isHTML(true);
-    // $mail->Subject = 'INSCRIPCION MUNDO CREATIVO';
-    // $mail->Body = "hello";
-    // $mail->AltBody = 'This is a plain-text message body';
-    //
-    //
-    // // 	//send the message, check for errors
-    // if (!$mail->send()) {
-    //    echo 'Mailer Error: ' . $mail->ErrorInfo;
-    //  } else {
-    //    echo 'Message sent!';
-    //     //Section 2: IMAP
-    //     //Uncomment these to save your message in the 'Sent Mail' folder.
-    //     #if (save_mail($mail)) {
-    //     #    echo "Message saved!";
-    //     #}
-    //}
-
-    // //Section 2: IMAP
-    // //IMAP commands requires the PHP IMAP Extension, found at: https://php.net/manual/en/imap.setup.php
-    // //Function to call which uses the PHP imap_*() functions to save messages: https://php.net/manual/en/book.imap.php
-    // //You can use imap_getmailboxes($imapStream, '/imap/ssl', '*' ) to get a list of available folders or labels, this can
-    // //be useful if you are trying to get this working on a non-Gmail IMAP server.
-    // function save_mail($mail)
-    // {
-    //     //You can change 'Sent Mail' to any other folder or tag
-    //     $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
-
-    //     //Tell your server to open an IMAP connection using the same username and password as you used for SMTP
-    //     $imapStream = imap_open($path, $mail->Username, $mail->Password);
-
-    //     $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
-    //     imap_close($imapStream);
-
-    //     return $result;
-    // }
 
     echo "<br>Se ingresaron con exito";
     desconectar($link);

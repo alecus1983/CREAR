@@ -23,9 +23,35 @@ require 'conexion.php';
   <link rel="stylesheet" href="../CSS/style.css" type="text/css">
   <link rel="stylesheet" href="../CSS/estilos.css" type="text/css">
   <link href="../images/sampledata/iconos/escudo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+
+  <script type="text/javascript">
+
+  $(document).on('change', '#vivecon', function(event) {
+     var padres = $("#vivecon option:selected").text();
+
+     switch (padres) {
+       case "madre":
+       $("#madre").css("display" , "block");
+       $("#padre").css("display" , "none");
+         break;
+         case "padre":
+         $("#padre").css("display" , "block");
+         $("#madre").css("display" , "none");
+         break;
+       default:
+       $("#padre").css("display" , "block");
+       $("#madre").css("display" , "block");
+
+     }
+});
+
+</script>
+
 </head>
 
 <body>
+
+
   <div class="scroll-up-btn">
     <i class="fas fa-angle-up"></i>
   </div>
@@ -261,11 +287,12 @@ require 'conexion.php';
                   <option value="6">6</option>
                 </select>
               </div>
-              
+
               <!-- Vive con-->
               <div id="38" class="form-group"> <label > Vive con : </label>
               </div>
-              <div id="39"> <select name="vivecon" id="vivecon" class="form_estudiante form-control">
+              <div id="39"> <select name="vivecon" id="vivecon" class="form_estudiante form-control"
+                >
                 <option value="">Seleccione...</option>
                 <option value="padres">ambos padres</option>
                 <option value="padre">padre</option>
@@ -280,6 +307,7 @@ require 'conexion.php';
 
           <!-- Formulario del padre -->
 
+          <div id="padre" style="display:none">
 
           <div style="margin-top: 50px;">
             <h3>
@@ -360,8 +388,9 @@ require 'conexion.php';
 
 
       </div>
+    </div>
 
-
+      <div id="madre"  style="display:none">
       <!-- Formulario de la madre -->
       <div style="margin-top: 50px;">
         <h3>
@@ -437,6 +466,7 @@ require 'conexion.php';
       </div>
 
     </div>
+  </div>
   </form>
 
   <br>

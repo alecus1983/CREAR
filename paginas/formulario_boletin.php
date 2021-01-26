@@ -2028,20 +2028,12 @@ if(!isset($_SESSION['usuario']))
 
         }); // fin de funcion
 
-              // ++++
     } // fin de la funsion deposit
-
-
-
 
 
     </script>
 
-
     <div id="formulario" style=" margin: auto;max-width: 1200px;position: relative;">
-
-      <!-- esta es la primera fila de la tabla -->
-
 
       <!-- esta es la primera fila de la tabla -->
       <div id=" encabezado" style="width: 100%" >
@@ -2065,7 +2057,6 @@ if(!isset($_SESSION['usuario']))
       <p>Introduzca la acci&oacute;n requerida  del siguiente men&uacute;</p>
 
       <div class="parametros">
-
 
           <label class="etiqueta_formulario"> A&ntilde;o </label>
           <!-- Este campo muestra la variable ano la cual contiene por defecto el aÃ±o reciente -->
@@ -2227,7 +2218,6 @@ if(!isset($_SESSION['usuario']))
     onkeyup="consultar();">
     </textarea>
   </fieldset>
-
 
 
 <!-- boton para cargar datos -->
