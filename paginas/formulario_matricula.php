@@ -159,52 +159,56 @@ if(!isset($_SESSION['usuario']))
 
   <section id="inscricion" class="max-width">
     <h2>FORMULARIO DE INSCRIPCI&Oacute;N</h2>
-    <?php
-    // datos para el formulario
-    $r = $link->query("select * from inscritos");
-    // datos para el encabezado
-    $c = $link->query("select * from inscritos");
-    // inicio de la tabla
-    echo "<table
-    id='tabla-inscritos'
-    data-toggle='table'
 
-    data-search='true'
-    data-show-columns='true'
+    <table
+  id="table"
+  data-toggle="table"
+  data-height="460"
+  data-ajax="ajaxRequest"
+  data-search="true"
+  data-side-pagination="server"
+  data-pagination="true">
+  <thead>
+    <tr>
+      <th data-field="id">id</th>
+      <th data-field="estudiante">Estudiante</th>
+      <th data-field="edad">edad</th>
+      <th data-field="genero">genero</th>
+      <th data-field="grado">grado</th>
+      <th data-field="fecha">fecha</th>
+      <th data-field="vicecon">vice con</th>
+    </tr>
+  </thead>
+</table>
 
-    >";
+<script>
+// your custom ajax request here
+function ajaxRequest(params) {
 
-    // variable con emcabezados
-    $cabeza = $c->fetch_array(MYSQLI_ASSOC);
-    // visializacion del encabezado
-    echo "<thead>";
-    foreach($cabeza as $key => $valor){
-      //muestra los emcabezados
-      echo "<th data-sortable='true' >$key</th>";
-    }
-    // fin del emcabezado
-    echo "</thead>";
+  // data you may need
+  console.log(params.data);
 
-    // ciclo de repeticion para mostrar los datos
-    while($dato = $r->fetch_array(MYSQLI_ASSOC)){
-      echo "<tr>";
-      foreach ($dato as $key => $value) {
-        if ($key == 'id'){
-          echo "<td ><a href='#matriculas' onclick='matricular($value);'>$value</a></td>";
+  $.ajax({
+      type: "POST",
+      url: "obtener_inscripciones.php",
 
-        } else {
-          // muestro una columna
-          echo "<td >";
-          echo "$value </td>";
-        }
-
+// You are expected to receive the generated JSON (json_encode($data))
+      dataType: "json",
+      success: function (data) {
+          params.success({
+// By default, Bootstrap table wants a "rows" property with the data
+              "rows": data,
+// You must provide the total item ; here let's say it is for array length
+              "total": data.length
+          })
+      },
+      error: function (er) {
+          params.error(er);
       }
-      echo "</tr>";
-    }
-    // fin de la tabla
-    echo "</table>";
+  });
+}
+</script>
 
-    ?>
   </section>
   <section id="matriculas" class="max-width">
     <h2>MATRICULA</h2>
@@ -226,11 +230,6 @@ if(!isset($_SESSION['usuario']))
       <div class="form-group">
         <label from="escolaridad">Escolaridad</label>
         <?php
-        //rutina para actualizar los niveles de escolridad
-        // en este caso los correspondientes a
-        // preescolar , primaria  y Bachillerato
-        // conexion con la base de datos
-
         // script de conexion
         $q = "select * from escolaridad where id_escolaridad < 4";
         // se ejecuta la consulta
