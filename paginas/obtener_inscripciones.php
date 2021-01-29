@@ -7,7 +7,6 @@ $link = conectar();
 // preescolar , primaria  y Bachillerato
 // conexion con la base de datos
 
-
 // datos para el formulario
 $r = $link->query("select   id,
                 nombre_estudiante,
@@ -49,32 +48,14 @@ $r = $link->query("select   id,
                 FORMAT( DATEDIFF(CURDATE(), nacimiento )/365.25 ,0) as edad
  from inscritos i inner join grados g
  on i.id_grado = g.id_grado");
-//
-// // datos para el encabezado
-// $c = $link->query("select * from inscritos");
-//
-// // inicio de la tabla
-// echo "<table
-// id='tabla-inscritos'
-// data-toggle='table'
-// data-search='true'
-// data-show-columns='true'
-// >";
-
-// // variable con emcabezados
-// $cabeza = $c->fetch_array(MYSQLI_ASSOC);
-// // visializacion del encabezado
-// echo "<thead>";
-// foreach($cabeza as $key => $valor){
-//   //muestra los emcabezados
-//   echo "<th data-sortable='true' >$key</th>";
-// }
-// fin del emcabezado
-// echo "</thead>";
+// array vacio
 $data = array();
+// contador inicia en cero
 $ii = 0;
+
 // ciclo de repeticion para mostrar los datos
 while($dato = $r->fetch_array(MYSQLI_ASSOC)){
+  
 $data[$ii]["id"] = $dato["id"];
 $data[$ii]["estudiante"] = $dato["nombre_estudiante"]." ".$dato["apellido_estudiante"];
 $data[$ii]["edad"] = $dato["edad"];
@@ -85,9 +66,9 @@ $data[$ii]["vicecon"] = $dato["vivecon"];
 
 $ii ++;
 
+
 }
-// fin de la tabla
-// echo "</table>";
+// exporto los datos
 echo json_encode($data);
 
  ?>

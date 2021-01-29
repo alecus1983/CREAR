@@ -37,7 +37,7 @@ $baseDeDatos ="imcrea_data";
     }
     if (!mysqli_select_db($link, $baseDeDatos))
     {
-        //echo "Error seleccionando la base de datos.<br>";
+        echo "Error seleccionando la base de datos.<br>";
         exit();
     }
     else

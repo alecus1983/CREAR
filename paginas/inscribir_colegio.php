@@ -201,8 +201,10 @@ $q2 = "INSERT INTO inscritos
 
 
     // muestro la consulta
-    //echo $q2;
-    $res = $link->query($q2);
+    // echo $q2;
+    if ($res = $link->query($q2)){
+
+
 
     $qx = $link->query("SELECT max(id) as cantidad FROM  inscritos");
     $dato = $qx->fetch_array();
@@ -297,10 +299,15 @@ $q2 = "INSERT INTO inscritos
       $mail->SMTPAuth = true;
       $mail->From = $mail->Username;
       $mail->Send();
+
     }
 
-
     echo "<br>Se ingresaron con exito";
+
+  } else {
+    echo "se presento un fallo al ingresar los datos, intentelo m&aacute;s tarde.";
+  }
+
     desconectar($link);
 
 
