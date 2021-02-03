@@ -2,7 +2,6 @@
 // esta funcion se encarga de conectar la base de datos con la
 // aplicacion PHP
 
-
 function conectar()
 
 {

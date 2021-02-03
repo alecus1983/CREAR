@@ -16,7 +16,7 @@ require 'Exception.php';
 require 'PHPMailer.php';
 require 'SMTP.php';
 
-require_once 'conexion.php';
+//require_once 'conexion.php';
 //conexion a la base de datos
 $link = conectar();
 

@@ -20,295 +20,221 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
-// archivos requeridos para iniciar
-//require 'Exception.php';
-// //require 'PHPMailer.php';
-// //require 'SMTP.php';
-// // archivo para la conexión a la base de datos
-require_once 'conexion.php';
-// //conexion a la base de datos
-$link = conectar();
-// zona horaria
+
+require ('datos.php');
+
+//  archivo para la conexión a la base de datos
 date_default_timezone_set('America/Bogota');
 //
+//  Parametros de entrada recuperados del formulario usando el método POST
+//  el valor recuperado corresponde al ide del usuario
 //
-//
-// // Parametros de entrada recuperados del formulario usando el método POST
-// // el valor recuperado corresponde al ide del usuario
-//
+
 //nombre del inscrito
-$nombre_estudiante = $_POST["nombre_estudiante"];
+$dato = new inscripcion();
+
+$dato->nombre_estudiante = $_POST["nombre_estudiante"];
+//echo "datos: ".$dato->nombre_estudiante;
+//apellidos del iscrito
+$dato->apellido_estudiante = $_POST['apellido_estudiante'];
 // apellidos del iscrito
-$apellido_estudiante = $_POST['apellido_estudiante'];
-// apellidos del iscrito
-$nacimiento = $_POST['nacimiento'];
+$dato->nacimiento = $_POST['nacimiento'];
 // ciudad de nacimiento del estudiante
-$ciudad_nacimiento = $_POST['ciudad_nacimiento'];
+$dato->ciudad_nacimiento = $_POST['ciudad_nacimiento'];
 // codigo de escolaridad
-$escolaridad = $_POST["escolaridad"];
+$dato->escolaridad = $_POST["escolaridad"];
 // grado
-$id_grado = $_POST["grado"];
+$dato->id_grado = $_POST["grados_escolaridad"];
 // nombre del grado
-$ngrado = $_POST["ngrado"];
+//$ngrado = $_POST["ngrado"];
+$dato->id_jornada = $_POST["jornada"];
+// Antiguedad 1 -> Si, 0 -> No
+$dato->antiguedad = $_POST["antiguedad"];
+// tipo_institucion privada = 0  publica = 1
+$dato->tipo_institucion = $_POST["tipo_institucion"];
+// nobre institucion
+$dato->institucion = $_POST["institucion"];
+// modadlidad 1 = virtual 0 = presencial
+$dato->modalidad = $_POST["modalidad"];
+
 // Telefono del inscrito
-$telefono = $_POST['telefono'];
+$dato->telefono = $_POST['telefono'];
+// Telefono del inscrito
+$dato->celular = $_POST['celular'];
 //tipo de indentificaion
-$tipo_identificacion = $_POST["tipo_identificacion"];
+$dato->tipo_identificacion = $_POST["tipo_identificacion"];
 // documento de estudiante
-$documento_estudiante = $_POST["documento_estudiante"];
+$dato->documento_estudiante = $_POST["documento_estudiante"];
 // lugar de expecidicion del documento del estudiante
-$lugar_exp_estudiante = $_POST["lugar_exp_estudiante"];
+$dato->lugar_exp_estudiante = $_POST["lugar_exp_estudiante"];
 // genero del estudiante ( femenino, masculino )
-$genero = $_POST["genero"];
+$dato->genero = $_POST["genero"];
 // grupo sanguineo del estudiante
-$gruporh = $_POST["gruporh"];
+$dato->gruporh = $_POST["gruporh"];
+// EPS del estudiante
+$dato->EPS = $_POST["EPS"];
 // sisben al que pertenece el estudiante
-$nivelsisben = $_POST["nivelsisben"];
+$dato->nivelsisben = $_POST["nivelsisben"];
 // direccion de residencia del estudiante
-$direccion_estudiante = $_POST["direccion_estudiante"];
+$dato->direccion_estudiante = $_POST["direccion_estudiante"];
 // barrio donde vive el estudiante
-$barrio = $_POST["barrio"];
+$dato->barrio = $_POST["barrio"];
 // estrato del estudiante
-$estrato = $_POST["estrato"];
+$dato->estrato = $_POST["estrato"];
 // personas con las que vive el estudiante
-$vivecon = $_POST["vivecon"];
+$dato->vivecon = $_POST["vivecon"];
 // nombre del padre
-$nombre_padre = $_POST["nombre_padre"];
+$dato->nombre_padre = $_POST["nombre_padre"];
 // apellodo del padre
-$apellido_padre = $_POST["apellido_padre"];
+$dato->apellido_padre = $_POST["apellido_padre"];
 // correo electronico del padre
-$correo_padre = $_POST["correo_padre"];
+$dato->correo_padre = $_POST["correo_padre"];
 // telefono del padre
-$telefono_padre = $_POST["telefono_padre"];
+$dato->telefono_padre = $_POST["telefono_padre"];
 // tipo de documento del padre
-$tipo_identificacion_padre = $_POST["tipo_identificacion_padre"];
+$dato->tipo_identificacion_padre = $_POST["tipo_identificacion_padre"];
 // numero de documento del padre
-$documento_padre = $_POST["documento_padre"];
+$dato->documento_padre = $_POST["documento_padre"];
 // lugrar de expedicion
-$lugar_exp_padre = $_POST["lugar_exp_padre"];
+$dato->lugar_exp_padre = $_POST["lugar_exp_padre"];
 // direccion del padre
-$direccion_padre = $_POST["direccion_padre"];
+$dato->direccion_padre = $_POST["direccion_padre"];
 // barrio del padre
-$barrio_padre = $_POST["barrio_padre"];
+$dato->barrio_padre = $_POST["barrio_padre"];
 
 // nombre de la madre
-$nombre_madre = $_POST["nombre_madre"];
+$dato->nombre_madre = $_POST["nombre_madre"];
 // apellido del padre
-$apellido_madre = $_POST["apellido_madre"];
+$dato->apellido_madre = $_POST["apellido_madre"];
 // correo de la madre debe llevar @
-$correo_madre = $_POST["correo_madre"];
+$dato->correo_madre = $_POST["correo_madre"];
 // telefono de la madre máximo diez dijitos
-$telefono_madre = $_POST["telefono_madre"];
+$dato->telefono_madre = $_POST["telefono_madre"];
 // tipo de documnto CC, CE, RC
-$tipo_identificacion_madre = $_POST["tipo_identificacion_madre"];
+$dato->tipo_identificacion_madre = $_POST["tipo_identificacion_madre"];
 // documento de la madre
-$documento_madre = $_POST["documento_madre"];
+$dato->documento_madre = $_POST["documento_madre"];
 // lugar de expedicin del documento de la madre
-$lugar_exp_madre = $_POST["lugar_exp_madre"];
+$dato->lugar_exp_madre = $_POST["lugar_exp_madre"];
 // direccion de recidencia de la madre
-$direccion_madre = $_POST["direccion_madre"];
 // barrio de la madre
-$barrio_madre = $_POST["barrio_madre"];
+$dato->direccion_madre = $_POST["direccion_madre"];
+// barrio de la madre
+$dato->barrio_madre = $_POST["barrio_madre"];
 
-$now = date("Y-m-d g:i");
+// $now = date("Y-m-d g:i");
 // Datos para realizar la inscripción
 
+// estructura que muestra los datos cargasos
+$numero2 = count($_POST);
+$tags2 = array_keys($_POST); // obtiene los nombres de las varibles
+$valores2 = array_values($_POST);// obtiene los valores de las varibles
 
+// crea las variables y les asigna el valor
+for($i=0;$i<$numero2;$i++){
+  // echo $tags2[$i]." - ".$valores2[$i]."<br>";
+  $tags2[$i]=$valores2[$i];
+}
 
+// Si se ejecuta el registro o insercion en la base de datos del $dato
+// y todos su atributo.
+if($dato->registro()) {
 
-// String  para realizar la consulta
-$q2 = "INSERT INTO inscritos
-(
-  nombre_estudiante,
-  apellido_estudiante,
-  nacimiento,
-  ciudad_nacimiento,
-  id_escolaridad,
-  id_grado,
-  telefono,
-  tipo_identificacion,
-  documento_estudiante,
-  lugar_exp_estudiante,
-  genero,
-  gruporh,
-  nivelsisben,
-  direccion_estudiante,
-  barrio,
-  estrato,
-  vivecon,
+  // Se crea un elemento grado
+  $grado = new grados();
+  // Se obtiene el nombre para un determinado grado
+  $ngrado = $grado->get_nombre($_POST['grados_escolaridad']);
+  // se obtiene el maximo valor del id
+  $maximo = $dato->maximo();
 
-  nombre_padre,
-  apellido_padre,
-  correo_padre,
-  telefono_padre,
-  tipo_identificacion_padre,
-  documento_padre,
-  lugar_exp_padre,
-  direccion_padre,
-  barrio_padre,
+  // El cuerpo del correo
+  $cuerpo = "<p>Se realiz&oacute; la inscripci&oacute;n n&uacute;mero <b>[".
+  $maximo[0]."]</b>,  del estudiante <b><font color='blue'>".
+  $dato->nombre_estudiante." "
+  .$dato->apellido_estudiante." </font></b> al grado $ngrado, nacido en  en ".
+  $dato->ciudad_nacimiento." n&uacute;mero de documneto ".$dato->documento_estudiante
+  .", declarando los siguientes
+  datos :</p>
+  <ul>
+  <li>Nombre del estudiante: ".$dato->nombre_estudiante." ". $dato->apellido_estudiante.
+  "<li>Fecha de nacimiento: ".$dato->nacimiento ."en". $dato->ciudad_nacimiento.
+  "<li>Direcci&oacute;n: ".$dato->direccion_estudiante ."/". $dato->barrio.
+  "<li>Estrato: ".$dato->estrato.
+  "<li>Grupo sanguineo: ".$dato->gruporh.
+  "<li>Vive con: ".$dato->vivecon.
+  "</ul>
+  <br>
+  <b>INFORMACI&Oacute;N DEL PADRE</b>
+  <ul>
 
-  nombre_madre,
-  apellido_madre,
-  correo_madre,
-  telefono_madre,
-  tipo_identificacion_madre,
-  documento_madre,
-  lugar_exp_madre,
-  direccion_madre,
-  barrio_madre,
-  fecha
-)
+  <li>Nombre : ".$dato->nombre_padre ." ". $dato->apellido_padre.
+  "<li>Correo : ".$dato->correo_padre.
+  "<li>Telefono: ".$dato->telefono_padre.
+  "<li>N&uacute;mero de documento: ".$dato->documento_padre .", ". $dato->lugar_exp_padre.
+  "<li>Direcci&oacute;n : ".$dato->direccion_padre ." ". $dato->barrio_padre.
+  "</ul> <br>
 
-  VALUES ('".$nombre_estudiante.
-    "',  '".$apellido_estudiante.
-    "', '".$nacimiento.
-    "', '".$ciudad_nacimiento.
-    "', '".$escolaridad.
-    "', '".$id_grado.
-    "', '".$telefono.
-    "', '".$tipo_identificacion.
-    "', '".$documento_estudiante.
-    "', '".$lugar_exp_estudiante.
-    "', '".$genero.
-    "', '".$gruporh.
-    "', '".$nivelsisben.
-    "', '".$direccion_estudiante.
-    "', '".$barrio.
-    "', '".$estrato.
-    "', '".$vivecon.
+  <b>INFORMACI&Oacute;N DE LA MADRE</b>
 
-    "', '".$nombre_padre.
-    "', '".$apellido_padre.
-    "', '".$correo_padre.
-    "', '".$telefono_padre.
-    "', '".$tipo_identificacion_padre.
-    "', '".$documento_padre.
-    "', '".$lugar_exp_padre.
-    "', '".$direccion_padre.
-    "', '".$barrio_padre.
+  <ul>
+  <li>Nombre : ".$dato->nombre_madre ." ".$dato->apellido_madre.
+  "<li>Correo : ".$dato->correo_madre.
+  "<li>Telefono: ".$dato->telefono_madre.
+  "<li>Direcci&oacute;n : ".$dato->direccion_madre." \ ".$dato->barrio_madre.
+  "<li>N&uacute;mero de documento: ".$dato->documento_madre." , ".$dato->lugar_exp_madre.
+  "</ul>
+  ";
 
-    "', '".$nombre_madre.
-    "', '".$apellido_madre.
-    "', '".$correo_madre.
-    "', '".$telefono_madre.
-    "', '".$tipo_identificacion_madre.
-    "', '".$documento_madre.
-    "', '".$lugar_exp_madre.
-    "', '".$direccion_madre.
-    "', '".$barrio_madre.
-    "', '".$now.
-     "' )";
+  // //Enable SMTP debugging
+  // // 0 = off (for production use)
+  // // 1 = client messages
+  // // 2 = client and server messages
+  // $mail->SMTPDebug = 4;
 
+  $mail = new PHPMailer();
 
-    // muestro la consulta
-    // echo $q2;
-    if ($res = $link->query($q2)){
-
-
-
-    $qx = $link->query("SELECT max(id) as cantidad FROM  inscritos");
-    $dato = $qx->fetch_array();
-
-    //$qx = mysqli( $link, $q);// or die ('no se pudo conectar con la base de datos:'.mysql_error());
-    // recupero el dato de la consulta como un array
-
-    //$dato = mysqli_fetch_array($qx,'MYSQLI_NUM');
-
-
-    // Envio de correo electronico
-
-    $cuerpo = "<p>Se realiz&oacute; la inscripci&oacute;n n&uacute;mero <b>[".$dato[0]."]</b>,  del estudiante <b><font color='blue'>$nombre_estudiante
-    $apellido_estudiante </font></b> al grado $ngrado, nacido en  en $ciudad_nacimiento
-    n&uacute;mero de documneto $documento_estudiante, declarando los siguientes
-    datos :</p>
-    <ul>
-    <li>Nombre del estudiante: $nombre_estudiante $apellido_estudiante
-    <li>Fecha de nacimiento: $nacimiento en $ciudad_nacimiento
-    <li>Direcci&oacute;n: $direccion_estudiante / $barrio
-    <li>Estrato: $estrato
-    <li>Grupo sanguineo: $gruporh
-    <li>Vive con: $vivecon
-    </ul>
-    <br>
-    <b>INFORMACI&Oacute;N DEL PADRE</b>
-    <ul>
-
-    <li>Nombre : $nombre_padre $apellido_padre
-    <li>Correo : $correo_padre
-    <li>Telefono: $telefono_padre
-    <li>N&uacute;mero de documento: $documento_padre , $lugar_exp_padre
-    <li>Direcci&oacute;n : $direccion_padre \ $barrio_padre
-    </ul>
-    <br>
-
-    <b>INFORMACI&Oacute;N DE LA MADRE</b>
-
-    <ul>
-    <li>Nombre : $nombre_madre $apellido_madre
-    <li>Correo : $correo_madre
-    <li>Telefono: $telefono_madre
-    <li>N&uacute;mero de documento: $documento_madre , $lugar_exp_madre
-    <li>Direcci&oacute;n : $direccion_madre \ $barrio_madre
-    </ul>
-    ";
-
-    //echo $cuerpo;
-
-    // //Enable SMTP debugging
-    // // 0 = off (for production use)
-    // // 1 = client messages
-    // // 2 = client and server messages
-    // $mail->SMTPDebug = 4;
-
-    $mail = new PHPMailer();
-
-    // Envío del correo de la madre si lo ha ingresado
-    if ($correo_madre != ""){
-
-      $mail->SMTPSecure = 'tls';
-      $mail->Username = "imcreativo@hotmail.com";
-      $mail->Password = "imc3459404801";
-      $mail->AddAddress($correo_madre);
-      $mail->FromName = "Mundo Creativo";
-      $mail->Subject = "INSCRIPCI&Oacute;N Instituto Mundo Creativo";
-      $mail->Body = $cuerpo;
-      $mail->IsHTML(true);
-      $mail->Host = "smtp.live.com";
-      $mail->Port = 587;
-      $mail->IsSMTP();
-      $mail->SMTPAuth = true;
-      $mail->From = $mail->Username;
-      $mail->Send();
-
-    }
-
-    // Se envía el correo del padre
-    if ($correo_padre) {
-      // code...
-      $mail->SMTPSecure = 'tls';
-      $mail->Username = "imcreativo@hotmail.com";
-      $mail->Password = "imc3459404801";
-      $mail->AddAddress($correo_padre);
-      $mail->FromName = "Mundo Creativo";
-      $mail->Subject = utf8_decode("INSCRIPCIÓN Instituto Mundo Creativo [".$dato[0]."]");
-      $mail->Body = $cuerpo;
-      $mail->IsHTML(true);
-      $mail->Host = "smtp.live.com";
-      $mail->Port = 587;
-      $mail->IsSMTP();
-      $mail->SMTPAuth = true;
-      $mail->From = $mail->Username;
-      $mail->Send();
-
-    }
-
-    echo "<br>Se ingresaron con exito";
-
-  } else {
-    echo "se presento un fallo al ingresar los datos, intentelo m&aacute;s tarde.";
+  // Envío del correo de la madre si lo ha ingresado
+  if ($dato->correo_madre != ""){
+    $mail->SMTPSecure = 'tls';
+    $mail->Username = "imcreativo@hotmail.com";
+    $mail->Password = "imc3459404801";
+    $mail->AddAddress($dato->correo_madre);
+    $mail->FromName = "Mundo Creativo";
+    $mail->Subject = "INSCRIPCI&Oacute;N Instituto Mundo Creativo";
+    $mail->Body = $cuerpo;
+    $mail->IsHTML(true);
+    $mail->Host = "smtp.live.com";
+    $mail->Port = 587;
+    $mail->IsSMTP();
+    $mail->SMTPAuth = true;
+    $mail->From = $mail->Username;
+    $mail->Send();
   }
 
-    desconectar($link);
+  // Se envía el correo del padre
+  if ($dato->correo_padre) {
+    // code...
+    $mail->SMTPSecure = 'tls';
+    $mail->Username = "imcreativo@hotmail.com";
+    $mail->Password = "imc3459404801";
+    $mail->AddAddress($dato->correo_padre);
+    $mail->FromName = "Mundo Creativo";
+    $mail->Subject = utf8_decode("INSCRIPCIÓN Instituto Mundo Creativo [".$maximo[0]."]");
+    $mail->Body = $cuerpo;
+    $mail->IsHTML(true);
+    $mail->Host = "smtp.live.com";
+    $mail->Port = 587;
+    $mail->IsSMTP();
+    $mail->SMTPAuth = true;
+    $mail->From = $mail->Username;
+    $mail->Send();
+  }
+
+  echo "<br>Se ingresaron con exito";
+
+} else {
+  echo "se presento un fallo al ingresar los datos, intentelo m&aacute;s tarde.";
+}
 
 
-    ?>
+?>

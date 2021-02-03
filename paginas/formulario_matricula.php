@@ -258,9 +258,6 @@ function ajaxRequest(params) {
       </div>
 
 
-
-
-
       <!-- tipo de indentificacion -->
       <div id="d20" class="form-group"> <label>Tipo de indentificación</label>
         <select class="form_estudiante form-control" id="tipo_identificacion" required="">

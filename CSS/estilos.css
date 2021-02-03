@@ -119,3 +119,11 @@ body {
 .has-error input[type="text"], .has-error input[type="email"], .has-error select {
   border: 1px solid #a94442;
 }
+
+.control-label:invalid {
+  color: #a94442;
+}
+
+.with-errors > ul:first-child li:first-child{
+  color: #a94442;
+}
