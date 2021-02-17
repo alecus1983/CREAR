@@ -243,6 +243,11 @@ section .title::after{
 .about .title::after{
     content: "Noticias 2021";
 }
+
+
+.about_ti .title::after{
+    content: "Tecnico laboral";
+}
 .about .about-content .left{
     width: 45%;
 }
