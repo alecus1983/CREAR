@@ -43,7 +43,7 @@ else
   echo"
   <script >
   alert('Contraseña Incorrecta');
-  location.href = 'login_boletines.php';
+  location.href = 'login_matriculas.php';
   </script>
   <?";
 }

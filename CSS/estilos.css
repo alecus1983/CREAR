@@ -127,3 +127,8 @@ body {
 .with-errors > ul:first-child li:first-child{
   color: #a94442;
 }
+
+.titulo_estudiante{
+  margin-top: 10%;
+  color: darkgreen;
+}

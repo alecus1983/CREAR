@@ -33,8 +33,8 @@
 
 <div class="sidenav">
   <div class="login-main-text">
-    <h2>Formulario<br>Matricula</h2>
-    <p>Login or register from here to access.</p>
+    <h2>Formulario<br><font style="color:#3367a9;">Matricula</font></h2>
+    <p><font style="color:#777777;">Inicie secci&oacute;n para empezar</font></p>
   </div>
 </div>
 <div class="main">
@@ -50,7 +50,7 @@
           <input type="password" name="login" class="form-control" placeholder="clave">
         </div>
         <button type="submit" class="btn btn-black">Login</button>
-        <button type="submit" class="btn btn-secondary">Register</button>
+        <!-- <button type="submit" class="btn btn-secondary">Registrarse</button> -->
       </form>
     </div>
   </div>

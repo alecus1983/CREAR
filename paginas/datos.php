@@ -2,7 +2,6 @@
 
 // Contiente los modelo de clase  que apunta a la base de datos
 // involucra  el archivo imcrea.php
-
 // require_once('imcrea.php');
 
 // Configuración de constantes
@@ -12,8 +11,7 @@ define('DB_PASS','conezioncrear21');
 define('DB_NAME','imcrea_data');
 define('DB_CHARSET','utf8');
 
-// requiere_once('config.php');
-
+// clase que determina la conexion con la base de datos
 class imcrea {
 
     protected $_db;
@@ -265,10 +263,6 @@ class inscripcion extends imcrea {
 
 
 
-
-
-
-
   // Clase que define la inscripcion
   class grados extends imcrea {
 
@@ -367,7 +361,52 @@ class inscripcion extends imcrea {
         }
       } // fin de la cuncion
 
-    } // fin de la clase
+    }
+     // fin de la clase
 
+// clase que define a los alumnos
+class alumnos extends imcrea {
+
+  public $id_alumno;
+  public $nombres;
+  public $cedula;
+  public $login;
+  public $fecha;
+  public $telefono;
+
+  public function get_id_nombre($id_alumno){
+    // se realiza la consulta
+    $resultado = $this->_db->query("SELECT nombres FROM  alumnos where  id_alumno = ".$id_alumno );
+    $dato = $resultado->fetch_array(MYSQLI_NUM);
+
+    // si se ejecuto la consulta
+    if (!$dato){
+      echo "Fallo en incertar fila";
+    } else {
+      // retorno  el valor 0 del array
+      return $dato[0];
+      $dato -> close();
+      $this -> _db -> close();
+    }
+  } // fin de la funcion
+
+  public function get_id_apellido($id_alumno){
+    // se realiza la consulta
+    $resultado = $this->_db->query("SELECT apellidos FROM  alumnos where  id_alumno = ".$id_alumno );
+    $dato = $resultado->fetch_array(MYSQLI_NUM);
+
+    // si se ejecuto la consulta
+    if (!$dato){
+      echo "Fallo en incertar fila";
+    } else {
+      // retorno  el valor 0 del array
+      return $dato[0];
+      $dato -> close();
+      $this -> _db -> close();
+    }
+  } // fin de la funcion
+
+
+}
 
 ?>
