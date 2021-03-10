@@ -6,9 +6,9 @@
 
 // Configuración de constantes
 define('DB_HOST', 'localhost');
-define('DB_USER', 'imcrea_admin');
+define('DB_USER', 'imcreati_admin');
 define('DB_PASS','conezioncrear21');
-define('DB_NAME','imcrea_data');
+define('DB_NAME','imcreati_data');
 define('DB_CHARSET','utf8');
 
 // clase que determina la conexion con la base de datos
@@ -52,6 +52,10 @@ class inscripcion extends imcrea {
   public $tipo_institucion;
   // modalidad 1 = virtual 0 presencial
   public $modalidad;
+  // tipo de institucion
+  public $nombre_institucion;
+  // motivo de retiro
+  public $motivo;
   // Telefono del inscrito
   public $telefono;
   // Telefono del inscrito
@@ -139,6 +143,9 @@ class inscripcion extends imcrea {
       id_jornada,
       antiguedad,
       tipo_institucion,
+      nombre_institucion,
+      motivo,
+      modalidad,
       telefono,
       celular,
       tipo_identificacion,
@@ -172,7 +179,8 @@ class inscripcion extends imcrea {
       lugar_exp_madre,
       direccion_madre,
       barrio_madre,
-      fecha
+      fecha,
+      estado
     )
 
     VALUES ('".$this->nombre_estudiante.
@@ -184,7 +192,8 @@ class inscripcion extends imcrea {
       "', '".$this->id_jornada.
       "', '".$this->antiguedad.
       "', '".$this->tipo_institucion.
-      "', '".$this->institucion.
+      "', '".$this->nombre_institucion.
+      "', '".$this->motivo.
       "', '".$this->modalidad.
       "', '".$this->telefono.
       "', '".$this->celular.
@@ -220,11 +229,12 @@ class inscripcion extends imcrea {
       "', '".$this->direccion_madre.
       "', '".$this->barrio_madre.
       "', '".$now.
+      "', 'i".
       "' )";
 
       // se realiza la consulta
       $qx = $this->_db->query($q2);
-      echo "<br><br>Consulata : <br>".$q2;
+      //echo "<br><br>Consulata : <br>".$q2;
 
       // si se ejecuto la consulta
       if (!$qx){
@@ -346,7 +356,7 @@ class inscripcion extends imcrea {
 
       public function get_nombre($id_grado){
         // se realiza la consulta
-        echo "consulsta: "."SELECT nombre_g FROM  grados where  id_grado = ".$id_grado;
+        // echo "consulsta: "."SELECT nombre_g FROM  grados where  id_grado = ".$id_grado;
         $resultado = $this->_db->query("SELECT nombre_g FROM  grados where  id_grado = ".$id_grado );
         $dato = $resultado->fetch_array(MYSQLI_NUM);
 
@@ -390,6 +400,7 @@ class alumnos extends imcrea {
     }
   } // fin de la funcion
 
+  // Funcion que permite tener un apellido de un alumno a partir del id
   public function get_id_apellido($id_alumno){
     // se realiza la consulta
     $resultado = $this->_db->query("SELECT apellidos FROM  alumnos where  id_alumno = ".$id_alumno );
@@ -405,8 +416,6 @@ class alumnos extends imcrea {
       $this -> _db -> close();
     }
   } // fin de la funcion
-
-
 }
 
 ?>

@@ -22,6 +22,7 @@ mb_http_output('UTF-8');
   <!-- <script src="../JS/es_ES.min.js"></script> -->
   <script src="../JS/validator.min.js"></script>
   <script src="../JS/validator.js"></script>
+  <script src="../JS/sweetalert.min.js"></script>
 
   <!-- <link href="../CSS/template.css" rel="stylesheet" type="text/css" /> -->
   <!-- <link href="../CSS/fa-v4-shims.css" rel="stylesheet" type="text/css" /> -->
@@ -70,6 +71,7 @@ mb_http_output('UTF-8');
       $(".madre").prop('required',false);
       $(".padre").prop('required',true);
       break;
+
       default:
       $("#padre").css("display" , "block");
       $("#madre").css("display" , "block");
@@ -89,7 +91,7 @@ mb_http_output('UTF-8');
 
 </head>
 
-<body>
+<body onload="$('#escolaridad option[value=\'\']').attr('selected',true);">
 
   <div class="scroll-up-btn">
     <i class="fas fa-angle-up"></i>
@@ -347,7 +349,7 @@ mb_http_output('UTF-8');
                 echo "<select class='form_estudiante form-control' id='escolaridad'
                 name='escolaridad'
                 onchange='actualizar_grados_escolaridad();' required >";
-                echo "<option value=''>Seleccione...</option>";
+                echo "<option value='' selected='selected'>Seleccione...</option>";
 
                 while($dato = mysqli_fetch_array($reg))
                 {
@@ -393,19 +395,21 @@ mb_http_output('UTF-8');
 
         <!-- Modalidad -->
         <div class="col-md-6">
-          <label style="display:flex; " >Modalidad</label>
           <div class="form-group">
-            <div class="form-check form-check-inline">
-              <label>
-                <input type="radio" name="modalidad" val=0 required>
-                Precencial (alternancia)
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label>
-                <input type="radio" name="modalidad" val=1 required>
-                Virual
-              </label>
+            <label for="antiguedad">Modo</label>
+            <div class="form-group">
+              <div class="form-check form-check-inline">
+                <label>
+                  <input type="radio" name="modo" value=0 required>
+                  Virtual
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label>
+                  <input type="radio" name="modo" value=1 required>
+                  Precencial
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -418,13 +422,13 @@ mb_http_output('UTF-8');
             <div class="form-group">
               <div class="form-check form-check-inline">
                 <label>
-                  <input type="radio" name="antiguiedad" value=0 required>
+                  <input type="radio" name="antiguedad" value=0 required>
                   Nuevo
                 </label>
               </div>
               <div class="form-check form-check-inline">
                 <label>
-                  <input type="radio" name="antiguiedad" value=1 required>
+                  <input type="radio" name="antiguedad" value=1 required>
                   Antiguo
                 </label>
               </div>
@@ -466,7 +470,7 @@ mb_http_output('UTF-8');
           <div class="form-group">
             <label for="motivo">Motivo</label>
             <input type="text" class="form-control form_estudiante" id="motivo"
-            name="motivo" maxlength="24" placeholder="Motivo retiro">
+            name="motivo" maxlength="30" placeholder="Motivo retiro">
           </div>
         </div>
       </div>
@@ -522,7 +526,7 @@ mb_http_output('UTF-8');
         </div>
       </div>
 
-      <div class="col-md-6 md-3">
+      <div class="col-md-6">
         <!-- Barrio -->
         <div  class="form-group">
           <label from="barrio" class="control-label"> Barrio:</label>
@@ -534,61 +538,226 @@ mb_http_output('UTF-8');
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="col-md-6">
-        <!-- Sisben -->
-        <div class="form-group">
-          <label class="control-label">Sisben</label>
-          <select name="nivelsisben" id="nivelsisben" name="nivelsisben"
-          class="form_estudiante form-control" required>
-          <option value="">Seleccione...</option>
-          <option value="99">No tiene</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-        </select>
-        <div class="help-block with-errors"></div>
+    <span class="font-weight-bold">
+      <h4 class="titulo_estudiante">Datos socio econ&oacute;micos
+      </h4>
+    </span>
+    <hr >
+
+
+
+
+        <div class="form-row">
+          <div class="col-md-6">
+            <!-- Sisben -->
+            <div class="form-group">
+              <label class="control-label">Sisben</label>
+              <select name="nivelsisben" id="nivelsisben" name="nivelsisben"
+              class="form_estudiante form-control" required>
+              <option value="">Seleccione...</option>
+              <option value="99">No tiene</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <!-- Estrato-->
+          <div class="form-group">
+            <label from="estrato" class="control-label"> Estrato </label>
+            <select  name="estrato" class="form_estudiante form-control"
+            id="estrato" name="estrato" required>
+            <option value="">Seleccione...</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+          <div class="help-block with-errors"></div>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-6">
-      <!-- Estrato-->
-      <div class="form-group">
-        <label from="estrato" class="control-label"> Estrato </label>
-        <select  name="estrato" class="form_estudiante form-control"
-        id="estrato" name="estrato" required>
-        <option value="">Seleccione...</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-      </select>
-      <div class="help-block with-errors"></div>
-    </div>
-  </div>
-</div>
 
-<!-- Vive con-->
-<div class="form-group">
-  <label class="control-label"> Vive con : </label>
-  <select name="vivecon" id="vivecon" name="vivecon"
-  class="form_estudiante form-control" required>
-  <option value="">Seleccione...</option>
-  <option value="padres">ambos padres</option>
-  <option value="padre">padre</option>
-  <option value="madre">madre</option>
-  <option value="abuelos">abuelos</option>
-  <option value="hermanos">hermanos</option>
-  <option value="tios">tíos</option>
-  <option value="otro">otro</option>
-</select>
-<div class="help-block with-errors"></div>
-</div>
+    <div class="form-row">
+      <div class="col-md6">
+        <div class="form-group">
+
+          <label class="control-label">
+            Etnia :
+          </label>
+
+            <select class="form-control form-estudiane" name="etnia">
+              <option value="0">Seleccione...</option>
+              <option value="1">ACHAGUA</option>
+              <option value="2">AFRODESCENDIENTE</option>
+              <option value="3">AMBALO</option>
+              <option value="4">AMORUA</option>
+              <option value="5">ANDOQUE</option>
+              <option value="6">ARHUACO</option>
+              <option value="7">AWA</option>
+              <option value="8">BANIVA</option>
+              <option value="9">BARA</option>
+              <option value="10">BARASANO</option>
+              <option value="11">BARI</option>
+              <option value="12">BETOYE (GUAHIBO)</option>
+              <option value="13">BORA</option>
+              <option value="14">CAMENTSA (KAMSA - KAMENTSA)</option>
+              <option value="15">CHIMILAS</option>
+              <option value="16">CHIRICOA</option>
+              <option value="17">COCAMA</option>
+              <option value="18">COCONUCO</option>
+              <option value="19">COREGUAJE</option>
+              <option value="20">CUBEO</option>
+              <option value="21">CUIVA (CUIBA - KUIVA)</option>
+              <option value="22">CUNA (TULE)</option>
+              <option value="23">CURRIPACO</option>
+              <option value="24">DESANO</option>
+              <option value="25">EMBERA CHAMI</option>
+              <option value="26">EMBERA KATIO</option>
+              <option value="27">EMBERASIAPIDARA</option>
+              <option value="28">GUAMBIANO (AUTODENOMINACION NA...</option>
+              <option value="29">GUANANO (WANANO)</option>
+              <option value="30">GUARIQUEMA</option>
+              <option value="31">GUAYABERO (AUTODENOMICACION JI...</option>
+              <option value="32">HITNU</option>
+              <option value="33">INGA</option>
+              <option value="34">JURUMI (URTUMI)</option>
+              <option value="35">KANKUAMO</option>
+              <option value="36">KARAPANA (CARAPANA)</option>
+              <option value="37">KARIJONA (CARIJONA)</option>
+              <option value="38">KAWIYARI (CABIYARI)</option>
+              <option value="39">KICHWA</option>
+              <option value="40">KIZGO (QUISGO)</option>
+              <option value="41">KOFAN</option>
+              <option value="42">KOGUI</option>
+              <option value="43">LETUAMA</option>
+              <option value="44">MACAGUAJE</option>
+              <option value="45">MACAHUA(N)</option>
+              <option value="46">MAKUNA</option>
+              <option value="47">MAPAYERRY</option>
+              <option value="48">MASIWARE (MASIGUARE - MAIBEN)</option>
+              <option value="49">MATAPI</option>
+              <option value="50">MIRA&#209;A</option>
+              <option value="51">MOKANA</option>
+              <option value="52">MUINANE</option>
+              <option value="53">MUISCA</option>
+              <option value="54">MURUI (MURUI - WITO)</option>
+              <option value="55">NEGRITUDES</option>
+              <option value="56" selected="selected">NO APLICA</option>
+              <option value="57">NONUYA</option>
+              <option value="58">NUKAK MAKU (SE INCLUYEN HUPHU,...</option>
+              <option value="59">OCAINA</option>
+              <option value="60">PAEZ (AUTODENOMINACION NASA)</option>
+              <option value="61">PALANQUERO</option>
+              <option value="62">PASTOS</option>
+              <option value="63">PIAPOCO</option>
+              <option value="64">PIAROA</option>
+              <option value="65">PIJAO (COYAIMAS - NATAGAIMAS)</option>
+              <option value="66">PIRATAPUYO</option>
+              <option value="67">PISAMIRA</option>
+              <option value="68">POLINDARAS</option>
+              <option value="69">PUINAVE</option>
+              <option value="70">QUILLACINGAS</option>
+              <option value="71">RAIZAL</option>
+              <option value="72">ROM</option>
+              <option value="73">SALIVA (SALIBA)</option>
+              <option value="74">SIKUANI (SICUANI)</option>
+              <option value="75">SIONA</option>
+              <option value="76">SIRIANO</option>
+              <option value="77">TAIWANO</option>
+              <option value="78">TAMAS (DUJOS DE PANIQUITA)</option>
+              <option value="79">TANIMUKA</option>
+              <option value="80">TARIANO</option>
+              <option value="81">TATUYO</option>
+              <option value="82">TIKUNAS</option>
+              <option value="83">TOTOR&#211;</option>
+              <option value="84">TSIRIPU (TSHIRIPO)</option>
+              <option value="85">TUKANO</option>
+              <option value="86">TUYUCA</option>
+              <option value="87">UITOTOS (HUITOTO - WITOTO)</option>
+              <option value="88">U&#180;WA</option>
+              <option value="89">WAUNANA (WOUNAAN)</option>
+              <option value="90">WAYUU</option>
+              <option value="91">WIPIWI</option>
+              <option value="92">WIWA</option>
+              <option value="93">YAGUA</option>
+              <option value="94">YAMALERO</option>
+              <option value="95">YANACONA</option>
+              <option value="96">YARI</option>
+              <option value="97">YARURO</option>
+              <option value="98">YAUNA</option>
+              <option value="99">YUCUNA</option>
+              <option value="100">YUKO</option>
+              <option value="101">YURI</option>
+              <option value="102">YURUTI (TAPUYA)</option>
+              <option value="103">ZENU (SENU)</option>
+            </select>
+          </div>
+        </div>
+
+
+      </div>
+
+
+    <div class="from-row">
+      <div  class="col-md-12">
+        <div class="form-group">
+          <label class="control-label">
+            Poblaci&oacute;n V&iacute;ctima del Conflicto * : </label>
+            <select class="form_estudiante form-control" name="victima">
+              <option value="0">Seleccione...</option>
+              <option value="1">ABANDONO O DESPOJO DE TIERRAS</option>
+              <option value="2">ACTO TERRORISTA /ATENTADOS/ COMBATES/ HOSTIGAMIENTOS</option>
+              <option value="3">AMENAZA</option>
+              <option value="4">CONFINAMIENTO</option>
+              <option value="5">DELITOS CONTRA LA LIBERTAD E INTEGRIDAD SEXUAL EN EL MARCO</option>
+              <option value="6">DESAPARICION FORZADA</option>
+              <option value="7">DESPLAZAMIENTO FORZADO</option>
+              <option value="8">DESVINCULADOS DE GRUPOS ARMADOS</option>
+              <option value="9">EN SITUACI&#211;N DE DESPLAZAMIENTO</option>
+              <option value="10">HIJOS DE ADULTOS DESMOVILIZADOS</option>
+              <option value="11">HOMICIDIO</option>
+              <option value="12">LESIONES PERSONALES F&#205;SICAS</option>
+              <option value="13">LESIONES PERSONALES PSICOL&#211;GICAS</option>
+              <option value="14">MINAS ANTIPERSONALES, MUNICI&#211;N SIN EXPLOTAR</option>
+              <option value="15" selected="selected">NO APLICA</option>
+              <option value="16">OTROS</option>
+              <option value="17">PERDIDA DE BIENES MUEBLES O INMUEBLES</option>
+              <option value="18">SECUESTRO</option>
+              <option value="19">SIN INFORMACI&#211;N</option>
+              <option value="20">TORTURA</option>
+              <option value="21">VINCULACI&#211;N DE NI&#209;OS NI&#209;AS ADOLESCENTES A ACTIVIDADES</option>
+            </select>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Vive con-->
+    <div class="form-group">
+      <label class="control-label"> Vive con : </label>
+      <select name="vivecon" id="vivecon" name="vivecon"
+      class="form_estudiante form-control" required>
+      <option value="" selected="selected">Seleccione...</option>
+      <option value="padres">ambos padres</option>
+      <option value="padre">padre</option>
+      <option value="madre">madre</option>
+      <option value="abuelos">abuelos</option>
+      <option value="hermanos">hermanos</option>
+      <option value="tios">tíos</option>
+      <option value="otro">otro</option>
+    </select>
+    <div class="help-block with-errors"></div>
+  </div>
 </div>
 
 <!-- Formulario del padre -->
@@ -620,7 +789,7 @@ mb_http_output('UTF-8');
   </div>
 
   <div class="form-row">
-    <div class="col-sm6">
+    <div class="col-sm12">
       <!-- Correo-->
       <div class="form-group">
         <label from="correo_padre" class="control-label">Correo</label>
@@ -698,6 +867,8 @@ mb_http_output('UTF-8');
 
 </div>
 <!--  fin de seccion del padre -->
+</div>
+
 
 <div id="madre"  style="display:none">
   <!-- Formulario de la madre -->
@@ -706,6 +877,7 @@ mb_http_output('UTF-8');
       <font color="tomato"> Informaci&oacute;n de la madre</font>
     </h3>
   </div>
+
 
   <!-- DATOS DE LA MADRE -->
   <div id="datos_madre" class="regilla"
@@ -800,20 +972,21 @@ mb_http_output('UTF-8');
 </div>
 <!-- fin de la informacion de la madre -->
 </div>
+
 <!-- formulario de salida -->
 <div class="form-group row">
   <div class="col-10 offset-2">
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="1" id="userAgreement">
       <label class="form-check-label" for="userAgreement">
-        Acepto <a href="#">las condiciones de uso</a>
+        Acepto <a href="politicadetratamientodedatos.html" target="_blank">las condiciones de uso</a>
       </label>
     </div>
 
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="1" id="newsletter">
       <label class="form-check-label" for="newsletter">
-        No quiero recivir notificaciones
+        No quiero recibir notificaciones
       </label>
     </div>
   </div>
@@ -823,8 +996,7 @@ mb_http_output('UTF-8');
   <br>
   <p id="respuesta"></p>
   <br>
-  <input type="submit" class="btn btn-primary" value="Inscribir"
-  />
+  <input type="submit" class="btn btn-primary" value="Inscribir"/>
 </div>
 </form>
 <!-- fin del formulario -->
@@ -833,8 +1005,6 @@ mb_http_output('UTF-8');
 
 <br>
 
-<!-- fin de la columna que encierra el formaulario -->
-</div>
 
 </div>
 <!-- fin del codigo-->
@@ -848,6 +1018,6 @@ mb_http_output('UTF-8');
   </footer>
 
   <script src="../JS/script.js"></script>
-</body>
+</body >
 
 </html>

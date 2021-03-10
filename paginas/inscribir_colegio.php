@@ -11,7 +11,7 @@
 // Requiere el archivo de conexion           //
 // con base de datos php                     //
 ///////////////////////////////////////////////
-
+// Configuración de constantes
 
 // declaración de constantes
 use PHPMailer\PHPMailer\PHPMailer;
@@ -30,9 +30,9 @@ date_default_timezone_set('America/Bogota');
 //  el valor recuperado corresponde al ide del usuario
 //
 
-//nombre del inscrito
+// //nombre del inscrito
 $dato = new inscripcion();
-
+//
 $dato->nombre_estudiante = $_POST["nombre_estudiante"];
 //echo "datos: ".$dato->nombre_estudiante;
 //apellidos del iscrito
@@ -54,9 +54,6 @@ $dato->antiguedad = $_POST["antiguedad"];
 $dato->tipo_institucion = $_POST["tipo_institucion"];
 // nobre institucion
 $dato->institucion = $_POST["institucion"];
-// modadlidad 1 = virtual 0 = presencial
-$dato->modalidad = $_POST["modalidad"];
-
 // Telefono del inscrito
 $dato->telefono = $_POST['telefono'];
 // Telefono del inscrito
@@ -81,6 +78,18 @@ $dato->direccion_estudiante = $_POST["direccion_estudiante"];
 $dato->barrio = $_POST["barrio"];
 // estrato del estudiante
 $dato->estrato = $_POST["estrato"];
+// modalidad de estudio presencial o virtual
+$dato->modalidad = $_POST["modo"];
+// nombre de la institucion donde proviene
+$dato->nombre_institucion = $_POST["institucion"];
+// tipo de institucion de donde proviene
+$dato->tipo_institucion = $_POST["tipo_institucion"];
+// motivo de retiro varchar(50)
+$dato->motivo = $_POST["motivo"];
+// Etnia
+$dato->etnia = $_POST["etnia"];
+// victima del Conflicto varchar(50)
+$dato->victima= $_POST["victima"];
 // personas con las que vive el estudiante
 $dato->vivecon = $_POST["vivecon"];
 // nombre del padre
@@ -101,7 +110,6 @@ $dato->lugar_exp_padre = $_POST["lugar_exp_padre"];
 $dato->direccion_padre = $_POST["direccion_padre"];
 // barrio del padre
 $dato->barrio_padre = $_POST["barrio_padre"];
-
 // nombre de la madre
 $dato->nombre_madre = $_POST["nombre_madre"];
 // apellido del padre
@@ -117,37 +125,44 @@ $dato->documento_madre = $_POST["documento_madre"];
 // lugar de expedicin del documento de la madre
 $dato->lugar_exp_madre = $_POST["lugar_exp_madre"];
 // direccion de recidencia de la madre
+// }
 // barrio de la madre
 $dato->direccion_madre = $_POST["direccion_madre"];
 // barrio de la madre
 $dato->barrio_madre = $_POST["barrio_madre"];
 
-// $now = date("Y-m-d g:i");
-// Datos para realizar la inscripción
+$now = date("Y-m-d g:i");
+//Datos para realizar la inscripción
 
-// estructura que muestra los datos cargasos
+//estructura que muestra los datos cargasos
 $numero2 = count($_POST);
 $tags2 = array_keys($_POST); // obtiene los nombres de las varibles
 $valores2 = array_values($_POST);// obtiene los valores de las varibles
 
 // crea las variables y les asigna el valor
 for($i=0;$i<$numero2;$i++){
-  // echo $tags2[$i]." - ".$valores2[$i]."<br>";
+  //echo $tags2[$i]." - ".$valores2[$i]."<br>";
   $tags2[$i]=$valores2[$i];
 }
 
-// Si se ejecuta el registro o insercion en la base de datos del $dato
-// y todos su atributo.
+
+// echo "nombre del estudiante : ".$dato->nombre_estudiante;
+
+//Si se ejecuta el registro o insercion en la base de datos del $dato
+//y todos su atributo.
 if($dato->registro()) {
+
+  // Coloco los valore iniciales para el correo enviado
+  $enviado = false;
 
   // Se crea un elemento grado
   $grado = new grados();
-  // Se obtiene el nombre para un determinado grado
+  // // Se obtiene el nombre para un determinado grado
   $ngrado = $grado->get_nombre($_POST['grados_escolaridad']);
-  // se obtiene el maximo valor del id
+  // // se obtiene el maximo valor del id
   $maximo = $dato->maximo();
-
-  // El cuerpo del correo
+  //
+  // // El cuerpo del correo
   $cuerpo = "<p>Se realiz&oacute; la inscripci&oacute;n n&uacute;mero <b>[".
   $maximo[0]."]</b>,  del estudiante <b><font color='blue'>".
   $dato->nombre_estudiante." "
@@ -185,13 +200,14 @@ if($dato->registro()) {
   "</ul>
   ";
 
-  // //Enable SMTP debugging
-  // // 0 = off (for production use)
-  // // 1 = client messages
-  // // 2 = client and server messages
-  // $mail->SMTPDebug = 4;
-
   $mail = new PHPMailer();
+  //Enable SMTP debugging
+  // 1 = client messages
+  // 0 = off (for production use)
+  // 2 = client and server messages
+  //$mail->SMTPDebug = 4;
+
+
 
   // Envío del correo de la madre si lo ha ingresado
   if ($dato->correo_madre != ""){
@@ -209,6 +225,7 @@ if($dato->registro()) {
     $mail->SMTPAuth = true;
     $mail->From = $mail->Username;
     $mail->Send();
+    $enviado = true;
   }
 
   // Se envía el correo del padre
@@ -228,13 +245,20 @@ if($dato->registro()) {
     $mail->SMTPAuth = true;
     $mail->From = $mail->Username;
     $mail->Send();
+    $enviado = true;
   }
 
-  echo "<br>Se ingresaron con exito";
+  if ($enviado == true){
+      echo "swal(Se ingresaron con exito)";
+  }
+
+
 
 } else {
   echo "se presento un fallo al ingresar los datos, intentelo m&aacute;s tarde.";
 }
+
+
 
 
 ?>

@@ -2,7 +2,6 @@
 // esta funcion se encarga de conectar la base de datos con la
 // aplicacion PHP
 
-
 function conectar()
 
 {
@@ -14,13 +13,13 @@ $host = "localhost";
 $puerto = "3306";
 
 // Nombre de usuario del servidor MySQL
-$usuario = "imcrea_admin";
+$usuario = "imcrea_admin";//"imcreati_admin";
 
 // Contraseña del usuario
 $contrasena = "conezioncrear21";
 
 // Nombre de la base de datos
-$baseDeDatos ="imcrea_data";
+$baseDeDatos = "imcrea_data";//"imcreati_data";
 
 //echo $host." - ".$puerto." - ".$usuario." - ".$contrasena." - ".$baseDeDatos;
 
@@ -37,7 +36,7 @@ $baseDeDatos ="imcrea_data";
     }
     if (!mysqli_select_db($link, $baseDeDatos))
     {
-        //echo "Error seleccionando la base de datos.<br>";
+        echo "Error seleccionando la base de datos.<br>";
         exit();
     }
     else

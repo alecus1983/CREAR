@@ -102,8 +102,9 @@ function ajaxRequest(params) {
     //
     $usuario = $_SESSION['usuario'];
     // se almacena una variable tipo consulta
-    $reg=mysqli_query( $link, "select * from docentes where cedula ='".$usuario."'" ) or
-    die("Problemas  encontrar el usuario:".mysqli_error());
+    $reg=mysqli_query( $link, "select * from docentes where cedula ='".$usuario."'" );
+    // or
+    // die("Problemas  encontrar el usuario:".mysqli_error());
 
 
     //Validamos si el nombre del administrador existe en la base de datos o es correcto
@@ -121,7 +122,7 @@ function ajaxRequest(params) {
     // almacena el cÃ³digo del docente  en la variable de secciÃ³n
     $_SESSION['code'] = $id_docente;
 
-    // muestra el nombre del usuario en pantalla
+    //muestra el nombre del usuario en pantalla
 
     if (!$admin){
       // si no es un administrador
@@ -196,9 +197,6 @@ function ajaxRequest(params) {
   table.bootstrapTable('filterBy', {
     estado: "m"});
  }
-
-
-
 
   </script>
 

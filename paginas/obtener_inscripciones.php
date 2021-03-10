@@ -95,13 +95,10 @@ $data[$ii]["vicecon"] = $dato["vivecon"];
 
 $ii ++;
 
-
 }
-
-
 
 $exportado = array('total' => $cantidad , 'totalNotFiltered' => $cantidad, 'rows' => $data );
 // exporto los datos
-echo json_encode($data);
+echo json_encode($exportado);
 
  ?>
