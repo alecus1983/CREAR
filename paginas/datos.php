@@ -267,6 +267,16 @@ class inscripcion extends imcrea {
       }
     }
 
+    // metodo para obtener todos los datos de una inscripcion dado un codigo
+    // de insgripcion
+    public function get_all($codigo){
+
+      $resultado = $this->_db->query("SELECT * FROM  inscritos WHERE id  = ".$codigo );
+      $dato = $resultado->fetch_array(MYSQLI_ASSOC);
+      // retorno el dato como un array
+      return $dato;
+    }
+
     //
 
   } // fin de la clase
@@ -384,6 +394,46 @@ class alumnos extends imcrea {
   public $fecha;
   public $telefono;
 
+  public function buscar_estudiante ($nombre, $apellido){
+
+    //Filtro anti-XSS
+    $caracteres_malos = array("<", ">", "\"", "'", "/", "<", ">", "'", "/");
+    $caracteres_buenos = array("& lt;", "& gt;", "& quot;", "& #x27;", "& #x2F;", "& #060;", "& #062;", "& #039;", "& #047;");
+    $nombre = str_replace($caracteres_malos, $caracteres_buenos, $nombre);
+    $apellido = str_replace($caracteres_malos, $caracteres_buenos, $apellido);
+
+    //Variable vacía (para evitar los E_NOTICE)
+    $mensaje = "";
+
+    //Comprueba si $consultaBusqueda está seteado
+    if (isset($nombre)) {
+
+      // convierte el nombre en un array
+      $nombres = explode(" ",$nombre);
+
+      // comvierte el apellido en un array
+      $apellidos = explode(" ",$apellido);
+
+      $texto = "Select * from alumnos where nombres like '%".$nombres[0].
+                "%' or apellidos like '%".$apellidos[0]."%' order by nombres , apellidos";
+
+    	//Selecciona todo de la tabla mmv001
+    	//donde el nombre sea igual a $consultaBusqueda,
+    	//o el apellido sea igual a $consultaBusqueda,
+    	//o $consultaBusqueda sea igual a nombre + (espacio) + apellido
+
+    	$consulta = $this->_db->query($texto);
+
+      while($dato = $consulta->fetch_array(MYSQLI_ASSOC)){
+        echo "<br><font style='color:blue'>".$dato["id_alumno"]."</font>";
+        echo " ".$dato["nombres"]."";
+        echo " ".$dato["apellidos"]."<br>";
+      }
+
+    };
+
+  }
+
   public function get_id_nombre($id_alumno){
     // se realiza la consulta
     $resultado = $this->_db->query("SELECT nombres FROM  alumnos where  id_alumno = ".$id_alumno );
@@ -416,6 +466,8 @@ class alumnos extends imcrea {
       $this -> _db -> close();
     }
   } // fin de la funcion
+
+
 }
 
 ?>

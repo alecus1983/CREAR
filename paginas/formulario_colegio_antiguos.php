@@ -208,6 +208,7 @@ mb_http_output('UTF-8');
                     <select class="form_estudiante form-control" id="tipo_identificacion"
                     name="tipo_identificacion" required>
                     <option value="">Seleccione...</option>
+                    <option value="RC">Targeta Identidad</option>
                     <option value="CC">cédula de ciudadanía</option>
                     <option value="CE">cédula de extranjería</option>
                     <option value="RC">registro civil</option>
@@ -316,7 +317,7 @@ mb_http_output('UTF-8');
                 <input id="telefono" name="telefono"
                 class="form_estudiante form-control" maxlength="12" type="tel"
                 minlength="7"
-                placeholder="número telefónico"  required/>
+                placeholder="número telefónico"/>
                 <div class="help-block with-errors"></div>
               </div>
             </div>
