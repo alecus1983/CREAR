@@ -2,7 +2,7 @@
 	session_start();
 
 	//conexion con la base de datos
-require_once 'conexion.php';
+require_once '../conexion.php';
 $link = conectar();
 //var_dump($_SESSION);
 
@@ -27,7 +27,7 @@ $year = date('Y');
 	if ($admin) {
 		// se crea el texto de la consulta
 		$q1 = "SELECT * FROM grados ORDER BY grado";
-		//echo "conulta ".$q1;
+		// echo "conulta ".$q1;
 	}
     else {
 		$q1 = "SELECT DISTINCT G.id_grado, G.grado FROM grados G INNER JOIN matricula_docente D ON G.id_grado = D.id_grado  WHERE D.year = '"
@@ -41,16 +41,17 @@ $q1x = mysqli_query( $link, $q1) or die('no se encuentra el grado: ' . mysqli_er
 
 
 	//recupero el arreglo generado en el resultado
-	while($dato1 = mysqli_fetch_array($q1x, MYSQLI_NUM))
+	while($dato1 = mysqli_fetch_array($q1x, MYSQLI_ASSOC))
 	{
+	// var_dump($dato1);
 	// recupero el nombre
 	$id = $dato1["id_grado"];
 	$grado = $dato1["grado"];
-	//echo "<br><br>Id = $id , grado $grado";
-
-	// estos valores son los valores a entrar por el método JSON
-	// aqui recupero el nombre del alumno
-	$data[$id] = $grado;
+	// echo "<br><br>Id = $id , grado $grado";
+	//
+	// // estos valores son los valores a entrar por el método JSON
+	// // aqui recupero el nombre del alumno
+	 $data[$id] = $grado;
 }
 
 	//var_dump($data);

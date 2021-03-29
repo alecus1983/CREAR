@@ -31,7 +31,7 @@ date_default_timezone_set('America/Bogota');
 //
 
 // //nombre del inscrito
-$dato = new inscripcion();
+$dato = new inscripcion(0);
 //
 $dato->nombre_estudiante = $_POST["nombre_estudiante"];
 //echo "datos: ".$dato->nombre_estudiante;

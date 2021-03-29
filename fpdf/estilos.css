@@ -1,0 +1,73 @@
+.Parrafo {
+ 	font-family: 18px font-family: Arial, Helvetica, sans-serif
+	font-size: 18px;
+	font-style: normal;
+	line-height: normal;
+	font-family: Arial, Helvetica, sans-serif;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 18px;
+	color: #000000;
+	align-content: flex-start
+	
+}
+
+.Subtitulo {
+	color: #660033;
+	font-weight: bold;
+	font-style: italic;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+.Titulo_1 {
+	font-size: 18px;
+	color: #660033;
+	font-style: italic;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	text-align: center;
+}
+.Titulo_tabla {
+	color: #FFFFFF;
+	font-weight: bold;
+	background-color: #663333;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-size: 22px;
+}
+.formato_tabla {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: normal;
+	color: #000000;
+	border-color:#000000;
+	
+}
+
+.enlaces {
+	border-top-width: thin;
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-left-width: thin;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	color: #006633;
+	font-size: 14px;
+	font: Verdana;
+	height: inherit;
+	width: auto;
+	position: inherit;
+}
+.ubicacion {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-style: inherit;
+	line-height: normal;
+	font-weight: 900;
+	font-variant: normal;
+	text-transform: capitalize;
+	color: #330033;
+}

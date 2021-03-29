@@ -27,13 +27,9 @@ $registro = mysqli_query ($link, $query) or
 $row = $registro->fetch_array(MYSQLI_ASSOC);
 //printf ("%s (%s)\n", $row["login"], $row["id_docente"]);
 
-
-
     if($row["login"] == $password)
     {
         //Creamos sesi�n
-
-
         //Almacenamos el nombre de usuario//  en una variable de sesi�n usuario
         $_SESSION['usuario'] = $usuario;
         // guardo el codigo del docete  en la variable de seccion  id

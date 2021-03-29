@@ -3,9 +3,9 @@
 require ('datos.php');
 
 $codigo = $_POST["codigo"];
-//$codigo = 97;
+// $codigo = 97;
 // creo un objeto tipo inscripcion
-$d = new inscripcion();
+$d = new inscripcion(0);
 // obtengo los Datos
 $data = $d->get_all($codigo);
 echo json_encode($data);

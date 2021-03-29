@@ -82,7 +82,7 @@ if($dato["estado"] == "i"){
 
 }else if($dato["estado"] == "m"){
   // id de la inscripcion y enlace para llamar al proceso de matricula
-  $data[$ii]["id"] = "<button type='button' style='width: 100%;background-color:lawngreen; border: 1px solid;border-radius: 3px;' onclick='valor("
+  $data[$ii]["id"] = "<button type='button' style='width: 100%;background-color:#28a745; color: #fff; border: 1px solid #28a745;border-radius: 3px;' onclick='valor("
                     .$dato["id"].")'>".$dato["id"]."</button>";
 
 }

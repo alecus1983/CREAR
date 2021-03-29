@@ -71,13 +71,13 @@ $jorn = mysqli_fetch_array($reg,MYSQLI_ASSOC);
 
 
 // se crea el emcabezado de la tabla
-echo "<table align= 'center' width = '100%' border='0'>";
+echo "<table class='table table-sm caption-top table-hover'
+        data-search='true'
+        data-toggle='table'
+        style='font-size: 14px;'>";
 
 // mediante las condiciones aqui descritas se hace un cruze entre las opciones para  seleccionar y para adiccionar campos
 // y todo de guarda en la variable $opcion
-
-//if ($opcion < $add) {
-//    $opcion = $add;}
 
 // estructura de seleccio la cual conmuta de acuerdo
 //  a la opcion precargada
@@ -93,35 +93,35 @@ case 1:
 
     $q1x = mysqli_query( $link, $q1) or die('Consulta fallida q1: ' . mysql_error());;
     $tabla = "alumnos";
-    echo "<tr bgcolor = '#0033FF'><td colspan='1', width = '10%' ><font size = 2>CODIGO</font></td>";
-    echo "<td colspan='1', width = '40%' ><font size = 2>NOMBRE</font size = 2></td>";
-    echo "<td colspan='1', width = '40%' ><font size = 2>APELLIDOS</font size = 2></td>";
+    echo "<caption>Lista de alumnos</caption>";
+    echo "<thead>";
+    echo "<tr><th>CODIGO</th>";
+    echo "<th>NOMBRE</th>";
+    echo "<th>APELLIDOS</th>";
 
     if($admin) {
-        echo "<td colspan='1', width = '10%' ><font size = 2>BORRAR</font size = 2></td></tr>";
+        echo "<th>BORRAR</th></tr></thead><tbody>";
     }
     else {
-        echo "</tr>";}
+        echo "</tr></thead><tbody>";}
 
     while($dato1 = mysqli_fetch_array($q1x)) {
 
 
-        echo "<tr bgcolor = '".$bk."'><td colspan='1', width = '10%' ><font size = 3>".$dato1['id_alumno']."</font></td>\n";
-        echo "<td colspan='1', width = '40%' ><font size = 2>".$dato1['nombres']."</font></td>\n";
-        echo "<td colspan='1', width = '40%' ><font size = 2>".$dato1['apellidos']."</font></td>\n";
+        echo "<tr><td>".$dato1['id_alumno']."</td>\n";
+        echo "<td>".ucwords(strtolower($dato1['nombres']))."</td>\n";
+        echo "<td>".ucwords(strtolower($dato1['apellidos']))."</td>\n";
 
         if($admin) {
-            echo "<td colspan='1', width = '10%' ><font color = 'red' size = 3> <a href = '#'  onclick = 'borrar("
-                .$dato1['id_alumno'].", \"".$tabla."\");'>Borrar</a></font></td></tr>\n";
+            echo "<td> <a href = '#'  onclick = 'borrar("
+                .$dato1['id_alumno'].", \"".$tabla."\");'>Borrar</a></td></tr>\n";
         }
         else {
             echo "</tr>";}
 
-        if($fondo) { $fondo = false;
-            $bk= "#C0C0C0";	}
-        else {$fondo = true;
-            $bk= "#FFFFFF";}
     }
+
+    echo "</tbody>";
     break;
 
 case 2:
@@ -130,123 +130,114 @@ case 2:
     $q1 = "SELECT * FROM docentes WHERE nombres like '%".$nombres."%' AND apellidos like '%".$apellidos."%'";
     $q1x = mysqli_query( $link, $q1) or die('Consulta fallida q1: ' . mysql_error());;
     $tabla = "docentes";
-    echo "<tr bgcolor = '#FF9000'><td  colspan='1', width = '10%' ><font size = 2>CODIGO</font></td>";
-    echo "<td colspan='1', width = '45%' ><font size = 2>NOMBRE</font></td>";
-    echo "<td colspan='1', width = '45%' ><font size = 2>APELLIDOS</font></td>";
+    echo "<caption>Lista de docentes</caption>";
+    echo "<thead>";
+    echo "<tr><th>CODIGO</th>";
+    echo "<th>NOMBRE</th>";
+    echo "<th>APELLIDOS</th>";
 
     if($admin) {
-        echo "<td colspan='1', width = '10%' ><font size = 2>BORRAR</font size = 2></td></tr>";
+        echo "<th>BORRAR</th></tr></thead><tbody>";
     }
     else {
-        echo "</tr>";}
+        echo "</tr></thead><tbody>";}
 
     while($dato1 = mysqli_fetch_array($q1x)) {
-        echo "<tr bgcolor = '".$bk."'><td colspan='1', width = '10%' ><font size = 2>".$dato1['id_docente']."</font></td>\n";
-        echo "<td colspan='1', width = '45%' ><font size = 2>".$dato1['nombres']."</font></td>\n";
-        echo "<td colspan='1', width = '45%' ><font size = 2>".$dato1['apellidos']."</font></td>\n";
+        echo "<tr><td>".$dato1['id_docente']."</td>\n";
+        echo "<td>".ucwords(strtolower($dato1['nombres']))."</td>\n";
+        echo "<td>".ucwords(strtolower($dato1['apellidos']))."</td>\n";
 
         if($admin) {
-            echo "<td colspan='1', width = '10%' ><font color = 'red' size = 2> <a href = '#'  onclick = 'borrar(".$dato1['id_docente'].", \"".$tabla."\");'>Borrar</a></font></td></tr>\n";
+            echo "<td><a href = '#'  onclick = 'borrar(".$dato1['id_docente'].", \"".$tabla."\");'>Borrar</a></td></tr>\n";
         }
         else {
             echo "</tr>";}
-
-        if($fondo) { $fondo = false;
-            $bk= "#C0C0C0";	}
-        else {$fondo = true;
-            $bk= "#FFFFFF";}
     }
-
+    echo "<tbody>";
     break;
 
 
 case 3:
-    //echo "\n a materias";
+    //En esta seccion se muestra el contenido de las materias";
 
     $q1 = "SELECT * FROM materia";
-    $q1x = mysqli_query( $link, $q1) or die('Consulta fallida q1: ' . mysqli_error());;
+    $q1x = mysqli_query( $link, $q1)
+    or die('Consulta fallida al buscar materias: ' . mysqli_error());;
 
     $tabla = "materia";
-    echo "<tr bgcolor = '#FF8000' ><td  colspan='1', width = '4%' ><font size = 2>CODIGO</font></td>";
-    echo "<td colspan='1', width = '24%' ><font size = 2>MATERIA</font></td>";
-    echo "<td colspan='1', width = '24%' ><font size = 2>AREA</font></td>";
-    echo "<td colspan='1', width = '24%' ><font size = 2>CODIGO DE AREA</font></td>";
-    echo "<td colspan='1', width = '24%' ><font size = 2>INTENSIDAD HORARIA</font></td></tr>";
+    echo "<caption>Lista de materias</caption>";
+    echo "<thead>";
+    echo "<tr><th>CODIGO</th>";
+    echo "<th>MATERIA</th>";
+    echo "<th>AREA</th>";
+    echo "<th>CODIGO DE AREA</th>";
+    echo "<th>INTENSIDAD HORARIA</th></tr></thead><tbody>";
 
-
+    // Estrucutura de  repeticion para mostrar las materias
     while($dato1 = mysqli_fetch_array($q1x)) {
-        echo "<tr bgcolor = '".$bk."' ><td colspan='1', width = '20%' ><font size = 2>".$dato1['id_materia']."</font></td>\n";
-        echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['materia']."</font></td>\n";
-        echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['area']."</font></td>\n";
-        echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['id_area']."</font></td>\n";
-        echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['ih']."</font></td></tr>\n";
-
-        if($fondo) { $fondo = false;
-            $bk= "#C0C0C0";	}
-        else {$fondo = true;
-            $bk= "#FFFFFF";}
+        echo "<tr><td>".$dato1['id_materia']."</td>\n";
+        echo "<td>".$dato1['materia']."</td>\n";
+        echo "<td>".$dato1['area']."</td>\n";
+        echo "<td>".$dato1['id_area']."</td>\n";
+        echo "<td>".$dato1['ih']."</td></tr>\n";
 
     }
+    echo "<tbody>";
 
     break;
 
 
 case 4:
-    //Areas
+    //Estructura que lista las areas a que contienen las materias
 
     $q1 = "SELECT DISTINCT area , id_area FROM materia";
     $q1x = mysqli_query( $link, $q1) or die('Consulta fallida q1: ' . mysql_error());;
 
-    echo "<tr bgcolor = '#FF7000' ><td  colspan='1', width = '30%' ><font size = 2>CODIGO</font></td>";
-    echo "<td colspan='1', width = '70%' ><font size = 2>AREA</font></td></tr>";
+    echo "<caption>Lista de &aacute;reas</caption>";
+    echo "<thead>";
+    echo "<tr><th>CODIGO</th>";
+    echo "<th>AREA</th></tr></thead><tbody>";
 
     while($dato1 = mysqli_fetch_array($q1x)) {
-        echo "<tr bgcolor = '".$bk."' ><td colspan='1', width = '20%' ><font size = 2>".$dato1['id_area']."</font></td>\n";
-        echo "<td colspan='1', width = '20%' ><font size = 2>".$dato1['area']."</font></td></tr>\n";
-
-        if($fondo) { $fondo = false;
-            $bk= "#C0C0C0";	}
-        else {$fondo = true;
-            $bk= "#FFFFFF";}
-				}
-
+        echo "<tr><td>".$dato1['id_area']."</td>\n";
+        echo "<td>".$dato1['area']."</td></tr>\n";
+      }
+      echo "<tbody>";
     break;
 
 
 // en el caso de consultar los logros
 case 5:
-    //echo "\n a logros";
-		// consulta en la tabla de logros
+    // consulta en la tabla de logros
     $q1 = "SELECT * FROM logros WHERE logro like '%".trim($logros)."%'
 				AND id_materia = ".$id_m." ORDER BY id_logro";
     $q1x = mysqli_query( $link, $q1) or die('Consulta fallida q1 (adicionar logros ): ' . mysqli_error());;
-	///echo "consulta :".$q1;
+
+
     $tabla = "logros";
-    echo "<tr bgcolor = '#11dd55'><td  colspan='1', width = '10%' ><font size = 2>CODIGO</font></td>";
-    echo "<td colspan='1', width = '80%' ><font size = 2>LOGRO</font></td>";
+    echo "<caption>Tabla de logros</caption>";
+    echo "<thead>";
+    echo "<tr><th>CODIGO</th>";
+    echo "<th>LOGRO</th>";
 
     if($admin) {
-        echo "<td colspan='1', width = '10%' ><font size = 2>BORRAR</font size = 2></td></tr>";
+        echo "<th>BORRAR</th></tr></thead><tbody>";
     }
     else {
-        echo "</tr>";}
+        echo "</tr></thead><tbody>";}
 
     while($dato1 = mysqli_fetch_array($q1x)) {
-        echo "<tr bgcolor = '".$bk."' ><td colspan='1', width = '10%' ><font size = 2>".$dato1['id_logro']."</font></td>\n";
-        echo "<td colspan='1', width = '80%' ><font size = 2>".$dato1['logro']."</font></td>\n";
+        echo "<tr><td>".$dato1['id_logro']."</td>\n";
+        echo "<td>".$dato1['logro']."</td>\n";
 
         if($admin) {
-            echo "<td colspan='1', width = '10%' ><font color = 'red' size = 2> <a href = '#'  onclick = 'borrar(".$dato1['id_logro'].", \"".$tabla."\");'>Borrar</a></font></td></tr>\n";
+            echo "<td><a href = '#'  onclick = 'borrar(".$dato1['id_logro'].", \"".$tabla."\");'>Borrar</a></td></tr>\n";
         }
         else {
             echo "</tr>";}
 
-        if($fondo) { $fondo = false;
-            $bk= "#C0C0C0";	}
-        else {$fondo = true;
-            $bk= "#FFFFFF";}
     }
-
+    echo "<tbody>";
     break;
 
 case 7:

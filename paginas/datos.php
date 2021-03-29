@@ -32,11 +32,18 @@ class imcrea {
 
 // Clase que define la inscripcion
 class inscripcion extends imcrea {
+  // consecutivo inscripciones
+  public $id;
+  // estado de la inscripcion "i" para inscritos
+  // "m" para matriculados
+  public $estado;
   // nombres de los estudiantes
   public $nombre_estudiante;
   // apellidos del iscrito
   public $apellido_estudiante;
-  // apellidos del iscrito
+  // correo del estudiante
+  public $correo_estudiante;
+  // apellidos del inscrito
   public $nacimiento;
   // ciudad de nacimiento del estudiante
   public $ciudad_nacimiento;
@@ -119,16 +126,83 @@ class inscripcion extends imcrea {
   public $direccion_madre;
   // barrio de la madre
   public $barrio_madre;
+  // victima del conflicto
+  public $victima_conflicto;
 
   //constructor de la clase
-  public function __construct(){
+  public function __construct($codigo){
     // se construye a partir de la clase imcrea
     parent::__construct();
+
+    $resultado = $this->_db->query("SELECT * FROM  inscritos WHERE id  = ".$codigo );
+    $dato = $resultado->fetch_array(MYSQLI_ASSOC);
+
+    if ($dato){
+    // retorno el dato como un array
+    $this->id = $dato["id"];
+    $this->antiguedad = $dato["antiguedad"];
+    $this->apellido_estudiante = $dato["apellido_estudiante"];
+    $this->apellido_madre = $dato["apellido_madre"];
+    $this->apellido_padre = $dato["apellido_padre"];
+    $this->barrio = $dato["barrio"];
+    $this->barrio_madre = $dato["barrio_madre"];
+    $this->barrio_padre = $dato["barrio_padre"];
+    $this->celular = $dato["celular"];
+    $this->correo_madre = $dato["correo_madre"];
+    $this->correo_padre = $dato["correo_padre"];
+    $this->correo_estudiante = $dato["correo_estudiante"];
+    $this->ciudad_nacimiento = $dato["ciudad_nacimiento"];
+    $this->direccion_estudiante = $dato["direccion_estudiante"];
+    $this->direccion_madre = $dato["direccion_madre"];
+    $this->direccion_padre = $dato["direccion_padre"];
+    $this->documento_madre = $dato["documento_madre"];
+    $this->documento_padre = $dato["documento_padre"];
+    $this->documento_estudiante = $dato["documento_estudiante"];
+    $this->estrato = $dato["estrato"];
+    $this->escolaridad = $dato["id_escolaridad"];
+    $this->EPS = $dato["EPS"];
+    $this->estado = $dato["estado"];
+    $this->genero = $dato["genero"];
+    $this->gruporh = $dato["gruporh"];
+    $this->id_grado = $dato["id_grado"];
+    $this->id_jornada = $dato["id_jornada"];
+    $this->lugar_exp_madre = $dato["lugar_exp_madre"];
+    $this->lugar_exp_padre = $dato["lugar_exp_padre"];
+    $this->lugar_exp_estudiante = $dato["lugar_exp_estudiante"];
+    $this->motivo = $dato["motivo"];
+    $this->modalidad = $dato["modalidad"];
+    $this->nacimiento = $dato["nacimiento"];
+    $this->nivelsisben = $dato["nivelsisben"];
+    $this->nombre_madre = $dato["nombre_madre"];
+    $this->nombre_padre = $dato["nombre_padre"];
+    $this->nombre_estudiante = $dato["nombre_estudiante"];
+    $this->nombre_institucion = $dato["nombre_institucion"];
+    $this->telefono = $dato["telefono"];
+    $this->telefono_madre = $dato["telefono_madre"];
+    $this->telefono_padre = $dato["telefono_padre"];
+    $this->tipo_identificacion = $dato["tipo_identificacion"];
+    $this->tipo_identificacion_madre = $dato["tipo_identificacion_madre"];
+    $this->tipo_identificacion_padre = $dato["tipo_identificacion_padre"];
+    $this->tipo_institucion = $dato["tipo_institucion"];
+    $this->vivecon = $dato["vivecon"];
+    $this->victima_conflicto = $dato["victima_conflicto"];
   }
 
+  }
+
+  // metodo para cambiar el estado de la matricula
+  // "i" para inscritos
+  // "m" para matriculados
+
+  public function update_estado(){
+    // consulta para la actualizacion
+    $texto = "UPDATE inscritos  SET estado ='$this->estado' WHERE id = $this->id";
+    $consulta = $this->_db->query($texto);
+
+  }
   // Registros
   public function registro() {
-
+    // crea un string con la fecha
     $now = date("Y-m-d g:i");
     // scrip sql
     // String  para realizar la consulta
@@ -136,6 +210,7 @@ class inscripcion extends imcrea {
     (
       nombre_estudiante,
       apellido_estudiante,
+      correo_estudiante,
       nacimiento,
       ciudad_nacimiento,
       id_escolaridad,
@@ -185,6 +260,7 @@ class inscripcion extends imcrea {
 
     VALUES ('".$this->nombre_estudiante.
       "',  '".$this->apellido_estudiante.
+      "',  '".$this->correo_estudiante.
       "', '".$this->nacimiento.
       "', '".$this->ciudad_nacimiento.
       "', '".$this->escolaridad.
@@ -384,16 +460,152 @@ class inscripcion extends imcrea {
     }
      // fin de la clase
 
+class matricula extends imcrea {
+  // clave foranea del alumno
+  public $id_alumno;
+  // clave primaria
+  public $id;
+  // clave primaria del grado
+  public $id_grado;
+  // clave de jornada
+  public $id_jornada;
+  // clave primaria del año
+  public $year;
+  // mes de ingreso
+  public $mes;
+  // mes de retiro
+  public $retiro;
+
+  //constructor de la clase
+  public function __construct($i){
+    // se construye a partir de la clase imcrea
+    parent::__construct();
+
+    // se realiza la consulta
+    $r = $this->_db->query("SELECT * FROM  matricula WHERE  id = ".$i );
+    $dato = $r->fetch_array(MYSQLI_ASSOC);
+
+    // si se ejecuto la consulta
+    if ($dato){
+      // completo los atributos en funcion de la consulta
+      $this->$id_alumno = $dato["id_alumno"];
+      $this->$id_grado = $dato["id_grado"];
+      $this->$id_jornada = $dato["id_jornada"];
+      $this->$year = $dato["year"];
+      $this->$mes = $dato["mes"];
+      $this->$retiro = $dato["retiro"];
+      //return $dato[0];
+      $dato -> close();
+    }
+  }
+
+  // metodo para matricular_colegio
+  public function set_matricula(){
+
+
+    // // esta funcion actualiza el codigo de inscripcion de un estudiante
+    // // dentro de la tabla alumnos
+    $texto = "INSERT INTO matricula (id_alumno,id_grado,id_jornada,mes,retiro,year)
+              VALUES ($this->id_alumno,$this->id_grado,$this->id_jornada,$this->mes,$this->retiro,$this->year)";
+              echo $texto;
+    // ejecuto la consulta
+    $consulta = $this->_db->query($texto);
+
+} // fin de set matricula
+} // fin de la clase
+
 // clase que define a los alumnos
 class alumnos extends imcrea {
 
   public $id_alumno;
   public $nombres;
+  public $apellidos;
   public $cedula;
   public $login;
   public $fecha;
   public $telefono;
+  public $inscripcion;
+  public $correo;
 
+  public function __construct($codigo){
+
+    parent::__construct();
+    // se realiza la consulta
+    $resultado = $this->_db->query("SELECT * FROM  alumnos where  id_alumno = ".$codigo );
+    $dato = $resultado->fetch_array(MYSQLI_ASSOC);
+
+    // si se ejecuto la consulta
+    if ($dato){
+      // completo los atributos en funcion de la consulta
+      $this->id_alumno = $dato["id_alumno"];
+      $this->nombres = $dato["nombres"];
+      $this->apellidos = $dato["apellidos"];
+      $this->cedula = $dato["cedula"];
+      $this->login = $dato["login"];
+      $this->fecha = $dato["fecha"];
+      $this->telefono = $dato["telefono"];
+      $this->inscripcion = $dato["inscripcion"];
+      //return $dato[0];
+      //$resultado -> close();
+    }
+    // $this -> _db -> close();
+  }
+
+  // crear alumnos
+  public function set_alumno(){
+    $q ="INSERT INTO alumnos (nombres, apellidos, cedula, fecha, correo, telefono, login, inscripcion)
+          values ('".$this->nombres."' ,'"
+          .$this->apellidos."' ,'"
+          .$this->cedula."' ,'"
+          .$this->fecha."' ,'"
+          .$this->correo."' ,'"
+          .$this->telefono."' ,"
+          ."'creativo'"." ,"
+          .$this->inscripcion.")";
+
+    echo "<br>".$q;
+
+    // ejecuto la consulta
+    $dato = $this->_db->query($q);
+
+    // si se ejecuto la consulta
+    if (!$dato){
+      echo "Fallo en incertar fila";
+    } else {
+      // retorno  el valor 0 del array
+      //return $dato[0];
+      $dato -> close();
+      $this -> _db -> close();
+    }
+  }
+
+  // método para actualizar alumnos
+  public function update_alumno(){
+    // actualizacion de los datos del alumno
+    $texto = "UPDATE alumnos SET  nombres ='$this->nombre_estudiante',
+                                  apellidos='$this->apellido_estudiante' ,
+                                  cedula = '$this->documento_estudiante' ,
+                                  telefono = '$this->celular',
+                                  fecha = '$this->fecha' ,
+                                  correo = '$this->correo'
+                                   ";
+
+    // ejecuto la consulta
+    $dato = $this->_db->query($texto);
+
+    // si se ejecuto la consulta
+    if (!$dato){
+       echo "Fallo al actualizar alumno";
+    } else {
+    // retorno  el valor 0 del array
+    $dato -> close();
+    $this -> _db -> close();
+
+  }
+}
+
+
+  // metodo para buscar estudiante dado el nombre y apellido
   public function buscar_estudiante ($nombre, $apellido){
 
     //Filtro anti-XSS
@@ -410,24 +622,27 @@ class alumnos extends imcrea {
 
       // convierte el nombre en un array
       $nombres = explode(" ",$nombre);
+      // iniciale del nombre
+      $i_nombre = substr($nombre,0,1);
+      $i_apellido = substr($apellido,0,1);
 
       // comvierte el apellido en un array
       $apellidos = explode(" ",$apellido);
+      // texto de la consulta para la busqueda del estudiante
+      $texto = "select * from (
+    	select LEFT (nombres,1) i_nombres, nombres,LEFT(apellidos,1)
+    	i_apellidos, apellidos, id_alumno from alumnos a
+    	) as f_nombres where (nombres like '%".$nombres[0]."%' or apellidos like '%".$apellidos[0]."%')
+      and i_nombres = '".$i_nombre."' and i_apellidos = '".$i_apellido."' order by nombres , apellidos";
 
-      $texto = "Select * from alumnos where nombres like '%".$nombres[0].
-                "%' or apellidos like '%".$apellidos[0]."%' order by nombres , apellidos";
-
-    	//Selecciona todo de la tabla mmv001
-    	//donde el nombre sea igual a $consultaBusqueda,
-    	//o el apellido sea igual a $consultaBusqueda,
-    	//o $consultaBusqueda sea igual a nombre + (espacio) + apellido
-
+    	// ejecucion de la consulta
     	$consulta = $this->_db->query($texto);
-
+      // metodo iterativo para la busqueda de nombres
       while($dato = $consulta->fetch_array(MYSQLI_ASSOC)){
+
         echo "<br><font style='color:blue'>".$dato["id_alumno"]."</font>";
-        echo " ".$dato["nombres"]."";
-        echo " ".$dato["apellidos"]."<br>";
+        echo " ".ucwords(strtolower($dato["nombres"]))."";
+        echo " ".ucwords(strtolower($dato["apellidos"]))."<br>";
       }
 
     };
@@ -467,7 +682,22 @@ class alumnos extends imcrea {
     }
   } // fin de la funcion
 
+  // obtengo el ultimo alumno ingresado
+  function maximo(){
+    // se realiza la consulta
+    $qx = $this->_db->query("SELECT max(id_alumno) as cantidad FROM  alumnos");
+    $dato = $qx->fetch_array(MYSQLI_NUM);
 
+    // si se ejecuto la consulta
+    if (!$dato){
+      echo "Fallo en incertar fila";
+    } else {
+      // retorno  el array
+      return $dato[0];
+      $dato -> close();
+      $this -> _db -> close();
+    }
+  }
 }
 
 ?>

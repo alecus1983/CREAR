@@ -23,28 +23,26 @@ if(!isset($_SESSION['usuario']))
 <html>
 <!-- se definen las etiquetas del encabezado -->
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Matriculas
   </title>
   <!-- en este codigo se definen los archivos de javascrip que se adjuntaran -->
 
   <script type="text/javascript" src="lib/jquery.js"></script>
   <script type="text/javascript" src="ajax.js"></script>
-
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
   <script src="../JS/jquery-3.5.1.min.js"></script>
-
+  <script src="../JS/sweetalert.min.js"></script>
   <script src="../JS/ajax.js"></script>
   <script src="../JS/bootstrap.min.js"></script>
   <!-- <script src="../JS/propper.min.js"  type="text/javascript"></script>
   <script src="../JS/datatables.min.js" type="text/javascript"></script> -->
   <script src="../JS/bootstrap-table.min.js" type="text/javascript"></script>
-
   <link href="../CSS/bootstrap-table.min.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/template.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/fa-v4-shims.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/default.css" rel="stylesheet" type="text/css" />
+  <link href="../CSS/datatables.min.js" rel="stylesheet" type="text/css"/>
   <link href="../CSS/datatables.min.js" rel="stylesheet" type="text/css"/>
   <link href="../CSS/jquery-3.3.1.slim.min.js" rel="stylesheet" type="text/css"/>
   <link href="../CSS/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -57,6 +55,23 @@ if(!isset($_SESSION['usuario']))
 
 
   <script>
+
+  // habilita el codigo dependiento la antiguedad del estudiante
+  function habilitar_codigo(){
+
+    var antiguedad = $("#antiguedad").val();
+    // si el estudiante es nuevo
+    if (antiguedad == 0){
+      // se deshabilita el ingreso del codigo
+      $("#codigo").prop('disabled', true);
+    }else {
+      // si es antiguo se habilita el codigo
+      $("#codigo").prop('disabled', false);
+    }
+
+  }
+
+
   // Esta funcion carga los datos de la tabla
   // que son generados en json por el archivo
   // obtener_inscripciones.php
@@ -80,8 +95,9 @@ if(!isset($_SESSION['usuario']))
           "total": data.length
         })
       },
-      error: function (er) {
-        params.error(er);
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
       }
     });
   }
@@ -123,7 +139,6 @@ if(!isset($_SESSION['usuario']))
     $_SESSION['code'] = $id_docente;
 
     //muestra el nombre del usuario en pantalla
-
     if (!$admin){
       // si no es un administrador
       header('Location:login_matriculas.php');
@@ -144,7 +159,7 @@ if(!isset($_SESSION['usuario']))
 
   function valor(valor){
 
-
+    $("#inscripcion").val(valor);
     // alert(valor);
 
     $.ajax({
@@ -210,14 +225,18 @@ if(!isset($_SESSION['usuario']))
         $("#lugar_exp_madre").val(data.lugar_exp_madre);
         $("#direccion_madre").val(data.direccion_madre);
         $("#barrio_madre").val(data.barrio_madre);
-
+        // habilita  el campo codigo
+        habilitar_codigo();
 
       },
-      error: function (er) {
-        params.error(er);
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
       }
     });
-    buscar_ajax();
+    // busca un estudiante
+    //buscar_ajax();
+    $("#lista").html("");
 
   }
 
@@ -227,17 +246,22 @@ if(!isset($_SESSION['usuario']))
     var nombre = $("#nombre_estudiante").val();
     // apellido estudiante
     var apellido = $("#apellido_estudiante").val();
+    // antiguedad 0 nuevo, 1 antiguo
+    var antiguedad = $("#antiguedad").val();
+
     // busqueda en ajax
-		$.ajax({
-		type: 'POST',
-		url: 'buscar_estudiante.php',
-		data: {"nombre": nombre, "apellido": apellido},
-		success: function(respuesta) {
-			//Copiamos el resultado en #mostrar
-			$('#lista_relacionados').html(respuesta);
-	   }
-	});
-	}
+    $.ajax({
+      type: 'POST',
+      url: 'buscar_estudiante.php',
+      data: {"nombre": nombre, "apellido": apellido, "antiguedad": antiguedad},
+      success: function(respuesta) {
+        //Copiamos el resultado en #mostrar
+        $('#lista').html(respuesta);
+      }
+    }).done(function(respuesta){
+      console.log(respuesta);
+    });
+  }
 
   ///////////////////////////////////////////////////////////////
   // esta funcion tiene como objetivo realizar                 //
@@ -266,20 +290,74 @@ if(!isset($_SESSION['usuario']))
 
   // funcion que carga los datos de la tabla de inscripciones
   // a la tabla de matriculas
-  function matricular(id){
+  function matricular(){
 
-    $("#nombre_estudiante").val(valor_incripcion(id,"nombre_estudiante"));
+    // nombre del estudiante
+    var nombre = $("#nombre_estudiante").val();
+    // nombre del estudiante
+    var apellido = $("#apellido_estudiante").val();
+    // antiguedad
+    var antiguedad = $("#antiguedad").val();
+    // codigo
+    var codigo = $("#codigo").val();
+    // identificador del grado
+    var id_grado = $("#grados_escolaridad").val();
+    // identificador de la jornada
+    var id_jornada = $("#jornada").val();
+
+    // validaciones
+    if (nombre.length < 2){
+      swal("Error", "Favor introduzca un nombre","error");
+    }
+    else if (apellido.length <2) {
+      swal("Error", "Favor introduzca un apellido","error");
+    }
+    else if (id_grado == ""){
+      swal("Error", "Favor introduzca un grado","error");
+    }
+    else if (id_jornada == ""){
+      swal("Error", "Favor introduzca una jornada","error");
+    }
+    // en caso de que sea positivo hay dos procedimientos, uno para datos_estudiantes
+    // nuevos y otro para estudiantes antiguos
+    // Nuevo 0
+    // Antiguo 1
+    else if (antiguedad == 1) {
+      if( codigo.length < 1 ){
+        swal("Error", "Favor introduzca un código","error");
+      } else {
+        // Cuando el estudiante es antiguo
+        // objeto ajax
+        $.ajax({
+          type: 'POST',
+          url: 'matricular_colegio.php',
+          data: {
+            "codigo" : codigo,
+            "inscripcion": $("#inscripcion").val(),
+            "antiguedad": antiguedad
+          }
+        }).done(function(respuesta){
+          swal("Resultado","Matriculando estudiante antiguo","success");
+        });
+      }
+    }
+    else  {
+      $.ajax({
+        type: 'POST',
+        url: 'matricular_colegio.php',
+        data: {
+          "codigo" : codigo,
+          "inscripcion": $("#inscripcion").val(),
+          "antiguedad": antiguedad
+        }
+      }).done(function(respuesta){
+        swal("Resultado","Matriculando estudiante nuevo","success");
+      });
+
+    }
   }
 
-  // fucion que recupera un valor de la tabla inscripciones
-  function valor_incripcion(id){
-    // selector de encabezados
-    var tabla = $("#tabla-inscritos tbody tr");
-    // select
-    //a = tabla["nombre_estudiante"].text;
-    return "carlos";
 
-  }
 
   // filtro en nuevo
   function filtro_nuevo(){
@@ -303,308 +381,320 @@ if(!isset($_SESSION['usuario']))
       ">
 
 
-        <h2>FORMULARIO DE INSCRIPCI&Oacute;N</h2>
-        <p>En este formulaio encontraras un listado con las inscripciones ingresadas
-          en el formulario,  las cuales se identifican con el codigo de inscrici&oacute;n
-          . Para comletar la matricuala pulse click sobre en codigo de la inscripci&oacute;n
-          y complete el formulario de matr&iacute;cula que aparece. </p>
+      <h2>FORMULARIO DE INSCRIPCI&Oacute;N</h2>
+      <p>En este formulaio encontraras un listado con las inscripciones ingresadas
+        en el formulario,  las cuales se identifican con el codigo de inscrici&oacute;n
+        . Para comletar la matricuala pulse click sobre en codigo de la inscripci&oacute;n
+        y complete el formulario de matr&iacute;cula que aparece. </p>
 
-          <div id="toolbar">
-            <button id="button" class="btn btn-warning" onclick="filtro_nuevo();">Nuevos</button>
-            <button id="button"  class="btn btn-success" onclick="filtro_matriculados();">Matriculados</button>
-          </div>
+        <div id="toolbar">
+          <button id="button" class="btn btn-warning" onclick="filtro_nuevo();">Nuevos</button>
+          <button id="button"  class="btn btn-success" onclick="filtro_matriculados();">Matriculados</button>
+        </div>
 
-          <table
-          id="tabla-inscritos"
-          data-toggle="table"
-          data-height="460"
-          data-pagination="true"
-          data-ajax="ajaxRequest"
-          data-search="true"
-          data-search-highlight="true"
+        <table
+        id="tabla-inscritos"
+        data-toggle="table"
+        data-height="460"
+        data-pagination="true"
+        data-ajax="ajaxRequest"
+        data-search="true"
+        data-search-highlight="true"
 
-          >
-          <thead class="thead-light">
-            <tr>
-              <th data-field="id"  data-switchable="true">id</th>
-              <!-- <th data-field="estado">estado</th> -->
-              <th data-field="estudiante" data-search-highlight-formatter="customSearchFormatter" data-sortable="true" data-sort-name="estudiante" data-sort-order="desc" data-title-tooltip="Nombre comleto del estudiante">Estudiante</th>
-              <th data-field="edad" data-search-highlight-formatter="customSearchFormatter" data-sortable="true">edad</th>
-              <th data-field="documento" data-search-highlight-formatter="customSearchFormatter" data-sortable="true">documento</th>
-              <th data-field="genero" data-search-highlight-formatter="customSearchFormatter" data-sortable="true">genero</th>
-              <th data-field="grado" data-search-highlight-formatter="customSearchFormatter" data-sortable="true" data-title-tooltip="grado al que se inscribió el estuadiante">grado</th>
-              <th data-field="fecha" data-search-highlight-formatter="customSearchFormatter" data-sortable="true" data-title-tooltip="fecha de inscripcion">fecha</th>
-              <th data-field="vivecon">vive con</th>
-              <!-- <th data-field="estado">estado</th> -->
-            </tr>
-          </thead>
-        </table>
-      </section>
-
-
-      <section id="relacionados">
-        <button style="margin-left: 50px;" type="button"
-        class="btn btn-outline-dark" onclick="buscar_ajax();" >Buscar</button>
-        <div id="lista_relacionados"
-        class="max-width"
-        style="background-color: #fff;
-        margin: 50px;
-        border-radius: 10px;
-        padding-bottom: 40px;
-        border: 2px solid #ff7b00;"></div>
+        >
+        <thead class="thead-light">
+          <tr>
+            <th data-field="id"  data-switchable="true">id</th>
+            <!-- <th data-field="estado">estado</th> -->
+            <th data-field="estudiante" data-search-highlight-formatter="customSearchFormatter" data-sortable="true" data-sort-name="estudiante" data-sort-order="desc" data-title-tooltip="Nombre comleto del estudiante">Estudiante</th>
+            <th data-field="edad" data-search-highlight-formatter="customSearchFormatter" data-sortable="true">edad</th>
+            <th data-field="documento" data-search-highlight-formatter="customSearchFormatter" data-sortable="true">documento</th>
+            <th data-field="genero" data-search-highlight-formatter="customSearchFormatter" data-sortable="true">genero</th>
+            <th data-field="grado" data-search-highlight-formatter="customSearchFormatter" data-sortable="true" data-title-tooltip="grado al que se inscribió el estuadiante">grado</th>
+            <th data-field="fecha" data-search-highlight-formatter="customSearchFormatter" data-sortable="true" data-title-tooltip="fecha de inscripcion">fecha</th>
+            <th data-field="vivecon">vive con</th>
+            <!-- <th data-field="estado">estado</th> -->
+          </tr>
+        </thead>
+      </table>
+    </section>
 
 
-      </section>
+    <section id="relacionados" style="margin: 0px;padding: 0px;">
 
-      <section id="matriculas"
-      class="max-width"
+      <div id="lista_relacionados"
+      class="max-width shadow-sm p-3 mb-5 bg-white rounded"
       style="background-color: #fff;
       margin: 50px;
       border-radius: 10px;
-      padding-bottom: 40px;
-      border: 2px solid #007bff;">
+      padding-bottom: 10px;
+      border: 2px solid gold;">
+      <div id="lista" style="padding-top:10px; padding-bottom: 30px;"></div>
+      <div style="display:grid">
+        <button style="margin-left: auto; width: 100px;" type="button"
+      class="btn btn-outline-dark" onclick="buscar_ajax();" >Buscar</button>
+    </div>
+    </div>
+    </section>
 
-            <br><br>
+    <section id="matriculas"
+    class="max-width shadow-sm p-3 mb-5 bg-white rounded"
+    style="background-color: #fff;
+    margin: 50px;
+    border-radius: 10px;
+    padding-bottom: 40px;
+    border: 2px solid #007bff;">
+    <input type="hidden" id="inscripcion" value=""></input>
+    <br><br>
 
-        <h2 style="color: aqua;font-weight: bold;">Formulario de Matricula</h2>
-        <hr>
+    <h2 style="color: aqua;font-weight: bold;">Formulario de Matricula</h2>
+    <hr>
 
-        <!-- -->
-        <div id="datos_estudiantes" >
-          <div class="form-row">
-            <div class="col-md-6 mb-3">
-              <!-- nombres -->
-              <div  class="form-group">
-                <label for="nombre_estudiante" class="control-label">Nombres</label>
-                <input id="nombre_estudiante" name="nombre_estudiante"
-                class="form_estudiante form-control" maxlength="40"  type="text"
-                placeholder="nombres"  required/>
-                <div class="help-block with-errors"></div>
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <!-- Apellidos -->
-              <div class="form-group">
-                <label for="apellido_estudiante" class="control-label">Apellidos</label>
-                <input id="apellido_estudiante" name="apellido_estudiante"
-                class="form_estudiante form-control" maxlength="40"  type="text"
-                placeholder="apellidos" required/>
-                <div class="help-block with-errors"></div>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="form-row">
-            <div class="col-md-4">
-              <!-- tipo de indentificacion -->
-              <div class="form-group">
-                <label class="control-label">Tipo de indentificación</label>
-                <select class="form_estudiante form-control" id="tipo_identificacion"
-                name="tipo_identificacion" required>
-                <option value="">Seleccione...</option>
-                <option value="CC">cédula de ciudadanía</option>
-                <option value="CE">cédula de extranjería</option>
-                <option value="RC">registro civil</option>
-                <option value="NUIP">NUIP</option>
-              </select>
-              <div class="help-block with-errors"></div>
-            </div>
-
-          </div>
-          <div class="col-md-4">
-            <!-- numero de identificacion-->
-            <div class="form-group">
-              <label from="documento_estudiante" class="control-label">Número de documento</label>
-              <input id="documento_estudiante" name="documento_estudiante"
-              class="form_estudiante form-control"
-              maxlength="12" type="number" min="99999"
-              placeholder="número de documento"  required/>
-              <div class="help-block with-errors"></div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <!-- lugar de expedicion-->
-            <div  class="form-group">
-              <label from="lugar_exp_estudiante" class="control-label">
-                Lugar de expedici&oacute;n</label>
-                <input id="lugar_exp_estudiante" name="lugar_exp_estudiante"
-                type="text" class="form_estudiante form-control"
-                placeholder="lugar de expedición" required ></input>
-                <div class="help-block with-errors"></div>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="form-row">
-            <div class="col-md-6 mb-3">
-              <!-- Fecha de nacimiento -->
-              <div  class="form-group">
-                <label from="nacimento" class="control-label">Fecha de nacimiento</label>
-                <input id="nacimiento" name="nacimiento"
-                class="form_estudiante form-control" type="date" min="2000-01-01"  required/>
-                <div class="help-block with-errors"></div>
-              </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <!-- Ciudad de nacimiento-->
-              <div class="form-group">
-                <label from="ciudad_nacimiento" class="control-label"> Ciudad de nacimiento</label>
-                <input id="ciudad_nacimiento" name="ciudad_nacimiento"
-                class="form_estudiante form-control" type="text"
-                maxlength="30" placeholder="ciudad de nacimiento" required>
-                <div class="help-block with-errors"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="col-md-6">
-              <!-- Correo-->
-              <div class="form-group">
-                <label from="correo_estudiante" class="control-label">Correo</label>
-                <input id="correo_estudiante" name="correo_estudiante"
-                class="form_estudiante form-control"  type="email"
-                placeholder="correo electrónico"
-                required />
-                <!-- <small id="emailHelp" class="form-text text-muted">
-                For authentication purposes only. We will never share
-                your email with anyone!
-              </small> -->
-              <div class="help-block with-errors"></div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <!-- genero del estudiante -->
-            <div  class="form-group">
-              <label from="genero" class="control-label">G&eacute;nero: </label>
-              <select name="genero" id="genero" name="genero"
-              class="form_estudiante form-control" required>
-              <option value="">Seleccione...</option>
-              <option value="M">masculino</option>
-              <option value="F">femenino</option>
-            </select>
-            <div class="help-block with-errors"></div>
-          </div>
-        </div>
-      </div>
-
+    <!-- -->
+    <div id="datos_estudiantes" >
       <div class="form-row">
-        <div class="col-md-6 mb-3">
-          <!-- celular -->
+        <div class="col-md-6">
           <div class="form-group">
-            <label from="celular" class="control-label">N&uacute;mero celular</label>
-            <input id="celular" name="celular"
-            class="form_estudiante form-control" maxlength="12" type="tel"
-            minlength="10"
-            placeholder="número celular"  required/>
+            <label for="codigo">C&oacute;digo del estudiante</label>
+            <input type="number"  class="form-control" id="codigo" placeholder="codigo">
             <div class="help-block with-errors"></div>
           </div>
         </div>
-
-        <div class="col-md-6 mb-3">
-          <!-- telefono -->
+        <div class="col-md-6">
           <div class="form-group">
-            <label from="telefono" class="control-label">Número fijo</label>
-            <input id="telefono" name="telefono"
-            class="form_estudiante form-control" maxlength="12" type="tel"
-            minlength="7"
-            placeholder="número telefónico"  required/>
-            <div class="help-block with-errors"></div>
-          </div>
-        </div>
-      </div>
-
-      <span class="font-weight-bold ">
-        <h4 style="font-weight: bold;">Nivel educativo
-        </h4>
-      </span>
-      <hr>
-
-      <div class="form-row">
-        <div class="col-md-6 mb-3">
-          <!-- nivel de escolaridad , preescolar, primaria  .. -->
-
-          <!-- grado del estudiane,  depende de lo que se halla seleccionado
-          como nivel de escolaridad-->
-          <div class="form-group">
-            <label from="grado" class="control-label">Grado</label>
-            <select class='form_estudiante form-control' id='grados_escolaridad'
-            name='grados_escolaridad' required >;
-            <option value=''>Seleccione...</option>
-            <option value='10' >primero</option>
-            <option value='11' >Segindo</option>
-            <option value='12' >Tercero</option>
-            <option value='13' >Cuarto</option>
-            <option value='14' >Quinto</option>
-            <div class="help-block with-errors"></div>
+            <label for="antiguedad">Antiguedad</label>
+            <select class='form_estudiante form-control' id="antiguedad"
+            name='antiguedad' onchange="habilitar_codigo();" required >
+            <option value="0">Nuevo</option>
+            <option value="1">Antiguo</option>
           </select>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <!-- nombres -->
+        <div  class="form-group">
+          <label for="nombre_estudiante" class="control-label">Nombres</label>
+          <input id="nombre_estudiante" name="nombre_estudiante"
+          class="form_estudiante form-control" maxlength="40"  type="text"
+          placeholder="nombres"  required/>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <!-- Apellidos -->
+        <div class="form-group">
+          <label for="apellido_estudiante" class="control-label">Apellidos</label>
+          <input id="apellido_estudiante" name="apellido_estudiante"
+          class="form_estudiante form-control" maxlength="40"  type="text"
+          placeholder="apellidos" required/>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <div class="col-md-4">
+        <!-- tipo de indentificacion -->
+        <div class="form-group">
+          <label class="control-label">Tipo de indentificación</label>
+          <select class="form_estudiante form-control" id="tipo_identificacion"
+          name="tipo_identificacion" required>
+          <option value="">Seleccione...</option>
+          <option value="CC">cédula de ciudadanía</option>
+          <option value="CE">cédula de extranjería</option>
+          <option value="RC">registro civil</option>
+          <option value="NUIP">NUIP</option>
+        </select>
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <!-- numero de identificacion-->
+      <div class="form-group">
+        <label from="documento_estudiante" class="control-label">Número de documento</label>
+        <input id="documento_estudiante" name="documento_estudiante"
+        class="form_estudiante form-control"
+        maxlength="12" type="number" min="99999"
+        placeholder="número de documento"  required/>
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <!-- lugar de expedicion-->
+      <div  class="form-group">
+        <label from="lugar_exp_estudiante" class="control-label">
+          Lugar de expedici&oacute;n</label>
+          <input id="lugar_exp_estudiante" name="lugar_exp_estudiante"
+          type="text" class="form_estudiante form-control"
+          placeholder="lugar de expedición" required ></input>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <!-- Fecha de nacimiento -->
+        <div  class="form-group">
+          <label from="nacimento" class="control-label">Fecha de nacimiento</label>
+          <input id="nacimiento" name="nacimiento"
+          class="form_estudiante form-control" type="date" min="2000-01-01"  required/>
           <div class="help-block with-errors"></div>
         </div>
       </div>
 
-
-
       <div class="col-md-6 mb-3">
+        <!-- Ciudad de nacimiento-->
         <div class="form-group">
-          <label for="jornada">Jornada</label>
-          <select class="form_estudiante form-control" id="jornada"
-          name="jornada" required>
-          <option value="">Seleccione...</option>
-          <option value="1">Mañana</option>
-          <option value="2">Tarde</option>
-        </select>
+          <label from="ciudad_nacimiento" class="control-label">Ciudad de nacimiento</label>
+          <input id="ciudad_nacimiento" name="ciudad_nacimiento"
+          class="form_estudiante form-control" type="text"
+          maxlength="30" placeholder="ciudad de nacimiento" required>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-6">
+        <!-- Correo-->
+        <div class="form-group">
+          <label from="correo_estudiante" class="control-label">Correo</label>
+          <input id="correo_estudiante" name="correo_estudiante"
+          class="form_estudiante form-control"  type="email"
+          placeholder="correo electrónico"
+          required />
+          <!-- <small id="emailHelp" class="form-text text-muted">
+          For authentication purposes only. We will never share
+          your email with anyone!
+        </small> -->
         <div class="help-block with-errors"></div>
       </div>
-
-
     </div>
-  </div>
-
-
-  <div class="form-row">
-    <div class="col-sm-12 col-md-6">
-      <div class="form-group">
-        <label for="modo">Modo</label>
-        <div class="form-group">
-          <select class='form_estudiante form-control' id='modo'
-          name='name' required >
-          <option value="0">Virtual</option>
-          <option value="1">Presencial</option>
-        </select>
-      </div>
+    <div class="col-md-6">
+      <!-- genero del estudiante -->
+      <div  class="form-group">
+        <label from="genero" class="control-label">G&eacute;nero: </label>
+        <select name="genero" id="genero" name="genero"
+        class="form_estudiante form-control" required>
+        <option value="">Seleccione...</option>
+        <option value="M">masculino</option>
+        <option value="F">femenino</option>
+      </select>
+      <div class="help-block with-errors"></div>
     </div>
-  </div>
-
-  <!-- Modalidad -->
-  <div class="col-md-6">
-
   </div>
 </div>
 
 <div class="form-row">
-  <div class="col-md-6">
+  <div class="col-md-6 mb-3">
+    <!-- celular -->
     <div class="form-group">
-      <label for="antiguedad">Antiguedad</label>
-      <select class='form_estudiante form-control' id="antiguedad"
-      name='antiguedad' required >
-      <option value="0">Nuevo</option>
-      <option value="1">Antiguo</option>
-    </select>
+      <label from="celular" class="control-label">N&uacute;mero celular</label>
+      <input id="celular" name="celular"
+      class="form_estudiante form-control" maxlength="12" type="tel"
+      minlength="10"
+      placeholder="número celular"  required/>
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <!-- telefono -->
+    <div class="form-group">
+      <label from="telefono" class="control-label">Número fijo</label>
+      <input id="telefono" name="telefono"
+      class="form_estudiante form-control" maxlength="12" type="tel"
+      minlength="7"
+      placeholder="número telefónico"  required/>
+      <div class="help-block with-errors"></div>
+    </div>
   </div>
 </div>
 
-<div class="col-md-6">
-  <div class="form-group">
-    <label for="tipo_institucion">Instituci&oacute;n de la que proviene</label>
-    <select class='form_estudiante form-control' id='tipo_institucion'
-    name='tipo_institucion' required >
-    <option value=1>Publica</option>
-    <option value=0>Privada</option>
-  </select>
+<span class="font-weight-bold ">
+  <h4 style="font-weight: bold;">Nivel educativo
+  </h4>
+</span>
+<hr>
+
+<div class="form-row">
+  <div class="col-md-6 mb-3">
+    <!-- nivel de escolaridad , preescolar, primaria  .. -->
+
+    <!-- grado del estudiane,  depende de lo que se halla seleccionado
+    como nivel de escolaridad-->
+    <div class="form-group">
+      <label from="grado" class="control-label">Grado</label>
+      <select class='form_estudiante form-control' id='grados_escolaridad'
+      name='grados_escolaridad' required >;
+      <option value=''>Seleccione...</option>
+      <option value='10' >primero</option>
+      <option value='11' >Segindo</option>
+      <option value='12' >Tercero</option>
+      <option value='13' >Cuarto</option>
+      <option value='14' >Quinto</option>
+      <div class="help-block with-errors"></div>
+    </select>
+    <div class="help-block with-errors"></div>
+  </div>
 </div>
+
+
+
+<div class="col-md-6 mb-3">
+  <div class="form-group">
+    <label for="jornada">Jornada</label>
+    <select class="form_estudiante form-control" id="jornada"
+    name="jornada" required>
+    <option value="">Seleccione...</option>
+    <option value="1">Mañana</option>
+    <option value="2">Tarde</option>
+  </select>
+  <div class="help-block with-errors"></div>
+</div>
+</div>
+</div>
+
+
+<div class="form-row">
+  <div class="col-sm-12 col-md-6">
+    <div class="form-group">
+      <label for="modo">Modo</label>
+      <div class="form-group">
+        <select class='form_estudiante form-control' id='modo'
+        name='name' required >
+        <option value="0">Virtual</option>
+        <option value="1">Presencial</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Modalidad -->
+<div class="col-md-6">
+
+</div>
+</div>
+
+<div class="form-row">
+
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="tipo_institucion">Instituci&oacute;n de la que proviene</label>
+      <select class='form_estudiante form-control' id='tipo_institucion'
+      name='tipo_institucion' required >
+      <option value=1>Publica</option>
+      <option value=0>Privada</option>
+    </select>
+  </div>
 </div>
 </div>
 
@@ -636,7 +726,7 @@ if(!isset($_SESSION['usuario']))
   <div class="col-md-6 col-sm-12">
     <!-- EPS-->
     <div class="form-group">
-      <label from="EPS" class="control-label"> EPS</label>
+      <label from="EPS" class="control-label">EPS</label>
       <input id="EPS" name="EPS"
       class="form_estudiante form-control" type="text"
       maxlength="20" minlength="3" placeholder="EPS" required>
@@ -680,7 +770,7 @@ if(!isset($_SESSION['usuario']))
   <div class="col-md-6">
     <!-- Barrio -->
     <div  class="form-group">
-      <label from="barrio" class="control-label"> Barrio:</label>
+      <label from="barrio" class="control-label">Barrio:</label>
       <input id="barrio" name="barrio" class="form_estudiante form-control"
       name="barrio" type="text" placeholder="barrio" maxlength="40"
       required>
@@ -919,77 +1009,75 @@ if(!isset($_SESSION['usuario']))
   </div>
 
   <div id="datos_padre">
+    <div  class="form-group">
+      <label from="nombre_padre" class="control-label">Nombres</label>
+      <input id="nombre_padre" name="nombre_padre"
+      class="form_padres form-control padre" maxlength="40"  type="text"
+      placeholder="nombres" />
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <!-- Apellidos -->
+    <div class="form-group">
+      <label from="apellido_padre" class="control-label">Apellidos</label>
+      <input id="apellido_padre" name="apellido_padre"
+      class="form_padres form-control padre" maxlength="40"  type="text"
+      placeholder="apellidos" required/>
+      <div class="help-block with-errors"></div>
+    </div>
+
+
+    <!-- Correo-->
+    <div class="form-group">
+      <label from="correo_padre" class="control-label">Correo</label>
+      <input id="correo_padre" name="correo_padre"
+      class="form_padres form-control"  type="email"
+      placeholder="correo electrónico"
+      data-error="correo invalido" />
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <!-- telefono -->
+    <div class="form-group">
+      <label from="telefono_padre" class="control-label">Teléfono</label>
+      <input id="telefono_padre" name="telefono_padre"
+      class="form_padres form-control padre" maxlength="12" type="tel"
+      pattern="[0-9]{10}"
+      placeholder="número telefónico"  required/>
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <!-- tipo de indentificacion -->
+    <div class="form-group">
+      <label from="tipo_identificacion_padre" class="control-label">Tipo de indentificación</label>
+      <select id="tipo_identificacion_padre" name="tipo_identificacion_padre"
+      class="form_padres form-control padre" >
+      <option value="">Seleccione...</option>
+      <option value="CC">cédula de ciudadanía.</option>
+      <option value="CE">cédula de extranjería.</option>
+      <option value="NUIP">NUIP</option>
+    </select>
+    <div class="help-block with-errors"></div>
+  </div>
+
+  <!-- documento-->
   <div  class="form-group">
-    <label from="nombre_padre" class="control-label">Nombres</label>
-    <input id="nombre_padre" name="nombre_padre"
-    class="form_padres form-control padre" maxlength="40"  type="text"
-    placeholder="nombres" />
+    <label from="documento_padre" class="control-label">N&uacute;mero del documento</label>
+    <input id="documento_padre" name="documento_padre"
+    class="form_padres form-control padre" maxlength="12" type="number"
+    min="7"
+    placeholder="número de documento"  />
     <div class="help-block with-errors"></div>
   </div>
 
-  <!-- Apellidos -->
+  <!-- lugar de expedicion-->
   <div class="form-group">
-    <label from="apellido_padre" class="control-label">Apellidos</label>
-    <input id="apellido_padre" name="apellido_padre"
-    class="form_padres form-control padre" maxlength="40"  type="text"
-    placeholder="apellidos" required/>
-    <div class="help-block with-errors"></div>
-  </div>
-
-
-      <!-- Correo-->
-      <div class="form-group">
-        <label from="correo_padre" class="control-label">Correo</label>
-        <input id="correo_padre" name="correo_padre"
-        class="form_padres form-control"  type="email"
-        placeholder="correo electrónico"
-        data-error="correo invalido" />
-        <div class="help-block with-errors"></div>
-
-
-  </div>
-
-  <!-- telefono -->
-  <div class="form-group">
-    <label from="telefono_padre" class="control-label">Teléfono</label>
-    <input id="telefono_padre" name="telefono_padre"
-    class="form_padres form-control padre" maxlength="12" type="tel"
-    pattern="[0-9]{10}"
-    placeholder="número telefónico"  required/>
-    <div class="help-block with-errors"></div>
-  </div>
-
-  <!-- tipo de indentificacion -->
-  <div class="form-group">
-    <label from="tipo_identificacion_padre" class="control-label">Tipo de indentificación</label>
-    <select id="tipo_identificacion_padre" name="tipo_identificacion_padre"
-    class="form_padres form-control padre" >
-    <option value="">Seleccione...</option>
-    <option value="CC">cédula de ciudadanía.</option>
-    <option value="CE">cédula de extranjería.</option>
-    <option value="NUIP">NUIP</option>
-  </select>
+    <label from="lugar_exp_padre" class="control-label">Lugar de expedici&oacute;n</label>
+    <input id="lugar_exp_padre" name="lugar_exp_padre" type="text"
+    class="form_padres form-control padre"
+    placeholder="lugar de expedición" >
+  </input>
   <div class="help-block with-errors"></div>
-</div>
-
-<!-- documento-->
-<div  class="form-group">
-  <label from="documento_padre" class="control-label">N&uacute;mero del documento</label>
-  <input id="documento_padre" name="documento_padre"
-  class="form_padres form-control padre" maxlength="12" type="number"
-  min="7"
-  placeholder="número de documento"  />
-  <div class="help-block with-errors"></div>
-</div>
-
-<!-- lugar de expedicion-->
-<div class="form-group">
-  <label from="lugar_exp_padre" class="control-label">Lugar de expedici&oacute;n</label>
-  <input id="lugar_exp_padre" name="lugar_exp_padre" type="text"
-  class="form_padres form-control padre"
-  placeholder="lugar de expedición" >
-</input>
-<div class="help-block with-errors"></div>
 </div>
 
 <!-- Direccion de residencia -->
@@ -1018,105 +1106,107 @@ if(!isset($_SESSION['usuario']))
   <!-- Formulario de la madre -->
   <div style="margin-top: 50px;">
     <h4>
-       Informaci&oacute;n de la madre
+      Informaci&oacute;n de la madre
     </h4>
   </div>
 
 
   <!-- DATOS DE LA MADRE -->
   <div id="datos_madre">
+    <div  class="form-group">
+      <label from="nombre_madre" class="control-label">Nombres</label>
+      <input id="nombre_madre" name="nombre_madre"
+      class="form_padres form-control madre" maxlength="40"  type="text"
+      placeholder="nombres" />
+      <div class="help-block with-errors"></div>
+    </div>
+    <!-- Apellidos -->
+    <div id="d62" class="form-group">
+      <label from="apellido_madre" class="control-label">Apellidos</label>
+      <input id="apellido_madre" name="apellido_madre"
+      class="form_padres form-control madre" maxlength="40"  type="text"
+      placeholder="apellidos" />
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <!-- Correo-->
+    <div id="d64" class="form-group">
+      <label from="correo_madre" class="control-label">Correo</label>
+      <input id="correo_madre" name="correo_madre"
+      class="form_padres form-control" data-error="correo invalido"  type="email"
+      placeholder="correo electrónico" />
+      <div class="help-block with-errors"></div>
+
+    </div>
+
+    <!-- telefono -->
+    <div class="form-group">
+      <label from="telefono_madre" class="control-label">Teléfono</label>
+      <input id="telefono_madre" name="telefono_madre"
+      class="form_padres form-control madre" maxlength="12" type="tel"
+      pattern="[0-9]{10}"
+      placeholder="número telefónico"  />
+      <div class="help-block with-errors"></div>
+
+    </div>
+
+    <!-- tipo de indentificacion -->
+    <div class="form-group">
+      <label from="tipo_identificacion_madre" class="control-label">Tipo de indentificación</label>
+      <select id="tipo_identificacion_madre" class="form_padres form-control madre"
+      name="tipo_identificacion_madre">
+      <option value="">Seleccione...</option>
+      <option value="CC">Cédula de ciudadania</option>
+      <option value="CE">Cédula de extranjer&iacute;a </option>
+      <option value="NUIP">NUIP</option>
+      <div class="help-block with-errors"></div>
+    </select>
+  </div>
+
+  <!-- documento de la madre-->
   <div  class="form-group">
-    <label from="nombre_madre" class="control-label">Nombres</label>
-    <input id="nombre_madre" name="nombre_madre"
-    class="form_padres form-control madre" maxlength="40"  type="text"
-    placeholder="nombres" />
-    <div class="help-block with-errors"></div>
-  </div>
-  <!-- Apellidos -->
-  <div id="d62" class="form-group">
-    <label from="apellido_madre" class="control-label">Apellidos</label>
-    <input id="apellido_madre" name="apellido_madre"
-    class="form_padres form-control madre" maxlength="40"  type="text"
-    placeholder="apellidos" />
+    <label from="documento_madre" class="control-label">N&uacute;mero de documento</label>
+    <input id="documento_madre" name="documento_madre"
+    class="form_padres form-control madre" maxlength="12"
+    type="number" min="99999"
+    placeholder="número de documento"  />
     <div class="help-block with-errors"></div>
   </div>
 
-  <!-- Correo-->
-  <div id="d64" class="form-group">
-    <label from="correo_madre" class="control-label">Correo</label>
-    <input id="correo_madre" name="correo_madre"
-    class="form_padres form-control" data-error="correo invalido"  type="email"
-    placeholder="correo electrónico" />
+  <!-- lugar de expedicion-->
+  <div  class="form-group">
+    <label from="lugar_exp_madre" class="control-label">Lugar de expedici&oacute;n</label>
+    <input id="lugar_exp_madre" name="lugar_exp_madre" type="text"
+    class="form_padres form-control madre"
+    placeholder="lugar de expedición" ></input>
     <div class="help-block with-errors"></div>
-
   </div>
 
-  <!-- telefono -->
+  <!-- Direccion de residencia -->
+  <div  class="form-group">
+    <label form="direccion_madre" class="control-label"> Direccion de residencia:</label>
+    <input id="direccion_madre" name="direccion_madre" type="text"
+    class="form_padres form-control"
+    placeholder="direccion de residencia" >
+    <div class="help-block with-errors"></div>
+  </div>
+
+  <!-- Barrio -->
   <div class="form-group">
-    <label from="telefono_madre" class="control-label">Teléfono</label>
-    <input id="telefono_madre" name="telefono_madre"
-    class="form_padres form-control madre" maxlength="12" type="tel"
-    pattern="[0-9]{10}"
-    placeholder="número telefónico"  />
+    <label from="barrio_madre" class="control-label">Barrio: </label>
+    <input id="barrio_madre" name="barrio_madre" type="text"
+    class="form_padres form-control"
+    placeholder="barrio" maxlength="40" >
     <div class="help-block with-errors"></div>
-
   </div>
-
-  <!-- tipo de indentificacion -->
-  <div class="form-group">
-    <label from="tipo_identificacion_madre" class="control-label">Tipo de indentificación</label>
-    <select id="tipo_identificacion_madre" class="form_padres form-control madre"
-    name="tipo_identificacion_madre">
-    <option value="">Seleccione...</option>
-    <option value="CC">Cédula de ciudadania</option>
-    <option value="CE">Cédula de extranjer&iacute;a </option>
-    <option value="NUIP">NUIP</option>
-    <div class="help-block with-errors"></div>
-  </select>
-</div>
-
-<!-- documento de la madre-->
-<div  class="form-group">
-  <label from="documento_madre" class="control-label">N&uacute;mero de documento</label>
-  <input id="documento_madre" name="documento_madre"
-  class="form_padres form-control madre" maxlength="12"
-  type="number" min="99999"
-  placeholder="número de documento"  />
-  <div class="help-block with-errors"></div>
-</div>
-
-<!-- lugar de expedicion-->
-<div  class="form-group">
-  <label from="lugar_exp_madre" class="control-label">Lugar de expedici&oacute;n</label>
-  <input id="lugar_exp_madre" name="lugar_exp_madre" type="text"
-  class="form_padres form-control madre"
-  placeholder="lugar de expedición" ></input>
-  <div class="help-block with-errors"></div>
-</div>
-
-<!-- Direccion de residencia -->
-<div  class="form-group">
-  <label form="direccion_madre" class="control-label"> Direccion de residencia:</label>
-  <input id="direccion_madre" name="direccion_madre" type="text"
-  class="form_padres form-control"
-  placeholder="direccion de residencia" >
-  <div class="help-block with-errors"></div>
-</div>
-
-<!-- Barrio -->
-<div class="form-group">
-  <label from="barrio_madre" class="control-label">Barrio: </label>
-  <input id="barrio_madre" name="barrio_madre" type="text"
-  class="form_padres form-control"
-  placeholder="barrio" maxlength="40" >
-  <div class="help-block with-errors"></div>
-</div>
 
 </div>
 <!-- fin de la informacion de la madre -->
 </div>
-
-<button type="button" class="btn btn-outline-primary">matricular</button>
+<div id="botones" style="display:flex">
+<button type="button" style="margin: auto;width: 140px;" class="btn btn-dark" onclick="matricular();">matricular</button>
+<!-- <button type="button" style="margin: auto;width: 140px;" class="btn btn-light" onclick="desmatricular();">desmatricular</button> -->
+</div>
 <!-- -->
 
 </section>
