@@ -65,58 +65,55 @@
 	// A partir de aqui creo un  formulario para el envio  de las notas
 	echo "<form name='notas' id='notas'>";
 	// dentro del formulario se encuentra una tabla
-	echo "<table align= 'center' width = '100%' border='0'>";
+	echo "<table class='table table-hover'>";
 
 	// consulta que  retorna los alumnos  matriculados en un año dentro de un grado
 	// para una jornada especifica
 	$q1 = "SELECT * FROM alumnos A INNER JOIN matricula M ON A.id_alumno = M.id_alumno
 	WHERE M.id_grado = ".$grado." AND M.year = ".$ano." AND M.id_jornada = $jornada ORDER BY A.apellidos";
 	// ejecuto la consulta
-	$q1x = mysqli_query($link, $q1) or die('Consulta fallida q1: ' . mysql_error());;
+	$q1x = mysqli_query($link, $q1) or die('Consulta fallida q1: ' . mysqli_error($link));;
 
-	// echo "<tr ><td  colspan='1', width = '60%' ><font style='color: white;' ><b>NOMBRE</b></font></td>";
-	// echo "<td colspan='1', width = '20%' ><font size = 3>NOTA</font></td>";
-	// echo "<td colspan='1', width = '20%' ><font size = 3>LOGRO</font></td></tr>";
-
+	
 	// si pertenece a los grados de preescolar
 	if($grado == 7 || $grado == 8 || $grado == 9 ){
 		// creo una fila con los encabezados, que comienzan con el campo nombre
-		echo "<tr ><td  colspan='1', width = '40%' ><font style='color: white;' ><b>NOMBRE</b></font></td>";
+		echo "<tr ><td><b>NOMBRE</b></td>";
 		// seguido por el campo nota
-		echo "<td colspan='1', width = '12%' ><font size = 2>NOTA</font></td>";
+		echo "<td>NOTA</td>";
 		// seguido por el campo logro 1
-		echo "<td colspan='1', width = '12%' ><font size = 2>LOGRO</font></td>";
+		echo "<td>LOGRO</td>";
 		// seguido por el campo logro 2
-		echo "<td colspan='1', width = '12%' ><font size = 2>LOGRO</font></td>";
+		echo "<td>LOGRO</td>";
 		// seguido por el campo logro 2
-		echo "<td colspan='1', width = '12%' ><font size = 2>LOGRO</font></td>";
+		echo "<td>LOGRO</td>";
 		// y terminando con el campo FALTAS
-		echo "<td colspan='1', width = '12%' ><font size = 2>FALTAS</font></td></tr>";
+		echo "<td>FALTAS</td></tr>";
 	}
 	else{
 		// Si no pertene a los grados de preescolar
 		// se crean  una columna para nombre
-		echo "<tr ><td  colspan='1', width = '40%' ><font style='color: white;' ><b>NOMBRE</b></font></td>";
+		echo "<tr><td><b>NOMBRE</b></td>";
 		// una segunda columna para  la nota
-		echo "<td colspan='1', width = '20%' ><font size = 3>NOTA</font></td>";
+		echo "<td>NOTA</td>";
 		// una tercera para el logro
-		echo "<td colspan='1', width = '20%' ><font size = 3>LOGRO</font></td>";
+		echo "<td>LOGRO</td>";
 		// y una última para las faltas
-		echo "<td colspan='1', width = '20%' ><font size = 3>FALTAS</font></td></tr>";
+		echo "<td>FALTAS</td></tr>";
 
 	}
 
 	// Se crean los botones para igualar las notas  e igualar los logros
 	echo "<tr><td></td>".
-		  "<td><input type = 'button' value='=' class='igual' id='igual_nota' onclick='igual_notas();' ></td>".
-			"<td><input type = 'button' value='=' class='igual' id='igual_l1' onclick='igual_logro1();'</td>";
+		  "<td><button type = 'button' value='=' class='igual btn btn-outline-primary' id='igual_nota' style='width: 60px;' onclick='igual_notas();' >=</button></td>".
+			"<td><button type = 'button' value='=' class='igual btn btn-outline-primary' id='igual_l1' style='width: 60px;' onclick='igual_logro1();'>=</button></td>";
 
 			// si el grado es preescolar se adicciona los botones para igualar los
 			// logros 2  y 3
 	if($grado == 7 || $grado == 8 || $grado == 9 ){
 
-	echo 	"<td><input type = 'button' value='=' class='igual' id='igual_l2' onclick='igual_logro2();'</td>";
-	echo			"<td><input type = 'button' value='=' class='igual' id='igual_l3' onclick='igual_logro3();'</td>";
+	echo 	"<td><button type = 'button' value='=' class='igua btn btn-outline-primary' id='igual_l2' onclick='igual_logro2();'>=</button></td>";
+	echo			"<td><button type = 'button' value='=' class='igual btn btn-outline-primary' id='igual_l3' onclick='igual_logro3();'>=</button></td>";
 
 	}
 	echo "</tr>";
@@ -124,9 +121,9 @@
 	// ejecuto la consulta
 	$dato1 = mysqli_fetch_array($q1x);
 	// se consulta los datos del alumno
-		echo "<tr  >";
-		echo "<td colspan='1', width = '40%' ><font size = 1>"
-		.$dato1['apellidos']." ".$dato1['nombres']."</font></td>";
+		echo "<tr >";
+		echo "<td>"
+		.ucwords(strtolower($dato1['apellidos']))." ".ucwords(strtolower($dato1['nombres']))."</td>";
 
 // consulta de notas para el alumno
 
@@ -141,7 +138,7 @@
 				//	echo "<br>consulta : $q2<br><br>";
 
 		// se ejecuta la consulta
-		$q2x = mysqli_query($link, $q2) or die('Consulta fallida  de notas: ' . mysqli_error());
+		$q2x = mysqli_query($link, $q2) or die('Consulta fallida  de notas: ' . mysqli_error($link));
 		// se extrae el primer dato datos
 		$dato2 = mysqli_fetch_array($q2x);
 		//
@@ -151,11 +148,11 @@
 		// la serie de datos se caracterizan por tener el mismo atributo
 		// name
 		// se muestra la nota la primera nota
-		echo "<td width = '20%' > <input type='number' step='0.1' max='5' min='0' style='width: 40px;'  id='master_nota' name='nota[]' class='notas'"
+		echo "<td> <input type='number' step='0.1' max='5' min='0' style='width: 60px;'  id='master_nota' name='nota[]' class='notas form-control'"
 					."  onchange='color_celda(\"master_nota\");'  value='".$dato2['nota']."'></td>\n";
 
 		// y se muestra el primer logro
-		echo "<td width = '20%' > <input type='text' style='width: 40px;' name='logro1[]' id='master_logro1' class='logros1'"
+		echo "<td> <input type='text' style='width: 60px;' name='logro1[]' id='master_logro1' class='logros1 form-control'"
 					."  onchange='color_celda(\"master_logro1\");' value='".$dato2['id_logro']."'>";
 
 		// si pertenece a preescolar
@@ -173,12 +170,12 @@
 
 
 						// se ejecuta la consulta
-			$q3x = mysqli_query($link, $q3) or die('Consulta fallida  de notas: ' . mysqli_error());
+			$q3x = mysqli_query($link, $q3) or die('Consulta fallida  de notas: ' . mysqli_error($link));
 						// se extrae el primer dato datos
 			$dato3 = mysqli_fetch_array($q3x);
 
 			// lo muestro
-			echo "<td width = '20%' > <input type='text' style='width: 40px;' name='logro2[]' id='master_logro2' class='logros2'"
+			echo "<td> <input type='text' style='width: 60px;' name='logro2[]' id='master_logro2' class='logros2'"
 						." onchange='color_celda(\"master_logro2\");' value='".$dato3['id_logro']."'>";
 
 
@@ -192,17 +189,17 @@
 						" AND id_alumno = ".$dato1["id_alumno"].
 						" AND serie = 2";
 						// se ejecuta la consulta
-			$q4x = mysqli_query($link, $q4) or die('Consulta fallida  de notas: ' . mysqli_error());
+			$q4x = mysqli_query($link, $q4) or die('Consulta fallida  de notas: ' . mysqli_error($link));
 						// se extrae el primer dato datos
 			$dato4 = mysqli_fetch_array($q4x);
 
 			// lo muestroo
-			echo "<td width = '20%' > <input type='text' style='width: 40px;' name='logro3[]' id='master_logro3' class='logros3'"
+			echo "<td> <input type='text' style='width: 60px;' name='logro3[]' id='master_logro3' class='logros3'"
 					." onchange='color_celda(\"master_logro3\");' value='".$dato4['id_logro']."'>";
 
 		}
 		// ingreso la cantidad de faltas para el primer estudiante
-		echo "<td width = '20%' > <input id='master_falta' type='text' style='width: 40px;' name='falta[]'  class='faltas'"
+		echo "<td> <input id='master_falta' type='text' style='width: 60px;' name='falta[]'  class='faltas'"
 				."  onchange='color_celda(\"master_falta\");'  value='".$dato2['faltas']."'>";
 
 		// se crea un campo oculto con el codigo del peimer alumno
@@ -221,10 +218,10 @@
 
 	while ($dato1 = mysqli_fetch_array($q1x)){
 		// genero una fila nueva
-		echo "<tr $background>";
+		echo "<tr>";
 		// colocando en la primera celda nombre y apellido
-		echo "<td colspan='1', width = '40%' ><font size = 1>"
-		.$dato1['apellidos']." ".$dato1['nombres']."</font></td>";
+		echo "<td>"
+		.ucwords(strtolower($dato1['apellidos']))." ".ucwords(strtolower($dato1['nombres']))."</td>";
 
 		// consulta de notas para el alumo
 		$q2 = "SELECT * FROM calificaciones WHERE".
@@ -237,15 +234,15 @@
 
 
 		// se ejecuta la consulta
-		$q2x = mysqli_query($link, $q2) or die('Consulta fallida  de notas: ' . mysql_error());
+		$q2x = mysqli_query($link, $q2) or die('Consulta fallida  de notas: ' . mysqli_error($link));
 		// se ejecuta la consulta
 		$dato2 = mysqli_fetch_array($q2x);
 
 		// se ingresa la nota del estudiante
-		echo "<td width = '20%' >	<input type='number' step='0.1' max='5' min='0' style='width: 40px;'  name='nota[]' class='notas'"
+		echo "<td>	<input type='number' step='0.1' max='5' min='0' style='width: 60px;'  name='nota[]' class='notas'"
 		." id='nota".$dato1['id_alumno']."' onchange='color_celda(\"nota".$dato1['id_alumno']."\");'  value='".$dato2['nota']."'>	</td>";
 		// se coloca el el primer logro
-		echo "<td width = '20%' > <input type='text' style='width: 40px;' name='logro1[]'  class='logros1'"
+		echo "<td> <input type='text' style='width: 60px;' name='logro1[]'  class='logros1'"
 					." id='logro1".$dato1['id_alumno']."' onchange='color_celda(\"logro1".$dato1['id_alumno']."\");'  value='".$dato2['id_logro']."'>";
 
 
@@ -264,12 +261,12 @@
 
 
 						// se ejecuta la consulta
-			$q3x = mysqli_query($link, $q3) or die('Consulta fallida  de notas: ' . mysqli_error());
+			$q3x = mysqli_query($link, $q3) or die('Consulta fallida  de notas: ' . mysqli_error($link));
 						// se extrae el primer dato datos
 			$dato3 = mysqli_fetch_array($q3x);
 
 			// incerto el segundo logro
-			echo "<td width = '20%' > <input  type='text' style='width: 40px;' name='logro2[]' class='logros2'"
+			echo "<td> <input  type='text' style='width: 60px;' name='logro2[]' class='logros2'"
 			." id='logro2".$dato1['id_alumno']."' onchange='color_celda(\"logro2".$dato1['id_alumno']."\");'   value='".$dato3['id_logro']."'></td>";
 			// genero el siguiete registro
 
@@ -286,20 +283,20 @@
 
 
 						// se ejecuta la consulta
-			$q4x = mysqli_query($link, $q4) or die('Consulta fallida  de notas: ' . mysqli_error());
+			$q4x = mysqli_query($link, $q4) or die('Consulta fallida  de notas: ' . mysqli_error($link));
 						// se extrae el primer dato datos
 			$dato4 = mysqli_fetch_array($q4x);
 
 			// incerto el tercer logro
-			echo "<td width = '20%' > <input  type='text' style='width: 40px;' name='logro3[]' class='logros3'"
+			echo "<td> <input  type='text' style='width: 60px;' name='logro3[]' class='logros3'"
 			." id='logro3".$dato1['id_alumno']."' onchange='color_celda(\"logro3".$dato1['id_alumno']."\");'  value='".$dato4['id_logro']."'></td>";
 			// espacio para las faltas
-			// echo "<td width = '20%' > <input type='text' style='width: 40px;' name='faltas[]'  class='faltas'"
+			// echo "<td> <input type='text' style='width: 60px;' name='faltas[]'  class='faltas'"
 			// ." value='".$dato2['faltas']."'>";
 		}
 
 		// ingreso la cantidad de faltas
-		echo "<td width = '20%' > <input type='text' style='width: 40px;' name='faltas[]'  class='faltas'"
+		echo "<td> <input type='text' style='width: 60px;' name='faltas[]'  class='faltas'"
 				." id='falta".$dato1['id_alumno']."' onchange='color_celda(\"falta".$dato1['id_alumno']."\");'  value='".$dato2['faltas']."'>";
 
 		echo "<input type='hidden' name='codigo[]' class='codigos' value=".$dato1['id_alumno']."></td>";

@@ -35,15 +35,15 @@ if(!isset($_SESSION['usuario']))
   <script src="../JS/sweetalert.min.js"></script>
   <script src="../JS/ajax.js"></script>
   <script src="../JS/bootstrap.min.js"></script>
-  <!-- <script src="../JS/propper.min.js"  type="text/javascript"></script>
-  <script src="../JS/datatables.min.js" type="text/javascript"></script> -->
+  <script src="../JS/datatables.min.js"></script>
+
   <script src="../JS/bootstrap-table.min.js" type="text/javascript"></script>
   <link href="../CSS/bootstrap-table.min.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/template.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/fa-v4-shims.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/default.css" rel="stylesheet" type="text/css" />
-  <link href="../CSS/datatables.min.js" rel="stylesheet" type="text/css"/>
-  <link href="../CSS/datatables.min.js" rel="stylesheet" type="text/css"/>
+
+
   <link href="../CSS/jquery-3.3.1.slim.min.js" rel="stylesheet" type="text/css"/>
   <link href="../CSS/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/all.css" rel="stylesheet" type="text/css" />

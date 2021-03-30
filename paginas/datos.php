@@ -1,5 +1,15 @@
 <?php
 
+
+if(!isset($_SESSION['usuario']))
+{
+  //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
+  header('Location:login_boletines.php');
+
+  //termina el programa php
+  exit();
+}
+
 // Contiente los modelo de clase  que apunta a la base de datos
 // involucra  el archivo imcrea.php
 // require_once('imcrea.php');
@@ -574,7 +584,7 @@ class alumnos extends imcrea {
     } else {
       // retorno  el valor 0 del array
       //return $dato[0];
-      $dato -> close();
+      //$dato -> close();
       $this -> _db -> close();
     }
   }

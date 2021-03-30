@@ -489,6 +489,7 @@ if(!isset($_SESSION['usuario']))
       document.getElementById("cedula").style.display='none';
       document.getElementById("area").style.display='none';
       document.getElementById("correo").style.display='none';
+      document.getElementById("i_correo").style.display='none';
       document.getElementById("Logro").style.display='none';
       document.getElementById("id_m").style.display='none';
       document.getElementById("id_a").style.display='none';
@@ -550,6 +551,7 @@ if(!isset($_SESSION['usuario']))
       document.getElementById("cedula").style.display='none';
       document.getElementById("area").style.display='none';
       document.getElementById("correo").style.display='none';
+      document.getElementById("i_correo").style.display='none';
       document.getElementById("Logro").style.display='none';
       document.getElementById("id_m").style.display='none';
       document.getElementById("id_a").style.display='none';
@@ -617,6 +619,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='block';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='block';
+        document.getElementById("i_correo").style.display='block';
         document.getElementById("Logro").style.display='none';
         document.getElementById("id_m").style.display='none';
         document.getElementById("id_a").style.display='none';
@@ -643,6 +646,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='block';
         document.getElementById("area").style.display='block';
         document.getElementById("correo").style.display='block';
+        document.getElementById("i_correo").style.display='block';
         document.getElementById("Logro").style.display='none';
         document.getElementById("id_m").style.display='none';
         document.getElementById("id_a").style.display='none';
@@ -667,6 +671,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("nombre").style.display='none';
         document.getElementById("apellido").style.display='none';
         document.getElementById("telefono").style.display='none';
@@ -697,6 +702,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("nombre").style.display='none';
         document.getElementById("apellido").style.display='none';
         document.getElementById("telefono").style.display='none';
@@ -728,6 +734,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("Logro").style.display='block';
         document.getElementById("id_m").style.display='block';
         document.getElementById("id_a").style.display='none';
@@ -750,6 +757,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("nombre").style.display='none';
         document.getElementById("apellido").style.display='none';
         document.getElementById("telefono").style.display='none';
@@ -776,6 +784,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("nombre").style.display='block';
         document.getElementById("apellido").style.display='block';
         document.getElementById("telefono").style.display='none';
@@ -803,6 +812,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("nombre").style.display='none';
         document.getElementById("apellido").style.display='none';
         document.getElementById("telefono").style.display='none';
@@ -834,6 +844,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("Logro").style.display='none';
         document.getElementById("id_m").style.display='none';
         document.getElementById("id_a").style.display='none';
@@ -859,6 +870,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("nombre").style.display='none';
         document.getElementById("apellido").style.display='none';
         document.getElementById("telefono").style.display='none';
@@ -888,6 +900,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("nombre").style.display='none';
         document.getElementById("apellido").style.display='none';
         document.getElementById("telefono").style.display='none';
@@ -1197,6 +1210,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='block';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='block';
+        document.getElementById("i_correo").style.display='block';
         document.getElementById("Logro").style.display='none';
         document.getElementById("id_m").style.display='none';
         document.getElementById("id_a").style.display='none';
@@ -1222,6 +1236,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='block';
         document.getElementById("area").style.display='block';
         document.getElementById("correo").style.display='block';
+        document.getElementById("i_correo").style.display='block';
         document.getElementById("Logro").style.display='none';
         document.getElementById("id_m").style.display='none';
         document.getElementById("id_a").style.display='none';
@@ -1251,6 +1266,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("Logro").style.display='block';
         document.getElementById("id_m").style.display='none';
         document.getElementById("id_a").style.display='none';
@@ -1275,6 +1291,7 @@ if(!isset($_SESSION['usuario']))
         document.getElementById("cedula").style.display='none';
         document.getElementById("area").style.display='none';
         document.getElementById("correo").style.display='none';
+        document.getElementById("i_correo").style.display='none';
         document.getElementById("nombre").style.display='none';
         document.getElementById("apellido").style.display='none';
         document.getElementById("telefono").style.display='none';
@@ -1869,193 +1886,236 @@ if(!isset($_SESSION['usuario']))
           console.log("Logro 1 : %s",$("#logro_1").val());
           console.log("Logro 2 : %s",$("#logro_2").val());
           console.log("Logro 3 : %s",$("#logro_3").val());
+
         }
 
 
 
+        /// variable que representa cada item del menu aderir
+
+        var datos  = validar_add();
+        if (datos) {
 
 
-        swal({
-          title: 'INSERTAR NOTAS',
-          text: "Esta seguro que quiere insertar las notas!",
-          icon: 'warning',
-          buttons: true,
-          buttons: ["cancelar", "insertar"],
-        }).then((value) => {
-          if(value){
-            //swal('The returned value is: true');
-            // +++++++
+          // en esta seccion se incertan los registros
+          // dentro de la base de datos , enviados a traves de
+          // ajax
 
-            /////////
-            var datos  = validar_add();
-            if (datos) {
+          console.log(" add = %i",$("#add").val());
+          switch($("#add").val()){
+            // caso de agregar notras
+            case '11':
 
-              // if (confirm("ALERTA!! va a proceder a ingresar" +
-              // "un  registro, para confirmar de"+
-              // " click en ACEPTAR\n de lo contrario"+
-              // " de click en CANCELAR.") )
-              // {
-              // en esta seccion se incertan los registros
-              // dentro de la base de datos , enviados a traves de
-              // ajax
+            swal({
+              title: 'INSERTAR NOTAS',
+              text: "Esta seguro que quiere insertar las notas!",
+              icon: 'warning',
+              buttons: true,
+              buttons: ["cancelar", "insertar"],
+            }).then((value) => {if(value){
 
-              console.log(" add = %i",$("#add").val());
-              switch($("#add").val()){
+              // creo tes array a partir de una secuencia
+              // de campos identificados cada uno por una clase
+              var notas = $('.notas').serializeArray();
+              // serializo los campos clase  logro 1
+              var logros1 = $('.logros1').serializeArray();
+              // serializo los campos clase logro 2
+              var logros2 = $('.logros2').serializeArray();
+              // serializo los campos clase logro 3
+              var logros3 = $('.logros3').serializeArray();
+              // serializo los codigos
+              var codigos = $('.codigos').serializeArray();
+              // serializo las  faltas
+              var faltas = $('.faltas').serializeArray();
 
-                case '11':
+              $.ajax({
+                type: "POST",
+                url: "notas.php",
+                data: {
+                  year: $("#years").val(),
+                  id_gs: $("#id_g").val(),
+                  id_ms : $("#id_ms").val(),
+                  id_jornada: $("#jornada").val(),
+                  id_docente: $("#id_docentes").val(),
+                  corte: $("#corte").val(),
+                  periodo: $("#periodos").val(),
+                  nota: JSON.stringify(notas),
+                  logro1: JSON.stringify(logros1),
+                  logro2: JSON.stringify(logros2),
+                  logro3: JSON.stringify(logros3),
+                  codigo: JSON.stringify(codigos),
+                  faltas: JSON.stringify(faltas)
+                },
 
-                // creo tes array a partir de una secuencia
-                // de campos identificados cada uno por una clase
-                var notas = $('.notas').serializeArray();
-                // serializo los campos clase  logro 1
-                var logros1 = $('.logros1').serializeArray();
-                // serializo los campos clase logro 2
-                var logros2 = $('.logros2').serializeArray();
-                // serializo los campos clase logro 3
-                var logros3 = $('.logros3').serializeArray();
-                // serializo los codigos
-                var codigos = $('.codigos').serializeArray();
-                // serializo las  faltas
-                var faltas = $('.faltas').serializeArray();
+                success: function(data) {
+                  //$("#resultado").html("Se ingresaron las notas con exito");
+                  $("#resultado").html(data);
+                },
+                error : function(xhr, status) {
+                  swal('Disculpe, existió un problema');
+                  console.log(xhr);
+                }
+              });
 
-                $.ajax({
-                  type: "POST",
-                  url: "notas.php",
-                  data: {
-                    year: $("#years").val(),
-                    id_gs: $("#id_g").val(),
-                    id_ms : $("#id_ms").val(),
-                    id_jornada: $("#jornada").val(),
-                    id_docente: $("#id_docentes").val(),
-                    corte: $("#corte").val(),
-                    periodo: $("#periodos").val(),
-                    nota: JSON.stringify(notas),
-                    logro1: JSON.stringify(logros1),
-                    logro2: JSON.stringify(logros2),
-                    logro3: JSON.stringify(logros3),
-                    codigo: JSON.stringify(codigos),
-                    faltas: JSON.stringify(faltas)
-                  },
-
-                  success: function(data) {
-                    //$("#resultado").html("Se ingresaron las notas con exito");
-                    $("#resultado").html(data);
-                  },
-                  error : function(xhr, status) {
-                    swal('Disculpe, existió un problema');
-                    console.log(xhr);
-                  }
-                });
-
-                break;
-
-                case '12':
-
-                swal("Se van a regenerar las tablas");
-                $('#resultado').load("registros.php",
-                {
-                  id_gs : $("#id_g").val()
-                });
-
-
-                break;
-
-                default:
-
-                $.ajax({
-                  url: 'adiccion.php',
-                  type: 'POST',
-                  dataType: 'html',
-                  data: {
-                    add: $("#add option:selected").val(),
-                    i_nombres: $("#i_nombres").val(),
-                    apellidos: $("#apellidos").val(),
-                    Logros: $("#Logros").val(),
-                    years: $("#years").val().toString(),
-                    id_g: $("#id_g").val(),
-                    fechas: $("#fechas").val(),
-                    cedulas: $("#cedulas").val(),
-                    correos : $("#correos").val(),
-                    telefonos : $("#telefonos").val(),
-                    areas : $("#areas").val(),
-                    fecha_fins : $("#fecha_fins").val(),
-                    id_es:$("#id_es").val(),
-                    logro_1:$("#logro_1").val(),
-                    logro_2:$("#logro_2").val(),
-                    logro_3:$("#logro_3").val(),
-                    faltas : $("#faltas").val(),
-                    estudiantes: $("#estudiantes").val(),
-                    periodos: $("#periodos").val(),
-                    id_ms : $("#id_ms").val(),
-                    id_jornada: $("#jornada").val(),
-                    docentes: $("#docentes").val()
-                  },
-                  beforeSend: function(){
-                    console.log("enviando datos .. para adiccionar");
-                  },
-
-                  success : function(result) {
-                    // en caso de que la funcion tenga exito
-                    $('#resultado').html(result);
-                  },
-                  error : function(xhr, status) {
-                    swal('Disculpe, existió un problema');
-                  },
-                  complete : function(xhr, status) {
-                    swal('Petición realizada');
-                  }
-                });
-                break;
-              }
-            } /// fin de la confirmacion de los datos
-
-            else {
-              $("#resultado").append("Los datos ingresados son incorrectos, verifique el formulario");
+            }else {
+              swal({ title:'Accion cancelada', icon: 'error',});
             }
-          } // si se retorna el boton insertar
+            } // si se retorna el boton insertar
+          );
 
-          else {
-            swal({ title:'Accion cancelada', icon: 'error',});
-          }
+          break;
 
-        }); // fin de funcion
+          case '12':
 
-      } // fin de la funsion deposit
+          if (validar_grado()){
+          // mensaje de aceptacion
+          swal({
+            title: 'Agregar Registros',
+            text: "se van a agregar registros para el grado "+$("#id_g option:selected").text(),
+            icon: 'warning',
+            buttons: true,
+            buttons: ["cancelar", "insertar"],
+          }).then((value) => {if(value){
+          // carga los registros  el la ventana de resultados
+          $('#resultado').load("registros.php", {id_gs : $("#id_g").val(), n_grado: $("#id_g option:selected").text()}
 
-      // funcion para llamar boletines
-      function boletin(){
-        // almaceno el valor del grado
-        grado = $("#id_g").val();
 
-        if (grado == -1){
-          swal("Datos", "Por favor seleccione un grado","info");
-        }else if (grado < 7 || grado > 9){
-          // llama a la funcion generar para generar el boletin
-          // que corresponde al modelo de primaria
-          crear_pdf();
-        } else {
-          // llama a la funcion generarx la cual genera el boletin tipo preescolar
-          obtener_pdf();
-        }
+          );
+        }});
       }
 
-      </script>
+          break;
 
-      <div id="formulario" style=" margin: auto;max-width: 1200px;">
+          default:
 
-        <!-- esta es la primera fila de la tabla -->
-        <div id="encabezado" style="width: 100%;
-        background-color: darkslategray;
-        color: rgba(200,200,200,20);
-        padding: 60px;" >
-        <!-- primera columna de la fila -->
+          swal({
+            title: 'CONFIRMAR',
+            text: "Para confirmar la accion presione aceptar, de lo contrario presione cancelar",
+            icon: 'warning',
+            buttons: true,
+            buttons: ["cancelar", "insertar"],
+          }).then((value) => {if(value){
 
-        <h1> <b>FORMULARIO</b> </h1>
-        <h2>Para la Gesti&oacute;n de Calificaciones</h2>
-        <?php if($admin == 1) { ?>
-          <a href="manual-plataforma.pdf" target="blank">tutorial </a><br>
-        <?php } else { ?>
-          <a href="manual-plataforma-docentes.pdf" target="blank">tutorial </a><br>
+          $.ajax({
+            url: 'adiccion.php',
+            type: 'POST',
+            dataType: 'html',
+            data: {
+              add: $("#add option:selected").val(),
+              i_nombres: $("#i_nombres").val(),
+              apellidos: $("#apellidos").val(),
+              Logros: $("#Logros").val(),
+              years: $("#years").val().toString(),
+              id_g: $("#id_g").val(),
+              fechas: $("#fechas").val(),
+              cedulas: $("#cedulas").val(),
+              correos : $("#correos").val(),
+              telefonos : $("#telefonos").val(),
+              areas : $("#areas").val(),
+              fecha_fins : $("#fecha_fins").val(),
+              id_es:$("#id_es").val(),
+              logro_1:$("#logro_1").val(),
+              logro_2:$("#logro_2").val(),
+              logro_3:$("#logro_3").val(),
+              faltas : $("#faltas").val(),
+              estudiantes: $("#estudiantes").val(),
+              periodos: $("#periodos").val(),
+              id_ms : $("#id_ms").val(),
+              id_jornada: $("#jornada").val(),
+              docentes: $("#docentes").val()
+            },
+            beforeSend: function(){
+              console.log("enviando datos .. para adiccionar");
+            },
+
+            success : function(result) {
+              // en caso de que la funcion tenga exito
+              $('#resultado').html(result);
+            },
+            error : function(xhr, status) {
+              swal('Disculpe, existió un problema');
+            },
+            complete : function(xhr, status) {
+              swal('Petición realizada');
+            }
+          });
+
+        }});
+          break;
+        }
+      } /// fin de la confirmacion de los datos
+
+      else {
+        $("#resultado").append("Los datos ingresados son incorrectos, verifique el formulario");
+      }
+
+
+      // fin de funcion
+
+    } // fin de la funsion deposit
+
+    // funcion para llamar boletines
+    function boletin(){
+      // almaceno el valor del grado
+      grado = $("#id_g").val();
+
+      if (grado == -1){
+        swal("Datos", "Por favor seleccione un grado","info");
+      }else if (grado < 7 || grado > 9){
+        // llama a la funcion generar para generar el boletin
+        // que corresponde al modelo de primaria
+        crear_pdf();
+      } else {
+        // llama a la funcion generarx la cual genera el boletin tipo preescolar
+        obtener_pdf();
+      }
+    }
+
+    // funcion que permite validar el campo grado retorna true si tiene
+    // un valor valido
+    function validar_grado(){
+      var grado = $("#id_g").val();
+      // si el grado es -1 es porque no se ha seleccionado
+      if (grado == "-1"){
+        swal("Datos","Por favor seleccione un grado","error");
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    // funcion que permite validar el campo grado retorna true si tiene
+    // un valor valido
+    function validar_periodo(){
+      var grado = $("#periodos").val();
+      // si el grado es -1 es porque no se ha seleccionado
+      if (grado == "-1"){
+        swal("Datos","Por favor seleccione un periodo","error");
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+
+
+    </script>
+
+    <div id="formulario" style=" margin: auto;max-width: 1200px;">
+
+    <!-- esta es la primera fila de la tabla -->
+    <div id="encabezado" style="width: 100%;
+    background-color: darkslategray;
+    color: rgba(200,200,200,20);
+    padding: 60px;" >
+    <!-- primera columna de la fila -->
+
+    <h1> <b>FORMULARIO</b> </h1>
+    <h2>Para la Gesti&oacute;n de Calificaciones</h2>
+    <?php if($admin == 1) { ?>
+      <a href="manual-plataforma.pdf" target="blank">tutorial </a><br>
+      <?php } else { ?>
+        <a href="manual-plataforma-docentes.pdf" target="blank">tutorial </a><br>
         <?php }?>
         <?php
         // se crea un campo input oculto que almacena el cÃ³digo del docente
@@ -2065,545 +2125,576 @@ if(!isset($_SESSION['usuario']))
 
         <div class="container">
 
-          <div class="row">
-            <div class="col-md-2">
-              <div class="form-group">
-                <label class="control-label"> A&ntilde;o </label>
-                <!-- Este campo muestra la variable ano la cual contiene por defecto el aÃ±o reciente -->
-                <!-- se conecta a la base de datos y recupera los  valores introduccidos en la tabla de calificaciones -->
-                <?php if($admin == 1) { ?>
-                  <input type="number" value="<?php echo date('Y');?>" id="years" name="years"
-                  min="2015" max="2100" step="1" required="required" class="form-control form-control-sm tag_formulario" >
+        <div class="row">
+        <div class="col-md-2">
+        <div class="form-group">
+        <label class="control-label"> A&ntilde;o </label>
+        <!-- Este campo muestra la variable ano la cual contiene por defecto el aÃ±o reciente -->
+        <!-- se conecta a la base de datos y recupera los  valores introduccidos en la tabla de calificaciones -->
+        <?php if($admin == 1) { ?>
+          <input type="number" value="<?php echo date('Y');?>" id="years" name="years"
+          min="2015" max="2100" step="1" required="required" class="form-control form-control-sm tag_formulario" >
 
-                <?php } else { ?>
-                  <input type="number" value="<?php echo date('Y');?>" id="years"
-                  name="years" min="2015" max="2100" step="1"
-                  required="required" readonly="readonly" class="form-control form-control-sm tag_formulario">
-                <?php } ?>
-              </div>
+          <?php } else { ?>
+            <input type="number" value="<?php echo date('Y');?>" id="years"
+            name="years" min="2015" max="2100" step="1"
+            required="required" readonly="readonly" class="form-control form-control-sm tag_formulario">
+            <?php } ?>
+            </div>
 
             </div>
 
 
             <div class="col-md-2">
-              <!-- en este campo se ubica  el periodo a tratar -->
-              <label class="control-label"> Periodo </label>
-              <select id='periodos' name="periodos"
-                      placeholder="seleccione el periodo"
-                      class="form-control form-control-sm tag_formulario"
-                      required>
+            <!-- en este campo se ubica  el periodo a tratar -->
+            <label class="control-label"> Periodo </label>
+            <select id='periodos' name="periodos"
+            placeholder="seleccione el periodo"
+            class="form-control form-control-sm tag_formulario"
+            required>
 
-                <?php	if($admin) { ?>
-                  <option value=-1>Seleccione
-                  </option>
-                  <option value=1>1
-                  </option>
-                  <option value=2>2
-                  </option>
-                  <option value=3>3
-                  </option>
-                  <option value=4>4
-                  </option>
+            <?php	if($admin) { ?>
+              <option value=-1>Seleccione
+              </option>
+              <option value=1>1
+              </option>
+              <option value=2>2
+              </option>
+              <option value=3>3
+              </option>
+              <option value=4>4
+              </option>
+              <option value=5>Recuperacion
+              </option>
+              <?php } else {	?>
+                <option value= "<?php echo $periodo_act ?>" > <? echo $periodo_act ?>
+                </option>
+                <?php if ($periodo_act == 4) {?>
                   <option value=5>Recuperacion
                   </option>
-                <?php } else {	?>
-                  <option value= "<?php echo $periodo_act ?>" > <? echo $periodo_act ?>
-                  </option>
-                  <?php if ($periodo_act == 4) {?>
-                    <option value=5>Recuperacion
-                    </option>
                   <?php } ?>
 
-                <?php } 	?>
-              </select>
-            </div>
-
-            <div class="col-md-2">
-              <label class="control-label"> Corte </label>
-              <select id="corte" class="form-control form-control-sm tag_formulario">
-                <option value=A>A</option>
-                <option value=F>F</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
-
-      <div class="container">
-        <p >Seleccione el <span class="text-success">grado</span> y la <span class="text-success">jornada</span>:</p>
-
-        <div class="row" style="margin-bottom: 20px;">
-          <div class="col-md-2" style="margin-bottom: 20px;">
-            <div class="form-group">
-              <label class=""> Grado </label>
-              <!-- cuadro de dialogo -->
-              <select id="id_g" name="id_gs"
-              class="form-control" required>
-              <option value="-1">Seleccione ...</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="col-md-2" style="margin-bottom: 20px;">
-          <div class="form-group">
-            <label class="control-label">Jornada </label>
-            <select id="jornada" placeholder="Seleccione la jornada"
-            class="form-control" required>
-            <option value=1>Ma&ntilde;ana</option>
-            <option value=2>Tarde</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="row g-2">
-      <div class="card col-sm-12 col-md-5 col-lg-4 border border-primary rounded"
-      style="padding:0px">
-      <div id="consultar" class="card-body" style="padding: 0px;">
-        <div class="card-header">
-        <h5 class="card-title">Consultas</h5>
-      </div>
-
-      <div name="datos" id="datos" targer="_blanck"
-      style="padding:10px;">
-      <small class="text-muted">Para ejecutar una consulta de estudiantes,
-      docentes, materias, etc, favor seleccione una opcion en la
-      siguiente lista.</small>
-      <br><br>
-
-      <select name="opcion" id="opcion"
-              class="form-select form-select-lg mb-3"
-              onchange="consultar_display();">
-        <option  value="-1" activate>Seleccione ...</a>
-        <option  value="1">Estudiantes</a>
-        <option  value="2">Docentes</a>
-        <option  value="3">Materias</a>
-        <option  value="4">Áreas</a>
-        <option  value="5">Logros</a>
-        <?php	if($admin) { ?>
-          <option  value="6">Boletin</a>
-          <option  value="16">Certificado</a>
-        <?php } ?>
-        <option  value="7">Matricula Alumnos</a>
-        <?php	if($admin) { ?>
-          <option  value="8">Matricula Docentes</a>
-          <option  value="9">Requisitos Materia</a>
-          <option  value="10">Evalucion</a>
-        <?php } ?>
-        <option  value="12">Nota</a>
-        <option  value="13">Registros por grado</a>
-        <option  value="14">Registros por docente</a>
-        <option  value="15">Registros por alumno</a>
-      </select>
-      <hr>
-
-    <div id="nombre_con" class="form-floating"
-    style="display: none;" placeholder="digite el nombre o parte del nombre">
-    <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
-    <input id="i_nombres_con" class="form-control" name="i_nombres" type="text" onkeydown="campo_nombre();">
-    <label from="id_nombres_con">Nombre</label>
-  </div>
-
-  <div id="apellido_con" class="form-floating" style="display: none;" onkeydown="campo_nombre();">
-    <!-- se genera un campo insertar el apellido -->
-    <input id="apellidos_con" class="form-control" name="apellidos" type="text">
-    <label from="apellidos_con">Apellido</label>
-  </div>
-  <div id="estudiante_con" class="form-floating" style="display: none;">
-    <!-- Se ingresa  un campo para seleccionar  un estudiante --> Estudiante :
-    <select class="form-select" id="estudiantes_con" name="estudiantes"
-    style="width: 50px;background-color: transparent;border: none;">
-    <option value="-1">Seleccione
-    </option>
-  </select>
-  <label for="estudiantes_con">Codigo del estudiante</label>
-</div>
-
-<div id="id_a_con" class="form-floating" style="display: none;">
-  <input id="id_as_con" class="form-control" name="id_as" type="text">
-  <label form="id_as_con">Aarea</label>
-</div>
-
-<div id="id_m_con" class="form-floating" style="display: none;">
-
-  <select id="id_ms_con" name="id_ms" class="form-control"
-  onchange="consultar();">
-  <option value="-1">Seleccione
-  </option>
-</select>
-<label>Materia</label>
-</div>
-
-<!-- contien los campos para  editar los contenidos de los logros -->
-<div id="Logro_con" class="form-floating" style="margin-top:20px;">
-  <textarea  id="Logros_con" class="form-control" name="Logros" onkeyup="consultar();">
-</textarea>
-<label form="logros_con">Logro</label>
-</div>
-
-
-<!-- boton para cargar datos -->
-<input style="background-color: darkgray; width:100%;
-height: 50px; border: #000 1px solid; margin-top: 20px;"
-type='button' value='CARGAR' id="cargar" onclick="consultar();">
-
-<!-- boton creado para crear el pdf -->
-<button type="button"
-        style="margin: auto;"
-        class="btn btn-outline-success"
-        value='CREAR BOLETIN'
-        id="generar"
-        onclick="boletin();">
-  CREAR BOLETIN
-</button>
-
-
-
-<!-- genera voletines con el modelo de preescolar -->
-<input style="background-color: #21FFA0; width:100%;
-height: 50px; border: #000 1px solid; margin-top: 20px;"
-type='button' value='GRAFICAR' id="graficar" onclick="grafica();">
-
-</div>
-
-
-<div   id="resultado_con" style="width: 99%;margin-top: 20px;margin-left: auto;">
-
-</div>
-
-<div   id="grafo" style="width: 800px; height: 400px">
-</div>
-
-</div>
-</div><!-- Fin de columna  -->
-
-
-<!--------------------------------------------------------->
-<!--------------- div ADICIONAR -------------------------->
-<!--  estos son los campos que constituyen el  segundo menu
-principal que es el menu adiccionar el cual se usa
-en la ediccion de nuevas notas de los estudiantes -->
-
-<div class="card col-lg-7 col-md-6 col-sm-12 offset-md-1 offset-lg-1 border border-secondary rounded" style="padding:0px">
-  <div class="card-header">
-    <h5 class="card-title">Tareas</h5>
-  </div>
-  <div id="menu_adiccionar" class="card-body menu_add" colspan="1">
-
-    <!-- Formulario que contiene los campos del menu adicionar -->
-    <form id="adiccionar" >
-
-      <!-- boton que interactua  entre las funciones
-      adiccionar y editar -->
-      <div class="form-check">
-
-      <input type="radio"
-              name="menu"
-              id="add_radio"
-              class="form-check-input"
-              value="add"
-              onclick="menu_adicionar();" >
-
-      <label for="add_radio"
-              style="font-size: large;"
-              class="form-check-label">Adiccionar</label>
-    </div>
-    <div class="form-check">
-      <input type="radio"
-              name="menu"
-              id="edi_radio"
-              class="form-check-input"
-              value="edi"
-              onclick="menu_adicionar();" >
-
-      <label id="edi_label"
-              style="font-size: large;"
-              class="form-check-label">Editar</label>
-
-    </div>
-
-      <!-- selector que permite selecionar la funcion a adiccionar -->
-      <select  name='add' id="add" class="form-select">
-        <option value='-1'>Seleccione
-        </option>
-        <?php	if($admin) { ?>
-          <option value='1'>Estudiantes
-          </option>
-          <option value='2'>Docentes
-          </option>
-          <option value='3'>Materias
-          </option>
-          <option value='4'>&Aacute;reas
-          </option>
-          <option value='5'>Logros
-          </option>
-          <option value='7'>Matricula Alumnos
-          </option>
-          <option value='8'>Matricula Docentes
-          </option>
-          <option value='9'>Requisitos Materia
-          </option>
-        <?php } ?>
-
-        <option value='11'>Nota
-        </option>
-        <?php	if($admin) { ?>
-
-          <option value='12'>Registos
-          </option>
-        <?php } ?>
-        <!-- Esta es la opcion permite configurar las notas realizadas -->
-      </select>
-
-      <br>
-
-      <!-- Selector que permite seleccionar las distintas
-      opciones a editar-->
-      <select class="form-select" name="ed" id="edi" onchange="edit_display();">
-        <option value='-1'>Seleccione
-        </option>
-        <?php	if($admin) { ?>
-          <option value='1'>Estudiantes
-          </option>
-          <option value='2'>Docentes
-          </option>
-          <option value='5'>Logros
-          </option>
-          <option value='12'>Periodos
-          </option>
-        <?php } ?>
-        <!-- Esta es la opcion permite configurar las notas realizadas -->
-      </select>
-      <br>
-      <!-- <div id="mensaje_error"
-            class="alert alert-danger"
-            style="background-color:transparent"
-            role="alert">
-      </div> -->
-
-      <div id="id_l" class="form-floating">
-
-        <!-- Fila en la que se ingresan los docentes -->
-        <input type="text"
-                class="form-control"
-                name="id_ls"
-                id="id_ls"
-                onblur="actualizar_logro();">
-        <label for="id_ls">C&oacute;digo:</label>
-      </div>
-
-      <div id="id_e" class="form-floating mb-3">
-
-        <!-- Fila en la que se ingresan los docentes -->
-        <input type="text"
-                name="id_es"
-                class="form-control"
-                id="id_es"
-                onblur="actualizar_nombre()">
-        <label for="id_es">C&oacute;digo:</label>
-      </div>
-
-      <div id="id_d" class="form-floating">
-        <!-- Fila en la que se ingresan los docentes -->
-        <input type="text"
-                name="id_ds"
-                class="form-control"
-                id="id_ds" >
-        <label for="id_ds">C&oacute;digo:</label>
-      </div>
-
-      <div id="docente"  class="form-floating">
-
-        <!-- Fila en la que se ingresan los docentes -->
-        <select id="docentes"
-                name="docentes"
-                class="from-select">
-          <option value='-1'>Seleccione
-          </option>
-        </select>
-        <label for="docentes">Docente</label>
-      </div>
-
-      <div id="nombre" class="form-floating">
-        <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
-
-        <input type="text"
-                id ='i_nombres'
-                name="i_nombres"
-                class="form-control">
-        <label from="id_nombres">Nombre</label>
-      </div>
-
-      <div id="apellido" class="form-floating" >
-        <!-- se genera un campo insertar el apellido -->
-        <input type='text'
-                id ='apellidos'
-                name="apellidos"
-                class="form-control">
-        <label from="apellidos">Apellidos</label>
-      </div>
-
-      <div  id="estudiante" class="form-floating">
-        <!-- Se ingresa  un campo para seleccionar  un estudiante --> Estudiante :
-        <select id="estudiantes"
-                name="estudiantes"
-                class="form-control"  >
-          <option value='-1'>Seleccione
-          </option>
-          <label for="estudiantes">Estudiante</label>
-        </select>
-      </div>
-
-      <div id="fecha" class="form-floating">
-        <!-- campo donde se ingresa la fecha  de nacimiento del estudiante -->
-        <input type="date"
-              min="1950-01-01"
-              max="2050-01-01"
-              id="fechas"
-              name ="fechas"
-              class="form-control" >
-        (yyyy/mm/dd)
-        <label for="fechas">Nacimiento:</label>
-      </div>
-
-      <div id="telefono" class="form-floating">
-        <!-- En este campo se ingresa  el  numero telefonico -->	Telefono:
-        <input type='tel'
-              id ='telefonos'
-              name="telefonos"
-              class="form-control">
-              <label for="telefonos">Telefono</label>
-      </div>
-
-      <div id="correo" class="form-floating">
-        <!-- en este campo se ingresa el telefono del estudiante --> Correo:
-        <input type='email'
-              id ='correos'
-              name="correos"
-              class="form-control">
-        <label for="correos">Correo</label>
-      </div>
-
-      <div id="cedula" class="form-floating">
-        <input type='text'
-              id ='cedulas'
-              name="cedulas"
-              class="form-control">
-              <label for="cedulas">Cedula</label>
-      </div>
-
-
-      <div id="area" class="form-floating">
-        <!-- se genera un campo   para la creacion
-        de las materias atendidas por docente -->
-        <input  type="text"
-                size="50"
-                id ='areas'
-                name="areas"
-                style="width: 60%;"
-                class="form-control">
-          <label for="areas">Materias</label>
-      </div>
-
-      <div id="id_m" class="form-floating">
-        <select id="id_ms"
-                name="id_ms" >
-          <option value='-1'>Seleccione
-          </option>
-        </select>
-        <label>Materia</label>
-      </div>
-
-      <div id="id_a" class="form-floating">
-        <input type='text'
-              id ='id_as'
-              name="id_as"
-              class="form-control">
-              <label>Id Area</label>
-      </div>
-
-      <div id="Logro" class="form-floating">
-        <textarea rows="2" cols="90" id="Logros" name="logros"
-        style="width: 80%;" class="form-control">
-      </textarea>
-      <label for="Logros">Logro</logro>
-
-    </div>
-
-    <div id="fecha_fin" class="form-floating">
-      <!-- En este campo se ingresa la fecha de fin del curso -->
-      <input type='date' min="1950-01-01" max="2050-01-01"
-      id='fecha_fins' name="fecha_fins" class="form-control" >
-      <label>Finalizacion(mm/dd/yyyy)
-      </label>
-    </div>
-
-    <div id="logro_1" class="form-floating">
-      <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
-      Logro 1:
-      <input type="text"  id ='logro_1' name="logro_1"
-      required="required"  class="campo">
-      <select name="logro_1x" id="logro_1x">
-        <option value='-1'>Seleccione
-        </option>
-      </select>
-    </div>
-
-    <div id="logro_2" class="form-floating">
-      <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
-      Logro 2:
-      <input type="text"  id ='logro_2' name="logro_2" class="campo">
-      <select name="logro_2x" id="logro_2x">
-        <option value='-1'>Seleccione
-        </option>
-      </select>
-    </div>
-
-    <div id="logro_3" class="form-floating">
-      <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
-      Logro 3:
-      <input type="text"  id ='logro_3' name="logro_3" class="campo">
-      <select name="logro_3x" id="logro_3x">
-        <option value='-1'>Seleccione
-        </option>
-      </select>
-    </div>
-
-    <button type='button'
-            style="margin: auto;margin-top: 20px;"
-            class="btn btn-outline-success"
-            value='INGRESAR'
-            id="ingresar"
-            onclick="deposit();">
-            Ingresar
-          </button>
-
-    <button type='button'
-            style="margin: auto;"
-            class="btn btn-outline-warning"
-            value='ACTUALIZAR'
-            id="actualizar"
-            onclick="upgrade();">
-            Actualizar
-            </button>
-
-  </form>
-  <div   id="resultado">
-  </div>
-  <div   id="calificador">
-  </div>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><!--fin de max-width -->
-</body>
-</html>
+                  <?php } 	?>
+                  </select>
+                  </div>
+
+                  <div class="col-md-2">
+                  <label class="control-label"> Corte </label>
+                  <select id="corte" class="form-control form-control-sm tag_formulario">
+                  <option value=A>A</option>
+                  <option value=F>F</option>
+                  </select>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  <br>
+
+                  <div class="container">
+                  <p >Seleccione el <span class="text-success">grado</span> y la <span class="text-success">jornada</span>:</p>
+
+                  <div class="row" style="margin-bottom: 20px;">
+                  <div class="col-md-2" style="margin-bottom: 20px;">
+                  <div class="form-group">
+                  <label class=""> Grado </label>
+                  <!-- cuadro de dialogo -->
+                  <select id="id_g" name="id_gs"
+                  class="form-control" required>
+                  <option value="-1">Seleccione ...</option>
+                  </select>
+                  </div>
+                  </div>
+
+                  <div class="col-md-2" style="margin-bottom: 20px;">
+                  <div class="form-group">
+                  <label class="control-label">Jornada </label>
+                  <select id="jornada" placeholder="Seleccione la jornada"
+                  class="form-control" required>
+                  <option value=1>Ma&ntilde;ana</option>
+                  <option value=2>Tarde</option>
+                  </select>
+                  </div>
+                  </div>
+                  </div>
+
+
+
+                  <div class="row ">
+                  <div class="card col-sm-12 col-md-6 col-lg-6  border border-primary rounded"
+                  style="padding:0px">
+                  <div id="consultar" class="card-body" style="padding: 0px;">
+                  <div class="card-header">
+                  <h5 class="card-title">Consultas</h5>
+                  </div>
+
+                  <div name="datos" id="datos" targer="_blanck"
+                  style="padding:10px;">
+                  <small class="text-muted">Para ejecutar una consulta de estudiantes,
+                  docentes, materias, etc, favor seleccione una opcion en la
+                  siguiente lista.</small>
+                  <br><br>
+
+                  <select name="opcion" id="opcion"
+                  class="form-select form-select-lg mb-3"
+                  onchange="consultar_display();">
+                  <option  value="-1" activate>Seleccione ...</a>
+                  <option  value="1">Estudiantes</a>
+                  <option  value="2">Docentes</a>
+                  <option  value="3">Materias</a>
+                  <option  value="4">Áreas</a>
+                  <option  value="5">Logros</a>
+                  <?php	if($admin) { ?>
+                    <option  value="6">Boletin</a>
+                    <option  value="16">Certificado</a>
+                    <?php } ?>
+                    <option  value="7">Matricula Alumnos</a>
+                    <?php	if($admin) { ?>
+                      <option  value="8">Matricula Docentes</a>
+                      <option  value="9">Requisitos Materia</a>
+                      <option  value="10">Evalucion</a>
+                      <?php } ?>
+                      <option  value="12">Nota</a>
+                      <option  value="13">Registros por grado</a>
+                      <option  value="14">Registros por docente</a>
+                      <option  value="15">Registros por alumno</a>
+                      </select>
+                      <hr>
+
+                      <div id="nombre_con" class="form-floating"
+                      style="display: none;" placeholder="digite el nombre o parte del nombre">
+                      <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
+                      <input id="i_nombres_con" class="form-control" name="i_nombres" type="text" onkeydown="campo_nombre();">
+                      <label from="id_nombres_con">Nombre</label>
+                      </div>
+
+                      <div id="apellido_con" class="form-floating" style="display: none;" onkeydown="campo_nombre();">
+                      <!-- se genera un campo insertar el apellido -->
+                      <input id="apellidos_con" class="form-control" name="apellidos" type="text">
+                      <label from="apellidos_con">Apellido</label>
+                      </div>
+                      <div id="estudiante_con" class="form-floating" style="display: none;">
+                      <!-- Se ingresa  un campo para seleccionar  un estudiante --> Estudiante :
+                      <select class="form-select" id="estudiantes_con" name="estudiantes"
+                      style="width: 50px;background-color: transparent;border: none;">
+                      <option value="-1">Seleccione
+                      </option>
+                      </select>
+                      <label for="estudiantes_con">Codigo del estudiante</label>
+                      </div>
+
+                      <div id="id_a_con" class="form-floating" style="display: none;">
+                      <input id="id_as_con" class="form-control" name="id_as" type="text">
+                      <label form="id_as_con">Aarea</label>
+                      </div>
+
+                      <div id="id_m_con" class="form-floating" style="display: none;">
+
+                      <select id="id_ms_con"
+                              name="id_ms"
+                              placeholder "seleccion de materias"
+                              class="form-control"
+                              onchange="consultar();">
+                      <option value="-1">Seleccione
+                      </option>
+                      </select>
+                      <label for="id_ms_con">Materia</label>
+                      </div>
+
+                      <!-- contien los campos para  editar los contenidos de los logros -->
+                      <div id="Logro_con" class="form-floating" style="margin-top:20px;">
+                      <textarea  id="Logros_con" class="form-control" name="Logros" onkeyup="consultar();">
+                      </textarea>
+                      <label form="logros_con">Logro</label>
+                      </div>
+
+
+                      <!-- boton para cargar datos -->
+                      <button type='button'
+                      style="margin: auto;"
+                      value='CARGAR'
+                      class="btn btn-outline-primary"
+                      id="cargar"
+                      onclick="consultar();">
+                      CARGAR
+                      </button>
+                      <!-- boton creado para crear el pdf -->
+                      <button type="button"
+                      style="margin: auto;"
+                      class="btn btn-outline-success"
+                      value='CREAR'
+                      id="generar"
+                      onclick="boletin();">
+                      CREAR
+                      </button>
+
+
+
+                      <!-- genera voletines con el modelo de preescolar -->
+                      <button type='button'
+                      style="margin: auto;"
+                      class="btn btn-outline-info"
+                      value='GRAFICAR'
+                      id="graficar"
+                      onclick="grafica();">
+                      GRAFICAR
+                      </button>
+
+                      </div>
+
+
+                      <div   id="resultado_con" style="width: 99%;margin-top: 20px;margin-left: auto; padding-top:20x;">
+
+                      </div>
+
+                      <div   id="grafo" style="width: 800px; height: 400px">
+                      </div>
+
+                      </div>
+                      </div><!-- Fin de columna  -->
+
+
+                      <!--------------------------------------------------------->
+                      <!--------------- div ADICIONAR -------------------------->
+                      <!--  estos son los campos que constituyen el  segundo menu
+                      principal que es el menu adiccionar el cual se usa
+                      en la ediccion de nuevas notas de los estudiantes -->
+
+                      <div class="card col-lg-6 col-md-6 col-sm-12 border border-secondary rounded" style="padding:0px">
+                      <div class="card-header">
+                      <h5 class="card-title">Tareas</h5>
+                      </div>
+                      <div id="menu_adiccionar" class="card-body menu_add" colspan="1">
+
+                      <!-- Formulario que contiene los campos del menu adicionar -->
+                      <form id="adiccionar" >
+
+                      <small class="text-muted">
+                      En este men&uacute; aparecen las tareas a realizar, puede elegir entre
+                      adiccionar y editar y luego la tarea a realizar en el men&uacute; tarea.
+                      </small>
+                      <br><br>
+                      <!-- boton que interactua  entre las funciones
+                      adiccionar y editar -->
+                      <div class="form-check">
+
+                      <input type="radio"
+                      name="menu"
+                      id="add_radio"
+                      class="form-check-input"
+                      value="add"
+                      onclick="menu_adicionar();" >
+
+                      <label for="add_radio"
+                      style="font-size: large;"
+                      class="form-check-label">Adiccionar</label>
+                      </div>
+                      <div class="form-check">
+                      <input type="radio"
+                      name="menu"
+                      id="edi_radio"
+                      class="form-check-input"
+                      value="edi"
+                      onclick="menu_adicionar();" >
+
+                      <label id="edi_label"
+                      style="font-size: large;"
+                      class="form-check-label">Editar</label>
+
+                      </div><br>
+
+                      <small class="text-muted">Tarea (adiccionar/editar)</small><br>
+
+                      <!-- selector que permite selecionar la funcion a adiccionar -->
+                      <select  name='add' id="add" class="form-select">
+                      <option value='-1'>Seleccione
+                      </option>
+                      <?php	if($admin) { ?>
+                        <option value='1'>Estudiantes
+                        </option>
+                        <option value='2'>Docentes
+                        </option>
+                        <option value='3'>Materias
+                        </option>
+                        <option value='4'>&Aacute;reas
+                        </option>
+                        <option value='5'>Logros
+                        </option>
+                        <option value='7'>Matricula Alumnos
+                        </option>
+                        <option value='8'>Matricula Docentes
+                        </option>
+                        <option value='9'>Requisitos Materia
+                        </option>
+                        <?php } ?>
+
+                        <option value='11'>Nota
+                        </option>
+                        <?php	if($admin) { ?>
+
+                          <option value='12'>Registos
+                          </option>
+                          <?php } ?>
+                          <!-- Esta es la opcion permite configurar las notas realizadas -->
+                          </select>
+
+
+                          <!-- Selector que permite seleccionar las distintas
+                          opciones a editar-->
+                          <select class="form-select" name="ed" id="edi" onchange="edit_display();">
+                          <option value='-1'>Seleccione
+                          </option>
+                          <?php	if($admin) { ?>
+                            <option value='1'>Estudiantes
+                            </option>
+                            <option value='2'>Docentes
+                            </option>
+                            <option value='5'>Logros
+                            </option>
+                            <option value='12'>Periodos
+                            </option>
+                            <?php } ?>
+                            <!-- Esta es la opcion permite configurar las notas realizadas -->
+                            </select>
+                            <br>
+                            <!-- <div id="mensaje_error"
+                            class="alert alert-danger"
+                            style="background-color:transparent"
+                            role="alert">
+                            </div> -->
+                            <hr>
+                            <div id="id_l" class="form-floating">
+
+                            <!-- Fila en la que se ingresan los docentes -->
+                            <input type="text"
+                            class="form-control"
+                            name="id_ls"
+                            id="id_ls"
+                            onblur="actualizar_logro();">
+                            <label for="id_ls">C&oacute;digo:</label>
+                            </div>
+
+                            <div id="id_e" class="form-floating mb-3">
+
+                            <!-- Fila en la que se ingresan los docentes -->
+                            <input type="text"
+                            name="id_es"
+                            class="form-control"
+                            id="id_es"
+                            onblur="actualizar_nombre()">
+                            <label for="id_es">C&oacute;digo:</label>
+                            </div>
+
+                            <div id="id_d" class="form-floating">
+                            <!-- Fila en la que se ingresan los docentes -->
+                            <input type="text"
+                            name="id_ds"
+                            class="form-control"
+                            id="id_ds" >
+                            <label for="id_ds">C&oacute;digo:</label>
+                            </div>
+
+                            <div id="docente"  class="form-floating">
+
+                            <!-- Fila en la que se ingresan los docentes -->
+                            <select id="docentes"
+                            name="docentes"
+                            class="form-select">
+                            <option value='-1'>Seleccione
+                            </option>
+                            </select>
+                            <label for="docentes">Docente</label>
+                            </div>
+
+                            <div id="nombre" class="form-floating">
+                            <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
+
+                            <input type="text"
+                            id ='i_nombres'
+                            name="i_nombres"
+                            class="form-control">
+                            <label from="id_nombres">Nombre</label>
+                            </div>
+
+                            <div id="apellido" class="form-floating" >
+                            <!-- se genera un campo insertar el apellido -->
+                            <input type='text'
+                            id ='apellidos'
+                            name="apellidos"
+                            class="form-control">
+                            <label from="apellidos">Apellidos</label>
+                            </div>
+
+                            <div  id="estudiante" class="form-floating">
+                            <!-- Se ingresa  un campo para seleccionar  un estudiante --> Estudiante :
+                            <select id="estudiantes"
+                            name="estudiantes"
+                            class="form-control"  >
+                            <option value='-1'>Seleccione
+                            </option>
+                            <label for="estudiantes">Estudiante</label>
+                            </select>
+                            </div>
+
+                            <div id="fecha" class="form-floating">
+                            <!-- campo donde se ingresa la fecha  de nacimiento del estudiante -->
+                            <input type="date"
+                            min="1950-01-01"
+                            max="2050-01-01"
+                            id="fechas"
+                            name ="fechas"
+                            class="form-control" >
+
+                            <label for="fechas">Nacimiento:(yyyy/mm/dd)</label>
+                            </div>
+
+                            <div id="telefono" class="form-floating">
+                            <!-- En este campo se ingresa  el  numero telefonico -->
+                            <input type='tel'
+                            id ='telefonos'
+                            name="telefonos"
+                            class="form-control">
+                            <label for="telefonos">Telefono</label>
+                            </div>
+
+                            <div id="correo" class="form-floating">
+                            <!-- en este campo se ingresa el telefono del estudiante -->
+                            <input type='email'
+                            id ='correos'
+                            name="correos"
+                            class="form-control">
+                            <label for="correos">Correo</label>
+                            </div>
+
+                            <div id="i_correo" class="form-floating">
+                            <!-- en este campo se ingresa el telefono del estudiante -->
+                            <input type='email'
+                            id ='i_correos'
+                            name="i_correos"
+                            class="form-control">
+                            <label for="i_correos">Correo institucional</label>
+                            </div>
+
+                            <div id="cedula" class="form-floating">
+                            <input type='text'
+                            id ='cedulas'
+                            name="cedulas"
+                            class="form-control">
+                            <label for="cedulas">Cedula</label>
+                            </div>
+
+
+                            <div id="area" class="form-floating">
+                            <!-- se genera un campo   para la creacion
+                            de las materias atendidas por docente -->
+                            <input  type="text"
+                            id ='areas'
+                            name="areas"
+                            style="width: 100%;"
+                            class="form-control">
+                            <label for="areas">Materias</label>
+                            </div>
+
+                            <br>
+
+                            <div id="id_m" class="form-group">
+
+                              <label for="id_ms">Materia</label>
+                            <select id="id_ms"
+                                    class="form-control"
+                                    placeholder "seleccion de materias"
+                                    name="id_ms" >
+                            <option value='-1'>Sel </option>
+                            </select>
+
+                            </div>
+
+                            <div id="id_a" class="form-floating">
+                            <input type='text'
+                            id ='id_as'
+                            name="id_as"
+                            class="form-control">
+                            <label>Id Area</label>
+                            </div>
+
+                            <div id="Logro" class="form-floating">
+                            <textarea rows="2" cols="90" id="Logros" name="logros"
+                            style="width: 80%;" class="form-control">
+                            </textarea>
+                            <label for="Logros">Logro</logro>
+
+                            </div>
+
+                            <div id="fecha_fin" class="form-floating">
+                            <!-- En este campo se ingresa la fecha de fin del curso -->
+                            <input type='date' min="1950-01-01" max="2050-01-01"
+                            id='fecha_fins' name="fecha_fins" class="form-control" >
+                            <label>Finalizacion(mm/dd/yyyy)
+                            </label>
+                            </div>
+
+                            <div id="logro_1" class="form-floating">
+                            <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
+                            Logro 1:
+                            <input type="text"  id ='logro_1' name="logro_1"
+                            required="required"  class="campo">
+                            <select name="logro_1x" id="logro_1x">
+                            <option value='-1'>Seleccione
+                            </option>
+                            </select>
+                            </div>
+
+                            <div id="logro_2" class="form-floating">
+                            <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
+                            Logro 2:
+                            <input type="text"  id ='logro_2' name="logro_2" class="campo">
+                            <select name="logro_2x" id="logro_2x">
+                            <option value='-1'>Seleccione
+                            </option>
+                            </select>
+                            </div>
+
+                            <div id="logro_3" class="form-floating">
+                            <!--  etiqueta para colocar la caja de texto donde se ubica el nombre -->
+                            Logro 3:
+                            <input type="text"  id ='logro_3' name="logro_3" class="campo">
+                            <select name="logro_3x" id="logro_3x">
+                            <option value='-1'>Seleccione
+                            </option>
+                            </select>
+                            </div>
+
+                            <button type='button'
+                            style="margin: auto;margin-top: 20px;"
+                            class="btn btn-outline-success"
+                            value='INGRESAR'
+                            id="ingresar"
+                            onclick="deposit();">
+                            Ingresar
+                            </button>
+
+                            <button type='button'
+                            style="margin: auto;"
+                            class="btn btn-outline-warning"
+                            value='ACTUALIZAR'
+                            id="actualizar"
+                            onclick="upgrade();">
+                            Actualizar
+                            </button>
+
+                            </form>
+                            <div class="callout callout-info"  id="resultado">
+                            </div>
+                            <div   id="calificador">
+                            </div>
+                            </div>
+                            </div>
+
+                            </div>
+
+                            </div><!-- fin del container -->
+
+                            </div> <!-- fin del formulario -->
+
+                            </div><!--fin de max-width -->
+                            </body>
+                            </html>
