@@ -49,7 +49,7 @@
 
 
 	// se realiza la  consulta en la base de datos
-	$q1x = mysqli_query($link, $q1 ) or die('no se encuentra el nombre: ' . mysql_error());;
+	$q1x = mysqli_query($link, $q1 ) or die('no se encuentra el nombre: ' . mysqli_error($link));;
 
 
 	//recupero el arreglo generado en el resultado

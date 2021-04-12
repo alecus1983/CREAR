@@ -1,16 +1,16 @@
 <?php
 session_start();
-
-require_once 'conexion.php';
-
 if(!isset($_SESSION['usuario']))
 {
+  session_destroy();
   //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
   header('Location:login_boletines.php');
 
   //termina el programa php
   exit();
 }
+
+require_once 'conexion.php';
 
 $link = conectar();
 

@@ -19,7 +19,7 @@ $link = conectar();
 	$q1 = "SELECT * FROM alumnos WHERE id_alumno =".$nombre;
 	//echo "consulta".$q1;
 	// se realiza la  consulta en la base de datos
-	$q1x = mysqli_query( $link ,$q1) or die('no se encuentra el nombre: ' . mysqli_error());;
+	$q1x = mysqli_query( $link ,$q1) or die('no se encuentra el nombre: ' . mysqli_error($link));;
 
 	//recupero el arreglo generado en el resultado
 	$dato1 = mysqli_fetch_array($q1x);

@@ -18,7 +18,7 @@ header("Content-Type: text/html;charset=utf-8");
 // CONEXION CON LA BASE DE DATOS
 $link = conectar();
 
-mysqli_query("SET NAMES 'utf8'");
+//mysqli_query("SET NAMES 'utf8'");
 
 
 // Se establece el tipo de cabecera  que tendra el documento
@@ -131,7 +131,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
     $pdf->Cell(80,5,utf8_decode('NOMBRE DEL ESTUDIANTE'),1,0,'C',true);
     $pdf->Cell(25,5,utf8_decode('GRADO'),1,0,'C',true);
     $pdf->Cell(25,5,utf8_decode('JORNADA'),1,0,'C',true);
-    $pdf->Cell(30,5,'AÑO LECTIVO',1,0,'C',true);
+    $pdf->Cell(30,5,'Aï¿½O LECTIVO',1,0,'C',true);
     $pdf->Ln();
     $pdf->Cell(20,5,utf8_decode($dato2['id_alumno']),1,0,'C');
     $pdf->Cell(80,5,utf8_decode($nombres." ".$apellidos),1,0,'C');
@@ -687,7 +687,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
                         }
                         else {
                             if($nota >= 3) {
-                              $valor = "Básico";
+                              $valor = "Bï¿½sico";
                               $pdf->SetFillColor(255, 230, 0);
                             }
                             else {
@@ -706,7 +706,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
 
                     $pdf->Cell(20,4,utf8_decode("Faltas: ".$faltas),'B',0,'L');
 
-                    $pdf->Cell(50,4,"Nivel de desempeño : ".$valor,'B',0,'L');
+                    $pdf->Cell(50,4,"Nivel de desempeï¿½o : ".$valor,'B',0,'L');
                     $pdf->SetFont('Arial','B',9);
                     $pdf->Cell(20,4,utf8_decode("Nota : ".$nota),1,0,'L',true);
 

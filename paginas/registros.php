@@ -4,9 +4,9 @@ session_start();
 
 if(!isset($_SESSION['usuario']))
 {
+  session_destroy();
   //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
   header('Location:login_boletines.php');
-
   //termina el programa php
   exit();
 }
@@ -57,7 +57,7 @@ for($i= 1; $i <= 5 ; $i++) {
    	//  se almacenan las materias de un grado especifico
 		$id_m = $materias_grado["id_materia"];
 
-   	echo "<br>materia - <b>".$materias_grado["materia"]."</b>";
+   	echo "<br>materia - <b>".utf8_encode($materias_grado["materia"])."</b>";
    	//CONSULTA LOS ALUMNOS MATRICULADOS EN UN AÑO Y GRADO
 
    	$q2 = "SELECT * FROM alumnos A INNER JOIN matricula M ON A.id_alumno = M.id_alumno
@@ -145,8 +145,8 @@ for($i= 1; $i <= 5 ; $i++) {
 
          		for ( $ii = $numero_f; $ii<3 ; $ii++){
                   // insrto en la tabla calificaciones un registro con los campos predefinidos
-          			$q4 = "INSERT INTO calificaciones (id_alumno, id_docente, id_materia, periodo, corte, year, serie, id_logro,nota, limite, modificado, own,serie)
-								VALUES ('$id_a', 0, '$id_m', '$i', 'F' , '$ano',$ii,0 , 0 ,'$fecha_f' ,'$hoy' , 99,0)";
+          			$q4 = "INSERT INTO calificaciones (id_alumno, id_docente, id_materia, periodo, corte, year, serie, id_logro,nota, limite, modificado, own)
+								VALUES ('$id_a', 0, '$id_m', '$i', 'F' , '$ano',$ii,0 , 0 ,'$fecha_f' ,'$hoy' , 99)";
                   // ejecuto la consulta en la base de datos
 	            		$q4x = mysqli_query( $link, $q4) or die('Error al insertar calificaciones : '. mysqli_error($link));
             		//echo "consulta:<font color='green'> $q4 </font><br>";

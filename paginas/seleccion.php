@@ -1,16 +1,18 @@
 <?php
 session_start();
+// if(!isset($_SESSION['usuario']))
+// {
+//   session_destroy();
+//   //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
+//   header('Location:login_boletines.php');
+//   //termina el programa php
+//   exit();
+// }
+
 require_once 'conexion.php';
 $link = conectar();
 
-if(!isset($_SESSION['usuario']))
-{
-  //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
-  header('Location:login_boletines.php');
 
-  //termina el programa php
-  exit();
-}
 
 // Se fija el grupo de caracteres en UTF 8
 
@@ -24,11 +26,9 @@ if (!$link->set_charset("utf8")) {
       //printf("Conjunto de caracteres actual: %s\n", $link->character_set_name());
 }
 
-
 // Pagina transitoria para generar los resultados a actualizar
 // RECUPERO DATOS DE EL FORMULARIO
 // DE ACTUACCION
-
 
 // recibe parametros por el método POST
 $opcion = $_POST["opcion"];
@@ -36,24 +36,32 @@ $nombres = $_POST["i_nombres"];
 $apellidos = $_POST["apellidos"];
 $logros = $_POST["Logros"];
 $year = $_POST["years"];
-$id_g = $_POST["id_g"];
+
+if(isset($_POST["id_g"])){
+    $id_g = $_POST["id_g"];
+}else{
+    // si no hay valor pongo -1
+    $id_g = "-1";  
+} 
+
 $periodo = $_POST["periodos"];
 $estudiante = $_POST["estudiantes"];
 $mes = date("m");
-//$id_e = $_POST["id_es"];
-//$id_d = $_POST["id_ds"];
 $id_m = $_POST["id_ms"];
-//$materia = $_POST[""];
 $bk= "#FFFFFF";// variable de color de fondo de tabla
 $fondo = true;
-$admin = $_SESSION['admin'];
+
+
+
 $id_jornada = $_POST["jornada"];
 $corte = $_POST["corte"];
 
+if (isset($_SESSION['admin'])){
+    $admin = $_SESSION['admin'];
+
+
 
 // COMIENZO A GENERAR TABLA
-
-
 
 // VERIFICO LA OPCION SELECCIONADA EN LA TABLA PARA INGREASAR
 // 1 - CONSULTAR
@@ -71,11 +79,9 @@ $grado = mysqli_fetch_array($reg);
 $qj = "select * from jornada where id_jornada =".$id_jornada;
 // mostrar
 
-
 //echo $qj."<br>";
  $reg = mysqli_query( $link, $qj );// or  die("Problemas  en la tabla jornada:".mysqli_error($link));
 $jorn = mysqli_fetch_array($reg,MYSQLI_ASSOC);
-
 
 
 // se crea el emcabezado de la tabla
@@ -249,9 +255,20 @@ case 5:
     echo "<tbody>";
 
     break;
+    
+case 6: 
+    if( $id_g == "-1"){
+        echo "<div class='alert alert-danger' role='alert'>Seleccione un grado por favor ...</div>";
+    } 
+    break;
 
 case 7:
 
+    if( $id_g == "-1"){
+        echo "<d iv class='alert alert-danger' role='alert'>Seleccione un grado por favor ...</d>";
+    } else {
+        
+    
     // matriculas de alumnos
     echo "Estudiantes matriculados en el grado <b>"
         .$grado['nombre_g']
@@ -296,6 +313,7 @@ case 7:
     }
 
     echo "</tbody>";
+    }
 
     break;
 
@@ -438,11 +456,18 @@ case 11:
     echo "</tbody>";
 
     break;
+    
+    case 12:
+    
+    break;
 }
 
 
 echo	"</table>";
-
+} else {
+    echo "<div> su secci&oacute;n ha expirado ...</div>";
+    $admin = 0;
+}
 
 //Mysql_free_result() se usa para liberar la memoria empleada al realizar una consulta
 desconectar($link);

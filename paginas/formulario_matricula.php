@@ -1,17 +1,17 @@
 <?php session_start();
 //validamos si se ha hecho o no el inicio de sesion correctamente
 //si no se ha hecho la sesion nos regresarÃ¡ a login.php
-
-include_once 'conexion.php';
-
 if(!isset($_SESSION['usuario']))
 {
   //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
   header('Location:login_matriculas.php');
-
   //termina el programa php
   exit();
 }
+
+include_once 'conexion.php';
+
+
 ?>
 
 <!-- se define el tipo de documento ht como HTML 5 -->

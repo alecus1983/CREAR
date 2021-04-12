@@ -8,11 +8,28 @@ require_once 'conexion.php'; // requiere el archivo conexion.php
 **y los almacenamos en variables.*/
 
 $link = conectar();
-// recibe ele campo de cedula
-$usuario = $_POST["cedula"];
+
+// valido el campo de la cedula
+if (isset($_POST["cedula"])){
+    // recibe ele campo de cedula
+    $usuario = $_POST["cedula"];
+} else {
+    // salida
+    exit;
+}
+
+
+// valido el campo login
+if (isset($_POST["login"])){
+    $password = $_POST["login"];
+} else {
+    // salida
+    exit;
+}
+
 //echo $usuario."<br>";
 // recibe la contraseña
-$password = $_POST["login"];
+;
 
 //echo $password;
 $query = "select * from docentes where cedula ='".$usuario."'";
@@ -49,10 +66,6 @@ $row = $registro->fetch_array(MYSQLI_ASSOC);
                 </script>
                 <?";
     }
-
-
 // funcion que termina la conexion
 desconectar($link);
-
-
 ?>

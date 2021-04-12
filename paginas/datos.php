@@ -1,8 +1,10 @@
 <?php
 
+session_start();
 
 if(!isset($_SESSION['usuario']))
 {
+  session_destroy();
   //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
   header('Location:login_boletines.php');
 
@@ -470,7 +472,7 @@ class inscripcion extends imcrea {
     }
      // fin de la clase
 
-class matricula extends imcrea {
+  class matricula extends imcrea {
   // clave foranea del alumno
   public $id_alumno;
   // clave primaria
@@ -504,7 +506,7 @@ class matricula extends imcrea {
       $this->$year = $dato["year"];
       $this->$mes = $dato["mes"];
       $this->$retiro = $dato["retiro"];
-      //return $dato[0];
+      return $dato[0];
       $dato -> close();
     }
   }
@@ -708,6 +710,22 @@ class alumnos extends imcrea {
       $this -> _db -> close();
     }
   }
+}
+
+// clase que indica las graficas a crear
+class grafica extends imcrea {
+
+  // atributos
+
+
+  public function __construct()
+  {
+    // heredo el constructor de la clase
+    parent::__construct();
+
+
+  }
+
 }
 
 ?>

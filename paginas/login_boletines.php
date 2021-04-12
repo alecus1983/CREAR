@@ -19,6 +19,7 @@
   <script src="../JS/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../CSS/style.css" type="text/css">
   <link rel="stylesheet" href="../CSS/estilos.css" type="text/css">
+  <link href="../imagenes/escudo.gif" rel="shortcut icon"/>
 </meta>
 <title>Validacion</title>
 <style type="text/css">
@@ -33,8 +34,17 @@
   <div id="contenedor">
     <div class="sidenav">
       <div class="login-main-text">
-        <h2>Formulario<br><font style="color:#57e666;">Docentes</font></h2>
-        <p><font style="color:#777777;">Inicie secci&oacute;n para empezar</font></p>
+      
+      <div class="content_logo" style="margin-bottom: 3vw;">
+                <span id="imagen_logo" 
+                style="width: 60px; 
+                       height: 60px;
+                       background-size: contain;">
+                </span>   
+      </div>
+        <h2>Formulario<br>
+        <font style="color:#57e666;">Docentes</font></h2>
+        <p><font style="color:#a8a8a8;">Inicie secci&oacute;n para empezar</font></p>
       </div>
     </div>
     <div class="main">

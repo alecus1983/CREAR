@@ -120,7 +120,7 @@ if($grado == 7 || $grado == 8 || $grado == 9 ){
 			 //echo "<br><br>consulta :".$q2;
 			 $l++;
 // se ejecuta la consulta
- $q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas: ' . mysqli_error($link));
+ $q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas prescolar: ' . mysqli_error($link));
  // si la consulta es exitosa
  if($q2x) {
 	 $exito++;
@@ -157,7 +157,7 @@ if($grado == 7 || $grado == 8 || $grado == 9 ){
 			//echo "<br><br>consulta :".$q2;
 			$l++;
 // se ejecuta la consulta
-$q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas: ' . mysqli_error($link));
+$q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas 2: ' . mysqli_error($link));
 // si la consulta es exitos
 
 
@@ -179,5 +179,5 @@ else {
 	."</b></font> notas, <font color='red'><b>".$fracaso."</b></font> errores";
 	desconectar($link);
 
-   exit ();
+
 ?>

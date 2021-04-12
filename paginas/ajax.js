@@ -310,20 +310,7 @@ function check_estudiante () { // funcion que valida a los estudiantes
 
 
 
-function borrar(id, tabla) {
 
-
-
-if (confirm("ALERTA!! va a proceder a borrar, el registro : "+id+" de la tabla :"+tabla+" ACEPTAR\n de lo contrario de click en CANCELAR.") )
-	{
-
-	$.getJSON("delete.php", {"id": id, "tabla": tabla },
- 	function () {
- 		swal("se eliminaron  los datos correctamente");
- 	});
-	consultar();
-}
-}
 
 
 function crear_pdf(){
@@ -397,4 +384,41 @@ function obtener_pdf(){
 	console.log("los parametros son : %s",parametros);
 	window.open("generarx.php?"+parametros);
 	window.open("generarx_borrador.php?"+parametros);
+}
+
+///////////////////////////////////////////////////////////////
+// esta funcion tiene como objetivo realizar                 //
+// la carga de los combos dinamicos y recibe tres atributos  //
+// los cuales son :                                          //
+//                                                           //
+// a - nombre del combo                                      //
+// b - nombre del archivo php que carga el combo             //
+// c - conjunto de parametros en formato JSON                //
+///////////////////////////////////////////////////////////////
+
+function carga ( a ,b,c ) {
+
+  console.log("Valor a: %s",a); 	// variable que almacena el codigo del campo
+  console.log("Valor b: %s",b);	// variable que almacena el nombre del archivo PHP
+  console.log(JSON.stringify(c));	// parametro que se transmite  mediante ajax
+
+  $.post("campos/"+b, c,
+  function (dato) {
+    $(a).empty();
+
+    $(a).append("<option value = -1> Seleccione </option>");
+    $.each(dato, function(index, materia) {
+      $(a).append("<option value ="+ index+">" + materia + "</option>");
+
+    });
+  }, 'json');
+
+
+}
+
+// busca conocer los grados de acuerdo a la escolaridad
+function actualizar_grados_escolaridad (){
+
+  // cargo los datos en el selectror
+  carga("#grados_escolaridad","grados_escolaridad.php",{ escolaridad :  $("#escolaridad").val()});
 }

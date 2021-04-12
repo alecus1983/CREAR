@@ -74,7 +74,7 @@
 	// ejecuto la consulta
 	$q1x = mysqli_query($link, $q1) or die('Consulta fallida q1: ' . mysqli_error($link));;
 
-	
+
 	// si pertenece a los grados de preescolar
 	if($grado == 7 || $grado == 8 || $grado == 9 ){
 		// creo una fila con los encabezados, que comienzan con el campo nombre
@@ -113,7 +113,7 @@
 	if($grado == 7 || $grado == 8 || $grado == 9 ){
 
 	echo 	"<td><button type = 'button' value='=' class='igua btn btn-outline-primary' id='igual_l2' onclick='igual_logro2();'>=</button></td>";
-	echo			"<td><button type = 'button' value='=' class='igual btn btn-outline-primary' id='igual_l3' onclick='igual_logro3();'>=</button></td>";
+	echo	"<td><button type = 'button' value='=' class='igual btn btn-outline-primary' id='igual_l3' onclick='igual_logro3();'>=</button></td>";
 
 	}
 	echo "</tr>";
@@ -135,25 +135,49 @@
 					" AND id_alumno = ".$dato1["id_alumno"].
 					" AND serie = 0";
 
-				//	echo "<br>consulta : $q2<br><br>";
-
 		// se ejecuta la consulta
 		$q2x = mysqli_query($link, $q2) or die('Consulta fallida  de notas: ' . mysqli_error($link));
 		// se extrae el primer dato datos
 		$dato2 = mysqli_fetch_array($q2x);
 		//
+		// si la nota que carga no es nula ...
+		if (isset($dato2['nota'])){
+			$nota = $dato2['nota'];
+		}
+		// si es nula
+		else {
+			$nota = 0;
+		}
 
+		// si la nota que carga no es nula ...
+		if (isset($dato2['id_logro'])){
+			$id_logro = $dato2['id_logro'];
+		}
+		// si es nula
+		else {
+			$id_logro = 0;
+		}
+
+		// si la nota que carga no es nula ...
+		if (isset($dato2['faltas'])){
+			$faltas2 = $dato2['faltas'];
+		}
+		// si es nula
+		else {
+			$faltas2 = 0;
+		}
 
 		// -- Datos para el primer estudiante --
 		// la serie de datos se caracterizan por tener el mismo atributo
 		// name
 		// se muestra la nota la primera nota
-		echo "<td> <input type='number' step='0.1' max='5' min='0' style='width: 60px;'  id='master_nota' name='nota[]' class='notas form-control'"
-					."  onchange='color_celda(\"master_nota\");'  value='".$dato2['nota']."'></td>\n";
+		echo "<td> <input type='number' step='0.1' max='5' min='0' style='width: 60px;'  id='master_nota' name='nota[]' class='notas form-control'
+		data-bs-toggle='tooltip' data-bs-placement='top' title='use , como separador decimal'"
+					."  onchange='color_celda(\"master_nota\");'  value='$nota'></td>\n";
 
 		// y se muestra el primer logro
 		echo "<td> <input type='text' style='width: 60px;' name='logro1[]' id='master_logro1' class='logros1 form-control'"
-					."  onchange='color_celda(\"master_logro1\");' value='".$dato2['id_logro']."'>";
+					."  onchange='color_celda(\"master_logro1\");' value='$id_logro'>";
 
 		// si pertenece a preescolar
 		if ($grado == 7 || $grado == 8 || $grado == 9){
@@ -174,9 +198,14 @@
 						// se extrae el primer dato datos
 			$dato3 = mysqli_fetch_array($q3x);
 
+			$id_logro3 = 0;
+			if(isset($dato3['id_logro'])){
+				$id_logro3 = $dato3['id_logro'];
+			}
+
 			// lo muestro
 			echo "<td> <input type='text' style='width: 60px;' name='logro2[]' id='master_logro2' class='logros2'"
-						." onchange='color_celda(\"master_logro2\");' value='".$dato3['id_logro']."'>";
+						." onchange='color_celda(\"master_logro2\");' value='$id_logro3'>";
 
 
 			// consulta para obtener el tercer logro (serie = 2)
@@ -193,14 +222,42 @@
 						// se extrae el primer dato datos
 			$dato4 = mysqli_fetch_array($q4x);
 
+			// si la nota que carga no es nula ...
+			if (isset($dato4['nota'])){
+				$nota4 = $dato4['nota'];
+			}
+			// si es nula
+			else {
+				$nota4 = 0;
+			}
+
+			// si la nota que carga no es nula ...
+			if (isset($dato4['id_logro'])){
+				$id_logro4 = $dato4['id_logro'];
+			}
+			// si es nula
+			else {
+				$id_logro4 = 0;
+			}
+
+			$faltas4  = 0;
+			// si la nota que carga no es nula ...
+			if (isset($dato4['faltas'])){
+				$faltas4 = $dato4['faltas'];
+			}
+			// si es nula
+			else {
+				$faltas4 = 0;
+			}
+
 			// lo muestroo
 			echo "<td> <input type='text' style='width: 60px;' name='logro3[]' id='master_logro3' class='logros3'"
-					." onchange='color_celda(\"master_logro3\");' value='".$dato4['id_logro']."'>";
+					." onchange='color_celda(\"master_logro3\");' value='$id_logro4'>";
 
 		}
 		// ingreso la cantidad de faltas para el primer estudiante
 		echo "<td> <input id='master_falta' type='text' style='width: 60px;' name='falta[]'  class='faltas'"
-				."  onchange='color_celda(\"master_falta\");'  value='".$dato2['faltas']."'>";
+				."  onchange='color_celda(\"master_falta\");'  value=$faltas2>";
 
 		// se crea un campo oculto con el codigo del peimer alumno
 		echo "<input type='hidden' name='codigo[]' class='codigos' value=".$dato1['id_alumno']."></td>";
@@ -238,12 +295,40 @@
 		// se ejecuta la consulta
 		$dato2 = mysqli_fetch_array($q2x);
 
+		// si la nota que carga no es nula ...
+		if (isset($dato2['nota'])){
+			$nota2 = $dato2['nota'];
+		}
+		// si es nula
+		else {
+			$nota2 = 0;
+		}
+
+		// si la nota que carga no es nula ...
+		if (isset($dato2['id_logro'])){
+			$id_logro2 = $dato2['id_logro'];
+		}
+		// si es nula
+		else {
+			$id_logro2 = 0;
+		}
+
+		// si la nota que carga no es nula ...
+		if (isset($dato2['faltas'])){
+			$faltas2 = $dato2['faltas'];
+		}
+		// si es nula
+		else {
+			$faltas2 = 0;
+		}
+
 		// se ingresa la nota del estudiante
-		echo "<td>	<input type='number' step='0.1' max='5' min='0' style='width: 60px;'  name='nota[]' class='notas'"
-		." id='nota".$dato1['id_alumno']."' onchange='color_celda(\"nota".$dato1['id_alumno']."\");'  value='".$dato2['nota']."'>	</td>";
+		echo "<td>	<input type='number' step='0.1' max='5' min='0' style='width: 60px;'  name='nota[]' class='notas'
+		data-bs-toggle='tooltip' data-bs-placement='top' title='use , como separador decimal'"
+		." id='nota".$dato1['id_alumno']."' onchange='color_celda(\"nota".$dato1['id_alumno']."\");'  value='$nota2'>	</td>";
 		// se coloca el el primer logro
 		echo "<td> <input type='text' style='width: 60px;' name='logro1[]'  class='logros1'"
-					." id='logro1".$dato1['id_alumno']."' onchange='color_celda(\"logro1".$dato1['id_alumno']."\");'  value='".$dato2['id_logro']."'>";
+					." id='logro1".$dato1['id_alumno']."' onchange='color_celda(\"logro1".$dato1['id_alumno']."\");'  value='$id_logro2'>";
 
 
 		//  si el grado es de preescolar
@@ -265,9 +350,14 @@
 						// se extrae el primer dato datos
 			$dato3 = mysqli_fetch_array($q3x);
 
+			$id_logro3 = 0;
+			if(isset($dato3['id_logro'])){
+				$id_logro3 = $dato3['id_logro'];
+			}
+
 			// incerto el segundo logro
 			echo "<td> <input  type='text' style='width: 60px;' name='logro2[]' class='logros2'"
-			." id='logro2".$dato1['id_alumno']."' onchange='color_celda(\"logro2".$dato1['id_alumno']."\");'   value='".$dato3['id_logro']."'></td>";
+			." id='logro2".$dato1['id_alumno']."' onchange='color_celda(\"logro2".$dato1['id_alumno']."\");'   value='$id_logro3'></td>";
 			// genero el siguiete registro
 
 
@@ -287,9 +377,14 @@
 						// se extrae el primer dato datos
 			$dato4 = mysqli_fetch_array($q4x);
 
+			$id_logro4 = 0;
+			if(isset($dato4['id_logro'])){
+				$id_logro4 = $dato4['id_logro'];
+			}
+
 			// incerto el tercer logro
 			echo "<td> <input  type='text' style='width: 60px;' name='logro3[]' class='logros3'"
-			." id='logro3".$dato1['id_alumno']."' onchange='color_celda(\"logro3".$dato1['id_alumno']."\");'  value='".$dato4['id_logro']."'></td>";
+			." id='logro3".$dato1['id_alumno']."' onchange='color_celda(\"logro3".$dato1['id_alumno']."\");'  value='$id_logro4'></td>";
 			// espacio para las faltas
 			// echo "<td> <input type='text' style='width: 60px;' name='faltas[]'  class='faltas'"
 			// ." value='".$dato2['faltas']."'>";
@@ -297,7 +392,7 @@
 
 		// ingreso la cantidad de faltas
 		echo "<td> <input type='text' style='width: 60px;' name='faltas[]'  class='faltas'"
-				." id='falta".$dato1['id_alumno']."' onchange='color_celda(\"falta".$dato1['id_alumno']."\");'  value='".$dato2['faltas']."'>";
+				." id='falta".$dato1['id_alumno']."' onchange='color_celda(\"falta".$dato1['id_alumno']."\");'  value='$faltas2'>";
 
 		echo "<input type='hidden' name='codigo[]' class='codigos' value=".$dato1['id_alumno']."></td>";
 
