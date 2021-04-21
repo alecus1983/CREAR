@@ -2,14 +2,14 @@
 
 session_start();
 
-if(!isset($_SESSION['usuario']))
-{
-  session_destroy();
-  //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
-  header('Location:login_boletines.php');
-  //termina el programa php
-  exit();
-}
+// if(!isset($_SESSION['usuario']))
+// {
+//   session_destroy();
+//   //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
+//   header('Location:login_boletines.php');
+//   //termina el programa php
+//   exit();
+// }
 
 // se requiere el archivo para la conexion
 require_once 'conexion.php';
@@ -28,7 +28,7 @@ $fecha_f = date('Y-10-30');
 $hoy = date('Y-m-d');
 
 // grado
-echo "Grado :<b>$n_grado</b> <br><br>";
+echo "Grado :<b>$n_grado ($grado)</b> <br><br>";
 
 
 // ciclo for para editar los periodos genera
@@ -63,19 +63,21 @@ for($i= 1; $i <= 5 ; $i++) {
    	$q2 = "SELECT * FROM alumnos A INNER JOIN matricula M ON A.id_alumno = M.id_alumno
 		WHERE M.id_grado = ".$grado." AND M.year ='".$ano."' ORDER BY A.id_alumno";
 
+    //echo "consulta : $q2<br>";
    	// ejecuta la consulta en una base de datos
-   	$q2x = mysqli_query( $link, $q2) or die('Consulta alumnos matricula fallida: '
-   	. mysqli_error($link));
+   	// $q2x = mysqli_query( $link, $q2) or die('Consulta alumnos matricula fallida: '
+   	// . mysqli_error($link));
 
+    $q2x = $link->query($q2);
 
    	// ciclo de repeticion que recupera los alumnos matriculados en un año y grado
 
-   	while($alumnos_grado = mysqli_fetch_array($q2x)) {
+   	while($alumnos_grado = $q2x->fetch_array(MYSQLI_BOTH)) {
 
 
    		$id_a = $alumnos_grado["id_alumno"];
 
-   		//echo "codigo alumno $id_a , <br>nombre ".$alumnos_grado["nombres"]." ".$alumnos_grado["apellidos"];
+   		// echo "codigo alumno $id_a , <br>nombre ".$alumnos_grado["nombres"]." ".$alumnos_grado["apellidos"];
 
    		// CONSULTA LOS REGISTROS DE CALIFICACIONES EN EL AÑO PERIODO MATERIA Y ALUMNO
    		// PARA EL CORTE A
@@ -133,7 +135,7 @@ for($i= 1; $i <= 5 ; $i++) {
    			// si se trata de preescolar evaluo so el numero de registros
    			// es menor que 3 ( con lo cual se deberiarn haber creado los registros)
    			// 0, 1, 2 etc
-
+        //echo "<br>numero de filas ".$numero_f;
       		if ($numero_f < 3)
      			{
 					// de ser que faltan registros  entonces inicializo

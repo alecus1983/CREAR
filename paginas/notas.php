@@ -74,7 +74,7 @@
 				" AND periodo = ".$periodo.
 				" AND serie = 0";
 
-				//echo "<br><br>consulta :".$q2;
+				// echo "<br><br>consulta 0 :".$q2;
 				$l++;
 // se ejecuta la consulta
 	$q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas: ' . mysqli_error($link));
@@ -117,7 +117,7 @@ if($grado == 7 || $grado == 8 || $grado == 9 ){
 			 " AND periodo = ".$periodo.
 			 " AND serie = 1";
 
-			 //echo "<br><br>consulta :".$q2;
+			 // echo "<br><br>consulta 1 :".$q2;
 			 $l++;
 // se ejecuta la consulta
  $q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas prescolar: ' . mysqli_error($link));
@@ -154,7 +154,7 @@ if($grado == 7 || $grado == 8 || $grado == 9 ){
 			" AND periodo = ".$periodo.
 			" AND serie = 2";
 
-			//echo "<br><br>consulta :".$q2;
+			// echo "<br><br>consulta 2 :".$q2;
 			$l++;
 // se ejecuta la consulta
 $q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas 2: ' . mysqli_error($link));

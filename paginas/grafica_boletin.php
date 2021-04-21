@@ -86,20 +86,20 @@ switch ($opcion) {
 
         if ($cantidad >= 0) {
           // ingreso la  cantidad de calificados
-          echo "<div class='clearfix' 
+          echo "<div class='clearfix'
                               style='display: grid;grid-template-columns: auto 70%; padding-left: 10px; padding-right: 10px;'><div><p class='text-muted text-capitalize fst-italic'>" . $dato["categoria"] . "</p></div>";
           echo "<div class='progress'>
-                        <div  class='progress-bar' 
-                              role='progressbar' 
-                              style='width: $porcentaje%;' 
-                              aria-valuenow='$porcentaje' 
-                              aria-valuemin='0' 
+                        <div  class='progress-bar'
+                              role='progressbar'
+                              style='width: $porcentaje%;'
+                              aria-valuenow='$porcentaje'
+                              aria-valuemin='0'
                               aria-valuemax='100'>$porcentaje %
                               </div></div></div>";
         } else {
 
           echo "<div class='alert alert-danger' role='alert'>
-                        No hay registros creados para este grado, 
+                        No hay registros creados para este grado,
                         contanctese con un administrador.
                         </div>";
         }
@@ -118,16 +118,29 @@ switch ($opcion) {
     if (isset($ano) and isset($periodo)) {
       // nuevo objeto de conexion a la base de datos
       // se realiza la consulta
-      $texto = "SELECT id_docente, docente,  sum(nota) notas, sum(calificado) cantidad, 
-  100* sum(calificado)/sum(nota) porcentaje from (  
-SELECT dc.id_docente , CONCAT( CONCAT( dc.nombres, ' '), dc.apellidos ) docente, 
-if(nota = 0, 0,1) nota, if(dc.id_docente = calificado,1 , 0) calificado from docentes dc 
-INNER JOIN 
-(select md.id_docente, bl.nota, bl.id_docente as calificado from 
-(select * from matricula_docente where year = $ano) as md inner join ( 
-select * from calificaciones c where year  = $ano and periodo = $periodo) as bl
-on md.id_materia  = bl.id_materia) as cl on cl.id_docente = dc.id_docente) as T
-GROUP  BY id_docente, docente";
+      $texto = "select id_docente, docente, count(*) cantidad , sum(corte) corte ,
+                100* sum(corte)/COUNT(*) porcentaje from (
+                select dc.id_docente, concat(concat(dc.nombres, ' '),dc.apellidos) docente,
+                id_grado, id_alumno, id_materia, nota, corte, periodo
+                from docentes dc inner join
+                (
+                SELECT md.id_docente,  ag.id_grado, ag.id_alumno, ag.id_materia,
+                periodo, nota, if(nota = 0, 0,1) corte, md.year
+                from ( select * from matricula_docente where year = $ano) as  md
+                inner join (
+                SELECT bl.id_alumno, bl.id_grado, cl.id_materia, periodo, nota, corte, cl.year
+                from calificaciones cl
+                INNER join ( select * from matricula  where year = $ano ) as bl
+                on cl.id_alumno = bl.id_alumno and cl.year = bl.year) as ag
+                on ag.id_materia = md.id_materia and md.id_grado = ag.id_grado
+                where md.year = $ano
+                order by ag.id_alumno
+                ) as data
+                on dc.id_docente  = data.id_docente
+                ) as datax
+                where periodo = $periodo
+                GROUP by id_docente , docente
+                order by docente asc";
 
 
       $consulta = $link->query($texto);
@@ -150,14 +163,14 @@ GROUP  BY id_docente, docente";
 
 
         // ingreso la  cantidad de calificados
-        echo "<div class='clearfix' 
+        echo "<div class='clearfix'
                               style='display: grid;grid-template-columns: auto 70%; padding-left: 10px; padding-right: 10px;'><div><p class='text-muted text-capitalize fst-italic'>" . $dato["docente"] . "</p></div>";
         echo "<div class='progress'>
-                        <div  class='progress-bar' 
-                              role='progressbar' 
-                              style='width: $porcentaje%;' 
-                              aria-valuenow='$porcentaje' 
-                              aria-valuemin='0' 
+                        <div  class='progress-bar'
+                              role='progressbar'
+                              style='width: $porcentaje%;'
+                              aria-valuenow='$porcentaje'
+                              aria-valuemin='0'
                               aria-valuemax='100'>$porcentaje %
                               </div></div></div>";
 

@@ -1243,6 +1243,7 @@ if (!isset($_SESSION['usuario'])) {
             document.getElementById("apellido_con").style.display = 'block'; // muestra este campo -->
             document.getElementById("cargar").style.display = 'none'; // muestra este campo -->
             $("#cargar").css("display", "none"); // muestro el boton de consultar
+            document.getElementById("grafo").style.display = 'none'; // espacio donde colocar la grafica
             break;
 
           case "2":
@@ -1250,6 +1251,7 @@ if (!isset($_SESSION['usuario'])) {
             document.getElementById("apellido_con").style.display = 'block';
             document.getElementById("cargar").style.display = 'none';
             $("#cargar").css("display", "none"); // muestro el boton de consultar
+            document.getElementById("grafo").style.display = 'none'; // espacio donde colocar la grafica
             break;
 
             // caso en donde consultar las materias existentes -->
@@ -1271,12 +1273,14 @@ if (!isset($_SESSION['usuario'])) {
             document.getElementById("id_m_con").style.display = 'block';
             document.getElementById("Logro_con").style.display = 'block';
             consultar();
+            document.getElementById("grafo").style.display = 'none'; // espacio donde colocar la grafica
             //$("#cargar").css("display", "none"); // muestro el boton de consultar
             break;
 
           case "6": // en este caso se editan los boletines
 
             document.getElementById("generar").style.display = 'block';
+            document.getElementById("grafo").style.display = 'none'; // espacio donde colocar la grafica
 
             break;
 
@@ -1306,6 +1310,7 @@ if (!isset($_SESSION['usuario'])) {
 
             $("#id_e").css("display", "none");
             $("#cargar").css("display", "none"); // muestro el boton de consultar
+            document.getElementById("grafo").style.display = 'none'; // espacio donde colocar la grafica
             break;
 
 
@@ -1526,7 +1531,7 @@ if (!isset($_SESSION['usuario'])) {
         // En caso que la opcion selecionada mediante el combo #option sea la 13, que corresponde
         // a los registros por grado entoncies
 
-        if ($("#opcion option:selected").val() > 12) {
+        if ($("#opcion option:selected").val() == "13") {
           // en caso de que la opcion se generar
           // un grafico de tendencias
           $("#resultado_con").html();
@@ -1538,6 +1543,7 @@ if (!isset($_SESSION['usuario'])) {
         }
         // en caso de que no se consulte un grafico
         else {
+          
           
           // borro el contenido del div grafo
           $("#grafo").html();

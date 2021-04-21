@@ -143,7 +143,7 @@ include_once 'conexion.php';
       // si no es un administrador
       header('Location:login_matriculas.php');
     }
-    echo	"Usuario : ".$nombre." ".$apellido." codigo (".$_SESSION['code'].")<br>";
+    echo	"Cliente : ".$nombre." ".$apellido." codigo (".$_SESSION['code'].")<br>";
     ?>
 
   </div>

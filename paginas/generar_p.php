@@ -131,7 +131,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
     $pdf->Cell(80,5,utf8_decode('NOMBRE DEL ESTUDIANTE'),1,0,'C',true);
     $pdf->Cell(25,5,utf8_decode('GRADO'),1,0,'C',true);
     $pdf->Cell(25,5,utf8_decode('JORNADA'),1,0,'C',true);
-    $pdf->Cell(30,5,'A�O LECTIVO',1,0,'C',true);
+    $pdf->Cell(30,5,utf8_decode('AÑO LECTIVO'),1,0,'C',true);
     $pdf->Ln();
     $pdf->Cell(20,5,utf8_decode($dato2['id_alumno']),1,0,'C');
     $pdf->Cell(80,5,utf8_decode($nombres." ".$apellidos),1,0,'C');
@@ -181,10 +181,10 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
     $avg = 0;
     $num_m = 0;
 
-		
+
     // se repite este ciclo para cada area
     while($dato3 = mysqli_fetch_array($q4x)) {
-    		
+
         // recupereo el codigo del area que se esta tratando
         $area = $dato3['area'];
         // recupero el codigo del area que se esta tratando
@@ -198,7 +198,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
         // ENCABEZADO DE AREA
         /////////////////////////////////////////////
         // consulta para estructurar las materias que pertenecen a cada área
-        $q5 = "SELECT  DISTINCT materia.id_materia, materia.materia, materia.id_area        
+        $q5 = "SELECT  DISTINCT materia.id_materia, materia.materia, materia.id_area
         FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
         INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
         INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
@@ -210,10 +210,10 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
         AND calificaciones.year =".$fecha."
         AND calificaciones.periodo =".$periodo."
         ORDER BY materia.id_area, materia.id_materia";
-        
+
         // ejecucion de la consulta para investigar  por las materias relacionadas con el area
         $q5x = mysqli_query($link, $q5) or die('Consulta fallida q5: ' . mysqli_error());;
-			
+
         // ciclo de repeticion de materias se repite  de acuerdo a cuantas materias tiene cada area
         while($dato4 = mysqli_fetch_array($q5x)) {
             // la materia en cuestion
@@ -230,7 +230,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
             $p3 = 0; // periodo 3
             $p4 = 0; // periodo 4
 
-				
+
             // ciclo for que iteratua dentro de los cuatro periodos
             for($i = 1;$i < 5;$i++) {
                 // consulta que selecciona una materia especifica
@@ -259,10 +259,10 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
                 // alumno  en un grado especifico
                 $q6x = mysqli_query($link, $q6)
                 or die('Consulta fallida q6: ' . mysqli_error());;
-					
+
                 // se ejecuta la consulta para
                 // extraer la
-                while($dato5 = mysqli_fetch_array($q6x)) {                
+                while($dato5 = mysqli_fetch_array($q6x)) {
 
                     $materia = $dato5['materia'];// recupera el dato de la materia para el periodo i
                     $nota = $dato5['nota'];// recupero la nota de la materia para el periodo i
@@ -297,14 +297,14 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
                     $f[$id_m][$i][$c] = $faltas;
                     // echo "<br>Asi va P (valor de c --> $c): <br><br>";
                     // print_r($p);
-                }	
-						           
+                }
+
                 // fin del ciclo while
 
-            } 
-					 
+            }
+
             // fin del for
-				
+
             // calcula la nota promedio
             //$avg = $avg + $p[$id_m][$periodo][0]*$w_f+$p[$id_m][$periodo][1]*$w_a;	// sumatoria de notas
             // nota acumulada segun el peso
@@ -372,7 +372,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
 
             //////////////////////////////////////////////////////////////////////////////
             // retorno un valor vacio en caso de que la nota es cero
-            
+
             if($p1 == 0.0){$p1 = "";}
             if($p2 == 0.0){$p2 = "";}
             if($p3 == 0.0){$p3 = "";}
@@ -435,7 +435,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
 
 
         } // final del dato4
-			
+
         /// ciclo for para calcular el promedio del area
 
         $num_m_a = count($nota_a);// numero de materias por area
@@ -490,16 +490,16 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
 
 
     }
-		
+
     /// algoritmo que calcula el promedio del periodo
-		
+
     foreach ($p as $materia) {
       // code...
       $avg = $avg + $materia[$periodo][0]*$w_f+$materia[$periodo][1]*$w_a;
       }
     $avg = number_format($avg /$num_m, 1, '.', '');
 
-	
+
     $pdf->Ln(3);
     $pdf->Cell(50,3,utf8_decode("Promedio: ".$avg),1,0,'L');
     $pdf->Cell(50,3,utf8_decode("Materias: ".$num_m),1,0,'L');
@@ -607,7 +607,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
         /////////////////////////////////////////////
 
         //$pdf->Ln(4);
-        
+
         $pdf->SetFillColor(230, 230, 230);
         $pdf->SetFont('Arial','B',8);
         $pdf->Cell(180,5,utf8_decode('Aréa : '.$area),1,0,'L',true);
@@ -639,8 +639,8 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
             // En esta consulta se generan consulta alrededor
             // de materias para los encabezado  de las materias
 
-            $q9 = "SELECT  DISTINCT materia.id_materia, materia.materia, format(sum(calificaciones.nota)/count(*),1)  as nota, 
-            docentes.nombres, docentes.apellidos, sum(calificaciones.faltas) as faltas, materia.id_area    
+            $q9 = "SELECT  DISTINCT materia.id_materia, materia.materia, format(sum(calificaciones.nota)/count(*),1)  as nota,
+            docentes.nombres, docentes.apellidos, sum(calificaciones.faltas) as faltas, materia.id_area
             FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
             INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
             INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
@@ -651,11 +651,11 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
             AND calificaciones.year =".$fecha."
             AND calificaciones.periodo =".$periodo."
             AND materia.id_materia =".$id_m.
-            
-                ")  GROUP BY materia.id_materia, docentes.id_docente	
+
+                ")  GROUP BY materia.id_materia, docentes.id_docente
                 ORDER BY materia.id_area, materia.id_materia";
-             
-				
+
+
             $q9x = mysqli_query($link, $q9) or die('Consulta fallida q9: ' . mysqli_error()."<br>Consulta :".$q9);;
 
 
@@ -706,7 +706,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
 
                     $pdf->Cell(20,4,utf8_decode("Faltas: ".$faltas),'B',0,'L');
 
-                    $pdf->Cell(50,4,"Nivel de desempe�o : ".$valor,'B',0,'L');
+                    $pdf->Cell(50,4,utf8_decode("Nivel de desempeño : ").$valor,'B',0,'L');
                     $pdf->SetFont('Arial','B',9);
                     $pdf->Cell(20,4,utf8_decode("Nota : ".$nota),1,0,'L',true);
 
@@ -794,7 +794,7 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
 
 
           }
-		
+
 
           $pdf->Output();
 
