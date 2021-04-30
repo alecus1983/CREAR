@@ -135,6 +135,8 @@
 					" AND id_alumno = ".$dato1["id_alumno"].
 					" AND serie = 0";
 
+
+
 		// se ejecuta la consulta
 		$q2x = mysqli_query($link, $q2) or die('Consulta fallida  de notas: ' . mysqli_error($link));
 		// se extrae el primer dato datos

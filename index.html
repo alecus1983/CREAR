@@ -1,31 +1,66 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
-
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mundo Creativo</title>
-    <script src="./JS/carga-datos-formulario-matricula-primaria.js" type="text/javascript"></script>
-    <script src="./JS/a076d05399.js"></script>
-    <script src="./JS/jquery-3.5.1.min.js"></script>
-    <!--<script src="/JS/typed.min.js"></script>-->
-    <script src="./JS/ajax.js" type="text/javascript"></script>
-    <script src="./JS/jquery.waypoints.min.js"></script>
-    <script src="./JS/owl.carousel.min.js"></script>
-    <!-- <link href="/CSS/template.css" rel="stylesheet" type="text/css" /> -->
-    <link href="./CSS/fa-v4-shims.css" rel="stylesheet" type="text/css" />
-    <link href="./CSS/default.css" rel="stylesheet" type="text/css" />
-    <link href="./CSS/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="./JS/bootstrap.min.js"></script>
+    <title>Mundo Creativo 2021</title>
+
+
+    <!-- google anuncios -->
+    <script data-ad-client="ca-pub-3461502394630592" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
     <link rel="stylesheet" href="./CSS/style.css" type="text/css">
-    <link rel="stylesheet" href="./CSS/estilos.css" type="text/css">
-    <link href="../images/sampledata/iconos/escudo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <!-- Estilos css de toda la pagina.  -->
+    <link rel="stylesheet" href="style_page_1.css"> <!-- 1.  Css de toda la pagina en general  -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+    <!-- 2.  Css de font-awesome  -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <!-- 3.  Css estilos de caroucel  -->
+
+    <link rel="stylesheet" href="estilos_grid.css"> <!-- 4.  Css para grid  -->
+
+
+
+    <!-- Scripts de la pagina en general -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 1.   Js de Jquery -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- 2.  Js de Ajax -->
+    <!--  -->
+
+    <!-- Iconono para shortcut icon -->
+    <link href="imagenes_page/iconos_colegio/escudo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <!--  -->
 </head>
 
-<body>
+<body style="background-color: white;">
+
+    <!--Barra lateral de redes sociales -->
+    <div class="social-bar">
+        <a href="https://www.facebook.com/fundacionmundocreativo" class="icon icon-facebook" target="_blank"></a>
+
+        <a href="https://www.youtube.com/channel/UCB9WnOxqDXmPcJwqAauBxWQ" class="icon icon-youtube"
+            target="_blank"></a>
+        <a href="https://www.instagram.com/imcreativo.edu.co/" class="icon icon-instagram" target="_blank"></a>
+    </div>
+    <!-- Fin Barra lateral de redes sociales -->
+
+    <!--Boton para subir pagina-->
+    <div class="scroll-up-btn">
+        <i class="fas fa-angle-up"></i>
+    </div>
+    <!-- Fin Boton para subir pagina-->
+
+
+    <!--Barra de navegacion -->
     <div class="scroll-up-btn">
         <i class="fas fa-angle-up"></i>
     </div>
@@ -39,223 +74,333 @@
 
             <ul class="menu" style="margin: 0px;">
                 <li><a href="#home" class="menu-btn, b_home">Home</a></li>
-                <li><a href="#about" class="menu-btn, b_noticias">Noticias</a></li>
-                <li><a href="#services" class="menu-btn,  b_colegio">Colegio</a></li>
-                <li><a href="#skills" class="menu-btn,  b_tecnicos">Tecnios</a></li>
-                <li><a href="#teams" class="menu-btn, b_docentes">Docentes</a></li>
-                <li><a href="#contactos" class="menu-btn ,  b_contact">Contact</a></li>
-                <li><a href="#" class="menu-btn,  b_login">Login</a></li>
+                <!--<li><a href="#noticias" class="menu-btn, b_noticias">Noticias</a></li> -->
+                <li><a href="#colegio" class="menu-btn,  b_colegio">Colegio</a></li>
+                <li><a href="#tecnicos" class="menu-btn,  b_tecnicos">Tecnios</a></li>
+                <!--  <li><a href="#services" class="menu-btn,  b_colegio">Cursos</a></li> -->
+                <li><a href="#contactos" class="menu-btn ,  b_contact">Contactos</a></li>
+                <li><a href="colegio/docentes.html" class="menu-btn,  b_login">Docentes</a></li>
+                <li><a href="login/login.html" class="menu-btn,  b_login">Login</a></li>
             </ul>
             <div class="menu-btn">
                 <i class="fas fa-bars"></i>
             </div>
         </div>
     </nav>
+    <!-- Fin Barra de navegacion -->
 
-    </section>
+
     <!-- home section start -->
-    <section class="home" id="home" style="background: linear-gradient(70deg, #6cc, white);">
+    <section class="home" id="home">
         <div class="max-width">
-            <div class="home-content">
-                <div class="text-1">Institucion Educativa</div>
-                <div class="text-2">Mundo Creativo</div>
-                <div class="text-3">Somos: <span class="typing"></span></div>
-                <a href="#contactos"> <strong> Contactanos! </strong></a>
+            <div class="row">
+                <div class="home-content">
+                    <div class="text-1">Institucion Educativa</div>
+                    <div class="text-2">Mundo Creativo</div>
+                    <div class="text-3">Somos:<span class="typing"></span></div>
+                    <a href="https://api.whatsapp.com/send?phone=573166288374">Contactanos!</a>
+                </div>
             </div>
         </div>
     </section>
+    <!--  end home section start -->
 
 
-    <!-- Noticias -->
-    <section class="about" id="about">
-        <div class="max-width">
-            <h2 class="title"><strong> Mundo Creativo al dia </strong></h2>
-            <div class="about-content">
 
-                <div class="article-introtext">
-                    <p>Ya nos encontramos en proceso de matrículas, puedes acercarte a nuestra institución en horario de
-                        7:00 a.m. a 12:00 p.m y de 2:00 p.m. a 5:00 p.m. de lunes a viernes.</p>
 
-                    <div id="matricula_" style="display: grid; grid-template-columns: auto auto; margin-top: 2em;">
-                        <div><img src="./images/matriculas.png" width="80%" /></div>
-                        <div><img src="./images/matriculas_diciembre.png" width="80%" /></div>
-                    </div>
-                </div>
-            </div>
 
-            <div style="margin-top: 2em;">
+    <!-- Baner Quin somos -->
 
-                <h2> <strong> ¿Qué es CREAR VIRTUALMENTE? </strong> </h2>
+    <div class="baner_somos">
+        <center>
+            <h1> Instituto Mundo Creativo</h1>
+        </center>
+        <br><br>
+        <div class="contenedor_texto">
+            <center>
+                <p>Somos una institucion educativa centrada en la formacion del ser y el desarrollo de competencias que
+                    responden a <span style="color: orange; font-weight: 500;"> altos estandares de calidad </span> ,
+                    mediante procesos pedagogicos que reconocen la individualidad y promueven la autonomia de la
+                    persona, con principios y valores sociales. Apoyados por una comunidad educativa comprometida con el
+                    mejoramiento institucional y el de su entorno</p>
 
-                <p style="text-justify: auto">Es una estrategia que busca capacitar a los estudiantes creativistas,
-                    brindando las herramientas necesarias para dar continuidad al proceso educativo a través de la
-                    educación remota.</p>
+            </center>
+        </div>
+        <br><br>
+        <!--
+        <div class="falso_body_baner">
+            <div class="main">
 
-                <br>
-
-                <p class="tex_noticias_segundop" style="text-align: justify-all"> A través de la plataforma G-suit,
-                    desarrollaremos actividades lúdicas recreativas por medio de vídeo conferencias que permiten el
-                    desarrollo de las diferentes inteligencias de nuestros estudiantes de manera interactiva. Además los
-                    estudiantes podrán resolver sus actividades desde casa y presentarlas a través del portal y o correo
-                    electrónico. De esta manera la interacción del estudiante con los docentes a través de la
-                    plataforma, generara acciones que permiten desarrollar las competencias académicas necesarias para
-                    el logro de las metas de aprendizaje para el año escolar. </p>
-                <br>
-
-                <p style="text-align: justify"> De esta manera la elaboración de actividades y la investigación por
-                    parte de los estudiantes, aportan al desarrollo de las competencias. Cada estudiante estará
-                    habilitado en la plataforma G-suit a través de un correo electrónico institucional cuyo dominio es
-                    _@imcreativo.edu.co, la cual será el portal de ingreso a la institución virtual.</p>
-
-                <br>
-                <div class="video_crear_vir">
-                    <iframe class="video1" width="1280" height="500" src="https://www.youtube.com/embed/5QyDsVvzsdM"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
+                <div class="single-column">
+                    <a href="#"><img src="imagenes_page/img_baner/1.jpg" alt="image"></a>
+                    <a href="#"><img src="imagenes_page/img_baner/2.jpg " alt="image"></a>
+                    <a href="#"><img src="imagenes_page/img_baner/2.jpg" alt="image"></a>
 
                 </div>
+                <div class="single-column">
+                    <a href="#"><img src="imagenes_page/img_baner/3.jpg" image"></a>
+                    <a href="#"><img src="imagenes_page/img_baner/4.jpg" alt="image"></a>
+                    <a href="#"><img src="imagenes_page/img_baner/2.jpg" alt="image"></a>
+
+                </div>
+                <div class="single-column">
+                    <a href="#"><img src="imagenes_page/img_baner/1.jpg" alt="image"></a>
+                    <a href="#"><img src="imagenes_page/img_baner/1.jpg" alt="image"></a>
+                    <a href="#"><img src="imagenes_page/img_baner/2.jpg" alt="image"></a>
+
+                </div>
+                <div class="single-column">
+                    <a href="#"><img src="imagenes_page/img_baner/3.jpg" alt="image"></a>
+                    <a href="#"><img src="imagenes_page/img_baner/2.jpg" alt="image"></a>
+                    <a href="#"><img src="imagenes_page/img_baner/2.jpg" alt="image"></a>
+                </div>
             </div>
-    </section>
+        </div>
+-->
 
-    <!-- Colegio servicios -->
-    <section class="services" id="services">
+
+
+
+
+
+    </div>
+
+    <!-- Fin Quin somos -->
+
+
+    <!-- Baner mapa-->
+    <div class="baner_map">
+        <center>
+            <h1 class="texto_map">Estamos ubicados</h1>
+        </center>
+        <br><br>
+        <p class="text_">En Santender de Quilichao Cauca, Nuestra direccion es:
+            <span style="color: orange;">Carrera 16 #13a esquina</span> Barrio limonar
+        </p>
+
+
+        <br><br>
+        <center>
+            <iframe "
+                    src="
+                https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2817.3198014978407!2d-76.48733731556788!3d3.01602014439183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e308076a8026be5%3A0x5d7111594c3c9c0b!2sColegio%20Instituto%20Mundo%20Creativo!5e0!3m2!1ses!2sco!4v1618123113436!5m2!1ses!2sco"
+                loading="lazy"></iframe>
+        </center>
+    </div>
+    <!-- Fin Baner mapa -->
+
+
+
+    <!--Noticias -->
+    <!-- Fin Noticias -->
+
+
+
+
+
+    <!-- colegio -->
+
+    <section id="colegio" class="services">
+
+
+
         <div class="max-width">
-            <h2 class="title">Colegio</h2>
 
+            <h2 class="title"> Nuestro Colegio</h2>
             <div class="serv-content">
 
-                    <div class="card">
-                        <a href="/paginas/primera_infancia.html" target="_self">
+
+
+                <div class="card">
+                    <a href="colegio/transicion.html" style="color: white;">
                         <div class="box">
-                            <div class="text"><strong> Preescolar </strong></div>
-                            <p> </p>
+
+                            <div class="text">Preescolar</div>
+
                         </div>
                     </a>
-                    </div>
+                </div>
+
 
                 <div class="card">
-                    <div class="box">
-
-                        <div class="text"><strong> Primaria </strong></div>
-                        <p> </p>
-                    </div>
+                    <a href="colegio/primaria.html">
+                        <div class="box">
+                            <div class="text" style="color: white;">Primaria</div>
+                        </div>
+                    </a>
                 </div>
+
+
                 <div class="card">
-                    <div class="box">
+                    <a style="color: white;" href="colegio/secundaria.html">
+                        <div class="box">
 
-                        <div class="text"><strong> Bachillerato </strong></div>
-                        <p></p>
-                    </div>
+                            <div class="text">Secundaria</div>
+
+                        </div>
+                    </a>
                 </div>
+
             </div>
+
         </div>
+
         </div>
+
+
+
     </section>
 
-    <!-- tecnicos-->
-    <section class="skills" id="skills">
+
+    <!-- fin colegio-->
+
+
+    <!-- Tecnicos Laborales -->
+
+    <section class="teams" id="tecnicos">
+
         <div class="max-width">
             <h2 class="title">Tecnicos Laborales</h2>
-            <div class="skills-content">
+
+            <div class="container">
+                <div class="item">
+                    <img src="imagenes_page/tecnicos/1.jpg" alt="" class="item-img">
+                    <div class="item-text">
+                        <h3>Tecnico en Sitemas</h3>
+
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="imagenes_page/tecnicos/2.jpg" alt="" class="item-img">
+                    <div class="item-text">
+                        <h3 style="text-align: center;"> Tecnico en Deporte y entrenamiento fisico</h3>
+
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="imagenes_page/tecnicos/3.jpg" alt="" class="item-img">
+                    <div class="item-text">
+                        <h3>Tecnico asistente administrativo</h3>
+
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="imagenes_page/tecnicos/4.jpg" alt="" class="item-img">
+                    <div class="item-text">
+                        <h3>Atencion a la primera infancia</h3>
+
+                    </div>
+                </div>
 
 
-              <div class="grid-gallery">
-                 <a class="grid-gallery__item" href="./paginas/tecnico_sistemas.html">
-                     <img class="grid-gallery__image" src="images/logosistemas.png">
-                 </a>
-                 <a class="grid-gallery__item" href="./paginas/tecnico_deporte.html">
-                     <img class="grid-gallery__image" src="images/logodeporte.png">
-                 </a>
-              <a class="grid-gallery__item" href="./paginas/tecnico_asadministrativo.html">
-                     <img class="grid-gallery__image" src="images/logoasistentead.png">
-                 </a>
+                <div class="item">
+                    <img src="imagenes_page/tecnicos/5.jpg" alt="" class="item-img">
+                    <div class="item-text">
+                        <h3>Tecnico auxiliar contable</h3>
 
+                    </div>
+                </div>
 
+              <!--  <div class="item">
+                    <img src="imagenes_page/tecnicos/5.jpg" alt="" class="item-img">
+                    <div class="item-text">
+                        <h3>Tecnico en ingles</h3>
 
-             </div>
-
-                         <div class="grid-gallery">
-                 <a class="grid-gallery__item" href="./paginas/tecnico_ingles.html">
-                     <img class="grid-gallery__image" src="images/logoingles.png">
-                 </a>
-                 <a class="grid-gallery__item" href="./paginas/tecnico_primerainfancia.html">
-                     <img class="grid-gallery__image" src="images/logoinfancianew.png">
-                 </a>
-              <a class="grid-gallery__item" href="./paginas/tecnico_agricola.html">
-                     <img class="grid-gallery__image" src="images/Copia%20de%20Copia%20de%20tecpa.png">
-                 </a>
-
-
-
-             </div>
-
-
-
+                    </div>
+                </div> -->
 
             </div>
-    </section>
-
-    <!-- profes -->
-    <section class="teams" id="teams">
-        <div class="max-width">
-            <h2 class="title">Docentes</h2>
-
         </div>
     </section>
+    <!-- Tecnicos Laborales -->
 
-    <!-- contact section start -->
+
+
+
+
     <section class="contact" id="contactos">
+
+
+
+
+
         <div class="max-width">
-            <h2 class="title">Contactactos</h2>
+            <h2 class="title">Nuestros Contactos</h2>
             <div class="contact-content">
                 <div class="column left">
-                    <div class="text">Nuestros Contactos</div>
-                    <p>Puedes contactarte con nosotros en nuestros numeros de atencion o Mandarnos un correo y nuestro
-                        equipo respondera tus consultas de manera oportuna</p>
+                    <div class="text">Nosotros Somos</div>
+                    <p>Instituci&oacute;n de educaci&oacute;n a partir de pre - escolar , hasta programas de formaci&oacute;n para el trabajo
+                        y el desarrollo humano.</p>
                     <div class="icons">
                         <div class="row">
                             <i class="fas fa-user"></i>
                             <div class="info">
-                                <div class="head">Telefonos</div>
-                                <div class="sub-title">+57 3214744820</div>
+                                <div class="head">Somos:</div>
+                                <div class="sub-title">Instituto Mundo Creativo</div>
                             </div>
                         </div>
                         <div class="row">
                             <i class="fas fa-map-marker-alt"></i>
                             <div class="info">
-                                <div class="head">Direccion</div>
-                                <div class="sub-title">Santander de Quilichao</div>
+                                <div class="head">Direccion:</div>
+                                <div class="sub-title">Carrera 16 #13a esquina, barrio liminar</div>
                             </div>
                         </div>
                         <div class="row">
                             <i class="fas fa-envelope"></i>
                             <div class="info">
                                 <div class="head">Email</div>
-                                <div class="sub-title">imcrea@gmail.com</div>
+                                <div class="sub-title">rectoria@imcreativo.edu.co</div>
                             </div>
                         </div>
+
+                        <div class="row">
+
+                            <div class="info">
+                                <div class="head">Numero institucional</div>
+                                <div class="sub-title">+57 3166288374</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="info">
+                                <div class="head">Numero de soporte tecnico</div>
+                                <div class="sub-title">+57 3214744820</div>
+                            </div>
+                        </div>
+
+
+
+
+
+
                     </div>
                 </div>
+
+
                 <div class="column right">
                     <div class="text">Mandanos un mensaje</div>
-                    <form action="#">
+                    <form class="contact-form" action="#" method="POST">
                         <div class="fields">
                             <div class="field name">
-                                <input type="text" placeholder="Name" required>
+                                <input type="text" class="fullname" placeholder="Name">
                             </div>
                             <div class="field email">
-                                <input type="email" placeholder="Email" required>
+                                <input type="text" class="email-input" placeholder="Email">
                             </div>
                         </div>
                         <div class="field">
-                            <input type="text" placeholder="Subject" required>
+                            <input type="text" class="subject" placeholder="Subject">
                         </div>
                         <div class="field textarea">
-                            <textarea cols="30" rows="10" placeholder="Message.." required></textarea>
+                            <textarea class="message" cols="30" rows="10" placeholder="Message.."></textarea>
                         </div>
-                        <div class="button">
-                            <button type="submit">Enviar Mensaje</button>
+                        <div class="button-area">
+                            <button class="send-msg" type="submit" name="send">Enviar mensaje</button>
                         </div>
                     </form>
                 </div>
@@ -263,13 +408,55 @@
         </div>
     </section>
 
-    <!-- footer section start -->
+
+
+
+    <div class="pu_google">
+
+        <script data-ad-client="ca-pub-3461502394630592" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- primera_publicidad -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3461502394630592"
+     data-ad-slot="3302499696"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- segunda_publicidad -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3461502394630592"
+     data-ad-slot="8260131148"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+    </div>
+
+
+
+
+
+
+
     <footer>
-        <span>Contenido de <a href="https://www.imcreativo.edu.co/">MundoCreativo</a> | <span
-                class="far fa-copyright"></span> 2021</span>
+        <span>Created By <a href="#">AndresBrown</a> | <span class="far fa-copyright"></span> 2020 All rights
+            reserved.</span>
     </footer>
 
-    <script src="./JS/script.js"></script>
+    <script src="script_page_1.js"></script
 </body>
 
 </html>

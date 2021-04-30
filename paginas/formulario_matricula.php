@@ -11,7 +11,6 @@ if(!isset($_SESSION['usuario']))
 
 include_once 'conexion.php';
 
-
 ?>
 
 <!-- se define el tipo de documento ht como HTML 5 -->
