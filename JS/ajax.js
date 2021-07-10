@@ -310,7 +310,20 @@ function check_estudiante () { // funcion que valida a los estudiantes
 
 
 
+function borrar(id, tabla) {
 
+
+
+if (confirm("ALERTA!! va a proceder a borrar, el registro : "+id+" de la tabla :"+tabla+" ACEPTAR\n de lo contrario de click en CANCELAR.") )
+	{
+
+	$.getJSON("delete.php", {"id": id, "tabla": tabla },
+ 	function () {
+ 		swal("se eliminaron  los datos correctamente");
+ 	});
+	consultar();
+}
+}
 
 
 function crear_pdf(){

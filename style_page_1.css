@@ -1,7 +1,9 @@
 /*  import google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
 
+
 *{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -32,9 +34,12 @@ section{
 }
 .max-width{
     max-width: 1300px;
-    padding: 0 80px;
+    padding: 0 105px;
     margin: auto;
 }
+
+
+
 .about, .services, .skills, .teams, .contact, footer{
     font-family: 'Poppins', sans-serif;
 }
@@ -79,52 +84,81 @@ section .title::after{
 }
 
 /* navbar styling */
-.navbar{
+
+.navbar_top{
     position: fixed;
     width: 100%;
     z-index: 999;
     padding: 30px 0;
     font-family: 'Ubuntu', sans-serif;
     transition: all 0.3s ease;
-    top -1px;
+  
 }
-.navbar.sticky{
-    padding: 15px 0;
-    background: black;
-}
-.navbar .max-width{
+
+.navbar_top .max-width{
     display: flex;
     align-items: center;
     justify-content: space-between;
+
 }
-.navbar .logo a{
+
+.logo_nav{
+    display: flex;
+    align-items: center;
+    margin-right: 10vw;
+
+}
+
+#logo_fimc{
+
+background-image: url('imagenes_page/iconos_colegio/escudo.png');
+background-size: cover;
+width: 50px;
+height: 50px;
+
+}
+
+.navbar_top .logo a{
     color: #fff;
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 600;
+    text-decoration: none;
 }
 .navbar .logo a span{
     color: white;
     transition: all 0.3s ease;
 }
-.navbar.sticky .logo a span{
-    color: #fff;
-}
-.navbar .menu li{
+
+.navbar_top .menu li{
     list-style: none;
     display: inline-block;
 }
-.navbar .menu li a{
+
+.navbar_top .menu li a{
     display: block;
     color: #fff;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     margin-left: 25px;
     transition: color 0.3s ease;
+    text-decoration: none;
 }
-.navbar .menu li a:hover{
+
+.navbar_top .menu li a:hover{
     color: orange;
 }
-.navbar.sticky .menu li a:hover{
+
+.navbar_top.sticky{
+    padding: 15px 0;
+    background: black;
+    backdrop-filter: blur(3px);
+    background-color: rgba(11, 11, 11, 0.9);
+}
+.navbar.sticky .logo a span{
+    color: #fff;
+}
+
+.navbar_top.sticky .menu li a:hover{
     color: #fff;
 }
 
@@ -162,7 +196,6 @@ section .title::after{
 .scroll-up-btn:hover{
     filter: brightness(90%);
 }
-
 
 
 
@@ -223,235 +256,6 @@ section .title::after{
 
 }
 
-/* about section styling */
-.about .title::after{
-    content: "Crear 2021";
-}
-.about .about-content .left{
-    width: 45%;
-}
-.about .about-content .left img{
-
-  width: 535px;
-    object-fit: cover;
-    border-radius: 6px;
-}
-.about .about-content .right{
-    width: 55%;
-}
-.about .about-content .right .text{
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-.about .about-content .right .text span{
-    color: orange;
-    font-size: 21px;
-}
-.about .about-content .right p{
-    text-align: justify;
-}
-.about .about-content .right a{
-    display: inline-block;
-  background-color: orange;
-    color: #fff;
-    font-size: 20px;
-    font-weight: 500;
-    padding: 10px 30px;
-    margin-top: 20px;
-    border-radius: 6px;
-  border: 2px solid orange;
-    transition: all 0.3s ease;
-}
-.about .about-content .right a:hover{
-  color: orange;
-  background: none;
-
-}
-
-/* services section styling */
-.services, .teams{
-    color:#fff;
-    background: #111;
-}
-.services .title::before,
-.teams .title::before{
-    background: #fff;
-}
-.services .title::after,
-.teams .title::after{
-    background: #111;
-    content: "Crear 2021";
-}
-.services .serv-content .card{
-    width: calc(33% - 20px);
-    background: #222;
-    text-align: center;
-    border-radius: 6px;
-    padding: 35px 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.services .serv-content .card:hover{
-    background: orange;
-}
-.services .serv-content .card .box{
-    transition: all 0.3s ease;
-}
-.services .serv-content .card:hover .box{
-    transform: scale(1.05);
-}
-.services .serv-content .card i{
-    font-size: 50px;
-    color: #ffa500;
-    transition: color 0.3s ease;
-}
-.services .serv-content .card:hover i{
-    color: #fff;
-}
-.services .serv-content .card .text{
-    font-size: 31px;
-    font-weight: 500;
-    margin: 10px 0 7px 0;
-}
-
-/* skills section styling */
-
-.skills .title::after{
-    content: "what i know";
-}
-.skills .skills-content .column{
-    width: calc(50% - 30px);
-}
-.skills .skills-content .left .text{
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-.skills .skills-content .left p{
-    text-align: justify;
-}
-.skills .skills-content .left a{
-    display: inline-block;
-    background: orange;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 500;
-    padding: 8px 16px;
-    margin-top: 20px;
-    border-radius: 6px;
-    border: 2px solid orange;
-    transition: all 0.3s ease;
-}
-.skills .skills-content .left a:hover{
-    color: orange;
-    background: none;
-}
-.skills .skills-content .right .bars{
-    margin-bottom: 15px;
-}
-.skills .skills-content .right .info{
-    display: flex;
-    margin-bottom: 5px;
-    align-items: center;
-    justify-content: space-between;
-}
-.skills .skills-content .right span{
-    font-weight: 500;
-    font-size: 18px;
-}
-.skills .skills-content .right .line{
-    height: 5px;
-    width: 100%;
-    background: lightgrey;
-    position: relative;
-}
-.skills .skills-content .right .line::before{
-    content: "";
-    position: absolute;
-    height: 100%;
-    left: 0;
-    top: 0;
-    background: orange;
-}
-.skills-content .right .html::before{
-    width: 90%;
-}
-.skills-content .right .css::before{
-    width: 60%;
-}
-.skills-content .right .js::before{
-    width: 80%;
-}
-.skills-content .right .php::before{
-    width: 50%;
-}
-.skills-content .right .mysql::before{
-    width: 70%;
-}
-
-/* teams section styling */
-.teams .title::after{
-  content: "Crear 2021";
-}
-.teams .carousel .card{
-    background: #222;
-    border-radius: 6px;
-    padding: 25px 35px;
-    text-align: center;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-.teams .carousel .card:hover{
-    background: orange;
-}
-.teams .carousel .card .box{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-.teams .carousel .card:hover .box{
-    transform: scale(1.05);
-}
-.teams .carousel .card .text{
-    font-size: 25px;
-    font-weight: 500;
-    margin: 10px 0 7px 0;
-}
-.teams .carousel .card img{
-    height: 150px;
-    width: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 5px solid orange;
-    transition: all 0.3s ease;
-}
-.teams .carousel .card:hover img{
-    border-color: #fff;
-}
-.owl-dots{
-    text-align: center;
-    margin-top: 20px;
-}
-.owl-dot{
-    height: 13px;
-    width: 13px;
-    margin: 0 5px;
-    outline: none!important;
-    border-radius: 50%;
-    border: 2px solid orange!important;
-    transition: all 0.3s ease;
-}
-.owl-dot.active{
-    width: 35px;
-    border-radius: 14px;
-}
-.owl-dot.active,
-.owl-dot:hover{
-    background: orange!important;
-}
 
 /* contact section styling */
 .contact .title::after{
@@ -589,24 +393,27 @@ footer span a:hover{
     .menu-btn i.active:before{
         content: "\f00d";
     }
-    .navbar .menu{
+    .navbar_top .menu{
         position: fixed;
         height: 100vh;
         width: 100%;
         left: -100%;
         top: 0;
-        background: #111;
+        
         text-align: center;
         padding-top: 80px;
+        background: black;
+        backdrop-filter: blur(3px);
+        background-color: rgba(11, 11, 11, 0.9);
         transition: all 0.3s ease;
     }
-    .navbar .menu.active{
+    .navbar_top .menu.active{
         left: 0;
     }
-    .navbar .menu li{
+    .navbar_top .menu li{
         display: block;
     }
-    .navbar .menu li a{
+    .navbar_top .menu li a{
         display: inline-block;
         margin: 20px 0;
         font-size: 25px;
@@ -623,21 +430,6 @@ footer span a:hover{
     }
     .max-width{
         max-width: 930px;
-    }
-    .about .about-content .column{
-        width: 100%;
-    }
-    .about .about-content .left{
-        display: flex;
-        justify-content: center;
-        margin: 0 auto 60px;
-    }
-    .about .about-content .right{
-        flex: 100%;
-    }
-    .services .serv-content .card{
-        width: calc(50% - 10px);
-        margin-bottom: 20px;
     }
     .skills .skills-content .column,
     .contact .contact-content .column{
@@ -668,26 +460,30 @@ footer span a:hover{
     .home .home-content a{
         font-size: 20px;
     }
-    .services .serv-content .card{
-        width: 100%;
-    }
 
 
 
 
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     .home .home-content .text-2{
         font-size: 50px;
     }
     .home .home-content .text-3{
         font-size: 27px;
     }
-    .about .about-content .right .text,
-    .skills .skills-content .left .text{
-        font-size: 19px;
+
+ 
+    .scroll-up-btn{
+        right: 15px;
+        bottom: 15px;
+        height: 38px;
+        width: 35px;
+        font-size: 23px;
+        line-height: 38px;
     }
+
     .contact .right form .fields{
         flex-direction: column;
     }
@@ -719,16 +515,6 @@ footer span a:hover{
 
 }
 
-section .title{
-
-font-size: 46px;
-
-}
-
-.img_ilus{
-width: 70%;
-
-}
 
 
 
@@ -913,6 +699,14 @@ font-family: 'Ubuntu', sans-serif;
 }
 
 
+.baner_somos p{
+
+    width: 90%;
+    margin: auto;
+color: black;
+
+}
+
 .baner_map iframe{
 
 width: 95%;
@@ -925,117 +719,73 @@ border-radius: 5px;
 
 
 
-@media screen and (min-width:200px) and (max-width: 500px){
+.whatsapp {
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:40px;
+    right:40px;
+    background-color:#25d366;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    font-size:30px;
+    z-index:100;
+  }
+  
+  .whatsapp-icon {
+    margin-top:13px;
+  }
 
 
-    .baner_somos p {
-        text-align: justify;
-        padding-left: 24px;
-        padding-right: 24px;
-        font-size: 18px;
-    }
 
-    .baner_map p {
-        font-size: 20px;
-        text-align: center;
-    }
+  .colegio_txt, .Mapa_col, .colegio{
 
-
-   }
-
-}
-@media screen and (min-width:500px) and (max-width: 700px){
-
-
-    .baner_somos p {
-        text-align: justify;
-        padding-left: 36px;
-        padding-right: 36px;
-        font-size: 18px;
-    }
-
-
+width: 75%;
+height: auto;
+margin: auto;
 
 
 }
 
 
 
-.falso_body_baner{
-    margin: 0;
-    padding: 0;
 
-    display: grid;
-    place-items: center;
-    width: 92%;
-    margin: auto;
-    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.42);
-    border: solid 8px white;
+.Texto_col{
+ margin-top: 140px;
+max-width: 100%;
+max-height: 100%;
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.p_txt{
+
+
+    font-size: 18px; margin-top: 70px; width: 82%;
+}
+
+.Mapa_col iframe{
+width: 95%;
+margin-top: 20px;
+border-radius: 30px;
+}
+
+.colegio_conten{
+
+
+    margin-top: -12px;
+}
+
+.txt_{
+
+font-size: 65px;
+
 }
 
 
-.main {
-    display: flex;
-    overflow: hidden;
-    height: 50vw;
-    background: #333;
-  }
-
-  .main img {
-    max-width: 100%;
-    vertical-align: middle;
-    border: 2px solid white;
-    box-sizing: border-box;
-    transition: opacity 0.2s;
-  }
-
-  .main:hover img {
-    opacity: 0.5;
-  }
-
-  .main img:hover {
-    opacity: 1;
-  }
-
-  .main .single-column {
-    animation: var(--animation, none) 16s infinite linear;
-  }
-
-  .main .single-column:hover {
-    animation-play-state: paused;
-  }
-
-  .main .single-column:nth-of-type(odd) {
-    align-self: flex-end;
-    --direction: 50%;
-  }
-
-  @-webkit-keyframes slide {
-    to {
-      -webkit-transform: translateY(var(--direction, -50%));
-      transform: translateY(var(--direction, -50%));
-    }
-  }
-  @keyframes slide {
-    to {
-      -webkit-transform: translateY(var(--direction, -50%));
-      transform: translateY(var(--direction, -50%));
-    }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-  .container{
-    width: 90%;
+.container{
+    width: 100%;
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
@@ -1049,13 +799,17 @@ border-radius: 5px;
 
 
   .item{
-    background-color: #111;
+  
+    background-color: rgb(243, 243, 243);
     cursor: pointer;
-    box-shadow: 0 0 5px 0 rgba(0,0,0,.095);
-    color: white;
+    box-shadow: 0 0 5px 0 rgba(36, 36, 36, 0.47);
+        color: rgb(22, 22, 22);
     transition: all 300ms;
-    border: solid 3px;
+    border-bottom: solid 7px #ffa500;
     position: relative;
+    font-weight: bold;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    height: 330px;
   }
 
 
@@ -1116,45 +870,243 @@ border-radius: 5px;
   }
 
 
-  .welcome_docentes{
 
-    width: 100%;
-    font-family: 'Ubuntu', sans-serif;
-    color: white;
-    font-size: 30px;
-    transition: 0.5s;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (min-width:200px) and (max-width: 500px){
+
+
+    .baner_somos p {
+        text-align: justify;
+        padding-left: 24px;
+        padding-right: 24px;
+        font-size: 18px;
+    }
+
+    .baner_map p {
+        font-size: 20px;
+        text-align: center;
+    }
+
+
+   }
+
+
+@media screen and (min-width:500px) and (max-width: 700px){
+
+
+    .baner_somos p {
+        text-align: justify;
+        padding-left: 36px;
+        padding-right: 36px;
+        font-size: 18px;
+    }
+
+
+
+
 }
 
-.welcome_docentes:hover{
 
-    font-size: 35px;
- transition: 0.5s;
-    text-decoration: underline;
+
+
+
+
+
+
+
+
+
+
+@media screen and (min-width: 200px) and (max-width: 600px){
+
+    .navbar{
+        padding: 5px; 
+    }
+
+    .whatsapp {
+
+        right:9px;
+     bottom: 4px;
+      }
+
+
+      .colegio_txt, .colegio{
+
+        width: 90%;
+       
+        
+          }
+
+          .Mapa_col{
+
+            width: 100%;
+          }
+
+          .Mapa_col iframe{
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 30px;
+            }
+
+          .Texto_col{
+            margin-top: 80px;
+           max-width: 100%;
+           max-height: 100%;
+           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+           
+           }
+    
+
+
+           .p_txt{
+
+
+            width: 100%;
+        }
+
+
+        body{
+
+
+            background: none;
+           
+        }
+        
+        .txt_{
+
+          font-size: 29px;
+          
+          }
+          
+
+
+    }
+    
+    @media screen and (min-width: 600px) and (max-width: 991px){
+    
+        .navbar{
+        
+            padding: 5px;
+        }
+       
+        .colegio_txt{
+
+            width: 85%;
+           
+            
+              }
+
+
+              .txt_{
+
+                font-size: 50px;
+                
+                }
+                
+        
+        }
+    
+/* responsive media query start */
+
+@media (max-width: 991px) {
+    .max-width{
+        padding: 0 50px;
+    }
+}
+@media (max-width: 947px){
+  
+
+    .home .home-content .text-2{
+        font-size: 70px;
+    }
+    .home .home-content .text-3{
+        font-size: 35px;
+    }
+    .home .home-content a{
+        font-size: 23px;
+        padding: 10px 30px;
+    }
+    .max-width{
+        max-width: 930px;
+    }
+    
+
+
+
+
 }
 
-.op_docentes{
-color: white;
-    width: 70%;
-    margin: auto;
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 20px;
+
+
+
+@media (max-width: 690px) {
+    .max-width{
+        padding: 0 23px;
+    }
+    .home .home-content .text-2{
+        font-size: 60px;
+    }
+    .home .home-content .text-3{
+        font-size: 32px;
+    }
+    .home .home-content a{
+        font-size: 20px;
+   
+
+
+
+
 }
 
-.op_docentes a{
-padding: 15px;
-width: 100%;
-height:auto;
-background-color: orange;
-font-size: 25px;
-color: white;
-border-radius: 10px;
-transition: 0.5s;
+@media (max-width: 500px) {
+    .home .home-content .text-2{
+        font-size: 50px;
+    }
+    .home .home-content .text-3{
+        font-size: 27px;
+     
+    }
 }
 
-.op_docentes a:hover{
 
-color: orange;
-background-color: transparent;
-border: solid orange 2px;
-transition: 0.5s;
+
+
 }
+
+
+
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:10px;
+	background-color:#25d366;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+  font-size:30px;
+	
+  z-index:100;
+}
+
+.my-float{
+	margin-top:16px;
+}
+
+
