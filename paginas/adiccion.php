@@ -1,23 +1,16 @@
 <?php
 session_start();
-if(!isset($_SESSION['usuario']))
-{
-  session_destroy();
-  //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
-  header('Location:login_boletines.php');
-
-  //termina el programa php
-  exit();
-}
 
 require_once 'conexion.php';
-
 $link = conectar();
+
 
 
 // Pagina transitoria para generar los resultados a actualizar
 // RECUPERO DATOS DE EL FORMULARIO
 // DE ACTUACCION
+
+
 
 $add = $_POST["add"];
 $nombres = strtoupper($_POST["i_nombres"]);
@@ -28,19 +21,6 @@ $grados = $_POST["id_g"];
 $fecha = $_POST["fechas"];
 $cedula = $_POST["cedulas"];
 $correo = $_POST["correos"];
-// si tiene setiado la variable i_correo
-if (isset($_POST["i_correos"])){
-  $i_correo = $_POST["i_correos"];
-} else {
-  $i_correo = "";
-}
-// si tiene  nota agrega la variable nota
-if (isset($_POST["nota"])){
-  $nota = $_POST["nota"];
-} else {
-  $nota = "";
-}
-
 $telefono = $_POST["telefonos"];
 $area = $_POST["areas"];
 $id_g = $_POST["id_g"];
@@ -55,14 +35,8 @@ $id_m = $_POST["id_ms"];
 $id_jornada = $_POST["id_jornada"];//utf8_encode("Mañana");
 $bk= "#FFFFFF";// variable de color de fondo de tabla
 $fondo = true;
-
-// si tiene  nota agrega la variable faltas
-if (isset($_POST["faltas"])){
-  $faltas = $_POST["faltas"];
-} else {
-  $faltas = "";
-}
-// $faltas = $_POST['faltas'];
+$nota = $_POST['nota'];
+$faltas = $_POST['faltas'];
 $id_docente = $id_d;
 $docente = $_POST["docentes"];
 
@@ -80,11 +54,11 @@ else
 //recupero el nombre del grados
 
 $q = "select * from grados where id_grado = ".$id_g;
-$qx	= mysqli_query($link, $q) or die('Consulta fallida tabla grados: ' . mysqli_error($link));
+$qx	= mysqli_query($link, $q) or die('Consulta fallida tabla grados: ' . mysql_error());
 $tabla_grado = mysqli_fetch_array($qx);
 
 $q = "select * from jornada where id_jornada = ".$id_jornada;
-$qx	= mysqli_query($link, $q) or die('Consulta fallida tabla jornada: ' . mysqli_error($link));
+$qx	= mysqli_query($link, $q) or die('Consulta fallida tabla jornada: ' . mysql_error());
 $tabla_jornada = mysqli_fetch_array($qx);
 
 
@@ -102,10 +76,10 @@ switch($add) {
 
 case 1:
 
-    $q1 = "INSERT INTO alumnos (nombres, apellidos, cedula, fecha,telefono, correo,login)
-			VALUES ('".$nombres."', '".$apellidos."', '".$cedula."', '".$fecha."', '".$telefono."', '".$correo."', 'creativo')";
+    $q1 = "INSERT INTO alumnos (nombres, apellidos, cedula, fecha,telefono, correo)
+			VALUES ('".$nombres."', '".$apellidos."', '".$cedula."', '".$fecha."', '".$telefono."', '".$correo."')";
 
-    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla alumnos: ' . mysqli_error($link));
+    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla alumnos: ' . mysql_error());
 
 
     $q1 = "Select MAX(id_alumno) id_alumno From alumnos";
@@ -122,10 +96,10 @@ case 1:
     break;
 
 case 2:
-    $q1 = "INSERT INTO docentes (admin, nombres, apellidos, cedula, fecha,celular, correo, i_correo, materias, login)
-			VALUES (0,'".$nombres."', '".$apellidos."', '".$cedula."', '".$fecha."', '".$telefono."', '".$correo."',  '$i_correo',  '".$area."', 'creativo')";
+    $q1 = "INSERT INTO docentes (nombres, apellidos, cedula, fecha,celular, correo, materias)
+			VALUES ('".$nombres."', '".$apellidos."', '".$cedula."', '".$fecha."', '".$telefono."', '".$correo."', '".$area."')";
 
-    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla docentes: ' . mysqli_error($link));
+    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla docentes: ' . mysql_error());
 
     //echo "Se ingreso el docente : ".$nombres." ".$apellidos."\n Cedula : ".$cedula."\n fecha : ".$fecha."\n Telefono: ".$telefono."\n Correo :".$correo;
 
@@ -148,11 +122,13 @@ case 3:
 
 case 4:
 
+
+
 case 5: // insertar logro
 
     $q1 = "INSERT INTO logros (logro, id_materia)
 			VALUES ('".$logros."', '".$curso."')";
-    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar el logro: ' . mysqli_error($link));
+    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar el logro: ' . mysql_error());
 
 
     $q1 = "Select MAX(id_logro) id_logro From logros";
@@ -174,7 +150,7 @@ case 7:
     $q1 = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, year, mes)
 			VALUES (".$id_e.", ".$id_g.", '".$id_jornada."', '".$year."', ".$mes.")";
 
-    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla matriculas: ' . mysqli_error($link));
+    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla matriculas: ' . mysql_error());
 
     //echo "Se ingreso el docente : ".$nombres." ".$apellidos."\n Cedula : ".$cedula."\n fecha : ".$fecha."\n Telefono: ".$telefono."\n Correo :".$correo;
 
@@ -189,7 +165,7 @@ case 7:
 					A.id_alumno = M.id_alumno WHERE M.year = '".$year."' AND M.id_grado = ".$id_g." AND M.id_jornada = $id_jornada ORDER BY A.nombres"  ;
 
 
-    $q1x = mysqli_query($link, $q1) or die('Consulta matricula fallida: ' . mysqli_error($link));;
+    $q1x = mysqli_query($link, $q1) or die('Consulta matricula fallida: ' . mysql_error());;
 
     echo "<tr bgcolor = '#01DF01'><td  colspan='1', width = '20%' ><font size = 2>CODIGO</font></td>";
     echo "<td colspan='1', width = '40%' ><font size = 2>NOMBRE</font></td>";
@@ -216,7 +192,7 @@ case 8: // en este caso se inserta los estudiantes en matricula docente
     $q1 = "INSERT INTO matricula_docente (id_grado, id_materia , id_docente, year,  id_jornada, mes, fecha)
 			VALUES ('".$id_g."', '".$curso."', '".$docente."', '".$year."' , '".$id_jornada."', '".$mes."', '".$fecha_fin."')";
 
-    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla matricula docentes: ' . mysqli_error($link));
+    $q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla matricula docentes: ' . mysql_error());
 
     //echo "Codigo del grado ".$id_g." Grado ".$curso." Docente ".$id_d." Años ".$year." mes ".$mes." fecha finalizacion ".$fecha_fin;
 
@@ -234,7 +210,7 @@ case 8: // en este caso se inserta los estudiantes en matricula docente
         .$year."' AND M.id_grado = ".$id_g." AND M.id_jornada = $id_jornada ORDER BY D.nombres"  ;
 
 
-    $q1x = mysqli_query($link, $q1) or die('Consulta matricula fallida: ' . mysqli_error($link));;
+    $q1x = mysqli_query($link, $q1) or die('Consulta matricula fallida: ' . mysql_error());;
 
     echo "<tr bgcolor = '#04B404'><td  colspan='1', width = '20%' ><font size = 3>CODIGO</font></td>";
     echo "<td colspan='1', width = '40%' ><font size = 3>NOMBRE</font></td>";
@@ -267,14 +243,14 @@ case 8: // en este caso se inserta los estudiantes en matricula docente
 			$q1 = "INSERT INTO requisitos (id_grado, id_materia )
 			VALUES ('".$id_g."', '".$curso."')";
 
-			$q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla matricula docentes: ' . mysqli_error($link));
+			$q1x = mysqli_query($link, $q1) or die('Consulta fallida al insertar tabla matricula docentes: ' . mysql_error());
 
 			echo "Se ingreso el requisito para el grado: ".$id_g." en el curso ".$curso;
 
 			$q1 = "SELECT R.id, grado, materia FROM ( requisitos R INNER JOIN grados G ON R.id_grado = G.id_grado)
 			INNER JOIN  materia M ON M.id_materia = R.id_materia WHERE id_grado =".$id_g." ORDER BY id_materia" ;
 
-			$q1x = mysqli_query($link, $q1) or die('Consulta fallida q1: ' . mysqli_error($link));;
+			$q1x = mysqli_query($link, $q1) or die('Consulta fallida q1: ' . mysql_error());;
 
 			$tabla = "requisitos";
 			echo "<tr bgcolor = '#FFA000'><td  colspan='1', width = '10%' ><font size = 3>GRADO</font></td>";
@@ -305,7 +281,7 @@ case 11:
         // se crea la consulta para el primer logro
         $q = "SELECT  DISTINCT  id  FROM calificaciones WHERE id_alumno = ".$estudiante." AND id_materia =".$id_m." AND periodo =".$periodo." AND year ='".$year."'";
 
-        $qq = mysqli_query($link, $q) or die('Error al contar registros de  calificaciones  : ' . mysqli_error($link));
+        $qq = mysqli_query($link, $q) or die('Error al contar registros de  calificaciones  : ' . mysql_error());
 
 
         $ids = mysqli_fetch_array($qq);
@@ -318,7 +294,7 @@ case 11:
                              //echo "Consulta: $q";
 
                              // se ejecuta la consulta para el primer logro
-                             $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones logro 1 : ' . mysqli_error($link));
+                             $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones logro 1 : ' . mysql_error());
 
                          }
 
@@ -332,7 +308,7 @@ case 11:
 
             //echo "Consulta: $q";
             // se ejecuta la consulta para el logro 2
-                            $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones logro 2: ' . mysqli_error($link));
+                            $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones logro 2: ' . mysql_error());
 
         }
 
@@ -350,7 +326,7 @@ case 11:
 
                             //se ejecuta la consulta para el logro 3
 
-                            $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones : ' . mysqli_error($link));
+                            $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones : ' . mysql_error());
                         }
 
                         echo 'Se actualiza la nota con exito!';
@@ -359,7 +335,7 @@ case 11:
                         $q1 = "SELECT C.id i, L.id, C.nota, L.logro, C.faltas FROM ( calificaciones C INNER JOIN logros L ON L.id = C.id_logro)
                         WHERE C.year ='".$year."' AND C.periodo =".$periodo." AND id_alumno =".$estudiante." AND C.id_materia =".$id_m." ORDER BY C.id_materia" ;
 
-                        $q1x = mysqli_query($link, $q1) or die('Consulta fallida, no se encontraron logros: ' . mysqli_error($link));;
+                        $q1x = mysqli_query($link, $q1) or die('Consulta fallida, no se encontraron logros: ' . mysql_error());;
 
                         $tabla = "calificaciones";
                         echo "<tr bgcolor = '#F0F000'><td  colspan='1', width = '10%' ><font size = 3>CODIGO</font></td>";
@@ -431,7 +407,7 @@ case 11:
 
             //echo $q1;
 
-            $q1x = mysqli_query($link, $q1) or die('Error al actualizar calificaciones logro 1 en formato primaria : ' . mysqli_error($link));
+            $q1x = mysqli_query($link, $q1) or die('Error al actualizar calificaciones logro 1 en formato primaria : ' . mysql_error());
 
             echo 'Se actualiza la nota con exito!';
 
@@ -439,7 +415,7 @@ case 11:
             $q1 = "SELECT C.id i, L.id, C.nota, L.logro, C.faltas FROM ( calificaciones C INNER JOIN logros L ON L.id = C.id_logro)
 			WHERE C.year ='".$year."' AND C.periodo =".$periodo." AND id_alumno =".$estudiante." AND C.id_materia =".$id_m." ORDER BY C.id_materia" ;
 
-            $q1x = mysqli_query($link, $q1) or die('Consulta fallida, no se encontraron logros: ' . mysqli_error($link));;
+            $q1x = mysqli_query($link, $q1) or die('Consulta fallida, no se encontraron logros: ' . mysql_error());;
 
             $tabla = "calificaciones";
             echo "<tr bgcolor = '#F0F000'><td  colspan='1', width = '10%' ><font size = 3>CODIGO</font></td>";

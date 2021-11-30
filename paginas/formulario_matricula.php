@@ -1,16 +1,17 @@
 <?php session_start();
 //validamos si se ha hecho o no el inicio de sesion correctamente
 //si no se ha hecho la sesion nos regresarÃ¡ a login.php
+
+include_once 'conexion.php';
+
 if(!isset($_SESSION['usuario']))
 {
   //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
   header('Location:login_matriculas.php');
+
   //termina el programa php
   exit();
 }
-
-include_once 'conexion.php';
-
 ?>
 
 <!-- se define el tipo de documento ht como HTML 5 -->
@@ -34,15 +35,15 @@ include_once 'conexion.php';
   <script src="../JS/sweetalert.min.js"></script>
   <script src="../JS/ajax.js"></script>
   <script src="../JS/bootstrap.min.js"></script>
-  <script src="../JS/datatables.min.js"></script>
-
+  <!-- <script src="../JS/propper.min.js"  type="text/javascript"></script>
+  <script src="../JS/datatables.min.js" type="text/javascript"></script> -->
   <script src="../JS/bootstrap-table.min.js" type="text/javascript"></script>
   <link href="../CSS/bootstrap-table.min.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/template.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/fa-v4-shims.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/default.css" rel="stylesheet" type="text/css" />
-
-
+  <link href="../CSS/datatables.min.js" rel="stylesheet" type="text/css"/>
+  <link href="../CSS/datatables.min.js" rel="stylesheet" type="text/css"/>
   <link href="../CSS/jquery-3.3.1.slim.min.js" rel="stylesheet" type="text/css"/>
   <link href="../CSS/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <link href="../CSS/all.css" rel="stylesheet" type="text/css" />
@@ -142,7 +143,7 @@ include_once 'conexion.php';
       // si no es un administrador
       header('Location:login_matriculas.php');
     }
-    echo	"Cliente : ".$nombre." ".$apellido." codigo (".$_SESSION['code'].")<br>";
+    echo	"Usuario : ".$nombre." ".$apellido." codigo (".$_SESSION['code'].")<br>";
     ?>
 
   </div>

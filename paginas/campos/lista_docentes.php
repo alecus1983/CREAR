@@ -15,14 +15,14 @@
 
 
 	// se crea el texto de la consulta
-	$q1 = "SELECT *  FROM docentes ORDER BY apellidos";
+	$q1 = "SELECT *  FROM docentes ORDER BY nombres";
 	//echo $q1;
 	// se realiza la  consulta en la base de datos
-	$q1x = $link->query($q1);//mysqli_query($link, $q1 ) or die('no se encuentran docentes: ' . mysqli_error($link));;
+	$q1x = mysqli_query($link, $q1 ) or die('no se encuentran docentes: ' . mysql_error());;
 
 
 	//recupero el arreglo generado en el resultado
-	while($dato1 = $q1x->fetch_array(MYSQLI_ASSOC))
+	while($dato1 = mysqli_fetch_array($q1x))
 	{
 	// recupero el nombre
 	$id = $dato1["id_docente"];

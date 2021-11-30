@@ -5,7 +5,7 @@
 function conectar()
 
 {
-
+echo "";
 // Dirección o IP del servidor MySQL
 $host = "localhost";
 
@@ -13,13 +13,13 @@ $host = "localhost";
 $puerto = "3306";
 
 // Nombre de usuario del servidor MySQL
-$usuario = "imcrea_admin";//"imcreati_admin";
+$usuario = "imcreati_admin";//"imcreati_admin";
 
 // Contraseña del usuario
 $contrasena = "conezioncrear21";
 
 // Nombre de la base de datos
-$baseDeDatos = "imcrea_data";//"imcreati_data";
+$baseDeDatos = "imcreati_data";//"imcreati_data";
 
 //echo $host." - ".$puerto." - ".$usuario." - ".$contrasena." - ".$baseDeDatos;
 
@@ -44,8 +44,7 @@ $baseDeDatos = "imcrea_data";//"imcreati_data";
         //echo "Obtuvimos la base de datos $baseDeDatos sin problema.<br>";
     }
     return $link;
-    return 0;
-}
+    }
 
 
     function desconectar($conexion){

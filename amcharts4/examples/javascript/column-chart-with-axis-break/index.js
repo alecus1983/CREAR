@@ -32,7 +32,7 @@ chart.data = [{
 	"visits": 665
 }, {
 	"country": "Russia",
-	"visits": 5800
+	"visits": 580
 }, {
 	"country": "South Korea",
 	"visits": 443
@@ -41,7 +41,7 @@ chart.data = [{
 	"visits": 441
 }];
 
-chart.padding(40, 80, 40, 40);
+chart.padding(40, 40, 40, 40);
 
 var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 categoryAxis.renderer.grid.template.location = 0;

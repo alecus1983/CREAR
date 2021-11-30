@@ -19,7 +19,9 @@
 	// se  recupera el nombre por el método POST
 	$grado = $_POST["grados"];
 
+
 	// se  recupera el nombre por el método POST
+
 	$admin = $_SESSION['admin'];
 	// se recibe el codigo
 	$id = $_POST['id'];
@@ -44,8 +46,10 @@
 
 	//echo "consulta :".$q1;
 
+
+
 	// se realiza la  consulta en la base de datos
-	$q1x = mysqli_query($link, $q1 ) or die('no se encuentra el nombre: ' . mysqli_error($link));;
+	$q1x = mysqli_query($link, $q1 ) or die('no se encuentra el nombre: ' . mysql_error());;
 
 
 	//recupero el arreglo generado en el resultado
