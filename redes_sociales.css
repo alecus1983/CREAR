@@ -6,6 +6,17 @@
     align-items: center;
     min-height: 20vh;
   }
+
+  .float2{
+
+
+    position:fixed;
+  
+    bottom:30px;
+    right:15px;
+    z-index:100;
+  
+  }
   /*!
    * Simple Social Buttons v2.0
    * Copyright 2020 zkreations
