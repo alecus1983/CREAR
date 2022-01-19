@@ -6,7 +6,7 @@
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
-    
+
 }
 
 
@@ -81,7 +81,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubun
     padding: 2px 0;
     background-color: #0000008a;
     backdrop-filter: blur(10px);
-    
+
 }
 .navbar-top .max-width{
     display: flex;
@@ -198,9 +198,23 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubun
 .home{
 width: 100%; height: auto;
 /*background-color: #121f3d;*/
-
-
 padding-top: 50px;
+}
+
+
+.home1{
+
+    width: 100%; height: 100vh;
+    background-color: #121f3d;
+
+}
+
+.home-col{
+
+    width: 100%; height: auto;
+    /*background-color: #121f3d;*/
+    padding-top: 50px;
+
 }
 
 .mapa{
@@ -228,7 +242,7 @@ height: 45vh;
 
 .ejemplo{
 
-    background-image: url(images_/fondo2.svg);
+    background-image: url(images_/fondocol.svg);
     background-size: cover;
     background-attachment: fixed;
 
@@ -239,6 +253,12 @@ height: 45vh;
 
 
 
+.mision{
+
+width: 100%;
+
+}
+
 
 @media screen and (min-width: 200px) and (max-width: 688px){
 
@@ -246,11 +266,10 @@ height: 45vh;
 
 .ejemplo{
 
-
     background-color: #121f3d;
 }
 
-.home{ 
+.home{
 
 background-color: #121f3d;
 
