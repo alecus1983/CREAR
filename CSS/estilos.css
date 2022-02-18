@@ -79,7 +79,7 @@ body {
   #encabezado.h1{
     font-size: small;
   }
-  
+
   #encabezado{
     width: 100%;
     background-color: lightseagreen;
@@ -96,7 +96,7 @@ body {
     background-color:rgb(0, 33, 77);
     overflow-x: hidden;
     padding-top: 20px;
-    
+
   }
 
   .login-main-text {
@@ -120,7 +120,7 @@ body {
 
 /*pantallas pequeñas*/
 @media screen and (min-width: 576px) {
-  
+
   #encabezado{
     width: 100%;
     background-color: darkslategray;
@@ -153,7 +153,7 @@ body {
 
 /*pantallas pequeñas*/
 @media screen and (min-width: 768px) {
-  
+
   #encabezado{
     width: 100%;
     background-color: darkslategray;
@@ -173,7 +173,7 @@ body {
     margin-top: 20%;
     padding: 60px;
     color: #fff;
-    
+
   }
 
   .main {
