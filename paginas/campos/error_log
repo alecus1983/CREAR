@@ -3305,5 +3305,3 @@ Stack trace:
 [22-Nov-2021 15:27:23 America/Bogota] PHP Notice:  Undefined index: admin in /home/imcreati/public_html/paginas/campos/materias_grado.php on line 25
 [22-Nov-2021 16:33:51 America/Bogota] PHP Notice:  Undefined index: admin in /home/imcreati/public_html/paginas/campos/materias_grado.php on line 25
 [23-Nov-2021 11:03:20 America/Bogota] PHP Notice:  Undefined index: admin in /home/imcreati/public_html/paginas/campos/materias_grado.php on line 25
-[01-Dec-2021 09:27:17 America/Bogota] PHP Notice:  Undefined index: admin in /home/imcreati/public_html/paginas/campos/materias.php on line 24
-[09-Dec-2021 12:06:05 America/Bogota] PHP Notice:  Undefined index: admin in /home/imcreati/public_html/paginas/campos/materias_grado.php on line 25

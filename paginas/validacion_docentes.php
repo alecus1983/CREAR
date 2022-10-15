@@ -9,6 +9,8 @@ require_once 'conexion.php'; // requiere el archivo conexion.php
 
 $link = conectar();
 
+var_dump($link);
+
 // valido el campo de la cedula
 if (isset($_POST["cedula"])){
     // recibe ele campo de cedula
