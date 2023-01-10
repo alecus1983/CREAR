@@ -1,0 +1,43 @@
+<html><head>
+    <title>Yo quero mas de ti</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+       
+    
+<section><div class="container">
+<h3 id="toc_23">YO QUIERO MAS DE TI</h3>
+<pre>
+  C         Em     F
+Yo quiero mas de Tí
+G                  C
+y habitar en tu presencia
+   Am     Am/G#         C
+menguar para que crezcas Tú
+            F           G
+y cada día ser más como Tú
+
+ 
+
+              F  G
+Quebranta mi corazón
+             Em  Am
+quebranta mi vi   da
+              F     G    C
+te entrego mi voluntad a Tí
+            F      G
+todo lo que soy, Señor
+             Em      Am
+todo cuanto tengo es tuyo
+              F      G             C
+yo quiero menguar para que crezcas Tú
+
+</pre></div></section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>

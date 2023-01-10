@@ -561,7 +561,7 @@ while($dato2 = mysqli_fetch_array($q3x)) {
 
      $pdf->Ln(5);
      $pdf->SetFont('Arial','B',10);
-     $pdf->Cell(180,5,"ANA POLONIA CARABALI VILLEGAS",0,0,'C',false);
+     $pdf->Cell(180,5,"LAURA MARCELA PALACIOS",0,0,'C',false);
      $pdf->Ln(5);
      $pdf->SetFont('Arial','',10);
      $pdf->Cell(180,5,"Rectora",0,0,'C',false);

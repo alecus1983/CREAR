@@ -1,0 +1,56 @@
+<html><head>
+    <title>Quiero levantar mis manos</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+       
+    
+<section><div class="container">
+    <pre>
+A                    C#m
+quiero levantar mis manos,
+F#                 Bm
+quiero levantar mi voz,
+   F#               Bm    E
+ofreciendo a ti mi vida
+                A  Em A
+en santidad y amor
+
+D
+padre solo a ti te ofrezco
+    C#m         F#
+mi vida y mi corazón
+Bm                   E
+y me postro en tu presencia
+Bm   D     E A
+en  adoración
+
+
+          C#m Em 
+hijo de dios,
+ A        D Dm        
+ recibe hoy
+           A F#m  
+toda la gloria,
+    Bm   E    A
+la honra y honor
+
+         C#m Em 
+hijo de dios,
+ A       D Dm    
+ recibe hoy
+            A F#m  
+toda la gloria,
+    Bm   E  A
+la honra y honor
+
+    </pre>
+</pre></div></section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>

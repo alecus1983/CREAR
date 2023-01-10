@@ -1,0 +1,41 @@
+<html><head>
+    <title>Conozco que todo lo puedes</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+    <section>   
+    
+<section>
+<div class="container">
+
+<h3 >CONOZCO QUE TODO LO PUEDES (A)</h3>
+
+<pre><b class="notas">   A                F#m</b>
+Conozco que todo lo puedes
+<b class="notas">          Bm        D</b>
+que mi pensamiento 
+<b class="notas">            E</b>
+no lo puedo esconder
+
+hablaba lo que no entend&iacute;a
+y de a oídas te había oído
+
+<b class="notas">     A                F#m</b>
+más ahora mis ojos te ven
+<b class="notas">          Bm            E</b>
+te preguntaré y tu me ensenaras
+
+
+más ahora mis ojos te ven
+me rindo a tus pies
+y me arrepiento Se&ntilde;or.
+</pre>
+</section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>

@@ -1,0 +1,28 @@
+<html><head>
+    <title>Digno es de adorar</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+    <section>   
+    
+<section>
+<div class="container">
+<h3 >DIGNO ES DE ADORAR (Em)</h3>
+<pre><b class="notas">Em            Am</b>
+Digno es de adorar
+<b class="notas">D        G        C  D</b>
+Digno de exaltar
+<b class="notas">Em              Am</b>
+Pues tanto nos amo
+<b class="notas">            C      G    D</b>
+Que en la cruz lo demostró
+</pre>
+</section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>

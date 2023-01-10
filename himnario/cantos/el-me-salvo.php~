@@ -1,0 +1,53 @@
+<html><head>
+    <title>Dulce comunion</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+       
+    
+<section><div class="container">
+<h3 >DULCE COMUNIÓN (G)</h3>
+<pre><b class="notas">G               C        Am7</b>
+Dulce comunión la que gozo ya
+<b class="notas">G                   A    D</b>
+En los brazos de mi Salvador
+<b class="notas">G                   C        Am7</b>
+Qué gran bendición en su paz me da
+<b class="notas">G         Em            A    D   G  C  </b>
+¡Oh!, yo siento en mí su tierno amor
+</pre>
+
+  <b>CORO</b>
+
+  <pre><b class="notas">G      C       G            A   D</b>
+Libre, salvo, del pecado y del temor
+<b class="notas">G      C Am7b5 G       Em         D    G</b>
+Libre, salvo, en los brazos de mi Salvador
+</pre>
+
+  <pre>¡Cuán dulce es vivir, cuán dulce es gozar!
+En los brazos de mi Salvador
+Allí quiero ir y con Él morar
+Siendo objeto de su tierno amor
+
+Libre, salvo, del pecado y del temor
+Libre, salvo, en los brazos de mi Salvador
+
+No hay que temer, ni que desconfiar
+En los brazos de mi Salvador
+Por su gran poder Él me guardará
+De los lazos del engañador
+
+
+Libre, salvo, del pecado y del temor
+Libre, salvo, en los brazos de mi Salvador
+ </pre></div>
+</section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>

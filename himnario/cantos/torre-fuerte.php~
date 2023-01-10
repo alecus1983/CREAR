@@ -1,0 +1,22 @@
+<html><head>
+    <title>Torre fuerte</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+       
+    
+<section><div class="container">
+<h3 id="toc_21">TORRE FUERTE </h3></span>
+
+  <pre>//Torre es el Nombre del Señor//
+//A El correrá el justo
+Y levantado será//</pre>
+</div></section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>
