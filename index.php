@@ -33,7 +33,8 @@
 </head>
 
 <body>
-    <!-- Navbar -->
+
+    <!--1. Navbar -->
     <header class="header-wrap header-2">
         <div class="top-header d-none d-md-block">
             <div class="container-flud">
@@ -63,11 +64,7 @@
                             </div>
                             |
                             <div class="lan-select ml-30">
-                                <form>
-                                    <select id="lan">
-                                        <option>Docentes</option>
-                                    </select>
-                                </form>
+                                      <a href="./paginas/login_boletines.php">Docentes</a>
                             </div>
                         </div>
                     </div>
@@ -75,12 +72,13 @@
             </div>
         </div>
 
+        <!-- 1.1 NavbarMobile -->
         <div class="main-header-wraper">
             <div class="container-fluid">
                 <div class="row align-items-center justify-content-between">
                     <div class="header-logo">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="#">
                                 <img src="assets/img/logo-navbar-mundocreativo.svg" alt="logo">
                             </a>
                         </div>
@@ -89,7 +87,7 @@
                         <div class="main-menu">
                             <ul>
                                 <li><a href="#">Inicio</a></li>
-                                <li><a href="#colegio">Nosotros</a> </li>
+                                <li><a href="#nosotros">Nosotros</a> </li>
                                 <li><a href="#">Servicios<i class="fas fa-angle-down"></i></a>
                                     <ul class="sub-menu">
                                         <li><a href="./colegio.php">Colegio</a></li>
@@ -119,9 +117,7 @@
                                     <nav class="sidebar-nav">
                                         <ul class="metismenu" id="mobile-menu">
                                             <li><a href="#">Inicio</a></li>
-                                            <li><a href="#Colegio">Nosotros</a> </li>
-
-
+                                            <li><a href="#nosotros">Nosotros</a> </li>
                                             <li>
                                                 <a class="has-arrow" href="#">Servicios</a>
                                                 <ul class="sub-menu">
@@ -131,11 +127,9 @@
                                                     <li><a href=" https://wa.link/5gai9l">Cursos y seminarios</a></li>
                                                 </ul>
                                             </li>
-
                                             <li><a href="contact">Contactos</a></li>
                                         </ul>
                                     </nav>
-
                                     <div class="action-bar">
                                         <a href="tel:+573154375785"><i class="fal fa-phone"></i> +57 (315) 4375785</a>
                                     </div>
@@ -147,10 +141,11 @@
                 </div>
             </div>
         </div>
+           <!-- Fin NavbarMobile -->
     </header>
-    <!-- Navbar -->
+    <!-- FIn Navbar -->
 
-    <!-- HomePage -->
+    <!-- 2. HomePage -->
     <section class="hero-slide-wrapper hero-2">
         <div class="hero-text">Techex</div>
         <div class="hero-slider-2 owl-carousel">
@@ -217,14 +212,11 @@
             <!--Tecnicos Baner-->
         </div>
     </section>
-    <!-- HomePage -->
-
+    <!-- Fin HomePage -->
 
     <br>
 
-
-
-    <!--Colegio-->
+    <!--3. Colegio-->
     <section id="colegio" class="container my-5">
         <!--Texto-->
         <div class="d-flex-">
@@ -248,9 +240,9 @@
             </div>
         </div>
     </section>
-    <!--Colegio-->
+    <!--Fin Colegio-->
 
-    <!--Tecnicos-->
+    <!-- 4. Tecnicos-->
     <section class="container my-5">
         <!--Texto-->
         <div class="d-flex-2">
@@ -275,11 +267,94 @@
             </div>
         </div>
     </section>
-    <!--Tecnicos-->
+    <!--Fin Tecnicos-->
+
+<br>
+
+    <!--SECCION DE CARACTERISTICAS-->
+	<div id="nosotros" style="margin-top: -50px;" class="container px-4 py-5" id="featured-3">
+            <h1 class="display-5 fw-bold lh-1 mb-3 text-center">Lo que nos hace <span
+										    style="text-decoration: underline #e8ca32;">Únicos
+            </span></h1>
+            <p style="line-height: 1 !important; font-weight: 700 !important;     font-size: calc(1.325rem + 0.9vw) !important; color: #211e3b;" class="mb-3 text-center">#Crear2023</p>
+            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+		<div class="feature col">
+                    <div class="feature-icon  text-center">
+			<svg  style="color: #211e3b;" xmlns="http://www.w3.org/2000/svg" width="65" height="" fill="currentColor"
+                             class="bi bi-check-all" viewBox="0 0 16 16">
+                            <path
+				d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z" />
+			</svg>
+                    </div>
+                    <br>
+                    <h2 class=" text-center">Educación de calidad</h2>
+                    <p  style="line-height: 1.5 !important;" class="">Contamos con un plan de educación para el trabajo y el desarrollo humano</p>
+		</div>
+		<div class="feature col">
+                    <div class="feature-icon text-center">
+			<svg style="color: #211e3b;" xmlns="http://www.w3.org/2000/svg" width="65" height="" fill="currentColor" class="bi bi-heart"
+                             viewBox="0 0 16 16">
+                            <path
+				d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+			</svg>
+                    </div>
+                    <br>
+                    <h2 class=" text-center"> Educación en Valores</h2>
+                    <p style="line-height: 1.5 !important;" class="">Contamos con formación en valores para nuestros estudiantes</p>
+		</div>
+		<div class="feature col">
+                    <div class="feature-icon text-center">
+			<svg style="color: #211e3b;" xmlns="http://www.w3.org/2000/svg" width="65" height="" fill="currentColor"
+                             class="bi bi-people-fill" viewBox="0 0 16 16">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                            <path fill-rule="evenodd"
+				  d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+                            <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+			</svg>
+                    </div>
+                    <br>
+                    <h2 class=" text-center">Liderazgo</h2>
+                    <p style="line-height: 1.5 !important;" class="">Inspiramos a nuestros estudiantes, para transformar el mundo
+                    </p>
+		</div>
+            </div>
+	</div>
+	<!--SECCION DE CARACTERISTICAS-->
 
 
+    <div class="container">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5  rounded-3">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1">Nuestra Misión</h1>
+        <br>
+        <p class="">En la Fundación Instituto Mundo Creativo formamos niñas, niños jóvenes y adultos en educación, posibilitando su desarrollo integral, potenciando sus capacidades individuales mediante la adquisición de competencias para que construyan el conocimiento y transformen su realidad socio-cultural, a través de un modelo pedagógico transformador que les permita ser gestores y protagonistas de su proyecto de vida desde la innovación educativa.
+
+</p>
+      </div>
+      <div class="col-lg-4  p-0 overflow-hidden">
+        <br>
+          <img class="rounded img-fluid" src="./recursos/img/estudiantes.jpg" alt="" >
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: -10px;" class="container">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5  rounded-3">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1">Nuestra Visión</h1>
+        <br>
+        <p class="">Seremos reconocidos por la integridad de la propuesta educativa centrada en la formación del ser y el desarrollo de competencias que responden a los estándares de calidad, mediante procesos pedagógicos que reconocen la individualidad y promuevan la autonomía de la persona, con principios y valores sociales. Apoyados por una comunidad educativa comprometida con el mejoramiento institucional de su entorno.
+</p>
+      </div>
+      <div class="col-lg-4  p-0 overflow-hidden">
+        <br>
+          <img class="rounded img-fluid" src="./recursos/img/colegio.jpg" alt="" >
+      </div>
+    </div>
+  </div>
+
+<!-- 5. Acceso rapido-->
     <section id="contact" class="container my-5">
-        <!-- Acceso rapido-->
         <div class="accesorapido">
             <div id="soporte-contact" class=" shadow-sm border rounded">
 
@@ -332,14 +407,12 @@
             </div>
             </a>
         </div>
-        <!-- Acceso rapido-->
     </section>
+     <!-- Acceso rapido-->
 
 
-    <!--FOOTER-->
-    <!-- Remove the container if you want to extend the Footer to full width. -->
+    <!--6.FOOTER-->
     <div class="container my-5">
-
         <footer>
             <div class="container p-4">
                 <div class="row">
@@ -355,7 +428,6 @@
                             <li class="mb-1">
                                 <a href="https://wa.link/5gai9l" style="color: #4f4f4f;">Docentes</a>
                             </li>
-
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-6 mb-4">
@@ -411,8 +483,7 @@
       <!-- Copyright -->
     </footer>
   </div>
-  <!-- End of .container -->
-    <!--Footer-->
+    <!--Fin Footer-->
 
 
     <!--  ALl JS Plugins
