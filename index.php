@@ -221,7 +221,9 @@
         <!--Texto-->
         <div class="d-flex-">
             <div class="col-lg-6  p-4">
-                <h1 class="display-4 text-h1">Conoce mas sobre nuestro Colegio
+                <h1 class="display-4 text-h1">Conoce mas sobre nuestro <span
+										style="text-decoration: underline #e8ca32;">Colegio
+                            </span>
                 </h1>
                 <br>
                 <p style="color: #4f4f4f;">En Mundo Creativo contamos con altos entandares de calidad educativa , ofrecemos una experiencia
@@ -247,7 +249,9 @@
         <!--Texto-->
         <div class="d-flex-2">
             <div class="col-lg-6  p-4">
-                <h1 class="display-4 text-h1">Conoce nuestros programas Técnicos
+                <h1 class="display-4 text-h1">Conoce nuestros programas <span
+										style="text-decoration: underline #e8ca32;">Técnicos
+                            </span>
                 </h1>
                 <br>
                 <p style="color: #4f4f4f;">Contamos con un plan de educación para el trabajo y el desarrollo humano, El estudiante creativista
@@ -325,9 +329,9 @@
     <div class="container">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5  rounded-3">
       <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-        <h1 class="display-4 fw-bold lh-1">Nuestra Misión</h1>
+        <h1 class="display-4 fw-bold lh-1">Nuestra <span style="text-decoration: underline #e8ca32;">Misión</span></h1>
         <br>
-        <p class="">En la Fundación Instituto Mundo Creativo formamos niñas, niños jóvenes y adultos en educación, posibilitando su desarrollo integral, potenciando sus capacidades individuales mediante la adquisición de competencias para que construyan el conocimiento y transformen su realidad socio-cultural, a través de un modelo pedagógico transformador que les permita ser gestores y protagonistas de su proyecto de vida desde la innovación educativa.
+        <p style="line-height: 29px;" class="">En la Fundación Instituto Mundo Creativo formamos niñas, niños jóvenes y adultos en educación, posibilitando su desarrollo integral, potenciando sus capacidades individuales mediante la adquisición de competencias para que construyan el conocimiento y transformen su realidad socio-cultural, a través de un modelo pedagógico transformador que les permita ser gestores y protagonistas de su proyecto de vida desde la innovación educativa.
 
 </p>
       </div>
@@ -341,9 +345,10 @@
   <div style="margin-top: -10px;" class="container">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5  rounded-3">
       <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-        <h1 class="display-4 fw-bold lh-1">Nuestra Visión</h1>
+        <h1 class="display-4 fw-bold lh-1">Nuestra <span
+										style="text-decoration: underline #e8ca32;">Visión</span></h1>
         <br>
-        <p class="">Seremos reconocidos por la integridad de la propuesta educativa centrada en la formación del ser y el desarrollo de competencias que responden a los estándares de calidad, mediante procesos pedagógicos que reconocen la individualidad y promuevan la autonomía de la persona, con principios y valores sociales. Apoyados por una comunidad educativa comprometida con el mejoramiento institucional de su entorno.
+        <p style="line-height: 29px;" class="">Seremos reconocidos por la integridad de la propuesta educativa centrada en la formación del ser y el desarrollo de competencias que responden a los estándares de calidad, mediante procesos pedagógicos que reconocen la individualidad y promuevan la autonomía de la persona, con principios y valores sociales. Apoyados por una comunidad educativa comprometida con el mejoramiento institucional de su entorno.
 </p>
       </div>
       <div class="col-lg-4  p-0 overflow-hidden">
@@ -485,6 +490,15 @@
   </div>
     <!--Fin Footer-->
 
+    <!--Btn whatsapp-->
+	<div class=" float2">
+            <div class="nshare">
+		<a class="nshare-item nshare-ws" href="https://wa.link/5gai9l">
+                    <i class="fab fa-whatsapp"></i>
+		</a>
+            </div>
+	</div>
+	<!--Btn whatsapp-->
 
     <!--  ALl JS Plugins
     ====================================== -->
