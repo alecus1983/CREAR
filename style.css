@@ -375,7 +375,7 @@ section .title::after {
 
 .baner-valores {
   position: relative;
-  height: 100%;
+  text-align: center !important;
   background-image: url(./recursos/img/fondo-azul-1920x1080-mm2023.jpg);
   background-size: cover;
   background-attachment: fixed;

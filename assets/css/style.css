@@ -1438,34 +1438,15 @@ p {
 }
 
 #scrollUp {
-  background-color: #086ad7;
-  border-radius: 50%;
-  bottom: 20px;
-  color: #ffffff;
-  font-size: 22px;
-  height: 40px;
-  line-height: 44px;
-  right: 20px;
-  text-align: center;
-  width: 40px;
-  -webkit-box-shadow: 0px 5px 15px 0px rgba(1, 29, 80, 0.1);
-  box-shadow: 0px 5px 15px 0px rgba(1, 29, 80, 0.1);
-  font-weight: 400;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
+  display: none;
 }
 
 #scrollUp:hover {
-  background-color: #211e3b;
 }
 
 @media only screen and (max-width: 991px) {
   #scrollUp {
-    font-size: 15px;
-    height: 30px;
-    line-height: 34px;
-    right: 30px;
-    width: 30px;
+  display: none;
   }
 }
 
@@ -4458,7 +4439,7 @@ header.header-4 .lan-select select option {
   position: relative;
   padding-left: 270px;
   background-color: #211e3b;
-}
+} 
 
 @media (max-width: 1600px) {
   .hero-2 {

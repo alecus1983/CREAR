@@ -90,7 +90,7 @@
                                 <li><a href="#nosotros">Nosotros</a> </li>
                                 <li><a href="#">Servicios<i class="fas fa-angle-down"></i></a>
                                     <ul class="sub-menu">
-                                        <li><a href="./colegio.php">Colegio</a></li>
+                                        <li><a href="./colegio-.php">Colegio</a></li>
                                         <li><a href="./tecnicos.php">Técnicos Laborales</a></li>
                                         <li><a href=" https://wa.link/5gai9l">Educación por ciclos</a></li>
                                         <li><a href=" https://wa.link/5gai9l">Cursos y seminarios</a></li>
@@ -121,7 +121,7 @@
                                             <li>
                                                 <a class="has-arrow" href="#">Servicios</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="./colegio.php">Colegio</a></li>
+                                                    <li><a href="./colegio-.php">Colegio</a></li>
                                                     <li><a href="./tecnicos.php">Técnicos Laborales</a></li>
                                                     <li><a href=" https://wa.link/5gai9l">Educación por ciclos</a></li>
                                                     <li><a href=" https://wa.link/5gai9l">Cursos y seminarios</a></li>
@@ -231,7 +231,7 @@
                     sociedad globalizada. Con el apoyo y el compromiso de toda la Comunidad Creativista.</p>
                 <br>
                 <div class="header-btn-cta">
-                    <a href="./colegio.php" class="theme-btn">Conoce más<i class="fas fa-arrow-right"></i></a>
+                    <a href="./colegio-.php" class="theme-btn">Conoce más<i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
