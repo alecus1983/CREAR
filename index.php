@@ -1,6 +1,11 @@
 <?php
 include_once "header.php";
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
     <!--1. Navbar -->
     <header class="header-wrap header-2">
         <div class="top-header d-none d-md-block">
@@ -355,6 +360,9 @@ include_once "header.php";
       </div>
     </div>
   </div>
+</body>
+</html>
+    
 
   <?php
 include_once "footer.php";
