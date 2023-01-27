@@ -226,7 +226,7 @@ include_once "header.php";
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowfullscreen></iframe>
-                <div style="padding: 15px;" class="shadow-lg">
+                <div style="padding: 15px;" class="shadow-lg rounded">
                     <h2 style="">Feria de la ciencia y la tecnologia</h2>
                     <p>Como objetivo de mostrar proyectos y experimentos de los estudiantes de primaria, el
                         Instituto Mundo creativo llevó a cabo la Feria de la Ciencia, un espacio donde se promovió
@@ -239,17 +239,18 @@ include_once "header.php";
             <!-- -->      
             <div>
             <iframe width="100%" height="315" src="https://www.youtube.com/embed/CrVxw4F_FWw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                <div style="padding: 15px;" class="shadow-lg">
+                <div style="padding: 15px;" class="shadow-lg rounded">
                     <h2 style="">Día del idioma y la raza</h2>
-                    <p>En el marco del Día del Respeto a la Diversidad Cultural celebrado en el mes de Octubre, el Instituto Mundo Creativos llevó a cabo la Celebración del día de la Raza y el Bilingüismo, una actividad en donde participaron los estudiantes de diferentes grados tanto de primaria como bachillerato de la institución</p>
+                    <p>En el marco del Día del Respeto a la Diversidad Cultural celebrado en el mes de Octubre, el Instituto Mundo Creativos llevó a cabo la Celebración del día de la Raza y el Bilingüismo, una actividad en donde participaron los estudiantes de diferentes grados tanto de primaria como bachillerato de la institución.</p>
                 </div>
             </div>
             <!-- -->
      
     </div>
   
+    <br><br>
 
-
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1446.158790091319!2d-76.4856941400431!3d3.0159642256021235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e308076a8026be5%3A0x5d7111594c3c9c0b!2sColegio%20Instituto%20Mundo%20Creativo!5e1!3m2!1ses!2sco!4v1674833648969!5m2!1ses!2sco" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
     
 </body>
