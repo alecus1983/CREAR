@@ -156,6 +156,8 @@ include_once "header.php";
   <br>
   <br>
 
+
+
   <section>
     <div class="container my-5">
       <h4 style="color:#000529; font-weight: bold; font-size: calc(1.320rem + 2.1vw);" class="text-center display-5">
@@ -172,6 +174,82 @@ include_once "header.php";
         Comunidad Creativista.</p>
     </div>
   </section>
+
+
+
+<section class="img-banner-colegio">
+
+<div>Conoce nuestra institución</div>
+
+</section>
+
+  <section class="container my-5">
+<div class="accesorapido">
+    <div class="text-center">
+        <div  style='background-color: #ededed; font-size: 22px; line-height: 30px; padding: 18px;   font-size: 30px;'>Preescolar </div>
+        <img src="./assets/img/Colegio/estudiantes-preescolar-mundocreativo.jpg" class="img-fluid" alt="...">
+        <div class="rounded" style=" background-color: #19295E;"><a style="color: white;"href="">Conoce más aquí ></a></div>
+    </div>
+
+    <div class="text-center">
+        <div style='background-color: #ededed; font-size: 22px; line-height: 30px; padding: 18px;   font-size: 30px;'>Primaria</div>
+        <img src="./assets/img/Colegio/estudiantes-primaria-mundocreativo.jpg" class="img-fluid" alt="...">
+        <div class="rounded" style=" background-color: #19295E;"><a style="color: white;"href="">Conoce más aquí ></a></div>
+
+    </div>
+
+    <div class="text-center">
+        <div style='background-color: #ededed; font-size: 22px; line-height: 30px; padding: 18px;   font-size: 30px;'>Bachillerato</div>
+        <img src="./assets/img/Colegio/estudiante-bachillerato-mundocreativo.jpg" class="img-fluid" alt="...">
+        <div class="rounded" style=" background-color: #19295E;"><a  style="color: white;" href="">Conoce más aquí ></a></div>
+
+    </div>
+</div>
+</section>
+
+<br>
+
+
+    <div class="container my-5">
+      <h4 style="color:#000529; font-weight: bold; font-size: calc(1.320rem + 2.1vw);" class="text-center display-5">
+        Noticias y Actividades
+      </h4>
+      <br>
+      <p style="color:#000529; font-size: 25px;" class="text-center">#CreativoAlDia</p>
+<br>
+      <div class="noticias">
+
+
+      <!-- -->
+      <div>
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/m1pcXmX02p4"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+                <div style="padding: 15px;" class="shadow-lg">
+                    <h2 style="">Feria de la ciencia y la tecnologia</h2>
+                    <p>Como objetivo de mostrar proyectos y experimentos de los estudiantes de primaria, el
+                        Instituto Mundo creativo llevó a cabo la Feria de la Ciencia, un espacio donde se promovió
+                        la investigación, intercambio y aprendizaje en áreas como matemáticas, biología, entre
+                        otros.</p>
+                </div>
+            </div>
+            <!-- -->
+
+            <!-- -->      
+            <div>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/CrVxw4F_FWw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <div style="padding: 15px;" class="shadow-lg">
+                    <h2 style="">Día del idioma y la raza</h2>
+                    <p>En el marco del Día del Respeto a la Diversidad Cultural celebrado en el mes de Octubre, el Instituto Mundo Creativos llevó a cabo la Celebración del día de la Raza y el Bilingüismo, una actividad en donde participaron los estudiantes de diferentes grados tanto de primaria como bachillerato de la institución</p>
+                </div>
+            </div>
+            <!-- -->
+     
+    </div>
+  
+
+
 
     
 </body>

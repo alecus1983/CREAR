@@ -1,7 +1,7 @@
 <!-- 5. Acceso rapido-->
 <section id="contact" class="container my-5">
-        <div class="accesorapido">
-            <div id="soporte-contact" class=" shadow-sm border rounded">
+        <div  class="accesorapido">
+            <div style="padding: 20px;" id="soporte-contact" class=" shadow-sm border rounded">
 
                 <a style="text-decoration: none;" href="https://wa.link/580e21">
 
@@ -19,7 +19,7 @@
                 </a>
 
             </div>
-            <div id="secretaria-contact" class="shadow-sm border rounded">
+            <div style="padding: 20px;" id="secretaria-contact" class="shadow-sm border rounded">
 
                 <a style="text-decoration: none;" href="https://wa.link/azw9np">
                     <div>
@@ -33,7 +33,7 @@
                     </div>
                 </a>
             </div>
-            <div id="academia-contact" class="shadow-sm border rounded ">
+            <div style="padding: 20px;" id="academia-contact" class="shadow-sm border rounded ">
 
                 <a style="text-decoration: none;" href="https://wa.link/5aeti0">
 
