@@ -62,7 +62,7 @@ include_once "header.php";
                                 <li><a href="#nosotros">Nosotros</a> </li>
                                 <li><a href="#">Servicios<i class="fas fa-angle-down"></i></a>
                                     <ul class="sub-menu">
-                                        <li><a href="./colegio-.php">Colegio</a></li>
+                                        <li><a href="./colegio.php">Colegio</a></li>
                                         <li><a href="./tecnicos.php">Técnicos Laborales</a></li>
                                         <li><a href=" https://wa.link/5gai9l">Educación por ciclos</a></li>
                                         <li><a href=" https://wa.link/5gai9l">Cursos y seminarios</a></li>
@@ -93,7 +93,7 @@ include_once "header.php";
                                             <li>
                                                 <a class="has-arrow" href="#">Servicios</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="./colegio-.php">Colegio</a></li>
+                                                    <li><a href="./colegio.php">Colegio</a></li>
                                                     <li><a href="./tecnicos.php">Técnicos Laborales</a></li>
                                                     <li><a href=" https://wa.link/5gai9l">Educación por ciclos</a></li>
                                                     <li><a href=" https://wa.link/5gai9l">Cursos y seminarios</a></li>
@@ -121,37 +121,8 @@ include_once "header.php";
     <section class="hero-slide-wrapper hero-2">
         <div class="hero-text">Techex</div>
         <div class="hero-slider-2 owl-carousel">
-            <!--Colegio Baner-->
-            <div class="single-slide bg-cover" style="background-image: url(assets/img/home2/slide1.jpg);
-            ">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-12 col-lg-6">
-                            <div class="hero-contents">
-                                <br><br>
-                                <h1>Matriculas Abiertas <span style="color: #FFDE59;">2023</span></h1>
-                                <p style="font-family: 'Encode Sans Condensed', sans-serif;">Que esperas para unirte a
-                                    nuestra familia Creativista, ofrecemos una experiencia formativa de alta calidad
-                                    para todos nuestros estudiantes.</p>
-                                <a href="services.html" class="theme-btn">Matricúlate Aqui<i
-                                        class="fas fa-arrow-right"></i></a>
-                                <!-- <a style="color: white;" href="about.html" class="theme-btn minimal-btn">Conoce más<i
-                                        class="fas fa-arrow-right"></i></a> -->
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mt-5 mt-lg-0 col-12 pl-lg-5">
-                            <div class="hero-banner">
-                                <div class="dot"></div>
-                                <img class="rounded" src="assets/img/home4/hero-4.png"
-                                    class="d-block mx-lg-auto img-fluid rounded shadow-lg"
-                                    src="./recursos/img/colegio_instituto_mundo_creativo.jpg">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Colegio Baner-->
 
+        
             <!--Tecnicos Baner-->
             <div class="single-slide bg-cover" style="background-image: url(assets/img/home2/slide2.jpg);
             ">
@@ -182,6 +153,37 @@ include_once "header.php";
                 </div>
             </div>
             <!--Tecnicos Baner-->
+
+            <!--Colegio Baner-->
+            <div class="single-slide bg-cover" style="background-image: url(assets/img/home2/slide1.jpg);
+            ">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-lg-6">
+                            <div class="hero-contents">
+                                <br><br>
+                                <h1>Matriculas Abiertas <span style="color: #FFDE59;">2023</span></h1>
+                                <p style="font-family: 'Encode Sans Condensed', sans-serif;">Que esperas para unirte a
+                                    nuestra familia Creativista, ofrecemos una experiencia formativa de alta calidad
+                                    para todos nuestros estudiantes.</p>
+                                <a href="services.html" class="theme-btn">Matricúlate Aqui<i
+                                        class="fas fa-arrow-right"></i></a>
+                                <!-- <a style="color: white;" href="about.html" class="theme-btn minimal-btn">Conoce más<i
+                                        class="fas fa-arrow-right"></i></a> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mt-5 mt-lg-0 col-12 pl-lg-5">
+                            <div class="hero-banner">
+                                <div class="dot"></div>
+                                <img class="rounded" src="assets/img/home4/hero-4.png"
+                                    class="d-block mx-lg-auto img-fluid rounded shadow-lg"
+                                    src="./recursos/img/colegio_instituto_mundo_creativo.jpg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Colegio Baner-->
 
             <!--Ciclos Baner-->
             <div class="single-slide bg-cover" style="background-image: url(assets/img/home2/slide5.jpg);
@@ -234,7 +236,7 @@ include_once "header.php";
                     sociedad globalizada. Con el apoyo y el compromiso de toda la Comunidad Creativista.</p>
                 <br>
                 <div class="header-btn-cta">
-                    <a href="./colegio-.php" class="theme-btn">Conoce más<i class="fas fa-arrow-right"></i></a>
+                    <a href="./colegio.php" class="theme-btn">Conoce más<i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 

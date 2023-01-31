@@ -28,7 +28,6 @@
     <!--  main style css file -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- template main style css file -->
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -70,3 +69,4 @@
     
 </body>
 </html>
+
