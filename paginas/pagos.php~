@@ -1,0 +1,8 @@
+<?php 
+//requiere los objetos
+require(datos.php);
+
+//$nino = new matricula(0);
+echo "prueba";
+
+?>
