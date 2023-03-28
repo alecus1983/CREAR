@@ -24,7 +24,7 @@ if (!isset($_SESSION['usuario'])) {
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>NOTAS</title>
+  <title>FORMULARIO DE CALIFICACIONES</title>
   <!-- en este codigo se definen los archivos de javascrip que se adjuntaran -->
   <script type="text/javascript" src="../JS/popper.min.js"></script>
   <script type="text/javascript" src="../JS/bootstrap.bundle.min.js"></script>

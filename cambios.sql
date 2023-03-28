@@ -57,3 +57,50 @@ ALTER TABLE pagos CHANGE id_pago id_pago INT(20)AUTO_INCREMENT ;
 select count(*) from pagos where id_matricula = 2 and mes = 4 and year = 2022
 
 select id from matricula where year = 2022
+
+-- cambios en la tabla matricula docente
+ALTER TABLE matricula_docente ADD id_curso INT(11) NOT NULL AFTER id_grado;
+-- cambio id_curso
+ALTER TABLE curso ADD PRIMARY KEY (id_curso)
+
+describe curso
+
+
+select * from matricula_docente
+
+select * from alumnos
+
+show tables
+
+describe matricula_docente
+
+select * from matricula
+
+
+
+ALTER TABLE calificaciones ADD id_semana int(11) NOT NULL AFTER serie;
+
+ALTER TABLE calificaciones ADD id_ponderado int(11) NOT NULL AFTER serie;
+
+describe calificaciones
+
+CREATE TABLE ponderado
+(id_ponderado int(11) PRIMARY KEY NOT NULL,
+ponderado varchar(2) NOT NULL,
+valor double
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+describe ponderado;
+
+CREATE TABLE semana
+(id_semana int(11) PRIMARY KEY NOT NULL,
+year varchar(4) NOT NULL,
+semana int(2) NOT NULL,
+limite date
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+describe semana;
+
+ALTER TABLE matricula ADD id_curso int(11) DEFAULT 1;
+
+SELECT * FROM matricula;
