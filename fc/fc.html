@@ -7,10 +7,583 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>formulario de calificaciones</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="css/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="js/all.js" ></script>
+	<link href="../imagenes/escudo.gif" rel="shortcut icon"/>
+
+	<script type="text/javascript">
+	 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 //                                                                                                     //
+	 // esta funcion interroga a la base de datos para visualizar el contenido de sus tablas                //
+	 // para lo cual toma el contenido de los selectores "consultar" (opcion) y  "adiccionar" (add)         //
+	 // como criterios para  selecionar que consulta se va a ejecutar  en la base de datos                  //
+	 // a travez del archivo seleccion.php                                                                  //
+	 // los demás campos se envian  como información para desarrollar las consultas.                        //
+	 //                                                                                                     //
+	 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	 function consultar() {
+
+             // En caso que la opcion selecionada mediante el combo #option sea la 13, que corresponde
+             // a los registros por grado entoncies
+
+             if ($("#opcion option:selected").val() > 12) {
+		 // en caso de que la opcion se generar
+		 // un grafico de tendencias
+		 $("#resultado_con").html();
+		 grafica();
+		 
+		 // muestro en pantalla
+		 console.log("graficando");
+
+             }
+             // en caso de que no se consulte un grafico
+             else {
+		 // actualiza la tabla con los valrores
+		 // se llama al archivo seleccion.php el cual retorna
+		 // una tabla en formato html
+
+		 $('#resultado_con').load("seleccion.php", {
+
+		     opcion: $("#opcion option:selected").val(),
+		     i_nombres: $("#i_nombres_con").val(),
+		     apellidos: $("#apellidos_con").val(),
+		     Logros: $("#Logros_con").val(),
+		     years: $("#years").val().toString(),
+		     id_g: $("#id_g option:selected").val(),
+		     estudiantes: $("#estudiantes").val(),
+		     periodos: $("#periodos option:selected").val(),
+		     id_ms: $("#id_ms_con").val(),
+		     jornada: $("#jornada option:selected").val(),
+		     corte: $("#corte option:selected").val()
+
+		 },
+					  function() {
+
+		 });
+             }
+
+	 }
+
+	 // funcion que actualiza el listado de los nombres de los estudiantes
+	 // o de los docentes
+
+	 function campo_nombre() {
+
+             // se carga  en el combo  resultado_con la lista de los estudiantes
+             // coincidentes con los criterios de busqueda.
+
+             $('#resultado_con').load("seleccion.php", {
+		 opcion: $("#opcion option:selected").val(),
+		 i_nombres: $("#i_nombres_con").val(),
+		 apellidos: $("#apellidos_con").val(),
+		 Logros: $("#Logros_con").val(),
+		 years: $("#years").val().toString(),
+		 id_g: $("#id_g option:selected").val(),
+		 estudiantes: $("#estudiantes").val(),
+		 periodos: $("#periodos option:selected").val(),
+		 id_ms: $("#id_ms_con").val(),
+		 jornada: $("#jornada option:selected").val(),
+		 corte: $("#corte option:selected").val()
+
+             },
+				      function() {
+
+             });
+	 }
+
+	 // funcion encargada de validar los campos a ingresar a la base de datos
+	 // esta relacionada con el formulario de  adiccionar
+
+	 function validar_add() {
+             // se toman las variables del formulario
+             var nombre = $("#i_nombres").val(); // variable nombre en el formulario
+             var apellido = $("#apellidos").val(); // variable apellidos en el formulario
+             var fecha = $("#fechas").val(); // variable fechas en el formulario
+             var telefono = $("#telefonos").val(); // variable telefonos en el formulario
+             var correo = $("#correos").val(); // variable correos en el formulario
+             var cedula = $("#cedulas").val(); // variable cedula en el formulario
+             var add = $("#add").val(); //  selector de adiccionar en el formulario
+             var ano = $("#years").val(); // variable año en el formulario
+             var jornada = $("select#jornada").val(); // variable jormana en el formulario
+             var periodo = $("select#periodos").val(); // variable periodo en el formulario
+             var corte = $("select#corte").val(); // variable corte en el formulario
+             var grado = $("select#id_g").val(); // variable gradp en el formulario
+             var docente = $("select#docentes").val(); //
+             var materia = $("select#id_ms").val(); //
+
+             var validar = true;
+             $("#resultado").html("");
+
+             if (add == 1 || add == 2) {
+		 // validando nombre
+		 if (nombre == "") {
+		     $("#i_nombres").css("border-color", "red");
+		     validar = false;
+		 }
+		 //en otro caso, el mensaje no se muestra
+		 else {
+		     $("#i_nombres").css("border-color", "grey");
+		 }
+		 // validando apellido
+		 if (apellido == "") {
+		     $("#apellidos").css("border-color", "red");
+		     validar = false;
+		 }
+		 //en otro caso, el mensaje no se muestra
+		 else {
+		     $("#apellidos").css("border-color", "grey");
+		 }
+		 // validar fecha
+		 if (fecha == "") {
+		     $("#fechas").css("border-color", "red");
+		     validar = false;
+		 }
+		 //en otro caso, el mensaje no se muestra
+		 else {
+		     $("#fechas").css("border-color", "grey");
+		 }
+		 // telefono
+		 if (telefono == "" || isNaN(telefono)) {
+		     $("#telefonos").css("border-color", "red");
+		     validar = false;
+		 }
+		 //en otro caso, el mensaje no se muestra
+		 else {
+		     $("#telefonos").css("border-color", "grey");
+		 }
+		 // validar correo
+		 if (correo == "") {
+		     $("#correos").css("border-color", "red");
+		     validar = false;
+		 }
+		 //en otro caso, el mensaje no se muestra
+		 else {
+		     $("#correos").css("border-color", "grey");
+		 }
+
+		 // validar cedula
+		 if (cedula == "" || isNaN(cedula)) {
+		     $("#cedulas").css("border-color", "red");
+		     validar = false;
+		 }
+		 //en otro caso, el mensaje no se muestra
+		 else {
+		     $("#cedulas").css("border-color", "grey");
+		 }
+             }
+             // en caso de que las opciones sean
+             else if (add == 7 || add == 9) {
+		 // datos de la jornada
+		 if (jornada == -1) {
+		     $("#resultado").append("<p style='color:red;'>Favor seleccione una jornada <p>");
+		     validar = false;
+		 }
+		 // datos del periodo
+		 if (periodo == -1) {
+		     $("#resultado").append("<p style='color:red;'>Favor seleccione un periodo <p>");
+		     validar = false;
+		 }
+		 // datos de corte
+		 if (corte == -1) {
+		     $("#resultado").append("<p style='color:red;'>Favor seleccione un corte <p>");
+		     validar = false;
+		 }
+		 // datos de grado
+		 if (grado == -1) {
+		     $("#resultado").append("<p style='color:red;'>Favor seleccione un grado <p>");
+		     validar = false;
+		 }
+             } else if (add == 8) {
+		 // datos de la jornada
+		 if (jornada == -1) {
+		     $("#resultado").append("<p style='color:red;'>Favor seleccione una jornada <p>");
+		     validar = false;
+		 }
+
+		 // datos de grado
+		 if (grado == -1) {
+		     $("#resultado").append("<p style='color:red;'>Favor seleccione un grado <p>");
+		     validar = false;
+		 }
+		 // datos de grado
+		 if (materia == -1) {
+		     $("#resultado").append("<p style='color:red;'>Favor seleccione una materia <p>");
+		     validar = false;
+		 }
+
+		 // datos de grado
+		 if (docente == -1) {
+		     $("#resultado").append("<p style='color:red;'>Favor seleccione un docente <p>");
+		     validar = false;
+		 }
+             }
+             return validar;
+	 }
+
+	 // Funcion en java scrip para ingresar valores en la base de datos
+	 // para todas las opciones del menu adiccionar
+	 // permite agregar estudiantes, docentes, notas etc ...
+
+	 function deposit() {
+
+             // para ello comienza
+             // almacenando el codigo del grado en la variable j
+             var j = $("#id_g").val();
+
+             // se crea un algoritmo para computar los logors
+             // la variable  k que cuenta el limite de logros (interaciones)
+             // asi :
+             // k = 0 --> corresponde a un logro
+             // k = 1 --> corresponde a dos logros
+             // k = 2 --> corresponde a tres logros
+
+             var k = 0;
+
+             // comienza con un algoritmo de validación
+             // los grados con codigos 7, 8 y 9 tienen tres logros (k = 2) estos corresponden a pre escolar
+
+             if (j == 7 || j == 8 || j == 9) {
+		 k = 2; // asigna tres logros
+		 console.log("Se cambio k a : %i", k);
+             }
+
+             // Si voy ha adiccionar una nota ...
+             // si lo que adicciono no es una nota salto este procedimiento
+             if ($("#add").val() == 11)  {
+		 // variable que cuenta las iteraciones
+		 var i = 0;
+
+		 /// por cada checkbox ejecuta esta funcion
+		 $('input[type=checkbox]').each(function() {
+		     // si el checkbox esta seteado
+		     if (this.checked == true) {
+
+			 // almaceno el id en la variable id_c el cual es el codigo del logro
+			 id_c = this.id;
+			 //
+			 if (k >= i) {
+
+			     switch (i) { // estructura para seleccionar los logros
+
+				 case 0:
+				     $("#logro_1").val(id_c);
+				     $("#logro_2").val("");
+				     $("#logro_3").val("");
+				     break
+
+				 case 1:
+				     $("#logro_2").val(id_c);
+				     $("#logro_3").val("");
+				     break
+
+				 case 2:
+				     $("#logro_3").val(id_c);
+				     break
+			     }
+
+			     i++;
+
+			     console.log("El valor de k es: " + k + ", el valor de i es :" + i + " y el id: " + id_c);
+
+			 }
+		     }
+
+		 });
+
+		 //  se muestra en consola los valores insertados en los campos logro 1, logro 2 y logro3
+		 console.log("Logro 1 : %s", $("#logro_1").val());
+		 console.log("Logro 2 : %s", $("#logro_2").val());
+		 console.log("Logro 3 : %s", $("#logro_3").val());
+
+             }
+
+
+
+             /// variable que representa cada item del menu aderir
+
+             var datos = validar_add();
+             if (datos) {
+
+
+		 // en esta seccion se incertan los registros
+		 // dentro de la base de datos , enviados a traves de
+		 // ajax
+
+		 console.log(" add = %i", $("#add").val());
+		 switch ($("#add").val()) {
+			 // caso de agregar notras
+		     case '11':
+
+			 swal({
+			     title: 'INSERTAR NOTAS',
+			     text: "Esta seguro que quiere insertar las notas!",
+			     icon: 'warning',
+			     buttons: true,
+			     buttons: ["cancelar", "insertar"],
+			 }).then((value) => {
+			     if (value) {
+
+				 // creo tes array a partir de una secuencia
+				 // de campos identificados cada uno por una clase
+				 var notas = $('.notas').serializeArray();
+				 // serializo los campos clase  logro 1
+				 var logros1 = $('.logros1').serializeArray();
+				 // serializo los campos clase logro 2
+				 var logros2 = $('.logros2').serializeArray();
+				 // serializo los campos clase logro 3
+				 var logros3 = $('.logros3').serializeArray();
+				 // serializo los codigos
+				 var codigos = $('.codigos').serializeArray();
+				 // serializo las  faltas
+				 var faltas = $('.faltas').serializeArray();
+
+				 $.ajax({
+				     type: "POST",
+				     url: "notas.php",
+				     data: {
+					 year: $("#years").val(),
+					 id_gs: $("#id_g").val(),
+					 id_ms: $("#id_ms").val(),
+					 id_jornada: $("#jornada").val(),
+					 id_docente: $("#id_docentes").val(),
+					 corte: $("#corte").val(),
+					 periodo: $("#periodos").val(),
+					 nota: JSON.stringify(notas),
+					 logro1: JSON.stringify(logros1),
+					 logro2: JSON.stringify(logros2),
+					 logro3: JSON.stringify(logros3),
+					 codigo: JSON.stringify(codigos),
+					 faltas: JSON.stringify(faltas)
+				     },
+
+				     success: function(data) {
+					 //$("#resultado").html("Se ingresaron las notas con exito");
+					 $("#resultado").html(data);
+
+				     },
+				     error: function(xhr, status) {
+					 swal('Disculpe, existió un problema');
+					 console.log(xhr);
+				     }
+				 });
+
+			     } else {
+				 swal({
+				     title: 'Accion cancelada',
+				     icon: 'error',
+				 });
+			     }
+			 } // si se retorna el boton insertar
+			 );
+
+			 break;
+
+		     case '12':
+
+			 if (validar_grado()) {
+			     // mensaje de aceptacion
+			     swal({
+				 title: 'Agregar Registros',
+				 text: "se van a agregar registros para el grado " + $("#id_g option:selected").text(),
+				 icon: 'warning',
+				 buttons: true,
+				 buttons: ["cancelar", "insertar"],
+			     }).then((value) => {
+				 if (value) {
+				     // carga los registros  el la ventana de resultados
+				     $('#resultado').load("registros.php", {
+					 id_gs: $("#id_g").val(),
+					 n_grado: $("#id_g option:selected").text()
+				     }
+
+				     );
+				 }
+			     });
+			 }
+
+			 break;
+
+		     default:
+
+			 swal({
+			     title: 'CONFIRMAR',
+			     text: "Para confirmar la accion presione aceptar, de lo contrario presione cancelar",
+			     icon: 'warning',
+			     buttons: true,
+			     buttons: ["cancelar", "insertar"],
+			 }).then((value) => {
+			     if (value) {
+
+				 $.ajax({
+				     url: 'adiccion.php',
+				     type: 'POST',
+				     dataType: 'html',
+				     data: {
+					 add: $("#add option:selected").val(),
+					 i_nombres: $("#i_nombres").val(),
+					 apellidos: $("#apellidos").val(),
+					 Logros: $("#Logros").val(),
+					 years: $("#years").val().toString(),
+					 id_g: $("#id_g").val(),
+					 fechas: $("#fechas").val(),
+					 cedulas: $("#cedulas").val(),
+					 correos: $("#correos").val(),
+					 telefonos: $("#telefonos").val(),
+					 areas: $("#areas").val(),
+					 fecha_fins: $("#fecha_fins").val(),
+					 id_es: $("#id_es").val(),
+					 logro_1: $("#logro_1").val(),
+					 logro_2: $("#logro_2").val(),
+					 logro_3: $("#logro_3").val(),
+					 faltas: $("#faltas").val(),
+					 estudiantes: $("#estudiantes").val(),
+					 periodos: $("#periodos").val(),
+					 id_ms: $("#id_ms").val(),
+					 id_jornada: $("#jornada").val(),
+					 docentes: $("#docentes").val()
+				     },
+				     beforeSend: function() {
+					 console.log("enviando datos .. para adiccionar");
+				     },
+
+				     success: function(result) {
+					 // en caso de que la funcion tenga exito
+					 $('#resultado').html(result);
+					 // ejecuto la funcion para la cual  actualiza el formato de seleccion
+					 //consultar();
+				     },
+				     error: function(xhr, status) {
+					 swal('Disculpe, existió un problema');
+				     },
+				     complete: function(xhr, status) {
+					 swal('Petición realizada');
+				     }
+				 });
+
+			     }
+			 });
+			 break;
+		 }
+             } /// fin de la confirmacion de los datos
+             else {
+		 $("#resultado").append("Los datos ingresados son incorrectos, verifique el formulario");
+             }
+
+
+             // fin de funcion
+
+	 } // fin de la funsion deposit
+
+	 // funcion para llamar boletines
+	 function boletin() {
+             // almaceno el valor del grado
+             grado = $("#id_g").val();
+
+             if (grado == -1) {
+		 swal("Datos", "Por favor seleccione un grado", "info");
+             } else if (grado < 7 || grado > 9) {
+		 // llama a la funcion generar para generar el boletin
+		 // que corresponde al modelo de primaria
+		 crear_pdf();
+             } else {
+		 // llama a la funcion generarx la cual genera el boletin tipo preescolar
+		 obtener_pdf();
+             }
+	 }
+
+	 // funcion que permite validar el campo grado retorna true si tiene
+	 // un valor valido
+	 function validar_grado() {
+             var grado = $("#id_g").val();
+             // si el grado es -1 es porque no se ha seleccionado
+             if (grado == "-1") {
+		 swal("Datos", "Por favor seleccione un grado", "error");
+		 return false;
+             } else {
+		 return true;
+             }
+	 }
+
+	 // funcion que permite validar el campo grado retorna true si tiene
+	 // un valor valido
+	 function validar_periodo() {
+             var grado = $("#periodos").val();
+             // si el grado es -1 es porque no se ha seleccionado
+             if (grado == "-1") {
+		 swal("Datos", "Por favor seleccione un periodo", "error");
+		 return false;
+             } else {
+		 return true;
+             }
+	 }
+
+	 function borrar(id, tabla) {
+
+             swal({
+		 title: 'CONFIRMAR',
+		 text: "Va a eliminar un registro de la tabla " + tabla + " con codigo " + id,
+		 icon: 'warning',
+		 buttons: true,
+		 buttons: ["cancelar", "insertar"],
+             }).then((value) => {
+		 if (value) {
+
+		     $.getJSON("delete.php", {
+			 "id": id,
+			 "tabla": tabla
+		     },
+			       function() {
+				   swal("se eliminaron  los datos correctamente");
+		     });
+		     consultar();
+		 }
+             });
+	 }
+	</script>
+
+	<!-- scrip -->
+	<script>
+	 //////////////////////////////////////////////////////////////////////////////////////////
+	 // Este script contiene la funcion para generar las graficas                            //
+	 // Esta foncion no recive parametros                                                    //
+	 //////////////////////////////////////////////////////////////////////////////////////////
+
+
+	 function grafica() {
+
+	     // se invoca al metodo ajax para solicitar el los datos del grafico
+	     $.ajax({
+		 type: "POST",
+		 url: "grafica_boletin.php",
+		 data: {
+		     year: $("#years").val(),
+		     id_gs: $("#id_g").val(),
+		     id_ms: $("#id_ms").val(),
+		     id_jornada: $("#jornada").val(),
+		     id_docente: $("#id_docentes").val(),
+		     corte: $("#corte").val(),
+		     periodo: $("#periodos").val(),
+		     opcion: $("#opcion").val()
+
+		 },
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+
+		     $("#grafo").html(respuesta);
+
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
+	     });
+
+	 }
+	</script>
     </head>
+    
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
@@ -190,7 +763,6 @@
 				    </div>
 
 				    <div class="row">
-
 					<button type="button"
 						      style="margin: 20px auto auto;
 						      display: block;"
@@ -213,7 +785,17 @@
                                 </div>
                                 <div class="card-body">
 				    <div class="row">
-					<div class="col-md-12">
+					<div id="calificador" class="col-md-12">
+					  <!-- formulario de notas> -->
+					    
+					    <button type="button"
+						    style="margin: 20px auto auto; display: block;"
+						    class="btn btn-outline-success"
+						    value="INGRESAR"
+						    id="ingresar" onclick="deposit();">
+						Ingresar
+					    </button>
+					    
 					</div>
 				    </div>
 				</div>
@@ -745,12 +1327,12 @@
                 </footer>
 	</div>
 		</div>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-		<script src="js/scripts.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-		<script src="assets/demo/chart-area-demo.js"></script>
-		<script src="assets/demo/chart-bar-demo.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-		<script src="js/datatables-simple-demo.js"></script>
+		<script src="./js/bootstrap.bundle.min.js" ></script>
+		<script src="./js/scripts.js"></script>
+		<script src="./js/Chart.min.js" ></script>
+		<script src="./assets/demo/chart-area-demo.js"></script>
+		<script src="./assets/demo/chart-bar-demo.js"></script>
+		<script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
+		<script src="./js/datatables-simple-demo.js"></script>
     </body>
 </html>

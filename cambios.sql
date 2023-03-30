@@ -96,6 +96,7 @@ CREATE TABLE semana
 (id_semana int(11) PRIMARY KEY NOT NULL,
 year varchar(4) NOT NULL,
 semana int(2) NOT NULL,
+inicio date,
 limite date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -104,3 +105,9 @@ describe semana;
 ALTER TABLE matricula ADD id_curso int(11) DEFAULT 1;
 
 SELECT * FROM matricula;
+-- consulta en la tabla de semanas
+select * from semana;
+
+describe semana;
+
+show tables;
