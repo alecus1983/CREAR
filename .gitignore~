@@ -1,0 +1,5 @@
+# ignora el archivo de composer
+composer.phar
+composer-setup
+login.php
+prueba.php
