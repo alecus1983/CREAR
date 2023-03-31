@@ -17,6 +17,10 @@ $jornada = $_POST['id_jornada'];
 $bk= "#FFFFFF";// variable de color de fondo de tabla
 $fondo = true;
 
+$listado  = new listado_estudiantes('2022',1,0);
+
+echo $listado->$year; 
+
 echo "Se ha requerido el año $ano, el periodo $periodo, en la jornada $jornada en la materia $id_m";
 
 //$lista = new $matriculas();

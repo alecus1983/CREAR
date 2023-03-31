@@ -30,8 +30,8 @@ class imcrea {
 
     public function __construct(){
 
-        $this->_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-
+      $this->_db= new mysqli('localhost','imcreati_admin','conezioncrear21','imcreati_data');
+        //$this->_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
         if ($this->_db->connect_errno) {
             echo "fallo al conectar bd".$this->_db->connect_errno;
             return;
@@ -810,13 +810,23 @@ class listado_estudiantes extends imcrea {
     // invoco al constructor de la clase padre (imcrea)
     parent::__construct();
     // genero una consulta a la base de datos
-    $q2 = $this->_db->query("select * from matricula where year = $y and ");
+    $q2 = $this->_db->query("select * from matricula where year = $y and id_grado= $g and id_curso =$c ");
     // guardo el resoltado en un array inicialmente vacio
-    $aa = array();
-    while($resultado = $q2->fetch_array(MYSQLI_NUM)){
+    $a_grado = array();
+    $a_alumno = array();
+    $a_curso = array();
+
+    while($resultado = $q2->fetch_array(MYSQLI_ASSOC)){
       // agrego elementos al array $aa
-      array_push($aa,$resultado[0]);
+      array_push($a_grado,$resultado['id_grado']);
+      array_push($a_alumno,$resultado['id_alumno']);
     }
+
+    // asignacion de parametros
+    $this->year = $y;
+    $this->id_grado =$a_grado;
+    $this->id_alumno = $a_alumno;
+    $this->id_curso = $c; 
 
 
 

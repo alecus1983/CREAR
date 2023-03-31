@@ -62,6 +62,9 @@ select id from matricula where year = 2022
 ALTER TABLE matricula_docente ADD id_curso INT(11) NOT NULL AFTER id_grado;
 -- cambio id_curso
 ALTER TABLE curso ADD PRIMARY KEY (id_curso)
+-- cambios en la tabla de matricula
+
+ALTER TABLE matricula  ADD id_curso INT(11) NOT NULL AFTER id_grado;
 
 describe curso
 
@@ -115,3 +118,12 @@ show tables;
 ALTER TABLE semana ADD inicio date AFTER semana;
 
 describe  matricula;
+-- consulta para extraer el listado de estudiantes
+select * from matricula where year = '2022' and id_grado = 1 and id_curso = 0
+-- actualizar el curso en la tabla matriculas ,  0 por defecto
+update matricula set id_curso = 0
+-- consulta para revisar los cursos activos
+select * from curso
+-- crear los valores iniciales de la tabla cursos
+insert into curso (id_curso, curso, activo) values (0,'A',1);
+insert into curso (id_curso, curso, activo) values (1,'B',1);
