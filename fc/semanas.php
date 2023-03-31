@@ -12,12 +12,12 @@ $id_m = $_POST["id_ms"];
 // $corte = $_POST["corte"];
 $periodo = $_POST["periodo"];
 $jornada = $_POST['id_jornada'];
-$semana = $_POST["semana"];
+//$semana = $_POST["semana"];
 
 $bk= "#FFFFFF";// variable de color de fondo de tabla
 $fondo = true;
 
 echo "Se ha requerido el año $ano, el periodo $periodo, en la jornada $jornada en la materia $id_m";
 
-$lista = new $matriculas();
+//$lista = new $matriculas();
 ?>

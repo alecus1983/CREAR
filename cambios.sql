@@ -111,3 +111,7 @@ select * from semana;
 describe semana;
 
 show tables;
+
+ALTER TABLE semana ADD inicio date AFTER semana;
+
+describe  matricula;

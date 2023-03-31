@@ -762,7 +762,15 @@
 					<div class="row">
 					    <div class="col-md-12 form-floating">
 						<select id="semana"
-							    class="form-control">
+							class="form-control">
+						    <option value="1">1</option>
+						    <option value="2">2</option>
+						    <option value="3">3</option>
+						    <option value="4">4</option>
+						    <option value="5">5</option>
+						    <option value="6">6</option>
+						    <option value="7">7</option>
+						    <option value="8">8</option>
 						</select>
 						<label for="semana">Semana</label>
 					    </div>
@@ -777,6 +785,7 @@
 						<label for="jornada">Jornada</label>
 					    </div>
 					</div>
+					
 
 					<div class="row">
 					    <div class="col-md-12 form-floating">
@@ -784,6 +793,16 @@
 							    class ="form-control">
 						</select>
 						<label class="Control-label">Grado</label>
+					    </div>
+					</div>
+
+					<div class="row">
+					    <div class="col-md-12 form-floating">
+						<select id="id_c"  class ="form-control">
+						    <option value="0">A</opcion>
+						    <option value="1">B</opcion>
+						</select>
+						<label class="Control-label">Curso</label>
 					    </div>
 					</div>
 

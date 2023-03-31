@@ -791,4 +791,37 @@ class matriculas_year extends imcrea {
   }
 }
 
+// clase de listado de estudiantes
+// requiere el año, el grado y el curso
+class listado_estudiantes extends imcrea {
+ 
+  // variable del año
+  public  $year;
+  // variable  del grado
+  public $grado;
+  // variable del curso
+  public $curso;
+  public $id_alumno;
+  public $id_grado;
+  public $id_curso;
+
+  // funcion constructor de objeto
+  public function __construct($y, $g, $c) {
+    // invoco al constructor de la clase padre (imcrea)
+    parent::__construct();
+    // genero una consulta a la base de datos
+    $q2 = $this->_db->query("select * from matricula where year = $y and ");
+    // guardo el resoltado en un array inicialmente vacio
+    $aa = array();
+    while($resultado = $q2->fetch_array(MYSQLI_NUM)){
+      // agrego elementos al array $aa
+      array_push($aa,$resultado[0]);
+    }
+
+
+
+  }
+
+}
+
 ?>
