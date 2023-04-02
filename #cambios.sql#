@@ -182,3 +182,5 @@ update ponderado set tipo = "G" where id_ponderado = 7;
 update ponderado set tipo = "H" where id_ponderado = 8;
 update ponderado set tipo = "I" where id_ponderado = 9;
 update ponderado set tipo = "J" where id_ponderado = 10;
+
+commit;
