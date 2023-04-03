@@ -182,3 +182,24 @@ update ponderado set tipo = "G" where id_ponderado = 7;
 update ponderado set tipo = "H" where id_ponderado = 8;
 update ponderado set tipo = "I" where id_ponderado = 9;
 update ponderado set tipo = "J" where id_ponderado = 10;
+
+select * from calificaciones where year = 2022 and id_alumno = 440 and id_materia = 1 and id_ponderado = 1 and id_semana = 1
+
+alter table calificaciones modify modificado datetime;
+
+insert into calificaciones (id_alumno,id_materia, nota,id_docente,periodo,year,modificado,id_ponderado,id_semana) values(1,1,5,1,1,2050,NOW(),1,1)
+
+alter table calificaciones change id  id int(18) unsigned  not null auto_increment primary key;
+
+
+alter table calificaciones modify id_logro int(11)  default null;
+
+alter table calificaciones modify faltas int(11)  default null;
+alter table calificaciones modify corte varchar(1)  default null;
+alter table calificaciones modify limite date  default null;
+alter table calificaciones modify own int(11)  default null;
+alter table calificaciones modify serie int(11)  default null;
+alter table calificaciones modify id_ponderado int(11)  default null;
+alter table calificaciones modify id_semana int(11)  default null;
+
+select id_alumno, id_materia from calificaciones where year = 2023;

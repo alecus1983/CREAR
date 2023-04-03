@@ -9,7 +9,7 @@
 	$grado = $_POST["grados"];
 	$id = $_POST['id'];
 	// el año
-	$year = '2022';//$_POST['year'];
+	$year = $_POST['year'];
 	// creo un nuevo docente
 	$doc = new docentes();
 	// recupero sus datos  si existe
