@@ -183,7 +183,9 @@ update ponderado set tipo = "H" where id_ponderado = 8;
 update ponderado set tipo = "I" where id_ponderado = 9;
 update ponderado set tipo = "J" where id_ponderado = 10;
 
-select * from calificaciones where year = 2022 and id_alumno = 440 and id_materia = 1 and id_ponderado = 1 and id_semana = 1
+select id_curso from calificaciones where year = 2023
+
+--and id_alumno = 440 -- and id_materia = 1 -- and id_ponderado = 1 and id_semana = 1
 
 alter table calificaciones modify modificado datetime;
 
@@ -203,3 +205,21 @@ alter table calificaciones modify id_ponderado int(11)  default null;
 alter table calificaciones modify id_semana int(11)  default null;
 
 select id_alumno, id_materia from calificaciones where year = 2023;
+
+
+
+select c1.id_alumno, nota, id_materia, id_ponderado, g.id_grado,g.grado from grados g inner join
+(select c.id_alumno, nota, id_materia, id_ponderado, id_grado from  matricula m inner join 
+(select id_alumno, nota, id_materia, id_ponderado from calificaciones where year = 2023) c
+on m.id_alumno = c.id_alumno) c1 on g.id_grado = c1.id_grado
+order by id_grado, id_materia, c1.id_alumno;
+
+
+select id_alumno, nota, id_materia, id_ponderado from calificaciones where  year = 2023
+order  by id_alumno, id_ponderado;
+
+
+select * from matricula where id_alumno = 984 and year = 2023;
+
+delete  from calificaciones where  year = 2023;
+

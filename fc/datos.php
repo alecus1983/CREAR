@@ -380,6 +380,7 @@ class matricula_docente extends imcrea {
     protected $mes;
     protected $fecha;
     public $listado;
+    public $listado_docentes;
     // constructor de la clase
     public function __construct(){
         //   constructor de la clase padre
@@ -420,6 +421,19 @@ class matricula_docente extends imcrea {
 
     }
 
+      public function listado_docentes ($year){
+        $arr = array();
+        $q = "select id_docente,cedula, login, nombres, apellidos from docentes where id_docente in (
+select distinct id_docente from matricula_docente where year = 2023) and admin= 0";
+        $c = $this->_db->query($q);
+        while($a = $c->fetch_array(MYSQLI_ASSOC)){
+            array_push($arr, $a['id_docente']);
+            
+
+        }
+        $this->listado_docentes = $arr;
+
+}
 }
 
 // Clase que define la inscripcion
@@ -857,11 +871,11 @@ class listado_estudiantes extends imcrea {
 
     // funcion constructor de objeto requiere
     //el año, el  grado y el curso
-    public function __construct($y, $g, $c) {
+    public function __construct($y, $g,$j , $c) {
         // invoco al constructor de la clase padre (imcrea)
         parent::__construct();
         // genero una consulta a la base de datos
-        $query = "select * from matricula where year = $y and id_grado= $g and id_curso =$c ";
+        $query = "select * from matricula where year = $y and id_grado= $g and id_jornada= $j and id_curso =$c ";
         $q2 = $this->_db->query($query);
         // guardo el resoltado en un array inicialmente vacio
         $a_grado = array();
@@ -897,6 +911,7 @@ class docentes extends imcrea {
     public $correo;
     public $i_correo;
     public $materias;
+    public $listado;
     
     //cosntructor de la clase
     public function __construct(){
@@ -953,7 +968,7 @@ class docentes extends imcrea {
 
     //funcion que retorna las materias que se dictan en un año
     //en forma de array,  requiere el grado $g y el año $y
-    public function get_materias_por_grado($g,$y){
+    public function get_materias_por_grado($g,$y) {
         $arr = array();
         $q = "";
         if($this->admin == 1){
@@ -977,6 +992,10 @@ class docentes extends imcrea {
         $this->materias = $arr;
 
     }
+
+  
+
+    
     
 
 }
@@ -1017,6 +1036,7 @@ class calificaciones extends  imcrea {
         if(is_null($r)){
             // si es falso entonces no ha sido calificado
             $this->calificado = false;
+            $this->nota = 0;
            
         }else{
             // si es verdadero asigno la nota

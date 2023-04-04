@@ -1,0 +1,339 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.tag_formulario{
+background-color: transparent;
+color: gold;
+border: none;
+font-weight: bold;
+font-size: 0.9rem;
+padding-left: 0px;
+}
+
+.window-notice {
+  background: rgba(116, 116, 116, 0.85);
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  position: fixed;
+  z-index: 999;
+}
+
+.window-notice .content {
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(33, 41, 52, .75);
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 600px;
+  min-width: 320px !important;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 2rem;
+  font-size: 1.3rem;
+}
+
+
+
+.input-group-text{
+    width:12rem;
+}
+
+
+
+.A {
+    color: blue;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.B {
+    color: blueviolet;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.C {
+    color: darkcyan;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.D {
+    color: red;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.E {
+    color: orange;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.F {
+    color: forestgreen;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.G {
+    color: darkslategray;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.H {
+    color: darkblue;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.I {
+    color: brown;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.j {
+    color: fuchsia;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.L {
+    color: dodgerblue;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px)  {
+
+    .input-group-text{
+    width:11rem;
+}
+
+
+.A {
+    color: blue;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.B {
+    color: blueviolet;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.C {
+    color: darkcyan;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.D {
+    color: red;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.E {
+    color: orange;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.F {
+    color: forestgreen;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.G {
+    color: darkslategray;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.H {
+    color: darkblue;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.I {
+    color: brown;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.J {
+    color: fuchsia;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.L {
+    color: dodgerblue;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+    
+}
+
+
+
+
+
+/*pantallas pequeñas*/
+@media screen and (max-width: 1500px) {
+
+  #encabezado.h1{
+    font-size: small;
+  }
+
+  #encabezado{
+    width: 100%;
+    background-color: lightseagreen;
+    color: aliceblue;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid darkblue;
+    box-shadow: 5px 5px 5px lightgray;
+
+  }
+
+  .sidenav {
+    height: 100%;
+    background-color:rgb(0, 33, 77);
+    overflow-x: hidden;
+    padding-top: 20px;
+
+  }
+
+  #login1{
+      max-width:100%;
+  }
+
+  #cedula{
+      max-width:80%;
+      font-size:2rem;
+  }
+  
+  #login{
+      max-width:80%;
+      font-size:2rem;
+  }
+  .label-login{
+      font-size:2rem;
+  }
+
+  .titulo-login {
+
+      font-size: 6rem;
+  }
+
+  .login-main-text {
+    margin-top: 2%;
+    padding: 10%;
+    color: #fff;
+    padding-bottom: 20%;
+  }
+
+  .main {
+    padding: 0px 10px;
+    background-color: white;
+    padding: 20px;
+    font-size: 0.7rem;
+
+  }
+
+  .form-contol::placeholder{
+    font-size: 0.7rem;
+  }
+}
+
+/*pantalla grande*/
+@media screen and (min-width: 1500px) {
+
+  #encabezado{
+    width: 100%;
+    background-color: darkslategray;
+    color: rgba(200,200,200,20);
+    padding: 60px;
+    box-shadow: 5px 5px 5px lightgray;
+}
+
+  .main {
+    margin-left: 40%;
+  }
+
+  .sidenav {
+    width: 40%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #333;
+  }
+
+  .login-main-text {
+    margin-top: 20%;
+    padding: 60px;
+    color: #fff;
+    padding-bottom: 70%;
+  }
+
+  .login-form {
+    margin-top: 80%;
+  }
+
+  .register-form {
+    margin-top: 20%;
+  }
+}
+
+
+

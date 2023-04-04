@@ -33,7 +33,7 @@ $d->get_docente_cc($_POST["cedula"]);
         //Almacenamos el nombre de usuario//  en una variable de sesi�n usuario
         $_SESSION['usuario'] = $usuario;
         // guardo el codigo del docete  en la variable de seccion  id
-        $_SESSION['id'] = $row['id_docente'];
+        $_SESSION['id'] = $d->id;
         // abre el archivo formulario boletin
         header("Location:fc.php");
     }
@@ -50,5 +50,5 @@ $d->get_docente_cc($_POST["cedula"]);
                 <?";
     }
 // funcion que termina la conexion
-desconectar($link);
+
 ?>

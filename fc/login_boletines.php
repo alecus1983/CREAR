@@ -18,7 +18,7 @@
   <link href="../CSS/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <script src="../JS/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../CSS/style.css" type="text/css">
-  <link rel="stylesheet" href="../CSS/estilos.css" type="text/css">
+  <link rel="stylesheet" href="estilos.css" type="text/css">
   <link href="../imagenes/escudo.gif" rel="shortcut icon"/>
 </meta>
 <title>Validacion</title>
@@ -42,21 +42,21 @@
                        background-size: contain;">
                 </span>   
       </div>
-        <h2>Formulario<br>
+        <h2 class="titulo-login">Formulario<br>
         <font style="color:#57e666;">Docentes</font></h2>
         <p><font style="color:#a8a8a8;">Inicie secci&oacute;n para empezar</font></p>
       </div>
     </div>
     <div class="main">
-      <div class="col-md-6 col-sm-6">
+      <div id="login1" class="col-md-6 col-sm-6">
         <div class="login-form">
           <form action="validacion_docentes.php" method="post">
             <div class="form-group">
-              <label>Usuario</label>
-              <input type="text" class="form-control" name="cedula" placeholder="usuario">
+              <label class="label-login">Usuario</label>
+              <input id="cedula" type="text" class="form-control" name="cedula" placeholder="usuario">
             </div>
             <div class="form-group">
-              <label>Contrase&ntilde;a</label>
+              <label class="label-login">Contrase&ntilde;a</label>
               <input name="login" id="login" type="password" name="login" class="form-control" placeholder="clave">
             </div>
             <button type="submit" class="btn btn-black" style="margin-top: 20px;">Login</button>
