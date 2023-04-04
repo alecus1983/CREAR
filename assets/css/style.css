@@ -314,6 +314,16 @@ button {
 
 /* Mis efectos  */
 
+
+@media screen and (max-width: 768px) {
+  
+  .mod-responsible{
+flex-direction: column-reverse;
+  }
+
+}
+
+
 @media screen and (min-width: 200px) and (max-width: 700px) {
   .h1-mod{
     font-size: 45px;
