@@ -223,3 +223,41 @@ select * from matricula where id_alumno = 984 and year = 2023;
 
 delete  from calificaciones where  year = 2023;
 
+-- cuantas calificaciones debe realizar un docente matricualado en un año y en un a semana 
+
+select * from matricula_docente where year = 2023
+
+
+-- cantidad de esudiantes matriculados por grado
+select cantidad, grado, id_escolaridad from grados g  inner join 
+( select count(*) as cantidad , id_grado  from matricula where year = 2023
+group by id_grado  ) c on c.id_grado = g.id_grado order by id_escolaridad, grado
+
+select id_escolaridad from grados
+
+CREATE TABLE semanas (
+id_semana int(3) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+semana  int(2) NOT NULL,
+inicio double,
+fin double,
+year varchar(4),
+notas_por_alumuno int(2)
+);
+
+insert into semanas (semana, year , notas_por_alumuno)
+values (1, '2023',7) , (2, '2023',7), (3, '2023',7),(4, '2023',8),  (5, '2023',7), (6, '2023',7), (7, '2023',7),  (8, '2023',5);
+insert into semanas (semana, year , notas_por_alumuno)
+values (9, '2023',7) , (10, '2023',7), (11, '2023',7),(12, '2023',8),  (13, '2023',7), (14, '2023',7), (15, '2023',7),  (16, '2023',5);
+insert into semanas (semana, year , notas_por_alumuno)
+values (17, '2023',7) , (18, '2023',7), (19, '2023',7),(20, '2023',8),  (21, '2023',7), (22, '2023',7), (23, '2023',7),  (24, '2023',5);
+insert into semanas (semana, year , notas_por_alumuno)
+values (25, '2023',7) , (26, '2023',7), (27, '2023',7),(28, '2023',8),  (29, '2023',7), (30, '2023',7), (31, '2023',7),  (32, '2023',5);
+
+-- select * from semanas
+
+-- drop table semanas
+
+
+
+
+
