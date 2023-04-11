@@ -1,0 +1,29 @@
+<?php
+
+///////////////////////////////////////////////////////////////////////////
+//  archivo para ingresar las notas  del estudiante en una semana        //
+///////////////////////////////////////////////////////////////////////////
+
+require_once('datos.php');
+// Parametros de entrada
+$ano = '2023';
+
+if($ano > 2015 and $ano < 2040) {
+
+    // genero una instancia de calificacioes
+    $calificacion = new calificaciones();
+    // genero un año para un grupo de calificacioes
+    $calificacion->year = $ano;
+    // asigno un docente
+    $calificacion->id_docente = 86;
+    // cantidad de calificaciones si se tiene  una nota
+    // por estudiante 
+    $calificacion->max_calificaciones();
+    echo $calificacion->max_semanal;
+    
+    
+} // fin de if año
+else { echo "Por favor seleccione un año valido";}
+
+
+?>

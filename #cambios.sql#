@@ -239,10 +239,8 @@ SELECT  COUNT(*) as   cantidad  from calificaciones WHERE id_alumno in
   ma.id_materia, md.id_grado, md.id_jornada, md.id_docente, ma.id_alumno
  
  SELECT  ma.id_materia, md.id_grado, md.id_jornada, md.id_docente, ma.id_alumno
- from matricula_docente md inner join
- 
- (select c.id_alumno, c.id_materia, id_ponderado, id_semana, nota  id_grado,m.id_curso , m.id_jornada
- from calificaciones c inner join matricula m 
+ from matricula_docente md inner join 
+ (select c.id_alumno, c.id_materia, id_ponderado, id_semana, nota  id_grado,m.id_curso , m.id_jornada  from calificaciones c inner join matricula m 
  on c.id_alumno = m.id_alumno and c.year = m.year) ma
  on md.id_grado = ma.id_grado and md.id_curso = ma.id_curso and md.id_jornada = ma.id_jornada
  where md.id_docente = 86 and md.`year` = 2023
@@ -282,11 +280,36 @@ select * from matricula_docente where year = 2023
 
 
 -- cantidad de esudiantes matriculados por grado
-select cantidad, grado, id_escolaridad from grados g  inner join 
-( select count(*) as cantidad , id_grado  from matricula where year = 2023
-group by id_grado  ) c on c.id_grado = g.id_grado order by id_escolaridad, grado
+select cantidad, grado, id_escolaridad, g.id_grado, id_jornada, id_curso from grados g  inner join 
+( select count(*) as cantidad , id_grado, id_jornada, id_curso  from matricula where year = 2023
+group by id_jornada, id_grado, id_curso  ) c on c.id_grado = g.id_grado
+order by  id_escolaridad, grado
 
-select id_escolaridad from grados
+-- cantidad de notas que debe ingresar un docente en una semana
+select md.id_docente, md.id_grado,  md.id_jornada, md.id_curso, id_materia, cantidad from matricula_docente as  md
+inner join
+( select cantidad, grado, id_escolaridad, g.id_grado, id_jornada, id_curso from grados g  inner join 
+( select count(*) as cantidad , id_grado, id_jornada, id_curso  from matricula where year = 2023
+group by id_jornada, id_grado, id_curso  ) c on c.id_grado = g.id_grado order by id_escolaridad, grado
+  ) as na on na.id_grado = md.id_grado and  na.id_curso = md.id_curso and na.id_jornada = md.id_jornada
+where md.year = 2023
+order by md.id_docente, md.id_materia, id_escolaridad, md.id_grado
+
+-- cantidad de notas que debe ingresar un docente en una semana
+select sum(cantidad) cantidad, id_docente from (
+select md.id_docente, md.id_grado,  md.id_jornada, md.id_curso, id_materia, cantidad from matricula_docente as  md
+inner join
+( select count(*) as cantidad , id_grado, id_jornada, id_curso  from matricula where year = 2023
+group by id_jornada, id_grado, id_curso ) as  ca
+on ca.id_grado = md.id_grado and ca.id_curso = md.id_curso and ca.id_jornada = md.id_jornada
+where md.year = 2023 and md.id_docente = 86
+order by md.id_docente, md.id_materia, md.id_grado
+) as cd
+group by id_docente
+
+-- cuanto ha calificado el docente por semana
+
+select count(*) cantidad from calificaciones where id_docente = 86 and year = 2023 and id_semana = 1
 
 CREATE TABLE semanas (
 id_semana int(3) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -306,12 +329,16 @@ values (17, '2023',7) , (18, '2023',7), (19, '2023',7),(20, '2023',8),  (21, '20
 insert into semanas (semana, year , notas_por_alumuno)
 values (25, '2023',7) , (26, '2023',7), (27, '2023',7),(28, '2023',8),  (29, '2023',7), (30, '2023',7), (31, '2023',7),  (32, '2023',5);
 
-select * from semanas
+ select * from semanas
 
 -- drop table semanas
 
 
+select * from  semanas where year = '2023' and semana = 1
 
+alter table  semanas change notas_por_alumuno notas_por_alumno int(2);
+
+describe semanas
 
 
 
