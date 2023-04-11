@@ -253,7 +253,7 @@ values (17, '2023',7) , (18, '2023',7), (19, '2023',7),(20, '2023',8),  (21, '20
 insert into semanas (semana, year , notas_por_alumuno)
 values (25, '2023',7) , (26, '2023',7), (27, '2023',7),(28, '2023',8),  (29, '2023',7), (30, '2023',7), (31, '2023',7),  (32, '2023',5);
 
--- select * from semanas
+select * from semanas
 
 -- drop table semanas
 
