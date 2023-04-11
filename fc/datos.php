@@ -1067,6 +1067,8 @@ class calificaciones extends  imcrea {
     public function update_calificacion_semanal($id,$nota){
 
         $q = "update calificaciones set nota = $nota where id = $id";
+
+        
         if( $this->_db->query($q) === True){
             $this->calificado = true;
         } else{

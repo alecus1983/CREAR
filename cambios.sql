@@ -223,3 +223,57 @@ select * from matricula where id_alumno = 984 and year = 2023;
 
 delete  from calificaciones where  year = 2023;
 
+--- consulta que interroga la cantidad de notas calificadas por un  docenten en 
+-- Una semana
+-- un año
+-- docente 
+-- notas mayores a cero
+
+SELECT  COUNT(*) as   cantidad  from calificaciones WHERE id_alumno in
+(SELECT id_alumno from matricula WHERE year = 2023 ) and year = 2023  
+ and id_materia in 
+ ( SELECT id_materia FROM matricula_docente  WHERE id_docente = 86  and year = 2023) 
+ and nota > 0
+ 
+  ma.id_materia, md.id_grado, md.id_jornada, md.id_docente, ma.id_alumno
+ 
+ SELECT  ma.id_materia, md.id_grado, md.id_jornada, md.id_docente, ma.id_alumno
+ from matricula_docente md inner join 
+ (select c.id_alumno, c.id_materia, id_ponderado, id_semana, nota  id_grado,m.id_curso , m.id_jornada  from calificaciones c inner join matricula m 
+ on c.id_alumno = m.id_alumno and c.year = m.year) ma
+ on md.id_grado = ma.id_grado and md.id_curso = ma.id_curso and md.id_jornada = ma.id_jornada
+ where md.id_docente = 86 and md.`year` = 2023
+ order by id_grado, id_jornada , id_materia, id_alumno
+ 
+
+truncate TABLE calificaciones;
+
+SELECT * from calificaciones c ;
+
+-- cantidad de calificaciones que deberia haber realizado en 
+-- Una semana
+-- un año
+-- de un total de 55 por alumno
+
+-- alumnos por clase atendidos por el docente
+select md.id_grado , md.id_materia, md.id_curso, md.id_jornada, id_docente , mt.id_alumno from matricula_docente md 
+inner join 
+-- cantida de estudiantes por grado curso en un año
+(SELECT id_grado , id_curso, id_jornada, id_alumno from matricula m WHERE  `year` = 2023) mt
+on md.id_grado  = mt.id_grado and md.id_curso = mt.id_curso and md.id_jornada = mt.id_jornada
+WHERE id_docente = 86  and md.year = 2023
+order by md.id_grado , md.id_curso, md.id_jornada, id_alumno  
+
+-- cantidad de notas por un docente 
+select count(*) *55 from matricula_docente md 
+inner join 
+-- cantida de estudiantes por grado curso en un año
+(SELECT id_grado , id_curso, id_jornada, id_alumno from matricula m WHERE  `year` = 2023) mt
+on md.id_grado  = mt.id_grado and md.id_curso = mt.id_curso and md.id_jornada = mt.id_jornada
+WHERE id_docente = 86  and md.year = 2023
+order by md.id_grado , md.id_curso, md.id_jornada, id_alumno
+
+
+
+
+

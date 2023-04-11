@@ -7,11 +7,11 @@ require_once('datos.php');
 if (isset($_SESSION["usuario"])){
     // recibe ele campo de cedula
     $usuario =  $_SESSION["usuario"];
-    
+
 } else {
     // salida
     exit;
-	header("Location:login_boletines.php");
+    header("Location:login_boletines.php");
 }
 
 $d = new docentes();
@@ -40,7 +40,7 @@ $admin = $d->admin ;
 	<style>
 	 input[type=number]::-webkit-inner-spin-button,
 	 input[type=number]::-webkit-outer-spin-button {
-	     -webkit-appearance: none;
+             -webkit-appearance: none;
 	     margin: 0;
 	 }
 
@@ -48,14 +48,14 @@ $admin = $d->admin ;
 
 	</style>
 
-        <style>
+	<style>
 	 .loader {
 	     position: absolute;
 	     left: 50%;
 	     top: 50%;
 	     z-index: 1;
 	     border: 30px solid #f3f3f3;
-	     border-radius: 50%;
+             border-radius: 50%;
 	     border-top: 16px solid blue;
 	     border-right: 16px solid green;
 	     border-bottom: 16px solid red;
@@ -87,13 +87,13 @@ $admin = $d->admin ;
 
 	 function deposit() {
 
-	     // para ello comienza
-	     // almacenando el codigo del grado en la variable j
-	     var j = $("#id_g").val();
+             // para ello comienza
+             // almacenando el codigo del grado en la variable j
+             var j = $("#id_g").val();
 
 
-	     swal({
-		 title: 'INSERTAR NOTAS',
+             swal({
+                 title: 'INSERTAR NOTAS',
                  text: "Esta seguro que quiere insertar las notas!",
                  icon: 'warning',
                  buttons: true,
@@ -114,28 +114,28 @@ $admin = $d->admin ;
                      // serializo las  faltas
                      var faltas = $('.faltas').serializeArray();
 
-		     // categorias para el seguimiento semanal
+                     // categorias para el seguimiento semanal
 
-		     // serializo los  campos del criterio A
-		     var A = $('.A').serializeArray();
-		     // serializo los  campos del criterio B
-		     var B = $('.B').serializeArray();
-		     // serializo los  campos del criterio C
-		     var C = $('.C').serializeArray();
-		     // serializo los  campos del criterio D
-		     var D = $('.D').serializeArray();
-		     // serializo los  campos del criterio E
-		     var E = $('.E').serializeArray();
-		     // serializo los  campos del criterio F
-		     var F = $('.F').serializeArray();
-		     // serializo los  campos del criterio G
-		     var G = $('.G').serializeArray();
-		     // serializo los  campos del criterio H
-		     var H = $('.H').serializeArray();
-		     // serializo los  campos del criterio I
-		     var I = $('.I').serializeArray();
-		     // serializo los  campos del criterio I
-		     var J = $('.J').serializeArray();
+                     // serializo los  campos del criterio A
+                     var A = $('.A').serializeArray();
+                     // serializo los  campos del criterio B
+                     var B = $('.B').serializeArray();
+                     // serializo los  campos del criterio C
+                     var C = $('.C').serializeArray();
+                     // serializo los  campos del criterio D
+                     var D = $('.D').serializeArray();
+                     // serializo los  campos del criterio E
+                     var E = $('.E').serializeArray();
+                     // serializo los  campos del criterio F
+                     var F = $('.F').serializeArray();
+                     // serializo los  campos del criterio G
+                     var G = $('.G').serializeArray();
+                     // serializo los  campos del criterio H
+                     var H = $('.H').serializeArray();
+                     // serializo los  campos del criterio I
+                     var I = $('.I').serializeArray();
+                     // serializo los  campos del criterio I
+                     var J = $('.J').serializeArray();
 
 
 
@@ -144,7 +144,7 @@ $admin = $d->admin ;
                          url: "notas_semanales.php",
                          data: {
                              year: $("#years").val(),
-			     semana: $("#semana").val(),
+                             semana: $("#semana").val(),
                              id_gs: $("#id_g").val(),
                              id_ms: $("#id_ms").val(),
                              id_jornada: $("#jornada").val(),
@@ -156,21 +156,23 @@ $admin = $d->admin ;
                              logro3: JSON.stringify(logros3),
                              codigo: JSON.stringify(codigos),
                              faltas: JSON.stringify(faltas),
-			     A: JSON.stringify(A),
-			     B: JSON.stringify(B),
-			     C: JSON.stringify(C),
-			     D: JSON.stringify(D),
-			     E: JSON.stringify(E),
-			     F: JSON.stringify(F),
-			     G: JSON.stringify(G),
-			     H: JSON.stringify(H),
-			     I: JSON.stringify(I),
-			     J: JSON.stringify(J)
+                             A: JSON.stringify(A),
+                             B: JSON.stringify(B),
+                             C: JSON.stringify(C),
+                             D: JSON.stringify(D),
+                             E: JSON.stringify(E),
+                             F: JSON.stringify(F),
+                             G: JSON.stringify(G),
+                             H: JSON.stringify(H),
+                             I: JSON.stringify(I),
+                             J: JSON.stringify(J)
                          },
 
                          success: function(data) {
+			     // respuesta a la carga de notas
                              //$("#resultado").html("Se ingresaron las notas con exito");
-                             $("#resultado").html(data);
+                             //$("#resultado").html(data);
+                             console.log(data);
 
                          },
                          error: function(xhr, status) {
@@ -180,146 +182,146 @@ $admin = $d->admin ;
                      });
                  }
 
-	     });
-         } // fin de la funsion deposit
+             });
+	 } // fin de la funsion deposit
 
 
 
 
-        </script>
+	</script>
 
 
-        <script>
-         // funsion que carga las semanas correctas cuando cambia
-         // el Periodo de calificaciones
-         // funcion para cargar las materias en el cuadro de dialogo
-         // de acurdo al grado seleccionado
+	<script>
+	 // funsion que carga las semanas correctas cuando cambia
+	 // el Periodo de calificaciones
+	 // funcion para cargar las materias en el cuadro de dialogo
+	 // de acurdo al grado seleccionado
 
-         function load_materias(){
+	 function load_materias(){
              var id_docente = $("#id_d").val();
              var id_grado = $("#id_g").val();
              var year = $("#years").val();
              carga("#id_ms", "materias_grado.php",{grados:id_grado,id: id_docente, year:year});
-         }
+	 }
 
-         // funcion para cargar la lista de  estudiantes en el
-         // div calificador
-         function load_lista_estudiantes(){
+	 // funcion para cargar la lista de  estudiantes en el
+	 // div calificador
+	 function load_lista_estudiantes(){
 
-             // se invoca al metodo ajax para solicitar
-             // el listado de estudiantes
-             $.ajax({
-                 type: "POST",
-                 url: "listado_estudiantes.php",
-                 data: {
+	     // se invoca al metodo ajax para solicitar
+	     // el listado de estudiantes
+	     $.ajax({
+		 type: "POST",
+		 url: "listado_estudiantes.php",
+		 data: {
                      years: $("#years").val(),
-                     id_g: $("#id_g").val(),
-                     id_ms: $("#id_ms").val(),
-                     id_jornada: $("#jornada").val(),
-                     periodo: $("#periodos").val(),
-                     curso: $("#id_c").val(),
-                     semana: $("#semana").val()
-                 } ,
-                 // si los datos son correctos entonces ...
-                 success: function(respuesta) {
+		     id_g: $("#id_g").val(),
+		     id_ms: $("#id_ms").val(),
+		     id_jornada: $("#jornada").val(),
+		     periodo: $("#periodos").val(),
+		     curso: $("#id_c").val(),
+		     semana: $("#semana").val()
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
 
-                     $("#calificador").html(respuesta);
-                     $("#resultado").html("");
+		     $("#calificador").html(respuesta);
+		     $("#resultado").html("");
 
-                 },
-                 error: function(xhr, status) {
-                     swal('Disculpe, existió un problema');
-                     console.log(xhr);
-                 }
-             });
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
+	     });
 
-         }
+	 }
 
-         // actualiza el formulario
-         function actualizar(){
-             load_materias();
-             load_lista_estudiantes();
-         }
+	 // actualiza el formulario
+	 function actualizar(){
+	     load_materias();
+	     load_lista_estudiantes();
+	 }
 
-        </script>
+	</script>
 
-        <!-- scrip -->
-        <script>
-         //////////////////////////////////////////////////////////////////////////////////////////
-         // Este script contiene la funcion para generar las graficas                            //
-         // Esta foncion no recive parametros                                                    //
-         //////////////////////////////////////////////////////////////////////////////////////////
+	<!-- scrip -->
+	<script>
+	 //////////////////////////////////////////////////////////////////////////////////////////
+	 // Este script contiene la funcion para generar las graficas                            //
+	 // Esta foncion no recive parametros                                                    //
+	 //////////////////////////////////////////////////////////////////////////////////////////
 
 
-         function grafica() {
+	 function grafica() {
 
              // se invoca al metodo ajax para solicitar el los datos del grafico
              $.ajax({
                  type: "POST",
-                 url: "grafica_boletin.php",
-                 data: {
+		 url: "grafica_boletin.php",
+		 data: {
                      year: $("#years").val(),
-                     id_gs: $("#id_g").val(),
-                     id_ms: $("#id_ms").val(),
-                     id_jornada: $("#jornada").val(),
-                     id_docente: $("#id_docentes").val(),
-                     corte: $("#corte").val(),
-                     periodo: $("#periodos").val(),
-                     opcion: $("#opcion").val()
+		     id_gs: $("#id_g").val(),
+		     id_ms: $("#id_ms").val(),
+		     id_jornada: $("#jornada").val(),
+		     id_docente: $("#id_docentes").val(),
+		     corte: $("#corte").val(),
+		     periodo: $("#periodos").val(),
+		     opcion: $("#opcion").val()
 
-                 },
-                 // si los datos son correctos entonces ...
-                 success: function(respuesta) {
+		 },
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
 
-                     $("#grafo").html(respuesta);
+		     $("#grafo").html(respuesta);
 
-                 },
-                 error: function(xhr, status) {
-                     swal('Disculpe, existió un problema');
-                     console.log(xhr);
-                 }
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
              });
 
-         }
+	 }
 
-         // funcion para cargar datos en un selector
-         function carga ( a ,b,c ) {
+	 // funcion para cargar datos en un selector
+	 function carga ( a ,b,c ) {
 
-             console.log("Valor a: %s",a); 	// variable que almacena el codigo del campo
-             console.log("Valor b: %s",b);	// variable que almacena el nombre del archivo PHP
-             console.log(JSON.stringify(c));	// parametro que se transmite  mediante ajax
+	     console.log("Valor a: %s",a); 	// variable que almacena el codigo del campo
+	     console.log("Valor b: %s",b);	// variable que almacena el nombre del archivo PHP
+	     console.log(JSON.stringify(c));	// parametro que se transmite  mediante ajax
 
-             // $.post(b, c,
-             $.ajax({
-                 async: true,
-                 method: "POST",
-                 url : b,
-                 data: c,
-                 dataType:"json",
+	     // $.post(b, c,
+	     $.ajax({
+		 async: true,
+		 method: "POST",
+		 url : b,
+		 data: c,
+		 dataType:"json",
 
-             }).done(  function (dato) {
-                 $(a).empty();
+	     }).done(  function (dato) {
+		 $(a).empty();
 
-                 $(a).append("<option value = -1> Seleccione </option>");
-                 $.each(dato, function(index, materia) {
-                     $(a).append("<option value ="+ index+">" + materia + "</option>");
+		 $(a).append("<option value = -1> Seleccione </option>");
+		 $.each(dato, function(index, materia) {
+		     $(a).append("<option value ="+ index+">" + materia + "</option>");
 
-                 });
-             });
+		 });
+	     });
 
-         }
+	 }
 
 
 	 jQuery.ajaxSetup({
-	     beforeSend: function() {
+             beforeSend: function() {
 		 $('#loader').show();
-	     },
+             },
 	     complete: function(){
 		 $('#loader').hide();
-	     } 
+	     }
 	 });
-	 
-        </script>
+
+	</script>
     </head>
 
     <body class="sb-nav-fixed" onload="inicio();">
@@ -327,7 +329,7 @@ $admin = $d->admin ;
 	<div class="loader" style="display:none" id="loader"></div>
 	<div id="content">
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
-            <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3" href="fc.php">INICIO</a>
 		<!-- Sidebar Toggle-->
@@ -336,7 +338,7 @@ $admin = $d->admin ;
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                    <li class="nav-item dropdown">
+		    <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle"
 			   id="navbarDropdown" href="#"
 			   role="button" data-bs-toggle="dropdown"
@@ -346,12 +348,12 @@ $admin = $d->admin ;
 
 			    <li><a class="dropdown-item" href="logout.php">Salir</a></li>
 			</ul>
-                    </li>
+		    </li>
 		</ul>
-            </nav>
-            <div id="layoutSidenav">
+	    </nav>
+	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
-                    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+		    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
 			<div class="sb-sidenav-menu">
 			    <div class="nav">
 				<div class="sb-sidenav-menu-heading">Core</div>
@@ -394,10 +396,10 @@ $admin = $d->admin ;
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
 						style="background: transparent;color: aquamarine;border: blue"
-						    class="form-control"
-						    onchange="actualizar();">
-                                            <option value="1">Mañana</option>
-                                            <option value="2">Tarde</option>
+						class="form-control"
+						onchange="actualizar();">
+					    <option value="1">Mañana</option>
+					    <option value="2">Tarde</option>
 					</select>
 
 					<label for="periodos"> Periodo</label>
@@ -407,12 +409,12 @@ $admin = $d->admin ;
 						class="form-control" required=""
 						onchange="load_();">
 
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">Recuperacion
-                                            </option>
+					    <option value="1">1</option>
+					    <option value="2">2</option>
+					    <option value="3">3</option>
+					    <option value="4">4</option>
+					    <option value="5">Recuperacion
+					    </option>
 					</select>
 
 					<label for="semana">Semana</label>
@@ -420,14 +422,14 @@ $admin = $d->admin ;
 						class="form-control"
 						style="background: transparent;color: aquamarine;border: blue"
 						onchange="load_lista_estudiantes();">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
+					    <option value="1">1</option>
+					    <option value="2">2</option>
+					    <option value="3">3</option>
+					    <option value="4">4</option>
+					    <option value="5">5</option>
+					    <option value="6">6</option>
+					    <option value="7">7</option>
+					    <option value="8">8</option>
 					</select>
 
 
@@ -438,7 +440,7 @@ $admin = $d->admin ;
 						onchange="actualizar();">
 					    <?php
 					    // creo un nuevo objeto  matricula docente
-                                            $mt = new matricula_docente();
+					    $mt = new matricula_docente();
 					    // asigno el año a la matricula como el a actual
 					    $mt->year = date('Y');
 					    // defino el codigo del docente de la matricula
@@ -457,47 +459,47 @@ $admin = $d->admin ;
 
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
-						style="background: transparent;color: aquamarine;border: blue"
-						onchange = "load_lista_estudiantes();"
-						class ="form-control">
-                                            <option value="0">A</opcion>
+						    style="background: transparent;color: aquamarine;border: blue"
+						    onchange = "load_lista_estudiantes();"
+						    class ="form-control">
+					    <option value="0">A</opcion>
 						<option value="1">B</opcion>
 					</select>
 
 					<label for="id_ms">Materia</label>
 					<select id="id_ms"
-						style="background: transparent;color: aquamarine;border: blue"
-						name="id_ms" onchange="load_lista_estudiantes();"
-						class="form-control">
+						    style="background: transparent;color: aquamarine;border: blue"
+						    name="id_ms" onchange="load_lista_estudiantes();"
+						    class="form-control">
 					</select>
 
 				    </nav>
 				</div>
-			    </div>
-			</div>
-			<div>
+                            </div>
+                        </div>
+                        <div>
 			    <?php
-			    if($admin){
+                            if($admin){
 				echo '<a href="listado_docentes.php" target="_blank">lista de docentes</a>';
-			    }
+                            }
 			    ?>
 			</div>
 			<div class="sb-sidenav-footer">
-			    <div class="small">Logged in as:</div>
-			    Start Bootstrap
-			</div>
+                            <div class="small">Logged in as:</div>
+                            Start Bootstrap
+                        </div>
                     </nav>
-		</div>
+                </div>
 
 
-		<div id="layoutSidenav_content">
+                <div id="layoutSidenav_content">
                     <main>
-			<div class="container-fluid px-4">
-			    <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
-			    <ol class="breadcrumb mb-4">
+                        <div class="container-fluid px-4">
+                            <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
+                            <ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item active">Para  la gestión de calificaciones</li>
-			    </ol>
-			    <div class="row">
+                            </ol>
+                            <div class="row">
 				<div class="col-md-12">
 				    <div class="card ">
 					<div class="card-header">
@@ -532,31 +534,31 @@ $admin = $d->admin ;
 					</div>
 				    </div>
 				</div>
-			    </div>
-			</div>
-                    </main>
-		</div>
-	    </div>
-	</div>
-
-	<footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
                             </div>
                         </div>
-                    </div>
-        </footer>
+                    </main>
+                </div>
+            </div>
+        </div>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+			<a href="#">Terms &amp; Conditions</a>
+		    </div>
+		</div>
+	    </div>
+	</footer>
 	<script src="./js/bootstrap.bundle.min.js" ></script>
-	<script src="./js/scripts.js"></script>
-	<script src="./js/Chart.min.js" ></script>
-	<script src="./assets/demo/chart-area-demo.js"></script>
-	<script src="./assets/demo/chart-bar-demo.js"></script>
-	<script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
-	<script src="./js/datatables-simple-demo.js"></script>
+        <script src="./js/scripts.js"></script>
+        <script src="./js/Chart.min.js" ></script>
+        <script src="./assets/demo/chart-area-demo.js"></script>
+        <script src="./assets/demo/chart-bar-demo.js"></script>
+        <script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="./js/datatables-simple-demo.js"></script>
     </body>
 </html>
