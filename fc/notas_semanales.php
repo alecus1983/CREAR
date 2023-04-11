@@ -34,13 +34,13 @@ $codigos = json_decode($_POST['codigo'], True);
 
 
 
-$C = json_decode($_POST['C'], True);
-$D = json_decode($_POST['D'], True);
-$E = json_decode($_POST['E'], True);
-$F = json_decode($_POST['F'], True);
-$G = json_decode($_POST['G'], True);
-$H = json_decode($_POST['H'], True);
-$I = json_decode($_POST['I'], True);
+// $C = json_decode($_POST['C'], True);
+// $D = json_decode($_POST['D'], True);
+// $E = json_decode($_POST['E'], True);
+// $F = json_decode($_POST['F'], True);
+// $G = json_decode($_POST['G'], True);
+// $H = json_decode($_POST['H'], True);
+// $I = json_decode($_POST['I'], True);
 
 // constante para validaciones
 $valido = true;
@@ -76,7 +76,11 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {
@@ -193,7 +197,7 @@ if($ano > 2015 and $ano < 2040) {
                     //creo  una instancia de calificacioes
                     $cal = new calificaciones();
                     // consulto si hay calificaciones
-                    $cal->get_calificacion_semanal($codigos[$i]['value'],$id_materia,$semana,$ano,3);
+                    $cal->get_calificacion_semanal($codigos[$i]['value'],$id_materia,$semana,$ano,4);
 
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
@@ -424,7 +428,7 @@ if($ano > 2015 and $ano < 2040) {
             }
 
 
-            if(isset($_POST['J'])){ 
+            if(isset($_POST['J'])) { 
                 // recupero los logros para el criterio J
                 $J = json_decode($_POST['J'], True);
                 ////////////////////////////////////////////////////////////////////////////////////

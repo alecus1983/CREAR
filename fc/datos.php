@@ -369,6 +369,10 @@ class inscripcion extends imcrea {
 
 } // fin de la clase
 
+// clase matricula docente
+// la cual describe las materias que dicta cada docente
+// en un año lectivo
+
 class matricula_docente extends imcrea {
     protected $id;
     public $id_grado;
@@ -387,6 +391,10 @@ class matricula_docente extends imcrea {
         parent::__construct();
 
     }
+
+    // se obtiene un listado de los grados matriculados por un docente
+    // en $this year y $this id_docente
+    
     public function get_matricula(){
         // consulta que interroga si es un administrador
         $resultado = $this->_db->query("select admin from docentes where id_docente = ".$this->id_docente);
@@ -416,24 +424,25 @@ class matricula_docente extends imcrea {
             }
         }
         $this->listado = $data;
-
-      
-
     }
 
-      public function listado_docentes ($year){
+    //obtiene un listado de docentes matriculados en un año
+    
+    public function listado_docentes ($year){
         $arr = array();
         $q = "select id_docente,cedula, login, nombres, apellidos from docentes where id_docente in (
 select distinct id_docente from matricula_docente where year = 2023) and admin= 0";
         $c = $this->_db->query($q);
         while($a = $c->fetch_array(MYSQLI_ASSOC)){
+            // agrego el codigo de un docente matriculado en el año
             array_push($arr, $a['id_docente']);
-            
-
         }
+        // cargo el listado de docentes
         $this->listado_docentes = $arr;
 
-}
+    }
+    
+    
 }
 
 // Clase que define la inscripcion
@@ -921,7 +930,7 @@ class docentes extends imcrea {
 
     //funcion para obtener los datos del docente
     // a partir de la base de datos
-    public function get_docente_id($id){
+    public function get_docente_id($id) {
         //consulta para recuperar el docente
         $q = "select * from docentes where  id_docente = $id";
         // se obtiene la variable resultado de consulta
@@ -993,6 +1002,9 @@ class docentes extends imcrea {
 
     }
 
+
+    
+
   
 
     
@@ -1017,6 +1029,7 @@ class calificaciones extends  imcrea {
     public $nota;
     // id
     public $id;
+    
     
     //cosntructor de la clase
     // crea una calificacion vacia
@@ -1067,10 +1080,42 @@ class calificaciones extends  imcrea {
     public function update_calificacion_semanal($id,$nota){
 
         $q = "update calificaciones set nota = $nota where id = $id";
+
+        
         if( $this->_db->query($q) === True){
             $this->calificado = true;
         } else{
             $this->calificado = false; }
+    }
+
+    // retorno  la cantidad de calificaciones que un docente debe generar en una semana
+    // si semanalmente se generara una nota por alumno y materia
+    // se de debe  multiplicar por la cantidad de calificaciones por alumnos
+    // de acuerdo al tipo de semana
+    public function max_calificaciones($id_docente, $year){
+        $q= "select sum(cantidad) cantidad, id_docente from ".
+          " ( select md.id_docente, md.id_grado,  md.id_jornada, md.id_curso, id_materia, cantidad ".
+          " from matricula_docente as  md inner join ".
+          " ( select count(*) as cantidad , id_grado, id_jornada, id_curso  from matricula where year = ".$year.
+          " group by id_jornada, id_grado, id_curso ) as  ca ".
+          " on ca.id_grado = md.id_grado and ca.id_curso = md.id_curso and ca.id_jornada = md.id_jornada ".
+          " where md.year = ".$year." and md.id_docente = ".$id_docente.
+          " order by md.id_docente, md.id_materia, md.id_grado ) as cd group by id_docente";
+
+        
+        // ejecuto la consulta 
+        $c = $this->_db->query($q);
+        $r = $c->fetch_array(MYSQLI_ASSOC);
+        return  $r['cantidad'];
+    }
+
+    public function get_docente_semana($id_docente, $semana) {
+
+        $q = "select count(*) cantidad from calificaciones where id_docente = $id_docente and year = 2023 and id_semana = ".$semana;
+        $c = $this->_db->query($q);
+        $r = $c->fetch_array(MYSQLI_ASSOC);
+        return $r['cantidad'];
+
     }
 
 
@@ -1141,6 +1186,40 @@ class materia extends imcrea {
         $this->materias = $arr;
 
     }
+    
+
+}
+
+// clase que representa las semanas
+class semana extends imcrea{
+    public $id_semana;
+    public $semana;
+    public $year;
+    public $inicio;
+    public $fin;
+    public $notas_por_alumno;
+    
+ //cosntructor de la clase
+    // crea una calificacion vacia
+    public function __construct(){
+        // hereda parametros de la clase padre
+        parent::__construct();
+    }
+
+    // obtengo los atributos de una semana dado 
+    // el numero de la semana y el año y la semana
+    public function get_semana_ano($semana, $ano) {
+
+        $q = "select * from  semanas where year = $ano and semana = $semana";
+        $c = $this->_db->query($q);
+        $r = $c->fetch_array(MYSQLI_ASSOC);
+        $this->notas_por_alumno =  $r['notas_por_alumno'];
+        $this->semana =  $r['semana'];
+        $this->year =  $r['year'];
+        $this->inicio =  $r['inicio'];
+        $this->fin =  $r['fin'];
+    }
+
     
 
 }
