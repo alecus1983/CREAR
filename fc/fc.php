@@ -237,6 +237,36 @@ $admin = $d->admin ;
 
 	 }
 
+	 // avance semanal de notas de docentes
+	 function avance_semanal() {
+
+
+	     // se invoca al metodo ajax para solicitar
+	     // el listado de estudiantes
+	     $.ajax({
+		 type: "POST",
+		 url: "notas_docentes_semanales.php",
+		 data: {
+                     years: $("#years").val(),
+		     periodo: $("#periodos").val(),
+		     semana: $("#semana").val()
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+
+		     //$("#calificador").html(respuesta);
+		     $("#resultado").html(respuesta);
+
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
+	     });
+
+	     
+	 }
+
 	 // actualiza el formulario
 	 function actualizar(){
 	     load_materias();
@@ -483,7 +513,9 @@ $admin = $d->admin ;
                         <div>
 			    <?php
                             if($admin){
-				echo '<a href="listado_docentes.php" target="_blank">lista de docentes</a>';
+				echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" href="listado_docentes.php" target="_blank">lista de docentes</a>';
+				echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" target="#" onclick="avance_semanal();">Avance notas semanales</a>';
+
                             }
 			    ?>
 			</div>
@@ -512,7 +544,7 @@ $admin = $d->admin ;
 					<div class="card-body">
 
 					    <div class="row">
-						<div class="col-md-5" id="resultado">
+						<div class="col-md-12" id="resultado">
 						    resultado
 						</div>
 					    </div>

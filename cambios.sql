@@ -311,22 +311,26 @@ group by id_docente order by id_docente
 
 select count(*) cantidad from calificaciones where id_docente = 86 and year = 2023 and id_semana = 1
 
+drop table semanas
+
 CREATE TABLE semanas (
 id_semana int(3) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 semana  int(2) NOT NULL,
 inicio double,
 fin double,
 year varchar(4),
-notas_por_alumuno int(2)
+notas_por_alumno int(2)
 );
 
-insert into semanas (semana, year , notas_por_alumuno)
+
+
+insert into semanas (semana, year , notas_por_alumno)
 values (1, '2023',7) , (2, '2023',7), (3, '2023',7),(4, '2023',8),  (5, '2023',7), (6, '2023',7), (7, '2023',7),  (8, '2023',5);
-insert into semanas (semana, year , notas_por_alumuno)
+insert into semanas (semana, year , notas_por_alumno)
 values (9, '2023',7) , (10, '2023',7), (11, '2023',7),(12, '2023',8),  (13, '2023',7), (14, '2023',7), (15, '2023',7),  (16, '2023',5);
-insert into semanas (semana, year , notas_por_alumuno)
+insert into semanas (semana, year , notas_por_alumno)
 values (17, '2023',7) , (18, '2023',7), (19, '2023',7),(20, '2023',8),  (21, '2023',7), (22, '2023',7), (23, '2023',7),  (24, '2023',5);
-insert into semanas (semana, year , notas_por_alumuno)
+insert into semanas (semana, year , notas_por_alumno)
 values (25, '2023',7) , (26, '2023',7), (27, '2023',7),(28, '2023',8),  (29, '2023',7), (30, '2023',7), (31, '2023',7),  (32, '2023',5);
 
 
@@ -335,6 +339,11 @@ values (25, '2023',7) , (26, '2023',7), (27, '2023',7),(28, '2023',8),  (29, '20
 
 -- drop table semanas
 
+delete from calificaciones where year = 2023
+
+-- cantidad de registros por docente  en el 2023
+SELECT  id_docente, COUNT(*) from calificaciones WHERE year = 2023 
+GROUP by id_docente order by id_docente
 
 
 

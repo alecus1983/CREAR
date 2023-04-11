@@ -1109,9 +1109,9 @@ class calificaciones extends  imcrea {
         return  $r['cantidad'];
     }
 
-    public function get_docente_semana($id_docente, $semana) {
+    public function get_docente_semana($id_docente, $ano, $semana) {
 
-        $q = "select count(*) cantidad from calificaciones where id_docente = $id_docente and year = 2023 and id_semana = ".$semana;
+        $q = "select count(*) cantidad from calificaciones where id_docente = $id_docente and year = $ano  and id_semana = ".$semana;
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
         return $r['cantidad'];

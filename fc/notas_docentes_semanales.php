@@ -6,10 +6,13 @@
 
 require_once('datos.php');
 // Parametros de entrada
-$ano = '2023';
-$semana = 8;
+$ano = $_POST['years'];
+$periodo = $_POST['periodo'];
+$semana = $_POST['semana'];
 
 if($ano > 2015 and $ano < 2040) {
+
+    echo "<h2>Avance semana $semana del $ano</h2>";
 
     $matriculas = new matricula_docente();
     $matriculas->listado_docentes(2023);
@@ -36,11 +39,20 @@ if($ano > 2015 and $ano < 2040) {
     $total = $sem->notas_por_alumno * $max_semanal;
     
     //echo "la cantidad de notas es $total";
-    $s =  $calificacion->get_docente_semana($docente->id, $semana);
+    // obengo la calificacion que un docente ha generado en la semana
+    $s =  $calificacion->get_docente_semana($docente->id, $ano,  $semana);
     // el porcentajae correcto es
-    $porcentaje = (100*$s)/$total;
+    $porcentaje = number_format((100*$s)/$total, 2);
     // resultado
-    echo "<p>El docente $docente->id ha cargado el $porcentaje, ingreso $s calificaciones de $total requeridas </p><br>";
+    echo '<div style="display: flex ; margin-bottom: 1rem"><b>' .ucwords(strtolower($docente->nombres))." ".ucwords(strtolower($docente->apellidos))." </b>"; // ha cargado el $porcentaje, ingreso $s calificaciones de $total requeridas </p>";
+    echo '<div class="progress col-md-8 col-5" style="display: flex ; margin-left: 1rem;">  <div class="progress-bar" role="progressbar" style="width: ';
+    echo $porcentaje;
+    echo '%;" aria-valuenow="';
+    echo $porcentaje;
+    echo '" aria-valuemin="0" aria-valuemax="100">';
+    echo $porcentaje;
+    echo '%</div></div></div>';
+        
     }
     
 } // fin de if año
