@@ -33,28 +33,16 @@ $faltas = json_decode($_POST['faltas'], True);
 $codigos = json_decode($_POST['codigo'], True);
 
 
-
-// $C = json_decode($_POST['C'], True);
-// $D = json_decode($_POST['D'], True);
-// $E = json_decode($_POST['E'], True);
-// $F = json_decode($_POST['F'], True);
-// $G = json_decode($_POST['G'], True);
-// $H = json_decode($_POST['H'], True);
-// $I = json_decode($_POST['I'], True);
-
-// constante para validaciones
-$valido = true;
-$l= 0;
-// variable que guarda la cantidad de registros actualizados
-$exito = 0;
-// variable que guarda la cantidad de registros sin ingresar
-$fracaso = 0;
-
+// Valido si me encuentro en un año valido
 if($ano > 2015 and $ano < 2040) {
+    // valido si tengo una semana seleccionada
     if($semana > 0){
+        // valido si tengo una materia seleccionada
         if($id_materia > 0){
+            // valido si tengo un periodo seleccionado
             if($periodo >0){
-
+                
+                // si resivo algun valor en los logros tipo A (Evaluacion de proceso)
                 if(isset($_POST['A'])){ 
                     // recupero los logros para el criterio A
                     $A = json_decode($_POST['A'], True);
@@ -76,10 +64,13 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
+
+                        // si además es la misma nota no hago nada
                         if (floatval($cal->nota) !== $nota){
                             $cal->update_calificacion_semanal($cal->id,$nota);}
                         else {
-                            echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
                         }
         
                     }else
@@ -470,6 +461,43 @@ if($ano > 2015 and $ano < 2040) {
 
                 //////////////////////////////////////////////////////////////////////////////
 
+
+             if(isset($_POST['L'])) { 
+                // recupero los logros para el criterio J
+                $L = json_decode($_POST['L'], True);
+                ////////////////////////////////////////////////////////////////////////////////////
+
+                // por cada elemento en los ponderados tipo J
+                // se ejecuta el siguiente ciclo de acurdo a la cantidad
+                // de estidoamtes
+                for($i=0 ; count($L) >  $i; $i++) {
+                    //recupero el valor de la nota
+                    $logro = floatval($L[$i]['value']);
+	
+                    //creo  una instancia de calificacioes
+                    $cal = new calificaciones();
+                    // consulto si hay calificaciones
+                    $cal->get_logro($codigos[$i]['value'],$id_materia,$ano, $periodo);
+
+                    // si esta calificado actualizo la nota
+                    if($cal->calificado){
+                        // update
+                        $cal->update_logro($cal->id,$logro);
+        
+                    }else
+                    {
+                        //insert
+                        $cal->set_logro($codigos[$i]['value'],
+                                                       $id_materia,
+                                                       $logro,
+                                                       $id_docente,
+                                                       $periodo,
+                                                       $ano
+                                                       );
+                    } // fin del else
+                } // fin del for
+
+            }
                 
             } // fin del if periodos
             else { echo "Por favor indique un periodo valido";}

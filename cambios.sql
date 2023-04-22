@@ -347,5 +347,37 @@ GROUP by id_docente order by id_docente
 
 
 
+select * from logros
+
+describe logros
+
+show tables
+
+describe semanas
+
+select * from  semana
+
+select * from  semanas
+
+alter table semanas modify inicio date;
+alter table semanas modify fin date;
+
+update semanas set inicio = '2023-04-17' where year = 2023 and semana = 10;
+update semanas set fin = '2023-04-24' where year = 2023 and semana = 10;
+
+
+update semanas set inicio = '2023-04-24' where year = 2023 and semana = 11;
+update semanas set fin = '2023-05-01' where year = 2023 and semana = 11;
+alter table semanas add id_periodo int(1) not null;
+update semanas set  id_periodo = 1 where semana < 9;
+update semanas set  id_periodo = 2 where semana < 17 and semana > 8 ;
+update semanas set  id_periodo = 3 where semana < 25 and semana > 16 ;
+update semanas set  id_periodo = 4 where semana > 24 ;
+
+
+-- consulta que obtiene la semana actual a calificar
+select semana from semanas where year = 2023 and inicio < NOW() and fin > NOW() order by semana asc;
+
+select id_periodo from semanas where year = 2023 and inicio < NOW() and fin > NOW() order by semana asc;
 
 

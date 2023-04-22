@@ -1,23 +1,19 @@
-<?php session_start();
-// requiere definicion de clases
-require_once('datos.php');
-// codigo del docente
-
-//valido el campo de la cedula
+<?php 
+session_start();
 if (isset($_SESSION["usuario"])){
-    // recibe ele campo de cedula
     $usuario =  $_SESSION["usuario"];
-
 } else {
-    // salida
-    exit;
     header("Location:login_boletines.php");
+    exit;
 }
+
+require_once('datos.php');
 
 $d = new docentes();
 $d->get_docente_cc($usuario);
 $id = $d->id;
 $admin = $d->admin ;
+$ano = date('Y');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -65,7 +61,7 @@ $admin = $d->admin ;
 	     -webkit-animation: spin 2s linear infinite;
 	     animation: spin 2s linear infinite;
 	 }
-	 }
+	 
 
 	 @-webkit-keyframes spin {
 	     0% { -webkit-transform: rotate(0deg); }
@@ -101,7 +97,8 @@ $admin = $d->admin ;
              }).then((value) => {
                  if (value) {
 
-                     // creo tes array a partir de una secuencia
+                     // creo un array a partir de los
+                     // elementos pertenecientes a  una misma clase
 
                      // serializo los campos clase  logro 1
                      var logros1 = $('.logros1').serializeArray();
@@ -134,11 +131,14 @@ $admin = $d->admin ;
                      var H = $('.H').serializeArray();
                      // serializo los  campos del criterio I
                      var I = $('.I').serializeArray();
-                     // serializo los  campos del criterio I
+                     // serializo los  campos del criterio J
                      var J = $('.J').serializeArray();
+                     // serializo los  campos del criterio L
+                     var L = $('.L').serializeArray();
 
 
-
+		     // llamo al metodo ajax para el envío de la  información
+		     // se emplea en envío por POST
                      $.ajax({
                          type: "POST",
                          url: "notas_semanales.php",
@@ -165,7 +165,8 @@ $admin = $d->admin ;
                              G: JSON.stringify(G),
                              H: JSON.stringify(H),
                              I: JSON.stringify(I),
-                             J: JSON.stringify(J)
+                             J: JSON.stringify(J),
+			     L: JSON.stringify(L)
                          },
 
                          success: function(data) {
@@ -184,9 +185,6 @@ $admin = $d->admin ;
 
              });
 	 } // fin de la funsion deposit
-
-
-
 
 	</script>
 
@@ -237,6 +235,30 @@ $admin = $d->admin ;
 
 	 }
 
+	 // funcion para la carga de logros
+	 function load_logros () {
+
+	     $.ajax({
+		 type: "POST",
+		 url: "logros.php",
+		 data: {
+		     grado: $("#id_g").val(),
+		     materia: $("#id_ms").val(),
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+
+		     $("#logros_materia").html(respuesta);
+		     //$("#resultado").html("");
+
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema al cargar los logros');
+		     console.log(xhr);
+		 }
+	     });
+	 }
+
 	 // avance semanal de notas de docentes
 	 function avance_semanal() {
 
@@ -264,7 +286,7 @@ $admin = $d->admin ;
 		 }
 	     });
 
-	     
+
 	 }
 
 	 // actualiza el formulario
@@ -354,7 +376,7 @@ $admin = $d->admin ;
 	</script>
     </head>
 
-    <body class="sb-nav-fixed" onload="inicio();">
+    <body class="sb-nav-fixed">
 
 	<div class="loader" style="display:none" id="loader"></div>
 	<div id="content">
@@ -364,7 +386,7 @@ $admin = $d->admin ;
 		<a class="navbar-brand ps-3" href="fc.php">INICIO</a>
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -415,7 +437,7 @@ $admin = $d->admin ;
 					       name="years"
 					       min="2015"
 					       max="2100" step="1"
-					       style="background: transparent;color: aquamarine;border: blue"
+					       style="background: transparent;color: darkgreen;border: 0px;"
 					<?php if ($admin !== 1) { ?>
 					    readonly="readonly"
 					<?php } ?>
@@ -425,7 +447,7 @@ $admin = $d->admin ;
 
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
-						style="background: transparent;color: aquamarine;border: blue"
+						style="background: transparent;color: darkgreen;border: 0px"
 						class="form-control"
 						onchange="actualizar();">
 					    <option value="1">Mañana</option>
@@ -434,42 +456,67 @@ $admin = $d->admin ;
 
 					<label for="periodos"> Periodo</label>
 					<select id="periodos"
-						style="background: transparent;color: aquamarine;border: blue"
+						style="background: transparent;color: darkgreen;border: 0px"
 						name="periodos"
 						class="form-control" required=""
-						onchange="load_();">
+						    onchange="load_();">
+					    <?php
 
-					    <option value="1">1</option>
+					    if($admin){
+						echo '<option value="1">1</option>
 					    <option value="2">2</option>
 					    <option value="3">3</option>
 					    <option value="4">4</option>
-					    <option value="5">Recuperacion
-					    </option>
+					    <option value="5">Recuperacion</option>';
+					    }
+
+					    else {
+
+						$s = new semana();
+						$sem  = $s->get_periodo_activo($ano);
+						echo "<option value='$sem' selectecd>$sem </option>";
+					    }
+					    ?>
+
+					    
 					</select>
 
 					<label for="semana">Semana</label>
 					<select id="semana"
-						class="form-control"
-						style="background: transparent;color: aquamarine;border: blue"
-						onchange="load_lista_estudiantes();">
+						    class="form-control"
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    onchange="load_lista_estudiantes();">
 
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-					    <option value="9">9</option>
->>>>>>> refs/remotes/origin/fc
+                                            <?php
+
+					    
+
+					    if ($admin) {
+						// opciones
+						$s = new semana();
+						$lista = $s->get_lista_semanas($ano);
+
+						foreach($lista as $sem) {
+						    echo "<option value='$sem'>$sem </option>";
+						}
+					    }
+
+					    else
+					    {
+						$s = new semana();
+						$sem  = $s->get_semana_activa($ano);
+						echo "<option value='$sem' selectecd>$sem </option>";
+					    }
+
+					    ?>
+
 					</select>
 
 
 					<label class="Control-label">Grado</label>
 					<select id="id_g" name="id_gs"
 						class ="form-control"
-						style="background: transparent;color: aquamarine;border: blue"
+						style="background: transparent;color: darkgreen;border:  0px"
 						onchange="actualizar();">
 					    <?php
 					    // creo un nuevo objeto  matricula docente
@@ -492,7 +539,7 @@ $admin = $d->admin ;
 
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
-						    style="background: transparent;color: aquamarine;border: blue"
+						    style="background: transparent;color: darkgreen;border:0px;"
 						    onchange = "load_lista_estudiantes();"
 						    class ="form-control">
 					    <option value="0">A</opcion>
@@ -501,7 +548,7 @@ $admin = $d->admin ;
 
 					<label for="id_ms">Materia</label>
 					<select id="id_ms"
-						    style="background: transparent;color: aquamarine;border: blue"
+						    style="background: transparent;color: darkgreen;border: 0px"
 						    name="id_ms" onchange="load_lista_estudiantes();"
 						    class="form-control">
 					</select>
@@ -515,6 +562,7 @@ $admin = $d->admin ;
                             if($admin){
 				echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" href="listado_docentes.php" target="_blank">lista de docentes</a>';
 				echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" target="#" onclick="avance_semanal();">Avance notas semanales</a>';
+				echo '<a style="margin: 2rem;" class="nav-link collapsed" aria-expanded="false" aria-controls="collapsePages" href="fs.php" target="_self">Gestión de semanas</a>';
 
                             }
 			    ?>
@@ -579,11 +627,11 @@ $admin = $d->admin ;
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                    <div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
                     <div>
-                        <a href="#">Privacy Policy</a>
+                        <a href="#">Politica de privacidad</a>
                         &middot;
-			<a href="#">Terms &amp; Conditions</a>
+			<a href="#">Terminos &amp; Condiciones</a>
 		    </div>
 		</div>
 	    </div>

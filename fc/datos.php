@@ -1,21 +1,16 @@
 <?php
-
 //session_start();
 
-// if(!isset($_SESSION['usuario']))
-// {
-//   session_destroy();
-//   //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
-//   header('Location:login_boletines.php');
-
-//   //termina el programa php
-//   exit();
-// }
+ //if(!isset($_SESSION['usuario']))
+ /* {
+   //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
+   header('Location:login_boletines.php');
+   session_destroy();
+   //termina el programa php
+   exit();
+ } */
 
 // Contiente los modelo de clase  que apunta a la base de datos
-// involucra  el archivo imcrea.php
-// require_once('imcrea.php');
-
 // Configuración de constantes
 define('DB_HOST', 'localhost');
 define('DB_USER', 'imcreati_admin');
@@ -1029,6 +1024,8 @@ class calificaciones extends  imcrea {
     public $nota;
     // id
     public $id;
+    // logro
+    public  $logro;
     
     
     //cosntructor de la clase
@@ -1039,7 +1036,8 @@ class calificaciones extends  imcrea {
     }
 
     // verifica la calificacion semanal
-    public function get_calificacion_semanal($id_a,$id_m, $id_s, $y,$id_p){
+    // requiere 
+    public function get_calificacion_semanal($id_a,$id_m,$id_s , $y, $id_p) {
 
         $q = "select * from calificaciones where year = $y and id_alumno = $id_a and id_materia = $id_m and id_ponderado = $id_p and id_semana = $id_s";
         // ejecuto la consulta
@@ -1052,7 +1050,7 @@ class calificaciones extends  imcrea {
             $this->nota = 0;
            
         }else{
-            // si es verdadero asigno la nota
+            // si es verdadero asigno la notag
             $this->calificado = true;
             $this->id_alumno = $r['id_alumno'];
             $this->id_materia = $r['id_materia'];
@@ -1065,21 +1063,83 @@ class calificaciones extends  imcrea {
         }
     }
     //inserta una calificacion semanal
+
+
+    // verifica la calificacion semanal
+    // requiere 
+    public function get_logro($id_a,$id_m, $y, $id_periodo) {
+
+        $q = "select * from calificaciones where year = $y
+                                        and id_alumno = $id_a
+                                       and id_materia = $id_m
+                                          and periodo = $id_periodo
+                                            and id_logro > 0";
+        // ejecuto la consulta
+        $c = $this->_db->query($q);
+        // lo convierto en array
+        $r = $c->fetch_array(MYSQLI_ASSOC);
+        // consulto si el resultado es vacio
+        if(is_null($r)){
+            // si es falso entonces no ha sido calificado
+            $this->calificado = false;
+            $this->logro = "";
+           
+        }else{
+            // si es verdadero asigno la nota
+            $this->calificado = true;
+            $this->id_alumno = $r['id_alumno'];
+            $this->id_materia = $r['id_materia'];
+            $this->id_semana =$r['id_semana'];
+            $this->year = $r['year'];
+            $this->id = $r['id'];
+            $this->logro = $r['id_logro'];
+            
+        }
+    }
+    
     public function set_calificacion_semanal($id_a,$id_m,$nota,$id_d,$p, $y,$id_p, $id_s){
         // creo la consulta
-        $q= "insert into calificaciones (id_alumno,id_materia, nota,id_docente,periodo,year,modificado,id_ponderado,id_semana) values($id_a,$id_m,$nota,$id_d,$p,$y,NOW(),$id_p,$id_s)";
+        $q= "insert into calificaciones
+            ( id_alumno,id_materia, nota,id_docente,periodo,year,modificado,id_ponderado,id_semana )
+            values($id_a,$id_m,$nota,$id_d,$p,$y,NOW(),$id_p,$id_s)";
         // ejecuto la consulta
         if( $this->_db->query($q) === True){
             $this->calificado = true;
         } else{
             $this->calificado = false; }
     }
+
+
+    public function set_logro($id_a,$id_m,$logro, $id_d , $p, $y){
+        // creo la consulta
+        $q= "insert into calificaciones
+            (id_alumno, id_materia, id_logro, nota , id_docente, periodo, year, modificado)
+            values($id_a, $id_m, $logro, 0 ,  $id_d, $p, $y,NOW())";
+        // ejecuto la consulta
+        if( $this->_db->query($q) === True){
+            $this->calificado = true;
+        } else{
+            $this->calificado = false; }
+    }
+
+    
         
     
 
     public function update_calificacion_semanal($id,$nota){
 
         $q = "update calificaciones set nota = $nota where id = $id";
+
+        
+        if( $this->_db->query($q) === True){
+            $this->calificado = true;
+        } else{
+            $this->calificado = false; }
+    }
+
+    public function update_logro($id,$logro){
+
+        $q = "update calificaciones set id_logro = $logro where id = $id";
 
         
         if( $this->_db->query($q) === True){
@@ -1206,10 +1266,11 @@ class semana extends imcrea{
         parent::__construct();
     }
 
-    // obtengo los atributos de una semana dado 
+    // obtengo los atributos de una semana particular dado 
     // el numero de la semana y el año y la semana
     public function get_semana_ano($semana, $ano) {
 
+        // obtengo las caracteristicas de una semana
         $q = "select * from  semanas where year = $ano and semana = $semana";
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
@@ -1218,6 +1279,77 @@ class semana extends imcrea{
         $this->year =  $r['year'];
         $this->inicio =  $r['inicio'];
         $this->fin =  $r['fin'];
+    }
+
+    // recupera el listado de semanas para un año
+    public function get_lista_semanas($ano) {
+        $q = "select semana from  semanas where year = $ano";
+        $c = $this->_db->query($q);
+
+        $arr = array();
+        // recorro el array
+        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
+            // añade elementos al array
+            array_push($arr, $r['semana']);
+        }
+        //retorno listado
+        return $arr;
+
+    }
+
+    public function get_semana_activa($ano) {
+        $q = "select semana from semanas where year = $ano and inicio < NOW() and fin > NOW() order by semana asc;";
+        $c = $this->_db->query($q);
+        $r = $c->fetch_array(MYSQLI_ASSOC);
+        return $r["semana"];
+
+    }
+
+    public function get_periodo_activo($ano) {
+        $q = "select id_periodo from semanas where year = $ano and inicio < NOW() and fin > NOW() order by semana asc;";
+        $c = $this->_db->query($q);
+        $r = $c->fetch_array(MYSQLI_ASSOC);
+        return $r["id_periodo"];
+
+    }
+
+    
+
+}
+
+// clase que representa los logros
+class logro extends imcrea{
+    public $id_logro;
+    public $logro;
+    public $id_materia;
+    
+    //cosntructor de la clase
+    // crea una calificacion vacia
+    public function __construct(){
+        // hereda parametros de la clase padre
+        parent::__construct();
+    }
+
+    // obtengo los atributos de un logro dado 
+    // el numero de la semana y el año y la semana
+    public function get_logros($id_materia) {
+
+        $q = "select * from  logros where id_materia = $id_materia";
+        $c = $this->_db->query($q);
+
+        // defino  el array 
+        $arr = array();
+        
+        // recorre el array 
+        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
+            // agrego un elemento al array
+            $arr[$r['id_logro']] = $r['logro'] ;
+            
+        }
+
+        
+        // retorno un array con los id de los logros de la materia
+        return $arr;
     }
 
     
