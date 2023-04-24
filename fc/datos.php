@@ -1039,7 +1039,11 @@ class calificaciones extends  imcrea {
     // requiere 
     public function get_calificacion_semanal($id_a,$id_m,$id_s , $y, $id_p) {
 
-        $q = "select * from calificaciones where year = $y and id_alumno = $id_a and id_materia = $id_m and id_ponderado = $id_p and id_semana = $id_s";
+        $q = "select * from calificaciones where year = $y and
+                                                 id_alumno = $id_a and
+                                                 id_materia = $id_m and
+                                                 id_ponderado = $id_p and
+                                                 id_semana = $id_s";
         // ejecuto la consulta
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);

@@ -77,8 +77,12 @@ if ($valido) {
         $estudiante = new alumnos($e);
         // creo un nuevo objeto de calificaciones
         $score = new calificaciones(); 
-        echo "<div class='row'> <div class='col-md-3 text-muted'><label class='text-primary'>$e</label>  ".ucwords(strtolower($estudiante->nombres))." ".ucwords(strtolower($estudiante->apellidos));
-        echo "<input type='hidden' name='codigo[]' class='codigo' value=".$estudiante->id_alumno."> </div>" ;
+        echo "<div class='row'>";
+        echo " <div class='col-md-3 '>";
+        echo "<button type='button' class='btn btn-outline-light' style='background-color: lightseagreen' onclick='est($e);'>";
+        echo "$e</button>";
+        echo "<span class='text-muted'>".ucwords(strtolower($estudiante->nombres))." ".ucwords(strtolower($estudiante->apellidos));
+        echo "</span><input type='hidden' name='codigo[]' class='codigo' value=".$estudiante->id_alumno."> </div>" ;
 
         switch ($semana){
             case 8:

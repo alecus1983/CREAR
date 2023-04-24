@@ -380,4 +380,29 @@ select semana from semanas where year = 2023 and inicio < NOW() and fin > NOW() 
 
 select id_periodo from semanas where year = 2023 and inicio < NOW() and fin > NOW() order by semana asc;
 
+select * from semanas;
+
+select * from ponderado;
+
+alter table ponderado add por_periodo int(2);
+
+update ponderado set por_periodo = 7 where id_ponderado = 1;
+update ponderado set por_periodo = 7 where id_ponderado = 2;
+update ponderado set por_periodo = 7 where id_ponderado = 3;
+update ponderado set por_periodo = 7 where id_ponderado = 4;
+update ponderado set por_periodo = 8  where id_ponderado = 5;
+update ponderado set por_periodo = 8  where id_ponderado = 6;
+update ponderado set por_periodo = 8 where id_ponderado = 7;
+update ponderado set por_periodo = 1  where id_ponderado = 8;
+update ponderado set por_periodo = 1 where id_ponderado = 9;
+update ponderado set por_periodo = 1 where id_ponderado = 10;
+
+
+select id, id_alumno, id_materia, nota, id_semana, id_ponderado, periodo from calificaciones where id_alumno = 1128 and id_materia = 4 and year = 2023 and periodo = 1;
+
+
+select id_ponderado, count(*) from calificaciones where id_alumno = 1128 and id_materia = 4 and year = 2023 and periodo = 1
+group by id_ponderado order by id_ponderado
+
+
 

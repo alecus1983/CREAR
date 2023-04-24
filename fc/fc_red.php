@@ -61,6 +61,12 @@ $ano = date('Y');
 	     -webkit-animation: spin 2s linear infinite;
 	     animation: spin 2s linear infinite;
 	 }
+
+	 .sel{
+	     background: darkred;
+	     color: darkblue;
+	     border: 0px;
+	 }
 	 
 
 	 @-webkit-keyframes spin {
@@ -141,7 +147,7 @@ $ano = date('Y');
 		     // se emplea en envío por POST
                      $.ajax({
                          type: "POST",
-                         url: "notas_semanales.php",
+                         url: "notas_semanales_red.php",
                          data: {
                              year: $("#years").val(),
                              semana: $("#semana").val(),
@@ -413,11 +419,11 @@ $ano = date('Y');
 	    </nav>
 	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
-		    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+		    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion" style="background-color: darkred">
 			<div class="sb-sidenav-menu">
 			    <div class="nav">
 				<div class="sb-sidenav-menu-heading">Core</div>
-				<a class="nav-link" href="fc.php">
+				<a class="nav-link" href="fc_red.php">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-tachometer-alt"></i></div>
 				    FORMULARIO
@@ -442,10 +448,11 @@ $ano = date('Y');
 					<input type="number"
 					       value="<?php echo date('Y'); ?>"
 					       id="years"
+					       class="sel"
 					       name="years"
 					       min="2015"
 					       max="2100" step="1"
-					       style="background: transparent;color: darkgreen;border: 0px;"
+
 					<?php if ($admin !== 1) { ?>
 					    readonly="readonly"
 					<?php } ?>
@@ -455,8 +462,8 @@ $ano = date('Y');
 
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
-						style="background: transparent;color: darkgreen;border: 0px"
-						class="form-control"
+						
+						class="sel form-control"
 						onchange="actualizar();">
 					    <option value="1">Mañana</option>
 					    <option value="2">Tarde</option>
@@ -464,67 +471,32 @@ $ano = date('Y');
 
 					<label for="periodos"> Periodo</label>
 					<select id="periodos"
-						style="background: transparent;color: darkgreen;border: 0px"
+					
 						name="periodos"
-						class="form-control" required=""
+						class="sel form-control" required=""
 						    onchange="load_();">
-					    <?php
-
-					    if($admin){
-						echo '<option value="1">1</option>
-					    <option value="2">2</option>
-					    <option value="3">3</option>
-					    <option value="4">4</option>
-					    <option value="5">Recuperacion</option>';
-					    }
-
-					    else {
-
-						$s = new semana();
-						$sem  = $s->get_periodo_activo($ano);
-						echo "<option value='$sem' selectecd>$sem </option>";
-					    }
-					    ?>
+					    <option value="1">1</option>
 
 					    
 					</select>
 
 					<label for="semana">Semana</label>
 					<select id="semana"
-						    class="form-control"
-						    style="background: transparent;color: darkgreen;border: 0px"
+						    class="sel form-control"
+					
 						    onchange="load_lista_estudiantes();">
 
-                                            <?php
-
-					    
-
-					    if ($admin) {
-						// opciones
-						$s = new semana();
-						$lista = $s->get_lista_semanas($ano);
-
-						foreach($lista as $sem) {
-						    echo "<option value='$sem'>$sem </option>";
-						}
-					    }
-
-					    else
-					    {
-						$s = new semana();
-						$sem  = $s->get_semana_activa($ano);
-						echo "<option value='$sem' selectecd>$sem </option>";
-					    }
-
-					    ?>
+                                            <option value="1">1</option>
+					    <option value="2">2</option>
+					    <option value="3">3</option>
 
 					</select>
 
 
 					<label class="Control-label">Grado</label>
 					<select id="id_g" name="id_gs"
-						class ="form-control"
-						style="background: transparent;color: darkgreen;border:  0px"
+						class ="sel form-control"
+
 						onchange="actualizar();">
 					    <?php
 					    // creo un nuevo objeto  matricula docente
@@ -547,34 +519,25 @@ $ano = date('Y');
 
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
-						    style="background: transparent;color: darkgreen;border:0px;"
+						
 						    onchange = "load_lista_estudiantes();"
-						    class ="form-control">
+						    class ="sel form-control">
 					    <option value="0">A</opcion>
 						<option value="1">B</opcion>
 					</select>
 
 					<label for="id_ms">Materia</label>
 					<select id="id_ms"
-						    style="background: transparent;color: darkgreen;border: 0px"
+						
 						    name="id_ms" onchange="load_lista_estudiantes();"
-						    class="form-control">
+						    class="sel form-control">
 					</select>
 
 				    </nav>
 				</div>
                             </div>
                         </div>
-                        <div>
-			    <?php
-                            if($admin){
-				echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" href="listado_docentes.php" target="_blank">lista de docentes</a>';
-				echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" target="#" onclick="avance_semanal();">Avance notas semanales</a>';
-				echo '<a style="margin: 2rem;" class="nav-link collapsed" aria-expanded="false" aria-controls="collapsePages" href="fs.php" target="_self">Gestión de semanas</a>';
 
-                            }
-			    ?>
-			</div>
 			<div class="sb-sidenav-footer">
                             <div class="small">Logged in as:</div>
                             Start Bootstrap
