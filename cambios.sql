@@ -409,3 +409,4 @@ order by id_ponderado
 
 
 
+select *  from alumnos where  id_alumno = 1088
