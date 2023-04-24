@@ -23,7 +23,7 @@ $ano = date('Y');
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>calificaciones</title>
+	<title>panel</title>
 	<link href="css/style.min.css" rel="stylesheet" />
 	<link href="css/styles.css" rel="stylesheet" />
 	<script src="js/all.js" ></script>
@@ -62,7 +62,10 @@ $ano = date('Y');
 	     animation: spin 2s linear infinite;
 	 }
 	 
-
+	 a{
+	     color: black;
+	     
+	 }
 	 @-webkit-keyframes spin {
 	     0% { -webkit-transform: rotate(0deg); }
 	     100% { -webkit-transform: rotate(360deg); }
@@ -387,264 +390,51 @@ $ano = date('Y');
     <body class="sb-nav-fixed">
 
 	<div class="loader" style="display:none" id="loader"></div>
-	<div id="content">
+	<div id="content" class="container">
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
-	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-		<!-- Navbar Brand-->
-		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
-		<!-- Sidebar Toggle-->
-		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-		<a style="color:FFF" href="#"></a>
-		<!-- Navbar-->
-		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		    <li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle"
-			   id="navbarDropdown" href="#"
-			   role="button" data-bs-toggle="dropdown"
-			   aria-expanded="false"><i class="fas fa-user fa-fw"></i>
-			    <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?> </a>
-			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+	    <div class="row align-items-center">
+		<div class="col"></div>
+		<div class="col">
+		    <a href="fc.php">
+			<svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" fill="currentColor" class="bi bi-file-bar-graph" viewBox="0 0 16 16">
+			    <path d="M4.5 12a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1z"/>
+			    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+			</svg></a>
+		</div>
+		<div class="col"></div>
+	    </div>
 
-			    <li><a class="dropdown-item" href="logout.php">Salir</a></li>
-			</ul>
-		    </li>
-		</ul>
-	    </nav>
-	    <div id="layoutSidenav">
-		<div id="layoutSidenav_nav">
-		    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-			<div class="sb-sidenav-menu">
-			    <div class="nav">
-				<div class="sb-sidenav-menu-heading">Core</div>
-				<a class="nav-link" href="fc.php">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-tachometer-alt"></i></div>
-				    FORMULARIO
-				</a>
-				<div class="sb-sidenav-menu-heading">DATOS</div>
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#collapseLayouts"
-				   aria-expanded="false" aria-controls="collapseLayouts">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i></div>
-				    Datos
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i></div>
-				</a>
-				<div class="collapse" id="collapseLayouts"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+	    <div class="row align-items-center">
+		<div class="col"></div>
+		<div class="col">
+		    <a href="fc.php">
+			
+			Calificaciones</a>
+		</div>
+		<div class="col"></div>
+	    </div>
+	    
+	    <div class="row align-items-center">
+		<div class="col"></div>
+		<div class="col">
+		    <a href="fc_red.php">	
+			<svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" fill="currentColor" class="bi bi-file-bar-graph-fill" viewBox="0 0 16 16">
+			    <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-2 11.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1z"/>
+			</svg>
+		    </a>
+		</div>
+		<div class="col"></div>
+	    </div>
 
-				    <nav class="sb-sidenav-menu-nested nav">
-
-					<label for="years">Año</label>
-					<input type="number"
-					       value="<?php echo date('Y'); ?>"
-					       id="years"
-					       name="years"
-					       min="2015"
-					       max="2100" step="1"
-					       style="background: transparent;color: darkgreen;border: 0px;"
-					<?php if ($admin !== 1) { ?>
-					    readonly="readonly"
-					<?php } ?>
-					class="form-control ">
-
-					<input type="hidden" value="<?php echo $id; ?>" id="id_d">
-
-					<label for="jornada">Jornada</label>
-					<select id="jornada"
-						style="background: transparent;color: darkgreen;border: 0px"
-						class="form-control"
-						onchange="actualizar();">
-					    <option value="1">Mañana</option>
-					    <option value="2">Tarde</option>
-					</select>
-
-					<label for="periodos"> Periodo</label>
-					<select id="periodos"
-						style="background: transparent;color: darkgreen;border: 0px"
-						name="periodos"
-						class="form-control" required=""
-						    onchange="load_();">
-					    <?php
-
-					    if($admin){
-						echo '<option value="1">1</option>
-					    <option value="2">2</option>
-					    <option value="3">3</option>
-					    <option value="4">4</option>
-					    <option value="5">Recuperacion</option>';
-					    }
-
-					    else {
-
-						$s = new semana();
-						$sem  = $s->get_periodo_activo($ano);
-						echo "<option value='$sem' selectecd>$sem </option>";
-					    }
-					    ?>
-
-					    
-					</select>
-
-					<label for="semana">Semana</label>
-					<select id="semana"
-						    class="form-control"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    onchange="load_lista_estudiantes();">
-
-                                            <?php
-
-					    
-
-					    if ($admin) {
-						// opciones
-						$s = new semana();
-						$lista = $s->get_lista_semanas($ano);
-
-						foreach($lista as $sem) {
-						    echo "<option value='$sem'>$sem </option>";
-						}
-					    }
-
-					    else
-					    {
-						$s = new semana();
-						$sem  = $s->get_semana_activa($ano);
-						echo "<option value='$sem' selectecd>$sem </option>";
-					    }
-
-					    ?>
-
-					</select>
-
-
-					<label class="Control-label">Grado</label>
-					<select id="id_g" name="id_gs"
-						class ="form-control"
-						style="background: transparent;color: darkgreen;border:  0px"
-						onchange="actualizar();">
-					    <?php
-					    // creo un nuevo objeto  matricula docente
-					    $mt = new matricula_docente();
-					    // asigno el año a la matricula como el a actual
-					    $mt->year = date('Y');
-					    // defino el codigo del docente de la matricula
-					    $mt->id_docente = $id;
-					    //actuliza el listado de cursos disponibles
-					    $mt->get_matricula();
-					    // conviere el dato en un json
-					    //echo json_encode($mt->listado);
-					    $lista = $mt->listado;
-					    echo '<option value="-1">seleccione</option>';
-					    foreach ($lista as $key => $value) {
-						echo '<option value="'.$key.'">'.$value.'</option>';
-					    }
-					    ?>
-					</select>
-
-					<label class="Control-label">Curso</label>
-					<select id="id_c"
-						    style="background: transparent;color: darkgreen;border:0px;"
-						    onchange = "load_lista_estudiantes();"
-						    class ="form-control">
-					    <option value="0">A</opcion>
-						<option value="1">B</opcion>
-					</select>
-
-					<label for="id_ms">Materia</label>
-					<select id="id_ms"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    name="id_ms" onchange="load_lista_estudiantes();"
-						    class="form-control">
-					</select>
-
-				    </nav>
-				</div>
-                            </div>
-                        </div>
-                        <div>
-			    <?php
-                            if($admin){
-				echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" href="listado_docentes.php" target="_blank">lista de docentes</a>';
-				echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" target="#" onclick="avance_semanal();">Avance notas semanales</a>';
-				echo '<a style="margin: 2rem;" class="nav-link collapsed" aria-expanded="false" aria-controls="collapsePages" href="fs.php" target="_self">Gestión de semanas</a>';
-
-                            }
-			    ?>
-			</div>
-			<div class="sb-sidenav-footer">
-                            <div class="small">Logged in as:</div>
-                            Start Bootstrap
-                        </div>
-                    </nav>
-                </div>
-
-
-                <div id="layoutSidenav_content">
-                    <main>
-                        <div class="container-fluid px-4">
-                            <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
-                            <ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item active">Para  la gestión de calificaciones</li>
-                            </ol>
-
-                           
-                            <div class="row">
-				<div class="col-md-12">
-				    <div class="card ">
-					<div class="card-header">
-					    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
-						<path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
-					    </svg>
-					    estadísticas
-                                        </div>
-				    </div>
-				</div>
-                                                
-                            </div>
-                            <div class="row">
-				<div class="col-md-12">
-				    <div class="card ">
-					<div class="card-header">
-					    <i class="fas fa-chart-area me-1"></i>
-					    notas
-					</div>
-					<div class="card-body">
-
-					    <div class="row">
-						<div class="col-md-12" id="resultado">
-						    
-						</div>
-					    </div>
-					    <div class="row">
-						<div class="row">
-
-						    <div id="calificador" class="col-md-12">
-							<!-- formulario de notas> -->
-						    </div>
-						</div>
-						<div class="row">
-						    <button type="button"
-							    style="margin: 20px auto auto; display: block;"
-							    class="btn btn-outline-success"
-							    value="INGRESAR"
-							    id="ingresar" onclick="deposit();">
-							Ingresar
-						    </button>
-
-						</div>
-					    </div>
-					</div>
-				    </div>
-				</div>
-                            </div>
-                        </div>
-                    </main>
-                </div>
-            </div>
+	    <div class="row align-items-center">
+		<div class="col"></div>
+		<div class="col">
+		    <a href="fc_red.php">Extra</a>
+		</div>
+		<div class="col"></div>
+	    </div>
+	    
+	    
         </div>
 
         <footer class="py-4 bg-light mt-auto">

@@ -347,5 +347,62 @@ GROUP by id_docente order by id_docente
 
 
 
+select * from logros
+
+describe logros
+
+show tables
+
+describe semanas
+
+select * from  semana
+
+select * from  semanas
+
+alter table semanas modify inicio date;
+alter table semanas modify fin date;
+
+update semanas set inicio = '2023-04-17' where year = 2023 and semana = 10;
+update semanas set fin = '2023-04-24' where year = 2023 and semana = 10;
+
+
+update semanas set inicio = '2023-04-24' where year = 2023 and semana = 11;
+update semanas set fin = '2023-05-01' where year = 2023 and semana = 11;
+alter table semanas add id_periodo int(1) not null;
+update semanas set  id_periodo = 1 where semana < 9;
+update semanas set  id_periodo = 2 where semana < 17 and semana > 8 ;
+update semanas set  id_periodo = 3 where semana < 25 and semana > 16 ;
+update semanas set  id_periodo = 4 where semana > 24 ;
+
+
+-- consulta que obtiene la semana actual a calificar
+select semana from semanas where year = 2023 and inicio < NOW() and fin > NOW() order by semana asc;
+
+select id_periodo from semanas where year = 2023 and inicio < NOW() and fin > NOW() order by semana asc;
+
+select * from semanas;
+
+select * from ponderado;
+
+alter table ponderado add por_periodo int(2);
+
+update ponderado set por_periodo = 7 where id_ponderado = 1;
+update ponderado set por_periodo = 7 where id_ponderado = 2;
+update ponderado set por_periodo = 7 where id_ponderado = 3;
+update ponderado set por_periodo = 7 where id_ponderado = 4;
+update ponderado set por_periodo = 8  where id_ponderado = 5;
+update ponderado set por_periodo = 8  where id_ponderado = 6;
+update ponderado set por_periodo = 8 where id_ponderado = 7;
+update ponderado set por_periodo = 1  where id_ponderado = 8;
+update ponderado set por_periodo = 1 where id_ponderado = 9;
+update ponderado set por_periodo = 1 where id_ponderado = 10;
+
+
+select id, id_alumno, id_materia, nota, id_semana, id_ponderado, periodo from calificaciones where id_alumno = 1128 and id_materia = 4 and year = 2023 and periodo = 1;
+
+
+select id_ponderado, count(*) from calificaciones where id_alumno = 1128 and id_materia = 4 and year = 2023 and periodo = 1
+group by id_ponderado order by id_ponderado
+
 
 

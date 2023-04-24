@@ -34,7 +34,7 @@ $codigos = json_decode($_POST['codigo'], True);
 
 
 // Valido si me encuentro en un año valido
-if($ano > 2015 and $ano < 2040) {
+if($ano > 2015 and $ano < 2050) {
     // valido si tengo una semana seleccionada
     if($semana > 0){
         // valido si tengo una materia seleccionada
@@ -62,11 +62,12 @@ if($ano > 2015 and $ano < 2040) {
                     $cal->get_calificacion_semanal($codigos[$i]['value'],$id_materia,$semana,$ano,1);
 
                     // si esta calificado actualizo la nota
+                    // solo si tiene un valor de cero
                     if($cal->calificado){
                         // update
 
-                        // si además es la misma nota no hago nada
-                        if (floatval($cal->nota) !== $nota){
+                        // si la nota es cero
+                        if (floatval($cal->nota) == 0){
                             $cal->update_calificacion_semanal($cal->id,$nota);}
                         else {
                             // texto a salir  por consola
