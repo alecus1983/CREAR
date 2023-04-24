@@ -86,9 +86,6 @@ if($ano > 2015 and $ano < 2050) {
                                                        1,
                                                        $semana);
                     } // fin del else
-
-                   
-
                 }
             }
 
@@ -112,7 +109,13 @@ if($ano > 2015 and $ano < 2050) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                         // si la nota es cero
+                        if (floatval($cal->nota) == 0){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {
@@ -153,7 +156,13 @@ if($ano > 2015 and $ano < 2050) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                         // si la nota es cero
+                        if (floatval($cal->nota) == 0){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {
@@ -194,7 +203,13 @@ if($ano > 2015 and $ano < 2050) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                         // si la nota es cero
+                        if (floatval($cal->nota) == 0){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {
@@ -234,7 +249,13 @@ if($ano > 2015 and $ano < 2050) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                         // si la nota es cero
+                        if (floatval($cal->nota) == 0){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {
@@ -275,7 +296,13 @@ if($ano > 2015 and $ano < 2050) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                         // si la nota es cero
+                        if (floatval($cal->nota) == 0){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {
@@ -316,7 +343,13 @@ if($ano > 2015 and $ano < 2050) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                         // si la nota es cero
+                        if (floatval($cal->nota) == 0){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {
@@ -358,7 +391,13 @@ if($ano > 2015 and $ano < 2050) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                         // si la nota es cero
+                        if (floatval($cal->nota) == 0){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {
@@ -399,7 +438,13 @@ if($ano > 2015 and $ano < 2050) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        // si la nota es cero
+                        if (floatval($cal->nota) == 0){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {
@@ -440,7 +485,13 @@ if($ano > 2015 and $ano < 2050) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                         // si la nota es cero
+                        if (floatval($cal->nota) == 0){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
+                        else {
+                            // texto a salir  por consola
+                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                        }
         
                     }else
                     {

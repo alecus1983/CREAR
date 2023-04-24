@@ -1039,14 +1039,15 @@ class calificaciones extends  imcrea {
     // requiere 
     public function get_calificacion_semanal($id_a,$id_m,$id_s , $y, $id_p) {
 
-        $q = "select * from calificaciones where year = $y and
-                                                 id_alumno = $id_a and
-                                                 id_materia = $id_m and
-                                                 id_ponderado = $id_p and
-                                                 id_semana = $id_s";
+        $q = "select id_alumno, id, nota, id_ponderado, id_materia, id_semana  from calificaciones where year = $y and  id_alumno = $id_a and    id_materia = $id_m and       id_ponderado = $id_p and   id_semana = $id_s";
         // ejecuto la consulta
+        // echo $q;
+        try { 
         $c = $this->_db->query($q);
-        $r = $c->fetch_array(MYSQLI_ASSOC);
+        $r = $c->fetch_array(MYSQLI_ASSOC); }
+        catch (Exeption $e) {
+                 echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
         // consulto si el resultado es vacio
         if(is_null($r)){
             // si es falso entonces no ha sido calificado
@@ -1062,11 +1063,31 @@ class calificaciones extends  imcrea {
             $this->year = $r['year'];
             $this->id_ponderado = $r['id_ponderado'];
             $this->id = $r['id'];
-            $this->nota = $r['nota'];
+             $this->nota = $r['nota'];
             
-        }
+         }
     }
-    //inserta una calificacion semanal
+
+    // funcion que recupera los datos de rendimiento de un alumno
+    // en una materia especifica
+    public function get_rendimiento_alummno_periodo($id_a, $id_m, $ano, $id_periodo){
+        // consulta para recuperar alumnos
+        $q = "select p.id_ponderado, ponderado, por_periodo, cantidad from ponderado as p inner join
+(select id_ponderado, count(*)  as cantidad from calificaciones where id_alumno = $id_a and id_materia = $id_m and year = $ano and periodo = $id_periodo
+group by id_ponderado order by id_ponderado) as c on p.id_ponderado = c.id_ponderado
+order by id_ponderado";
+
+         $c = $this->_db->query($q);
+
+        $arr = array();
+        // recorro el array
+        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
+            // añade elementos al array
+            array_push($arr, $r);
+        }
+        //retorno listado
+        return $arr;
+    }
 
 
     // verifica la calificacion semanal

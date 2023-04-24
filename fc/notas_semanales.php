@@ -34,16 +34,16 @@ $codigos = json_decode($_POST['codigo'], True);
 
 
 // Valido si me encuentro en un año valido
-if($ano > 2015 and $ano < 2040) {
+if($ano > 2015 and $ano < 2050) {
     // valido si tengo una semana seleccionada
     if($semana > 0){
         // valido si tengo una materia seleccionada
         if($id_materia > 0){
             // valido si tengo un periodo seleccionado
-            if($periodo >0){
+            if($periodo >0) {
                 
                 // si resivo algun valor en los logros tipo A (Evaluacion de proceso)
-                if(isset($_POST['A'])){ 
+                if(isset($_POST['A'])) { 
                     // recupero los logros para el criterio A
                     $A = json_decode($_POST['A'], True);
     
@@ -52,44 +52,41 @@ if($ano > 2015 and $ano < 2040) {
                 // por cada elemento en los ponderados tipo A
                 // se ejecuta el siguiente ciclo de acurdo a la cantidad
                 // de estidoamtes
-                for($i=0 ; count($A) >  $i; $i++) {
-                    //recupero el valor de la nota
-                    $nota = floatval($A[$i]['value']);
+                    for($i=0 ; count($A) >  $i; $i++) {
+                        //recupero el valor de la nota
+                        $nota = floatval($A[$i]['value']);
 	
-                    //creo  una instancia de calificacioes
-                    $cal = new calificaciones();
-                    // consulto si hay calificaciones
-                    $cal->get_calificacion_semanal($codigos[$i]['value'],$id_materia,$semana,$ano,1);
+                        //creo  una instancia de calificacioes
+                        $cal = new calificaciones();
+                        // consulto si hay calificaciones
+                        $cal->get_calificacion_semanal($codigos[$i]['value'],$id_materia,$semana,$ano,1);
 
-                    // si esta calificado actualizo la nota
-                    if($cal->calificado){
-                        // update
+                        // si esta calificado actualizo la nota
+                         if($cal->calificado){
+                             // update
 
-                        // si además es la misma nota no hago nada
-                        if (floatval($cal->nota) !== $nota){
-                            $cal->update_calificacion_semanal($cal->id,$nota);}
-                        else {
-                            // texto a salir  por consola
-                            //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
-                        }
+                            // si además es la misma nota no hago nada
+                            if (floatval($cal->nota) !== $nota){
+                                $cal->update_calificacion_semanal($cal->id,$nota);}
+                            else {
+                                // texto a salir  por consola
+                                //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
+                            }
         
-                    }else
-                    {
-                        //insert
-                        $cal->set_calificacion_semanal($codigos[$i]['value'],
-                                                       $id_materia,
-                                                       $nota,
-                                                       $id_docente,
-                                                       $periodo,
-                                                       $ano,
-                                                       1,
-                                                       $semana);
-                    } // fin del else
-
-                   
-
+                        } else
+                        {
+                            //insert
+                            $cal->set_calificacion_semanal($codigos[$i]['value'],
+                                                           $id_materia,
+                                                           $nota,
+                                                           $id_docente,
+                                                           $periodo,
+                                                           $ano,
+                                                           1,
+                                                           $semana);
+                        } // fin del else
+                    }
                 }
-            }
 
             if(isset($_POST['B'])){ 
                 // recupero los logros para el criterio B
@@ -111,7 +108,8 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                           $cal->update_calificacion_semanal($cal->id,$nota); }
         
                     }else
                     {
@@ -152,7 +150,8 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
         
                     }else
                     {
@@ -193,7 +192,8 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
         
                     }else
                     {
@@ -233,7 +233,8 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
         
                     }else
                     {
@@ -274,7 +275,8 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
         
                     }else
                     {
@@ -315,7 +317,8 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
         
                     }else
                     {
@@ -357,7 +360,8 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
         
                     }else
                     {
@@ -398,7 +402,8 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
         
                     }else
                     {
@@ -439,7 +444,8 @@ if($ano > 2015 and $ano < 2040) {
                     // si esta calificado actualizo la nota
                     if($cal->calificado){
                         // update
-                        $cal->update_calificacion_semanal($cal->id,$nota);
+                        if (floatval($cal->nota) !== $nota){
+                            $cal->update_calificacion_semanal($cal->id,$nota);}
         
                     }else
                     {
@@ -459,7 +465,7 @@ if($ano > 2015 and $ano < 2040) {
 
             }
 
-                //////////////////////////////////////////////////////////////////////////////
+            //     //////////////////////////////////////////////////////////////////////////////
 
 
              if(isset($_POST['L'])) { 

@@ -401,8 +401,11 @@ update ponderado set por_periodo = 1 where id_ponderado = 10;
 select id, id_alumno, id_materia, nota, id_semana, id_ponderado, periodo from calificaciones where id_alumno = 1128 and id_materia = 4 and year = 2023 and periodo = 1;
 
 
-select id_ponderado, count(*) from calificaciones where id_alumno = 1128 and id_materia = 4 and year = 2023 and periodo = 1
-group by id_ponderado order by id_ponderado
+-- ponderados 
+select p.id_ponderado, ponderado, por_periodo, cantidad from ponderado as p inner join
+(select id_ponderado, count(*)  as cantidad from calificaciones where id_alumno = 947 and id_materia = 4 and year = 2023 and periodo = 1
+group by id_ponderado order by id_ponderado) as c on p.id_ponderado = c.id_ponderado
+order by id_ponderado
 
 
 

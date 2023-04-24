@@ -18,7 +18,7 @@ if($_POST["materia"] >0 ){
 
     $logros = $l->get_logro($materia);
 
-    foreach  ($id in $logros){
+    foreach  ($id as $logros){
         echo $id."  ".$logros[$id]."<br>  "; 
     }
     

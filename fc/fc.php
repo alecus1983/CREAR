@@ -195,6 +195,29 @@ $ano = date('Y');
 	 function est(id_a){
 	     swal("Has ingresado el alumno"+id_a);
 
+	     $.ajax({
+		 type: "POST",
+		 url: "rendiminento_alumno_periodo.php",
+		 data: {
+		     id_alumno: id_a,
+		     materia: $("#id_ms").val(),
+		     year : $("#years").val(),
+		     periodo: $("#periodos").val()
+		     
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+
+		     $("#estadisicas").html(respuesta);
+		     //$("#resultado").html("");
+
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema al cargar los logros');
+		     console.log(xhr);
+		 }
+	     });
+
 	     
 	 }
 	 
@@ -601,6 +624,9 @@ $ano = date('Y');
 					    </svg>
 					    estadísticas
                                         </div>
+					<div id="estadisicas" class="card-body">
+					    
+					</div>
 				    </div>
 				</div>
                                                 
