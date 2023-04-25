@@ -519,9 +519,6 @@ $ano = date('Y');
 						    onchange="load_lista_estudiantes();">
 
                                             <?php
-
-					    
-
 					    if ($admin) {
 						// opciones
 						$s = new semana();
@@ -538,9 +535,7 @@ $ano = date('Y');
 						$sem  = $s->get_semana_activa($ano);
 						echo "<option value='$sem' selectecd>$sem </option>";
 					    }
-
 					    ?>
-
 					</select>
 
 
