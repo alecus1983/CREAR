@@ -77,8 +77,8 @@ if ($valido) {
             $score = new calificaciones(); 
             echo "<div class='row'>";
             echo " <div class='col-md-6 '>";
-            echo "<button type='button' class='btn btn-outline-light' style='background-color: lightseagreen' onclick='est($e);'>";
-            echo "$e</button>";
+            echo "<a href='#estadisicas' style='background-color: dodgerblue; margin-right: 1em; onclick='est($e);'>";
+            echo "$e</a>";
             echo "<span class='text-muted'>".ucwords(strtolower($estudiante->nombres))." ".ucwords(strtolower($estudiante->apellidos));
             echo "</span><input type='hidden' name='codigo[]' class='codigo' value=".$estudiante->id_alumno."> </div>" ;
 
@@ -105,8 +105,8 @@ if ($valido) {
             $score = new calificaciones(); 
             echo "<div class='row'>";
             echo " <div class='col-md-3 '>";
-            echo "<button type='button' class='btn btn-outline-light' style='background-color: lightseagreen' onclick='est($e);'>";
-            echo "$e</button>";
+            echo "<a href='#estadisicas' style=' margin-right: 1em;' onclick='est($e);'>";
+            echo "$e</a>";
             echo "<span class='text-muted'>".ucwords(strtolower($estudiante->nombres))." ".ucwords(strtolower($estudiante->apellidos));
             echo "</span><input type='hidden' name='codigo[]' class='codigo' value=".$estudiante->id_alumno."> </div>" ;
 

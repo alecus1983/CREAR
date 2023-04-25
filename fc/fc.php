@@ -193,7 +193,8 @@ $ano = date('Y');
 
 	 // funcion para la carga de los alumnos
 	 function est(id_a){
-	     swal("Has ingresado el alumno"+id_a);
+	     //swal("Has ingresado el alumno"+id_a);
+
 
 	     $.ajax({
 		 type: "POST",
@@ -217,6 +218,9 @@ $ano = date('Y');
 		     console.log(xhr);
 		 }
 	     });
+
+	     $("#estadisticas").focus();
+             //event.preventDefault();
 
 	     
 	 }
