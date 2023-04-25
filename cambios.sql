@@ -410,3 +410,37 @@ order by id_ponderado
 
 
 select *  from alumnos where  id_alumno = 1088
+
+select id,  id_ponderado from calificaciones where year = 2023 and id_materia = 20 and corte = 'H';
+
+delete from calificaciones where corte = 'H';
+
+select * from materia where id_materia = 20;
+
+describe calificaciones;
+
+-- iserto las calificacioes resumidas
+insert into calificaciones (id_alumno,id_materia,nota,id_docente, id_semana,year, periodo, corte, id_ponderado)
+select id_alumno, id_materia,avg(nota) nota, id_docente, id_semana, year,periodo, 'H',0
+from calificaciones where year = 2023 and id_materia = 20
+group by id_alumno,id_materia,id_docente,id_semana, periodo
+order by id_alumno, id_semana;
+
+
+-- dividir la nota mayores a 5 por 10
+update calificaciones set nota = nota /10 where id in
+(select id  from calificaciones where  id_materia = 20 and year = 2023 and nota > 5);
+
+-- actualizar errores en el periodo
+UPDATE calificaciones SET periodo = 1 where id_semana <9 and id_semana > 0 and periodo = 2 and year = 2023; 
+
+select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year from calificaciones where year = 2023 and id_materia = 20 and id_ponderado = 0 and id_semana = 1 and nota > 0
+
+select * from matricula  where id_alumno = 1138 and year = 2023;
+select * from grados where id_grado = 6;
+
+select id_semana, nota,id_ponderado from  calificaciones where id_alumno = 1091 and year = 2023 and id_materia = 20;
+
+delete from  calificaciones where id_alumno = 1091 and year = 2023 and id_materia = 20;
+
+select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year from calificaciones where year = 2023 and id_alumno = 1091 and id_materia = 20 and id_ponderado = 0 and id_semana = 1;

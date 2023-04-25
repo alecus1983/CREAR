@@ -991,20 +991,9 @@ class docentes extends imcrea {
             $id_m = $a['id_materia'];
             $m = $a['materia'];
             $arr[$id_m] = $m; 
-
         }
         $this->materias = $arr;
-
     }
-
-
-    
-
-  
-
-    
-    
-
 }
 
 class calificaciones extends  imcrea {
@@ -1039,14 +1028,15 @@ class calificaciones extends  imcrea {
     // requiere 
     public function get_calificacion_semanal($id_a,$id_m,$id_s , $y, $id_p) {
 
-        $q = "select id_alumno, id, nota, id_ponderado, id_materia, id_semana  from calificaciones where year = $y and  id_alumno = $id_a and    id_materia = $id_m and       id_ponderado = $id_p and   id_semana = $id_s";
+        $q = "select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year  from calificaciones where year = $y and  id_alumno = $id_a and    id_materia = $id_m and       id_ponderado = $id_p and   id_semana = $id_s";
         // ejecuto la consulta
         // echo $q;
+        
         try { 
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC); }
         catch (Exeption $e) {
-                 echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+            //echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
         // consulto si el resultado es vacio
         if(is_null($r)){
