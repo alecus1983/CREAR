@@ -135,11 +135,76 @@ $ano = date('Y');
                      var J = $('.J').serializeArray();
                      // serializo los  campos del criterio L
                      var L = $('.L').serializeArray();
+		     var valido = true;
+		     // valido los datos antes de enviarlos
 
+		     $('.A').each( function (a){
+			 
+			     if($(this)[0].value > 5){
+				 valido = false;
+			 }
+		     } )
 
-		     // llamo al metodo ajax para el envío de la  información
-		     // se emplea en envío por POST
-                     $.ajax({
+		     $(' .B').each( function (a){
+			 
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $(' .C').each( function (a){
+			 
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $(' .D').each( function (a){
+			 
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $('.E').each( function (a){
+			 
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $( '.F').each( function (a){
+			 
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $(' .G').each( function (a){
+			 
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+		     
+		     $('.H').each( function (a){
+			 
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $(' .I').each( function (a){
+			 
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+		     
+		     if(valido){ 
+			 // llamo al metodo ajax para el envío de la  información
+			 // se emplea en envío por POST
+			 $.ajax({
                          type: "POST",
                          url: "notas_semanales.php",
                          data: {
@@ -181,6 +246,10 @@ $ano = date('Y');
                              console.log(xhr);
                          }
                      });
+		     } // fin de valido
+		     else {
+			 swal("Revise los datos","No se ingresaron los datos \t porque tiene notas mayores que 5","error");
+		     }
                  }
 
              });
@@ -192,7 +261,7 @@ $ano = date('Y');
 	<script>
 
 	 // funcion para la carga de los alumnos
-	 function est(id_a){
+	 function est(id_a) {
 	     //swal("Has ingresado el alumno"+id_a);
 
 

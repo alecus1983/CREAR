@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
@@ -67,7 +67,7 @@ $ano = date('Y');
 	     color: darkblue;
 	     border: 0px;
 	 }
-	 
+
 
 	 @-webkit-keyframes spin {
 	     0% { -webkit-transform: rotate(0deg); }
@@ -142,51 +142,119 @@ $ano = date('Y');
                      // serializo los  campos del criterio L
                      var L = $('.L').serializeArray();
 
+		     var valido = true;
+		     // valido los datos antes de enviarlos
 
-		     // llamo al metodo ajax para el envío de la  información
-		     // se emplea en envío por POST
-                     $.ajax({
-                         type: "POST",
-                         url: "notas_semanales_red.php",
-                         data: {
-                             year: $("#years").val(),
-                             semana: $("#semana").val(),
-                             id_gs: $("#id_g").val(),
-                             id_ms: $("#id_ms").val(),
-                             id_jornada: $("#jornada").val(),
-                             id_docente: $("#id_d").val(),
-                             corte: $("#corte").val(),
-                             periodo: $("#periodos").val(),
-                             logro1: JSON.stringify(logros1),
-                             logro2: JSON.stringify(logros2),
-                             logro3: JSON.stringify(logros3),
-                             codigo: JSON.stringify(codigos),
-                             faltas: JSON.stringify(faltas),
-                             A: JSON.stringify(A),
-                             B: JSON.stringify(B),
-                             C: JSON.stringify(C),
-                             D: JSON.stringify(D),
-                             E: JSON.stringify(E),
-                             F: JSON.stringify(F),
-                             G: JSON.stringify(G),
-                             H: JSON.stringify(H),
-                             I: JSON.stringify(I),
-                             J: JSON.stringify(J),
-			     L: JSON.stringify(L)
-                         },
+		     $('.A').each( function (a){
 
-                         success: function(data) {
-			     // respuesta a la carga de notas
-                             //$("#resultado").html("Se ingresaron las notas con exito");
-                             //$("#resultado").html(data);
-                             console.log(data);
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
 
-                         },
-                         error: function(xhr, status) {
-                             swal('Disculpe, existió un problema');
-                             console.log(xhr);
-                         }
-                     });
+		     $(' .B').each( function (a){
+
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $(' .C').each( function (a){
+
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $(' .D').each( function (a){
+
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $('.E').each( function (a){
+
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $( '.F').each( function (a){
+
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $(' .G').each( function (a){
+
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $('.H').each( function (a){
+
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     $(' .I').each( function (a){
+
+			 if($(this)[0].value > 5){
+			     valido = false;
+			 }
+		     } )
+
+		     if(valido){
+
+			 // llamo al metodo ajax para el envío de la  información
+			 // se emplea en envío por POST
+			 $.ajax({
+                             type: "POST",
+                             url: "notas_semanales_red.php",
+                             data: {
+				 year: $("#years").val(),
+				 semana: $("#semana").val(),
+				 id_gs: $("#id_g").val(),
+				 id_ms: $("#id_ms").val(),
+				 id_jornada: $("#jornada").val(),
+				 id_docente: $("#id_d").val(),
+				 corte: $("#corte").val(),
+				 periodo: $("#periodos").val(),
+				 logro1: JSON.stringify(logros1),
+				 logro2: JSON.stringify(logros2),
+				 logro3: JSON.stringify(logros3),
+				 codigo: JSON.stringify(codigos),
+				 faltas: JSON.stringify(faltas),
+				 A: JSON.stringify(A),
+				 B: JSON.stringify(B),
+				 C: JSON.stringify(C),
+				 D: JSON.stringify(D),
+				 E: JSON.stringify(E),
+				 F: JSON.stringify(F),
+				 G: JSON.stringify(G),
+				 H: JSON.stringify(H),
+				 I: JSON.stringify(I),
+				 J: JSON.stringify(J),
+				 L: JSON.stringify(L)
+                             },
+
+                             success: function(data) {
+				 // respuesta a la carga de notas
+				 //$("#resultado").html("Se ingresaron las notas con exito");
+				 //$("#resultado").html(data);
+				 console.log(data);
+
+                             },
+                             error: function(xhr, status) {
+				 swal('Disculpe, existió un problema');
+				 console.log(xhr);
+                             }
+			 });
+		     }
                  }
 
              });
@@ -198,12 +266,44 @@ $ano = date('Y');
 	<script>
 
 	 // funcion para la carga de los alumnos
+	 function est(id_a) {
+	     //swal("Has ingresado el alumno"+id_a);
+
+
+	     $.ajax({
+		 type: "POST",
+		 url: "rendiminento_alumno_periodo.php",
+		 data: {
+		     id_alumno: id_a,
+		     materia: $("#id_ms").val(),
+		     year : $("#years").val(),
+		     periodo: $("#periodos").val()
+		     
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+
+		     $("#estadisicas").html(respuesta);
+		     //$("#resultado").html("");
+
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema al cargar los logros');
+		     console.log(xhr);
+		 }
+	     });
+
+	     $("#estadisticas").focus();
+             //event.preventDefault();
+
+	     
+	 }// funcion para la carga de los alumnos
 	 function est(id_a){
 	     swal("Has ingresado el alumno"+id_a);
 
-	     
+
 	 }
-	 
+
 	 // funsion que carga las semanas correctas cuando cambia
 	 // el Periodo de calificaciones
 	 // funcion para cargar las materias en el cuadro de dialogo
@@ -408,7 +508,7 @@ $ano = date('Y');
 			<a class="nav-link dropdown-toggle"
 			   id="navbarDropdown" href="#"
 			   role="button" data-bs-toggle="dropdown"
-			   aria-expanded="false"><i class="fas fa-user fa-fw"></i>
+			   aria-expanded="false"><i class="fas fa-userfa-fw"></i>
 			    <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?> </a>
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
@@ -462,8 +562,8 @@ $ano = date('Y');
 
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
-						
-						class="sel form-control"
+
+						    class="sel form-control"
 						onchange="actualizar();">
 					    <option value="1">Mañana</option>
 					    <option value="2">Tarde</option>
@@ -471,24 +571,24 @@ $ano = date('Y');
 
 					<label for="periodos"> Periodo</label>
 					<select id="periodos"
-					
-						name="periodos"
+
+						    name="periodos"
 						class="sel form-control" required=""
 						    onchange="load_();">
 					    <option value="1">1</option>
 
-					    
+
 					</select>
 
 					<label for="semana">Semana</label>
 					<select id="semana"
 						    class="sel form-control"
-					
+
 						    onchange="load_lista_estudiantes();">
 
-                                            <option value="1">1</option>
-					    <option value="2">2</option>
-					    <option value="3">3</option>
+                                            <option value="1">4</option>
+					    <option value="2">5</option>
+					    <option value="3">6</option>
 
 					</select>
 
@@ -519,7 +619,7 @@ $ano = date('Y');
 
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
-						
+
 						    onchange = "load_lista_estudiantes();"
 						    class ="sel form-control">
 					    <option value="0">A</opcion>
@@ -528,7 +628,7 @@ $ano = date('Y');
 
 					<label for="id_ms">Materia</label>
 					<select id="id_ms"
-						
+
 						    name="id_ms" onchange="load_lista_estudiantes();"
 						    class="sel form-control">
 					</select>
@@ -554,7 +654,7 @@ $ano = date('Y');
 				<li class="breadcrumb-item active">Para  la gestión de calificaciones</li>
                             </ol>
 
-                           
+
                             <div class="row">
 				<div class="col-md-12">
 				    <div class="card ">
@@ -566,7 +666,7 @@ $ano = date('Y');
                                         </div>
 				    </div>
 				</div>
-                                                
+
                             </div>
                             <div class="row">
 				<div class="col-md-12">
@@ -578,8 +678,9 @@ $ano = date('Y');
 					<div class="card-body">
 
 					    <div class="row">
+
 						<div class="col-md-12" id="resultado">
-						    
+
 						</div>
 					    </div>
 					    <div class="row">
