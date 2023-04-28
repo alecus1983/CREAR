@@ -444,3 +444,6 @@ select id_semana, nota,id_ponderado from  calificaciones where id_alumno = 1091 
 delete from  calificaciones where id_alumno = 1091 and year = 2023 and id_materia = 20;
 
 select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year from calificaciones where year = 2023 and id_alumno = 1091 and id_materia = 20 and id_ponderado = 0 and id_semana = 1;
+
+
+ SELECT id from calificaciones where year = 2023 and periodo = 1 and nota > 5 and nota <51 and id_ponderado = 2

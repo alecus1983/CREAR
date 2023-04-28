@@ -3,7 +3,7 @@ session_start();
 if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
 } else {
-    header("Location:login_boletines.php");
+    header("Location:board.php");
     exit;
 }
 
@@ -60,12 +60,6 @@ $ano = date('Y');
 	     height: 10rem;
 	     -webkit-animation: spin 2s linear infinite;
 	     animation: spin 2s linear infinite;
-	 }
-
-	 .sel{
-	     background: darkred;
-	     color: darkblue;
-	     border: 0px;
 	 }
 
 
@@ -142,119 +136,51 @@ $ano = date('Y');
                      // serializo los  campos del criterio L
                      var L = $('.L').serializeArray();
 
-		     var valido = true;
-		     // valido los datos antes de enviarlos
 
-		     $('.A').each( function (a){
+		     // llamo al metodo ajax para el envío de la  información
+		     // se emplea en envío por POST
+                     $.ajax({
+                         type: "POST",
+                         url: "notas_semanales.php",
+                         data: {
+                             year: $("#years").val(),
+                             semana: $("#semana").val(),
+                             id_gs: $("#id_g").val(),
+                             id_ms: $("#id_ms").val(),
+                             id_jornada: $("#jornada").val(),
+                             id_docente: $("#id_d").val(),
+                             corte: $("#corte").val(),
+                             periodo: $("#periodos").val(),
+                             logro1: JSON.stringify(logros1),
+                             logro2: JSON.stringify(logros2),
+                             logro3: JSON.stringify(logros3),
+                             codigo: JSON.stringify(codigos),
+                             faltas: JSON.stringify(faltas),
+                             A: JSON.stringify(A),
+                             B: JSON.stringify(B),
+                             C: JSON.stringify(C),
+                             D: JSON.stringify(D),
+                             E: JSON.stringify(E),
+                             F: JSON.stringify(F),
+                             G: JSON.stringify(G),
+                             H: JSON.stringify(H),
+                             I: JSON.stringify(I),
+                             J: JSON.stringify(J),
+			     L: JSON.stringify(L)
+                         },
 
-			 if($(this)[0].value > 5){
-			     valido = false;
-			 }
-		     } )
+                         success: function(data) {
+			     // respuesta a la carga de notas
+                             //$("#resultado").html("Se ingresaron las notas con exito");
+                             //$("#resultado").html(data);
+                             console.log(data);
 
-		     $(' .B').each( function (a){
-
-			 if($(this)[0].value > 5){
-			     valido = false;
-			 }
-		     } )
-
-		     $(' .C').each( function (a){
-
-			 if($(this)[0].value > 5){
-			     valido = false;
-			 }
-		     } )
-
-		     $(' .D').each( function (a){
-
-			 if($(this)[0].value > 5){
-			     valido = false;
-			 }
-		     } )
-
-		     $('.E').each( function (a){
-
-			 if($(this)[0].value > 5){
-			     valido = false;
-			 }
-		     } )
-
-		     $( '.F').each( function (a){
-
-			 if($(this)[0].value > 5){
-			     valido = false;
-			 }
-		     } )
-
-		     $(' .G').each( function (a){
-
-			 if($(this)[0].value > 5){
-			     valido = false;
-			 }
-		     } )
-
-		     $('.H').each( function (a){
-
-			 if($(this)[0].value > 5){
-			     valido = false;
-			 }
-		     } )
-
-		     $(' .I').each( function (a){
-
-			 if($(this)[0].value > 5){
-			     valido = false;
-			 }
-		     } )
-
-		     if(valido){
-
-			 // llamo al metodo ajax para el envío de la  información
-			 // se emplea en envío por POST
-			 $.ajax({
-                             type: "POST",
-                             url: "notas_semanales_red.php",
-                             data: {
-				 year: $("#years").val(),
-				 semana: $("#semana").val(),
-				 id_gs: $("#id_g").val(),
-				 id_ms: $("#id_ms").val(),
-				 id_jornada: $("#jornada").val(),
-				 id_docente: $("#id_d").val(),
-				 corte: $("#corte").val(),
-				 periodo: $("#periodos").val(),
-				 logro1: JSON.stringify(logros1),
-				 logro2: JSON.stringify(logros2),
-				 logro3: JSON.stringify(logros3),
-				 codigo: JSON.stringify(codigos),
-				 faltas: JSON.stringify(faltas),
-				 A: JSON.stringify(A),
-				 B: JSON.stringify(B),
-				 C: JSON.stringify(C),
-				 D: JSON.stringify(D),
-				 E: JSON.stringify(E),
-				 F: JSON.stringify(F),
-				 G: JSON.stringify(G),
-				 H: JSON.stringify(H),
-				 I: JSON.stringify(I),
-				 J: JSON.stringify(J),
-				 L: JSON.stringify(L)
-                             },
-
-                             success: function(data) {
-				 // respuesta a la carga de notas
-				 //$("#resultado").html("Se ingresaron las notas con exito");
-				 //$("#resultado").html(data);
-				 console.log(data);
-
-                             },
-                             error: function(xhr, status) {
-				 swal('Disculpe, existió un problema');
-				 console.log(xhr);
-                             }
-			 });
-		     }
+                         },
+                         error: function(xhr, status) {
+                             swal('Disculpe, existió un problema');
+                             console.log(xhr);
+                         }
+                     });
                  }
 
              });
@@ -264,46 +190,6 @@ $ano = date('Y');
 
 
 	<script>
-
-	 // funcion para la carga de los alumnos
-	 function est(id_a) {
-	     //swal("Has ingresado el alumno"+id_a);
-
-
-	     $.ajax({
-		 type: "POST",
-		 url: "rendiminento_alumno_periodo.php",
-		 data: {
-		     id_alumno: id_a,
-		     materia: $("#id_ms").val(),
-		     year : $("#years").val(),
-		     periodo: $("#periodos").val()
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-
-		     $("#estadisicas").html(respuesta);
-		     //$("#resultado").html("");
-
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema al cargar los logros');
-		     console.log(xhr);
-		 }
-	     });
-
-	     $("#estadisticas").focus();
-             //event.preventDefault();
-
-
-	 }// funcion para la carga de los alumnos
-	 function est(id_a){
-	     swal("Has ingresado el alumno"+id_a);
-
-
-	 }
-
 	 // funsion que carga las semanas correctas cuando cambia
 	 // el Periodo de calificaciones
 	 // funcion para cargar las materias en el cuadro de dialogo
@@ -497,10 +383,10 @@ $ano = date('Y');
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
 	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
-		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
+		<a class="navbar-brand ps-3" href="fc.php">INICIO</a>
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -508,7 +394,7 @@ $ano = date('Y');
 			<a class="nav-link dropdown-toggle"
 			   id="navbarDropdown" href="#"
 			   role="button" data-bs-toggle="dropdown"
-			   aria-expanded="false"><i class="fas fa-userfa-fw"></i>
+			   aria-expanded="false"><i class="fas fa-user fa-fw"></i>
 			    <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?> </a>
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
@@ -519,11 +405,11 @@ $ano = date('Y');
 	    </nav>
 	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
-		    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion" style="background-color: darkred">
+		    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion" style="background-color: cadetblue">
 			<div class="sb-sidenav-menu">
 			    <div class="nav">
 				<div class="sb-sidenav-menu-heading">Core</div>
-				<a class="nav-link" href="fc_red.php">
+				<a class="nav-link" href="fc.php">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-tachometer-alt"></i></div>
 				    FORMULARIO
@@ -548,11 +434,10 @@ $ano = date('Y');
 					<input type="number"
 					       value="<?php echo date('Y'); ?>"
 					       id="years"
-					       class="sel"
 					       name="years"
 					       min="2015"
 					       max="2100" step="1"
-
+					       style="background: transparent;color: darkgreen;border: 0px;"
 					<?php if ($admin !== 1) { ?>
 					    readonly="readonly"
 					<?php } ?>
@@ -562,43 +447,77 @@ $ano = date('Y');
 
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
-
-						class="sel form-control"
-						    onchange="actualizar();">
+						style="background: transparent;color: darkgreen;border: 0px"
+						class="form-control"
+						onchange="actualizar();">
 					    <option value="1">Mañana</option>
 					    <option value="2">Tarde</option>
 					</select>
 
 					<label for="periodos"> Periodo</label>
 					<select id="periodos"
-
+						style="background: transparent;color: darkgreen;border: 0px"
 						name="periodos"
-						    class="sel form-control" required=""
-						onchange="load_();">
-					    <option value="1">1</option>
+						class="form-control" required=""
+						    onchange="load_();">
+					    <?php
+
+					    if($admin){
+						echo '<option value="1">1</option>
+					    <option value="2">2</option>
+					    <option value="3">3</option>
+					    <option value="4">4</option>
+					    <option value="5">Recuperacion</option>';
+					    }
+
+					    else {
+
+						$s = new semana();
+						$sem  = $s->get_periodo_activo($ano);
+						echo "<option value='$sem' selectecd>$sem </option>";
+					    }
+					    ?>
 
 
 					</select>
 
 					<label for="semana">Semana</label>
 					<select id="semana"
-						class="sel form-control"
+						    class="form-control"
+						    style="background: transparent;color: darkgreen;border: 0px"
 						    onchange="load_lista_estudiantes();">
-					    
-					    <option value="4">4</option>
-					    <option value="5">5</option>
-					    <option value="6">6</option>
-					    <option value="7">7</option>
-					    <option value="8">8</option>
+
+                                            <?php
+
+
+
+					    if ($admin) {
+						// opciones
+						$s = new semana();
+						$lista = $s->get_lista_semanas($ano);
+
+						foreach($lista as $sem) {
+						    echo "<option value='$sem'>$sem </option>";
+						}
+					    }
+
+					    else
+					    {
+						$s = new semana();
+						$sem  = $s->get_semana_activa($ano);
+						echo "<option value='$sem' selectecd>$sem </option>";
+					    }
+
+					    ?>
 
 					</select>
 
 
 					<label class="Control-label">Grado</label>
 					<select id="id_g" name="id_gs"
-						    class ="sel form-control"
-
-						    onchange="actualizar();">
+						class ="form-control"
+						style="background: transparent;color: darkgreen;border:  0px"
+						onchange="actualizar();">
 					    <?php
 					    // creo un nuevo objeto  matricula docente
 					    $mt = new matricula_docente();
@@ -620,25 +539,32 @@ $ano = date('Y');
 
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
-
-						onchange = "load_lista_estudiantes();"
-						class ="sel form-control">
+						    style="background: transparent;color: darkgreen;border:0px;"
+						    onchange = "load_lista_estudiantes();"
+						    class ="form-control">
 					    <option value="0">A</opcion>
 						<option value="1">B</opcion>
 					</select>
 
 					<label for="id_ms">Materia</label>
 					<select id="id_ms"
-
-						name="id_ms" onchange="load_lista_estudiantes();"
-						class="sel form-control">
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    name="id_ms" onchange="load_lista_estudiantes();"
+						    class="form-control">
 					</select>
 
 				    </nav>
 				</div>
                             </div>
                         </div>
+                        <div>
+			    <?php
+                            if($admin){
 
+
+                            }
+			    ?>
+			</div>
 			<div class="sb-sidenav-footer">
                             <div class="small">Logged in as:</div>
                             Start Bootstrap
@@ -652,60 +578,370 @@ $ano = date('Y');
                         <div class="container-fluid px-4">
                             <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
                             <ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item active">Para  la gestión de calificaciones</li>
+				<li class="breadcrumb-item active">Para la gestistión de las semanas</li>
                             </ol>
-
-
-                            <div class="row">
-				<div class="col-md-12">
-				    <div class="card ">
-					<div class="card-header">
-					    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
-						<path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
-					    </svg>
-					    estadísticas
-                                        </div>
-				    </div>
-				</div>
-
-                            </div>
-                            <div class="row">
-				<div class="col-md-12">
-				    <div class="card ">
+			    
+                            <div id="f_semanas" class="row container" style="display:hidden;">
+				
+				<div class="col-md-5">
+				    <div class="card border-primary border-6">
 					<div class="card-header">
 					    <i class="fas fa-chart-area me-1"></i>
-					    notas
+					    semanas primer periodo
 					</div>
-					<div class="card-body">
-
-					    <div class="row">
-
-						<div class="col-md-12" id="resultado">
-
-						</div>
-					    </div>
-					    <div class="row">
-						<div class="row">
-
-						    <div id="calificador" class="col-md-12">
-							<!-- formulario de notas> -->
+					<div class="card-body container">
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio1"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 1</label>
+							<input type="date" id="inicio1" class="form-control" >
 						    </div>
 						</div>
-						<div class="row">
-						    <button type="button"
-							    style="margin: 20px auto auto; display: block;"
-							    class="btn btn-outline-success"
-							    value="INGRESAR"
-							    id="ingresar" onclick="deposit();">
-							Ingresar
-						    </button>
-
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin1"
+							       class="form-label text-muted fst-italic">
+							    fin semana 1
+							</label>
+							<input type="date" id="fin1" class="form-control" >
+						    </div>
 						</div>
+						
 					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio2"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 2
+							</label>
+							<input type="date" id="inicio2" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin2"
+							       class="form-label text-muted fst-italic">
+							    fin semana 2
+							</label>
+							<input type="date" id="fin2" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio3"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 3
+							</label>
+							<input type="date" id="inicio3" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin3"
+							       class="form-label text-muted fst-italic">
+							    fin semana 3
+							</label>
+							<input type="date" id="fin3" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio4"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 4
+							</label>
+							<input type="date" id="inicio4" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin4"
+							       class="form-label text-muted fst-italic">
+							    fin semana 4
+							</label>
+							<input type="date" id="fin4" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio5"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 5
+							</label>
+							<input type="date" id="inicio2" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin5"
+							       class="form-label text-muted fst-italic">
+							    fin semana 5
+							</label>
+							<input type="date" id="fin5" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio6"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 6
+							</label>
+							<input type="date" id="inicio6" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin6"
+							       class="form-label text-muted fst-italic">
+							    fin semana 6
+							</label>
+							<input type="date" id="fin6" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio7"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 7
+							</label>
+							<input type="date" id="inicio7" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin7"
+							       class="form-label text-muted fst-italic">
+							    fin semana 7
+							</label>
+							<input type="date" id="fin7" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio8"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 8
+							</label>
+							<input type="date" id="inicio8" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin2"
+							       class="form-label text-muted fst-italic">
+							    fin semana 8
+							</label>
+							<input type="date" id="fin2" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
 					</div>
 				    </div>
 				</div>
+
+				<div class="col-md-6">
+				    <div class="card border-success">
+					<div class="card-header">
+					    <i class="fas fa-chart-area me-1"></i>
+					    semanas segundo periodo
+					</div>
+					<div class="card-body container">
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio9"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 9
+							</label>
+							<input type="date" id="inicio9" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin9"
+							       class="form-label text-muted fst-italic">
+							    fin semana 9
+							</label>
+							<input type="date" id="fin9" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio10"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 10
+							</label>
+							<input type="date" id="inicio2" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin10"
+							       class="form-label text-muted fst-italic">
+							    fin semana 10
+							</label>
+							<input type="date" id="fin10" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio11"
+							       class="form-label text-muted fst-italic">
+							    inicio semana 11
+							</label>
+							<input type="date" id="inicio11" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin11" class="form-label text-muted fst-italic">fin semana 11</label>
+							<input type="date" id="fin11" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio12" class="form-label text-muted fst-italic">inicio semana 12</label>
+							<input type="date" id="inicio12" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin12" class="form-label text-muted fst-italic">fin semana 12</label>
+							<input type="date" id="fin12" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio5" class="form-label text-muted fst-italic">inicio semana 13</label>
+							<input type="date" id="inicio2" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin13" class="form-label text-muted fst-italic">fin semana 13</label>
+							<input type="date" id="fin13" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio6" class="form-label text-muted fst-italic">inicio semana 14</label>
+							<input type="date" id="inicio6" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin14" class="form-label text-muted fst-italic">fin semana 14</label>
+							<input type="date" id="fin14" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio7" class="form-label text-muted fst-italic">inicio semana 15</label>
+							<input type="date" id="inicio7" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin15" class="form-label text-muted fst-italic">fin semana 15</label>
+							<input type="date" id="fin15" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+						<div class="col-md-6">
+						    <div class="form-group">
+							<label for="inicio16" class="form-label text-muted fst-italic">inicio semana 16</label>
+							<input type="date" id="inicio16" class="form-control" >
+						    </div>
+						</div>
+						<div class="col-md-6">
+						    <div class="form-group ">
+							<label for="fin16" class="form-label text-muted fst-italic">fin semana 16</label>
+							<input type="date" id="fin16" class="form-control" >
+						    </div>
+						</div>
+						
+					    </div>
+
+					</div>
+				    </div>
+				</div>
+				
                             </div>
+
+			    
                         </div>
                     </main>
                 </div>
@@ -717,7 +953,7 @@ $ano = date('Y');
                 <div class="d-flex align-items-center justify-content-between small">
                     <div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
                     <div>
-                        <a href="#">Politica de privacidad</a>
+                        <a href="#">Politica privacidad</a>
                         &middot;
 			<a href="#">Terminos &amp; Condiciones</a>
 		    </div>

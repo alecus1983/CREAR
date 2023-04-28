@@ -116,6 +116,10 @@ if ($valido) {
 		
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 5 );
                 $nota1 = $score->nota;
+                // coloco un numero vacio  si la nota es igual a cero
+                if ($nota1 == 0){
+                    $nota1 = "";
+                }
                 echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
@@ -127,6 +131,11 @@ if ($valido) {
                 // actitud (F)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 6 );
                 $nota2 = $score->nota;
+                // coloco un numero vacio  si la nota es igual a cero
+                if ($nota2 == 0){
+                    $nota2 = "";
+                }
+
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
@@ -137,6 +146,11 @@ if ($valido) {
                 //asistencia (G)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 7 );
                 $nota3 = $score->nota;
+                // coloco un numero vacio  si la nota es igual a cero
+                if ($nota3 == 0){
+                    $nota3 = "";
+                }
+
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
@@ -148,6 +162,11 @@ if ($valido) {
                 //evaluación final (I)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 9 );
                 $nota4 = $score->nota;
+                // coloco un numero vacio  si la nota es igual a cero
+                if ($nota4 == 0){
+                    $nota4 = "";
+                }
+
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">evaluacion final</span>';
@@ -158,6 +177,11 @@ if ($valido) {
                 //auto evaluacion (J)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 10 );
                 $nota5 = $score->nota;
+                // coloco un numero vacio  si la nota es igual a cero
+                if ($nota5 == 0){
+                    $nota5 = "";
+                }
+
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">auto evaluacion</span>';
@@ -182,6 +206,11 @@ if ($valido) {
                 //evaluación de proceso (A)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 1 );
                 $nota1 = $score->nota;
+                                // coloco un numero vacio  si la nota es igual a cero
+                if ($nota1 == 0){
+                    $nota1 = "";
+                }
+
                 echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">evaluacion de proceso</span>';
@@ -192,6 +221,9 @@ if ($valido) {
                 // actividad (B)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 2 );
                 $nota2 = $score->nota;
+                 if ($nota2 == 0){
+                    $nota2 = "";
+                }
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
@@ -201,6 +233,9 @@ if ($valido) {
                 //taller (C)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 3 );
                 $nota3 = $score->nota;
+                 if ($nota3 == 0){
+                    $nota3 = "";
+                }
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">taller</span>';
@@ -210,6 +245,9 @@ if ($valido) {
                 //tarea (D)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 4);
                 $nota4 = $score->nota;
+                 if ($nota4 == 0){
+                    $nota4 = "";
+                }
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">tarea</span>';
@@ -222,6 +260,9 @@ if ($valido) {
 		
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 5 );
                 $nota5 = $score->nota;
+                 if ($nota5 == 0){
+                    $nota5 = "";
+                }
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
@@ -233,6 +274,9 @@ if ($valido) {
                 // actitud(F)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 6 );
                 $nota6 = $score->nota;
+                 if ($nota6 == 0){
+                    $nota6 = "";
+                }
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
@@ -243,6 +287,9 @@ if ($valido) {
                 //asistencia (G)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 7 );
                 $nota7 = $score->nota;
+                 if ($nota7 == 0){
+                    $nota7 = "";
+                }
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
@@ -253,6 +300,9 @@ if ($valido) {
                 //quiz (H)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 8 );
                 $nota8 = $score->nota;
+                 if ($nota8 == 0){
+                    $nota8 = "";
+                }
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">quiz</span>';
@@ -267,6 +317,9 @@ if ($valido) {
 
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 1 );
                 $nota1 = $score->nota;
+                 if ($nota1 == 0){
+                    $nota1 = "";
+                }
                 echo "<div class='col-md-9' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">evaluación de proceso</span>';
@@ -277,6 +330,9 @@ if ($valido) {
                 // actividad (B)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 2 );
                 $nota2 = $score->nota;
+                 if ($nota2 == 0){
+                    $nota2 = "";
+                }
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">actividad</span>';
@@ -286,6 +342,9 @@ if ($valido) {
                 //taller (C)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 3 );
                 $nota3 = $score->nota;
+                 if ($nota3 == 0){
+                    $nota3 = "";
+                }
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">taller</span>';
@@ -295,6 +354,9 @@ if ($valido) {
                 //tarea (D)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 4 );
                 $nota4 = $score->nota;
+                 if ($nota4 == 0){
+                    $nota4 = "";
+                }
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">tarea</span>';
@@ -305,6 +367,9 @@ if ($valido) {
                 // presentacion personal (E)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 5 );
                 $nota5 = $score->nota;
+                 if ($nota5 == 0){
+                    $nota5 = "";
+                }
 
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
@@ -316,6 +381,9 @@ if ($valido) {
                 // actitud (F)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 6 );
                 $nota6 = $score->nota;
+                 if ($nota6 == 0){
+                    $nota6 = "";
+                }
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
@@ -326,6 +394,9 @@ if ($valido) {
                 //asistencia (G)
                 $score->get_calificacion_semanal($e, $id_m,$id_semana, $ano, 7 );
                 $nota7 = $score->nota;
+                 if ($nota7 == 0){
+                    $nota7 = "";
+                }
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
@@ -348,7 +419,7 @@ if ($valido) {
     echo "<div id='logros_materia' class='col-md-4'>";
     // contenido
 
-    if($id_m >0 and $semana == 8 ){
+    if($id_m >0 and $semana == 8 ) {
 
 	
         // creo nuevo elemento de logros
