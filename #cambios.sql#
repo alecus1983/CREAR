@@ -531,3 +531,5 @@ describe requisitos
 insert  table requisitos (id_materia,id_grado) values(75, 14);
 
 describe matricula_docente;
+
+insert into matricula_docente (id_grado, id_curso,id_materia,id_docente,year,id_jornada,mes,fecha) values(11,0,12,2,2023,1,4,NOW())

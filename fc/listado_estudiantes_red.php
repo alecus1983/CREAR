@@ -78,6 +78,7 @@ if ($valido) {
     $jo->get_jornada_por_id($id_jornada);
     $cu = new curso();
     $cu->get_curso_por_id($id_curso);
+
     $gr = new grados();
     $gr->get_nombre($grado);
 
@@ -118,7 +119,11 @@ if ($valido) {
             echo "<div class='col-md-6' name=''>";
             echo '<div class="input-group mb-1">';
             echo '<span class="input-group-text" id="addon-wrapping">nota</span>';
+            if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0"  value="'.$nota.'"  class="form-control A" placeholder="disciplina" name="A[]" aria-label="disciplina" aria-describedby="basic-addon1" disabled>';
+            } else {
             echo '<input type="number" step="0.1" max="5" min="0"  value="'.$nota.'"  class="form-control A" placeholder="disciplina" name="A[]" aria-label="disciplina" aria-describedby="basic-addon1">';
+            }
             echo '</div>'; // fin de div del grupo
             // si se trata de la semana final
             if ($semana_final) {
@@ -167,7 +172,11 @@ if ($valido) {
                 echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="E[]"  value="'.$nota.'"  class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="E[]"  value="'.$nota.'"  class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1" disabled>';
+                 } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="E[]"  value="'.$nota.'"  class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';
+                }
                 echo '</div>';
                 //echo '</div>';
 
@@ -184,7 +193,11 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'"  class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'"  class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1" disabled>';
+                 } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'"  class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
+                }
                 echo '</div>';
                 //echo '</div>';
 		
@@ -200,7 +213,11 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1" disabled>';
+                 } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
+                }
                 echo '</div>';
                 //echo '</div>';
 
@@ -217,7 +234,10 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">evaluacion final</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="I[]" value="'.$nota.'" class="form-control I" placeholder="evaluación final" aria-label="evaluacion final" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="I[]" value="'.$nota.'" class="form-control I" placeholder="evaluación final" aria-label="evaluacion final" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="I[]" value="'.$nota.'" class="form-control I" placeholder="evaluación final" aria-label="evaluacion final" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 
@@ -233,7 +253,10 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">auto evaluacion</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="J[]" value="'.$nota.'" class="form-control J" placeholder="auto evaluacion" aria-label="auto evaluacion" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="J[]" value="'.$nota.'" class="form-control J" placeholder="auto evaluacion" aria-label="auto evaluacion" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="J[]" value="'.$nota.'" class="form-control J" placeholder="auto evaluacion" aria-label="auto evaluacion" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 
@@ -243,7 +266,8 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">logro</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="L[]" value="'.$logro.'" class="form-control L" placeholder="logro" aria-label="auto evaluacion" aria-describedby="basic-addon1">';
+                echo '<input type="number" step="0.1" max="5" min="0" name="L[]" value="'.$logro.'" class="form-control L" placeholder="logro" aria-label="auto evaluacion" aria-describedby="basic-addon1" >';
+                
                 echo '</div>';
                 echo '</div>';
 
@@ -265,7 +289,10 @@ if ($valido) {
                 echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">evaluacion de proceso</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="A[]" value="'.$nota.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="A[]" value="'.$nota.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="A[]" value="'.$nota.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 
@@ -279,7 +306,10 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">actividad</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
                 //taller (C)
@@ -292,7 +322,10 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">taller</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota.'"  class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota.'"  class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota.'"  class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
                 //tarea (D)
@@ -305,7 +338,10 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">tarea</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 
@@ -321,7 +357,10 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota.'" class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota.'" class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota.'" class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 
@@ -336,7 +375,10 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 		
@@ -350,7 +392,10 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 
@@ -364,7 +409,10 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">quiz</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="H[]" value="'.$nota.'" class="form-control H" placeholder="quiz" aria-label="quiz" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="H[]" value="'.$nota.'" class="form-control H" placeholder="quiz" aria-label="quiz" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="H[]" value="'.$nota.'" class="form-control H" placeholder="quiz" aria-label="quiz" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 echo '</div>';
             }
@@ -382,7 +430,10 @@ if ($valido) {
                 echo "<div class='col-md-9' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">evaluación de proceso</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="A[]"  value="'.$nota.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="A[]"  value="'.$nota.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="A[]"  value="'.$nota.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 
@@ -396,7 +447,10 @@ if ($valido) {
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">actividad</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
                 //taller (C)
@@ -409,8 +463,11 @@ if ($valido) {
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">taller</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota.'" class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1">';
-                echo '</div>';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota.'" class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1" disabled>';
+                 } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota.'" class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1">';}
+                    echo '</div>';
                 //echo '</div>';
                 //tarea (D)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 4 );
@@ -422,7 +479,10 @@ if ($valido) {
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">tarea</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 
@@ -437,7 +497,10 @@ if ($valido) {
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentación personal</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota.'" class="form-control  E" placeholder="presentacion personal" aria-label="presentacion personal" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota.'" class="form-control  E" placeholder="presentacion personal" aria-label="presentacion personal" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota.'" class="form-control  E" placeholder="presentacion personal" aria-label="presentacion personal" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 
@@ -451,7 +514,10 @@ if ($valido) {
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 //echo '</div>';
 		
@@ -465,7 +531,10 @@ if ($valido) {
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
+                if($nota > 0){
+                echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1" disabled>';
+                } else {
+                    echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';}
                 echo '</div>';
                 echo '</div>';
 		
