@@ -4,14 +4,11 @@ require_once 'datos.php';
 // se crean las siguientes variables
 // con obtenida a travez del formulario formulario_boletines
 
-$fecha = $_GET["year"];				// carga el valor  en la variable fecha
-$periodo = $_GET["periodos"];
-$grado = $_GET["grado"]; // guarda el codigo del grado  en la variable $gradox
+$year = $_GET["year"];				// carga el valor  en la variable fecha
+$id_periodo = $_GET["periodos"];
+$id_grado = $_GET["grado"]; // guarda el codigo del grado  en la variable $gradox
 $id_jornada = $_GET["jornada"]; // guarda el dato de la jornada
 $id_curso = $_GET["curso"]; // codigo del curso
-
-$w_a = 0.5; // peso del corte a
-$w_f = 0.5; // peso del corte final
 
 // se inserta este fichero para generar el documento en pdf
 
@@ -56,12 +53,13 @@ class PDF extends FPDF
 
 // se crea un nuevo documento de PDF
 $pdf=new PDF();
-// creo un nuevo elemento grado
+$pdf->SetFont('helvetica','',10);
+//creo un nuevo elemento grado
 $gr = new grados();
-// obtengo las caracteristicas del grado
-$gr->get_grado_id($grado);
+//obtengo las caracteristicas del grado
+$gr->get_grado_id($id_grado);
 // creamos un nuevo listado de estudiantes 
-$list = new listado_estudiantes($fecha, $grado, $id_jornada, $id_curso);
+$list = new listado_estudiantes($year, $id_grado, $id_jornada, $id_curso);
 // VARIABLES PARA GUARDAR LOS NOMBRES DE LOS ESTUDIANTES
 $nivel = $gr->grado; //$datog['grado'];
 // se almacena el grado al que es promovido
@@ -85,13 +83,21 @@ $spot = array(array(array(array())));
 // codigo del estudiante y   los valores son
 // el promedio y la posicion
 
+$jo = new jornada();
+$jo->get_jornada_por_id($id_jornada);
+$md = new matricula_docente();
+$d  = new docentes();
+$notax = new calificaciones();
+$lo = new logro();
 $promedio = array();
+
+// por cada alumno calculos los valores estadisticos
 foreach($list->id_alumno  as $e){
 
     // un nuevo objeto tipo area
     $a = new area();
     // lista de areas
-    $lista_a = $a->get_areas_grado($grado);
+    $lista_a = $a->get_areas_grado($id_grado);
 
     // por cada area que debe evaluar el grado muestro ..
     foreach ($lista_a as  $id_area =>$a) {
@@ -99,13 +105,13 @@ foreach($list->id_alumno  as $e){
         // creamo las nuevas materias
         $m = new  materia();
         // obtiene un listado de areas a ver en  un grado
-        $lista_m_a = $m->get_materias_por_grado_area($grado, $id_area);
+        $lista_m_a = $m->get_materias_por_grado_area($id_grado, $id_area);
 
         //lista de materias del area
-         foreach($lista_m_a as $id_materia => $materia) {
+        foreach($lista_m_a as $id_materia => $materia) {
             
             // a partir de aqui comienso a computar las calificaciones
-             $notax = new calificaciones();
+            $notax = new calificaciones();
             // obtengo la nota del periodo
             
             $p1 = 0; // periodo 1
@@ -115,34 +121,43 @@ foreach($list->id_alumno  as $e){
             // esta rutina coloca los colores a las celdas
             // para el primer periodo
 
-            // ciclo for que iteratua dentro de los cuatro periodos
-           
             // obtengo la nota del periodo
-            $notax->get_nota_periodo($e,$id_materia,1,$fecha);
+            // compuesta por cuatro coordenadas
+            // $e       --> codigo del estudiante
+            // $id_area --> codigo del area
+            // $id_materia --> codigo materia
+            // codigo del periodo
+            
+            $notax->get_nota_periodo($e,$id_materia,1,$year);
+            // guardo la nota en la variable $p1 para mostrar
+            // en la tabla
             $p1 =  number_format($notax->nota, 1, '.', '');
-            // asignamos la nota a la matriz
-            // compuesta por tres coordenadas
-            // materia  ---> $id_materia
-            // periodo ----> 
+            // guardo el valor para calculos estadisticos
             $spot[$e][$id_area][$id_materia][1] = floatval($p1);
             
-            // obtengo la nota del periodo
-            $notax->get_nota_periodo($e,$id_materia,2,$fecha);
+            // obtengo la nota del periodo 2
+            $notax->get_nota_periodo($e,$id_materia,2,$year);
+            // calculo la nota del periodo
             $p2 = number_format($notax->nota, 1, '.', '');
+            
             $spot[$e][$id_area][$id_materia][2] =  floatval($p2);
             // obtengo la nota del periodo
-            $notax->get_nota_periodo($e,$id_materia,3,$fecha);
+            $notax->get_nota_periodo($e,$id_materia,3,$year);
+            // guardo la nota del tercer periodo para mostrarlo
+            // en la tabla 
             $p3 = number_format($notax->nota, 1, '.', '');
+            // gurdo la nota del tercer periodo para calculos
+            // estadisticos
             $spot[$e][$id_area][$id_materia][3] =  floatval($p3);
             // obtengo la nota del periodo
-            $notax->get_nota_periodo($e,$id_materia,4,$fecha);
+            $notax->get_nota_periodo($e,$id_materia,4,$year);
             $p4 = number_format($notax->nota, 1, '.', '');
             $spot[$e][$id_area][$id_materia][4] =  floatval($p4);
             
-         }
+        }
     }
 
-    // calcular promedios  para el alumno
+    // calcular promedio general  para el alumno
     $p_a  =0;
     // cantidad de materias
     $c_m = 0;
@@ -151,14 +166,13 @@ foreach($list->id_alumno  as $e){
         // por cada materia del area
         foreach($area as $materia){
             // el promedio del area
-            $p_a = $p_a + $materia[$periodo];
+            $p_a = $p_a + $materia[$id_periodo];
             $c_m ++;
         }
     }
     //calculo el promedio del estudiante
     $promedio[$e] = $p_a/$c_m;
-    //echo "El promedio para $e sumando $p_a para ".count($spot[$e])." materias un promedio de ".$promedio[$e]."<br>";
-    
+
 }
 
 //echo var_dump($promeedio);
@@ -180,17 +194,17 @@ foreach ($promedio as  $pr => $prom){
 // echo var_dump($promeedio)."<br>";
 // echo var_dump($posicion);
 
-//echo var_dump($spot);
+// echo var_dump($spot);
 
-// Estructura de repeticion para cada estudiante
+//Estructura de repeticion para cada estudiante
 foreach($list->id_alumno  as $e) {
 
     //echo $e."<br>";
     $estudiante = new alumnos($e);
     //echo ucwords(strtolower($estudiante->nombres))." ".ucwords(strtolower($estudiante->apellidos))."<br>";
 
-    // ENCABEZADO DE CELDAS	//////////////////////////////
-    // usando la libreria FPDF
+    //ENCABEZADO DE CELDAS	//////////////////////////////
+    //usando la libreria FPDF
     $pdf->AddPage();
     $pdf->Ln(5);
     $pdf->SetFillColor(172, 172, 172);
@@ -203,17 +217,21 @@ foreach($list->id_alumno  as $e) {
     $pdf->Cell(20,5,utf8_decode('PUESTO'),1,0,'C',true);
     $pdf->Ln();
     $pdf->Cell(20,5,utf8_decode($e),1,0,'C');
-    $pdf->Cell(75,5,utf8_decode($estudiante->nombres." ".$estudiante->apellidos),1,0,'C');
+    $pdf->Cell(75,5,utf8_decode(strtoupper($estudiante->nombres." ".$estudiante->apellidos)),1,0,'C');
     $pdf->Cell(20,5,utf8_decode($nivel),1,0,'C');
-    $pdf->Cell(20,5,"mañana",1,0,'C');
-    $pdf->Cell(25,5,utf8_decode($fecha),1,0,'C');
-    $pdf->Cell(20,5,utf8_decode($posicion[$e]),1,0,'C');
+    $pdf->Cell(20,5,utf8_decode($jo->jornada),1,0,'C');
+    $pdf->Cell(25,5,utf8_decode($year),1,0,'C');
+    $pdf->SetFillColor(0, 0, 0);
+    $pdf->SetTextColor(255,255,255);
+    $pdf->Cell(20,5,utf8_decode($posicion[$e]),1,0,'C',true);
+    $pdf->SetTextColor(0);
+
     $pdf->Ln(7);
 
-    // // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    // // encabezado para la tabla resumen
-    // //
+    // encabezado para la tabla resumen
+    //
 
     $pdf->Ln(3);
     $pdf->SetFillColor(200, 200, 200);
@@ -229,20 +247,32 @@ foreach($list->id_alumno  as $e) {
 
     // un nuevo objeto tipo area
     $a = new area();
+    // numero materias
+    $num_m = 0;
+    // areas perdidas
+    $a_perdidas =0;
+
 
     // obtentengo el listado de areas
     // definiendo cuantas materias tiene cada grado
-    $lista_a = $a->get_areas_grado($grado);
+    $lista_a = $a->get_areas_grado($id_grado);
     $p = Array(Array()); // aaray que almacena las notas de un alumno.
     
 
-    // por cada area que debe evaluar el grado muestro ..
+    /////////////////////////////////////////////////////
+    //                                                 //
+    //    TABLA DE NOTAS                               //
+    //                                                 //
+    /////////////////////////////////////////////////////
+
+    
+    
+    //por cada area que debe evaluar el grado muestro ..
     foreach ($lista_a as  $id_area =>$a) {
 
         // variables de repeticion de area
         $avg = 0;
         $avg_a = 0;
-        $num_m = 0;
         // obtengo el area
         $area = $a[0];
         // obtengo la cantidad de materias del area
@@ -255,10 +285,10 @@ foreach($list->id_alumno  as $e) {
 
         $m = new  materia();
         // obtiene un listado de areas a ver en  un grado
-        $lista_m_a = $m->get_materias_por_grado_area($grado, $id_area);
+        $lista_m_a = $m->get_materias_por_grado_area($id_grado, $id_area);
         // defino el tipo de fuente
         $pdf->SetFont('Arial','B',7);
-        $pdf->Cell(50,3*$cantidad,$area,1,0,'L');
+        $pdf->Cell(50,3*$cantidad,utf8_decode($area),1,0,'L');
         // obtengo la coordenada en X en la cual termino de imprimirse la caja
         // del area, par a partir de ahí comenzar a escribir las materias
         $x = $pdf->GetX();
@@ -269,12 +299,12 @@ foreach($list->id_alumno  as $e) {
             //la siguiente linea
             $pdf->SetX($x);
             // se crea los campos para mostrar cada materia
-            $pdf->Cell(50,3,$materia,1,0,'L');
+            $pdf->Cell(50,3,utf8_decode($materia),1,0,'L');
             
             // a partir de aqui comienso a computar las calificaciones
             //$notax = new calificaciones();
             // obtengo la nota del periodo
-            // $notax->get_nota_periodo($e,$id_materia,$periodo,$fecha);
+            // $notax->get_nota_periodo($e,$id_materia,$id_periodo,$year);
             // muestro la nota del periodo
 
 
@@ -293,19 +323,12 @@ foreach($list->id_alumno  as $e) {
             
 
             // obtengo la nota del periodo
-            //$notax->get_nota_periodo($e,$id_materia,1,$fecha);
-            $p1 = number_format( $spot[$e][$id_area][$id_materia][1],1,'.','');//  number_format($notax->nota, 1, '.', '');
-            // asignamos la nota a la matriz
-            // compuesta por tres coordenadas
-            // materia  ---> $id_materia
-            // periodo ----> 
-            ///$p[$id_materia][1] = floatval($p1);
-            // obtengo la nota del periodo
-            //$notax->get_nota_periodo($e,$id_materia,2,$fecha);
+            $p1 = number_format( $spot[$e][$id_area][$id_materia][1],1,'.','');
+            // obtengo la nota para el segundo periodo
             $p2 = number_format($spot[$e][$id_area][$id_materia][2], 1, '.', '');
             // //$p[$id_materia][2] =  floatval($p2);
             // // obtengo la nota del periodo
-            // //$notax->get_nota_periodo($e,$id_materia,3,$fecha);
+            // //$notax->get_nota_periodo($e,$id_materia,3,$year);
             $p3 = number_format($spot[$e][$id_area][$id_materia][3], 1, '.', '');
             // //$p[$id_materia][3] =  floatval($p3);
             // // obtengo la nota del periodo
@@ -316,9 +339,9 @@ foreach($list->id_alumno  as $e) {
             //////////////////////////////////////////////////////////////////////////////
             // retorno un valor vacio en caso de que la nota es cero
             if($p1 == 0.0){$p1 = "";}
-            if($p2 == 0.0 || $periodo < 2){$p2 = "";}
-            if($p3 == 0.0 || $periodo < 3){$p3 = "";}
-            if($p4 == 0.0 || $periodo < 4){$p4 = "";}
+            if($p2 == 0.0 || $id_periodo < 2){$p2 = "";}
+            if($p3 == 0.0 || $id_periodo < 3){$p3 = "";}
+            if($p4 == 0.0 || $id_periodo < 4){$p4 = "";}
 
             //
             if($p1<3 and $p1>0.1) {
@@ -328,52 +351,52 @@ foreach($list->id_alumno  as $e) {
             $pdf->Cell(15,3,$p1,1,0,'C',true);// imprime el primer periodo
             
             // pinta de rojo  la celda del segundo periodo si la nota es baja
-            if($p2<3 and $p2 >0.1 and $periodo > 1) {
+            if($p2<3 and $p2 >0.1 and $id_periodo > 1) {
                 $pdf->SetFillColor(255, 0, 0);}// pintar de rojo
             else {	$pdf->SetFillColor(255, 255, 255);}
 
             // coloca la nota del segundo periodo  a partir del mismo
-            if($periodo > 1) {
+            if($id_periodo > 1) {
                 $pdf->Cell(15,3,utf8_decode($p2),1,0,'C',true);}
             
             else {
                 $pdf->Cell(15,3,'',1,0,'C',true);}
             
             // pinta de rojo  la celda del tercer periodo si la nota es baja
-            if($p3<3 and $p3 >0.1  and $periodo > 2) {
+            if($p3<3 and $p3 >0.1  and $id_periodo > 2) {
                 $pdf->SetFillColor(255, 0, 0);}// pintar de rojo
             else {	$pdf->SetFillColor(255, 255, 255);}
             
             // coloca la nota del tercer periodo  a partir del mismo
-            if($periodo > 2) {
+            if($id_periodo > 2) {
                 $pdf->Cell(15,3,utf8_decode($p3),1,0,'C',true);}
             else {
                 $pdf->Cell(15,3,'',1,0,'C',true);}
             
 
             // pinta de rojo  la celda del tercer periodo si la nota es baja
-            if($p4<3 and $p3>0.1 and $periodo > 3) {
+            if($p4<3 and $p3>0.1 and $id_periodo > 3) {
                 $pdf->SetFillColor(255, 0, 0);}// pintar de rojo
             else {	$pdf->SetFillColor(255, 255, 255);}
             
             // coloca la nota del cuarto  periodo  a partir del mismo
-            if($periodo > 3) {
+            if($id_periodo > 3) {
                 $pdf->Cell(15,3,utf8_decode($p4),1,0,'C',true);}
             else {
                 $pdf->Cell(15,3,'',1,0,'C',true);}
 
-            if ($periodo == 1){
+            if ($id_periodo == 1){
                 $ac = $spot[$e][$id_area][$id_materia][1]/4;
             }
-            elseif ($periodo == 2){
+            elseif ($id_periodo == 2){
                 $ac = ($spot[$e][$id_area][$id_materia][1] + $spot[$e][$id_area][$id_materia][1])/4;
             }
-            elseif ($periodo == 3){
+            elseif ($id_periodo == 3){
                 $ac = ($spot[$e][$id_area][$id_materia][1] +
                        $spot[$e][$id_area][$id_materia][2] +
                        $spot[$e][$id_area][$id_materia][3])/4;
             }
-            elseif ($periodo == 4){
+            elseif ($id_periodo == 4){
                 $ac = ($spot[$e][$id_area][$id_materia][1] +
                        $spot[$e][$id_area][$id_materia][2] +
                        $spot[$e][$id_area][$id_materia][3] +
@@ -387,99 +410,56 @@ foreach($list->id_alumno  as $e) {
             $pdf->Ln(3);
 
             
-         } // fin de materias
+        } // fin de materias
 
-        // si se trata del cuato periodo caculo la nota del area en base
-            // al acumulado
-        // if ($periodo == 4){
-        //     $nota_a[$materia_a] = $ac; // gurado la nota acumulada en el vector del area
+        //si se trata del cuato periodo caculo la nota del area en base
+        //al acumulado
+        if ($id_periodo == 4){
+            $nota_a[$materia_a] = $ac; // gurado la nota acumulada en el vector del area
             
-        // }
-        // else{
-        //     $nota_a[$materia_a] = $p[$id_materia][$periodo]; // nota  de la mateia
-        // }
+        }
+        else{
+            $nota_a[$materia_a] = $spot[$e][$id_area][$id_materia][$id_periodo]; // nota  de la mateia
+        }
 
         foreach ($spot[$e][$id_area] as $materia){
-            //echo $materia[$periodo]." -- ";
-            $avg_a = $materia[$periodo] + $avg_a;
+            //echo $materia[$id_periodo]." -- ";
+            $avg_a = $materia[$id_periodo] + $avg_a;
         }
         // promedio del area
         
         $avg_a = $avg_a/count($spot[$e][$id_area]);
+
+        if($avg_a < 3){$a_perdidas ++;}
         //echo " = ".$avg_a."<br>";    
 
         $avg_a =  number_format($avg_a, 1, '.', ''); // se calcula el promedio del area
         
-        // // PROMEDIO RECUPERACIOENES
-        // $avg_ar = 0; /// variable que calcula el promedio del area con recuperaciones
-        // for ($ii =0;$ii <= $num_m_a;$ii++){
-        //     $avg_ar = $nota_r[$ii]+$avg_ar; // se hace una sumatoria de las notas del area con recuperaciones
-                
-        // }
-
-        // $avg_ar =  number_format($avg_ar / $num_m_a, 1, '.', ''); // se calcula el promedio del area con recuperacion
-            
-        // // calculo el mayor entre el promedio del area  y el promedio con recuperaciones
-        // if($avg_a > $avg_ar){
-        //     $avg_at = $avg_a; // el promedio total sera el acumulado
-        // }
-        // else{
-        //     $avg_at = $avg_ar; // el promedio total sera el de las recuperaciones
-        // }
+ 
         
-        // // algoritmo que cuenta las areas perdidas
-        // if ($avg_at < 3){
-        //     if ($id_a != 12){
-        //         $a_perdidas ++;// incremento el contador de areas perdidas siempre y cuando no sea disciplina
-        //     }
-        // }
-        // // si ha recuperado imprimo el dato de la recuperacion
-        // // de lo contrario no lo imprimo
-        // if ($recupero){
-        //     $avg_print = " (".$avg_at.")";
-        // }
-        // else{
-        //     $avg_print = ""; //
-        // }
-        // $avg_at = number_format($avg_at, 1, '.', '');
-        //$pdf->Ln(3); // se genera una nueva linea
+        //$avg_at = number_format($avg_at, 1, '.', '');
+
         $pdf->SetFillColor(200, 200, 200); // se define el color de fondo
         // $pdf->SetFillColor(200, 200, 200); // se coloca el color gris
         $pdf->Cell(160,3,"Total ".utf8_decode($area),1,0,'L',true);
-        $pdf->Cell(20,3,$avg_a.$avg_print,1,0,'C',true);
+        $pdf->Cell(20,3,$avg_a,1,0,'C',true);
         $pdf->SetFillColor(255, 255, 255);// se restablece el color blanco
         $pdf->Ln(3);
         
-     } // fin de areas
-
-    /// ciclo for para calcular el promedio del area
-    // $num_m_a = count($nota_a);// numero de materias por area
-
-    // $avg_a = 0; /// variable que calcula el promedio del area
-    // for ($ii =0;$ii <= $num_m_a;$ii++) {
-                
-    // $avg_a = $nota_a[$ii]+$avg_a; // se hace una sumatoria de las notas del area
-
-    // }
-
-    /// algoritmo que calcula el promedio del periodo
-    //  foreach ($spot[$e] as $materia) {
-    // //     // code...
-    // //     // echo var_dump($materia).'<br><br>';
-    //      $avg = $avg + $materia[$periodo];
-  
-    //  }
-    //  $avg = number_format($avg /$num_m, 1, '.', '');
+    }
+    //fin de areas
+ 
 
 
-    $pdf->Ln(3);
+
     $pdf->Cell(50,3,utf8_decode("Promedio: ".number_format($promedio[$e],1,'.')),1,0,'L');
     $pdf->Cell(50,3,utf8_decode("Materias: ".$num_m),1,0,'L');
     $pdf->Cell(80,3,utf8_decode("Areas Perdidas: ".$a_perdidas),1,0,'L');
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // detalle de cada materia
+    
+    //detalle de cada materia
 
-     $pdf->Ln(5);
+    $pdf->Ln(5);
+    
     $pdf->Cell(180,5,utf8_decode("ESCALA DE VALORACIÓN:"),0,0,'L');
     $pdf->Ln(6);
     $pdf->SetFillColor(0, 200, 0);
@@ -489,7 +469,7 @@ foreach($list->id_alumno  as $e) {
     $pdf->Cell(5,5,"",1,0,'L',true);
     $pdf->Cell(40,5,utf8_decode(" NIVEL ALTO: 4.1 a 4.7"),0,0,'L');
     
-    //$pdf->Ln(8);
+
     $pdf->SetFillColor(255, 230, 0);
     $pdf->Cell(5,5,"",1,0,'L',true);
     $pdf->Cell(40,5,utf8_decode("NIVEL BÁSICO: 3.0 a 4.0"),0,0,'L');
@@ -497,56 +477,102 @@ foreach($list->id_alumno  as $e) {
     $pdf->SetFillColor(255, 0, 0);
     $pdf->Cell(5,5,"",1,0,'L',true);
     $pdf->Cell(40,5,utf8_decode(" NIVEL BAJO: 1.0 a 2.9"),0,0,'L');
-        
+    $pdf->Ln(16);   
 
-//     $pdf->Ln(10);
+
+
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    //    	FICHA DE DESCRIPCION DE LOGROS
     
-//     foreach ($lista_a as  $id_area =>$a) {
-//         // obtengo el area
-//         $area = $a[0];
-//         //variables de cada area
-//         $nota_a = array(); // array que contiene las notas de cada area
+    // por cada area que debe evaluar el grado muestro ..
+    foreach ($lista_a as  $id_area =>$a) {
+
+        // obtengo el area
+        $area = $a[0];
+        $logros = "logros";
         
-//         $m = new materia();
-//         // obtiene un listado de areas a ver en  un grado
-//         $lista_m_a = $m->get_materias_por_grado_area($grado, $id_area);
+        $pdf->SetFillColor(230, 230, 230);
+        $pdf->SetFont('Arial','B',8);
+        $pdf->Cell(180,5,utf8_decode('Aréa : '.$area),1,0,'L',true);
+        $pdf->Ln(5);
+        $lista_m_a = $m->get_materias_por_grado_area($id_grado, $id_area);
+        // recorro las materias del area
+        foreach($lista_m_a as $id_materia => $materia) {
+            //obtengo la nota del periodo actual
+            $nota = number_format( $spot[$e][$id_area][$id_materia][$id_periodo],1,'.','');
+            $faltas = 0;
+            
+            
+                
+            
 
-//         // por cada materia imprimo una fila
-//         foreach($lista_m_a as $id_materia => $materia) {
+            $nota = number_format($nota, 1, '.', '');
+            //$pdf->Ln(4);
+            $pdf->SetFont('Arial','B',9);
+            $pdf->Cell(50,4,utf8_decode($materia),'L',0,'L');
+            $pdf->SetFont('Arial','',7);
+
+            
+            // obtengo el id del docente
+            $id_docente = $md->get_docente($id_materia, $id_grado, $id_jornada, $id_curso, $year);
+            if($id_docente) {
+                $d->get_docente_id($id_docente);
+                $pdf->Cell(40,4,"Prof:".ucwords(strtolower($d->nombres))." "
+                           .ucwords(strtolower($d->apellidos)),0,0,'L');}
+            else{
+                $pdf->Cell(40,4,"",0,0,'L');}
+
+            //$pdf->Cell(20,4,utf8_decode("Faltas: ".$faltas),0,0,'L');
+            $pdf->Cell(20,4,"",0,0,'L');
+
+            // calculo el criterio de desempeño
+            if($nota >= 4.8) {
+                $valor = "Superior";
+                $pdf->SetFillColor(0, 200, 0);
+            }
+            else {
+                if($nota >= 4.1) {
+                    $valor = "Alto";
+                    $pdf->SetFillColor(0, 204, 255);
+                }
+                else {
+                    if($nota >= 3) {
+                        $valor = "Básico";
+                        $pdf->SetFillColor(255, 230, 0);
+                    }
+                    else {
+                        $valor = "Bajo";
+                        $pdf->SetFillColor(255, 0, 0);
+                    }
+                }
+            }
+            
+            $pdf->Cell(50,4,utf8_decode("Nivel de desempeño : ").utf8_decode($valor),0,0,'L');
+            $pdf->SetFont('Arial','B',9);
 
 
+            
+            $pdf->Cell(20,4,utf8_decode("Nota : ".$nota),1,0,'L',true);
+            $pdf->Ln(4);
+            $pdf->SetFont('Arial','I',8);
+            $pdf ->SetTextColor(30,30,30);
 
+            // obtengo el codigo del logro
+            $notax->get_logro($e, $id_materia, $year, $id_periodo);
+            //valido si ha retornado un logro
+            if($notax->calificado){
+                // si obtengo el codigo del logro  entonces cargo
+                // sus atributos
+                $lo->get_logro_id(intval($notax->logro));
+                // imprimo el logro
+                $pdf->MultiCell(180,4, utf8_decode($lo->logro),'BLR','L',false);}
+            else{
+                // si no hay logro coloco el espacio
+                $pdf->MultiCell(180,4, "",'BLR','L',false);}
+        }
 
-//         }
-//     }
-
-   
-
-
-
-
-
-
-//     $pdf->Ln(5);
-//     // si el grado es diferente de 11
-//     if ($grado != 2 && $periodo == 4){
-//         $pdf->SetFillColor(255, 238, 170);
-//         $pdf->SetFont('Arial','B',9);
         
-//         if ($a_perdidas == 0){
-//             $pdf->Multicell(180,5,utf8_decode("El estudiante APROBO las competencias necesarias y fue Promovido al grado  ".$promovido),0,'L',true);
-//         }
-//         elseif ($a_perdidas < 3){
-//             $pdf->Multicell(180,5,utf8_decode("El estudiante REPROBO el mínimo de  las competencias necesarias para ser promovido al grado ".
-//                                               $promovido." y fue APLAZADO "),0,'L',true);
-//         }
-//         else{
-//             $pdf->Multicell(180,5,utf8_decode("El estudiante REPROBO las competencias necesarias y NO fue Promovido al grado ".$promovido),0,'L',true);
-//         }
-    //    }
-
-
-    // OBSERVACIONES DEL ESTUDIANTE
+    }
 
     $pdf->Ln(15);
     $pdf->Cell(180,5,utf8_decode("Observaciones : "),0,0,'L');
@@ -569,12 +595,18 @@ foreach($list->id_alumno  as $e) {
     $pdf->Cell(180,5,utf8_decode("    ________________________          _________________________"),0,0,'C');
     $pdf->Ln(3);
     $pdf->Cell(180,5,utf8_decode("           Rectora                                       Directora de Grupo"),0,0,'C');
+            
 }
+        
+    
+    
+
+// OBSERVACIONES DEL ESTUDIANTE
+
+
+
 
 
 $pdf->Output();
-
-
-desconectar($link);
 
 ?>

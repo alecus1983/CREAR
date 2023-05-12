@@ -359,10 +359,16 @@ select * from  semana
 
 select * from  semanas
 
+select semana from semanas where year= 2023 and (inicio is not null or fin is not null);
+
 alter table semanas modify inicio date;
 alter table semanas modify fin date;
 
-update semanas set inicio = '2023-05-02' where year = 2023 and semana = 12;
+update semanas set inicio = '2023-05-08' , fin = '2023-05-15', year = 2023 where id_semana = 1
+
+update semanas set inicio = Null  where year = 2023 and semana = 1;
+
+
 update semanas set fin = '2023-05-07' where year = 2023 and semana = 12;
 
 
@@ -531,3 +537,17 @@ describe requisitos
 insert  table requisitos (id_materia,id_grado) values(75, 14);
 
 describe matricula_docente;
+
+
+
+(select avg( nota) nota from calificaciones
+where id_alumno = 1091 and id_materia = 20 and   periodo = 1 and year = 2023 and id_ponderado >0
+order by id_ponderado)
+
+select  nota from calificaciones
+where id_alumno = 1091 and id_materia = 20 and   periodo = 1 and year = 2023
+
+
+select * from semanas;
+
+select inicio, fin from semanas where year = 2023 and inicio not_null
