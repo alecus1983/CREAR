@@ -118,6 +118,21 @@ padding-left: 0px;
     font-weight:900;
 }
 
+.J {
+    color: fuchsia;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.L {
+    color: dodgerblue;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+
 
 @media only screen 
 and (min-device-width : 320px) 
@@ -186,6 +201,20 @@ and (max-device-width : 480px)  {
 
 .I {
     color: brown;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.J {
+    color: fuchsia;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+.L {
+    color: dodgerblue;
     max-width: 5rem;
     text-align: center;
     font-weight:900;

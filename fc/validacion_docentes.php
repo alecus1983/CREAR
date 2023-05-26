@@ -35,7 +35,7 @@ $d->get_docente_cc($_POST["cedula"]);
         // guardo el codigo del docete  en la variable de seccion  id
         $_SESSION['id'] = $d->id;
         // abre el archivo formulario boletin
-        header("Location:fc.php");
+        header("Location:board.php");
     }
     else
         // en caso de que la contraseña sea incorrecta

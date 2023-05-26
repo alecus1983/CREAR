@@ -307,25 +307,15 @@ button {
     Template Default Fonts & Fonts Styles
  ---------------------------------------------- */
 
- .h1-mod{
+.h1-mod {
   font-size: 70px;
   font-weight: bold;
 }
 
 /* Mis efectos  */
 
-
-@media screen and (max-width: 768px) {
-  
-  .mod-responsible{
-flex-direction: column-reverse;
-  }
-
-}
-
-
 @media screen and (min-width: 200px) and (max-width: 700px) {
-  .h1-mod{
+  .h1-mod {
     font-size: 45px;
     font-weight: bold;
   }
@@ -405,7 +395,9 @@ flex-direction: column-reverse;
   margin-top: var(--nshare-spacing);
 }
 
-.nshare-item, .nshare-item:hover, .nshare-item:active {
+.nshare-item,
+.nshare-item:hover,
+.nshare-item:active {
   text-decoration: none;
   color: inherit;
 }
@@ -419,7 +411,8 @@ flex-direction: column-reverse;
   margin: 0;
 }
 
-.nshare, .nshare-item {
+.nshare,
+.nshare-item {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -553,7 +546,7 @@ flex-direction: column-reverse;
 
 @media screen and (min-width: 200px) and (max-width: 900px) {
   .flx {
-      min-height: 14vh;
+    min-height: 14vh;
   }
 }
 
@@ -563,7 +556,8 @@ flex-direction: column-reverse;
   padding: 0;
 }
 
-.content-wrapper, .content-wrapper-2 {
+.content-wrapper,
+.content-wrapper-2 {
   margin: 0 auto;
   max-width: 1200px;
   display: flex;
@@ -572,7 +566,8 @@ flex-direction: column-reverse;
   padding: 0.5rem;
 }
 
-.news-card, .news-card-2 {
+.news-card,
+.news-card-2 {
   border: 0px solid aqua;
   margin: 0.5rem;
   position: relative;
@@ -590,7 +585,7 @@ flex-direction: column-reverse;
 
 @media (min-width: 900px) {
   .news-card {
-      height: 20rem
+    height: 20rem
   }
 }
 
@@ -602,7 +597,8 @@ flex-direction: column-reverse;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0) linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 80%);
-  ; z-index: 0;
+  ;
+  z-index: 0;
 }
 
 .news-card__card-link {
@@ -655,21 +651,21 @@ flex-direction: column-reverse;
 
 @media (min-width: 900px) {
   .news-card:hover .news-card__details-wrapper {
-      max-height: 20rem;
-      opacity: 1;
+    max-height: 20rem;
+    opacity: 1;
   }
 
   .news-card:hover .news-card__text-wrapper {
-      background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.6);
   }
 
   .news-card:hover .news-card__title {
-      color: yellow;
+    color: yellow;
   }
 
   .news-card:hover .news-card__image {
-      transform: scale(1.2);
-      z-index: -1;
+    transform: scale(1.2);
+    z-index: -1;
   }
 }
 
@@ -1847,6 +1843,7 @@ p {
   padding: 0;
   margin-right: 0;
 }
+
 /* 
 #scrollUp {
   background-color: #086ad7;
@@ -3479,7 +3476,8 @@ header.header-2 .main-menu ul>li>ul ul {
 }
 
 header.header-2 .top-header {
-  background-color: rgb(255 255 255);  position: relative;
+  background-color: rgb(255 255 255);
+  position: relative;
   z-index: 1;
   padding: 6px 50px;
 }
@@ -4258,8 +4256,8 @@ header.header-4 .lan-select select option {
   left: 0;
   content: "";
   top: 0;
-  background: #211e3b;
-  width: 100%;
+  background: #00000000;
+    width: 100%;
   height: 100%;
   z-index: -1;
   opacity: .8;
@@ -4850,8 +4848,8 @@ header.header-4 .lan-select select option {
   /* fallback for old browsers */
   /* background: -webkit-linear-gradient(to right, #004e92, #000428); */
   /* Chrome 10-25, Safari 5.1-6 */
- /* background: linear-gradient(to right, #004e92, #000428); */
- /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
+  /* background: linear-gradient(to right, #004e92, #000428); */
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
@@ -5037,7 +5035,6 @@ header.header-4 .lan-select select option {
   left: 0;
   top: 0;
   opacity: .85;
-  background-color: #060404bf;
 }
 
 .hero-3 .single-slide .hero-contents {
@@ -6939,7 +6936,6 @@ header.header-4 .lan-select select option {
   position: absolute;
   width: 100%;
   height: 50%;
-  background-color: #eef4fc;
   content: "";
   left: 0;
   bottom: 0;
@@ -6951,6 +6947,93 @@ header.header-4 .lan-select select option {
   top: 0;
 }
 
+
+.hover-service1 {
+  background-image: url('../img/index/colegioservices.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+
+}
+
+
+.hover-service2 {
+  background-image: url('../img/index/cursosservices.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+
+}
+
+.hover-service3 {
+  background-image: url('../img/index/tecnicosservices.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+
+}
+
+
+.hover-service4 {
+  background-image: url('../img/index/ciclosservices.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+
+}
+
+
+.hover-preescolar {
+  background-image: url('../img/Colegio/colegioservice-preescolar.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+}
+
+.hover-primaria {
+  background-image: url('../img/Colegio/colegioservice-primaria.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+}
+
+.hover-bachillerato {
+  background-image: url('../img/Colegio/colegioservice-bachillerato.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+}
+
+.hover-sistenas{
+  background-image: url('../img/tecnicos/service-sistemas.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+}
+
+.hover-admin{
+  background-image: url('../img/tecnicos/service-admin.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+}
+
+.hover-deporte{
+  background-image: url('../img/tecnicos/service-deporte.jpg');
+  height: 370px;
+  border-radius: 7px;
+  position: relative;
+  transition: 0.5s;
+}
 .case-study-carousel-wrapper .work-process-nav div {
   border-radius: 5px;
   width: 55px;
@@ -7983,7 +8066,7 @@ header.header-4 .lan-select select option {
 .call-consultation .icon {
   float: left;
   border-radius: 50%;
-  background-color: #086ad7;
+  background-color: #19295E;
   width: 60px;
   height: 60px;
   line-height: 64px;
@@ -8009,9 +8092,9 @@ header.header-4 .lan-select select option {
 }
 
 .consultations-wrapper {
-  background-color: #eef4fc;
   background-position: 20px 30px;
   position: relative;
+
 }
 
 .consultations-wrapper::before {
@@ -8582,7 +8665,7 @@ header.header-4 .lan-select select option {
   height: 115px;
   border: 10px solid #c3c3c3;
   background-color: #e6f0fb;
-  
+
   color: #086ad7;
   line-height: 100px;
   font-size: 50px;
@@ -10213,7 +10296,7 @@ header.header-4 .lan-select select option {
 }
 
 .consultations-form {
-  background-color: #086ad7;
+  background-color: #19295E;
   padding: 70px 65px;
   border-radius: 7px;
 }
