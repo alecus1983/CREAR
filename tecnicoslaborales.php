@@ -26,12 +26,68 @@ include_once "./assets/templates/header.php";
 include_once "./assets/templates/baner-info.php";
 ?>
 <!--HOme-->
+<br>
+<br>
+<br>
+<br>
+<!-- Test services  -->
 
+<!-- Feature Area Start -->
+<div class="feature_area section_gap">
+    <div class="feature_shape circle_round"></div>
+    <div class="feature_shape_2"></div>
+    <div class="container">
+
+
+        <div class="row mb-70">
+            <div class="col-lg-6 col-12">
+                <div class="section-title style-3">
+                    <span>2023</span>
+                    <p>PROGRAMAS 2023</p>
+                    <h1>Tecnicos Laborales</h1>
+                </div>
+            </div>
+            <div class="col-lg-6 mt-4 mt-lg-0 col-12 text-lg-right">
+                <div class="work-process-nav"></div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 wow fadeInUp animated" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <a href="./programas/sistemas.html">
+                    <div class="single_feature">
+
+                        <img src="./assets/img/tecnicos/service-sistemas.jpg" alt="features-images">
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 wow fadeInUp animated" data-wow-duration="1500ms" data-wow-delay="400ms">
+                <a href="./programas/administrativo.html">
+                    <div class="single_feature">
+                    <img src="./assets/img/tecnicos/service-admin.jpg" alt="features-images">
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 wow fadeInUp animated" data-wow-duration="1500ms" data-wow-delay="600ms">
+                <a href="./programas/deporte.html">
+                    <div class="single_feature single-last-item">
+                    <img src="./assets/img/tecnicos/service-deporte.jpg" alt="features-images">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Feature Area End -->
+<!-- Test services  -->
+
+<br><br><br>
 
 
 
 <!-- 3.Services of the business -->
-<br>
+<!-- <br>
 <br>
 <br>
 <br>
@@ -51,36 +107,30 @@ include_once "./assets/templates/baner-info.php";
         </div>
 
         <div class="case-study-items owl-carousel text-center">
-            <!-- Sistemas -->
             <a href="programas/sistemas.html">
                 <div class="single-case-item">
                     <div class="p-4 case-thumb bg-cover hover-sistenas">
                     </div>
                 </div>
             </a>
-            <!-- Sitemas -->
 
-            <!-- Admin-->
             <a href="programas/administrativo.html">
                 <div class="single-case-item">
                     <div class="case-thumb bg-cover hover-admin">
                     </div>
                 </div>
             </a>
-            <!--  Admin  -->
 
-            <!-- Deporte  -->
             <a href="programas/deporte.html">
                 <div class="single-case-item">
                     <div class="case-thumb bg-cover hover-deporte">
                     </div>
                 </div>
             </a>
-            <!-- Deporte -->
         </div>
     </div>
 </section>
-<br><br><br>
+<br><br><br> -->
 <!-- Services of the business -->
 
 <section style="margin-top: -80px;" class="our-process clear-fix section-padding">

@@ -27,14 +27,20 @@ include_once "./assets/templates/baner-info.php";
 ?>
 <!--HOme-->
 
-<!-- 3.Services of the business -->
 <br>
 <br>
 <br>
 <br>
-<section class="case-study-carousel-wrapper style-2">
+<!-- Test services  -->
+
+<!-- Feature Area Start -->
+<div class="feature_area section_gap">
+    <div class="feature_shape circle_round"></div>
+    <div class="feature_shape_2"></div>
     <div class="container">
-        <div class="row mb-70">
+
+
+    <div class="row mb-70">
             <div class="col-lg-6 col-12">
                 <div class="section-title style-3">
                     <span>Servicios</span>
@@ -46,39 +52,41 @@ include_once "./assets/templates/baner-info.php";
                 <div class="work-process-nav"></div>
             </div>
         </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 wow fadeInUp animated" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <a href="./colegio.php">
+                <div class="single_feature">
 
-        <div class="case-study-items owl-carousel text-center">
-            <!-- Colegio Preescolar -->
-            <a href="#">
-                <div class="single-case-item">
-                    <div class="p-4 case-thumb bg-cover hover-preescolar">
-                    </div>
+                    <img src="./assets/img/Colegio/colegioservice-preescolar.jpg" alt="features-images">
                 </div>
-            </a>
-            <!-- Colegio -->
+                </a>
+            </div>
 
-            <!-- Colegio Primaria -->
-            <a href="#">
-                <div class="single-case-item">
-                    <div class="case-thumb bg-cover hover-primaria">
-                    </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp animated" data-wow-duration="1500ms" data-wow-delay="400ms">
+                <a href="./educacionciclos.php">
+                <div class="single_feature">
+                    <img src="./assets/img/Colegio/colegioservice-primaria.jpg" alt="features-images">
                 </div>
-            </a>
-            <!--  Colegio Primaria  -->
+                </a>
+            </div>
 
-            <!-- Colegio Bachillerato -->
-            <a href="#">
-                <div class="single-case-item">
-                    <div class="case-thumb bg-cover hover-bachillerato">
-                    </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp animated" data-wow-duration="1500ms" data-wow-delay="600ms">
+                <a href="./tecnicoslaborales.php">
+                <div class="single_feature single-last-item">
+                    <img src="./assets/img/Colegio/colegioservice-bachillerato.jpg" alt="features-images">
                 </div>
-            </a>
-            <!-- Colegio Bachillerat -->
+                </a>
+            </div>
         </div>
     </div>
-</section>
+</div>
+<!-- Feature Area End -->
+<!-- Test services  -->
+
 <br><br><br>
-<!-- Services of the business -->
+
+
+
 
 
 <section class="consultations-wrapper section-padding bg-contain pb-0" style="background-image: url('assets/img/circle-bg-2.png')">
