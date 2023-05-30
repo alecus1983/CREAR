@@ -117,8 +117,8 @@
                                             <li><a href="./Nosotros.html">Nosotros</a> </li>
                                             <li><a href="#">Servicios <i class="fas fa-angle-down"></i></a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="./colegio.html">Colegio</a></li>
-                                                    <li><a href="./tecnicoslaborales.html">Tecnicos Laborales</a></li>
+                                                    <li><a href="./colegio.php">Colegio</a></li>
+                                                    <li><a href="./tecnicoslaborales.php">Tecnicos Laborales</a></li>
                                                     <!-- <li><a href="./educacionciclos.php">Educación por Ciclos</a></li> -->
                                                     <!-- <li><a href="./cursoscortos.html">Cursos y Seminarios</a></li> -->
                                                 </ul>
