@@ -28,7 +28,7 @@ class imcrea {
         $this->_db= new mysqli('localhost','imcreati_admin','conezioncrear21','imcreati_data');
         //$this->_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
         if ($this->_db->connect_errno) {
-            //echo "fallo al conectar bd".$this->_db->connect_errno;
+            echo "fallo al conectar bd".$this->_db->connect_errno;
             return;
         }
 
@@ -321,7 +321,7 @@ class inscripcion extends imcrea {
 
         // si se ejecuto la consulta
         if (!$qx){
-            //echo "Fallo en incertar fila";
+            echo "Fallo en incertar fila";
         } else {
             // retorno  el array
             return $qx;
@@ -341,7 +341,7 @@ class inscripcion extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
-            //echo "Fallo en incertar fila";
+            echo "Fallo en incertar fila";
         } else {
             // retorno  el array
             return $dato;
@@ -387,16 +387,6 @@ class matricula_docente extends imcrea {
 
     }
 
-    public function get_docente($id_materia, $id_grado, $id_jornada, $id_curso, $year){
-        $q = "select * from matricula_docente where year = $year and id_grado =$id_grado and id_curso =$id_curso and id_jornada = $id_jornada and id_materia = $id_materia;";
-        $resultado = $this->_db->query($q);
-        $r = $resultado->fetch_array(MYSQLI_ASSOC);
-        if(isset($r["id_docente"])){
-            return $r["id_docente"];}
-        else
-        {return null;}
-    } 
-
     // se obtiene un listado de los grados matriculados por un docente
     // en $this year y $this id_docente
     
@@ -436,7 +426,7 @@ class matricula_docente extends imcrea {
     public function listado_docentes ($year){
         $arr = array();
         $q = "select id_docente,cedula, login, nombres, apellidos from docentes where id_docente in (
-select distinct id_docente from matricula_docente where year = $year) and admin= 0";
+select distinct id_docente from matricula_docente where year = 2023) and admin= 0";
         $c = $this->_db->query($q);
         while($a = $c->fetch_array(MYSQLI_ASSOC)){
             // agrego el codigo de un docente matriculado en el año
@@ -445,63 +435,6 @@ select distinct id_docente from matricula_docente where year = $year) and admin=
         // cargo el listado de docentes
         $this->listado_docentes = $arr;
 
-    }
-
-    // listado de matriculas (id) docentes por grado
-    public function get_lista_por_grado ($id_grado,$id_jornada, $id_curso, $year){
-        $arr = array();
-        $q = "select id from matricula_docente where id_grado = $id_grado and ".
-           " id_jornada = $id_jornada and id_curso = $id_curso and year = $year order by id_docente";
-        
-        $c = $this->_db->query($q);
-        while($a = $c->fetch_array(MYSQLI_ASSOC)){
-            // agregar elementos al array
-            array_push($arr, $a['id']);
-            
-        }
-        // listado de matriculas
-        return $arr;
-
-    }
-
-    public function get_matricula_por_id($id){
-        $q = "select * from  matricula_docente where id =$id ";
-        // ejecuto la consulta
-        $c = $this->_db->query($q);
-        $a = $c->fetch_array(MYSQLI_ASSOC);
-
-        $this->id = $a['id'];
-        $this->id_grado = $a['id_grado'];
-        $this->id_curso = $a['id_curso'];
-        $this->id_materia = $a['id_materia'];
-        $this->id_docente = $a['id_docente'];
-        $this->year = $a['year'];
-        $this->id_jornada = $a['id_jornada'];
-        $this->mes = $a['mes'];
-        $this->fecha = $a['fecha'];
-    }
-
-    public function  add($id_grado,$id_curso,$id_materia,$id_docente,$ano,$id_jornada){
-        $q = "insert into matricula_docente (id_grado, id_curso,id_materia,id_docente,year,id_jornada,mes,fecha)".
-           " values($id_grado,$id_curso,$id_materia,$id_docente,$ano,$id_jornada,4,NOW())";
-        //echo $q;
-        $c = $this->_db->query($q);
-        if($c === true){
-            return true;
-        }else
-        {return false;}
-        
-    }
-
-    public function del($id){
-         $q= "delete from  matricula_docente where id = $id";
-         //echo $q;
-        $c = $this->_db->query($q);
-        if($c === true){
-            return true;
-        }else
-            return false;
-        
     }
     
     
@@ -577,7 +510,7 @@ class grados extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
-            //echo "Fallo en incertar fila";
+            echo "Fallo en incertar fila";
         } else {
             // retorno  el array
             return $dato;
@@ -595,7 +528,7 @@ class grados extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
-            //echo "Fallo en incertar fila";
+            echo "Fallo en incertar fila";
         } else {
             // retorno  el array
             $this->n_grado = $dato[0];
@@ -612,7 +545,7 @@ class grados extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
-            //echo "Fallo en incertar fila";
+            echo "Fallo en incertar fila";
         } else {
             // retorno  el array
             $this->n_grado = $dato["nombre_g"];
@@ -672,7 +605,7 @@ class matricula extends imcrea {
         // // dentro de la tabla alumnos
         $texto = "INSERT INTO matricula (id_alumno,id_grado,id_jornada,mes,retiro,year)
               VALUES ($this->id_alumno,$this->id_grado,$this->id_jornada,$this->mes,$this->retiro,$this->year)";
-        //echo $texto;
+        echo $texto;
         // ejecuto la consulta
         $consulta = $this->_db->query($texto);
 
@@ -728,14 +661,14 @@ class alumnos extends imcrea {
            ."'creativo'"." ,"
            .$this->inscripcion.")";
 
-        //echo "<br>".$q;
+        echo "<br>".$q;
 
         // ejecuto la consulta
         $dato = $this->_db->query($q);
 
         // si se ejecuto la consulta
         if (!$dato){
-            //echo "Fallo en incertar fila";
+            echo "Fallo en incertar fila";
         } else {
             // retorno  el valor 0 del array
             //return $dato[0];
@@ -760,7 +693,7 @@ class alumnos extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
-            //echo "Fallo al actualizar alumno";
+            echo "Fallo al actualizar alumno";
         } else {
             // retorno  el valor 0 del array
             $dato -> close();
@@ -821,7 +754,7 @@ class alumnos extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
-            //echo "Fallo en incertar fila";
+            echo "Fallo en incertar fila";
         } else {
             // retorno  el valor 0 del array
             return $dato[0];
@@ -838,7 +771,7 @@ class alumnos extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato) {
-            //echo "Fallo en incertar fila";
+            echo "Fallo en incertar fila";
         } else {
             // retorno  el valor 0 del array
             return $dato[0];
@@ -855,7 +788,7 @@ class alumnos extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
-            //echo "Fallo en incertar fila";
+            echo "Fallo en incertar fila";
         } else {
             // retorno  el array
             return $dato[0];
@@ -906,11 +839,11 @@ class pagos extends imcrea {
             // si se ejecuto la consulta
             if ($resultado){
                 // completo los atributos en funcion de la consulta
-                // echo "<br>se inserto un nuevo pago";
+                echo "<br>se inserto un nuevo pago";
             }
         }
         else {
-            //echo "<br>ya existia una matricula para ese periodo";
+            echo "<br>ya existia una matricula para ese periodo";
         }
     
     } // fin de constructor de la clase
@@ -1079,59 +1012,7 @@ class docentes extends imcrea {
         }
         $this->materias = $arr;
     }
-
-    // total de docentes 
-    public function get_total_docentes(){
-        // array
-        $arr = array();
-        // consulta
-        $q ="select id_docente, completo from 
-(select id_docente,  nombres, apellidos, lower(concat(nombres, apellidos)) completo from docentes) as c
-order by completo asc";
-        // realizar consulta
-        $c = $this->_db->query($q);
-        // recorro el array 
-        while($a = $c->fetch_array(MYSQLI_ASSOC)){
-            // el arrray
-            array_push($arr, $a['id_docente']);
-        }
-        return $arr;
-    }
 }
-
-// clase que define los poderados
-class ponderado  extends imcrea{
-
-    public $id_ponderado;
-    public $ponderado;
-    public $valor;
-    public $tipo;
-    public $por_periodo;
-
-    //cosntructor de la clase
-    // crea una calificacion vacia
-    public function __construct(){
-        // hereda parametros de la clase padre
-        parent::__construct();
-    }
-
-    //obtengo los parametros de un ponderado basado
-    // en un tipo
-    public function get_ponderado_por_tipo($tipo){
-        $q = "select * from ponderado where tipo = '$tipo'";
-        //echo $q;
-          $c = $this->_db->query($q);
-          $r = $c->fetch_array(MYSQLI_ASSOC);
-          $this->id_ponderado = $r['id_ponderado'];
-          $this->ponderado = $r['ponderado'];
-          $this->valor = $r['valor'];
-          $this->tipo = $r['tipo'];
-          $this->por_periodo = $r['por_periodo'];
-        }
-    }
-    
-    
-
 
 class calificaciones extends  imcrea {
     // si esta calificado 1 si no 0
@@ -1159,8 +1040,6 @@ class calificaciones extends  imcrea {
     public function __construct(){
         // hereda parametros de la clase padre
         parent::__construct();
-
-      
     }
 
     // verifica la calificacion semanal
@@ -1196,37 +1075,6 @@ class calificaciones extends  imcrea {
             
          }
     }
-    
-    // obtiene la nota del periodo
-    public function get_nota_periodo($id_a, $id_m, $periodo, $year){
-        // si la materia es disciplina se calcula como un promedio
-        if($id_m == 20){
-            $q = "select avg( nota) nota from calificaciones
-                  where id_alumno = $id_a and id_materia = $id_m and
-                  periodo = $periodo and year = $year and  id_semana > 0";
-        }
-        // para el resto de las asignatuas se calcula de acuerdo al ponderado
-        else {
-        $q = "select  sum(valor*nota)/100 as nota from
-              ponderado as p inner join 
-              (select id_ponderado, nota from calificaciones
-               where id_alumno = $id_a and id_materia = $id_m and
-               periodo = $periodo and year = $year and id_ponderado > 0
-               order by id_ponderado) as  cal on cal.id_ponderado = p.id_ponderado
-               order by p.id_ponderado";}
-        
-         try {
-             // realizo la consulta
-             $c = $this->_db->query($q);
-             //extraigo un dato
-             $r = $c->fetch_array(MYSQLI_ASSOC); }
-         catch (Exeption $e) {
-            //echo 'Excepción capturada: ',  $e->getMessage(), "\n";
-         }
-         // guardo la nota en el objeto
-         $this->nota = $r['nota'];
-        
-    }
 
     // funcion que recupera los datos de rendimiento de un alumno
     // en una materia especifica
@@ -1253,6 +1101,7 @@ order by id_ponderado";
     // verifica la calificacion semanal
     // requiere 
     public function get_logro($id_a,$id_m, $y, $id_periodo) {
+
         $q = "select * from calificaciones where year = $y
                                         and id_alumno = $id_a
                                        and id_materia = $id_m
@@ -1360,31 +1209,6 @@ order by id_ponderado";
         $r = $c->fetch_array(MYSQLI_ASSOC);
         return $r['cantidad'];
 
-    }
-
-    public function get_criterio_faltantes($id_e, $id_m, $id_s, $p, $year){
-
-        $q = "select v.criterio, tipo, id_semana from 
-(select concat(validar,$id_m) as criterio, tipo, id_semana from validar where id_semana < $id_s) as v left join
-(select  concat (tipo,id_semana, id_materia) as  criterio , c.id_ponderado from ponderado as p inner join ( 
-select id_alumno, id_semana, id_ponderado, id_materia from calificaciones where year = $year and periodo = $p and id_materia = $id_m  and   id_semana < $id_s and  id_alumno in ($id_e)) as c on c.id_ponderado = p.id_ponderado) as n on n.criterio = v.criterio where n.criterio is null";
-
-        // realizo la consulta
-        $c = $this->_db->query($q);
-        //$arr = array(array());
-        // recorro el array
-        while($a = $c->fetch_array(MYSQLI_ASSOC)){
-            
-             $criterio = $a['criterio'];
-             $tipo = $a['tipo'];
-             $semana = $a['id_semana'];
-             $arr[$criterio][0] = $tipo;
-             $arr[$criterio][1] = $semana;
-            
-        }
-        // retorna un array con el conjunto de areas
-        return $arr;
-        
     }
 
 
@@ -1526,17 +1350,6 @@ class materia extends imcrea {
         }
         return $arr;
     }
-    // obtengo un array con todas las materas
-    public function get_all(){
-        $arr = array();
-        $q =" select id_materia from materia order by materia";
-        $c = $this->_db->query($q);
-        while($a = $c->fetch_array(MYSQLI_NUM)){
-            array_push($arr, $a[0]);
-        }
-        return $arr;
-        
-    }
 }
 
 // clase que representa las semanas
@@ -1572,9 +1385,9 @@ class semana extends imcrea{
 
     // recupera el listado de semanas para un año
     public function get_lista_semanas($ano) {
-        $q = "select semana from  semanas where year= $ano and (inicio is not null or fin is not null) ";
+        $q = "select semana from  semanas where year = $ano";
         $c = $this->_db->query($q);
-        // array que retorna la lista de semanas
+
         $arr = array();
         // recorro el array
         while($r = $c->fetch_array(MYSQLI_ASSOC)) {
@@ -1583,6 +1396,7 @@ class semana extends imcrea{
         }
         //retorno listado
         return $arr;
+
     }
 
     public function get_semana_activa($ano) {
@@ -1599,30 +1413,6 @@ class semana extends imcrea{
         $r = $c->fetch_array(MYSQLI_ASSOC);
         return $r["id_periodo"];
 
-    }
-
-    // funcion que actuliza los datos de  la semana
-    public function set_semana($semana,$year,$inicio,$fin){
-        $q="update semanas set inicio = '$inicio' , fin = '$fin', year = $year where id_semana = $semana";
-        //echo $q;
-        $c = $this->_db->query($q);
-        if($c === true){
-            return true;
-        }else
-        {return false;}
-        
-    }
-
-    // funcion que actuliza los datos de  la semana
-    public function reset_semana($semana){
-        $q="update semanas set inicio = null , fin = null, year = null where id_semana = $semana";
-        //echo $q;
-        $c = $this->_db->query($q);
-        if($c === true){
-            return true;
-        }else
-        {return false;}
-        
     }
 
     
@@ -1642,7 +1432,8 @@ class logro extends imcrea{
         parent::__construct();
     }
 
-    // obtengo un array con los logros de una materia
+    // obtengo los atributos de un logro dado 
+    // el numero de la semana y el año y la semana
     public function get_logros($id_materia) {
 
         $q = "select * from  logros where id_materia = $id_materia";
@@ -1654,161 +1445,17 @@ class logro extends imcrea{
         // recorre el array 
         while($r = $c->fetch_array(MYSQLI_ASSOC)) {
             // agrego un elemento al array
-            $arr[$r['id_logro']] = $r['logro'] ;            
-        }        
+            $arr[$r['id_logro']] = $r['logro'] ;
+            
+        }
+
+        
         // retorno un array con los id de los logros de la materia
         return $arr;
     }
 
-    public function get_logro_id($id_logro) {
-
-        $q = "select * from  logros where id_logro= $id_logro";
-        $c = $this->_db->query($q);
-       
-        // recorre el array 
-        $r = $c->fetch_array(MYSQLI_ASSOC);
-            // agrego un elemento al array
-        $this->logro = $r['logro'] ;
-        $this->id_logro = $r['id_logro'] ;            
-    }
-   
-
-}
-
-
-//clase que indentifica las jornadas
-//hace referencia a los horarios en que
-//se dictan la clases
-class jornada extends imcrea{
-    // codigo de la jornada
-    public $id_materia;
-    // nombre de la jornada
-    public $jornada;
-
-    //cosntructor de la clase
-    // crea una calificacion vacia
-    public function __construct(){
-        // hereda parametros de la clase padre
-        parent::__construct();
-    }
-
-    public function get_jornada_por_id($id_jornada){
-        $q = "select * from  jornada where id_jornada =$id_jornada ";
-        // ejecuto la consulta
-        $c = $this->_db->query($q);
-        $a = $c->fetch_array(MYSQLI_ASSOC);
-
-        $this->id_jornada = $a['id_jornada'];
-        $this->jornada = $a['jornada'];
-        
-    }
-        
     
-}
 
-// clase que define los cursos los cuales son grupos de estudiantes que
-// se encuentran en el mismo grado y jornada
-class curso extends imcrea{
-    // codigo del curso tipo int()
-    public $id_curso;
-    // nombre del curso tipo varchar()
-    public $curso;
-    // indica si el curso esta activo tipo int()
-    public $activo;
-
-    //cosntructor de la clase
-    // crea una calificacion vacia
-    public function __construct(){
-        // hereda parametros de la clase padre
-        parent::__construct();
-    }
-
-    public function get_curso_por_id($id_curso){
-        $q = "select * from  curso  where id_curso =$id_curso ";
-        //echo $q;
-        // ejecuto la consulta
-        $c = $this->_db->query($q);
-        $a = $c->fetch_array(MYSQLI_ASSOC);
-        //echo var_dump($a);
-        // retorno los atributos del curso
-        $this->id_curso = $a['id_curso'];
-        $this->curso = $a['curso'];
-        $this->activo = $a['activo'];        
-    }
-}
-
-// clase que define las materias requeridas
-// para un grado o un programa tecnico
-class requisitos extends imcrea{
-    // codigo del requisito
-    public $id;
-    // nombre  del grado/programa tecnico
-    public $id_grado;
-    // codigo de la materia
-    public $id_materia;
-
-    //cosntructor de la clase
-    // crea una calificacion vacia
-    public function __construct(){
-        // hereda parametros de la clase padre
-        parent::__construct();
-    }
-
-    public function get_requisitos_grado($id_grado){
-        // array que contiene los reguisitos
-        $arr = array();
-        // consulta
-        $q = "select id from  requisitos  where id_grado =$id_grado ";
-        //echo $q;
-        // ejecuto la consulta
-        $c = $this->_db->query($q);
-        while($a = $c->fetch_array(MYSQLI_NUM)){
-            array_push($arr, $a[0]);
-            // agrego array
-            // $id = $a['id'];
-            // $id_grado = $a['id_grado'];
-            // $id_materia = $a['id_materia'];
-            // $arr[$id][0] = $id_grado;
-            // $arr[$id][1] = $id_materia;
-        }
-        //echo var_dump($arr);
-        return $arr;
-    }
-
-    public function get_requisitos_id($id){
-        $q = "select * from requisitos where id = $id";
-        //echo $q;
-        // ejecuto la consulta
-        $c = $this->_db->query($q);
-        $a = $c->fetch_array(MYSQLI_ASSOC);
-        $this->id = $a['id'];
-        $this->id_grado = $a['id_grado'];
-        $this->id_materia = $a['id_materia'];
-        
-    }
-
-    public function add($id_materia,$id_grado){
-        $q= "insert into requisitos (id_materia,id_grado) values($id_materia, $id_grado)";
-        //echo $q;
-        $c = $this->_db->query($q);
-        if($c === true){
-            return true;
-        }else
-        {return false;}
-        
-    }
-
-
-     public function del($id_materia,$id_grado){
-         $q= "delete from  requisitos where id_materia = $id_materia and id_grado = $id_grado";
-         //echo $q;
-        $c = $this->_db->query($q);
-        if($c === true){
-            return true;
-        }else
-            return false;
-        
-    }
 }
 
 ?>

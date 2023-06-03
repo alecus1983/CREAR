@@ -1,22 +1,19 @@
 <?php
 session_start();
-require_once('datos.php');
 if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
-    $d = new docentes();
-    $d->get_docente_cc($usuario);
-    $id = $d->id;
-    $admin = $d->admin ;
-
-    $ano = date('Y');
-    if($admin == 0){
-        header("Location:board.php");
-    }
 } else {
     header("Location:board.php");
     exit;
 }
 
+require_once('datos.php');
+
+$d = new docentes();
+$d->get_docente_cc($usuario);
+$id = $d->id;
+$admin = $d->admin ;
+$ano = date('Y');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -154,7 +151,6 @@ if (isset($_SESSION["usuario"])){
                              id_docente: $("#id_d").val(),
                              corte: $("#corte").val(),
                              periodo: $("#periodos").val(),
-			     id_curso: $("#id_c").val(),
                              logro1: JSON.stringify(logros1),
                              logro2: JSON.stringify(logros2),
                              logro3: JSON.stringify(logros3),
@@ -292,441 +288,6 @@ if (isset($_SESSION["usuario"])){
 
 	 }
 
-	 // avance semanal de notas de docentes
-	 function notas_faltantes() {
-
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_calificaciones_faltantes.php",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-
-		     //$("#calificador").html(respuesta);
-		     $("#avance").html(respuesta);
-
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-
-	 	 function eliminar_semana(){
-
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de las semanas
-	     $.ajax({
-		 type: "POST",
-		 url: "eliminar_semana.php",
-		 dataType: "json",
-		 data: {
-		     semana:$("#lista_semanas").val()
-		     
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 //$("#avance").html(respuesta['html']);
-			 gestion_semanas();
-			 swal("Completado","Se actualizo la semana","success");
-		     } else {
-			 if(respuesta['status'] == 20){swal('Error','no se pudo actualizar la semana','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Fecha','Porfavor seleccione una fecha de inicio','error');}
-			 if(respuesta['status'] == 24){swal('Fecha','Porfavor seleccione una fecha de fin','error');}
-			 if(respuesta['status'] == 25){swal('Año','Porfavor seleccione una fecha de inicio menor a la de fin','error');}
-			 if(respuesta['status'] == 26){swal('Semana','Porfavor seleccione una semana','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-		 }
-	 // funcion que cambia semanas
-	 function actualizar_semana(){
-
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de las semanas
-	     $.ajax({
-		 type: "POST",
-		 url: "actualizar_semana.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     inicio: $("#inicio").val(),
-		     fin: $("#fin").val(),
-		     semana:$("#lista_semanas").val()
-		     
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 //$("#avance").html(respuesta['html']);
-			 gestion_semanas();
-			 swal("Completado","Se actualizo la semana","success");
-		     } else {
-			 if(respuesta['status'] == 20){swal('Error','no se pudo actualizar la semana','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Fecha','Porfavor seleccione una fecha de inicio','error');}
-			 if(respuesta['status'] == 24){swal('Fecha','Porfavor seleccione una fecha de fin','error');}
-			 if(respuesta['status'] == 25){swal('Año','Porfavor seleccione una fecha de inicio menor a la de fin','error');}
-			 if(respuesta['status'] == 26){swal('Semana','Porfavor seleccione una semana','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-	 }
-
-	 // funcion que llama el formulario de gestionar las
-	 // semas
-	 function gestion_semanas() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de las semanas
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_semanas.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#avance").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 // muesta el formulario de docentes en un grado 
-	 function matricula_docente() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_matricula_docente.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#avance").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-
-	 function agregar_matricula_docente() {
-
-	     
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "add_matricula_docente.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_materia_md").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
-		     id_docente: $("#id_docente_mt").val()
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 swal('Actualizacion','Se insertaron los dastos con éxito','success');
-			 matricula_docente();
-		     } else {
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-			 if(respuesta['status'] == 26){swal('Curso','Porfavor seleccione un curso','error');}
-			 if(respuesta['status'] == 27){swal('Docente','Porfavor seleccione un docente','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	  }
-
-	 function eliminar_matricula_docente(id) {
-
-	     
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "del_matricula_docente.php",
-		 dataType: "json",
-		 data: {
-                     id: id
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 swal('Actualizacion','Se elimino el docente del curso','success');
-			 matricula_docente();
-		     } else {
-			 if(respuesta['status'] == 20){swal('Error','Hubo un error al eliminar la matricula docente','error');}
-			 if(respuesta['status'] == 21){swal('Error','Hubo un error al eliminar la matricula docente','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 function requisitos_grado() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_requisitos.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_materia_mt").val(),
-		     id_curso: $("#id_c").val(),
-		     periodo: $("#periodos").val(),
-		     id_jornada: $("#jornada").val(),
-		     semana: $("#semana").val()
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#avance").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 20){swal('Consulta','Fallo al intentar ingresar el requisito','error');}
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 function agregar_requisito() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "add_requisitos.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_materia_mt").val(),		     
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 swal('Actualizacion','Se insertaron los dastos con éxito','success');
-			 requisitos_grado();
-		     } else {
-			 if(respuesta['status'] == 20){swal('Consulta','Fallo al intentar ingresar el requisito','error');}
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-
-	 function eliminar_requisitos(id_materia,id_grado) {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "del_requisito.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     id_g: id_grado,
-		     id_ms: id_materia,		     
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 swal('Actualizacion','Se elimino los requisitos con éxito','success');
-			 requisitos_grado();
-		     } else {
-			 if(respuesta['status'] == 20){swal('Consulta','Fallo al intentar ingresar el requisito','error');}
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-	 
-	 // funcion que obtiene los requisitos del grado 
-	 function eliminar_grado() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "del_requisito.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 swal('Actualizacion','Se eliminaron los dastos con éxito','success');
-			 requisitos_grado();
-		     } else {
-			 if(respuesta['status'] == 20){swal('Consulta','Fallo al intentar ingresar el requisito','error');}
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
 	 // actualiza el formulario
 	 function actualizar(){
 	     load_materias();
@@ -780,7 +341,7 @@ if (isset($_SESSION["usuario"])){
 				 "&grado="+grados+
 				 "&jornada="+jornada+
 				 "&curso="+curso;
-
+		 
 		 console.log("los parametros son : %s",parametros);
 		 // abro boletin en una nueva ventana
 		 // llamando para ello al archivo cetificado.php
@@ -790,38 +351,38 @@ if (isset($_SESSION["usuario"])){
 	     // si la opcion seleccionada es boletines entra aqui
 	     //if (opcion == 6)
 	     //{
-
-
+		 
+		 
 	     //}
 	     // de lo contrario mira si la opcion seleccionada es
 	     // el certificado
 	     //else if (opcion == 16)
 	     //{
-	     // almacena los parametros para enviar
-	     // por el método GET
-	     // var parametros= "year="+year+
-	     //		 "&grado="+grados;
-	     // muestro los parámetos por consola
-	     //console.log("los parametros son : %s",parametros);
-	     // abro el certificado en una nueva ventana
-	     // llamando para ello al archivo cetificado.php
-	     //window.open("certificado.php?"+parametros);
+		 // almacena los parametros para enviar
+		 // por el método GET
+		// var parametros= "year="+year+
+		//		 "&grado="+grados;
+		 // muestro los parámetos por consola
+		 //console.log("los parametros son : %s",parametros);
+		 // abro el certificado en una nueva ventana
+		 // llamando para ello al archivo cetificado.php
+		 //window.open("certificado.php?"+parametros);
 	     //}
-
+	     
 	 }
 
 
 
 	 function obtener_pdf(){
 	     // esta funcion crea un pdf para preescolar
-	     // se almacena el año en la variable year
+	     // se almacena el año en la variable year 
 	     var year = $("#years").val();
 	     // se almacena el periodo
 	     var periodos = $("#periodos").val();
 	     // y se almacenan las variables grados
 	     var gradosx = $("#id_gs").val();
 	     var grados = $("#id_gs").val();
-
+	     
 	     // se almacenan todas las variables dentro de la variable parametros
 	     var parametros= "year="+year+"&periodos="+periodos+"&grados="+gradosx+"&id_gs="+gradosx+"";
 	     console.log("los parametros son : %s",parametros);
@@ -912,16 +473,14 @@ if (isset($_SESSION["usuario"])){
     <body class="sb-nav-fixed">
 
 	<div class="loader" style="display:none" id="loader"></div>
-
 	<div id="content">
-
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
 	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -938,29 +497,31 @@ if (isset($_SESSION["usuario"])){
 		    </li>
 		</ul>
 	    </nav>
-
-
 	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
 		    <nav class="sb-sidenav accordion sb-sidenav-dark"
 			 id="sidenavAccordion"
-			 style="background-color: cadetblue">
-
+			 tyle="background-color: cadetblue">
 			<div class="sb-sidenav-menu">
 			    <div class="nav">
-				
-				
+				<div class="sb-sidenav-menu-heading">Core</div>
+				<a class="nav-link" href="fc.php">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-tachometer-alt"></i></div>
+				    FORMULARIO
+				</a>
+				<div class="sb-sidenav-menu-heading">DATOS</div>
 				<a class="nav-link collapsed" href="#"
 				   data-bs-toggle="collapse"
-				   data-bs-target="#collapseLayouts1"
-				   aria-expanded="false" aria-controls="collapseLayouts1">
+				   data-bs-target="#collapseLayouts"
+				   aria-expanded="false" aria-controls="collapseLayouts">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i></div>
 				    Datos
 				    <div class="sb-sidenav-collapse-arrow">
 					<i class="fas fa-angle-down"></i></div>
 				</a>
-				<div class="collapse" id="collapseLayouts1"
+				<div class="collapse" id="collapseLayouts"
 				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
 				    <nav class="sb-sidenav-menu-nested nav">
@@ -982,19 +543,19 @@ if (isset($_SESSION["usuario"])){
 
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    class="form-control"
-						    onchange=";">
+						style="background: transparent;color: darkgreen;border: 0px"
+						class="form-control"
+						onchange=";">
 					    <option value="1">Mañana</option>
 					    <option value="2">Tarde</option>
 					</select>
 
 					<label for="periodos">Periodo</label>
 					<select id="periodos"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    name="periodos"
-						    class="form-control" required=""
-						onchange="">
+						style="background: transparent;color: darkgreen;border: 0px"
+						name="periodos"
+						class="form-control" required=""
+						    onchange="">
 					    <?php
 
 					    if($admin){
@@ -1015,9 +576,9 @@ if (isset($_SESSION["usuario"])){
 
 					<label for="semana">Semana</label>
 					<select id="semana"
-						class="form-control"
-						style="background: transparent;color: darkgreen;border: 0px"
-						onchange="">
+						    class="form-control"
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    onchange="load_lista_estudiantes();">
                                             <?php
 
 					    if ($admin) {
@@ -1043,9 +604,9 @@ if (isset($_SESSION["usuario"])){
 
 					<label class="Control-label">Grado</label>
 					<select id="id_g" name="id_gs"
-						    class ="form-control"
-						    style="background: transparent;color: darkgreen;border:  0px"
-						    onchange="actualizar()">
+						class ="form-control"
+						style="background: transparent;color: darkgreen;border:  0px"
+						onchange="actualizar();">
 					    <?php
 					    // creo un nuevo objeto  matricula docente
 					    $mt = new matricula_docente();
@@ -1067,9 +628,9 @@ if (isset($_SESSION["usuario"])){
 
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
-						style="background: transparent;color: darkgreen;border:0px;"
-						onchange = ";"
-						class ="form-control">
+						    style="background: transparent;color: darkgreen;border:0px;"
+						    onchange = ";"
+						    class ="form-control">
 					    <option value="0">A</opcion>
 						<option value="1">B</opcion>
 					</select>
@@ -1082,100 +643,42 @@ if (isset($_SESSION["usuario"])){
 					</select>
 
 				    </nav>
-
-
-
-
 				</div>
-
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#collapseLayouts2"
-				   aria-expanded="false" aria-controls="collapseLayouts2">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i></div>
-				    Elementos
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i></div>
-				</a>
-			
-				<div class="collapse" id="collapseLayouts2"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_semanas()">Gestión de Semanas
-					</a>
-				    </nav>
-				    
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="requisitos_grado()">Requisitos de grado
-					</a>
-				    </nav>
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="matricula_docente()">Matricula Docente
-					</a>
-				    </nav>
-				</div>
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#collapseLayouts3"
-				   aria-expanded="false" aria-controls="collapseLayouts3">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i></div>
-				    Procesos
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i></div>
-				</a>
-				<div class="collapse" id="collapseLayouts3"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#"
-					   href="listado_docentes.php"
-					   target="_blank">lista de docentes
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#"
-					   onclick="avance_semanal();">Avance notas semanales
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="fs.php" target="_self">Gestión de semanas
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="" target="_self"
-					   onclick="crear_pdf()">Boletin
-					</a>
-
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="notas_faltantes()">Notas faltantes
-					</a>
-
-					
-
-				    </nav>
-				</div>
-
                             </div>
                         </div>
                         <div>
-
+			    <a style="margin: 2rem;"
+			       class="nav-link collapsed"
+			       href="#"
+			       data-bs-toggle="collapse"
+			       data-bs-target="#collapsePages"
+			       aria-expanded="false"
+			       aria-controls="collapsePages"
+			       href="listado_docentes.php"
+			       target="_blank">lista de docentes
+			    </a>
+			    <a style="margin: 2rem;"
+			       class="nav-link collapsed"
+			       href="#"
+			       data-bs-toggle="collapse"
+			       data-bs-target="#collapsePages"
+			       aria-expanded="false"
+			       aria-controls="collapsePages"
+			       target="#" onclick="avance_semanal();">Avance notas semanales
+			    </a>
+			    <a style="margin: 2rem;"
+			       class="nav-link collapsed"
+			       aria-expanded="false"
+			       aria-controls="collapsePages"
+			       href="fs.php" target="_self">Gestión de semanas
+			    </a>
+			    <a style="margin: 2rem;"
+			       class="nav-link collapsed"
+			       aria-expanded="false"
+			       aria-controls="collapsePages"
+					    href="" target="_self"
+					    onclick="crear_pdf()">Boletin
+			    </a>
 			</div>
 			<div class="sb-sidenav-footer">
                             <div class="small">Registrado como:</div>
@@ -1190,13 +693,13 @@ if (isset($_SESSION["usuario"])){
                         <div class="container-fluid px-4">
                             <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
                             <ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
+				<li class="breadcrumb-item active">Para la gestistión de las semanas</li>
                             </ol>
 
 			    <div id="avance" class="row"></div>
-
+			    
                             <div id="f_semanas" class="row container" style="display:none;">
-
+				
 				<div class="col-md-5">
 				    <div class="card border-primary border-6">
 					<div class="card-header">
@@ -1205,7 +708,7 @@ if (isset($_SESSION["usuario"])){
 					</div>
 					<div class="card-body container">
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio1"
@@ -1223,11 +726,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin1" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio2"
@@ -1246,11 +749,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin2" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio3"
@@ -1269,11 +772,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin3" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio4"
@@ -1292,11 +795,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin4" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio5"
@@ -1315,11 +818,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin5" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio6"
@@ -1338,11 +841,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin6" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio7"
@@ -1361,11 +864,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin7" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio8"
@@ -1384,7 +887,7 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin2" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					</div>
@@ -1399,7 +902,7 @@ if (isset($_SESSION["usuario"])){
 					</div>
 					<div class="card-body container">
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio9"
@@ -1418,11 +921,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin9" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio10"
@@ -1441,11 +944,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin10" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio11"
@@ -1461,11 +964,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin11" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio12" class="form-label text-muted fst-italic">inicio semana 12</label>
@@ -1478,11 +981,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin12" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio5" class="form-label text-muted fst-italic">inicio semana 13</label>
@@ -1495,11 +998,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin13" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio6" class="form-label text-muted fst-italic">inicio semana 14</label>
@@ -1512,11 +1015,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin14" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio7" class="form-label text-muted fst-italic">inicio semana 15</label>
@@ -1529,11 +1032,11 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin15" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					    <div class="row align-items-center">
-
+						
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio16" class="form-label text-muted fst-italic">inicio semana 16</label>
@@ -1546,23 +1049,21 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin16" class="form-control" >
 						    </div>
 						</div>
-
+						
 					    </div>
 
 					</div>
 				    </div>
 				</div>
-
+				
                             </div>
 
-
+			    
                         </div>
                     </main>
                 </div>
             </div>
-
-
-        </div><!-- fin del contenido -->
+        </div>
 
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">

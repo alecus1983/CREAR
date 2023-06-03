@@ -320,7 +320,7 @@ $ano = date('Y');
 	     // el listado de estudiantes
 	     $.ajax({
 		 type: "POST",
-		 url: "listado_estudiantes_red.php",
+		 url: "listado_estudiantes.php",
 		 data: {
                      years: $("#years").val(),
 		     id_g: $("#id_g").val(),
@@ -580,9 +580,7 @@ $ano = date('Y');
 					<select id="semana"
 						class="sel form-control"
 						    onchange="load_lista_estudiantes();">
-					    <option value="1">1</option>
-					    <option value="2">2</option>
-					    <option value="3">3</option>
+					    
 					    <option value="4">4</option>
 					    <option value="5">5</option>
 					    <option value="6">6</option>
