@@ -1150,6 +1150,7 @@ if (isset($_SESSION["usuario"])){
 					   class="nav-link"
 					   href="#"
 					   onclick="avance_semanal();">Avance notas semanales
+
 					</a>
 					<a style="margin: 0.5rem;"
 					   class="nav-link"

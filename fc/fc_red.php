@@ -214,7 +214,7 @@ $ano = date('Y');
 			 // se emplea en envío por POST
 			 $.ajax({
                              type: "POST",
-                             url: "notas_semanales_red.php",
+                             url: "notas_semanales.php",
                              data: {
 				 year: $("#years").val(),
 				 semana: $("#semana").val(),
@@ -580,6 +580,7 @@ $ano = date('Y');
 					<select id="semana"
 						class="sel form-control"
 						    onchange="load_lista_estudiantes();">
+
 					    <option value="9">9</option>
 					    <option value="10">10</option>
 					    <option value="11">11</option>
@@ -588,6 +589,8 @@ $ano = date('Y');
 					    <option value="14">14</option>
 					    <option value="15">15</option>
 					    <option value="16">16</option>
+
+
 
 					</select>
 
