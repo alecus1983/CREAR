@@ -359,11 +359,17 @@ select * from  semana
 
 select * from  semanas
 
+select semana from semanas where year= 2023 and (inicio is not null or fin is not null);
+
 alter table semanas modify inicio date;
 alter table semanas modify fin date;
 
-update semanas set inicio = '2023-04-17' where year = 2023 and semana = 10;
-update semanas set fin = '2023-04-24' where year = 2023 and semana = 10;
+update semanas set inicio = '2023-05-08' , fin = '2023-05-15', year = 2023 where id_semana = 1
+
+update semanas set inicio = Null  where year = 2023 and semana = 1;
+
+
+update semanas set fin = '2023-05-07' where year = 2023 and semana = 12;
 
 
 update semanas set inicio = '2023-04-24' where year = 2023 and semana = 11;
@@ -447,3 +453,101 @@ select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year from calif
 
 
  SELECT id from calificaciones where year = 2023 and periodo = 1 and nota > 5 and nota <51 and id_ponderado = 2
+
+select * from requisitos
+
+show tables
+
+
+-- selecciono la cantidad de areas que ve un grado
+select area.id_area, area, cantidad from area inner join ( 
+select id_area, count(*) cantidad from materia where id_materia in (
+select id_materia from requisitos where id_grado =1 )  GROUP by id_area
+) as ca on ca.id_area = area.id_area 
+
+-- selecciono las materias de un area 
+select id_area, id_materia from materia where id_materia in (
+select id_materia from requisitos where id_grado =1 ) and  
+id_area  = 1 order by id_materia  
+
+
+select * from calificaciones where year = 2023
+
+(
+select id_grado from matricula where id_alumno = 500 and year = 2023)
+
+-- datos para el calculo de  la nota final
+select id_ponderado, nota from calificaciones
+where id_alumno = 1091 and id_materia = 1 and   periodo = 1 and year = 2023 and id_ponderado >0
+order by id_ponderado
+
+select * from ponderado
+
+-- datos para el calculo de  la nota final
+select p.id_ponderado, ponderado, tipo, valor,nota from ponderado as p innerjoin 
+(select id_ponderado, nota from calificaciones
+where id_alumno = 1091 and id_materia = 1 and   periodo = 1 and year = 2023 and id_ponderado >0
+order by id_ponderado)  cal on cal.id_ponderado = p.id_ponderado
+order by p.id_ponderado
+
+select id_alumno, n.id_semana, n.validar from 
+(select * from validar where id_semana < 3 ) as v left join
+(select id_alumno,  id_semana, concat (tipo,id_semana) validar, id_materia  from ponderado as p inner join ( 
+select id_alumno, id_semana, id_ponderado, id_materia from calificaciones where year = 2023 and periodo = 1 and id_materia = 1  and   id_semana < 3 and  id_alumno in (500)) as c on c.id_ponderado = p.id_ponderado) as n
+on v.validar = n.validar -- where n.validar is null
+
+
+
+select v.criterio, tipo, id_semana from 
+(select concat(validar,2) as criterio, tipo, id_semana from validar where id_semana < 9) as v left join
+(select  concat (tipo,id_semana, id_materia) as  criterio , c.id_ponderado from ponderado as p inner join ( 
+select id_alumno, id_semana, id_ponderado, id_materia from calificaciones where year = 2023 and periodo = 1 and id_materia = 2  and   id_semana < 9 and  id_alumno in (500)) as c on c.id_ponderado = p.id_ponderado) as n on n.criterio = v.criterio
+where n.criterio is null
+
+describe validar
+
+describe jornada;
+
+describe curso;
+
+select * from curso where id_curso =0
+
+
+
+select * from curso;
+
+describe docentes;
+
+insert into curso (id_curso,curso,activo) values
+(0,'A',1),
+(1,'B',1),
+(2,'C',1),
+(3,'D',1)
+
+select id_docente, completo from 
+(select id_docente,  nombres, apellidos, lower(concat(nombres, apellidos)) completo from docentes) as c
+order by completo asc
+
+select * from requisitos
+
+describe materia
+
+describe requisitos
+
+insert  table requisitos (id_materia,id_grado) values(75, 14);
+
+describe matricula_docente;
+
+
+
+(select avg( nota) nota from calificaciones
+where id_alumno = 1091 and id_materia = 20 and   periodo = 1 and year = 2023 and id_ponderado >0
+order by id_ponderado)
+
+select  nota from calificaciones
+where id_alumno = 1091 and id_materia = 20 and   periodo = 1 and year = 2023
+
+
+select * from semanas;
+
+select inicio, fin from semanas where year = 2023 and inicio not_null

@@ -1150,9 +1150,15 @@ if (isset($_SESSION["usuario"])){
 					   class="nav-link"
 					   href="#"
 					   onclick="avance_semanal();">Avance notas semanales
-					
+
+					</a>
 					<a style="margin: 0.5rem;"
 					   class="nav-link"
+					   href="fs.php" target="_self">Gestión de semanas
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="" target="_self"
 					   onclick="crear_pdf()">Boletin
 					</a>
 

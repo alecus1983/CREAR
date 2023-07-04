@@ -601,6 +601,44 @@ if($ano > 2015 and $ano < 2050) {
                         }
                     }
 
+                    // para los logros  de disciplina
+                    if(isset($_POST['L'])) { 
+                        // recupero los logros para el criterio J
+                        $L = json_decode($_POST['L'], True);
+                        ////////////////////////////////////////////////////////////////////////////////////
+
+                        // por cada elemento en los ponderados tipo J
+                        // se ejecuta el siguiente ciclo de acurdo a la cantidad
+                        // de estidoamtes
+                        for($i=0 ; count($L) >  $i; $i++) {
+                            //recupero el valor de la nota
+                            $logro = floatval($L[$i]['value']);
+	
+                            //creo  una instancia de calificacioes
+                            $cal = new calificaciones();
+                            // consulto si hay calificaciones
+                            $cal->get_logro($codigos[$i]['value'],$id_materia,$ano, $periodo);
+
+                            // si esta calificado actualizo la nota
+                            if($cal->calificado){
+                                // update
+                                $cal->update_logro($cal->id,$logro);
+        
+                            }else
+                            {
+                                //insert
+                                $cal->set_logro($codigos[$i]['value'],
+                                                $id_materia,
+                                                $logro,
+                                                $id_docente,
+                                                $periodo,
+                                                $ano
+                                );
+                            } // fin del else
+                        } // fin del for
+
+                    }
+
                 }
             } // fin del if periodos
 
