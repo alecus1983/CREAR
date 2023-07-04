@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>realimentaciones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+  <script type="text/javascript">
+
+
+  var retro = {
+    
+    "ACOPI" : ["FEEDER IV"],
+    "AGUABLANCA" : ["CALIPSO"],
+    "ALAMEDA" : ["CALLE 12"],
+    "ALAMOS" : ["LA FLORA","LA MERCED","LOS PARQUES"],
+    "ALFONSO LOPEZ" : ["LA BASE"],
+    "ALTO MENGA" : ["LA FLORA","YUMBO COBRE"],
+    "ARROYO-MENGA" : ["PANORAMA"],
+    "AUTOPISTA" : ["FUNDENTE 34.5"],
+    "BELLA SUIZA" : ["EL LIDO","LA BUITRERA","TEQUENDAMA"],
+    "BOCATOMA RIO C" : ["PT MALLARINO I"],
+    "BOCHALEMA" : ["CANASGORDAS","UNIVALLE","LA VIGA","LA BOCHA"],
+    "BRETANA" : ["LAS ACACIAS"],
+    "BRISAS DE MAYO" : ["IMBANACO"],
+    "CALIPSO" : ["LA UNION","PONDAJE","AGUABLANCA"],
+    "CALLE 11" : ["CARRERA 4"],
+    "CALLE 12" : ["ALAMEDA","CARRERA 4"],
+    "CALLE 15" : ["CALLE 19","OBRERO","VERSALLES"],
+    "CALLE 19" : ["CARRERA 13", "SAN NICOLAS","CALLE 15"],
+    "CALLE 56" : ["CIUDAD CORDOBA"],
+    "CANASGORDAS" : ["BOCHALEMA","EL CASTILLO"],
+    "CAPRI" : ["UNIVALLE"],
+    "CARRERA 10" : ["SANTA ROSA"],
+    "CARRERA 13" : ["CALLE 19","SANTA ROSA"],
+    "CARRERA 15" : ["LAS PLANTAS"],
+    "CARRERA 1a" : ["LOS ANDES"],
+    "CARRERA 4" : ["CALLE 11","CALLE 12","VERSALLES","SANTA MONICA"],
+    "CARRERA 40" : ["PANORAMA","FUNDENTE 34.5"],
+    "CARRERA 5a NTE" : ["LA MERCED"],
+    "CARRERA 8a" : ["FLORESTA"],
+    "CASCAJAL" : ["ESTERO"],
+    "CASCAJAL" : ["VUELTA LARGA"],
+    "CEMENTOS 34.5" : ["GUACHICONA"],
+    "CENCAR" : ["LA Y"],
+    "CENTRO" : ["VERSALLES"],
+    "CIRUELOS" : ["FEPICOL","SALOMIA"],
+    "CIUDAD CORDOBA" : ["NARINO","CALLE 56","LILI"],
+    "COLGATE" : ["ESMERALDA","POPULAR"],
+    "COLON" : ["SIMON BOLIVAR","LAS ACACIAS"],
+    "CRISTALES" : ["IMBANACO"],
+    "DECEPAZ" : ["NAVARRO"],
+    "DIAMANTE" : ["LOS LAGOS","QUIMBAYA","EL POBLADO","RIO CAUCA"],
+    "EL BOSQUE" : ["LA CAMPINA"],
+    "EL CAMPO" : ["PASOANCHO"],
+    "EL CASTILLO" : ["CANASGORDAS"],
+    "EL CEDRO" : ["SAN FERNANDO"],
+    "EL LIDO" : ["SANTA ISABEL","BELLA SUIZA"],
+    "EL POBLADO" : ["RIO CAUCA","DIAMANTE"],
+    "EL SENA" : ["SANTANDER"],
+    "ESMERALDA" : ["COLGATE"],
+    "ESTERO" : ["CASCAJAL"],
+    "FEEDER I" : ["LA ESTANCIA"],
+    "FEEDER IV" : ["ACOPI","PEDREGAL","KILOMETRO 18"],
+    "FEPICOL" : ["CIRUELOS"],
+    "FLORESTA" : ["LA BASE","CARRERA 8a","SAN NICOLAS"],
+    "FUNDENTE 34.5" : ["CARRERA 40","AUTOPISTA","LLOREDA"],
+    "GUACANDA" : ["SAN MARCOS"],
+    "GUACHICONA" : ["CEMENTOS 34.5","MULALO","MULALO I"],
+    "GUAYAQUIL" : ["LA UNION"],
+    "HORMIGUERO" : ["MANUELA BELTRA"],
+    "IMBANACO" : ["CRISTALES","SANTA ISABEL","BRISAS DE MAYO"],
+    "KILOMETRO 18" : ["FEEDER IV"],
+    "LA BASE" : ["FLORESTA","ALFONSO LOPEZ"],
+    "LA BOCHA" : ["BOCHALEMA"],
+    "LA BUITRERA" : ["BELLA SUIZA","NAPOLES"],
+    "LA CAMPINA" : ["EL BOSQUE"],
+    "LA CEMENTERA" : ["MULALO I"],
+    "LA ESTANCIA" : ["FEEDER I","SAN MARCOS"],
+    "LA FLORA" : ["ALTO MENGA","ALAMOS"],
+    "LA MERCED" : ["CARRERA 5a NTE","ALAMOS"],
+    "LA UNION" : ["CALIPSO","GUAYAQUIL","VALLADO"],
+    "LA VIGA" : ["BOCHALEMA"],
+    "LA Y" : ["CENCAR"],
+    "LAS ACACIAS" : ["BRETANA", "COLON"],
+    "LAS PLANTAS" : ["CARRERA 15"],
+    "LILI" : ["CIUDAD CORDOBA"],
+    "LIMONAR" : ["SAN JUDAS", "MELENDEZ"],
+    "LLOREDA" : ["POPULAR","FUNDENTE 34.5"],
+    "LOS ANDES" : ["CARRERA 1a"],
+    "LOS CERROS" : ["RIO CALI"],
+    "LOS LAGOS" : ["DIAMANTE","NAVARRO"],
+    "LOS PARQUES" : ["ALAMOS"],
+    "MANUELA BELTRA" : ["HORMIGUERO"],
+    "MELENDEZ" : ["LIMONAR"],
+    "MOJICA" : ["TALANGA"],
+    "MULALO" : ["GUACHICONA","MULALO I"],
+    "MULALO I" : ["LA CEMENTERA", "GUACHICONA","MULALO"],
+    "NAPOLES" : ["LA BUITRERA","PASOANCHO"],
+    "NARINO" : [ "CIUDAD CORDOBA","VALLADO"],
+    "NAVARRO" : ["LOS LAGOS","DECEPAZ"],
+    "OBRERO" : ["SAN VICENTE","CALLE 15"],
+    "PANORAMA" : ["CARRERA 40","ARROYO-MENGA"],
+    "PASOANCHO" : ["SAN ISIDRO","EL CAMPO","NAPOLES"],
+    "PEDREGAL" : ["FEEDER IV"],
+    "PONDAJE" : ["CALIPSO"],
+    "POPULAR" : ["LLOREDA","COLGATE"],
+    "PT MALLARINO I" : ["PTO MALLARINO","BOCATOMA RIO C"],
+    "QUIMBAYA" : ["DIAMANTE"],
+    "RIO CALI" : ["LOS CERROS"],
+    "RIO CAUCA" : ["EL POBLADO", "DIAMANTE"],
+    "SALOMIA" : ["CIRUELOS"],
+    "SAN FERNANDO" : ["EL CEDRO"],
+    "SAN ISIDRO" : ["PASOANCHO"],
+    "SAN JUDAS" : ["LIMONAR", "SIMON BOLIVAR"],
+    "SAN MARCOS" : ["LA ESTANCIA","GUACANDA"],
+    "SAN NICOLAS" : ["CALLE 19","FLORESTA"],
+    "SAN VICENTE" : ["OBRERO"],
+    "SANTA ISABEL" : ["EL LIDO","IMBANACO"],
+    "SANTA MONICA" : ["CARRERA 4"],
+    "SANTA ROSA" : ["CARRERA 13", "CARRERA 10"],
+    "SANTANDER" : ["EL SENA"],
+    "SIMON BOLIVAR" : ["COLON","SAN JUDAS"],
+    "TALANGA" : ["MOJICA"],
+    "TEQUENDAMA" : ["BELLA SUIZA"],
+    "TROCADERO" : ["UNICENTRO"],
+    "UNICENTRO" : ["TROCADERO"],
+    "UNIVALLE" : ["BOCHALEMA","CAPRI"],
+    "VALLADO" : ["LA UNION","NARINO","VERGEL"],
+    "VERGEL" : ["VALLADO"],
+    "VERSALLES" : ["CALLE 15","CENTRO","CARRERA 4"],
+    "VUELTA LARGA" : ["CASCAJAL"],
+    "YUMBO COBRE" : ["ALTO MENGA"]
+
+
+};
+
+   // retorna un elemento
+   function getRandomCircuit(){
+    // obtengo un nummero aleatoria del tamaño del array
+    var numero = parseInt(Math.random() * Object.keys(retro).length);
+    var ex = 0;
+    var rcircuit = "";
+    // explorando JSON
+    for (var key in retro) {
+      // ciclo de descision
+      if (ex == numero) {
+        // muestro en la consola
+        console.log(key + ' -> ' + retro[key]);
+        // asigno el nodo de pregunta
+        rcircuit = key;
+      }
+      // incremento contador
+      ex = ex + 1;
+    }
+    return rcircuit;
+  }
+
+  // funcion que retorna el máximo entre dos números
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+
+  // funcion que genera un listado
+  function listado(){
+
+    var pregunta = "";
+    // arreglo vacio
+    var respuestas = [];
+
+    document.getElementById("datos").innerHTML = "";
+
+    //console.log(retro["GUACHICONA"]);
+    var key = getRandomCircuit();
+    // cantidad de fronteras
+    var size = retro[key].length;
+
+    // genero un numero aleatorio de acuerdo a la longitud
+    var rr = getRandomInt(0,size);
+    // agrego la primera respuesta (correcta)
+    respuestas.push(retro[key][rr]);
+    // agrego una posible respuesta ... (b)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(c)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(d)
+    respuestas.push(getRandomCircuit());
+
+    // funcion que rota un listado
+    //var arr1 = ["a", "b", "c", "d"];
+    respuestas.sort(function() { return Math.random() - 0.5 });
+
+    // leo el formulario
+    var form_retro = document.getElementById("retroalimentaciones");
+
+    var texto = "El circuito <b>"+ key + "</b> es realimentado en caso de suplencia por otra subestacion desde el circuito:";
+    document.getElementById("parrafo").innerHTML =texto;
+
+    // por cada elemento en respuestas
+    // for( i in respuestas) {
+    //   console.log(respuestas[i]);
+    // }
+
+    document.getElementById("ta").innerHTML = respuestas[0];
+    document.getElementById("a").value = respuestas[0];
+    document.getElementById("tb").innerHTML = respuestas[1];
+    document.getElementById("b").value = respuestas[1];
+    document.getElementById("tc").innerHTML = respuestas[2];
+    document.getElementById("c").value = respuestas[2];
+    document.getElementById("td").innerHTML = respuestas[3];
+    document.getElementById("d").value = respuestas[3];
+    document.getElementById("pregunta").value = key;
+
+  }
+
+  // funcion que evalua la reapuesta
+
+  function calificar(){
+    // guarda el item seleccionado
+    var item = "";
+    // guarda el objeto formulario
+    var formulario = document.getElementById("retroalimentaciones");
+    // guarda en nombre del circuito
+    var pregunta = document.getElementById("pregunta").value;
+    // respuesta
+    var datos = document.getElementById("datos");
+
+    for (i=0; i < formulario.length; i++) {
+            if (formulario[i].checked==true) {
+            //alert(formulario[i].value);
+            item = formulario[i];
+        }
+  }
+
+  // variable de conclucion
+  var dato = false;
+  // buscando la respuesta
+  for ( l in retro){
+    // compruebo si estoy en el nodo correcto
+    if (l == pregunta){
+      console.log("buscando .."+ pregunta);
+      // por cada una de las realimentaciones
+      for (n in retro[l]){
+        // verificacion
+        if ( retro[l][n] == item.value){
+          dato = true;
+        }
+
+      }
+    }
+  }
+
+  // si el dato
+  if (dato == true) {
+  // alert ("correcto");
+  datos.innerHTML = "correcto";
+  }
+  else {
+    // alert("incorrecto");
+    datos.innerHTML = "incorrecto";
+  }
+}
+
+  </script>
+</head>
+
+<body style="background-color: #fff;color: darkblue;">
+<div style="max-width:80%; margin: auto">
+
+
+  <p id="parrafo"></p>
+  
+  <form id="retroalimentaciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+        <input class="form-control" id="a" type="radio" name="opcion" value="ta">
+    </div>
+    </div>
+    <label class="form-control" id="ta"></label>
+    </div>
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="b" type="radio" name="opcion" value="tb">
+    </div>
+    </div>
+    <label class="form-control" id="tb"></label>
+    </div>
+
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="c" type="radio" name="opcion" value="tc">
+    </div>
+    </div>
+
+    <label class="form-control" id="tc"></label>
+    </div>
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="d" type="radio" name="opcion" value="td">
+    </div>
+    </div>
+    <label class="form-control" id="td"></label>
+    </div>
+
+    <input class="form-control" id="pregunta" type="hidden" value="" >
+    
+  </form>
+<br>
+<button type="button" name="button" onclick="calificar();" class="btn btn-outline-success">Calificar</button>
+
+<span id="datos" style="margin: 30px;   font-weight: 800;"></span>
+<button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
+<br><br><a href="index.html">Ir al inicio</a>
+</div>
+<script src="./boostrap/js/bootstrap.js"></script>
+</body>
+
+</html>

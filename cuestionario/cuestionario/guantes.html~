@@ -2,53 +2,42 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>normas</title>
+  <title>calibres</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
-    <link href="style.css" rel="stylesheet" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
   <script type="text/javascript">
 
 
   var definicion = {
+    '1/0 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 4/0, segun la norma EMCALI : ',
+'4 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 1/0, segun la norma EMCALI : ',
+'4 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 4, segun la norma EMCALI : ',
 
-      'Ley 1715 del 13 de mayo de 2014' : 'Que promueve el desarrollo de las Fuentes de Energía Renovables No Convencionales.',
-      'Decreto MME 2469 del 02 de diciembre de 2014' : 'Lineamientos de política energética en materia de entrega de excedentes de autogeneración.',
-      'Resolución UPME 281 de 2015' : 'Por la cual se define el límite máximo de potencia de la autogeneración a pequeña escala.',
+'2 AWG' : 'El conductor <b>sparrow (33.62 mm²) </b> ',
+'2/0 AWG' : 'El conductor <b>quail (67.44 mm²) </b>',
+'1/0 AWG' : 'El conductor <b>raven (53.50 mm²) </b>',
+'4/0 AWG' : 'El conductor <b>Penguin (107.21 mm²)</b> ',
+'266.8 AWG' : 'El conductor <b>Waxwing (135.2 mm²) </b> ',
+'350 AWG' : 'El conductor <b>177.34 mm²</b> ',
+'397.5 AWG' : 'El conductor <b>Chickadee (201.4 mm²)</b> ',
+'477 AWG' : 'El conductor <b>Pelican (241.7 mm²)</b> ',
+'500 AWG' : 'El conductor <b>253.7 mm²</b> ',
 
 
-      'NTC 1340' : 'Tensiones y Frecuencias Nominales En Sistemas De Energía Eléctrica En Redes De Servicio Público.',
-      'NTC 5000' : 'Calidad De La Potencia Eléctrica (Cpe). Definiciones Y Términos Fundamentales.',
-      'NTC 5001' : 'Calidad De La Potencia Eléctrica. Limites Y Metodología De Evaluación En Punto De Conexión Común.',
 
-      'CREG025 de 1995' : 'Código de Conexión',
-      'CREG061 de 1996':'Esquema de deslastre automático de carga - EDAC',
-      'CREG070 de 1998':'Reglamento de distribución',
-      'CREG080 de 1999':'Supervición del SIN',
-      'CREG065 de 2000':'Mantenimientos del SIN, consignación de emergencia',
-      'CREG024 de 2005':'Calidad de la potencia',
-      'CREG106 de 2006':'Procedimientos generales para asignación de puntos de conexión.',
-      'CREG016 de 2007':'Calidad de la potencia',
-      'CREG011 de 2009':'Formulas tarifarias del STN',
-      'CREG005 de 2010':'Requisitos y condiciones técnicas que deben cumplir los procesos de cogeneración.',
-      'CREG093 de 2012':'Energía no suministrada, reporte de eventos STN',
-      'CREG094 de 2012':'Energía no suministrada, reporte de eventos STR',
-      'CREG135 de 2013':'Control de tensión',
-      'CREG038 de 2014':'Código de medida',
-      'CREG024 de 2015':'Regula la actividad de autogeneración a gran escala.',
-      'CREG224 de 2016':'Confiablidad contingencias sencillas',
-      'CREG030 de 2018': 'Regula la actividad de autogeneración a pequeña escala y generación distribuida.',
-      'CREG015 de 2018':'Calidad del servicio - Unidades constructivas',
-      'CREG060 de 2019':'Conexión de plantas solares y eólicas al SIN',
-      'CREG073 de 2019':'Criterios de confiabilidad en contingencias sencillas',
-      'CREG131 de 2020':'Medición AMI',
-      'CREG044 de 2020':'Declaración de pruebas',
-      'CREG075 de 2021':'Capacidad de transporte en el SIN',
-      'CREG215 de 2021':'Tasa de retorno de la actividad de distribucion',
-      'CREG075 de 2021':'Asignacion de la capacidad de transporte',
+'2 AWG' : 'Conductor ACSR para cargas maxima de 1.53 MVA (67 A) y 4.23 MVA (185 A) en suplencia a 13.2 kV ',
+'1/0 AWG' : 'Conductor ACSR para cargas maxima de 2.1 MVA (129 A) y 5.67 MVA (248 A) en suplencia a 13.2 kV ',
+'266.5 AWG' : 'Conductor ACSR para cargas maxima de 7.5 MVA (339 A) y 10.6 MVA (440 A) en suplencia a 13.2 kV ',
 
-      'ACUERDO CNO534 de 2011':'Causas reporte de eventos, maniobras en el STN',
-      'ACUERDO CNO963 de 2017':'Coordinación de mantenimientos',
-      'ACUERDO CNO1428 2021':'Por el cual se actualizan los requisitos y procedimientos necesarios para la prestación del servicio de AGC por las unidades conectadas al SIN'
+'2 AWG' : 'Conductor subterraneo (CU) para carga maxima de 2.7 MVA (121 A)  a 13.2 kV ',
+'4/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 5.3 MVA (233 A) en suplencia 7.8 MVA (343 A) a  13.2 kV ',
+'500 AWG' : 'Conductor subterraneo (CU) para carga maxima de 7.5 MVA (330 A) en suplencia 10 MVA (440 A) a  13.2 kV ',
+
+'1/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 9.1 MVA (153 A)  a 34.5 kV norma EMCALI',
+'4/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 12.9 MVA (217 A) en suplencia 19.5 MVA (327 A) a  34.5 kV ',
+'500 AWG' : 'Conductor subterraneo (CU) para carga maxima de 19.7 MVA (330 A) en suplencia 26.2 MVA (440 A) a  34.5 kV '
 
 
 };
@@ -112,7 +101,7 @@
     // leo el formulario
     var form_retro = document.getElementById("protecciones");
 
-    var texto = ""+ definicion[key] + " corresponde a:";
+    var texto = "<i>"+ definicion[key] + "</i> corresponde a:";
     document.getElementById("parrafo").innerHTML =texto;
 
     // por cada elemento en respuestas
@@ -188,8 +177,7 @@
 
 
   <p id="parrafo"></p>
-
- 
+  
   <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
     
     <div class="input-group mb-3"> 

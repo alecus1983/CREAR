@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>definiciones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+  <script type="text/javascript">
+
+
+  var definicion = {
+
+      "Magnitud" : "Propiedad de un fenómeno, cuerpo o sustancia, que puede expresarse cuantitativamente mediante un número y una referencia",
+      "Naturaleza de una magnitud" : "Aspecto común a magnitudes mutuamente comparables.",
+      "Sistema de magnitudes" : "Conjunto de magnitudes relacionadas entre sí mediante ecuaciones no contradictorias.",
+      "Magnitud de base" : "Magnitud de un subconjunto elegido por convenio, dentro de un sistema de magnitudes dado, de tal manera que ninguna magnitud del subconjunto pueda ser expresada en función de las otras",
+      "Magnitud derivada" : "Magnitud, dentro de un sistema de magnitudes, definida en función de las magnitudes de base de ese sistema",
+      "Sistema Internacional de Magnitudes" : "Sistema de magnitudes basado en las siete magnitudes básicas: longitud, masa, tiempo, corriente eléctrica, temperatura termodinámica, cantidad de sustancia e intensidad luminosa",
+      "Dimensión de una magnitud" : "Expresión de la dependencia de una magnitud en términos de las magnitudes de base, dentro de un sistema de magnitudes, como el producto de potencias de factores correspondientes a dichas magnitudes de base, omitiendo cualquier factor numérico.",
+      " Dimensión de una magnitud" : "Expresión de la dependencia de una magnitud en términos de las magnitudes de base, dentro de un sistema de magnitudes, como el producto de potencias de factores correspondientes a dichas magnitudes de base, omitiendo cualquier factor numérico", 
+      "Magnitud de dimensión uno" : "Magnitud para la cual son nulos todos los exponentes de los factores correspondientes a las magnitudes básicas que intervienen en su dimensión.",
+      "Unidad de medida" : "Magnitud escalar real, definida y adoptada por convenio, con la que se puede comparar cualquier otra magnitud de la misma naturaleza para expresar la relación entre ambas mediante un número.",
+      "Unidad de base" : "Unidad de medida adoptada por convenio para una magnitud de base.",
+      "Unidad derivada" : "Unidad de medida para una magnitud derivada.",
+      "Unidad derivada coherente" : "Unidad derivada que, para un sistema de magnitudes y un conjunto de unidades básicas dados, es producto de potencias de unidades de base, sin otro factor de proporcionalidad que el número uno.",
+      "Sistema de unidades" : "Conjunto de unidades de base y unidades derivadas, sus  múltiplos y submúltiplos, definidos conforme a reglas dadas, para un sistema de magnitudes dado.",
+      "Sistema coherente de unidades" : "Sistema de unidades basado en un sistema de magnitudes determinado, en el que la unidad de medida de cada magnitud derivada es una unidad derivada coherente.",
+      "Unidad fuera del sistema" : "Unidad de medida que no pertenece a un sistema de unidades dado.",
+      "Sistema internacional de Unidades" : "Sistema de unidades  basado en el Sistema Internacional de Magnitudes, con nombres y símbolos de las unidades, y con una serie de prefijos con sus nombres y símbolos, así como reglas para su utilización,adoptado por la Conferencia General de Pesas y Medidas (CGPM)",
+      "Submúltiplo de una unidad" : "Unidad de medida obtenida al dividir una unidad de medida dada por un número entero mayor que uno",
+      "Valor de una magnitud" : "Conjunto formado por un número y una referencia, que constituye la expresión cuantitativa de una magnitud",
+      "Álgebra de magnitudes" : "Conjunto de reglas y operaciones matemáticas aplicadas a magnitudes diferentes de las magnitudes ordinales.",
+      "Ecuación entre magnitudes" : "Relación matemática de igualdad entre las magnitudes de un sistema de magnitudes dado, independiente de las unidades de medida.",
+      "Magnitud ordinal" : "Magnitud definida por un procedimiento de medición adoptado por convenio, que puede clasificarse con otras magnitudes de la misma naturaleza según el orden creciente o decreciente de sus valores cuantitativos, sin que pueda establecerse relación algebraica alguna entre estas magnitudes",
+      "Escala de valores de una magnitud" : "Conjunto ordenado de valores de magnitudes de una determinada naturaleza, utilizado para clasificar magnitudes de esta naturaleza, en orden creciente o decreciente según sus valores cuantitativos",
+      "Propiedad nominal" : "Propiedad de un fenómeno, cuerpo o sustancia, que no puede expresarse cuantitativamente.",
+      "Medición" : "Proceso que consiste en obtener experimentalmente uno o varios valores que pueden atribuirse razonablemente a una magnitud.",
+"Metrología" : "Ciencia de las mediciones y sus aplicaciones.",
+"Mensurando" : "Magnitud que se desea medir.",
+"Principio de medición" : "Fenómeno que sirve como base de una medición.",
+"Método de medición":"Descripción genérica de la secuencia lógica de operaciones utilizadas en una medición.",
+"Procedimiento de medición":"Descripción detallada de una medición conforme a",
+"Procedimiento de medición de referencia":"Procedimiento de medición aceptado para producir resultados de medición apropiados para su uso previsto, para evaluar la veracidad de los valores medidos obtenidos a partir de otros procedimientos de medición, para magnitudes de la misma naturaleza, para una calibración o para la caracterización de materiales de referencia.",
+"Procedimiento de medición primario de referencia":"Procedimiento de medición de referencia utilizado para obtener un resultado de medición, independientemente de cualquier patrón de medición de una magnitud de la misma naturaleza.",
+"Resultado de medición":"Resultado de una medición, m. Conjunto de valores de una magnitud atribuidos a un mensurando, acompañados de cualquier otra información relevante disponible.",
+"Valor medido de una magnitud":"Valor medido, m. Valor de una magnitud que representa un resultado de medición.",
+"Valor verdadero de una magnitud":"Valor verdadero, m. Valor de una magnitud compatible con la definición de la magnitud.",
+"Valor convencional de una magnitud":"Valor convencional, m. Valor asignado a una magnitud, mediante un acuerdo, para un determinado propósito.",
+"Exactitud de medición":"Proximidad del acuerdo entre un valor medido y un valor verdadero de un mensurando.",
+"Veracidad de medición":"Veracidad, f. Proximidad entre la media de un número infinito de valores medidos repetidos y un valor de referencia.",
+"Precisión de medición":"Proximidad del acuerdo entre las indicaciones o los valores medidos obtenidos en mediciones repetidas de un mismo objeto, o de objetos similares, bajo condiciones especificadas.",
+      "Error de medición":"Diferencia entre un valor medido de una magnitud y un valor de referencia.",
+"error sistemático de medición":"Error sistemático, m. Componente del error de medición que, en mediciones repetidas, permanece constante o varía de manera predecible.",
+"Sesgo de medición":"Valor estimado de un error sistemático.",
+"error aleatorio de medición":"Error aleatorio, m. Componente del error de medición que, en mediciones repetidas, varía de manera impredecible.",
+"Condición de repetibilidad de una medición":"Condición de repetibilidad, f. Condición de medición, dentro de un conjunto de condiciones que incluye el mismo procedimiento de medición, los mismos operadores, el mismo sistema de medición, las mismas condiciones de operación y el mismo lugar, así como mediciones repetidas del mismo objeto o de un objeto similar en un periodo corto de tiempo.",
+"Repetibilidad de medición":"Repetibilidad, f. Precisión de medición bajo un conjunto de condiciones de repetibilidad 2.22 Condición de precisión intermedia de una medición, f. Condición de precisión intermedia, f. Condición de medición, dentro de un conjunto de condiciones que incluye el mismo procedimiento de medición, el mismo lugar y mediciones repetidas del mismo objeto u objetos similares durante un periodo amplio de tiempo, pero que puede incluir otras condiciones que involucren variaciones.",
+"Precisión intermedia de medición":"Precisión intermedia, f. Precisión de medición bajo un conjunto de condiciones de precisión intermedia.",
+"Condición de reproducibilidad de una medición":"Condición de reproducibilidad, f. Condición de medición, dentro de un conjunto de condiciones que incluye diferentes lugares, operadores, sistemas de medición y mediciones repetidas de los mismos objetos u objetos similares.",
+"reproducibilidad de medición":"Reproducibilidad, f. Precisión de medición bajo un conjunto de condiciones de reproducibilidad.",
+"Incertidumbre de medición":"Parámetro no negativo que caracteriza la dispersión de los valores atribuidos a un mensurando, a partir de la información que se utiliza",
+"Incertidumbre debida a la definición":"Incertidumbre intrínseca, f. Componente de la incertidumbre de medición resultante de la falta de detalles en la definición del mensurando.",
+"Evaluación Tipo A de la incertidumbre de medición":"Evaluación de una componente de la incertidumbre de medición mediante un análisis estadístico de los valores medidos obtenidos bajo condiciones de medición definidas.",
+"Evaluación Tipo B de la incertidumbre de medición":"Evaluación de una componente de la incertidumbre de medición de manera distinta a una evaluación tipo A de la incertidumbre de medición.",
+      "Incertidumbre estándar de medición":"Incertidumbre de medición expresada como una desviación estándar",
+ "Incertidumbre estándar combinada de medición":"Incertidumbre estándar obtenida a partir de las incertidumbres estandar individuales asociadas a las magnitudes de entrada de un modelo de medición.",
+      "Incertidumbre estándar relativa de medición":"Cociente entre la incertidumbre estándar y el valor absoluto del valor medido.",
+"Presupuesto de incertidumbre":"Declaración de una incertidumbre de medición y las componentes de esa incertidumbre, junto con su cálculo y combinación.",
+"Incertidumbre objetivo":"Incertidumbre de medición especificada como un límite superior y elegida en base al uso previsto de los resultados de medición.",
+"Incertidumbre expandida de medición":"Producto de una incertidumbre estándar combinada y un factor mayor que uno.",
+"Intervalo de cobertura":"Intervalo que contiene el conjunto de valores verdaderos de un mensurando con una probabilidad determinada, basada en la información disponible.",
+"Probabilidad de cobertura":"Probabilidad de que el conjunto de los valores verdaderos de un mensurando esté contenido en un intervalo de cobertura especificado.",
+"Factor de cobertura":"Número mayor que uno por el que se multiplica una incertidumbre estándar combinada para obtener una incertidumbre expandida.",
+"Calibración":"Operación que bajo condiciones especificadas establece, en una primera etapa, una relación entre los valores y sus incertidumbres de medición asociadas obtenidas a partir de los patrones de medición, y las correspondientes indicaciones con sus incertidumbres asociadas y, en una segunda etapa, utiliza esta información para establecer una relación que permita obtener un resultado de medición a partir de una indicación.",
+"Jerarquía de calibración":"Secuencia de calibraciones desde una referencia hasta el sistema de medición final, en la cual el resultado de cada calibración depende del resultado de la calibración precedente.",
+"trazabilidad metrológica":"Propiedad de un resultado de medición por la cual el resultado puede relacionarse con una referencia mediante una cadena ininterrumpida y documentada de calibraciones, cada una de las cuales contribuye a la incertidumbre de medición.",
+"cadena de trazabilidad metrológica":"Sucesión de patrones y calibraciones que relacionan un resultado de medición con una referencia.",
+      "trazabilidad metrológica a una unidad de medición":"Trazabilidad metrológica a una unidad, f. Trazabilidad metrológica en la que la referencia es la definición de una unidad de medición mediante su realización práctica.",
+"Validación":"Verificación de que los requisitos especificados son adecuados para un uso  previsto",
+"Comparabilidad metrológica de resultados de medición":"Comparabilidad de resultados de medición, para magnitudes de una naturaleza  dada, que son metrológicamente trazables a la misma referencia.",
+"Compatibilidad metrológica de resultados de medición":"Propiedad de un conjunto de resultados de medición de un mensurando específico, tal que el valor absoluto de la diferencia de los valores medidos, para cualquier par de resultados de medición, sea inferior a un cierto múltiplo seleccionado de la incertidumbre estándar de esta diferencia.",
+"Modelo de medición":"Relación matemática entre todas las magnitudes conocidas que intervienen en una medición."
+};
+
+  // retorna un elemento
+  function getRandomCircuit(){
+    // obtengo un nummero aleatoria del tamaño del array
+    var numero = parseInt(Math.random() * Object.keys(definicion).length);
+    var ex = 0;
+    var rcircuit = "";
+    // explorando JSON
+    for (var key in definicion) {
+      // ciclo de descision
+      if (ex == numero) {
+        // muestro en la consola
+        console.log(key + ' -> ' + definicion[key]);
+        // asigno el nodo de pregunta
+        rcircuit = key;
+      }
+      // incremento contador
+      ex = ex + 1;
+    }
+    return rcircuit;
+  }
+
+  // funcion que retorna el máximo entre dos números
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+
+  // funcion que genera un listado
+  function listado(){
+
+    var pregunta = "";
+    // arreglo vacio
+    var respuestas = [];
+
+    document.getElementById("datos").innerHTML = "";
+
+    //console.log(definicion["GUACHICONA"]);
+    var key = getRandomCircuit();
+    // cantidad de fronteras
+    //var size = definicion[key].length;
+
+    // genero un numero aleatorio de acuerdo a la longitud
+    //var rr = getRandomInt(0,size);
+    // agrego la primera respuesta (correcta)
+    respuestas.push(key);
+    // agrego una posible respuesta ... (b)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(c)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(d)
+    respuestas.push(getRandomCircuit());
+
+    // funcion que rota un listado
+    //var arr1 = ["a", "b", "c", "d"];
+    respuestas.sort(function() { return Math.random() - 0.5 });
+
+    // leo el formulario
+    var form_retro = document.getElementById("protecciones");
+
+    var texto = ""+ definicion[key] + "  corresponde a:";
+    document.getElementById("parrafo").innerHTML =texto;
+
+    // por cada elemento en respuestas
+    // for( i in respuestas) {
+    //   console.log(respuestas[i]);
+    // }
+
+    document.getElementById("ta").innerHTML = respuestas[0];
+    document.getElementById("a").value = respuestas[0];
+    document.getElementById("tb").innerHTML = respuestas[1];
+    document.getElementById("b").value = respuestas[1];
+    document.getElementById("tc").innerHTML = respuestas[2];
+    document.getElementById("c").value = respuestas[2];
+    document.getElementById("td").innerHTML = respuestas[3];
+    document.getElementById("d").value = respuestas[3];
+    document.getElementById("pregunta").value = key;
+
+  }
+
+  // funcion que evalua la reapuesta
+
+  function calificar(){
+    // guarda el item seleccionado
+    var item = "";
+    // guarda el objeto formulario
+    var formulario = document.getElementById("protecciones");
+    // guarda en nombre del circuito
+    var pregunta = document.getElementById("pregunta").value;
+    // respuesta
+    var datos = document.getElementById("datos");
+
+    for (i=0; i < formulario.length; i++) {
+            if (formulario[i].checked==true) {
+            //alert(formulario[i].value);
+            item = formulario[i];
+        }
+  }
+
+  // variable de conclucion
+  var dato = false;
+  // buscando la respuesta
+  for ( l in definicion){
+    // compruebo si estoy en el nodo correcto
+    if (l == pregunta){
+      console.log("buscando .."+ pregunta);
+      // por cada una de las realimentaciones
+      //for (n in definicion[l]){
+        // verificacion
+        if ( l == item.value){
+          dato = true;
+        }
+
+      //}
+    }
+  }
+
+  // si el dato
+  if (dato == true) {
+  // alert ("correcto");
+  datos.innerHTML = "correcto";
+  }
+  else {
+    // alert("incorrecto");
+    datos.innerHTML = "incorrecto";
+  }
+}
+
+  </script>
+</head>
+
+<body style="background-color: #fff;color: darkblue;">
+<div style="max-width:80%; margin: auto">
+
+
+  <p id="parrafo"></p>
+  
+  <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+        <input class="form-control" id="a" type="radio" name="opcion" value="ta">
+    </div>
+    </div>
+    <label class="form-control" id="ta"></label>
+    </div>
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="b" type="radio" name="opcion" value="tb">
+    </div>
+    </div>
+    <label class="form-control" id="tb"></label>
+    </div>
+
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="c" type="radio" name="opcion" value="tc">
+    </div>
+    </div>
+
+    <label class="form-control" id="tc"></label>
+    </div>
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="d" type="radio" name="opcion" value="td">
+    </div>
+    </div>
+    <label class="form-control" id="td"></label>
+    </div>
+
+    <input class="form-control" id="pregunta" type="hidden" value="" >
+    
+  </form>
+<br>
+<button type="button" name="button" onclick="calificar();" class="btn btn-outline-success">Calificar</button>
+
+<span id="datos" style="margin: 30px;   font-weight: 800;"></span>
+<button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
+<br><br><a href="index.html">Ir al inicio</a>
+</div>
+<script src="./boostrap/js/bootstrap.js"></script>
+</body>
+
+</html>

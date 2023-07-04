@@ -2,53 +2,59 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>normas</title>
+  <title>causas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
-    <link href="style.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
   <script type="text/javascript">
 
 
   var definicion = {
+    'Humanos' : 'Accidental en Consignación Nacional',
+'Humanos' : 'Accidental en Consignación Local',
+'Humanos' : 'Accidental sin Consignación',
+'Humanos' : 'Maniobra indebida',
+'Protección, Teleprotección y Control' : 'Esquema de teleprotección',
+'Protección, Teleprotección y Control' : 'Sistemas de alimentación CC/CA',
+'Protección, Teleprotección y Control' : 'Relé de protección',
+'Protección, Teleprotección y Control' : 'Coordinación o ajustes de protecciones de activos del STN',
+'Protección, Teleprotección y Control' : 'Coordinación o ajustes de protecciones de activos del STR',
+'Protección, Teleprotección y Control' : 'Coordinación o ajustes de protecciones de activos de generación',
+'Protección, Teleprotección y Control' : 'Falla en el elemento o activo protegido',
+'Protección, Teleprotección y Control' : 'Operación como respaldo',
+'Protección, Teleprotección y Control' : 'Esquema suplementario - Local',
+'Protección, Teleprotección y Control' : 'Sistemas de control',
+'Equipos, accesorios e instalaciones de potencia' : 'Explosión o incendio',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en herrajes - conectores',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en equipo de medida PT/CT',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla de Seccionador',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla de interruptor',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en equipo inductivo / capacitivo',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla descargador de sobretensiones',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla generador',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en aislador',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en cables',
+'Cuerpos, Objetos Extraños y Atentados' : 'Alta vegetación',
+'Cuerpos, Objetos Extraños y Atentados' : 'Accidente con humano',
+'Cuerpos, Objetos Extraños y Atentados' : 'AMI (Acto Mal Intencionado)',
+'Cuerpos, Objetos Extraños y Atentados' : 'Animales',
+'Cuerpos, Objetos Extraños y Atentados' : 'Vehículos',
+'Medio AmbienteMedio Ambiente' : 'Contaminación',
+'Medio AmbienteMedio Ambiente' : 'Quema o fuego',
+'Fenómenos naturales' : 'Descarga atmosférica',
+'Fenómenos naturales' : 'Temblor de tierra',
+'Fenómenos naturales' : 'Vendaval',
+'Fenómenos naturales' : 'Inundación',
+'Fenómenos naturales' : 'Deslizamiento de terreno',
+'Sistema eléctrico de Potencia' : 'Sobrecarga',
+'Sistema eléctrico de Potencia' : 'Sobre/Baja frecuencia',
+'Sistema eléctrico de Potencia' : 'Sobrevoltaje',
+'Sistema eléctrico de Potencia' : 'Baja o Ausencia de Voltaje',
+'Sistema eléctrico de Potencia' : 'Sobrepotencia envío / recibo',
+'Sistema eléctrico de Potencia' : 'Topología',
+'Sistema eléctrico de Potencia' : 'Oscilación de potencia',
+'Sistema eléctrico de Potencia' : 'Pérdida de Sincronismo',
+'Sistema eléctrico de Potencia' : 'Operación Esquema Suplementario - Sistémico',
 
-      'Ley 1715 del 13 de mayo de 2014' : 'Que promueve el desarrollo de las Fuentes de Energía Renovables No Convencionales.',
-      'Decreto MME 2469 del 02 de diciembre de 2014' : 'Lineamientos de política energética en materia de entrega de excedentes de autogeneración.',
-      'Resolución UPME 281 de 2015' : 'Por la cual se define el límite máximo de potencia de la autogeneración a pequeña escala.',
-
-
-      'NTC 1340' : 'Tensiones y Frecuencias Nominales En Sistemas De Energía Eléctrica En Redes De Servicio Público.',
-      'NTC 5000' : 'Calidad De La Potencia Eléctrica (Cpe). Definiciones Y Términos Fundamentales.',
-      'NTC 5001' : 'Calidad De La Potencia Eléctrica. Limites Y Metodología De Evaluación En Punto De Conexión Común.',
-
-      'CREG025 de 1995' : 'Código de Conexión',
-      'CREG061 de 1996':'Esquema de deslastre automático de carga - EDAC',
-      'CREG070 de 1998':'Reglamento de distribución',
-      'CREG080 de 1999':'Supervición del SIN',
-      'CREG065 de 2000':'Mantenimientos del SIN, consignación de emergencia',
-      'CREG024 de 2005':'Calidad de la potencia',
-      'CREG106 de 2006':'Procedimientos generales para asignación de puntos de conexión.',
-      'CREG016 de 2007':'Calidad de la potencia',
-      'CREG011 de 2009':'Formulas tarifarias del STN',
-      'CREG005 de 2010':'Requisitos y condiciones técnicas que deben cumplir los procesos de cogeneración.',
-      'CREG093 de 2012':'Energía no suministrada, reporte de eventos STN',
-      'CREG094 de 2012':'Energía no suministrada, reporte de eventos STR',
-      'CREG135 de 2013':'Control de tensión',
-      'CREG038 de 2014':'Código de medida',
-      'CREG024 de 2015':'Regula la actividad de autogeneración a gran escala.',
-      'CREG224 de 2016':'Confiablidad contingencias sencillas',
-      'CREG030 de 2018': 'Regula la actividad de autogeneración a pequeña escala y generación distribuida.',
-      'CREG015 de 2018':'Calidad del servicio - Unidades constructivas',
-      'CREG060 de 2019':'Conexión de plantas solares y eólicas al SIN',
-      'CREG073 de 2019':'Criterios de confiabilidad en contingencias sencillas',
-      'CREG131 de 2020':'Medición AMI',
-      'CREG044 de 2020':'Declaración de pruebas',
-      'CREG075 de 2021':'Capacidad de transporte en el SIN',
-      'CREG215 de 2021':'Tasa de retorno de la actividad de distribucion',
-      'CREG075 de 2021':'Asignacion de la capacidad de transporte',
-
-      'ACUERDO CNO534 de 2011':'Causas reporte de eventos, maniobras en el STN',
-      'ACUERDO CNO963 de 2017':'Coordinación de mantenimientos',
-      'ACUERDO CNO1428 2021':'Por el cual se actualizan los requisitos y procedimientos necesarios para la prestación del servicio de AGC por las unidades conectadas al SIN'
 
 
 };
@@ -112,7 +118,7 @@
     // leo el formulario
     var form_retro = document.getElementById("protecciones");
 
-    var texto = ""+ definicion[key] + " corresponde a:";
+    var texto = "La causa <b>"+ definicion[key] + "</b>,  corresponde a:";
     document.getElementById("parrafo").innerHTML =texto;
 
     // por cada elemento en respuestas
@@ -188,8 +194,7 @@
 
 
   <p id="parrafo"></p>
-
- 
+  
   <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
     
     <div class="input-group mb-3"> 
@@ -241,7 +246,6 @@
 <br><br><a href="index.html">Ir al inicio</a>
 </div>
 <script src="./boostrap/js/bootstrap.js"></script>
-
 </body>
 
 </html>

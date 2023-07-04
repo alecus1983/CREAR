@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+  <title>circuitos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+    <script>
+
+        var aciertos = 0;
+        var errores = 0;
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+        }
+
+        // variable que almacena los nombres de los circuitos
+        // y la asocia a las subestaciones
+
+        function circuitos(){
+            // busco un valor aleatorio entre
+        var valor = getRandomInt(0,157);
+
+        var cir = '{"circuitos":['+
+                    // circuitos san antonio (11)
+                    '{"nombre":"Santa teresita","sub":"01"},'+
+                    '{"nombre":"Pichinde","sub":"01"},'+
+                    '{"nombre":"Cristales","sub":"01"},'+
+                    '{"nombre":"Carrera 13","sub":"01"},'+
+                    '{"nombre":"Siloe","sub":"01"},'+
+                    '{"nombre":"Carrera 10","sub":"01"},'+
+                    '{"nombre":"San fernando","sub":"01"},'+
+                    '{"nombre":"Carrera 4","sub":"01"},'+
+                    '{"nombre":"Rio Cali","sub":"01"},'+
+                    '{"nombre":"Alameda","sub":"01"},'+
+                    '{"nombre":"Kilometro 18","sub":"01"},'+
+
+
+                    // circuitos chipichape (10)
+                    '{"nombre":"Granada","sub":"02"},'+
+                    '{"nombre":"Piloto","sub":"02"},'+
+                    '{"nombre":"Avenida 6a","sub":"02"},'+
+                    '{"nombre":"Versalles","sub":"02"},'+
+                    '{"nombre":"Santa Monica","sub":"02"},'+
+                    '{"nombre":"La merced","sub":"02"},'+
+                    '{"nombre":"La flora","sub":"02"},'+
+                    '{"nombre":"Yumbo cobre","sub":"02"},'+
+                    '{"nombre":"San Vicente","sub":"02"},'+
+                    '{"nombre":"Los cerros","sub":"02"},'+
+
+                    // circutos diesel 1 (12)
+                    '{"nombre":"Carrera 5N","sub":"03"},'+
+                    '{"nombre":"Centro","sub":"03"},'+
+                    '{"nombre":"Alfonzo Lopez","sub":"03"},'+
+                    '{"nombre":"Salomia","sub":"03"},'+
+                    '{"nombre":"Carrera 8","sub":"03"},'+
+                    '{"nombre":"Carrera 1A","sub":"03"},'+
+                    '{"nombre":"Obrero","sub":"03"},'+
+                    '{"nombre":"San Nicolas","sub":"03"},'+
+                    '{"nombre":"Santander","sub":"03"},'+
+                    '{"nombre":"Bueno Madrid","sub":"03"},'+
+                    '{"nombre":"Colgate","sub":"03"},'+
+                    '{"nombre":"Bocatoma Rio Cauca","sub":"03"},'+
+
+                    // circuitos disel 2 (8)
+
+                    '{"nombre":"Aranjuez","sub":"04"},'+
+                    '{"nombre":"Rodeo","sub":"04"},'+
+                    '{"nombre":"Calle 19","sub":"04"},'+
+                    '{"nombre":"Floresta","sub":"04"},'+
+                    '{"nombre":"Carrera 15","sub":"04"},'+
+                    '{"nombre":"Guayaquil","sub":"04"},'+
+                    '{"nombre":"Aguablanca","sub":"04"},'+
+                    '{"nombre":"Las Acacias","sub":"04"},'+
+
+                    // circuitos centro (8)
+                    '{"nombre":"CAM","sub":"06"},'+
+                    '{"nombre":"Calle 10","sub":"06"},'+
+                    '{"nombre":"Calle 11","sub":"06"},'+
+                    '{"nombre":"Calle 12","sub":"06"},'+
+                    '{"nombre":"Calle 13","sub":"06"},'+
+                    '{"nombre":"Calle 14","sub":"06"},'+
+                    '{"nombre":"Calle 15","sub":"06"},'+
+                    '{"nombre":"Santa Rosa","sub":"06"},'+
+                    '{"nombre":"Unirroyal","sub":"06"},'+
+
+                    // circuitos sur (9)
+                    '{"nombre":"Union","sub":"05"},'+
+                    '{"nombre":"Imbanaco","sub":"05"},'+
+                    '{"nombre":"Melendez","sub":"05"},'+
+                    '{"nombre":"San Judas","sub":"05"},'+
+                    '{"nombre":"Bretaña","sub":"05"},'+
+                    '{"nombre":"Colon","sub":"05"},'+
+                    '{"nombre":"Tequendama","sub":"05"},'+
+                    '{"nombre":"Lido","sub":"05"},'+
+                    '{"nombre":"Cedro","sub":"05"},'+
+
+                    // circuitos juanchito (11)
+                    '{"nombre":"La base","sub":"07"},'+
+                    '{"nombre":"Sindical","sub":"07"},'+
+                    '{"nombre":"Pondaje","sub":"07"},'+
+                    '{"nombre":"Fepicol","sub":"07"},'+
+                    '{"nombre":"7 de Agosto","sub":"07"},'+
+                    '{"nombre":"Las plantas","sub":"07"},'+
+                    '{"nombre":"Navarro","sub":"07"},'+
+                    '{"nombre":"Diamante","sub":"07"},'+
+                    '{"nombre":"Hormiguero","sub":"07"},'+
+                    '{"nombre":"Barranquilla","sub":"07"},'+
+                    '{"nombre":"Puerto Mallarino (J)","sub":"07"},'+
+
+                    // circuitos san luis (17)
+                    '{"nombre":"Carmelo","sub":"17"},'+
+                    '{"nombre":"Paso del comercio","sub":"17"},'+
+                    '{"nombre":"Floralia","sub":"17"},'+
+                    '{"nombre":"Samanes","sub":"17"},'+
+                    '{"nombre":"Petecuy","sub":"17"},'+
+                    '{"nombre":"Guaduales","sub":"17"},'+
+                    '{"nombre":"El sema","sub":"17"},'+
+                    '{"nombre":"Alcazares","sub":"17"},'+
+                    '{"nombre":"Los andes","sub":"17"},'+
+                    '{"nombre":"Los parques","sub":"17"},'+
+                    '{"nombre":"Chiminangos","sub":"17"},'+
+                    '{"nombre":"Ciruelos","sub":"17"},'+
+                    '{"nombre":"Fundente","sub":"17"},'+
+                    '{"nombre":"Popular","sub":"17"},'+
+                    '{"nombre":"Puerto Mallarino (L)","sub":"17"},'+
+                    '{"nombre":"Esmeralda","sub":"17"},'+
+                    '{"nombre":"Sidelpa","sub":"17"},'+
+
+                    // circuitos ladera (3)
+                    '{"nombre":"Bella suiza","sub":"11"},'+
+                    '{"nombre":"Brizas de Mayo","sub":"11"},'+
+                    '{"nombre":"Santa isabel","sub":"11"},'+
+
+
+                    // circuitos termoyumbo (7)
+                    '{"nombre":"Feeder 4","sub":"12"},'+
+                    '{"nombre":"Feeder I","sub":"12"},'+
+                    '{"nombre":"Cencar","sub":"12"},'+
+                    '{"nombre":"Propal","sub":"12"},'+
+                    '{"nombre":"Industria","sub":"12"},'+
+                    '{"nombre":"Mulalo","sub":"12"},'+
+                    '{"nombre":"Cementos","sub":"12"},'+
+
+
+                    // circuitos guachicona (5)
+                    '{"nombre":"Las cruces","sub":"18"},'+
+                    '{"nombre":"Pedregal","sub":"18"},'+
+                    '{"nombre":"Guacanda","sub":"18"},'+
+                    '{"nombre":"Mulalo I","sub":"18"},'+
+                    '{"nombre":"La estancia","sub":"18"},'+
+
+                    // circuitos pance (8)
+                    '{"nombre":"Multicentro","sub":"20"},'+
+                    '{"nombre":"Capri","sub":"20"},'+
+                    '{"nombre":"Pasoancho","sub":"20"},'+
+                    '{"nombre":"Cañas gordas","sub":"20"},'+
+                    '{"nombre":"La montaña","sub":"20"},'+
+                    '{"nombre":"La viga","sub":"20"},'+
+                    '{"nombre":"La maria","sub":"20"},'+
+                    '{"nombre":"La buitrera","sub":"20"},'+
+
+                    // circuitos menga (7)
+                    '{"nombre":"Calima","sub":"14"},'+
+                    '{"nombre":"Industrial","sub":"14"},'+
+                    '{"nombre":"las mañanitas","sub":"14"},'+
+                    '{"nombre":"Las colinas","sub":"14"},'+
+                    '{"nombre":"La campiña","sub":"14"},'+
+                    '{"nombre":"Acopi","sub":"14"},'+
+                    '{"nombre":"Centelsa","sub":"14"},'+
+
+
+                    // circuitos guachal (5)
+                    '{"nombre":"La Y","sub":"21"},'+
+                    '{"nombre":"Sonora","sub":"21"},'+
+                    '{"nombre":"Piles","sub":"21"},'+
+                    '{"nombre":"Guachicona","sub":"21"},'+
+                    '{"nombre":"Carton colombia","sub":"21"},'+
+
+                    // circuitos puerto tejada (2)
+                    '{"nombre":"Puerto tejada","sub":"22"},'+
+                    '{"nombre":"Vuelta larga","sub":"22"},'+
+
+                    // circuitos mulalo (3)
+                    '{"nombre":"La calera","sub":"08"},'+
+                    '{"nombre":"San marcos","sub":"08"},'+
+                    '{"nombre":"Cementera","sub":"08"},'+
+
+                    // circuitos arroyohondo (4)
+                    '{"nombre":"Autopista","sub":"09"},'+
+                    '{"nombre":"Alumina","sub":"09"},'+
+                    '{"nombre":"LLoreda","sub":"09"},'+
+                    '{"nombre":"Panoama","sub":"09"},'+
+
+                    // circutos melendez (13)
+                    '{"nombre":"San Isidro","sub":"16"},'+
+                    '{"nombre":"Ciudad cordoba","sub":"16"},'+
+                    '{"nombre":"Vallado","sub":"16"},'+
+                    '{"nombre":"Napoles","sub":"16"},'+
+                    '{"nombre":"Univallle","sub":"16"},'+
+                    '{"nombre":"Limonar","sub":"16"},'+
+                    '{"nombre":"El campo","sub":"16"},'+
+                    '{"nombre":"Simon bolivar","sub":"16"},'+
+                    '{"nombre":"El caney","sub":"16"},'+
+                    '{"nombre":"La bocha","sub":"16"},'+
+                    '{"nombre":"Carbonero","sub":"16"},'+
+                    '{"nombre":"Carrera 70","sub":"16"},'+
+                    '{"nombre":"Trocadero","sub":"16"},'+
+
+                    // circuitos Alferez (3)
+
+                    '{"nombre":"Panamericana","sub":"24"},'+
+                    '{"nombre":"Cascajal","sub":"24"},'+
+                    '{"nombre":"Valle del lili","sub":"24"},'+
+
+                    // circutos campiña
+                    '{"nombre":"El bosque","sub":"23"},'+
+                    '{"nombre":"Carrefur","sub":"23"},'+
+                    '{"nombre":"Alto menga","sub":"23"},'+
+
+
+                    // aguablanca (12)
+                    '{"nombre":"Mojica","sub":"10"},'+
+                    '{"nombre":"Mojica","sub":"10"},'+
+                    '{"nombre":"lagos","sub":"10"},'+
+                    '{"nombre":"El poblado","sub":"10"},'+
+                    '{"nombre":"Calle 56","sub":"10"},'+
+                    '{"nombre":"Nariño","sub":"10"},'+
+                    '{"nombre":"Vergel","sub":"10"},'+
+                    '{"nombre":"Lili","sub":"10"},'+
+                    '{"nombre":"Decepaz","sub":"10"},'+
+                    '{"nombre":"El estero","sub":"10"},'+
+                    '{"nombre":"Manuela Beltran","sub":"10"}'+
+                    ']}';
+
+        // Creo el objeto tipo JSON    
+        dato = JSON.parse(cir);
+
+        document.getElementById("circuito").innerHTML = dato.circuitos[valor].nombre;
+        document.getElementById("sub").innerHTML = dato.circuitos[valor].sub;
+        document.getElementById("calificar").style.backgroundColor = "#bfbfbf";
+        document.getElementById("calificar").style.color = "#0000AA";
+
+
+        }
+
+        // funcion encargada de realizar las calificaciones
+
+        function calificar(){
+
+            // obtengo el codigo de la subestacion del campo oculto
+            var val1 = document.getElementById("respuesta1").value;
+            // obtengo el codigo de la subestacion del select
+            var val2 = document.getElementById("sub").innerHTML;
+
+            // si son iguales hay un acierto
+            if (val1 == val2){
+
+                document.getElementById("calificar").style.backgroundColor = "green";
+                document.getElementById("calificar").style.color = "#56ff00";
+                aciertos = aciertos + 1;
+            }
+            else {
+                document.getElementById("calificar").style.backgroundColor = "red";
+                document.getElementById("calificar").style.color = "#FFF";
+                errores = errores +1;
+
+            }
+
+            /// actualizo los aciertos y los errores
+
+            document.getElementById("aciertos").innerHTML = aciertos;
+            document.getElementById("errores").innerHTML = errores;
+        }
+
+        function ver_respuesta(){
+            // obtengo el codigo de la subestacion del campo oculto
+            var val1 = document.getElementById("sub").innerHTML;
+
+            var sub = '{ "subestacion": ['+
+                '{"nombre":"Aguablanca", "codigo": "10"},'+
+                '{"nombre":"Arroyohondo", "codigo": "09"},'+
+                '{"nombre":"Chipicape", "codigo": "02"},'+
+                '{"nombre":"Diesel I", "codigo": "03"},'+
+                '{"nombre":"Diesel II", "codigo": "04"},'+
+                '{"nombre":"San Antonio", "codigo": "01"},'+
+                '{"nombre":"Juanchito", "codigo": "07"},'+
+                '{"nombre":"Sur", "codigo": "05"},'+
+                '{"nombre":"San Luis", "codigo": "17"},'+
+                '{"nombre":"Ladera", "codigo": "11"},'+
+                '{"nombre":"Termoyumbo", "codigo": "12"},'+
+                '{"nombre":"Guachicona", "codigo": "18"},'+
+                '{"nombre":"Pance", "codigo": "20"},'+
+                '{"nombre":"Menga", "codigo": "14"},'+
+                '{"nombre":"Guachal", "codigo": "21"},'+
+                '{"nombre":"Puerto tejada", "codigo": "22"},'+
+                '{"nombre":"Mulalo", "codigo": "08"},'+
+                '{"nombre":"Arroyohondo", "codigo": "09"},'+
+                '{"nombre":"Melendez", "codigo": "16"},'+
+                '{"nombre":"Alferez", "codigo": "24"},'+
+                '{"nombre":"Campiña", "codigo": "23"},'+
+                '{"nombre":"Centro", "codigo": "06"}'+
+                ']}';
+
+        
+        sitio = JSON.parse(sub);
+
+        for (ii =0 ; ii < sitio.subestacion.length; ii ++ ){
+
+            if (sitio.subestacion[ii].codigo == val1){
+                document.getElementById("resp1").innerHTML = sitio.subestacion[ii].nombre;
+            }
+
+        }
+        }
+        
+
+        
+
+    </script>
+
+</head>
+<body>
+
+    <div class="container">
+<h1>
+    Pagina de  consulta de circuitos
+</h1>
+<p>En el formulario presiona el boton nuevo para obtener un nuevo circuito </p>
+
+
+    
+    <i><span id="circuito" style="font-style: oblique;"></span></i>
+    <span> pertenece a la subestaci&oacute;n ...</span>
+    <select id="respuesta1" class="form-control form-control-sm" style="max-width: 80%;"> 
+        <option value="24">Alferez</option>
+        <option value="10">Aguablanca</option>
+        <option value="09">Arroyohondo</option>
+        <option value="23">Campiña</option>
+        <option value="06">Centro</option>
+        <option value="02">Chipicape</option>
+        <option value="03">Diesel I</option>
+        <option value="04">Diesel II</option>
+        <option value="21">Guachal</option>
+        <option value="18">Guachicona</option>
+        <option value="07">Juanchito</option>
+        <option value="11">Ladera</option>
+        <option value="16">Melendez</option>
+        <option value="14">Menga</option>
+        <option value="08">Mulalo</option>
+        <option value="20">Pance</option>
+        <option value="22">Puerto tejada</option>
+        <option value="01">San Antonio</option>
+        <option value="17">San Luis</option>
+        <option value="05">Sur</option>
+        <option value="12">Termoyumbo</option>
+          
+        
+        
+
+    </select>
+    <br>
+    <button onclick="circuitos();"  class="btn btn-outline-dark"  >nuevo</button> 
+    <button id="calificar" onclick="calificar();" class="btn btn-outline-success">Calificar</button><br><br>
+
+    <button id="mostrar_resp1" onclick="ver_respuesta();" class="btn btn-outline-warning">Ver respuesta</button>
+        <span id="resp1" style="margin-left: 10%;font-weight: bold;font-family: verdana;color: rgb(27, 47, 161);"></span>
+    <br><br>
+    <span id="sub" hidden></span>
+    
+    <div class="card" style="max-width: 80%;">
+        <ul class="list-group list-group-flush">
+    <li class="list-group-item">Aciertos <span style="color: darkgreen;" id="aciertos"></span></li>
+    <li class="list-group-item">Errores <span style="color: darkred;" id="errores"></span></li>
+</ul>
+</div>   
+    <div>
+        
+    </div>
+    <br><br><a href="index.html">Ir al inicio</a>
+</div>
+
+    <script src="./boostrap/js/bootstrap.js"></script>
+</body>
