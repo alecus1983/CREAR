@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>colores</title>
+  <title>responsable</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
     <link href="style.css" rel="stylesheet" type="text/css">
@@ -11,19 +11,23 @@
 
   var definicion = {
     
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120 V (1 fase 2 hilos)",
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120/240 V (2 fase 3 hilos)",
-      "amarillo, azul, rojo, blanco, verde (verde amarillo)" : "Trifasico en Y - 208/120 V",
-      "negro, azul, rojo, verde" : "Trifasico en delta (3 fases, 3 hilos) 240 V",
-      "negro, naranja, azul, blanco,  verde (verde amarillo)" : "Trifasico en delta (3 fases, 4 hilos) 240/208/120 V",
-      "cafe, negro, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 380/220 V",
-      "cafe, naranja, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 480/277 V",
-      "cafe, naranja, amarillo, verde" : "Trifasico en delta  480 -440 V",
-      "violeta, cafe, rojo, verde" : "Trifasico en delta > 1000 V",
-      "amarillo, violeta, rojo" : "Trifasico en Y > 1000 V",
-
+      "El CND" : "responsable de centralizar, almacenar y procesar la información de eventos",
+      "información de eventos" : "sera utilizada, entre otros, para cálculo de variables relacionadas con la calidad del servicio, las compensaciones, las remuneraciones de activos y insumo para la dererminación de la ENS",
+      "El CND": "deberá mantener almacenada la información de eventos, en medio digital o de última tecnología, por un periodo no inferior a cinco años y deberá elaborar un resumen mensual de los eventos registrados en la base de datos",
+      "Los agentes": "En caso de que un agente no notifique la ocurrencia de cualquier evento, o la finalización de la ejecución de maniobras en los plazos señalados en el mencionado artículo se ajustará el número máximo de horas anuales de indisponibilidad del activo correspondiente",
+      "Los OR" : "son los responsables de la recolección y el reporte de la información de eventos.",
+      "información de eventos" : "activo sobre el cual se presenta el evento",
+      "información de eventos" : "fecha y hora de ocurrencia del evento",
+      "información de eventos" : "duración del evento teniendo en cuenta los tiempos de ejecución de maniobras establecidos por la regulación y los procedimientos que el CNO defina para tal fin",
+      "información de eventos" : "la capacidad disponible del activo durante el evento, con base en la estimación de la capacidad disponible de que trata el numeral  5.1.8",
+      "información de eventos" : "causa que origina el evento, precisando si corresponde a alguna de las excluidas",
+      "información de eventos" : "cuando el activo quede no operativo, informar el activo causante",
+      "información de eventos" : "señalar si el evento obedece a la operación de un esquema suplementario, identificando el respectivo esquema",
+      "información de eventos" : "diferenciación entre eventos programados y no programados",
+    "información de eventos" : "número de consignación, cuando aplique",
+      "información de eventos" :"clasificación según las causas detalladas, acordadas y publicadas por el Consejo Nacional de Operación, CNO",
       
-
+      
 };
 
   // retorna un elemento
@@ -85,7 +89,7 @@
     // leo el formulario
     var form_retro = document.getElementById("protecciones");
 
-    var texto = ""+ definicion[key] + " corresponde a:";
+      var texto = " ... <b> <i>"+ definicion[key] + "</i></b> corresponde a:";
     document.getElementById("parrafo").innerHTML =texto;
 
     // por cada elemento en respuestas

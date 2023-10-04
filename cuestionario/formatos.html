@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>colores</title>
+  <title>formatos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
     <link href="style.css" rel="stylesheet" type="text/css">
@@ -11,19 +11,27 @@
 
   var definicion = {
     
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120 V (1 fase 2 hilos)",
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120/240 V (2 fase 3 hilos)",
-      "amarillo, azul, rojo, blanco, verde (verde amarillo)" : "Trifasico en Y - 208/120 V",
-      "negro, azul, rojo, verde" : "Trifasico en delta (3 fases, 3 hilos) 240 V",
-      "negro, naranja, azul, blanco,  verde (verde amarillo)" : "Trifasico en delta (3 fases, 4 hilos) 240/208/120 V",
-      "cafe, negro, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 380/220 V",
-      "cafe, naranja, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 480/277 V",
-      "cafe, naranja, amarillo, verde" : "Trifasico en delta  480 -440 V",
-      "violeta, cafe, rojo, verde" : "Trifasico en delta > 1000 V",
-      "amarillo, violeta, rojo" : "Trifasico en Y > 1000 V",
-
+      "TC1":"Caracterización de usuarios",
+      "TC2":"Factuaración de usuarios",
+      "CS4":"Inventario puntos de medida barras",
+      "CS5":"Medida de barras",
+      "CS6":"Medida de circuitos",
+      "CS8":"Indicadores de calidad de potencia",
+      "BRA1":"Subestaciones",
+      "BRA2":"unidades constructivas subestaciones",
+      "BRA3":"UC equipo subestaciones",
+      "BRA4":"Unidades constructivas transformadores de subestación",
+      "BRA5":"unidades constructivas compensación de subestaciones",
+      "BRA6":"unidades constructivas de centro de control",
+      "BRA7":"información de circuitos",
+      "BRA8":"información sobre líneas",
+      "BRA9":"equipos de línea",
+      "BRA11":"transformadores de  distibución",
+      "BRA12":"unidades especiales",
+      "CS1":"SAIDI y SAIFI",
+      "CS2":"DIU y FIU",
+      "CS3":"incentivo de calidad media"
       
-
 };
 
   // retorna un elemento
@@ -85,7 +93,7 @@
     // leo el formulario
     var form_retro = document.getElementById("protecciones");
 
-    var texto = ""+ definicion[key] + " corresponde a:";
+      var texto = "El formato <b> <i>"+ definicion[key] + "</i></b> corresponde a:";
     document.getElementById("parrafo").innerHTML =texto;
 
     // por cada elemento en respuestas

@@ -11,33 +11,41 @@
 
 
   var definicion = {
-    '1/0 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 4/0, segun la norma EMCALI : ',
-'4 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 1/0, segun la norma EMCALI : ',
-'4 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 4, segun la norma EMCALI : ',
+      '1/0 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 4/0, segun la norma EMCALI : ',
+      '4 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 1/0, segun la norma EMCALI : ',
+      '4 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 4, segun la norma EMCALI : ',
 
-'2 AWG' : 'El conductor <b>sparrow (33.62 mm²) </b> ',
-'2/0 AWG' : 'El conductor <b>quail (67.44 mm²) </b>',
-'1/0 AWG' : 'El conductor <b>raven (53.50 mm²) </b>',
-'4/0 AWG' : 'El conductor <b>Penguin (107.21 mm²)</b> ',
-'266.8 AWG' : 'El conductor <b>Waxwing (135.2 mm²) </b> ',
-'350 AWG' : 'El conductor <b>177.34 mm²</b> ',
-'397.5 AWG' : 'El conductor <b>Chickadee (201.4 mm²)</b> ',
-'477 AWG' : 'El conductor <b>Pelican (241.7 mm²)</b> ',
-'500 AWG' : 'El conductor <b>253.7 mm²</b> ',
+      '2 AWG' : 'El conductor <b>sparrow (33.62 mm²) </b> ',
+      '2/0 AWG' : 'El conductor <b>quail (67.44 mm²) </b>',
+      '1/0 AWG' : 'El conductor <b>raven (53.50 mm²) </b>',
+      '4/0 AWG' : 'El conductor <b>Penguin (107.21 mm²)</b> ',
+      '266.8 AWG' : 'El conductor <b>Waxwing (135.2 mm²) </b> ',
+      '350 AWG' : 'El conductor <b>177.34 mm²</b> ',
+      '397.5 AWG' : 'El conductor <b>Chickadee (201.4 mm²)</b> ',
+      '477 AWG' : 'El conductor <b>Pelican (241.7 mm²)</b> ',
+      '500 AWG' : 'El conductor <b>253.7 mm²</b> ',
 
 
 
-'2 AWG' : 'Conductor ACSR para cargas maxima de 1.53 MVA (67 A) y 4.23 MVA (185 A) en suplencia a 13.2 kV ',
-'1/0 AWG' : 'Conductor ACSR para cargas maxima de 2.1 MVA (129 A) y 5.67 MVA (248 A) en suplencia a 13.2 kV ',
-'266.5 AWG' : 'Conductor ACSR para cargas maxima de 7.5 MVA (339 A) y 10.6 MVA (440 A) en suplencia a 13.2 kV ',
+      '2 AWG' : 'Conductor ACSR semi aislada, para cargas máxima de 184 A',
+      '1/0 AWG' : 'Conductor ACSR semi aislada, para cargas maxima de 241 A',
+      '4/0 AWG' : 'Conductor ACSR semi aislada, para cargas maxima de 355 A',
+      '266.5 AWG' : 'Conductor ACSR semi aislada para cargas maxima de 458 A',
+      '336.8 AWG' : 'Conductor ACSR semi aislada, para cargas maxima de 530 A',
 
-'2 AWG' : 'Conductor subterraneo (CU) para carga maxima de 2.7 MVA (121 A)  a 13.2 kV ',
-'4/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 5.3 MVA (233 A) en suplencia 7.8 MVA (343 A) a  13.2 kV ',
-'500 AWG' : 'Conductor subterraneo (CU) para carga maxima de 7.5 MVA (330 A) en suplencia 10 MVA (440 A) a  13.2 kV ',
+      '2 AWG' : 'Conductor subterraneo (Al) para carga maxima de 120 A',
+      '1/0 AWG' : 'Conductor subterraneo (Al) para carga maxima de 155 A',
+      '4/0 AWG' : 'Conductor subterraneo (Al) para carga maxima de 230 A',
+      '250 AWG' : 'Conductor subterraneo (Al) para carga maxima de 250 A',
+      '350 AWG' : 'Conductor subterraneo (Al) para carga maxima de 305 A',
+      '500 AWG' : 'Conductor subterraneo (Al) para carga maxima de 370 A',
 
-'1/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 9.1 MVA (153 A)  a 34.5 kV norma EMCALI',
-'4/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 12.9 MVA (217 A) en suplencia 19.5 MVA (327 A) a  34.5 kV ',
-'500 AWG' : 'Conductor subterraneo (CU) para carga maxima de 19.7 MVA (330 A) en suplencia 26.2 MVA (440 A) a  34.5 kV '
+      '2 AWG' : 'Conductor subterraneo (CU) para carga maxima de 155 A',
+      '1/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 200 A',
+      '4/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 295 A',
+      '250 AWG' : 'Conductor subterraneo (CU) para carga maxima de 325 A',
+      '350 AWG' : 'Conductor subterraneo (CU) para carga maxima de 390 A',
+      '500 AWG' : 'Conductor subterraneo (CU) para carga maxima de 465 A'
 
 
 };
@@ -221,11 +229,16 @@
     <input class="form-control" id="pregunta" type="hidden" value="" >
     
   </form>
+
+  
 <br>
 <button type="button" name="button" onclick="calificar();" class="btn btn-outline-success">Calificar</button>
 
 <span id="datos" style="margin: 30px;   font-weight: 800;"></span>
 <button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
+<div>
+    <img src="imagenes/capacidad_corriete.png" width="90%">
+</div>
 <br><br><a href="index.html">Ir al inicio</a>
 </div>
 <script src="./boostrap/js/bootstrap.js"></script>

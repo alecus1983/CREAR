@@ -2,32 +2,24 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>colores</title>
+  <title>definiciones</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
-    <link href="style.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+  	<link href="../style.css" rel="stylesheet" type="text/css">
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <script type="text/javascript">
 
 
   var definicion = {
-    
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120 V (1 fase 2 hilos)",
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120/240 V (2 fase 3 hilos)",
-      "amarillo, azul, rojo, blanco, verde (verde amarillo)" : "Trifasico en Y - 208/120 V",
-      "negro, azul, rojo, verde" : "Trifasico en delta (3 fases, 3 hilos) 240 V",
-      "negro, naranja, azul, blanco,  verde (verde amarillo)" : "Trifasico en delta (3 fases, 4 hilos) 240/208/120 V",
-      "cafe, negro, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 380/220 V",
-      "cafe, naranja, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 480/277 V",
-      "cafe, naranja, amarillo, verde" : "Trifasico en delta  480 -440 V",
-      "violeta, cafe, rojo, verde" : "Trifasico en delta > 1000 V",
-      "amarillo, violeta, rojo" : "Trifasico en Y > 1000 V",
+       "$$MHAI_{gu}$$" : "$$MHAIA_{m,gu} = \int_0^1 f(x) dx $$",
+       "prueba" : "$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$"
 
-      
+   };
 
-};
-
-  // retorna un elemento
-  function getRandomCircuit(){
+   // retorna un elemento
+   function getRandomCircuit(){
     // obtengo un nummero aleatoria del tamaño del array
     var numero = parseInt(Math.random() * Object.keys(definicion).length);
     var ex = 0;
@@ -56,58 +48,60 @@
   // funcion que genera un listado
   function listado(){
 
-    var pregunta = "";
-    // arreglo vacio
-    var respuestas = [];
+       var pregunta = "";
+       // arreglo vacio
+       var respuestas = [];
 
-    document.getElementById("datos").innerHTML = "";
+       document.getElementById("datos").innerHTML = "";
 
-    //console.log(definicion["GUACHICONA"]);
-    var key = getRandomCircuit();
-    // cantidad de fronteras
-    //var size = definicion[key].length;
+       //console.log(definicion["GUACHICONA"]);
+       var key = getRandomCircuit();
+       // cantidad de fronteras
+       //var size = definicion[key].length;
+       
+       // genero un numero aleatorio de acuerdo a la longitud
+       //var rr = getRandomInt(0,size);
+       // agrego la primera respuesta (correcta)
+       respuestas.push(key);
+       // agrego una posible respuesta ... (b)
+       respuestas.push(getRandomCircuit());
+       // agrego otra posible respuesta ...(c)
+       respuestas.push(getRandomCircuit());
+       // agrego otra posible respuesta ...(d)
+       respuestas.push(getRandomCircuit());
 
-    // genero un numero aleatorio de acuerdo a la longitud
-    //var rr = getRandomInt(0,size);
-    // agrego la primera respuesta (correcta)
-    respuestas.push(key);
-    // agrego una posible respuesta ... (b)
-    respuestas.push(getRandomCircuit());
-    // agrego otra posible respuesta ...(c)
-    respuestas.push(getRandomCircuit());
-    // agrego otra posible respuesta ...(d)
-    respuestas.push(getRandomCircuit());
+       // funcion que rota un listado
+       //var arr1 = ["a", "b", "c", "d"];
+       respuestas.sort(function() { return Math.random() - 0.5 });
 
-    // funcion que rota un listado
-    //var arr1 = ["a", "b", "c", "d"];
-    respuestas.sort(function() { return Math.random() - 0.5 });
+       // leo el formulario
+       var form_retro = document.getElementById("protecciones");
 
-    // leo el formulario
-    var form_retro = document.getElementById("protecciones");
+      var texto = ""+ definicion[key] + " corresponde a:";
+       document.getElementById("parrafo").innerHTML =texto;
 
-    var texto = ""+ definicion[key] + " corresponde a:";
-    document.getElementById("parrafo").innerHTML =texto;
+       // por cada elemento en respuestas
+       // for( i in respuestas) {
+       //   console.log(respuestas[i]);
+       // }
+       
+       document.getElementById("ta").innerHTML = respuestas[0];
+       document.getElementById("a").value = respuestas[0];
+       document.getElementById("tb").innerHTML = respuestas[1];
+       document.getElementById("b").value = respuestas[1];
+       document.getElementById("tc").innerHTML = respuestas[2];
+       document.getElementById("c").value = respuestas[2];
+       document.getElementById("td").innerHTML = respuestas[3];
+       document.getElementById("d").value = respuestas[3];
+       document.getElementById("pregunta").value = key;
+       
+       MathJax.typeset();
+       MathJax.typesetPromise();
+   }
 
-    // por cada elemento en respuestas
-    // for( i in respuestas) {
-    //   console.log(respuestas[i]);
-    // }
+   // funcion que evalua la reapuesta
 
-    document.getElementById("ta").innerHTML = respuestas[0];
-    document.getElementById("a").value = respuestas[0];
-    document.getElementById("tb").innerHTML = respuestas[1];
-    document.getElementById("b").value = respuestas[1];
-    document.getElementById("tc").innerHTML = respuestas[2];
-    document.getElementById("c").value = respuestas[2];
-    document.getElementById("td").innerHTML = respuestas[3];
-    document.getElementById("d").value = respuestas[3];
-    document.getElementById("pregunta").value = key;
-
-  }
-
-  // funcion que evalua la reapuesta
-
-  function calificar(){
+   function calificar(){
     // guarda el item seleccionado
     var item = "";
     // guarda el objeto formulario
@@ -161,8 +155,7 @@
 
 
   <p id="parrafo"></p>
-
- 
+  
   <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
     
     <div class="input-group mb-3"> 
@@ -211,10 +204,9 @@
 
 <span id="datos" style="margin: 30px;   font-weight: 800;"></span>
 <button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
-<br><br><a href="index.html">Ir al inicio</a>
+<br><br><a href="../index.html">Ir al inicio</a>
 </div>
 <script src="./boostrap/js/bootstrap.js"></script>
-
 </body>
 
 </html>
