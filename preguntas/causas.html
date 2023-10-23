@@ -2,27 +2,60 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>colores</title>
+  <title>causas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
-    <link href="style.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
   <script type="text/javascript">
 
 
   var definicion = {
-    
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120 V (1 fase 2 hilos)",
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120/240 V (2 fase 3 hilos)",
-      "amarillo, azul, rojo, blanco, verde (verde amarillo)" : "Trifasico en Y - 208/120 V",
-      "negro, azul, rojo, verde" : "Trifasico en delta (3 fases, 3 hilos) 240 V",
-      "negro, naranja, azul, blanco,  verde (verde amarillo)" : "Trifasico en delta (3 fases, 4 hilos) 240/208/120 V",
-      "cafe, negro, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 380/220 V",
-      "cafe, naranja, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 480/277 V",
-      "cafe, naranja, amarillo, verde" : "Trifasico en delta  480 -440 V",
-      "violeta, cafe, rojo, verde" : "Trifasico en delta > 1000 V",
-      "amarillo, violeta, rojo" : "Trifasico en Y > 1000 V",
+    'Humanos' : 'Accidental en Consignación Nacional',
+'Humanos' : 'Accidental en Consignación Local',
+'Humanos' : 'Accidental sin Consignación',
+'Humanos' : 'Maniobra indebida',
+'Protección, Teleprotección y Control' : 'Esquema de teleprotección',
+'Protección, Teleprotección y Control' : 'Sistemas de alimentación CC/CA',
+'Protección, Teleprotección y Control' : 'Relé de protección',
+'Protección, Teleprotección y Control' : 'Coordinación o ajustes de protecciones de activos del STN',
+'Protección, Teleprotección y Control' : 'Coordinación o ajustes de protecciones de activos del STR',
+'Protección, Teleprotección y Control' : 'Coordinación o ajustes de protecciones de activos de generación',
+'Protección, Teleprotección y Control' : 'Falla en el elemento o activo protegido',
+'Protección, Teleprotección y Control' : 'Operación como respaldo',
+'Protección, Teleprotección y Control' : 'Esquema suplementario - Local',
+'Protección, Teleprotección y Control' : 'Sistemas de control',
+'Equipos, accesorios e instalaciones de potencia' : 'Explosión o incendio',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en herrajes - conectores',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en equipo de medida PT/CT',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla de Seccionador',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla de interruptor',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en equipo inductivo / capacitivo',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla descargador de sobretensiones',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla generador',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en aislador',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en cables',
+'Cuerpos, Objetos Extraños y Atentados' : 'Alta vegetación',
+'Cuerpos, Objetos Extraños y Atentados' : 'Accidente con humano',
+'Cuerpos, Objetos Extraños y Atentados' : 'AMI (Acto Mal Intencionado)',
+'Cuerpos, Objetos Extraños y Atentados' : 'Animales',
+'Cuerpos, Objetos Extraños y Atentados' : 'Vehículos',
+'Medio AmbienteMedio Ambiente' : 'Contaminación',
+'Medio AmbienteMedio Ambiente' : 'Quema o fuego',
+'Fenómenos naturales' : 'Descarga atmosférica',
+'Fenómenos naturales' : 'Temblor de tierra',
+'Fenómenos naturales' : 'Vendaval',
+'Fenómenos naturales' : 'Inundación',
+'Fenómenos naturales' : 'Deslizamiento de terreno',
+'Sistema eléctrico de Potencia' : 'Sobrecarga',
+'Sistema eléctrico de Potencia' : 'Sobre/Baja frecuencia',
+'Sistema eléctrico de Potencia' : 'Sobrevoltaje',
+'Sistema eléctrico de Potencia' : 'Baja o Ausencia de Voltaje',
+'Sistema eléctrico de Potencia' : 'Sobrepotencia envío / recibo',
+'Sistema eléctrico de Potencia' : 'Topología',
+'Sistema eléctrico de Potencia' : 'Oscilación de potencia',
+'Sistema eléctrico de Potencia' : 'Pérdida de Sincronismo',
+'Sistema eléctrico de Potencia' : 'Operación Esquema Suplementario - Sistémico',
 
-      
+
 
 };
 
@@ -85,7 +118,7 @@
     // leo el formulario
     var form_retro = document.getElementById("protecciones");
 
-    var texto = ""+ definicion[key] + " corresponde a:";
+    var texto = "La causa <b>"+ definicion[key] + "</b>,  corresponde a:";
     document.getElementById("parrafo").innerHTML =texto;
 
     // por cada elemento en respuestas
@@ -161,8 +194,7 @@
 
 
   <p id="parrafo"></p>
-
- 
+  
   <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
     
     <div class="input-group mb-3"> 
@@ -214,7 +246,6 @@
 <br><br><a href="index.html">Ir al inicio</a>
 </div>
 <script src="./boostrap/js/bootstrap.js"></script>
-
 </body>
 
 </html>

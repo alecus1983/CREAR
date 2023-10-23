@@ -2,27 +2,25 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>colores</title>
+  <title>horarios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
-    <link href="style.css" rel="stylesheet" type="text/css">
+
   <script type="text/javascript">
 
 
   var definicion = {
-    
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120 V (1 fase 2 hilos)",
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120/240 V (2 fase 3 hilos)",
-      "amarillo, azul, rojo, blanco, verde (verde amarillo)" : "Trifasico en Y - 208/120 V",
-      "negro, azul, rojo, verde" : "Trifasico en delta (3 fases, 3 hilos) 240 V",
-      "negro, naranja, azul, blanco,  verde (verde amarillo)" : "Trifasico en delta (3 fases, 4 hilos) 240/208/120 V",
-      "cafe, negro, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 380/220 V",
-      "cafe, naranja, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 480/277 V",
-      "cafe, naranja, amarillo, verde" : "Trifasico en delta  480 -440 V",
-      "violeta, cafe, rojo, verde" : "Trifasico en delta > 1000 V",
-      "amarillo, violeta, rojo" : "Trifasico en Y > 1000 V",
+    "Yy0" :"<img src='./imagenes/yy0.png'>",
+    "Yy6" :"<img src='./imagenes/yy6.png'>",
+    "Dy1" :"<img src='./imagenes/dy1.png'>",
+    "Dy11" :"<img src='./imagenes/dy11.png'>",
+    "Dy5" :"<img src='./imagenes/dy5.png'>",
+    "Dy7" :"<img src='./imagenes/dy7.png'>",
+    "Yd11" :"<img src='./imagenes/yd11.png'>",
+    "Yd1" :"<img src='./imagenes/yd1.png'>",
+    "Yz11" :"<img src='./imagenes/yz11.png'>",
+    "Yz1" :"<img src='./imagenes/yz1.png'>",
 
-      
 
 };
 
@@ -85,7 +83,7 @@
     // leo el formulario
     var form_retro = document.getElementById("protecciones");
 
-    var texto = ""+ definicion[key] + " corresponde a:";
+    var texto = ""+ definicion[key] + "</b>, <br> corresponde a:";
     document.getElementById("parrafo").innerHTML =texto;
 
     // por cada elemento en respuestas
@@ -161,8 +159,7 @@
 
 
   <p id="parrafo"></p>
-
- 
+  
   <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
     
     <div class="input-group mb-3"> 
@@ -213,8 +210,8 @@
 <button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
 <br><br><a href="index.html">Ir al inicio</a>
 </div>
-<script src="./boostrap/js/bootstrap.js"></script>
 
+<script src="./boostrap/js/bootstrap.js"></script>
 </body>
 
 </html>

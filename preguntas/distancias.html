@@ -2,27 +2,38 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>colores</title>
+  <title>distancias</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
-    <link href="style.css" rel="stylesheet" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
   <script type="text/javascript">
 
 
   var definicion = {
-    
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120 V (1 fase 2 hilos)",
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120/240 V (2 fase 3 hilos)",
-      "amarillo, azul, rojo, blanco, verde (verde amarillo)" : "Trifasico en Y - 208/120 V",
-      "negro, azul, rojo, verde" : "Trifasico en delta (3 fases, 3 hilos) 240 V",
-      "negro, naranja, azul, blanco,  verde (verde amarillo)" : "Trifasico en delta (3 fases, 4 hilos) 240/208/120 V",
-      "cafe, negro, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 380/220 V",
-      "cafe, naranja, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 480/277 V",
-      "cafe, naranja, amarillo, verde" : "Trifasico en delta  480 -440 V",
-      "violeta, cafe, rojo, verde" : "Trifasico en delta > 1000 V",
-      "amarillo, violeta, rojo" : "Trifasico en Y > 1000 V",
 
-      
+    "3.8 m " : "Distancia vertical “a” sobre techos y proyecciones",
+  	"2.3 m " : "Distancia horizontal “b” a muros, balcones, salientes, ventanas",
+  	"4.1 m " : "Distancia vertical “c” sobre o debajo de balcones o techos de fácil acceso a personas",
+  	"6.1 m " : "Distancia vertical “d” a carreteras, calles, callejones, zonas peatonales 115 kV",
+  	"5.6 m " : "Distancia vertical “d” a carreteras, calles, callejones, zonas peatonales 34.5/13.2 kV",
+  	"2.3 m " : "Distancia mínima vertical en el cruce “f” a los conductores alimentadores de ferrocarriles electrificados 115 kV",
+  	"1.8 m " : "Distancia mínima vertical en el cruce “f” a los conductores alimentadores de ferrocarriles electrificados 34.5/13.2 kV",
+  	"5.6 m " : "Distancia mínima vertical respecto del máximo nivel del agua “g” 115 kV",
+  	"5.2 m " : "Distancia mínima vertical respecto del máximo nivel del agua “g” 34.5/13.2 kV",
+  	"3.0 m " : "Límite de aproximación seguro, parte movil expuesta 13.2 kV",
+  	"1.5 m " : "Límite de aproximación seguro, parte fija expuesta 13.2 kV",
+  	"0.7 m " : "Límite de aproximación restrigida 13.2  kV",
+  	"0.2 m " : "Límite de aproximación técnica 13.2  kV",
+  	"3.0 m " : "Límite de aproximación seguro, parte movil expuesta 34.5 kV",
+  	"1.8 m " : "Límite de aproximación seguro, parte fija expuesta 34.5 kV",
+  	"0.8 m " : "Límite de aproximación restrigida 34.5  kV",
+  	"0.3 m " : "Límite de aproximación técnica 34.5  kV",
+  	"3.3 m " : "Límite de aproximación seguro, parte movil expuesta 34.5 kV",
+  	"2.5 m " : "Límite de aproximación seguro, parte fija expuesta 34.5 kV",
+  	"1.0 m " : "Límite de aproximación restrigida 34.5  kV",
+  	"0.8 m " : "Límite de aproximación técnica 34.5  kV"
+
 
 };
 
@@ -85,7 +96,7 @@
     // leo el formulario
     var form_retro = document.getElementById("protecciones");
 
-    var texto = ""+ definicion[key] + " corresponde a:";
+    var texto = ""+ definicion[key] + "corresponde a:";
     document.getElementById("parrafo").innerHTML =texto;
 
     // por cada elemento en respuestas
@@ -161,8 +172,7 @@
 
 
   <p id="parrafo"></p>
-
- 
+  
   <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
     
     <div class="input-group mb-3"> 

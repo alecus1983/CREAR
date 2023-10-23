@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>colores</title>
+  <title>criticas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
     <link href="style.css" rel="stylesheet" type="text/css">
@@ -10,24 +10,45 @@
 
 
   var definicion = {
-    
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120 V (1 fase 2 hilos)",
-      "negro, blanco, verde (verde amarillo)" :    "Monofasico 120/240 V (2 fase 3 hilos)",
-      "amarillo, azul, rojo, blanco, verde (verde amarillo)" : "Trifasico en Y - 208/120 V",
-      "negro, azul, rojo, verde" : "Trifasico en delta (3 fases, 3 hilos) 240 V",
-      "negro, naranja, azul, blanco,  verde (verde amarillo)" : "Trifasico en delta (3 fases, 4 hilos) 240/208/120 V",
-      "cafe, negro, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 380/220 V",
-      "cafe, naranja, amarillo,  blanco, verde" : "Trifasico en Y (3 fases, 4 hilos) 480/277 V",
-      "cafe, naranja, amarillo, verde" : "Trifasico en delta  480 -440 V",
-      "violeta, cafe, rojo, verde" : "Trifasico en delta > 1000 V",
-      "amarillo, violeta, rojo" : "Trifasico en Y > 1000 V",
 
-      
+       "<b>(Y)</b> yotta":"10<sup>24</sup>",
+       "<b>(Z)</b> zetta":"10<sup>21</sup>",
+       "<b>(E)</b> exa":"10<sup>18</sup>",
+       "<b>(P)</b> peta":"10<sup>15</sup>",
 
-};
+       "<b>(T)</b> tera":"10<sup>12</sup>",
+       "<b>(G)</b> giga":"10<sup>9</sup>",
+       "<b>(M)</b> mega":"10<sup>6</sup>",
+       "<b>(k)</b> kilo":"10<sup>3</sup>",
 
-  // retorna un elemento
-  function getRandomCircuit(){
+       "<b>(h)</b> hecto":"10<sup>2</sup>",
+       "<b>(da)</b> deca":"10<sup>1</sup>",
+       "<b>(d)</b> deci":"10<sup>-1</sup>",
+       "<b>(c)</b> centi":"10<sup>-2</sup>",
+
+       "<b>(m)</b> mili":"10<sup>-3</sup>",
+       "<b>(&mu;)</b> micro":"10<sup>-6</sup>",
+       "<b>(n)</b> nano":"10<sup>-9</sup>",
+       "<b>(p)</b> pico":"10<sup>-12</sup>",
+
+       "<b>(f)</b> fento":"10<sup>-15</sup>",
+       "<b>(a)</b> atto":"10<sup>-18</sup>",
+       "<b>(z)</b> zepto":"10<sup>-21</sup>",
+       "<b>(y)</b> yocto":"10<sup>-24</sup>",
+
+       "<b>(Yi)</b> yobi":"(2<sup>10</sup>)<sup>8</sup>",
+       "<b>(Zi)</b> zebi":"(2<sup>10</sup>)<sup>7</sup>",
+       "<b>(Ei)</b> exbi":"(2<sup>10</sup>)<sup>6</sup>",
+       "<b>(Pi)</b> pebi":"(2<sup>10</sup>)<sup>5</sup>",
+       "<b>(Ti)</b> tebi":"(2<sup>10</sup>)<sup>4</sup>",
+       "<b>(Gi)</b> gibi":"(2<sup>10</sup>)<sup>3</sup>",
+       "<b>(Mi)</b> mebi":"(2<sup>10</sup>)<sup>2</sup>",
+       "<b>(Ki)</b> kibi":"(2<sup>10</sup>)<sup>1</sup>",
+       
+   };
+
+   // retorna un elemento
+   function getRandomCircuit(){
     // obtengo un nummero aleatoria del tamaño del array
     var numero = parseInt(Math.random() * Object.keys(definicion).length);
     var ex = 0;
@@ -85,7 +106,7 @@
     // leo el formulario
     var form_retro = document.getElementById("protecciones");
 
-    var texto = ""+ definicion[key] + " corresponde a:";
+    var texto = "El exponente <b>"+ definicion[key] + "</b> esta asociado a  :";
     document.getElementById("parrafo").innerHTML =texto;
 
     // por cada elemento en respuestas
@@ -159,9 +180,7 @@
 <body style="background-color: #fff;color: darkblue;">
 <div style="max-width:80%; margin: auto">
 
-
   <p id="parrafo"></p>
-
  
   <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
     
