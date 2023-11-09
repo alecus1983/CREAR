@@ -214,7 +214,7 @@ $ano = date('Y');
 			 // se emplea en envío por POST
 			 $.ajax({
                              type: "POST",
-                             url: "notas_semanales_red.php",
+                             url: "notas_semanales.php",
                              data: {
 				 year: $("#years").val(),
 				 semana: $("#semana").val(),
@@ -298,7 +298,11 @@ $ano = date('Y');
 
 
 	 }// funcion para la carga de los alumnos
-	 
+	 function est(id_a){
+	     swal("Has ingresado el alumno"+id_a);
+
+
+	 }
 
 	 // funsion que carga las semanas correctas cuando cambia
 	 // el Periodo de calificaciones
@@ -571,7 +575,7 @@ $ano = date('Y');
 						name="periodos"
 						    class="sel form-control" required=""
 						onchange="load_();">
-					    <option value="1">1</option>
+					    <option value="3">3</option>
 
 
 					</select>
@@ -581,11 +585,25 @@ $ano = date('Y');
 						class="sel form-control"
 						    onchange="load_lista_estudiantes();">
 					    
-					    <option value="4">4</option>
-					    <option value="5">5</option>
-					    <option value="6">6</option>
-					    <option value="7">7</option>
-					    <option value="8">8</option>
+					    
+					    					   	<option value="16">16</option>
+
+					    					<option value="17">17</option>
+					    										    					<option value="18">18</option>
+
+
+					       					    <option value="19">19</option>
+					    
+				    					    <option value="20">20</option>
+
+					    					     <option value="21">21</option>
+					    					    <option value="22">22</option>
+					    					    <option value="23">23</option>
+
+
+<option value="24">24</option>
+					    					    <option value="25">25</option>
+
 
 					</select>
 
@@ -636,8 +654,8 @@ $ano = date('Y');
                         </div>
 
 			<div class="sb-sidenav-footer">
-                            <div class="small">Registrado(a) como:</div>
-                            <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?>
+                            <div class="small">Logged in as:</div>
+                            Start Bootstrap
                         </div>
                     </nav>
                 </div>
@@ -661,7 +679,6 @@ $ano = date('Y');
 					    </svg>
 					    estadísticas
                                         </div>
-					<div id="estadisicas" class="card-body"></div>
 				    </div>
 				</div>
 
