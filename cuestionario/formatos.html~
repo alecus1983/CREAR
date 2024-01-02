@@ -2,18 +2,36 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>definiciones</title>
+  <title>colores</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
-  <link href="../style.css" rel="stylesheet" type="text/css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
   <script type="text/javascript">
 
 
   var definicion = {
-"$$DATOS$$" : "<span>PRIMER DATO $$D_{1}$$</span>"
-
+    
+      "TC1":"Caracterización de usuarios",
+      "TC2":"Factuaración de usuarios",
+      "CS4":"Inventario puntos de medida barras",
+      "CS5":"Medida de barras",
+      "CS6":"Medida de circuitos",
+      "CS8":"Indicadores de calidad de potencia",
+      "BRA1":"Subestaciones",
+      "BRA2":"unidades constructivas subestaciones",
+      "BRA3":"UC equipo subestaciones",
+      "BRA4":"Unidades constructivas transformadores de subestación",
+      "BRA5":"unidades constructivas compensación de subestaciones",
+      "BRA6":"unidades constructivas de centro de control",
+      "BRA7":"información de circuitos",
+      "BRA8":"información sobre líneas",
+      "BRA9":"equipos de línea",
+      "BRA11":"transformadores de  distibución",
+      "BRA12":"unidades especiales",
+      "CS1":"SAIDI y SAIFI",
+      "CS2":"DIU y FIU",
+      "CS3":"incentivo de calidad media"
+      
 };
 
   // retorna un elemento
@@ -75,7 +93,7 @@
     // leo el formulario
     var form_retro = document.getElementById("protecciones");
 
-    var texto = ""+ definicion[key] + "corresponde a:";
+      var texto = "El formato  <i>"+ definicion[key] + "</i> corresponde a:";
     document.getElementById("parrafo").innerHTML =texto;
 
     // por cada elemento en respuestas
@@ -151,7 +169,8 @@
 
 
   <p id="parrafo"></p>
-  
+
+ 
   <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
     
     <div class="input-group mb-3"> 
@@ -203,6 +222,7 @@
 <br><br><a href="index.html">Ir al inicio</a>
 </div>
 <script src="./boostrap/js/bootstrap.js"></script>
+
 </body>
 
 </html>
