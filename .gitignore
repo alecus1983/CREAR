@@ -1,0 +1,7 @@
+# ignora el archivo de composer
+composer.phar
+composer-setup
+login.php
+prueba.php
+.lastlogin
+.sync.ffs_db

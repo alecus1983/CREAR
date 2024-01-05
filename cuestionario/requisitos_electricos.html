@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>normas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+
+
+  var definicion = {
+           
+     "Se puede aplicar el método tetraelectródico de Wenner, que es el más utilizado para aplicaciones eléctricas": "<b>medición de resistividad aparente</b>",
+     "Para su medición se pueden utilizar los métodos especificados en la norma IEEE 81, entre los cuales se encuentra el método de Caída de Potencial" : "<b>medición de resistencia de puesta a tierra</b>",
+     "La medición debe hacerse usando un telurómetro de alta frecuencia (mayor o igual a 10 kHz) o con un generador de impulsos normalizados o con equipo de baja frecuencia" : "<b>medición de resistencia de puesta a tierra</b>",
+     "En las estructuras de las líneas de transmisión de tensiones mayores o iguales a 110 kV, localizadas en zonas urbanas o que estén a menos de 50 m de escuelas o viviendas de zonas rurales" : "<b>medición de tensiones de paso y de contacto</b>",
+     "Para subestaciones, deben medirse hasta un metro por fuera del encerramiento y en el caso de torres o postes a un metro de la estructura " : "<b>medición de tensiones de paso y de contacto</b>",
+     "Se debe procurar que la corriente inyectada sea del 1% de la corriente para la cual ha sido dimensionada la instalación y no inferior a 50 A" : "<b>medición de tensiones de paso y de contacto</b>",
+     "El conductor para baja tensión, debe seleccionarse con la Tabla 250-95 de la NTC 2050" : "<b>conductor de protección o de puesta a tierra de equipos</b>",
+    "El conductor para media tensión, alta tensión y extra alta tensión, debe seleccionarse de forma tal que su temperatura no supere la del aislamiento de los conductores activos alojados en la misma canalización, como se establece en el Capítulo 9 de la IEEE 242." : "<b>conductor de protección o de puesta a tierra de equipos</b>",
+    "Los conductores del sistema de puesta a tierra deben ser continuos, sin interruptores o medios de desconexión y cuando se unan debe hacerlo en las cajas, asegurando que queden mecánica y eléctricamente seguros mediante empalmes o mediante uniones con soldadura o con conectores certificados para tal uso." : "<b>conductor de protección o de puesta a tierra de equipos</b>",
+    "El conductor de puesta a tierra de equipos, debe acompañar los conductores activos durante todo su recorrido y por la misma canalización. En las cajas aún las no metálicas donde se instalen aparatos como tomacorrientes o interruptores debe colocarse un elemento de sujeción o conexión del conductor de protección." : "<b>conductor de protección o de puesta a tierra de equipos</b>",
+    "Los conductores del cableado de puesta a tierra que se requieran aislar, el aislamiento debe ser de color verde, verde con rayas amarillas o en su defecto identificarlos con marcas verdes en los puntos extremos y puntos visibles o de inspección." : "<b>conductor de protección o de puesta a tierra de equipos</b>",
+    "Queda terminantemente prohibido el empleo de materiales combustibles en las proximidades de las canalizaciones y de las máquinas o equipos bajo tensión, permitiéndose su utilización siempre y cuando estén alejados de la parte en tensión o debidamente protegidos (por ejemplo en instalaciones con plantas diésel)." : "<b>Requisitos para el proceso de generacion</b>",
+    "Para edificaciones en caverna se deben utilizar transformadores tipo seco para los sistemas de servicios auxiliares y en general sistemas de baja tensión. " : "<b>Requisitos para el proceso de generacion</b>",
+    "Todos los circuitos de baja tensión situados en las proximidades de máquinas, aparatos u otros circuitos de alta tensión, deben ser considerados como pertenecientes a instalaciones de alta tensión, en los casos en que, por falta de protección, se pueda presentar un contacto entre ellos" : "<b>Requisitos para el proceso de generacion</b>",
+    "Las canalizaciones eléctricas no se deben instalar en las proximidades de tuberías de calefacción" : "<b>Requisitos para el proceso de generacion</b>",
+    "Para evitar los peligros que pudieran originar el incendio de un transformador de más de 100 kVA o un interruptor de gran volumen de aceite, se debe construir un foso o sumidero en el que se colocarán varias capas de gravilla que servirán como filtro y para ahogar la combustión." : "<b>Requisitos para el proceso de generacion</b>",
+    "Los transformadores con potencia igual o mayor 100 kVA, ubicados al interior de la casa de máquinas deben ser instalados en celdas diseñadas con muros y puertas antiexplosión." : "<b>Requisitos para el proceso de generacion</b>",
+    "Los transformadores con potencia igual o mayor 100 kVA, ubicados en la subestaciones deben ser instalados en espacios protegidos por muros y puertas cortafuego" : "<b>Requisitos para el proceso de generacion</b>",
+    "El diseño eléctrico debe contemplar mínimo lo siguiente: comportamiento de la línea tanto en régimen permanente como en régimen transitorio, confiabilidad de la línea (número de salidas por 100 km/año), coordinación de aislamiento, coordinación de protecciones, distancias de seguridad, establecer los parámetros de la línea ,estudio de apantallamiento, estudio de flujo de cargas, estudio de pérdidas de energía, evaluar el Efecto Corona y gradientes superficiales, evaluar las sobretensiones por ondas tipo rayo y tipo maniobra, evaluar los niveles de campos electromagnéticos en la zona de servidumbre, evaluar los niveles de radiointerferencia,  puesta a tierra, nivel de ruido audible, conductor económico, calculo de pérdidas por efecto corona" : "<b>Requisitos generales del las lineas de transmision</b>",
+    "Toda línea de transmisión aérea con tensión nominal igual o mayor a 57,5 kV, debe tener una zona de seguridad o derecho de vía" : "<b>Requisitos generales del las lineas de transmision</b>",
+    "Dentro de la zona de servidumbre se debe impedir la siembra o crecimiento natural de árboles o arbustos que con el transcurrir del tiempo comprometan la distancia de seguridad y se constituyan en un peligro para las personas o afecten la confiabilidad de la línea": "<b>Requisitos generales del las lineas de transmision</b>",
+    "Para líneas de transmisión con tensión nominal menor o igual a 500 kV que crucen zonas urbanas o áreas industriales y para las cuales las construcciones existentes imposibilitan dejar el ancho de la zona de servidumbre establecido Para líneas de transmisión con tensión nominal menor o igual a 500 kV que crucen zonas urbanas o áreas industriales y para las cuales las construcciones existentes imposibilitan dejar el ancho de la zona de servidumbre establecido ": "<b>Requisitos generales del las lineas de transmision</b>", 
+    : "<b>Requisitos generales del las lineas de transmision</b>",
+    : "<b>Requisitos generales del las lineas de transmision</b>",
+};
+
+  // retorna un elemento
+  function getRandomCircuit(){
+    // obtengo un nummero aleatoria del tamaño del array
+    var numero = parseInt(Math.random() * Object.keys(definicion).length);
+    var ex = 0;
+    var rcircuit = "";
+    // explorando JSON
+    for (var key in definicion) {
+      // ciclo de descision
+      if (ex == numero) {
+        // muestro en la consola
+        console.log(key + ' -> ' + definicion[key]);
+        // asigno el nodo de pregunta
+        rcircuit = key;
+      }
+      // incremento contador
+      ex = ex + 1;
+    }
+    return rcircuit;
+  }
+
+  // funcion que retorna el máximo entre dos números
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+
+  // funcion que genera un listado
+  function listado(){
+
+    var pregunta = "";
+    // arreglo vacio
+    var respuestas = [];
+
+    document.getElementById("datos").innerHTML = "";
+
+    //console.log(definicion["GUACHICONA"]);
+    var key = getRandomCircuit();
+    // cantidad de fronteras
+    //var size = definicion[key].length;
+
+    // genero un numero aleatorio de acuerdo a la longitud
+    //var rr = getRandomInt(0,size);
+    // agrego la primera respuesta (correcta)
+    respuestas.push(key);
+    // agrego una posible respuesta ... (b)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(c)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(d)
+    respuestas.push(getRandomCircuit());
+
+    // funcion que rota un listado
+    //var arr1 = ["a", "b", "c", "d"];
+    respuestas.sort(function() { return Math.random() - 0.5 });
+
+    // leo el formulario
+    var form_retro = document.getElementById("protecciones");
+
+    var texto = " Un requisito de la(el) "+ definicion[key] + " corresponde a:";
+    document.getElementById("parrafo").innerHTML =texto;
+
+    // por cada elemento en respuestas
+    // for( i in respuestas) {
+    //   console.log(respuestas[i]);
+    // }
+
+    document.getElementById("ta").innerHTML = respuestas[0];
+    document.getElementById("a").value = respuestas[0];
+    document.getElementById("tb").innerHTML = respuestas[1];
+    document.getElementById("b").value = respuestas[1];
+    document.getElementById("tc").innerHTML = respuestas[2];
+    document.getElementById("c").value = respuestas[2];
+    document.getElementById("td").innerHTML = respuestas[3];
+    document.getElementById("d").value = respuestas[3];
+    document.getElementById("pregunta").value = key;
+
+  }
+
+  // funcion que evalua la reapuesta
+
+  function calificar(){
+    // guarda el item seleccionado
+    var item = "";
+    // guarda el objeto formulario
+    var formulario = document.getElementById("protecciones");
+    // guarda en nombre del circuito
+    var pregunta = document.getElementById("pregunta").value;
+    // respuesta
+    var datos = document.getElementById("datos");
+
+    for (i=0; i < formulario.length; i++) {
+            if (formulario[i].checked==true) {
+            //alert(formulario[i].value);
+            item = formulario[i];
+        }
+  }
+
+  // variable de conclucion
+  var dato = false;
+  // buscando la respuesta
+  for ( l in definicion){
+    // compruebo si estoy en el nodo correcto
+    if (l == pregunta){
+      console.log("buscando .."+ pregunta);
+      // por cada una de las realimentaciones
+      //for (n in definicion[l]){
+        // verificacion
+        if ( l == item.value){
+          dato = true;
+        }
+
+      //}
+    }
+  }
+
+  // si el dato
+  if (dato == true) {
+  // alert ("correcto");
+  datos.innerHTML = "correcto";
+  }
+  else {
+    // alert("incorrecto");
+    datos.innerHTML = "incorrecto";
+  }
+}
+
+  </script>
+</head>
+
+<body style="background-color: #fff;color: darkblue;">
+<div style="max-width:80%; margin: auto">
+
+
+  <p id="parrafo"></p>
+
+ 
+  <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+        <input class="form-control" id="a" type="radio" name="opcion" value="ta">
+    </div>
+    </div>
+    <label class="form-control" id="ta"></label>
+    </div>
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="b" type="radio" name="opcion" value="tb">
+    </div>
+    </div>
+    <label class="form-control" id="tb"></label>
+    </div>
+
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="c" type="radio" name="opcion" value="tc">
+    </div>
+    </div>
+
+    <label class="form-control" id="tc"></label>
+    </div>
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="d" type="radio" name="opcion" value="td">
+    </div>
+    </div>
+    <label class="form-control" id="td"></label>
+    </div>
+
+    <input class="form-control" id="pregunta" type="hidden" value="" >
+    
+  </form>
+<br>
+<button type="button" name="button" onclick="calificar();" class="btn btn-outline-success">Calificar</button>
+
+<span id="datos" style="margin: 30px;   font-weight: 800;"></span>
+<button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
+<br><br><a href="index.html">Ir al inicio</a>
+</div>
+<script src="./boostrap/js/bootstrap.js"></script>
+
+</body>
+
+</html>

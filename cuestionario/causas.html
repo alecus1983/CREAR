@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>causas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+  <script type="text/javascript">
+
+
+  var definicion = {
+    'Humanos' : 'Accidental en Consignación Nacional',
+'Humanos' : 'Accidental en Consignación Local',
+'Humanos' : 'Accidental sin Consignación',
+'Humanos' : 'Maniobra indebida',
+'Protección, Teleprotección y Control' : 'Esquema de teleprotección',
+'Protección, Teleprotección y Control' : 'Sistemas de alimentación CC/CA',
+'Protección, Teleprotección y Control' : 'Relé de protección',
+'Protección, Teleprotección y Control' : 'Coordinación o ajustes de protecciones de activos del STN',
+'Protección, Teleprotección y Control' : 'Coordinación o ajustes de protecciones de activos del STR',
+'Protección, Teleprotección y Control' : 'Coordinación o ajustes de protecciones de activos de generación',
+'Protección, Teleprotección y Control' : 'Falla en el elemento o activo protegido',
+'Protección, Teleprotección y Control' : 'Operación como respaldo',
+'Protección, Teleprotección y Control' : 'Esquema suplementario - Local',
+'Protección, Teleprotección y Control' : 'Sistemas de control',
+'Equipos, accesorios e instalaciones de potencia' : 'Explosión o incendio',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en herrajes - conectores',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en equipo de medida PT/CT',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla de Seccionador',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla de interruptor',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en equipo inductivo / capacitivo',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla descargador de sobretensiones',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla generador',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en aislador',
+'Equipos, accesorios e instalaciones de potencia' : 'Falla en cables',
+'Cuerpos, Objetos Extraños y Atentados' : 'Alta vegetación',
+'Cuerpos, Objetos Extraños y Atentados' : 'Accidente con humano',
+'Cuerpos, Objetos Extraños y Atentados' : 'AMI (Acto Mal Intencionado)',
+'Cuerpos, Objetos Extraños y Atentados' : 'Animales',
+'Cuerpos, Objetos Extraños y Atentados' : 'Vehículos',
+'Medio AmbienteMedio Ambiente' : 'Contaminación',
+'Medio AmbienteMedio Ambiente' : 'Quema o fuego',
+'Fenómenos naturales' : 'Descarga atmosférica',
+'Fenómenos naturales' : 'Temblor de tierra',
+'Fenómenos naturales' : 'Vendaval',
+'Fenómenos naturales' : 'Inundación',
+'Fenómenos naturales' : 'Deslizamiento de terreno',
+'Sistema eléctrico de Potencia' : 'Sobrecarga',
+'Sistema eléctrico de Potencia' : 'Sobre/Baja frecuencia',
+'Sistema eléctrico de Potencia' : 'Sobrevoltaje',
+'Sistema eléctrico de Potencia' : 'Baja o Ausencia de Voltaje',
+'Sistema eléctrico de Potencia' : 'Sobrepotencia envío / recibo',
+'Sistema eléctrico de Potencia' : 'Topología',
+'Sistema eléctrico de Potencia' : 'Oscilación de potencia',
+'Sistema eléctrico de Potencia' : 'Pérdida de Sincronismo',
+'Sistema eléctrico de Potencia' : 'Operación Esquema Suplementario - Sistémico',
+
+
+
+};
+
+  // retorna un elemento
+  function getRandomCircuit(){
+    // obtengo un nummero aleatoria del tamaño del array
+    var numero = parseInt(Math.random() * Object.keys(definicion).length);
+    var ex = 0;
+    var rcircuit = "";
+    // explorando JSON
+    for (var key in definicion) {
+      // ciclo de descision
+      if (ex == numero) {
+        // muestro en la consola
+        console.log(key + ' -> ' + definicion[key]);
+        // asigno el nodo de pregunta
+        rcircuit = key;
+      }
+      // incremento contador
+      ex = ex + 1;
+    }
+    return rcircuit;
+  }
+
+  // funcion que retorna el máximo entre dos números
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+
+  // funcion que genera un listado
+  function listado(){
+
+    var pregunta = "";
+    // arreglo vacio
+    var respuestas = [];
+
+    document.getElementById("datos").innerHTML = "";
+
+    //console.log(definicion["GUACHICONA"]);
+    var key = getRandomCircuit();
+    // cantidad de fronteras
+    //var size = definicion[key].length;
+
+    // genero un numero aleatorio de acuerdo a la longitud
+    //var rr = getRandomInt(0,size);
+    // agrego la primera respuesta (correcta)
+    respuestas.push(key);
+    // agrego una posible respuesta ... (b)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(c)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(d)
+    respuestas.push(getRandomCircuit());
+
+    // funcion que rota un listado
+    //var arr1 = ["a", "b", "c", "d"];
+    respuestas.sort(function() { return Math.random() - 0.5 });
+
+    // leo el formulario
+    var form_retro = document.getElementById("protecciones");
+
+    var texto = "La causa <b>"+ definicion[key] + "</b>,  corresponde a:";
+    document.getElementById("parrafo").innerHTML =texto;
+
+    // por cada elemento en respuestas
+    // for( i in respuestas) {
+    //   console.log(respuestas[i]);
+    // }
+
+    document.getElementById("ta").innerHTML = respuestas[0];
+    document.getElementById("a").value = respuestas[0];
+    document.getElementById("tb").innerHTML = respuestas[1];
+    document.getElementById("b").value = respuestas[1];
+    document.getElementById("tc").innerHTML = respuestas[2];
+    document.getElementById("c").value = respuestas[2];
+    document.getElementById("td").innerHTML = respuestas[3];
+    document.getElementById("d").value = respuestas[3];
+    document.getElementById("pregunta").value = key;
+
+  }
+
+  // funcion que evalua la reapuesta
+
+  function calificar(){
+    // guarda el item seleccionado
+    var item = "";
+    // guarda el objeto formulario
+    var formulario = document.getElementById("protecciones");
+    // guarda en nombre del circuito
+    var pregunta = document.getElementById("pregunta").value;
+    // respuesta
+    var datos = document.getElementById("datos");
+
+    for (i=0; i < formulario.length; i++) {
+            if (formulario[i].checked==true) {
+            //alert(formulario[i].value);
+            item = formulario[i];
+        }
+  }
+
+  // variable de conclucion
+  var dato = false;
+  // buscando la respuesta
+  for ( l in definicion){
+    // compruebo si estoy en el nodo correcto
+    if (l == pregunta){
+      console.log("buscando .."+ pregunta);
+      // por cada una de las realimentaciones
+      //for (n in definicion[l]){
+        // verificacion
+        if ( l == item.value){
+          dato = true;
+        }
+
+      //}
+    }
+  }
+
+  // si el dato
+  if (dato == true) {
+  // alert ("correcto");
+  datos.innerHTML = "correcto";
+  }
+  else {
+    // alert("incorrecto");
+    datos.innerHTML = "incorrecto";
+  }
+}
+
+  </script>
+</head>
+
+<body style="background-color: #fff;color: darkblue;">
+<div style="max-width:80%; margin: auto">
+
+
+  <p id="parrafo"></p>
+  
+  <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+        <input class="form-control" id="a" type="radio" name="opcion" value="ta">
+    </div>
+    </div>
+    <label class="form-control" id="ta"></label>
+    </div>
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="b" type="radio" name="opcion" value="tb">
+    </div>
+    </div>
+    <label class="form-control" id="tb"></label>
+    </div>
+
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="c" type="radio" name="opcion" value="tc">
+    </div>
+    </div>
+
+    <label class="form-control" id="tc"></label>
+    </div>
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="d" type="radio" name="opcion" value="td">
+    </div>
+    </div>
+    <label class="form-control" id="td"></label>
+    </div>
+
+    <input class="form-control" id="pregunta" type="hidden" value="" >
+    
+  </form>
+<br>
+<button type="button" name="button" onclick="calificar();" class="btn btn-outline-success">Calificar</button>
+
+<span id="datos" style="margin: 30px;   font-weight: 800;"></span>
+<button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
+<br><br><a href="index.html">Ir al inicio</a>
+</div>
+<script src="./boostrap/js/bootstrap.js"></script>
+</body>
+
+</html>

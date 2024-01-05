@@ -575,10 +575,14 @@ $ano = date('Y');
 						name="periodos"
 						    class="sel form-control" required=""
 						onchange="load_();">
+<<<<<<< HEAD
 					 
 
 					    					    <option value="4">4</option>
 
+=======
+					    <option value="3">3</option>
+>>>>>>> refs/remotes/origin/main
 
 
 					</select>
@@ -589,6 +593,7 @@ $ano = date('Y');
 						    onchange="load_lista_estudiantes();">
 					    
 					    
+<<<<<<< HEAD
 					 
 <option value="26">26</option>
 					      				 <option value="27">27</option>
@@ -598,6 +603,25 @@ $ano = date('Y');
 					    					    					    		  					    					    					    		  <option value="31">31</option>
 
 
+=======
+					    					   	<option value="16">16</option>
+
+					    					<option value="17">17</option>
+					    										    					<option value="18">18</option>
+
+
+					       					    <option value="19">19</option>
+					    
+				    					    <option value="20">20</option>
+
+					    					     <option value="21">21</option>
+					    					    <option value="22">22</option>
+					    					    <option value="23">23</option>
+
+
+<option value="24">24</option>
+					    					    <option value="25">25</option>
+>>>>>>> refs/remotes/origin/main
 
 
 					</select>

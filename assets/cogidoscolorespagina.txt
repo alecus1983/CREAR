@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 #19295E azul
 
 #0C1739 azul os
 
+=======
+#19295E azul
+
+#0C1739 azul os
+
+>>>>>>> refs/remotes/origin/main
 #FFDE59 amarillo

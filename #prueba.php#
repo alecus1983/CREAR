@@ -1,0 +1,6 @@
+<?php
+$numero = 1;
+$numero ? $numero *2;
+echo "El numero correcto es : $numero";
+?>
+                                                                                                             

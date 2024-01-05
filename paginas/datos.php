@@ -1,13 +1,13 @@
 <?php
 
 session_start();
-
+// pregunta si  la variable de seccion NO esta inicioada
 if(!isset($_SESSION['usuario']))
 {
+    // entonces borra el resto de las variables de seccion
   session_destroy();
-  //Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
+  //Sila seccion no esta iniciada entonces retorna a la pagina principal
   header('Location:login_boletines.php');
-
   //termina el programa php
   exit();
 }
@@ -16,7 +16,7 @@ if(!isset($_SESSION['usuario']))
 // involucra  el archivo imcrea.php
 // require_once('imcrea.php');
 
-// Configuración de constantes
+// Configuración de constantes requieridas para la ejecucion
 define('DB_HOST', 'localhost');
 define('DB_USER', 'imcreati_admin');
 define('DB_PASS','conezioncrear21');
@@ -25,14 +25,15 @@ define('DB_CHARSET','utf8');
 
 // clase que determina la conexion con la base de datos
 class imcrea {
-
+    //variable de conexion
     protected $_db;
-
+    // funcion del constructor de la clase (corre al iniciar cada objeto)
     public function __construct(){
-
+        // crea en la variable _db un objeto de conexion con la base de datos
         $this->_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-
+        //consulta el metodo connect_errno 
         if ($this->_db->connect_errno) {
+            // si el valor es true se ha producido un error en la conexion
             echo "fallo al conectar bd".$this->_db->connect_errno;
             return;
         }
