@@ -1,0 +1,56 @@
+<html><head>
+    <title>Cuan Grande es El</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+    <section>   
+    
+<section>
+    <div class="container">
+
+        <h3 id="toc_32">CUAN GRANDE ES &Eacute;L</h3>
+
+  <pre>Se&ntilde;or mi Dios, al contemplar los cielos
+El firmamento y las estrellas mil
+Al o&iacute;r tu voz en los potentes truenos
+Y ver brillar al sol en su cenit.
+</pre>
+
+  <b>CORO</b>
+
+<pre>Mi coraz&oacute;n entona la canci&oacute;n
+¡Cuán grande es Dios!
+¡Cuán grande es Dios!
+Mi coraz&oacute;n entona la canci&oacute;n
+¡Cuán grande es Dios!
+¡Cuán grande es Dios!
+</pre>
+
+  <pre>Al recorrer los montes y los valles
+Y ver las bellas flores al pasar
+Al escuchar el canto de las aves
+Y er murmurar del claro manantial.
+Cuando recuerdo del amor divino
+Que desde el cielo al Salvador envi&oacute;
+
+Aquel Jes&uacute;s que por salva~nos vino
+Y en una cruz sufri&oacute; por m&iacute; y muri&oacute;.
+Trabajemos por el Maestro,
+Desde el alba al vislumbrar.
+
+Siempre hablemos de Su amor y fiel
+bondad,
+Cuando todo aqu&iacute; fenezca
+Y nuestra obra cesa ya,
+Y que sea pasada lista, all&iacute; he de estar.
+
+</pre>
+</section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+	<meta charset="utf-8">
+	<title>definiciones</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+	<script type="text/javascript">
+	 // variable que almacena los asiertos
+	 var aciertos = 0;
+	 // variable que alamacena los errores
+	 var errores = 0;
+
+	 var definicion = {"Accesible" : "Que está al alcance de una persona, sin valerse de mecanismo alguno y sin barreras físicas de por medio",
+			   "Accidente" : "Evento no deseado, incluidos los descuidos y las fallas de equipos, que da por resultado la muerte, una lesión personal, un daño a la propiedad o deterioro ambiental.",
+			   "Acto inseguro": "Violación de una norma de seguridad ya definida",
+			   "Alta concentración de personas": "Cuando se pueden concentrar 50 o más personas",
+			   "Amenaza":"Peligro latente de que un evento físico de origen natural, o causado, o inducido por la acción humana de manera accidental, se presente con una severidad suficiente para causar pérdida de vidas, lesiones u otros impactos en la salud, así como también daños y pérdidas en los bienes, la infraestructura, los medios de sustento, la prestación de servicios y los recursos ambientales.",
+			   "Análisis de riesgos":"Conjunto de técnicas para identificar, clasificar y evaluar los factores de riesgo. Es el estudio de consecuencias nocivas o perjudiciales, vinculadas a exposiciones reales o potenciales",
+			   "Comité técnico de normalización": "Grupo de personas con diferentes intereses sobre un tema, que se reúnen regular y voluntariamente con el fin de identificar necesidades, analizar documentos y elaborar normas técnicas.",
+			   "Condición insegura": "Circunstancia potencialmente riesgosa que está presente en el ambiente de trabajo.",
+			   "Confiabilidad" : " Capacidad de un dispositivo, equipo o sistema para cumplir una función requerida, en unas condiciones y tiempo dado. Equivale a fiabilidad.",
+			   "Conformidad" : " Cumplimiento de un producto, proceso o servicio frente a uno o varios requisitos o prescripciones.",
+			   "Consenso" : " Acuerdo general caracterizado porque no hay oposición sostenida a asuntos esenciales, de cualquier parte involucrada en el proceso, y que considera las opiniones de todas las partes y reconcilia las posiciones divergentes, dentro del ámbito del bien común e interés general.",
+			   "Consignación" : " Conjunto de operaciones destinadas a abrir, bloquear y formalizar la intervención sobre un circuito o equipo eléctrico.",
+			   "Contacto directo" : " Es el contacto de personas o animales con conductores activos o partes energizadas de una instalación eléctrica.",
+			   "Contacto eléctrico" : " Acción de unión de dos elementos con el fin de cerrar un circuito. Puede ser de frotamiento, de rodillo, líquido o de presión.",
+			   "Contacto indirecto" : " Es el contacto de personas o animales con elementos o partes conductivas que normalmente no se encuentran energizadas. Pero que en condiciones de falla de los aislamientos se puedan energizar.",
+			   "Contaminación" : " Liberación artificial de sustancias o energía hacia el entorno y que puede causar efectos adversos en el ser humano, otros organismos vivos, equipos o el medio ambiente.",
+			   "Contratista" : " Persona natural o jurídica que responde ante el dueño de una obra, para efectuar actividades de asesoría, interventoría, diseño, supervisión, construcción, operación, mantenimiento u otras relacionadas con las instalaciones eléctricas y sus equipos asociados.",
+			   "Control de calidad" : " Proceso de regulación, a través del cual se mide y controla la calidad real de un producto o servicio.",
+			   "Declaración de conformidad de primera parte" : " Certificación emitida por la persona o la organización que suministra el objeto, respecto a la conformidad de este con el reglamento técnico. La declaración de conformidad suscrita por el responsable de la construcción de la instalación tiene esta condición de certificación de primera parte.",
+			   "Descarga disruptiva" : " Falla de un aislamiento bajo un esfuerzo eléctrico, por superarse un nivel de tensión determinado que hace circular una corriente. Se aplica al rompimiento del dieléctrico en sólidos, líquidos o gases y a la combinación de estos.",
+			   "Disponibilidad" : " Certeza de que un equipo o sistema sea operable en un tiempo dado. Cualidad para operar normalmente.",
+			   "Dispositivo de control de hombre muerto" : " Dispositivo diseñado para parar un equipo cuando un operario libera el mismo con la mano o pie.",
+			   "Dispositivo de protección contra sobretensiones transitorias" : " Dispositivo diseñado para limitar las sobretensiones transitorias y conducir las corrientes de impulso. Contiene al menos un elemento no lineal.",
+			   "Dispositivo de protección contra sobretensiones transitorias del tipo conmutación de tensión" : " Un DPS que tiene una alta impedancia cuando no está presente un transitorio y cambia súbitamente su impedancia a un valor bajo en respuesta a un transitorio de tensión.","  Ejemplos de estos dispositivos son" : " Los vía de chispas, tubos de gas, tiristores y triacs.",
+			   "Dispositivo de protección contra sobretensiones transitorias del tipo limitación de tensión" : " Un DPS que tiene una alta impedancia cuando no está presente un transitorio, la cual se reduce gradualmente con el incremento de la corriente y la tensión transitoria. Ejemplos de estos dispositivos son los varistores y los diodos de supresión.",
+			   "Distancia a masa" : " Distancia mínima, bajo condiciones especificadas, entre una parte bajo tensión y toda estructura que tiene el mismo potencial de tierra.",
+			   "Distancia al suelo" : " Distancia mínima, bajo condiciones ya especificadas, entre el conductor bajo tensión y el terreno.",
+			   "distancia de seguridad" : " Distancia mínima alrededor de un equipo eléctrico o de conductores energizados, necesaria para garantizar que no habrá accidente por acercamiento de personas, animales, estructuras, edificaciones o de otros equipos.",
+			   "Edificio o edificación" : " Estructura fija, hecha con materiales resistentes para vivienda humana o para otros usos.",
+			   "Edificio alto" : " Es aquel que supera los 28 metros de altura, medidos desde el nivel donde puede acceder un vehículo de bomberos, según el Código de Sismo Resistencia.",
+			   "Emergencia" : " situación que se presenta por un hecho accidental y que requiere suspender todo trabajo para atenderla.",
+			   "empalme" : " conexión eléctrica destinada a unir dos partes de conductores, para garantizar continuidad eléctrica y mecánica.",
+			   "empresa" : " unidad económica que se representa como un sistema integral con recursos humanos, de información, financieros y técnicos que producen bienes o servicios y genera utilidad.",
+			   "embebido" : "  para efectos de este reglamento se aplica a un cuerpo solido absorbido por un material resultante de una mescla de líquidos y sólidos, tales como el concreto.",
+			   "equipo eléctrico de soporte de la vida" : " equipo eléctrico cuyo continuo funcionamiento es imprescindible para mantener la vida de un paciente.",
+			   "extintor" : " aparato autónomo, que contiene un agente para apagar el fuego, eliminando el oxígeno." ,
+			   "factor de riesgo" : " condición ambiental o humana cuya presencia o modificación puede producir un accidente o una enfermedad ocupacional." ,
+			   "fibrilación ventricular" : " contracción espontánea e incontrolada de las fibras del músculo cardíaco." ,
+			   "Frontera de aproximación limitada" : " es el límite hasta el cual una persona advertida puede situarse sin riesgo de exposición a contacto eléctrico." ,
+			   "Frontera de aproximación restringida" : " es el límite a partir del cual, una persona calificada y habilitada puede trabajar en conductores o partes de circuitos energizados expuestos." ,
+			   "Frontera de arco eléctrico" : " es la distancia a la cual la energía incidente producida por un arco eléctrico es igual a 5 j/cm2 (1,2 cal/cm2). se aplica para sistemas mayores a 50 voltios." ,
+			   "Fuego" : " combinación de combustible, oxígeno y calor. combustión que se desarrolla en condiciones controladas." ,
+			   "Fuego clase c" : " el originado en equipos eléctricos energizados." ,
+			   "Gestión del riesgo" : " es el proceso social de planeación, ejecución, seguimiento y evaluación de políticas y acciones permanentes para el conocimiento del riesgo y promoción de una mayor conciencia del mismo, impedir o evitar que se genere, reducirlo o controlarlo cuando ya existe y para prepararse y manejar las situaciones de desastre, así como para la posterior recuperación, entiéndase rehabilitación y reconstrucción. estas acciones tienen el propósito explícito de contribuir a la seguridad, el bienestar y calidad de vida de las personas y al desarrollo sostenible.",
+			   "impacto ambiental" : " acción o actividad que produce una alteración, favorable o desfavorable, en el medio ambiente o en alguno de los componentes del mismo." ,
+			   "impericia" : " falta de habilidad para desarrollar una tarea." ,
+			   "inspección" : " examen del diseño de un producto, del producto, proceso o instalación y determinación de su conformidad con requisitos específicos o, sobre la base del juicio profesional, con requisitos generales. la inspección de un proceso puede incluir la inspección de personas, instalaciones, tecnología y metodología." ,
+			   "maniobra" : " conjunto de procedimientos tendientes a operar una red eléctrica en forma segura." ,
+			   "mantenimiento" : " conjunto de acciones o procedimientos tendientes a preservar o restablecer un bien, a un estado tal que le permita garantizar la máxima confiabilidad." ,
+			   "máquina" : " conjunto de mecanismos accionados por una forma de energía, para transformarla en otra más apropiada a un efecto dado." ,
+			   "masa" : " conjunto de partes metálicas de un equipo, que en condiciones normales, están aisladas de las partes activas y que en caso de falla del aislamiento básico puede ser una parte activa, y se toma como referencia para las señales y tensiones de un circuito electrónico. las masas pueden estar o no estar conectadas a tierra." ,
+			   "material" : " cualquier sustancia, insumo, parte o repuesto que se transforma con su primer uso o se incorpora a un bien como parte de él." ,
+			   "material aislante" : " material que impide la propagación de algún fenómeno físico, (aislante eléctrico, material dieléctrico que se emplea para impedir el paso de cargas eléctricas. aislante térmico, material que impide el paso de calor)." ,
+			   "método electrogeométrico" : " procedimiento que permite establecer cuál es el volumen de cubrimiento de protección contra rayos de una estructura para una corriente dada, según la posición y la altura de la estructura considerada como pararrayos." ,
+			   "metrología" : " ciencia de la medición. incluye aspectos teóricos y prácticos." ,
+			   "modelo" : " procedimiento matemático que permite simular la evolución de variables y propiedades de un sistema, durante el desarrollo de un fenómeno físico o químico. representación abstracta de un sistema." ,
+			   "monitor de aislamiento" : " es un aparato o conjunto de aparatos que vigila la impedancia balanceada o no balanceada de cada fase de un circuito aislado de puesta a tierra y equipado con un circuito de prueba que acciona una alarma cuando la corriente de fuga supere el valor de referencia, sin disparar el circuito." ,
+			   "muerte aparente o muerte clínica" : " estado que se presenta cuando una persona deja de respirar o su corazón no bombea sangre." ,
+			   "muerto" : " ser sin vida. también se aplica a un dispositivo enterrado en el suelo, cuyo fin es servir de punto de anclaje fijo." ,
+			   "necrosis eléctrica" : " tipo de quemadura con muerte de tejidos." ,
+			   "nivel de riesgo" : " equivale a grado de riesgo. es el resultado de la valoración conjunta de la probabilidad de ocurrencia de los accidentes, de la gravedad de sus efectos y de la vulnerabilidad del medio." ,
+			   
+			   "normalizar" : " establecer un orden en una actividad específica." ,
+			   "objetivos legítimos" : " entre otros, la garantía y la seguridad de la vida y la salud humana, animal y vegetal, de su medio ambiente y la prevención de las prácticas que puedan inducir a error a los consumidores, incluyendo asuntos relativos a la identificación de bienes o servicios, considerando entre otros aspectos, cuando corresponda a factores fundamentales de tipo climático, geográfico, tecnológico o de infraestructura o justificación científica." ,
+			   "operador de red" : " empresa de servicios públicos encargada de la planeación, de la expansión y de las inversiones, operación y mantenimiento de todo o parte de un sistema de transmisión regional o un sistema de distribución local." ,
+			   "organismo de acreditación" : " entidad que acredita y supervisa los organismos de certificación e inspección y laboratorios de pruebas, ensayos y metrología que hagan parte del subsistema nacional de la calidad." ,
+			   "organismo de certificación" : " entidad imparcial, pública o privada, nacional, extranjera o internacional, que posee la competencia y la confiabilidad necesarias para administrar un sistema de certificación, consultando los intereses generales." ,
+			   "organismo de evaluación de la conformidad" : " organismo que realiza servicios de evaluación de la conformidad.",
+			   "organismo de inspección" : " entidad que ejecuta actividades de medición, ensayo o comparación con un patrón o documento de referencia de un proceso, un producto, una instalación o una organización y confrontar los resultados con unos requisitos especificados." ,
+			   "organismo nacional de acreditación (onac)" : " organismo de acreditación de colombia, que representa al país en las organizaciones internacionales y regionales de acreditación." ,
+			   "organismo nacional de normalización" : " entidad reconocida por el gobierno nacional, cuya función principal es la elaboración, adopción y publicación de las normas técnicas nacionales y la adopción como tales de las normas elaboradas por otros entes." ,
+			   "pararrayos" : " elemento metálico resistente a la corrosión, cuya función es interceptar los rayos que podrían impactar directamente sobre la instalación a proteger. más técnicamente se denomina terminal de captación." ,
+			   "patrón" : " medida materializada, aparato de medición o sistema de medición destinado a definir, realizar, conservar o reproducir una unidad o uno o varios valores conocidos de una magnitud para trasmitirlos por comparación a otros instrumentos de medición." ,
+			   "pcb" : " bifenilo policlorado, aquellos clorobifenilos que tienen la fórmula molecular c12h10-ncln donde n es mayor que 1. conocido comúnmente como askarel." ,
+			   "peligro" : " condición no controlada que tiene el potencial de causar lesiones a personas, daños a instalaciones o afectaciones al medio ambiente." ,
+			   "peligro inminente" : " para efectos de interpretación y aplicación del retie, alto riesgo será equivalente a peligro inminente; entendido como aquella condición del entorno o práctica irregular, cuya frecuencia esperada y severidad de sus efectos puedan comprometer fisiológicamente el cuerpo humano en forma grave (quemaduras, impactos, paro cardíaco, paro respiratorio, fibrilación o pérdida de funciones); o afectar el entorno de la instalación eléctrica (contaminación, incendio o explosión). en general, se puede presentar por",
+			   "pequeño comercio o industria" : " para efectos del presente reglamento, se entenderá como pequeño comercio aquel que tenga una capacidad instalable menor a 10 kva y una área no mayor a 50 m2 y pequeña industria aquella con una capacidad instalable menor a 20 kva.",
+			   "persona advertida" : " persona suficientemente informada y supervisada por personas calificadas que le permitan evitar los riesgos que podría generar al desarrollar una actividad relacionada con la electricidad.",
+			   "persona calificada" : " persona natural que demuestre su formación (capacitación y entrenamiento) en el conocimiento de la electrotecnia y los riesgos asociados a la electricidad.",
+			   "persona competente" : " es la persona natural (técnico, tecnólogo o ingeniero formado en el campo de la electrotecnia), que además de cumplir los requisitos de persona calificada cuenta con matrícula profesional vigente, que según la normatividad legal está autorizado y acreditado para el ejercicio de la profesión, y que ha adquirido los conocimientos y las habilidades en este campo.",
+			   "persona habilitada" : " persona competente, autorizada por el propietario o tenedor de la instalación, para realizar determinados trabajos con riesgo eléctrico, con base en su conocimiento e idoneidad, y que no presente incapacidades físicas o mentales que pongan en riesgo su salud o la de terceros.",
+			   "persona jurídica" : " según el artículo 633 del código civil, se llama persona jurídica una persona ficticia, capaz de ejercer derechos y contraer obligaciones civiles y de ser representada judicial y extrajudicialmente. sujeto susceptible de adquirir y ejercer derechos y de aceptar y cumplir obligaciones, ya lo sea por sí o por representante.",
+			   "persona natural" : " según el artículo 74 del código civil colombiano son personas todos los individuos de la especie humana, cualquiera que sea su edad, sexo, extirpe o condición.",
+			   "prevención" : " evaluación predictiva de los riesgos y sus consecuencias. conocimiento a priori para controlar los riesgos. acciones para eliminar la probabilidad de un accidente.",
+			   "previsión" : " anticipación y adopción de medidas ante la posible ocurrencia de un suceso, en función de los indicios observados y de la experiencia.",
+			   "primeros auxilios" : " todos los cuidados inmediatos y adecuados, pero provisionales, que se prestan a alguien accidentado o con enfermedad repentina, para conservarle la vida.",
+			   "profesión" : " empleo, facultad u oficio que tiene una persona y ejerce con derecho a retribución.",
+			   
+			   "riesgo de electrocución" : " posibilidad de circulación de una corriente eléctrica mortal a través de un ser vivo.",
+			   "señalización" : " conjunto de actuaciones y medios dispuestos para reflejar las advertencias de seguridad en una instalación.",
+			   
+			   "urgencia" : " necesidad de trabajo que se presenta fuera de la programación y que permite realizarse cuando se terminen las tareas en ejecución.",
+			   "usuario" : " persona natural o jurídica que se beneficia con la prestación de un servicio público, bien como propietario del inmueble en donde este se presta, o como receptor directo del servicio. a este último usuario se denomina también consumidor // toda persona natural o jurídica que, como destinatario final, adquiera, disfrute o utilice un determinado producto, cualquiera que sea su naturaleza para la satisfacción de una necesidad propia, privada, familiar o doméstica y empresarial cuando no esté ligada intrínsecamente a su actividad económica.",
+			   "vecindad del paciente" : " es el espacio destinado para el examen y tratamiento de pacientes, se define como la distancia horizontal de 1,8 metros desde la cama, silla, mesa u otro dispositivo que soporte al paciente y se extiende hasta una distancia vertical de 2,30  metros sobre el piso.",
+			   "vehículo eléctrico (también referenciado como ve)" : " es un vehículo propulsado por uno o más motores eléctricos. esta denominación aplica igualmente a los vehículos híbridos eléctricos enchufables, es decir, vehículos de propulsión alternativa que combina un motor eléctrico y un motor de combustión interna.",
+
+			   ' contrato de conexión' : 'contrato bilateral que se celebra entre un transportador regional y/o distribuidor local y/u operador de red, y un generador, autogenerador, generador distribuidos, consumidor, u otro transportador y/o distribuidor, con el fin de establecer las relaciones técnicas, jurídicas, económicas, administrativas y comerciales que se derivan de la nueva conexión o de la modificación de una conexión existente, a las redes del sistema de transmisión regional (str), sistema de distribución local (sdl) ó sistema de transmisión nacional (stn), según corresponda. (fuente resolución creg 106 de 2006)',
+			   'Criticidad' : 'situación de un elemento de la red en la que, para un determinado escenario, tiene al menos un parámetro eléctrico con un valor fuera de los umbrales de aceptabilidad establecidos.'
+			   
+
+	 };
+
+	 // retorna un elemento
+	 function getrandomcircuit(){
+	     // obtengo un nummero aleatoria del tamaño del array
+	     var numero = parseInt(Math.random() * Object.keys(definicion).length);
+	     var ex = 0;
+	     var rcircuit = "";
+	     // explorando json
+	     for (var key in definicion) {
+		 // ciclo de descision
+		 if (ex == numero) {
+		     // muestro en la consola
+		     console.log(key + ' -> ' + definicion[key]);
+		     // asigno el nodo de pregunta
+		     rcircuit = key;
+		 }
+		 // incremento contador
+		 ex = ex + 1;
+	     }
+	     return rcircuit;
+	 }
+
+	 // funcion que retorna el máximo entre dos números
+	 function getrandomint(min, max) {
+	     return Math.floor(Math.random() * (max - min)) + min;
+	 }
+
+
+	 // funcion que genera un listado
+	 function listado(){
+
+	     var pregunta = "";
+	     // arreglo vacio
+	     var respuestas = [];
+	     
+	     document.getElementById("datos"). innerHTML = "";
+
+	     //console.log(definicion["guachicona"]);
+	     var key = getrandomcircuit();
+	     // cantidad de fronteras
+	     //var size = definicion[key].length;
+
+	     // genero un numero aleatorio de acuerdo a la longitud
+	     //var rr = getrandomint(0,size);
+	     // agrego la primera respuesta (correcta)
+	     respuestas.push(key);
+	     // agrego una posible respuesta ... (b)
+	     respuestas.push(getrandomcircuit());
+	     // agrego otra posible respuesta ...(c)
+	     respuestas.push(getrandomcircuit());
+	     // agrego otra posible respuesta ...(d)
+	     respuestas.push(getrandomcircuit());
+
+	     // funcion que rota un listado
+	     //var arr1 = ["a", "b", "c", "d"];
+	     respuestas.sort(function() { return Math.random() - 0.5 });
+
+	     // leo el formulario
+	     var form_retro = document.getElementById("protecciones");
+
+	     var texto = ""+ definicion[key] + " corresponde a:";
+	     document.getElementById("parrafo"). innerHTML =texto;
+
+	     // por cada elemento en respuestas
+	     // for( i in respuestas) {
+	     //   console.log(respuestas[i]);
+	     // }
+
+	     document.getElementById("ta").  innerHTML = respuestas[0];
+	     document.getElementById("a").value = respuestas[0];
+	     document.getElementById("tb").  innerHTML = respuestas[1];
+	     document.getElementById("b").value = respuestas[1];
+	     document.getElementById("tc").  innerHTML = respuestas[2];
+	     document.getElementById("c").value = respuestas[2];
+	     document.getElementById("td").  innerHTML = respuestas[3];
+	     document.getElementById("d").value = respuestas[3];
+	     document.getElementById("pregunta").value = key;
+
+	 }
+
+	 // funcion que evalua la reapuesta
+
+	 function calificar(){
+	     // guarda el item seleccionado
+	     var item = "";
+	     // guarda el objeto formulario
+	     var formulario = document.getElementById("protecciones");
+	     // guarda en nombre del circuito
+	     var pregunta = document.getElementById("pregunta").value;
+	     // respuesta
+	     var datos = document.getElementById("datos");
+
+	     for (i=0; i < formulario.length; i++) {
+		 if (formulario[i].checked==true) {
+		     //alert(formulario[i].value);
+		     item = formulario[i];
+		 }
+	     }
+
+	     // variable de conclucion
+	     var dato = false;
+	     // buscando la respuesta
+	     for ( l in definicion){
+		 // compruebo si estoy en el nodo correcto
+		 if (l == pregunta){
+		     console.log("buscando .."+ pregunta);
+		     // por cada una de las realimentaciones
+		     //for (n in definicion[l]){
+		     // verificacion
+		     if ( l == item.value){
+			 dato = true;
+		     }
+
+		     //}
+		 }
+	     }
+
+	     // si el dato
+	     if (dato == true) {
+		 // alert ("correcto");
+		 datos. innerHTML = "correcto";
+		 aciertos = aciertos + 1;
+	     }
+	     else {
+		 // alert("incorrecto");
+		 datos. innerHTML = "incorrecto";
+		 errores = errores +1;
+	     }
+
+	     /// actualizo los aciertos y los errores
+
+             document.getElementById("aciertos").innerHTML = aciertos;
+             document.getElementById("errores").innerHTML = errores;
+	 }
+
+	</script>
+    </head>
+
+    <body style="background-color: #fff;color: darkblue;">
+	<div style="max-width:80%; margin: auto">
+	    <h2>DEFINICIONES RETIE <font color="red"><b>PERSONAS</b></font> </h2>
+	    <p id="parrafo"></p>
+	    <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
+		<div class="input-group mb-3">
+		    <div class="input-group-prepend">
+			<div class="input-group-text">
+			    <input class="form-control" id="a" type="radio" name="opcion" value="ta">
+			</div>
+		    </div>
+		    <label class="form-control" id="ta"></label>
+		</div>
+		<div class="input-group mb-3">
+		    <div class="input-group-prepend">
+			<div class="input-group-text">
+			    <input class="form-control" id="b" type="radio" name="opcion" value="tb">
+			</div>
+		    </div>
+		    <label class="form-control" id="tb"></label>
+		</div>
+		<div class="input-group mb-3">
+		    <div class="input-group-prepend">
+			<div class="input-group-text">
+			    <input class="form-control" id="c" type="radio" name="opcion" value="tc">
+			</div>
+		    </div>
+
+		    <label class="form-control" id="tc"></label>
+		</div>
+
+		<div class="input-group mb-3">
+		    <div class="input-group-prepend">
+			<div class="input-group-text">
+			    <input class="form-control" id="d" type="radio" name="opcion" value="td">
+			</div>
+		    </div>
+		    <label class="form-control" id="td"></label>
+		</div>
+
+		<input class="form-control" id="pregunta" type="hidden" value="" >
+
+	    </form>
+	    <br>
+	    <button type="button" name="button" onclick="calificar();" class="btn btn-outline-success">Calificar</button>
+
+	    <span id="datos" style="margin: 30px;   font-weight: 800;"></span>
+	    <button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
+	    <br><br>
+<div class="card" style="max-width: 80%;">
+		<ul class="list-group list-group-flush">
+		    <li class="list-group-item">Aciertos <span style="color: darkgreen; margin-left: 20px; font-weight: bold;" id="aciertos"></span></li>
+		    <li class="list-group-item">Errores<span style="color: darkred; margin-left: 20px; font-weight: bold;" id="errores"></span></li>
+		</ul>
+</div>
+
+	    <br><br><a href="index.html">Ir al inicio</a>
+	</div>
+	<script src="./boostrap/js/bootstrap.js"></script>
+    </body>
+
+</html>

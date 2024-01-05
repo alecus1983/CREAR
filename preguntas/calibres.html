@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>calibres</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+  <script type="text/javascript">
+
+
+  var definicion = {
+      '1/0 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 4/0, segun la norma EMCALI : ',
+      '4 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 1/0, segun la norma EMCALI : ',
+      '4 AWG' : 'Calibre del conductor de neutro si, el conductor de fase es 4, segun la norma EMCALI : ',
+
+      '2 AWG' : 'El conductor <b>sparrow (33.62 mm²) </b> ',
+      '2/0 AWG' : 'El conductor <b>quail (67.44 mm²) </b>',
+      '1/0 AWG' : 'El conductor <b>raven (53.50 mm²) </b>',
+      '4/0 AWG' : 'El conductor <b>Penguin (107.21 mm²)</b> ',
+      '266.8 AWG' : 'El conductor <b>Waxwing (135.2 mm²) </b> ',
+      '350 AWG' : 'El conductor <b>177.34 mm²</b> ',
+      '397.5 AWG' : 'El conductor <b>Chickadee (201.4 mm²)</b> ',
+      '477 AWG' : 'El conductor <b>Pelican (241.7 mm²)</b> ',
+      '500 AWG' : 'El conductor <b>253.7 mm²</b> ',
+
+
+
+      '2 AWG' : 'Conductor ACSR semi aislada, para cargas máxima de 184 A',
+      '1/0 AWG' : 'Conductor ACSR semi aislada, para cargas maxima de 241 A',
+      '4/0 AWG' : 'Conductor ACSR semi aislada, para cargas maxima de 355 A',
+      '266.5 AWG' : 'Conductor ACSR semi aislada para cargas maxima de 458 A',
+      '336.8 AWG' : 'Conductor ACSR semi aislada, para cargas maxima de 530 A',
+
+      '2 AWG' : 'Conductor subterraneo (Al) para carga maxima de 120 A',
+      '1/0 AWG' : 'Conductor subterraneo (Al) para carga maxima de 155 A',
+      '4/0 AWG' : 'Conductor subterraneo (Al) para carga maxima de 230 A',
+      '250 AWG' : 'Conductor subterraneo (Al) para carga maxima de 250 A',
+      '350 AWG' : 'Conductor subterraneo (Al) para carga maxima de 305 A',
+      '500 AWG' : 'Conductor subterraneo (Al) para carga maxima de 370 A',
+
+      '2 AWG' : 'Conductor subterraneo (CU) para carga maxima de 155 A',
+      '1/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 200 A',
+      '4/0 AWG' : 'Conductor subterraneo (CU) para carga maxima de 295 A',
+      '250 AWG' : 'Conductor subterraneo (CU) para carga maxima de 325 A',
+      '350 AWG' : 'Conductor subterraneo (CU) para carga maxima de 390 A',
+      '500 AWG' : 'Conductor subterraneo (CU) para carga maxima de 465 A'
+
+
+};
+
+  // retorna un elemento
+  function getRandomCircuit(){
+    // obtengo un nummero aleatoria del tamaño del array
+    var numero = parseInt(Math.random() * Object.keys(definicion).length);
+    var ex = 0;
+    var rcircuit = "";
+    // explorando JSON
+    for (var key in definicion) {
+      // ciclo de descision
+      if (ex == numero) {
+        // muestro en la consola
+        console.log(key + ' -> ' + definicion[key]);
+        // asigno el nodo de pregunta
+        rcircuit = key;
+      }
+      // incremento contador
+      ex = ex + 1;
+    }
+    return rcircuit;
+  }
+
+  // funcion que retorna el máximo entre dos números
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+
+  // funcion que genera un listado
+  function listado(){
+
+    var pregunta = "";
+    // arreglo vacio
+    var respuestas = [];
+
+    document.getElementById("datos").innerHTML = "";
+
+    //console.log(definicion["GUACHICONA"]);
+    var key = getRandomCircuit();
+    // cantidad de fronteras
+    //var size = definicion[key].length;
+
+    // genero un numero aleatorio de acuerdo a la longitud
+    //var rr = getRandomInt(0,size);
+    // agrego la primera respuesta (correcta)
+    respuestas.push(key);
+    // agrego una posible respuesta ... (b)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(c)
+    respuestas.push(getRandomCircuit());
+    // agrego otra posible respuesta ...(d)
+    respuestas.push(getRandomCircuit());
+
+    // funcion que rota un listado
+    //var arr1 = ["a", "b", "c", "d"];
+    respuestas.sort(function() { return Math.random() - 0.5 });
+
+    // leo el formulario
+    var form_retro = document.getElementById("protecciones");
+
+    var texto = "<i>"+ definicion[key] + "</i> corresponde a:";
+    document.getElementById("parrafo").innerHTML =texto;
+
+    // por cada elemento en respuestas
+    // for( i in respuestas) {
+    //   console.log(respuestas[i]);
+    // }
+
+    document.getElementById("ta").innerHTML = respuestas[0];
+    document.getElementById("a").value = respuestas[0];
+    document.getElementById("tb").innerHTML = respuestas[1];
+    document.getElementById("b").value = respuestas[1];
+    document.getElementById("tc").innerHTML = respuestas[2];
+    document.getElementById("c").value = respuestas[2];
+    document.getElementById("td").innerHTML = respuestas[3];
+    document.getElementById("d").value = respuestas[3];
+    document.getElementById("pregunta").value = key;
+
+  }
+
+  // funcion que evalua la reapuesta
+
+  function calificar(){
+    // guarda el item seleccionado
+    var item = "";
+    // guarda el objeto formulario
+    var formulario = document.getElementById("protecciones");
+    // guarda en nombre del circuito
+    var pregunta = document.getElementById("pregunta").value;
+    // respuesta
+    var datos = document.getElementById("datos");
+
+    for (i=0; i < formulario.length; i++) {
+            if (formulario[i].checked==true) {
+            //alert(formulario[i].value);
+            item = formulario[i];
+        }
+  }
+
+  // variable de conclucion
+  var dato = false;
+  // buscando la respuesta
+  for ( l in definicion){
+    // compruebo si estoy en el nodo correcto
+    if (l == pregunta){
+      console.log("buscando .."+ pregunta);
+      // por cada una de las realimentaciones
+      //for (n in definicion[l]){
+        // verificacion
+        if ( l == item.value){
+          dato = true;
+        }
+
+      //}
+    }
+  }
+
+  // si el dato
+  if (dato == true) {
+  // alert ("correcto");
+  datos.innerHTML = "correcto";
+  }
+  else {
+    // alert("incorrecto");
+    datos.innerHTML = "incorrecto";
+  }
+}
+
+  </script>
+</head>
+
+<body style="background-color: #fff;color: darkblue;">
+<div style="max-width:80%; margin: auto">
+
+
+  <p id="parrafo"></p>
+  
+  <form id="protecciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+        <input class="form-control" id="a" type="radio" name="opcion" value="ta">
+    </div>
+    </div>
+    <label class="form-control" id="ta"></label>
+    </div>
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="b" type="radio" name="opcion" value="tb">
+    </div>
+    </div>
+    <label class="form-control" id="tb"></label>
+    </div>
+
+
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="c" type="radio" name="opcion" value="tc">
+    </div>
+    </div>
+
+    <label class="form-control" id="tc"></label>
+    </div>
+    
+    <div class="input-group mb-3"> 
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+    <input class="form-control" id="d" type="radio" name="opcion" value="td">
+    </div>
+    </div>
+    <label class="form-control" id="td"></label>
+    </div>
+
+    <input class="form-control" id="pregunta" type="hidden" value="" >
+    
+  </form>
+
+  
+<br>
+<button type="button" name="button" onclick="calificar();" class="btn btn-outline-success">Calificar</button>
+
+<span id="datos" style="margin: 30px;   font-weight: 800;"></span>
+<button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
+<div>
+    <img src="imagenes/capacidad_corriete.png" width="90%">
+</div>
+<br><br><a href="index.html">Ir al inicio</a>
+</div>
+<script src="./boostrap/js/bootstrap.js"></script>
+
+</body>
+
+</html>

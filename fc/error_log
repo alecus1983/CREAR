@@ -1,0 +1,95 @@
+[19-Jul-2023 09:00:31 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:00:31 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:00:31 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1421
+[19-Jul-2023 09:00:31 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1423
+Stack trace:
+#0 /home/imcreati/public_html/fc/generar_p.php(100): area->get_areas_grado('3')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1423
+[19-Jul-2023 09:00:39 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:00:39 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:00:39 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:00:39 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:00:39 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1421
+[19-Jul-2023 09:00:39 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1423
+Stack trace:
+#0 /home/imcreati/public_html/fc/generar_p.php(100): area->get_areas_grado('3')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1423
+[19-Jul-2023 09:00:58 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:00:58 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1017
+[19-Jul-2023 09:00:58 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1019
+Stack trace:
+#0 /home/imcreati/public_html/fc/materias_grado.php(16): docentes->get_docente_id('7')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1019
+[19-Jul-2023 09:01:09 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:01:09 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 610
+[19-Jul-2023 09:01:09 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:611
+Stack trace:
+#0 /home/imcreati/public_html/fc/generar_p.php(60): grados->get_grado_id('4')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 611
+[19-Jul-2023 09:01:25 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:01:25 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1040
+[19-Jul-2023 09:01:25 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1042
+Stack trace:
+#0 /home/imcreati/public_html/fc/board.php(13): docentes->get_docente_cc('34611647')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1042
+[19-Jul-2023 09:01:29 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:01:29 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1040
+[19-Jul-2023 09:01:29 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1042
+Stack trace:
+#0 /home/imcreati/public_html/fc/board.php(13): docentes->get_docente_cc('34611647')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1042
+[19-Jul-2023 09:02:30 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:02:30 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1040
+[19-Jul-2023 09:02:30 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1042
+Stack trace:
+#0 /home/imcreati/public_html/fc/fc.php(13): docentes->get_docente_cc('34611647')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1042
+[19-Jul-2023 09:04:17 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:04:17 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1040
+[19-Jul-2023 09:04:17 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1042
+Stack trace:
+#0 /home/imcreati/public_html/fc/board.php(13): docentes->get_docente_cc('34611647')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1042
+[19-Jul-2023 09:04:21 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:04:21 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1040
+[19-Jul-2023 09:04:21 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1042
+Stack trace:
+#0 /home/imcreati/public_html/fc/validacion_docentes.php(27): docentes->get_docente_cc('34611647')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1042
+[19-Jul-2023 09:05:25 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:05:25 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1040
+[19-Jul-2023 09:05:25 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1042
+Stack trace:
+#0 /home/imcreati/public_html/fc/validacion_docentes.php(27): docentes->get_docente_cc('34611647')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1042
+[19-Jul-2023 09:07:55 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:07:55 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1040
+[19-Jul-2023 09:07:55 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1042
+Stack trace:
+#0 /home/imcreati/public_html/fc/validacion_docentes.php(27): docentes->get_docente_cc('1067467539')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1042
+[19-Jul-2023 09:11:27 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 09:11:27 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 1040
+[19-Jul-2023 09:11:27 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:1042
+Stack trace:
+#0 /home/imcreati/public_html/fc/validacion_docentes.php(27): docentes->get_docente_cc('34611647')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1042
+[19-Jul-2023 10:08:16 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::__construct(): (HY000/1040): Too many connections in /home/imcreati/public_html/fc/datos.php on line 28
+[19-Jul-2023 10:08:16 America/Argentina/Buenos_Aires] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/imcreati/public_html/fc/datos.php on line 699
+[19-Jul-2023 10:08:16 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on null in /home/imcreati/public_html/fc/datos.php:700
+Stack trace:
+#0 /home/imcreati/public_html/fc/listado_estudiantes.php(146): alumnos->__construct('870')
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 700

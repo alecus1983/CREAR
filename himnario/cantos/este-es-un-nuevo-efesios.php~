@@ -1,0 +1,42 @@
+<html><head>
+    <title>Este es un nuevo efesios</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+       
+    
+<section><div class="container">
+<h3 >ESTE ES UN NUEVO EFESIO</h3>
+
+  <pre>Hubiera desmayado yo
+sino creyere que veré
+a mi eterno redentor
+al que mis fuerzas renovaron
+para seguir hacia perfección
+
+Por eso no descansaré
+hasta que Cristo sea en mi
+esas virtudes desplegar
+desde fe amor fraterna
+piedra de corona
+allí descenderá
+ </pre>
+
+  <b>CORO</b>
+
+  <pre>//Este es un nuevo efesio 
+un empo de reclamar 
+Josué quiero mi monte 
+y mi posición en Cristo 
+para mi esa es mi heredad// 
+para mi esa es Oh Señor 
+mi heredad</pre>
+</div></section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>

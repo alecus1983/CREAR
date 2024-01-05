@@ -19,7 +19,7 @@
 	$link = conectar();
 
 
-	mysqli_query("SET NAMES 'utf8'");
+	//mysqli_query($link, "SET NAMES 'utf8'");
 
 
 	// Se establece el tipo de cabecera  que tendra el documento
@@ -71,7 +71,7 @@
 
 	$qg = "SELECT * FROM grados WHERE id_grado =".$gradox;
 
-	$qgx = mysqli_query($link, $qg) or die('Consulta fallida grados (qg): ' . mysql_error());
+	$qgx = mysqli_query($link, $qg) or die('Consulta fallida grados (qg): ' . mysqli_error($link));
 
 	while($datog = mysqli_fetch_array($qgx)) { //extrae los datos de la consulta q3x en la variable tipo arrelo dato
 
@@ -94,7 +94,7 @@
 		//
 		// echo "consulta nombres :".$q3." <br>";
 
-		$q3x = mysqli_query($link, $q3) or die('Consulta fallida alumnos (q3): ' . mysqli_error());;
+		$q3x = mysqli_query($link, $q3) or die('Consulta fallida alumnos (q3): ' . mysqli_error($link));;
 
 		//
 		//	ENCABEZADO DE NOMBRE
@@ -148,7 +148,9 @@
 			" ORDER BY materia.materia"
 			;
 
-			$q5x = mysqli_query($link, $q5 ) or die('Consulta fallida q3: ' . mysqli_error());;
+			//echo $q5;
+
+			$q5x = mysqli_query($link, $q5 ) or die('Consulta fallida q3: ' . mysqli_error($link));;
 
 			$nota = 	"";
 
@@ -169,7 +171,9 @@
 				AND materia.id_materia =".$id_m.
 				")";
 
-				$q6x = mysqli_query($link, $q6) or die('Consulta fallida q3: ' . mysql_error());;
+				//echo  $q6;
+
+				$q6x = mysqli_query($link, $q6) or die('Consulta fallida q6: ' . mysqli_error($link));;
 
 
 
@@ -179,6 +183,7 @@
 						$faltas =$dato5['faltas'];
 						$logo =$dato5['logo'];
 
+						
 
 							$pdf->SetFont('Arial','B',12);
 							$pdf->Cell(70,7,$materia,1,0,'L');
@@ -199,15 +204,21 @@
 							AND calificaciones.periodo =".$periodo."
 							)";
 
-							$q7x = mysqli_query($link, $q7) or die('Consulta fallida q3: ' . mysql_error());;
+							
+
+							$q7x = mysqli_query($link, $q7) or die('Consulta fallida q3: ' . mysqli_error($link));;
 
 
 								$x1=$pdf->GetX();
 								$y1=$pdf->GetY();
 								// Crea un cuadro de texto para la dimension indicada
 								$pdf->Cell(70,45,"",1,0,'L');
+								
+								if ($logo != "") { 
 								// se crea una imagen para la dimencin indicada
 								$pdf->Image('../imagenes/'.$logo,$x1+2,$y1+2,66,41);
+								}
+
 								// variable para incertar texto en el multicell
 								$texto = "";
 								$x2=$pdf->GetX();

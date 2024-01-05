@@ -1,0 +1,56 @@
+<html><head>
+    <title>El incambiable Dios</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+       
+    
+<section>
+<div class="container">
+  <h3 id="toc_59">EL IMCAMBIABLE DIOS (G)</h3>
+
+<pre><b class="notas"> G</b>
+Ve, el tiempo transitorio
+<b class="notas"> Bm7                D</b>
+nada en tiera quedara
+<b class="notas"> G                   G  D/F# Em</b>
+pon tu fe en aquello eternal
+<b class="notas">Am           D     G</b>
+en el incambiable Dios
+</pre>
+
+  <b>Coro</b>
+
+  <pre><b class="notas">G</b>
+En el incambiable Dios
+<b class="notas">Em                  D</b>
+En el incambiable Dios
+<b class="notas">G                     G  D/F# Em</b>
+pon tu fe en aquello eternal
+<b class="notas">Am           D     G</b>
+En el incambiable Dios
+
+Fia en El, nunca te deja
+pues, ha sido siempre fieldset
+Y si fueras olvidado
+vive mas cerca de El
+
+No codicies vanidades
+de este undo tan atroz
+busca bienes celestiales
+que jamas pereceran
+
+Cuando cese tu jornada
+y sifuiste fiel a Dios
+un hogar tendras en gloria
+y sera felicidad.
+ </pre></div>
+</section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>

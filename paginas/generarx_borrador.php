@@ -19,7 +19,9 @@
 	
 	$link = conectar();
 
-	mysqli_query("SET NAMES 'utf8'");
+	//mysqli_query($link, "SET NAMES 'utf8'");
+
+	
 
 
 	// Se establece el tipo de cabecera  que tendra el documento
@@ -63,6 +65,8 @@
 
 	}
 
+	
+
 	// se crea un nuevo documento de PDF
 	$pdf=new PDF();
 
@@ -71,16 +75,17 @@
 
 	$qg = "SELECT * FROM grados WHERE id_grado =".$gradox;
 
-	$qgx = mysqli_query($link, $qg) or die('Consulta fallida grados (qg): ' . mysqli_error());
-
+	$qgx = mysqli_query($link, $qg) or die('Consulta fallida grados (qg): ' . mysqli_error($link));
+	
 	while($datog = mysqli_fetch_array($qgx)) { //extrae los datos de la consulta q3x en la variable tipo arrelo dato
 
 
 			// VARIABLES PARA GUARDAR LOS NOMBRES DE LOS ESTUDIANTES
 
 			$nivel = $datog['grado'];
+			//echo $nivel;
 
-	}
+	
 
 
 		$q3 = "SELECT DISTINCT  alumnos.id_alumno, alumnos.nombres, alumnos.apellidos
@@ -94,7 +99,7 @@
 		//
 		// echo "consulta nombres :".$q3." <br>";
 
-		$q3x = mysqli_query($link, $q3) or die('Consulta fallida alumnos (q3): ' . mysqli_error());;
+		$q3x = mysqli_query($link, $q3) or die('Consulta fallida alumnos (q3): ' . mysqli_error($link));;
 
 		//
 		//	ENCABEZADO DE NOMBRE
@@ -102,7 +107,7 @@
 
 		// CICLO DE REPETICION PARA EXPLORAR LOS ESTUDIANTES
 
-
+		
 		while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x en la variable tipo arrelo dato
 
 
@@ -148,7 +153,7 @@
 			" ORDER BY materia.materia"
 			;
 
-			$q5x = mysqli_query($link, $q5 ) or die('Consulta fallida q3: ' . mysqli_error());;
+			$q5x = mysqli_query($link, $q5 ) or die('Consulta fallida q3: ' . mysqli_error($link));;
 
 			$nota = 	"";
 
@@ -169,7 +174,7 @@
 				AND materia.id_materia =".$id_m.
 				")";
 
-				$q6x = mysqli_query($link, $q6) or die('Consulta fallida q3: ' . mysqli_error());;
+				$q6x = mysqli_query($link, $q6) or die('Consulta fallida q3: ' . mysqli_error($link));;
 
 
 
@@ -199,15 +204,18 @@
 							AND calificaciones.periodo =".$periodo."
 							)";
 
-							$q7x = mysqli_query($link, $q7) or die('Consulta fallida q3: ' . mysqli_error());;
+							$q7x = mysqli_query($link, $q7) or die('Consulta fallida q3: ' . mysqli_error($link));;
 
 
 								$x1=$pdf->GetX();
 								$y1=$pdf->GetY();
 								// Crea un cuadro de texto para la dimension indicada
 								$pdf->Cell(70,45,"",1,0,'L');
+
+								if ($logo != "") { 
 								// se crea una imagen para la dimencin indicada
-								$pdf->Image('../imagenes/'.$logo,$x1+2,$y1+2,66,41);
+								$pdf->Image('../imagenes/'.$logo,$x1+2,$y1+2,66,41);}
+								
 								// variable para incertar texto en el multicell
 								$texto = "";
 								$x2=$pdf->GetX();
@@ -215,17 +223,7 @@
 								$pdf->Cell(110,45,"",1,0,'L');
 								$pdf->SetXY($x2,$y2);
 
-							while($dato6 = mysqli_fetch_array($q7x)) {
-
-								$texto = $texto."ID:  ".$dato6['logro']."\n";
-
-
-								if($id_m == '20') {
-								$nota = 	$dato6['nota'];
-
-								}
-							}
-							$pdf->SetFont('Arial','',8);
+								$pdf->SetFont('Arial','',8);
 							$pdf->MultiCell(110,6, $texto,0,'L',false);
 							$pdf->SetXY($x2,$y2);
 							$pdf->Ln(45);
@@ -247,11 +245,11 @@
 
 			}
 
-
+		}
 
 $pdf->Output();
 
-desconectar($link);
+//desconectar($link);
 
 
 ?>

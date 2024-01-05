@@ -1,0 +1,59 @@
+<html><head>
+    <title>En la Cruz</title>
+    <?php include('requisitos.html'); ?>
+
+
+</head>
+
+<body>
+<?php include('header.php'); ?>
+    <section>   
+    
+<section>
+<div class="container">
+  <h3 >EN LA CRUZ</h3>
+
+  <p>[&#x1d15f;]  = 83 <i>BPM</i></p>
+  <p>Tono: G</p>
+  <pre>
+G
+Me hirió el pecado, fui a Jesús,
+    C G  Am G  F D
+Mostréle mi dolor;
+G                 C      G
+Perdido, errante vi Su luz
+  Am   D         G
+Bendijome en Su amor.
+
+
+En la cruz, en la cruz,
+      D          G
+Do primero vi la luz
+        C        D           G
+Y las manchas de mi alma yo lavé;
+     C      Cm     G     Em
+Fue allí por fe do vi a Jesús,
+   Am      D            G
+Y siempre feliz con El seré.
+
+
+Sobre una cruz mi buen Señor
+Su sangre derramó
+Por este pobre pecador
+A quien así salvó.
+
+Venció la m.u erte con poder,
+Y al cielo se exaltó ;
+Confiar er1Ei es mi placer
+Morir no temo yo.
+
+Aunque el se fue solo no estoy;
+Mandó al Consolador,
+Divino Espíritu, que hoy
+Me da perfecto amor.
+</pre>
+</section>
+<?php include('footer.php'); ?>
+    
+
+</body></html>
