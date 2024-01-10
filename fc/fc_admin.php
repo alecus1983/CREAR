@@ -1,6 +1,9 @@
 <?php
 session_start();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 require_once('datos.php');
 if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
@@ -13,15 +16,19 @@ if (isset($_SESSION["usuario"])){
     if($admin == 0){
         header("Location:board.php");
     }
+<<<<<<< HEAD
 =======
 if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 } else {
     header("Location:board.php");
     exit;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 require_once('datos.php');
@@ -32,6 +39,8 @@ $id = $d->id;
 $admin = $d->admin ;
 $ano = date('Y');
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -170,9 +179,13 @@ $ano = date('Y');
                              corte: $("#corte").val(),
                              periodo: $("#periodos").val(),
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     id_curso: $("#id_c").val(),
 =======
 >>>>>>> refs/remotes/origin/main
+=======
+			     id_curso: $("#id_c").val(),
+>>>>>>> origin/fc
                              logro1: JSON.stringify(logros1),
                              logro2: JSON.stringify(logros2),
                              logro3: JSON.stringify(logros3),
@@ -311,9 +324,16 @@ $ano = date('Y');
 	 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 // avance semanal de notas de docentes
 	 function notas_faltantes() {
 
+=======
+	 // avance semanal de notas de docentes
+	 function notas_faltantes() {
+
+
+>>>>>>> origin/fc
 	     // se invoca al metodo ajax para solicitar
 	     // el listado de estudiantes
 	     $.ajax({
@@ -327,6 +347,10 @@ $ano = date('Y');
 		     id_ms: $("#id_ms").val(),
 		     id_jornada: $("#jornada").val(),
 		     id_curso: $("#id_c").val(),
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/fc
 		 } ,
 		 // si los datos son correctos entonces ...
 		 success: function(respuesta) {
@@ -344,6 +368,7 @@ $ano = date('Y');
 	 }
 
 
+<<<<<<< HEAD
 	 // llamado para agregar certificados
 	 function certificado() {
 
@@ -378,6 +403,9 @@ $ano = date('Y');
 
 
 	 function eliminar_semana(){
+=======
+	 	 function eliminar_semana(){
+>>>>>>> origin/fc
 
 
 	     // se invoca al metodo ajax para solicitar
@@ -777,8 +805,11 @@ $ano = date('Y');
 
 	 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 	 // actualiza el formulario
 	 function actualizar(){
 	     load_materias();
@@ -833,10 +864,14 @@ $ano = date('Y');
 				 "&jornada="+jornada+
 				 "&curso="+curso;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 		 
 >>>>>>> refs/remotes/origin/main
+=======
+
+>>>>>>> origin/fc
 		 console.log("los parametros son : %s",parametros);
 		 // abro boletin en una nueva ventana
 		 // llamando para ello al archivo cetificado.php
@@ -847,18 +882,26 @@ $ano = date('Y');
 	     //if (opcion == 6)
 	     //{
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
 		 
 		 
 >>>>>>> refs/remotes/origin/main
+=======
+
+
+>>>>>>> origin/fc
 	     //}
 	     // de lo contrario mira si la opcion seleccionada es
 	     // el certificado
 	     //else if (opcion == 16)
 	     //{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 	     // almacena los parametros para enviar
 	     // por el método GET
 	     // var parametros= "year="+year+
@@ -870,6 +913,7 @@ $ano = date('Y');
 	     //window.open("certificado.php?"+parametros);
 	     //}
 
+<<<<<<< HEAD
 =======
 		 // almacena los parametros para enviar
 		 // por el método GET
@@ -883,6 +927,8 @@ $ano = date('Y');
 	     //}
 	     
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 	 }
 
 
@@ -890,10 +936,14 @@ $ano = date('Y');
 	 function obtener_pdf(){
 	     // esta funcion crea un pdf para preescolar
 <<<<<<< HEAD
+<<<<<<< HEAD
 	     // se almacena el año en la variable year
 =======
 	     // se almacena el año en la variable year 
 >>>>>>> refs/remotes/origin/main
+=======
+	     // se almacena el año en la variable year
+>>>>>>> origin/fc
 	     var year = $("#years").val();
 	     // se almacena el periodo
 	     var periodos = $("#periodos").val();
@@ -901,10 +951,14 @@ $ano = date('Y');
 	     var gradosx = $("#id_gs").val();
 	     var grados = $("#id_gs").val();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 	     
 >>>>>>> refs/remotes/origin/main
+=======
+
+>>>>>>> origin/fc
 	     // se almacenan todas las variables dentro de la variable parametros
 	     var parametros= "year="+year+"&periodos="+periodos+"&grados="+gradosx+"&id_gs="+gradosx+"";
 	     console.log("los parametros son : %s",parametros);
@@ -996,12 +1050,18 @@ $ano = date('Y');
 
 	<div class="loader" style="display:none" id="loader"></div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	<div id="content">
 
 =======
 	<div id="content">
 >>>>>>> refs/remotes/origin/main
+=======
+
+	<div id="content">
+
+>>>>>>> origin/fc
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
 	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
@@ -1009,10 +1069,14 @@ $ano = date('Y');
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
 <<<<<<< HEAD
+<<<<<<< HEAD
 			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 =======
 			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 >>>>>>> refs/remotes/origin/main
+=======
+			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+>>>>>>> origin/fc
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -1030,15 +1094,23 @@ $ano = date('Y');
 		</ul>
 	    </nav>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
 >>>>>>> refs/remotes/origin/main
+=======
+
+
+>>>>>>> origin/fc
 	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
 		    <nav class="sb-sidenav accordion sb-sidenav-dark"
 			 id="sidenavAccordion"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 			 style="background-color: cadetblue">
 
 			<div class="sb-sidenav-menu">
@@ -1049,6 +1121,7 @@ $ano = date('Y');
 				   data-bs-toggle="collapse"
 				   data-bs-target="#collapseLayouts1"
 				   aria-expanded="false" aria-controls="collapseLayouts1">
+<<<<<<< HEAD
 =======
 			 tyle="background-color: cadetblue">
 			<div class="sb-sidenav-menu">
@@ -1065,6 +1138,8 @@ $ano = date('Y');
 				   data-bs-target="#collapseLayouts"
 				   aria-expanded="false" aria-controls="collapseLayouts">
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i></div>
 				    Datos
@@ -1072,10 +1147,14 @@ $ano = date('Y');
 					<i class="fas fa-angle-down"></i></div>
 				</a>
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<div class="collapse" id="collapseLayouts1"
 =======
 				<div class="collapse" id="collapseLayouts"
 >>>>>>> refs/remotes/origin/main
+=======
+				<div class="collapse" id="collapseLayouts1"
+>>>>>>> origin/fc
 				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
 				    <nav class="sb-sidenav-menu-nested nav">
@@ -1098,6 +1177,7 @@ $ano = date('Y');
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
 <<<<<<< HEAD
+<<<<<<< HEAD
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    class="form-control"
 						    onchange=";">
@@ -1106,6 +1186,11 @@ $ano = date('Y');
 						class="form-control"
 						onchange=";">
 >>>>>>> refs/remotes/origin/main
+=======
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    class="form-control"
+						    onchange=";">
+>>>>>>> origin/fc
 					    <option value="1">Mañana</option>
 					    <option value="2">Tarde</option>
 					</select>
@@ -1113,16 +1198,22 @@ $ano = date('Y');
 					<label for="periodos">Periodo</label>
 					<select id="periodos"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    name="periodos"
 						    class="form-control" required=""
 						onchange="">
+<<<<<<< HEAD
 =======
 						style="background: transparent;color: darkgreen;border: 0px"
 						name="periodos"
 						class="form-control" required=""
 						    onchange="">
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 					    <?php
 
 					    if($admin){
@@ -1144,6 +1235,7 @@ $ano = date('Y');
 					<label for="semana">Semana</label>
 					<select id="semana"
 <<<<<<< HEAD
+<<<<<<< HEAD
 						class="form-control"
 						style="background: transparent;color: darkgreen;border: 0px"
 						onchange="">
@@ -1152,6 +1244,11 @@ $ano = date('Y');
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    onchange="load_lista_estudiantes();">
 >>>>>>> refs/remotes/origin/main
+=======
+						class="form-control"
+						style="background: transparent;color: darkgreen;border: 0px"
+						onchange="">
+>>>>>>> origin/fc
                                             <?php
 
 					    if ($admin) {
@@ -1178,6 +1275,7 @@ $ano = date('Y');
 					<label class="Control-label">Grado</label>
 					<select id="id_g" name="id_gs"
 <<<<<<< HEAD
+<<<<<<< HEAD
 						    class ="form-control"
 						    style="background: transparent;color: darkgreen;border:  0px"
 						    onchange="actualizar()">
@@ -1186,6 +1284,11 @@ $ano = date('Y');
 						style="background: transparent;color: darkgreen;border:  0px"
 						onchange="actualizar();">
 >>>>>>> refs/remotes/origin/main
+=======
+						    class ="form-control"
+						    style="background: transparent;color: darkgreen;border:  0px"
+						    onchange="actualizar()">
+>>>>>>> origin/fc
 					    <?php
 					    // creo un nuevo objeto  matricula docente
 					    $mt = new matricula_docente();
@@ -1208,6 +1311,7 @@ $ano = date('Y');
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
 <<<<<<< HEAD
+<<<<<<< HEAD
 						style="background: transparent;color: darkgreen;border:0px;"
 						onchange = ";"
 						class ="form-control">
@@ -1216,6 +1320,11 @@ $ano = date('Y');
 						    onchange = ";"
 						    class ="form-control">
 >>>>>>> refs/remotes/origin/main
+=======
+						style="background: transparent;color: darkgreen;border:0px;"
+						onchange = ";"
+						class ="form-control">
+>>>>>>> origin/fc
 					    <option value="0">A</opcion>
 						<option value="1">B</opcion>
 					</select>
@@ -1228,8 +1337,16 @@ $ano = date('Y');
 					</select>
 
 				    </nav>
+<<<<<<< HEAD
 				</div>
 <<<<<<< HEAD
+=======
+
+
+
+
+				</div>
+>>>>>>> origin/fc
 
 				<a class="nav-link collapsed" href="#"
 				   data-bs-toggle="collapse"
@@ -1269,7 +1386,10 @@ $ano = date('Y');
 					</a>
 				    </nav>
 				</div>
+<<<<<<< HEAD
 				
+=======
+>>>>>>> origin/fc
 				<a class="nav-link collapsed" href="#"
 				   data-bs-toggle="collapse"
 				   data-bs-target="#collapseLayouts3"
@@ -1280,7 +1400,10 @@ $ano = date('Y');
 				    <div class="sb-sidenav-collapse-arrow">
 					<i class="fas fa-angle-down"></i></div>
 				</a>
+<<<<<<< HEAD
 				
+=======
+>>>>>>> origin/fc
 				<div class="collapse" id="collapseLayouts3"
 				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
@@ -1295,9 +1418,21 @@ $ano = date('Y');
 					   class="nav-link"
 					   href="#"
 					   onclick="avance_semanal();">Avance notas semanales
+<<<<<<< HEAD
 					</a>
 					<a style="margin: 0.5rem;"
 					   class="nav-link"
+=======
+
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="fs.php" target="_self">Gestión de semanas
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="" target="_self"
+>>>>>>> origin/fc
 					   onclick="crear_pdf()">Boletin
 					</a>
 
@@ -1307,11 +1442,15 @@ $ano = date('Y');
 					   onclick="notas_faltantes()">Notas faltantes
 					</a>
 
+<<<<<<< HEAD
 					<a style="margin: 0.5rem;"
 					   class="nav-link"
 					   href="#" target="_self"
 					   onclick="certificado()">Generar certificado
 					</a>
+=======
+					
+>>>>>>> origin/fc
 
 				    </nav>
 				</div>
@@ -1320,6 +1459,7 @@ $ano = date('Y');
                         </div>
                         <div>
 
+<<<<<<< HEAD
 =======
                             </div>
                         </div>
@@ -1357,6 +1497,8 @@ $ano = date('Y');
 					    onclick="crear_pdf()">Boletin
 			    </a>
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 			</div>
 			<div class="sb-sidenav-footer">
                             <div class="small">Registrado como:</div>
@@ -1372,6 +1514,9 @@ $ano = date('Y');
                             <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
                             <ol class="breadcrumb mb-4">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 				<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
                             </ol>
 
@@ -1379,6 +1524,7 @@ $ano = date('Y');
 
                             <div id="f_semanas" class="row container" style="display:none;">
 
+<<<<<<< HEAD
 =======
 				<li class="breadcrumb-item active">Para la gestistión de las semanas</li>
                             </ol>
@@ -1388,6 +1534,8 @@ $ano = date('Y');
                             <div id="f_semanas" class="row container" style="display:none;">
 				
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 				<div class="col-md-5">
 				    <div class="card border-primary border-6">
 					<div class="card-header">
@@ -1397,10 +1545,14 @@ $ano = date('Y');
 					<div class="card-body container">
 					    <div class="row align-items-center">
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 						
 >>>>>>> refs/remotes/origin/main
+=======
+
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio1"
@@ -1419,11 +1571,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1431,6 +1587,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio2"
@@ -1450,11 +1608,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1462,6 +1624,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio3"
@@ -1481,11 +1645,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1493,6 +1661,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio4"
@@ -1512,11 +1682,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1524,6 +1698,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio5"
@@ -1543,11 +1719,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1555,6 +1735,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio6"
@@ -1574,11 +1756,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1586,6 +1772,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio7"
@@ -1605,11 +1793,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1617,6 +1809,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio8"
@@ -1636,10 +1830,14 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 						
 >>>>>>> refs/remotes/origin/main
+=======
+
+>>>>>>> origin/fc
 					    </div>
 
 					</div>
@@ -1655,10 +1853,14 @@ $ano = date('Y');
 					<div class="card-body container">
 					    <div class="row align-items-center">
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 						
 >>>>>>> refs/remotes/origin/main
+=======
+
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio9"
@@ -1678,11 +1880,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1690,6 +1896,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio10"
@@ -1709,11 +1917,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1721,6 +1933,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio11"
@@ -1737,11 +1951,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1749,6 +1967,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio12" class="form-label text-muted fst-italic">inicio semana 12</label>
@@ -1762,11 +1982,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1774,6 +1998,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio5" class="form-label text-muted fst-italic">inicio semana 13</label>
@@ -1787,11 +2013,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1799,6 +2029,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio6" class="form-label text-muted fst-italic">inicio semana 14</label>
@@ -1812,11 +2044,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1824,6 +2060,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio7" class="form-label text-muted fst-italic">inicio semana 15</label>
@@ -1837,11 +2075,15 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
 =======
 						
 					    </div>
@@ -1849,6 +2091,8 @@ $ano = date('Y');
 					    <div class="row align-items-center">
 						
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio16" class="form-label text-muted fst-italic">inicio semana 16</label>
@@ -1862,30 +2106,41 @@ $ano = date('Y');
 						    </div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 						
 >>>>>>> refs/remotes/origin/main
+=======
+
+>>>>>>> origin/fc
 					    </div>
 
 					</div>
 				    </div>
 				</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 
                             </div>
 
 
+<<<<<<< HEAD
 =======
 				
                             </div>
 
 			    
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                         </div>
                     </main>
                 </div>
             </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -1893,6 +2148,11 @@ $ano = date('Y');
 =======
         </div>
 >>>>>>> refs/remotes/origin/main
+=======
+
+
+        </div><!-- fin del contenido -->
+>>>>>>> origin/fc
 
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">

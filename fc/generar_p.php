@@ -23,6 +23,9 @@ class PDF extends FPDF
 
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
   //Cabecera de página
   function Header()
   {
@@ -50,6 +53,7 @@ class PDF extends FPDF
     //$this->Ln(1);
     //$this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
   }
+<<<<<<< HEAD
 =======
     //Cabecera de página
     function Header()
@@ -79,6 +83,8 @@ class PDF extends FPDF
     	//$this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
     }
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 }
 
 // se crea un nuevo documento de PDF
@@ -92,14 +98,19 @@ $gr->get_grado_id($id_grado);
 $list = new listado_estudiantes($year, $id_grado, $id_jornada, $id_curso);
 // VARIABLES PARA GUARDAR LOS NOMBRES DE LOS ESTUDIANTES
 <<<<<<< HEAD
+<<<<<<< HEAD
 $nivel = $gr->grado; 
 =======
 $nivel = $gr->grado; //$datog['grado'];
 >>>>>>> refs/remotes/origin/main
+=======
+$nivel = $gr->grado; 
+>>>>>>> origin/fc
 // se almacena el grado al que es promovido
 // para el   grado actual los estudiantes
 // de este grado
 $promovido = $gr->promovido;//$datog['promovido'];
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 // array multidimencional para almacenar
@@ -107,6 +118,11 @@ $promovido = $gr->promovido;//$datog['promovido'];
 =======
 // array para almacenar en su orden
 >>>>>>> refs/remotes/origin/main
+=======
+
+// array multidimencional para almacenar
+// las notas en el siguiente orden:
+>>>>>>> origin/fc
 // codigo del estudiante
 // codigo de area  
 // codigo de materia
@@ -114,6 +130,9 @@ $promovido = $gr->promovido;//$datog['promovido'];
 $spot = array(array(array(array())));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 // array multidimencional para almacenar
 // recupraciones en el siguiente orden:
 // codigo del estudiante
@@ -122,14 +141,20 @@ $spot = array(array(array(array())));
 // nota (calificaciones) de la recuperacion
 $recover = array(array(array()));
 
+<<<<<<< HEAD
 =======
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 //
 //	ENCABEZADO DE NOMBRE
 //
 // CICLO DE REPETICION PARA EXPLORAR LOS ESTUDIANTES
 // se exploran los estudiantes para formar el array de notas
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 // y de recuperaciones.
 
 // array de promedios cuyo indice es el
@@ -293,6 +318,7 @@ foreach($list->id_alumno  as $e) {
   }
   //calculo el promedio del estudiante
   $promedio[$e] = $p_a/$c_m;
+<<<<<<< HEAD
 =======
 
 //array de promedios cuyo indice es el
@@ -389,15 +415,21 @@ foreach($list->id_alumno  as $e){
     //calculo el promedio del estudiante
     $promedio[$e] = $p_a/$c_m;
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 
 }
 
 //echo var_dump($promeedio);
 <<<<<<< HEAD
+<<<<<<< HEAD
 // ORDENO EL PROMEDIO
 =======
 // ordeno el promedio
 >>>>>>> refs/remotes/origin/main
+=======
+// ORDENO EL PROMEDIO
+>>>>>>> origin/fc
 arsort($promedio);
 // contador de posicion
 $con_p = 1;
@@ -407,6 +439,9 @@ $posicion = array();
 
 foreach ($promedio as  $pr => $prom){
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
   //echo $pr. " -->".$prom."<br>----<br>";
   $posicion[$pr] = $con_p;
   $con_p ++;
@@ -1042,6 +1077,7 @@ foreach($list->id_alumno  as $e) {
       $nota = number_format( $spot[$e][$id_area][$id_materia][$id_periodo],1,'.','');
       if($nota > 5.0){$nota = number_format(5.0,1,'.','');}
       $faltas = 0;
+<<<<<<< HEAD
 =======
     //echo $pr. " -->".$prom."<br>----<br>";
     $posicion[$pr] = $con_p;
@@ -1371,12 +1407,17 @@ foreach($list->id_alumno  as $e) {
             if($nota > 5.0){$nota = number_format(5.0,1,'.','');}
             $faltas = 0;
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
             
             
                 
             
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
       $nota = number_format($nota, 1, '.', '');
       //$pdf->Ln(4);
       $pdf->SetFont('Arial','B',9);
@@ -1466,6 +1507,7 @@ foreach($list->id_alumno  as $e) {
   $pdf->Cell(180,5,utf8_decode("    ________________________          _________________________"),0,0,'C');
   $pdf->Ln(3);
   $pdf->Cell(180,5,utf8_decode("           Rectora                                       Directora de Grupo"),0,0,'C');
+<<<<<<< HEAD
 =======
             $nota = number_format($nota, 1, '.', '');
             //$pdf->Ln(4);
@@ -1557,6 +1599,8 @@ foreach($list->id_alumno  as $e) {
     $pdf->Ln(3);
     $pdf->Cell(180,5,utf8_decode("           Rectora                                       Directora de Grupo"),0,0,'C');
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
             
 }
         

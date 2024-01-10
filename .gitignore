@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ignora el archivo de composer
 composer.phar
 composer-setup
@@ -5,3 +6,21 @@ login.php
 prueba.php
 .lastlogin
 .sync.ffs_db
+=======
+fc/calificar.php~
+fc/datos.php~
+fc/fc.php~
+fc/semanas.php~
+.gitignore~
+.lastlogin
+.sync.ffs_db
+fc/#fc.html#
+fc/.vscode/
+fc/listado_estudiantes.php~
+#cambios.sql#
+fc/notas_semanales.php~
+fc/listado_docentes.php~
+fc/estilos.css~
+#cambios.sql#
+fc/*.php~
+>>>>>>> origin/fc

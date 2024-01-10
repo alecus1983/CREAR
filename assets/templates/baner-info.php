@@ -14,10 +14,14 @@
     </div>
     <div style="background-color: #FFDE59; padding:  29px 0px  29px 57px;" class=" flex-fill  text-dark">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <h2>Admisiones 2024</h2>
 =======
         <h2>Admisiones 2023</h2>
 >>>>>>> refs/remotes/origin/main
+=======
+        <h2>Admisiones 2024</h2>
+>>>>>>> origin/fc
         <a href="./admisiones.php" style="color: #19295E; font-family: sans-serif;">Click aqui para ver más</a>
     </div>
 </div>

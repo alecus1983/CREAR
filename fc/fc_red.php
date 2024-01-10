@@ -298,11 +298,15 @@ $ano = date('Y');
 
 
 	 }// funcion para la carga de los alumnos
+<<<<<<< HEAD
 	 function est(id_a){
 	     swal("Has ingresado el alumno"+id_a);
 
 
 	 }
+=======
+	 
+>>>>>>> origin/fc
 
 	 // funsion que carga las semanas correctas cuando cambia
 	 // el Periodo de calificaciones
@@ -324,7 +328,11 @@ $ano = date('Y');
 	     // el listado de estudiantes
 	     $.ajax({
 		 type: "POST",
+<<<<<<< HEAD
 		 url: "listado_estudiantes.php",
+=======
+		 url: "listado_estudiantes_red.php",
+>>>>>>> origin/fc
 		 data: {
                      years: $("#years").val(),
 		     id_g: $("#id_g").val(),
@@ -576,6 +584,7 @@ $ano = date('Y');
 						    class="sel form-control" required=""
 						onchange="load_();">
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 
 
 					    					    <option value="4">4</option>
@@ -583,6 +592,9 @@ $ano = date('Y');
 =======
 					    <option value="3">3</option>
 >>>>>>> refs/remotes/origin/main
+=======
+					    <option value="2">2</option>
+>>>>>>> origin/fc
 
 
 					</select>
@@ -591,6 +603,7 @@ $ano = date('Y');
 					<select id="semana"
 						class="sel form-control"
 						    onchange="load_lista_estudiantes();">
+<<<<<<< HEAD
 					    
 					    
 <<<<<<< HEAD
@@ -622,6 +635,18 @@ $ano = date('Y');
 <option value="24">24</option>
 					    					    <option value="25">25</option>
 >>>>>>> refs/remotes/origin/main
+=======
+
+					    <option value="9">9</option>
+					    <option value="10">10</option>
+					    <option value="11">11</option>
+					    <option value="12">12</option>
+					    <option value="13">13</option>
+					    <option value="14">14</option>
+					    <option value="15">15</option>
+					    <option value="16">16</option>
+
+>>>>>>> origin/fc
 
 
 					</select>
@@ -673,8 +698,13 @@ $ano = date('Y');
                         </div>
 
 			<div class="sb-sidenav-footer">
+<<<<<<< HEAD
                             <div class="small">Logged in as:</div>
                             Start Bootstrap
+=======
+                            <div class="small">Registrado(a) como:</div>
+                            <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?>
+>>>>>>> origin/fc
                         </div>
                     </nav>
                 </div>
@@ -698,6 +728,10 @@ $ano = date('Y');
 					    </svg>
 					    estadísticas
                                         </div>
+<<<<<<< HEAD
+=======
+					<div id="estadisicas" class="card-body"></div>
+>>>>>>> origin/fc
 				    </div>
 				</div>
 

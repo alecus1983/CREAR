@@ -8,6 +8,7 @@ $err = "";
 
 // jornada
 <<<<<<< HEAD
+<<<<<<< HEAD
 $id_jornada = $_POST["id_jornada"];
 // curso
 $id_curso = $_POST['curso'];
@@ -16,6 +17,11 @@ $jornada = $_POST["id_jornada"];
 // curso
 $curso = $_POST['curso'];
 >>>>>>> refs/remotes/origin/main
+=======
+$id_jornada = $_POST["id_jornada"];
+// curso
+$id_curso = $_POST['curso'];
+>>>>>>> origin/fc
 // //semana
 $semana = $_POST["semana"];
 // periodos
@@ -46,10 +52,14 @@ if($_POST["years"]!== ""){
 
 if($_POST["id_jornada"]!== ""){
 <<<<<<< HEAD
+<<<<<<< HEAD
     $id_jornada = $_POST['id_jornada'];
 =======
     $jornada = $_POST['id_jornada'];
 >>>>>>> refs/remotes/origin/main
+=======
+    $id_jornada = $_POST['id_jornada'];
+>>>>>>> origin/fc
 }else {
     $valido = false;
     $err = $err."<p class='text-danger'>Porfavor seleccione un año</p>";
@@ -85,12 +95,18 @@ if($_POST["semana"] > 0){
 if ($valido) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
     $jo = new jornada();
     $jo->get_jornada_por_id($id_jornada);
     $cu = new curso();
     $cu->get_curso_por_id($id_curso);
+<<<<<<< HEAD
 =======
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
     $gr = new grados();
     $gr->get_nombre($grado);
 
@@ -99,19 +115,27 @@ if ($valido) {
     //echo "<div class='row'><div class='col-md-12>";
     // saco este mensaje por consola
 <<<<<<< HEAD
+<<<<<<< HEAD
     echo "<p>Listado de  estudiantes  del grado <b>".$gr->n_grado."  ".$cu->curso."</b>, en la jornada ".$jo->jornada.", en la semana $semana  en la materia : <b>".$cr->materia."</b></p>";
 =======
     echo "<p>Listado de  estudiantes de <b>".$cr->materia."</b> del grado <b>".$gr->n_grado."</b> </p>";
 >>>>>>> refs/remotes/origin/main
+=======
+    echo "<p>Listado de  estudiantes  del grado <b>".$gr->n_grado."  ".$cu->curso."</b>, en la jornada ".$jo->jornada.", en la semana $semana  en la materia : <b>".$cr->materia."</b></p>";
+>>>>>>> origin/fc
     
     echo "<div class='row'><div class='col-md-8'>";
 
     //crea un nuevo objeto listado (año,grado,jornada,curso)
 <<<<<<< HEAD
+<<<<<<< HEAD
     $listado  = new listado_estudiantes($ano,$grado,$id_jornada, $id_curso);
 =======
     $listado  = new listado_estudiantes($ano,$grado,$jornada, $curso);
 >>>>>>> refs/remotes/origin/main
+=======
+    $listado  = new listado_estudiantes($ano,$grado,$id_jornada, $id_curso);
+>>>>>>> origin/fc
 
     // si se trata de la materia de disciplina entonces
     if ($id_m == 20) {
@@ -132,6 +156,9 @@ if ($valido) {
             // criterio 0 para disciplina
             $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 0 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
             $nota = $score->nota;
             if ($nota == 0){
                     $nota = "";
@@ -141,6 +168,7 @@ if ($valido) {
             echo '<div class="input-group mb-1">';
             echo '<span class="input-group-text" id="addon-wrapping">nota</span>';
             echo '<input type="number" step="0.1" max="5" min="0"  value="'.$nota.'"  class="form-control A" placeholder="disciplina" name="A[]" aria-label="disciplina" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
             $nota1 = $score->nota;
             echo "<div class='col-md-6' name=''>";
@@ -148,6 +176,8 @@ if ($valido) {
             echo '<span class="input-group-text" id="addon-wrapping">nota</span>';
             echo '<input type="number" step="0.1" max="5" min="0"  value="'.$nota1.'"  class="form-control A" placeholder="disciplina" name="A[]" aria-label="disciplina" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
             echo '</div>'; // fin de div del grupo
             // si se trata de la semana final
             if ($semana_final) {
@@ -188,12 +218,16 @@ if ($valido) {
                 // presentacion personal (E)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 5 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
                 } else
             {$nota = number_format($nota,1);}
+<<<<<<< HEAD
                 echo "<div class='col-md-6' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
@@ -209,6 +243,12 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="E[]"  value="'.$nota1.'"  class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+                echo "<div class='col-md-1' name=''>";
+                echo '<div class="input-group mb-1">';
+                echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
+                echo '<input type="number" step="0.1" max="5" min="0" name="E[]"  value="'.$nota.'"  class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
@@ -216,12 +256,16 @@ if ($valido) {
                 // actitud (F)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 6 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
                 } else
             {$nota = number_format($nota,1);}
+<<<<<<< HEAD
 =======
                 $nota2 = $score->nota;
                 // coloco un numero vacio  si la nota es igual a cero
@@ -229,27 +273,37 @@ if ($valido) {
                     $nota2 = "";
                 }
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
 <<<<<<< HEAD
+<<<<<<< HEAD
                 echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'"  class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
 =======
                 echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota2.'"  class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+                echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'"  class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 		
                 //asistencia (G)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 7 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
                 } else
             {$nota = number_format($nota,1);}
+<<<<<<< HEAD
 =======
                 $nota3 = $score->nota;
                 // coloco un numero vacio  si la nota es igual a cero
@@ -257,15 +311,21 @@ if ($valido) {
                     $nota3 = "";
                 }
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
 <<<<<<< HEAD
+<<<<<<< HEAD
                 echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
 =======
                 echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota3.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+                echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
@@ -273,12 +333,16 @@ if ($valido) {
                 //evaluación final (I)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 9 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
                 } else
             {$nota = number_format($nota,1);}
+<<<<<<< HEAD
 =======
                 $nota4 = $score->nota;
                 // coloco un numero vacio  si la nota es igual a cero
@@ -286,27 +350,37 @@ if ($valido) {
                     $nota4 = "";
                 }
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">evaluacion final</span>';
 <<<<<<< HEAD
+<<<<<<< HEAD
                 echo '<input type="number" step="0.1" max="5" min="0" name="I[]" value="'.$nota.'" class="form-control I" placeholder="evaluación final" aria-label="evaluacion final" aria-describedby="basic-addon1">';
 =======
                 echo '<input type="number" step="0.1" max="5" min="0" name="I[]" value="'.$nota4.'" class="form-control I" placeholder="evaluación final" aria-label="evaluacion final" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+                echo '<input type="number" step="0.1" max="5" min="0" name="I[]" value="'.$nota.'" class="form-control I" placeholder="evaluación final" aria-label="evaluacion final" aria-describedby="basic-addon1">';
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
                 //auto evaluacion (J)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 10 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
                 } else
             {$nota = number_format($nota,1);}
+<<<<<<< HEAD
 =======
                 $nota5 = $score->nota;
                 // coloco un numero vacio  si la nota es igual a cero
@@ -314,15 +388,21 @@ if ($valido) {
                     $nota5 = "";
                 }
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">auto evaluacion</span>';
 <<<<<<< HEAD
+<<<<<<< HEAD
                 echo '<input type="number" step="0.1" max="5" min="0" name="J[]" value="'.$nota.'" class="form-control J" placeholder="auto evaluacion" aria-label="auto evaluacion" aria-describedby="basic-addon1">';
 =======
                 echo '<input type="number" step="0.1" max="5" min="0" name="J[]" value="'.$nota5.'" class="form-control J" placeholder="auto evaluacion" aria-label="auto evaluacion" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+                echo '<input type="number" step="0.1" max="5" min="0" name="J[]" value="'.$nota.'" class="form-control J" placeholder="auto evaluacion" aria-label="auto evaluacion" aria-describedby="basic-addon1">';
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
@@ -345,12 +425,16 @@ if ($valido) {
                 //evaluación de proceso (A)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 1 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
                 } else
             {$nota = number_format($nota,1);}
+<<<<<<< HEAD
 =======
                 $nota1 = $score->nota;
                                 // coloco un numero vacio  si la nota es igual a cero
@@ -358,21 +442,30 @@ if ($valido) {
                     $nota1 = "";
                 }
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 
                 echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">evaluacion de proceso</span>';
 <<<<<<< HEAD
+<<<<<<< HEAD
                 echo '<input type="number" step="0.1" max="5" min="0" name="A[]" value="'.$nota.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1">';
 =======
                 echo '<input type="number" step="0.1" max="5" min="0" name="A[]" value="'.$nota1.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+                echo '<input type="number" step="0.1" max="5" min="0" name="A[]" value="'.$nota.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1">';
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
                 // actividad (B)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 2 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -382,6 +475,7 @@ if ($valido) {
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">actividad</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota2 = $score->nota;
                  if ($nota2 == 0){
@@ -392,11 +486,16 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota2.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
                 //taller (C)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 3 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -406,6 +505,7 @@ if ($valido) {
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">taller</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota.'"  class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota3 = $score->nota;
                  if ($nota3 == 0){
@@ -416,11 +516,16 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">taller</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota3.'"  class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
                 //tarea (D)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 4);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -430,6 +535,7 @@ if ($valido) {
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">tarea</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota4 = $score->nota;
                  if ($nota4 == 0){
@@ -440,6 +546,8 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">tarea</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota4.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
@@ -448,6 +556,9 @@ if ($valido) {
 		
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 5 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -457,6 +568,7 @@ if ($valido) {
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota.'" class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota5 = $score->nota;
                  if ($nota5 == 0){
@@ -467,6 +579,8 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota5.'" class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
@@ -474,6 +588,9 @@ if ($valido) {
                 // actitud(F)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 6 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -483,6 +600,7 @@ if ($valido) {
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota6 = $score->nota;
                  if ($nota6 == 0){
@@ -493,12 +611,17 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota6.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 		
                 //asistencia (G)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 7 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -508,6 +631,7 @@ if ($valido) {
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota7 = $score->nota;
                  if ($nota7 == 0){
@@ -518,12 +642,17 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota7.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
                 //quiz (H)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 8 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -533,6 +662,7 @@ if ($valido) {
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">quiz</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="H[]" value="'.$nota.'" class="form-control H" placeholder="quiz" aria-label="quiz" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota8 = $score->nota;
                  if ($nota8 == 0){
@@ -543,6 +673,8 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">quiz</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="H[]" value="'.$nota8.'" class="form-control H" placeholder="quiz" aria-label="quiz" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 echo '</div>';
             }
@@ -553,6 +685,9 @@ if ($valido) {
 
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 1 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -562,6 +697,7 @@ if ($valido) {
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">evaluación de proceso</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="A[]"  value="'.$nota.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota1 = $score->nota;
                  if ($nota1 == 0){
@@ -572,12 +708,17 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">evaluación de proceso</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="A[]"  value="'.$nota1.'" class="form-control A" placeholder="evaluación de proceso" aria-label="evaluación de proceso" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
                 // actividad (B)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 2 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -587,6 +728,7 @@ if ($valido) {
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">actividad</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota2 = $score->nota;
                  if ($nota2 == 0){
@@ -597,11 +739,16 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">actividad</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="B[]" value="'.$nota2.'" class="form-control B" placeholder="actividad" aria-label="actividad" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
                 //taller (C)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 3 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -611,6 +758,7 @@ if ($valido) {
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">taller</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota.'" class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota3 = $score->nota;
                  if ($nota3 == 0){
@@ -621,11 +769,16 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">taller</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="C[]" value="'.$nota3.'" class="form-control C" placeholder="taller" aria-label="taller" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
                 //tarea (D)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 4 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -635,6 +788,7 @@ if ($valido) {
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">tarea</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota4 = $score->nota;
                  if ($nota4 == 0){
@@ -645,38 +799,53 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">tarea</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="D[]" value="'.$nota4.'" class="form-control D" placeholder="tarea" aria-label="tarea" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
                 // presentacion personal (E)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 5 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
                 } else
             {$nota = number_format($nota,1);}
+<<<<<<< HEAD
 =======
                 $nota5 = $score->nota;
                  if ($nota5 == 0){
                     $nota5 = "";
                 }
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 
                 //echo "<div class='col-md-2' name=''>";
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentación personal</span>';
 <<<<<<< HEAD
+<<<<<<< HEAD
                 echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota.'" class="form-control  E" placeholder="presentacion personal" aria-label="presentacion personal" aria-describedby="basic-addon1">';
 =======
                 echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota5.'" class="form-control  E" placeholder="presentacion personal" aria-label="presentacion personal" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+                echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="'.$nota.'" class="form-control  E" placeholder="presentacion personal" aria-label="presentacion personal" aria-describedby="basic-addon1">';
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 
                 // actitud (F)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 6 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -686,6 +855,7 @@ if ($valido) {
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota6 = $score->nota;
                  if ($nota6 == 0){
@@ -696,12 +866,17 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">actitud</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="F[]" value="'.$nota6.'" class="form-control F" placeholder="actitud" aria-label="actitud" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 //echo '</div>';
 		
                 //asistencia (G)
                 $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 7 );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
                 $nota = $score->nota;
                  if ($nota == 0){
                     $nota = "";
@@ -711,6 +886,7 @@ if ($valido) {
                 echo '<div class="input-group mb-2">';
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
+<<<<<<< HEAD
 =======
                 $nota7 = $score->nota;
                  if ($nota7 == 0){
@@ -721,6 +897,8 @@ if ($valido) {
                 echo '<span class="input-group-text" id="addon-wrapping">asistencia</span>';
                 echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="'.$nota7.'" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
                 echo '</div>';
                 echo '</div>';
 		

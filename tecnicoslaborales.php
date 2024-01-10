@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/fc
 <?php
 include_once "./assets/templates/header.php";
 ?>
@@ -228,6 +231,7 @@ include_once "./assets/templates/baner-info.php";
 
 <?php
 include_once "./assets/templates/footer.php";
+<<<<<<< HEAD
 =======
 <?php
 include_once "./assets/templates/header.php";
@@ -459,4 +463,6 @@ include_once "./assets/templates/baner-info.php";
 <?php
 include_once "./assets/templates/footer.php";
 >>>>>>> refs/remotes/origin/main
+=======
+>>>>>>> origin/fc
 ?>

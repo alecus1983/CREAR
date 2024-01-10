@@ -7,8 +7,12 @@
  session_destroy();
  //Redireccionar a login.php
 <<<<<<< HEAD
+<<<<<<< HEAD
  header("location: login_boletines_prueba.php");
 =======
  header("location: login_boletines.php");
 >>>>>>> refs/remotes/origin/main
+=======
+ header("location: login_boletines.php");
+>>>>>>> origin/fc
 ?>

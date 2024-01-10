@@ -64,6 +64,11 @@ $ano = date('Y');
 
 	 a{
 	     color: black;
+<<<<<<< HEAD
+=======
+	     
+
+>>>>>>> origin/fc
 	 }
 	 @-webkit-keyframes spin {
 	     0% { -webkit-transform: rotate(0deg); }
@@ -86,12 +91,17 @@ $ano = date('Y');
 
 	<div id="content" class="container">
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
+<<<<<<< HEAD
 	    
 <<<<<<< HEAD
 	    <div class="align-items-center"><h2 class="text-center fs-2">PANEL <b>DOCENTE</b></h2></div>
 =======
 	    <div class="align-items-center"><h2 class="display-2">PANEL <b>DOCENTE</b></h2></div>
 >>>>>>> refs/remotes/origin/main
+=======
+
+
+>>>>>>> origin/fc
 	    <div class="row align-items-center" style="height:10em;">
 		
 		<div class="col"></div>
@@ -130,6 +140,7 @@ $ano = date('Y');
 		</div>
 		
 		<div class="col">
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 		    <a class="d-flex justify-content-center" href="./recuperacion.php">
@@ -166,6 +177,15 @@ $ano = date('Y');
 		</div>
 	    </div>
             </div>
+=======
+		    <a href="../" class="d-flex justify-content-center">
+			<img src="../imagenes/escudo.gif" height="70em" >
+		    </a>
+		</div>
+		<div class="col"></div>
+	    </div>
+        </div>
+>>>>>>> origin/fc
 
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
