@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+	<meta charset="utf-8">
+	<title>verificacion_inicial</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="../boostrap/css/bootstrap.css">
+	<link href="../style.css" rel="stylesheet" type="text/css">
+
+
+    </head>
+
+    <body style="background-color: #fff;color: darkblue;">
+	<div style="max-width:80%; margin: auto">
+
+	    <div style="width: 100%;">
+
+		<h1>VERIFICACIÓN INCIAL DE MEDIDORES</h1>
+		
+		<div class="card border-primary mb-3" style="max-width: 18rem;" id="cd1">
+		    <div class="card-header">[1] ALISTAMIENTO </div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Alistar el(los) medidor(es) de acuerdo a lo definido en el Instructivo
+			    109P01I003 Alistar equipos e instrumentos de
+			    medición para
+			    calibración</p>
+			<a href="#cd2" class="btn btn-outline-primary" >siguiente</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd2">
+		    <div class="card-header">[2] CONSULTAR REQUISITOS
+			DEL CLIENTE </div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Consultar los requisitos del cliente relacionado en el numeral 3.3.1 del
+			    documento "Condiciones de Prestación de Servicios de Ensayo y
+			    Calibración a la Unidad de Control de Energía". Verificar la solicitud
+			    del servicio en el sistema de información <b>OPEN SMART FLEX</b>.
+			    Cuando se trate de un servicio externo se debe verificar los requisitos
+			    del cliente en el documento "Solicitud de Calibración de Medidores de
+			    Energía"</p>
+			<a href="#cd3" class="btn btn-outline-primary" >siguiente</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd3">
+		    <div class="card-header">[3] VERIFICAR CONDICIONES DE
+			REFERENCIA</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Los ensayos deben efectuarse bajo las condiciones de referencia
+			    dadas en el numeral 4.2 de la norma NTC 4856:2018 Verificación
+			    Inicial y Posterior de Medidores de Energía Eléctrica. Si durante la
+			    realización de uno de los ensayos las condiciones antes indicadas
+			    varían, este debe suspenderse hasta que se verifique su
+			    cumplimiento. <mark>Al reiniciar el proceso, el respectivo ensayo debe
+			    repetirse totalmente y los datos que se hubieren tomado en él no se
+			    consideran válidos</mark>.</p>
+			<a href="#cd4" class="btn btn-outline-success" >cumplen</a>
+			<a href="#cd3" class="btn btn-outline-danger" > no cumplen</a>
+		    </div>
+		</div>
+
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd4">
+		    <div class="card-header">[4] SELECCIONAR <b>EPM</b></div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Seleccionar el EPM a utilizar de acuerdo con la <mark>clase de exactitud</mark> del  medidor y los resultados obtenidos en <mark>la calibración del EPM</mark> según lo
+			    establecido en la norma NTC 2423:2017.</p>
+			<a href="#cd5" class="btn btn-outline-primary" >siguiente</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd5">
+		    <div class="card-header">[5] MONTAJE Y CONEXIÓN</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Montar el(los) medidor(es) objeto de prueba al bastidor del Equipo de
+			    Prueba Medidores (EPM) y conectar las señales de corriente y
+			    tensión a los bornes previstos para ello, según el manual de
+			    operación del EPM a utilizar.</p>
+			<a href="#cd6" class="btn btn-outline-primary" >siguiente</a>
+		    </div>
+		</div>
+
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd6">
+		    <div class="card-header">[6] REVISAR MONTAJE Y CONEXIÓN</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Revisar el montaje y verificar que las conexiones de los medidores
+			    objeto de prueba se hayan realizado de acuerdo a su <mark>diagrama de
+			    conexión</mark>.</p>
+			<p><i>¿ Cumple ?</i></p>
+			<a href="#cd7" class="btn btn-outline-success" >cumplen [7]</a>
+			<a href="#cd5" class="btn btn-outline-danger" > no cumplen [5]</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd7">
+		    <div class="card-header">[7] PREPARACIÓN DEL EPM</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Encender el Equipo de Prueba Medidores (EPM) desde el interruptor
+			    principal y encender el computador, seleccionar software de ensayo y
+			    calibración IMECALTEST y realizar ajustes según el instructivo de
+			    operación del EPM a utilizar.</p>
+			<a href="#cd8" class="btn btn-outline-primary" >siguiente</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd8">
+		    <div class="card-header">[8] VERIFICAR SI SE UTILIZARAN LOS
+			TRANSFORMADORES DE AISLAMIENTO</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Verificar si se Utilizaran los
+			    Transformadores de Aislamiento.</p>
+			<p><i>¿ Utilizaran transformadores ?</i></p>
+			<a href="#cd9" class="btn btn-outline-success" >si [9]</a>
+			<a href="#cd10" class="btn btn-outline-danger" > no [10]</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd9">
+		    <div class="card-header">[9] ADECUAR EL SISTEMA DE CONEXIÓN</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Adecuar el sistema de conexión de acuerdo a los medidores a
+			    calibrar; esta tarea se realiza con el objetivo de que los terminales del
+			    secundario de los transformadores de aislamiento de cada uno de los
+			    equipos de Prueba que no esten en funcionamiento, queden
+			    cortocircuitados y con ello evitar calentamiento o sobretensiones que
+			    deterioran los transformadores, asimismo, que no haya mal contacto
+			    entre el medidor y los terminales del equipo de prueba o descartar
+			    que el medidor o los medidores presenten algún problema en el
+			    bloque de terminales; lo anterior aplica para equipos que presentan
+			    transformadores de aislamiento trifásicos en corriente.</p>
+			<p><i>Conexiones OK</i></p>
+			<a href="#cd10" class="btn btn-outline-success" >si [10]</a>
+			<a href="#cd9" class="btn btn-outline-danger" > no [9]</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd10">
+		    <div class="card-header">[10] PRECALENTAMIENTO</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Energizar los circuitos de tensión del medidor durante el tiempo
+			    requerido según el numeral 4.2 de la norma NTC 4856:2018 y tomar
+			    los datos de la hora inicial y la hora final del precalentamiento para
+			    ingresarlos al programa de medida del software IMECALTEST, en el
+			    campo DATOS GENERALES DE LA MEDIDA.</p>
+			<a href="#cd11" class="btn btn-outline-primary" >siguiente</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd11">
+		    <div class="card-header">[11] VERIFICAR SI EL MEDIDOR TIENE PANTALLA LCD</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text"><i>¿pantalla LCD?</i></p>
+			<a href="#cd12" class="btn btn-outline-success" >si [12]</a>
+			<a href="#cd13" class="btn btn-outline-danger" > no [13]</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd12">
+		    <div class="card-header">[12] VERIFICAR INFORMACIÓN</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Verificar la información que en él se despliega (número de serie,
+			    tensiones, corrientes, factor de potencia, registros de energía,
+			    alarmas, entre otros).</p>
+			<a href="#cd13" class="btn btn-outline-success" >si [13]</a>
+			<a href="#cd28" class="btn btn-outline-danger" > no [28]</a>
+		    </div>
+		</div>
+
+		<div class="card border-dark mb-3" style="max-width: 18rem;" id="cd13">
+		    <div class="card-header">[13] SELECCIONAR PROGRAMA DE MEDIDA
+			E INGRESAR DATOS</div>
+		    <div class="card-body text-dark">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Seleccionar el Programa de Medida a Utilizar, tener en cuenta
+			    caracteristicas del medidor objeto de prueba, como son: </p>
+
+			<ol>
+			    <li>tipo de medidor</li>
+			    <li>la clase de precisión</li>
+			    <li>constante</li>
+			    <li>si es bidireccional</li>
+			    <li>verificar los puntos de ensayo y límites de error de la prueba , con
+				base a la Tabla 3 de la Norma NTC 4856:2018</li>
+			    <li>la corriente de   arranque con base en la tabla 8 de de la Norma NTC 4856:2018</li>
+			    <li>el  número de pulsos a ulilizar en el ensayo de exactitud</li>
+			    <li>el tiempo para los ensayos de arranque y funcionamiento sin carga, de acuerdo con
+				la Norma NTC 4856:2018 .</li>
+			    <li> Ingresar observaciones en el campo DATOS GENERALES DE LA
+			    MEDIDA del software IMECALTEST. Incluir en este campo la hora
+				inicial y la hora final del precalentamiento.
+			    </li></p>
+			<a href="#cd14" class="btn btn-outline-primary" >siguiente</a>
+		    </div>
+		</div>
+
+		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;" id="cd14">
+		    <div class="card-header">[14] Ensayo de Exactitud</div>
+		    <div class="card-body">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Determinar los errores del (de los) medidor(es) en los puntos de
+			    prueba (PP) indicados en el numeral 4.4.2 tabla 3 de la norma NTC
+			    4856:2018.</p>
+			<a href="#cd15" class="btn btn-success" >siguiente</a>
+		    </div>
+		</div>
+
+		<div class="card text-white bg-info mb-3" style="max-width: 18rem;" id="cd15">
+		    <div class="card-header">[15] VERIFICACIÓN CONSTANTE</div>
+		    <div class="card-body">
+			<h5 class="card-title"></h5>
+			<p class="card-text">Realizar el ensayo de la Verificación de la Constante por el método
+			    de Dosificación de Energía según lo establecido en el numeral 4.4.3.2
+			    de la NTC 4856:2018.</p>
+			<a href="#cd16" class="btn btn-success" >siguiente</a>
+		    </div>
+		</div>
+		
+	   
+		
+
+
+		
+	    </div>
+
+	    <br><br><a href="../index.html">Ir al inicio</a>
+	</div>
+
+	<script src="../boostrap/js/bootstrap.js"></script>
+    </body>
+
+</html>

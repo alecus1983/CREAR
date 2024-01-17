@@ -22,9 +22,7 @@ $link = conectar();
 
 
 // Se establece el tipo de cabecera  que tendra el documento
-class PDF extends FPDF
-
-{
+class PDF extends FPDF{
     //Cabecera de página
     function Header()
     {

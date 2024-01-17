@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>circuitos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./boostrap/css/bootstrap.css">
+    <script>
+
+     // variable que almacena los asiertos
+     var aciertos = 0;
+     // variable que alamacena los errores
+     var errores = 0;
+
+      // variable json con los enlaces de los circuitos 
+      var  retro = {
+	  	 "JUANCHITO": ["PANCE", "SALVAJINA", "PAEZ","SAN MARCOS" ],
+	 "YUMBO" : [ "SAN MARCOS" , "PANCE", "ALTO ANCHICAYA", "ALFEREZ II"],
+	 "PANCE" : [ "ALTO ANCHICAYA",  "YUMBO", "SALVAJINA", "JUANCHITO",],
+	  "SAN MARCOS" : ["JUANCHITO", "YUMBO", "CARTAGO"],
+	 "SAN BERNANDINO" : ["PAEZ", "ALFEREZ II" ],
+	  "ALFEREZ II" : ["SAN BERNANDINO",  "YUMBO","TESALIA"],
+	 "ALTO ANCHICAYA" : ["YUMBO", "PANCE"],
+	 "SALVAJINA" : ["PANCE", "JUANCHITO"],
+	 "PAEZ" : ["JUANCHITO", "SAN BERNANDINO"],
+	  "SAN BERNANDINO" : ["PAEZ", "ALFEREZ II"],
+	  "TESALIA":["ALFEREZ II"],
+	  "CARTAGO" :["SAN MARCOS", "VIRGINIA"],
+	  "VIRGINIA" : ["CARTAGO"]
+
+      }
+
+
+     // retorna un elemento entero de manera aleatoria
+     // entre 0 y la longitud del vector retro
+
+     function getRandomCircuit(){
+	 // obtengo un nummero aleatoria del tamaño del array
+	 var numero = parseInt(Math.random() * Object.keys(retro).length);
+	 var ex = 0;
+	 var rcircuit = "";
+	 // explorando JSON retro 
+	 for (var key in retro) {
+	     // reviso si estoy explorando la variable indicada
+	     if (ex == numero) {
+		 // muestro en la consola
+		 console.log(key + ' -> ' + retro[key]);
+		 // asigno el nodo de pregunta
+		 rcircuit = key;
+	     }
+	     // incremento contador
+	     ex = ex + 1;
+	 }
+	 return rcircuit;
+     }
+
+     function getRandomInt(min, max) {
+         min = Math.ceil(min);
+         max = Math.floor(max);
+         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+     }
+
+	 // funcion que evalua la reapuesta
+
+	 function calificar() {
+	     // guarda el item seleccionado
+	     var item = "";
+	     // guarda el objeto formulario
+	     var formulario = document.getElementById("retroalimentaciones");
+	     // guarda en nombre del circuito (oculto)
+	     var pregunta = document.getElementById("pregunta").value;
+	     // respuesta
+	     var datos = document.getElementById("datos");
+
+	     for (i=0; i < formulario.length; i++) {
+		 if (formulario[i].checked==true) {
+		     //alert(formulario[i].value);
+		     item = formulario[i];
+		 }
+	     }
+
+	     // variable de conclucion
+	     var dato = false;
+	     // buscando la respuesta
+	     for ( l in retro){
+		 // compruebo si estoy en el nodo correcto
+		 if (l == pregunta){
+		     console.log("buscando .."+ pregunta);
+		     // por cada una de las realimentaciones
+		     for (n in retro[l]){
+			 // verificacion
+			 if ( retro[l][n] == item.value){
+			     dato = true;
+			 }
+
+		     }
+		 }
+	     }
+
+	     // si el dato
+	     if (dato == true) {
+		 // alert ("correcto");
+		 datos.innerHTML = "correcto";
+		 aciertos = aciertos + 1;
+	     }
+	     else {
+		 // alert("incorrecto");
+		 datos.innerHTML = "incorrecto";
+		 errores = errores +1;
+	     }
+
+	      /// actualizo los aciertos y los errores
+
+             document.getElementById("aciertos").innerHTML = aciertos;
+             document.getElementById("errores").innerHTML = errores;
+	 }
+
+    // funcion que presenta la respuesta correcta
+     function ver_respuesta(){
+         // obtengo el codigo de la subestacion del campo oculto
+         var val1 = document.getElementById("sub").innerHTML;
+
+         sitio = JSON.parse(sub);
+
+         for (ii =0 ; ii < sitio.subestacion.length; ii ++ ){
+
+             if (sitio.subestacion[ii].codigo == val1){
+                 document.getElementById("resp1").innerHTML = sitio.subestacion[ii].nombre;
+             }
+
+         }
+     }
+
+     // funcion que valida que un valor no se encuentre en el array respuesta
+     function validar_respuesta(respuesta, respuestas){
+	 var vl = false;
+	 for (r in respuestas){
+	     if (respuestas[r] == respuesta){ vl = true;} 
+	 }
+
+	 return vl;
+     }
+     // funcion que genera un listado de respuestas posibles
+     function listado() {
+
+	 // variable de respuesta
+	 var pregunta = "";
+	 // arreglo vacio para almacenar las respuestas
+	 var respuestas = [];
+	 // espacio de la pagina donde aparece la respuesta
+	 document.getElementById("datos").innerHTML = "";
+
+	 
+
+	 // obtengo un circuito aleatorio 
+	 var key = getRandomCircuit();
+	 // cantidad de fronteras
+	 var size = retro[key].length;
+
+	 // genero un numero aleatorio de acuerdo a la longitud
+	 var rr = getRandomInt(0,size);
+	 // agrego la primera respuesta (correcta)
+	 respuestas.push(retro[key][rr]);
+	 // ciclo de repeticion para las restantes respuestas
+	 for ( var dd = 0; dd <3 ; dd++) {
+	     // variable que almacena temporalmente la respuesta
+	     var rd = getRandomCircuit();
+	     // se repite hasta obtener  una respuesta diferente
+	     while (validar_respuesta(rd,respuestas)) {
+		 // obtengo una otra respuesta aleatoria a partir del JSON retro
+		 rd = getRandomCircuit();
+	     }
+	     // agrego una posible respuesta ... (b)
+	     respuestas.push(rd);
+	 }
+
+	 // funcion que rota un listado
+	 //var arr1 = ["a", "b", "c", "d"];
+	 respuestas.sort(function() { return Math.random() - 0.5 });
+
+	 // leo el formulario
+	 var form_retro = document.getElementById("retroalimentaciones");
+
+	 var texto = "La subestacion <b>"+ key + "</b> se conecta en 220 kV con :";
+	 document.getElementById("parrafo").innerHTML =texto;
+
+	 // por cada elemento en respuestas
+	 // for( i in respuestas) {
+	 //   console.log(respuestas[i]);
+	 // }
+
+	 document.getElementById("ta").innerHTML = respuestas[0];
+	 document.getElementById("a").value = respuestas[0];
+	 document.getElementById("tb").innerHTML = respuestas[1];
+	 document.getElementById("b").value = respuestas[1];
+	 document.getElementById("tc").innerHTML = respuestas[2];
+	 document.getElementById("c").value = respuestas[2];
+	 document.getElementById("td").innerHTML = respuestas[3];
+	 document.getElementById("d").value = respuestas[3];
+	 document.getElementById("pregunta").value = key;
+
+     }
+
+    </script>
+
+</head>
+<body>
+
+    <div class="container">
+
+	<div style="max-width:80%; margin: auto">
+
+	    <h2>
+		Circuitos a 220 kV
+	    </h2>
+	    <p>En el formulario presiona el boton nuevo para obtener un nuevo circuito que conecta dos subestaciones </p>
+	    
+	    <p id="parrafo"></p>
+	    <form id="retroalimentaciones" style="color:rgb(2, 13, 41); background-color: #c2ccce;padding: 2%;">
+
+		<div class="input-group mb-3">
+		    <div class="input-group-prepend">
+			<div class="input-group-text">
+			    <input class="form-control" id="a" type="radio" name="opcion" value="ta">
+			</div>
+		    </div>
+		    <label class="form-control" id="ta"></label>
+		</div>
+
+		<div class="input-group mb-3">
+		    <div class="input-group-prepend">
+			<div class="input-group-text">
+			    <input class="form-control" id="b" type="radio" name="opcion" value="tb">
+			</div>
+		    </div>
+		    <label class="form-control" id="tb"></label>
+		</div>
+
+
+		<div class="input-group mb-3">
+		    <div class="input-group-prepend">
+			<div class="input-group-text">
+			    <input class="form-control" id="c" type="radio" name="opcion" value="tc">
+			</div>
+		    </div>
+
+		    <label class="form-control" id="tc"></label>
+		</div>
+
+		<div class="input-group mb-3">
+		    <div class="input-group-prepend">
+			<div class="input-group-text">
+			    <input class="form-control" id="d" type="radio" name="opcion" value="td">
+			</div>
+		    </div>
+		    <label class="form-control" id="td"></label>
+		</div>
+
+		<input class="form-control" id="pregunta" type="hidden" value="" >
+
+	    </form>
+
+	    <br>
+	    <button type="button" name="button" onclick="calificar();" class="btn btn-outline-success">Calificar</button>
+
+	    <span id="datos" style="margin: 30px;   font-weight: 800;"></span>
+	    <button type="button" name="button" onclick="listado();" class="btn btn-outline-primary" style="float: right;">Nuevo</button>
+
+	    <br><br>
+	    <button id="mostrar_resp1" onclick="ver_respuesta();" class="btn btn-outline-warning">Ver respuesta</button>
+            <span id="resp1" style="margin-left: 10%;font-weight: bold;font-family: verdana;color: rgb(27, 47, 161);"></span>
+	    <br><br>
+	    
+	    <span id="sub" hidden></span>
+
+	    <div class="card" style="max-width: 80%;">
+		<ul class="list-group list-group-flush">
+		    <li class="list-group-item">Aciertos <span style="color: darkgreen; margin-left: 20px; font-weight: bold;" id="aciertos"></span></li>
+		    <li class="list-group-item">Errores<span style="color: darkred; margin-left: 20px; font-weight: bold;" id="errores"></span></li>
+		</ul>
+	    </div>
+	    <div>
+
+	    </div>
+	    <br>
+	    <br>
+	    <a href="index.html">Ir al inicio</a></div>
+    </div>
+
+    <script src="./boostrap/js/bootstrap.js"></script>
+</body>
