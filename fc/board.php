@@ -64,11 +64,6 @@ $ano = date('Y');
 
 	 a{
 	     color: black;
-<<<<<<< HEAD
-	     
-
-=======
->>>>>>> refs/remotes/origin/main
 	 }
 	 @-webkit-keyframes spin {
 	     0% { -webkit-transform: rotate(0deg); }
@@ -91,17 +86,8 @@ $ano = date('Y');
 
 	<div id="content" class="container">
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
-<<<<<<< HEAD
-
-
-=======
 	    
-<<<<<<< HEAD
 	    <div class="align-items-center"><h2 class="text-center fs-2">PANEL <b>DOCENTE</b></h2></div>
-=======
-	    <div class="align-items-center"><h2 class="display-2">PANEL <b>DOCENTE</b></h2></div>
->>>>>>> refs/remotes/origin/main
->>>>>>> refs/remotes/origin/main
 	    <div class="row align-items-center" style="height:10em;">
 		
 		<div class="col"></div>
@@ -140,31 +126,14 @@ $ano = date('Y');
 		</div>
 		
 		<div class="col">
-<<<<<<< HEAD
-		    <a href="../" class="d-flex justify-content-center">
-			<img src="../imagenes/escudo.gif" height="70em" >
-		    </a>
-		</div>
-		<div class="col"></div>
-	    </div>
-        </div>
-=======
 
-<<<<<<< HEAD
 		    <a class="d-flex justify-content-center" href="./recuperacion.php">
-=======
-		    <a class="d-flex justify-content-center">
->>>>>>> refs/remotes/origin/main
 			<svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16" style="color:darkblue;">
 			    <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
 
 			</svg>
 		    </a>
-<<<<<<< HEAD
 		    <a href="./recuperacion.php" class="d-flex justify-content-center">Recuperación</A>
-=======
-		    <a href="" class="d-flex justify-content-center">Recuperación</A>
->>>>>>> refs/remotes/origin/main
 
 		</div>
 		<div class="col"></div>
@@ -185,7 +154,6 @@ $ano = date('Y');
 		</div>
 	    </div>
             </div>
->>>>>>> refs/remotes/origin/main
 
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">

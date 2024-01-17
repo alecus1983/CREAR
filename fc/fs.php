@@ -584,11 +584,7 @@ $ano = date('Y');
                             <div class="row container">
 				
 				<div class="col-md-5">
-<<<<<<< HEAD
-				    <div class="card border-primary border-6">
-=======
 				    <div class="card border-primary border-5">
->>>>>>> refs/remotes/origin/main
 					<div class="card-header">
 					    <i class="fas fa-chart-area me-1"></i>
 					    semanas primer periodo
@@ -598,26 +594,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio1"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 1</label>
-=======
 							<label for="inicio1" class="form-label text-muted fst-italic">inicio semana 1</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio1" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin1"
-							       class="form-label text-muted fst-italic">
-							    fin semana 1
-							</label>
-=======
 							<label for="fin1" class="form-label text-muted fst-italic">fin semana 1</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin1" class="form-control" >
 						    </div>
 						</div>
@@ -628,27 +611,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio2"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 2
-							</label>
-=======
 							<label for="inicio2" class="form-label text-muted fst-italic">inicio semana 2</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio2" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin2"
-							       class="form-label text-muted fst-italic">
-							    fin semana 2
-							</label>
-=======
 							<label for="fin2" class="form-label text-muted fst-italic">fin semana 2</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin2" class="form-control" >
 						    </div>
 						</div>
@@ -659,27 +628,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio3"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 3
-							</label>
-=======
 							<label for="inicio3" class="form-label text-muted fst-italic">inicio semana 3</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio3" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin3"
-							       class="form-label text-muted fst-italic">
-							    fin semana 3
-							</label>
-=======
 							<label for="fin3" class="form-label text-muted fst-italic">fin semana 3</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin3" class="form-control" >
 						    </div>
 						</div>
@@ -690,27 +645,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio4"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 4
-							</label>
-=======
 							<label for="inicio4" class="form-label text-muted fst-italic">inicio semana 4</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio4" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin4"
-							       class="form-label text-muted fst-italic">
-							    fin semana 4
-							</label>
-=======
 							<label for="fin4" class="form-label text-muted fst-italic">fin semana 4</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin4" class="form-control" >
 						    </div>
 						</div>
@@ -721,27 +662,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio5"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 5
-							</label>
-=======
 							<label for="inicio5" class="form-label text-muted fst-italic">inicio semana 5</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio2" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin5"
-							       class="form-label text-muted fst-italic">
-							    fin semana 5
-							</label>
-=======
 							<label for="fin5" class="form-label text-muted fst-italic">fin semana 5</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin5" class="form-control" >
 						    </div>
 						</div>
@@ -752,27 +679,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio6"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 6
-							</label>
-=======
 							<label for="inicio6" class="form-label text-muted fst-italic">inicio semana 6</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio6" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin6"
-							       class="form-label text-muted fst-italic">
-							    fin semana 6
-							</label>
-=======
 							<label for="fin6" class="form-label text-muted fst-italic">fin semana 6</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin6" class="form-control" >
 						    </div>
 						</div>
@@ -783,27 +696,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio7"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 7
-							</label>
-=======
 							<label for="inicio7" class="form-label text-muted fst-italic">inicio semana 7</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio7" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin7"
-							       class="form-label text-muted fst-italic">
-							    fin semana 7
-							</label>
-=======
 							<label for="fin7" class="form-label text-muted fst-italic">fin semana 7</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin7" class="form-control" >
 						    </div>
 						</div>
@@ -814,27 +713,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio8"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 8
-							</label>
-=======
 							<label for="inicio8" class="form-label text-muted fst-italic">inicio semana 8</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio8" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin2"
-							       class="form-label text-muted fst-italic">
-							    fin semana 8
-							</label>
-=======
 							<label for="fin2" class="form-label text-muted fst-italic">fin semana 8</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin2" class="form-control" >
 						    </div>
 						</div>
@@ -845,11 +730,7 @@ $ano = date('Y');
 				    </div>
 				</div>
 
-<<<<<<< HEAD
-				<div class="col-md-6">
-=======
 				<div class="col-md-5">
->>>>>>> refs/remotes/origin/main
 				    <div class="card border-success">
 					<div class="card-header">
 					    <i class="fas fa-chart-area me-1"></i>
@@ -860,27 +741,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio9"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 9
-							</label>
-=======
 							<label for="inicio9" class="form-label text-muted fst-italic">inicio semana 9</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio9" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin9"
-							       class="form-label text-muted fst-italic">
-							    fin semana 9
-							</label>
-=======
 							<label for="fin9" class="form-label text-muted fst-italic">fin semana 9</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin9" class="form-control" >
 						    </div>
 						</div>
@@ -891,27 +758,13 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio10"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 10
-							</label>
-=======
 							<label for="inicio10" class="form-label text-muted fst-italic">inicio semana 10</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio2" class="form-control" >
 						    </div>
 						</div>
 						<div class="col-md-6">
 						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin10"
-							       class="form-label text-muted fst-italic">
-							    fin semana 10
-							</label>
-=======
 							<label for="fin10" class="form-label text-muted fst-italic">fin semana 10</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="fin10" class="form-control" >
 						    </div>
 						</div>
@@ -922,14 +775,7 @@ $ano = date('Y');
 						
 						<div class="col-md-6">
 						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio11"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 11
-							</label>
-=======
 							<label for="inicio11" class="form-label text-muted fst-italic">inicio semana 11</label>
->>>>>>> refs/remotes/origin/main
 							<input type="date" id="inicio11" class="form-control" >
 						    </div>
 						</div>
