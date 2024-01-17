@@ -973,7 +973,7 @@ if (isset($_SESSION["usuario"])){
 					       min="2015"
 					       max="2100" step="1"
 					       style="background: transparent;color: darkgreen;border: 0px;"
-					<?php if ($admin !== 1) { ?>
+					<?php if ($admin < 1) { ?>
 					    readonly="readonly"
 					<?php } ?>
 					class="form-control ">
