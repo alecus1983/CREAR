@@ -16,6 +16,8 @@
  *
  * PHP version 5 and 7
  *
+ * @category  Crypt
+ * @package   EC
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2019 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -24,15 +26,19 @@
 
 namespace phpseclib3\Crypt\EC\BaseCurves;
 
-use phpseclib3\Crypt\EC\Curves\Curve25519;
-use phpseclib3\Math\BigInteger;
+use phpseclib3\Math\Common\FiniteField\Integer;
+use phpseclib3\Common\Functions\Strings;
 use phpseclib3\Math\PrimeField;
+use phpseclib3\Math\BigInteger;
+use phpseclib3\Crypt\EC\Curves\Curve25519;
 use phpseclib3\Math\PrimeField\Integer as PrimeInteger;
 
 /**
  * Curves over y^2 = x^3 + a*x + x
  *
+ * @package EC
  * @author  Jim Wigginton <terrafrost@php.net>
+ * @access  public
  */
 class Montgomery extends Base
 {
@@ -216,7 +222,7 @@ class Montgomery extends Base
      *
      * @return array
      */
-    public function multiplyPoint(array $p, BigInteger $d)
+    public function multiplyPoint(array $p, Integer $d)
     {
         $p1 = [$this->one, $this->zero];
         $alreadyInternal = isset($x[1]);

@@ -1,5 +1,9 @@
 <?php
 session_start();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 require_once('datos.php');
 if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
@@ -12,11 +16,31 @@ if (isset($_SESSION["usuario"])){
     if($admin == 0){
         header("Location:board.php");
     }
+<<<<<<< HEAD
+=======
+=======
+if (isset($_SESSION["usuario"])){
+    $usuario =  $_SESSION["usuario"];
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 } else {
     header("Location:board.php");
     exit;
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+require_once('datos.php');
+
+$d = new docentes();
+$d->get_docente_cc($usuario);
+$id = $d->id;
+$admin = $d->admin ;
+$ano = date('Y');
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -154,7 +178,14 @@ if (isset($_SESSION["usuario"])){
                              id_docente: $("#id_d").val(),
                              corte: $("#corte").val(),
                              periodo: $("#periodos").val(),
+<<<<<<< HEAD
 			     id_curso: $("#id_c").val(),
+=======
+<<<<<<< HEAD
+			     id_curso: $("#id_c").val(),
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
                              logro1: JSON.stringify(logros1),
                              logro2: JSON.stringify(logros2),
                              logro3: JSON.stringify(logros3),
@@ -292,10 +323,17 @@ if (isset($_SESSION["usuario"])){
 
 	 }
 
+<<<<<<< HEAD
 	 // avance semanal de notas de docentes
 	 function notas_faltantes() {
 
 
+=======
+<<<<<<< HEAD
+	 // avance semanal de notas de docentes
+	 function notas_faltantes() {
+
+>>>>>>> refs/remotes/origin/main
 	     // se invoca al metodo ajax para solicitar
 	     // el listado de estudiantes
 	     $.ajax({
@@ -309,7 +347,10 @@ if (isset($_SESSION["usuario"])){
 		     id_ms: $("#id_ms").val(),
 		     id_jornada: $("#jornada").val(),
 		     id_curso: $("#id_c").val(),
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/main
 		 } ,
 		 // si los datos son correctos entonces ...
 		 success: function(respuesta) {
@@ -327,7 +368,44 @@ if (isset($_SESSION["usuario"])){
 	 }
 
 
+<<<<<<< HEAD
 	 	 function eliminar_semana(){
+=======
+	 // llamado para agregar certificados
+	 function certificado() {
+
+	     // se invoca al metodo ajax para solicitar
+	     // el listado de estudiantes
+	     $.ajax({
+		 type: "POST",
+		 url: "certificado.php",
+		 data: {
+                     years: $("#years").val(),
+		     periodo: $("#periodos").val(),
+		     semana: $("#semana").val(),
+		     id_g: $("#id_g").val(),
+		     id_ms: $("#id_ms").val(),
+		     id_jornada: $("#jornada").val(),
+		     id_curso: $("#id_c").val(),
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+
+		     //$("#calificador").html(respuesta);
+		     $("#avance").html(respuesta);
+
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
+	     });
+
+	 }
+
+
+	 function eliminar_semana(){
+>>>>>>> refs/remotes/origin/main
 
 
 	     // se invoca al metodo ajax para solicitar
@@ -727,6 +805,11 @@ if (isset($_SESSION["usuario"])){
 
 	 }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 	 // actualiza el formulario
 	 function actualizar(){
 	     load_materias();
@@ -780,7 +863,15 @@ if (isset($_SESSION["usuario"])){
 				 "&grado="+grados+
 				 "&jornada="+jornada+
 				 "&curso="+curso;
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+		 
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 		 console.log("los parametros son : %s",parametros);
 		 // abro boletin en una nueva ventana
 		 // llamando para ello al archivo cetificado.php
@@ -790,13 +881,27 @@ if (isset($_SESSION["usuario"])){
 	     // si la opcion seleccionada es boletines entra aqui
 	     //if (opcion == 6)
 	     //{
+<<<<<<< HEAD
 
 
+=======
+<<<<<<< HEAD
+
+
+=======
+		 
+		 
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 	     //}
 	     // de lo contrario mira si la opcion seleccionada es
 	     // el certificado
 	     //else if (opcion == 16)
 	     //{
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 	     // almacena los parametros para enviar
 	     // por el método GET
 	     // var parametros= "year="+year+
@@ -808,20 +913,52 @@ if (isset($_SESSION["usuario"])){
 	     //window.open("certificado.php?"+parametros);
 	     //}
 
+<<<<<<< HEAD
+=======
+=======
+		 // almacena los parametros para enviar
+		 // por el método GET
+		// var parametros= "year="+year+
+		//		 "&grado="+grados;
+		 // muestro los parámetos por consola
+		 //console.log("los parametros son : %s",parametros);
+		 // abro el certificado en una nueva ventana
+		 // llamando para ello al archivo cetificado.php
+		 //window.open("certificado.php?"+parametros);
+	     //}
+	     
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 	 }
 
 
 
 	 function obtener_pdf(){
 	     // esta funcion crea un pdf para preescolar
+<<<<<<< HEAD
 	     // se almacena el año en la variable year
+=======
+<<<<<<< HEAD
+	     // se almacena el año en la variable year
+=======
+	     // se almacena el año en la variable year 
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 	     var year = $("#years").val();
 	     // se almacena el periodo
 	     var periodos = $("#periodos").val();
 	     // y se almacenan las variables grados
 	     var gradosx = $("#id_gs").val();
 	     var grados = $("#id_gs").val();
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+	     
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 	     // se almacenan todas las variables dentro de la variable parametros
 	     var parametros= "year="+year+"&periodos="+periodos+"&grados="+gradosx+"&id_gs="+gradosx+"";
 	     console.log("los parametros son : %s",parametros);
@@ -912,16 +1049,34 @@ if (isset($_SESSION["usuario"])){
     <body class="sb-nav-fixed">
 
 	<div class="loader" style="display:none" id="loader"></div>
+<<<<<<< HEAD
 
 	<div id="content">
 
+=======
+<<<<<<< HEAD
+
+	<div id="content">
+
+=======
+	<div id="content">
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
 	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+<<<<<<< HEAD
 			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+=======
+<<<<<<< HEAD
+			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+=======
+			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -938,12 +1093,24 @@ if (isset($_SESSION["usuario"])){
 		    </li>
 		</ul>
 	    </nav>
+<<<<<<< HEAD
 
 
+=======
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
 		    <nav class="sb-sidenav accordion sb-sidenav-dark"
 			 id="sidenavAccordion"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 			 style="background-color: cadetblue">
 
 			<div class="sb-sidenav-menu">
@@ -954,13 +1121,40 @@ if (isset($_SESSION["usuario"])){
 				   data-bs-toggle="collapse"
 				   data-bs-target="#collapseLayouts1"
 				   aria-expanded="false" aria-controls="collapseLayouts1">
+<<<<<<< HEAD
+=======
+=======
+			 tyle="background-color: cadetblue">
+			<div class="sb-sidenav-menu">
+			    <div class="nav">
+				<div class="sb-sidenav-menu-heading">Core</div>
+				<a class="nav-link" href="fc.php">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-tachometer-alt"></i></div>
+				    FORMULARIO
+				</a>
+				<div class="sb-sidenav-menu-heading">DATOS</div>
+				<a class="nav-link collapsed" href="#"
+				   data-bs-toggle="collapse"
+				   data-bs-target="#collapseLayouts"
+				   aria-expanded="false" aria-controls="collapseLayouts">
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i></div>
 				    Datos
 				    <div class="sb-sidenav-collapse-arrow">
 					<i class="fas fa-angle-down"></i></div>
 				</a>
+<<<<<<< HEAD
 				<div class="collapse" id="collapseLayouts1"
+=======
+<<<<<<< HEAD
+				<div class="collapse" id="collapseLayouts1"
+=======
+				<div class="collapse" id="collapseLayouts"
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
 				    <nav class="sb-sidenav-menu-nested nav">
@@ -973,7 +1167,11 @@ if (isset($_SESSION["usuario"])){
 					       min="2015"
 					       max="2100" step="1"
 					       style="background: transparent;color: darkgreen;border: 0px;"
+<<<<<<< HEAD
 					<?php if ($admin < 1) { ?>
+=======
+					<?php if ($admin !== 1) { ?>
+>>>>>>> refs/remotes/origin/main
 					    readonly="readonly"
 					<?php } ?>
 					class="form-control ">
@@ -982,19 +1180,44 @@ if (isset($_SESSION["usuario"])){
 
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
+<<<<<<< HEAD
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    class="form-control"
 						    onchange=";">
+=======
+<<<<<<< HEAD
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    class="form-control"
+						    onchange=";">
+=======
+						style="background: transparent;color: darkgreen;border: 0px"
+						class="form-control"
+						onchange=";">
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 					    <option value="1">Mañana</option>
 					    <option value="2">Tarde</option>
 					</select>
 
 					<label for="periodos">Periodo</label>
 					<select id="periodos"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    name="periodos"
 						    class="form-control" required=""
 						onchange="">
+<<<<<<< HEAD
+=======
+=======
+						style="background: transparent;color: darkgreen;border: 0px"
+						name="periodos"
+						class="form-control" required=""
+						    onchange="">
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 					    <?php
 
 					    if($admin){
@@ -1015,9 +1238,21 @@ if (isset($_SESSION["usuario"])){
 
 					<label for="semana">Semana</label>
 					<select id="semana"
+<<<<<<< HEAD
 						class="form-control"
 						style="background: transparent;color: darkgreen;border: 0px"
 						onchange="">
+=======
+<<<<<<< HEAD
+						class="form-control"
+						style="background: transparent;color: darkgreen;border: 0px"
+						onchange="">
+=======
+						    class="form-control"
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    onchange="load_lista_estudiantes();">
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
                                             <?php
 
 					    if ($admin) {
@@ -1043,9 +1278,21 @@ if (isset($_SESSION["usuario"])){
 
 					<label class="Control-label">Grado</label>
 					<select id="id_g" name="id_gs"
+<<<<<<< HEAD
 						    class ="form-control"
 						    style="background: transparent;color: darkgreen;border:  0px"
 						    onchange="actualizar()">
+=======
+<<<<<<< HEAD
+						    class ="form-control"
+						    style="background: transparent;color: darkgreen;border:  0px"
+						    onchange="actualizar()">
+=======
+						class ="form-control"
+						style="background: transparent;color: darkgreen;border:  0px"
+						onchange="actualizar();">
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 					    <?php
 					    // creo un nuevo objeto  matricula docente
 					    $mt = new matricula_docente();
@@ -1067,9 +1314,21 @@ if (isset($_SESSION["usuario"])){
 
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
+<<<<<<< HEAD
 						style="background: transparent;color: darkgreen;border:0px;"
 						onchange = ";"
 						class ="form-control">
+=======
+<<<<<<< HEAD
+						style="background: transparent;color: darkgreen;border:0px;"
+						onchange = ";"
+						class ="form-control">
+=======
+						    style="background: transparent;color: darkgreen;border:0px;"
+						    onchange = ";"
+						    class ="form-control">
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 					    <option value="0">A</opcion>
 						<option value="1">B</opcion>
 					</select>
@@ -1082,11 +1341,16 @@ if (isset($_SESSION["usuario"])){
 					</select>
 
 				    </nav>
+<<<<<<< HEAD
 
 
 
 
 				</div>
+=======
+				</div>
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 				<a class="nav-link collapsed" href="#"
 				   data-bs-toggle="collapse"
@@ -1126,6 +1390,10 @@ if (isset($_SESSION["usuario"])){
 					</a>
 				    </nav>
 				</div>
+<<<<<<< HEAD
+=======
+				
+>>>>>>> refs/remotes/origin/main
 				<a class="nav-link collapsed" href="#"
 				   data-bs-toggle="collapse"
 				   data-bs-target="#collapseLayouts3"
@@ -1136,6 +1404,10 @@ if (isset($_SESSION["usuario"])){
 				    <div class="sb-sidenav-collapse-arrow">
 					<i class="fas fa-angle-down"></i></div>
 				</a>
+<<<<<<< HEAD
+=======
+				
+>>>>>>> refs/remotes/origin/main
 				<div class="collapse" id="collapseLayouts3"
 				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
@@ -1150,6 +1422,7 @@ if (isset($_SESSION["usuario"])){
 					   class="nav-link"
 					   href="#"
 					   onclick="avance_semanal();">Avance notas semanales
+<<<<<<< HEAD
 
 					</a>
 					<a style="margin: 0.5rem;"
@@ -1159,6 +1432,11 @@ if (isset($_SESSION["usuario"])){
 					<a style="margin: 0.5rem;"
 					   class="nav-link"
 					   href="" target="_self"
+=======
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+>>>>>>> refs/remotes/origin/main
 					   onclick="crear_pdf()">Boletin
 					</a>
 
@@ -1168,7 +1446,15 @@ if (isset($_SESSION["usuario"])){
 					   onclick="notas_faltantes()">Notas faltantes
 					</a>
 
+<<<<<<< HEAD
 					
+=======
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="certificado()">Generar certificado
+					</a>
+>>>>>>> refs/remotes/origin/main
 
 				    </nav>
 				</div>
@@ -1177,6 +1463,46 @@ if (isset($_SESSION["usuario"])){
                         </div>
                         <div>
 
+<<<<<<< HEAD
+=======
+=======
+                            </div>
+                        </div>
+                        <div>
+			    <a style="margin: 2rem;"
+			       class="nav-link collapsed"
+			       href="#"
+			       data-bs-toggle="collapse"
+			       data-bs-target="#collapsePages"
+			       aria-expanded="false"
+			       aria-controls="collapsePages"
+			       href="listado_docentes.php"
+			       target="_blank">lista de docentes
+			    </a>
+			    <a style="margin: 2rem;"
+			       class="nav-link collapsed"
+			       href="#"
+			       data-bs-toggle="collapse"
+			       data-bs-target="#collapsePages"
+			       aria-expanded="false"
+			       aria-controls="collapsePages"
+			       target="#" onclick="avance_semanal();">Avance notas semanales
+			    </a>
+			    <a style="margin: 2rem;"
+			       class="nav-link collapsed"
+			       aria-expanded="false"
+			       aria-controls="collapsePages"
+			       href="fs.php" target="_self">Gestión de semanas
+			    </a>
+			    <a style="margin: 2rem;"
+			       class="nav-link collapsed"
+			       aria-expanded="false"
+			       aria-controls="collapsePages"
+					    href="" target="_self"
+					    onclick="crear_pdf()">Boletin
+			    </a>
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 			</div>
 			<div class="sb-sidenav-footer">
                             <div class="small">Registrado como:</div>
@@ -1191,6 +1517,10 @@ if (isset($_SESSION["usuario"])){
                         <div class="container-fluid px-4">
                             <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
                             <ol class="breadcrumb mb-4">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 				<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
                             </ol>
 
@@ -1198,6 +1528,18 @@ if (isset($_SESSION["usuario"])){
 
                             <div id="f_semanas" class="row container" style="display:none;">
 
+<<<<<<< HEAD
+=======
+=======
+				<li class="breadcrumb-item active">Para la gestistión de las semanas</li>
+                            </ol>
+
+			    <div id="avance" class="row"></div>
+			    
+                            <div id="f_semanas" class="row container" style="display:none;">
+				
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 				<div class="col-md-5">
 				    <div class="card border-primary border-6">
 					<div class="card-header">
@@ -1206,7 +1548,15 @@ if (isset($_SESSION["usuario"])){
 					</div>
 					<div class="card-body container">
 					    <div class="row align-items-center">
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio1"
@@ -1224,11 +1574,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin1" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio2"
@@ -1247,11 +1611,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin2" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio3"
@@ -1270,11 +1648,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin3" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio4"
@@ -1293,11 +1685,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin4" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio5"
@@ -1316,11 +1722,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin5" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio6"
@@ -1339,11 +1759,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin6" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio7"
@@ -1362,11 +1796,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin7" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio8"
@@ -1385,7 +1833,15 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin2" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 					    </div>
 
 					</div>
@@ -1400,7 +1856,15 @@ if (isset($_SESSION["usuario"])){
 					</div>
 					<div class="card-body container">
 					    <div class="row align-items-center">
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio9"
@@ -1419,11 +1883,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin9" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio10"
@@ -1442,11 +1920,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin10" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio11"
@@ -1462,11 +1954,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin11" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio12" class="form-label text-muted fst-italic">inicio semana 12</label>
@@ -1479,11 +1985,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin12" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio5" class="form-label text-muted fst-italic">inicio semana 13</label>
@@ -1496,11 +2016,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin13" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio6" class="form-label text-muted fst-italic">inicio semana 14</label>
@@ -1513,11 +2047,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin14" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio7" class="form-label text-muted fst-italic">inicio semana 15</label>
@@ -1530,11 +2078,25 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin15" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 					    </div>
 
 					    <div class="row align-items-center">
 
+<<<<<<< HEAD
+=======
+=======
+						
+					    </div>
+
+					    <div class="row align-items-center">
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 						<div class="col-md-6">
 						    <div class="form-group">
 							<label for="inicio16" class="form-label text-muted fst-italic">inicio semana 16</label>
@@ -1547,23 +2109,54 @@ if (isset($_SESSION["usuario"])){
 							<input type="date" id="fin16" class="form-control" >
 						    </div>
 						</div>
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+						
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 					    </div>
 
 					</div>
 				    </div>
 				</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
                             </div>
 
 
+<<<<<<< HEAD
+=======
+=======
+				
+                            </div>
+
+			    
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
                         </div>
                     </main>
                 </div>
             </div>
+<<<<<<< HEAD
 
 
         </div><!-- fin del contenido -->
+=======
+<<<<<<< HEAD
+
+
+        </div><!-- fin del contenido -->
+=======
+        </div>
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">

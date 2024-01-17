@@ -2,6 +2,12 @@
 //requiere los objetos
 require('datos_pagos.php');
 
+<<<<<<< HEAD
+$nino = new matricula(2);
+echo "prueba<br>";
+echo "Codigo del alumno".$nino->id_alumno;
+echo "<br>El codigo del grado es  :".$nino->id_grado
+=======
 generar_pagos_colegio_year(2020);
 //$nino = new matricula(2);
 echo "prueba<br>";
@@ -33,5 +39,6 @@ function generar_pagos_colegio($id_m, $mes_i, $mes_f,$y){
     }
 
 }
+>>>>>>> refs/remotes/origin/main
 
 ?>

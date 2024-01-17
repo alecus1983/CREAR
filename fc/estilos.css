@@ -132,7 +132,20 @@ padding-left: 0px;
     font-weight:900;
 }
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+.R {
+    color: forestgreen;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+=======
+
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 
 @media only screen 
 and (min-device-width : 320px) 
@@ -220,6 +233,19 @@ and (max-device-width : 480px)  {
     font-weight:900;
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+.R {
+    color: forestgreen;
+    max-width: 5rem;
+    text-align: center;
+    font-weight:900;
+}
+
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     
 }
 

@@ -341,7 +341,15 @@ class inscripcion extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
+<<<<<<< HEAD
             //echo "Fallo en incertar fila";
+=======
+<<<<<<< HEAD
+            //echo "Fallo en incertar fila";
+=======
+            echo "Fallo en incertar fila";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         } else {
             // retorno  el array
             return $dato;
@@ -387,6 +395,10 @@ class matricula_docente extends imcrea {
 
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
     public function get_docente($id_materia, $id_grado, $id_jornada, $id_curso, $year){
         $q = "select * from matricula_docente where year = $year and id_grado =$id_grado and id_curso =$id_curso and id_jornada = $id_jornada and id_materia = $id_materia;";
         $resultado = $this->_db->query($q);
@@ -397,6 +409,11 @@ class matricula_docente extends imcrea {
         {return null;}
     } 
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     // se obtiene un listado de los grados matriculados por un docente
     // en $this year y $this id_docente
     
@@ -436,7 +453,15 @@ class matricula_docente extends imcrea {
     public function listado_docentes ($year){
         $arr = array();
         $q = "select id_docente,cedula, login, nombres, apellidos from docentes where id_docente in (
+<<<<<<< HEAD
 select distinct id_docente from matricula_docente where year = $year) and admin= 0";
+=======
+<<<<<<< HEAD
+select distinct id_docente from matricula_docente where year = $year) and admin= 0";
+=======
+select distinct id_docente from matricula_docente where year = 2023) and admin= 0";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         $c = $this->_db->query($q);
         while($a = $c->fetch_array(MYSQLI_ASSOC)){
             // agrego el codigo de un docente matriculado en el año
@@ -446,6 +471,10 @@ select distinct id_docente from matricula_docente where year = $year) and admin=
         $this->listado_docentes = $arr;
 
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
     // listado de matriculas (id) docentes por grado
     public function get_lista_por_grado ($id_grado,$id_jornada, $id_curso, $year){
@@ -503,6 +532,11 @@ select distinct id_docente from matricula_docente where year = $year) and admin=
             return false;
         
     }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     
     
 }
@@ -577,7 +611,15 @@ class grados extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
+<<<<<<< HEAD
             //echo "Fallo en incertar fila";
+=======
+<<<<<<< HEAD
+            //echo "Fallo en incertar fila";
+=======
+            echo "Fallo en incertar fila";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         } else {
             // retorno  el array
             return $dato;
@@ -595,7 +637,15 @@ class grados extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
+<<<<<<< HEAD
             //echo "Fallo en incertar fila";
+=======
+<<<<<<< HEAD
+            //echo "Fallo en incertar fila";
+=======
+            echo "Fallo en incertar fila";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         } else {
             // retorno  el array
             $this->n_grado = $dato[0];
@@ -612,7 +662,15 @@ class grados extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
+<<<<<<< HEAD
             //echo "Fallo en incertar fila";
+=======
+<<<<<<< HEAD
+            //echo "Fallo en incertar fila";
+=======
+            echo "Fallo en incertar fila";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         } else {
             // retorno  el array
             $this->n_grado = $dato["nombre_g"];
@@ -672,7 +730,15 @@ class matricula extends imcrea {
         // // dentro de la tabla alumnos
         $texto = "INSERT INTO matricula (id_alumno,id_grado,id_jornada,mes,retiro,year)
               VALUES ($this->id_alumno,$this->id_grado,$this->id_jornada,$this->mes,$this->retiro,$this->year)";
+<<<<<<< HEAD
         //echo $texto;
+=======
+<<<<<<< HEAD
+        //echo $texto;
+=======
+        echo $texto;
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         // ejecuto la consulta
         $consulta = $this->_db->query($texto);
 
@@ -728,14 +794,30 @@ class alumnos extends imcrea {
            ."'creativo'"." ,"
            .$this->inscripcion.")";
 
+<<<<<<< HEAD
         //echo "<br>".$q;
+=======
+<<<<<<< HEAD
+        //echo "<br>".$q;
+=======
+        echo "<br>".$q;
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 
         // ejecuto la consulta
         $dato = $this->_db->query($q);
 
         // si se ejecuto la consulta
         if (!$dato){
+<<<<<<< HEAD
             //echo "Fallo en incertar fila";
+=======
+<<<<<<< HEAD
+            //echo "Fallo en incertar fila";
+=======
+            echo "Fallo en incertar fila";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         } else {
             // retorno  el valor 0 del array
             //return $dato[0];
@@ -760,7 +842,15 @@ class alumnos extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
+<<<<<<< HEAD
             //echo "Fallo al actualizar alumno";
+=======
+<<<<<<< HEAD
+            //echo "Fallo al actualizar alumno";
+=======
+            echo "Fallo al actualizar alumno";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         } else {
             // retorno  el valor 0 del array
             $dato -> close();
@@ -821,7 +911,15 @@ class alumnos extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
+<<<<<<< HEAD
             //echo "Fallo en incertar fila";
+=======
+<<<<<<< HEAD
+            //echo "Fallo en incertar fila";
+=======
+            echo "Fallo en incertar fila";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         } else {
             // retorno  el valor 0 del array
             return $dato[0];
@@ -838,7 +936,15 @@ class alumnos extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato) {
+<<<<<<< HEAD
             //echo "Fallo en incertar fila";
+=======
+<<<<<<< HEAD
+            //echo "Fallo en incertar fila";
+=======
+            echo "Fallo en incertar fila";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         } else {
             // retorno  el valor 0 del array
             return $dato[0];
@@ -855,7 +961,15 @@ class alumnos extends imcrea {
 
         // si se ejecuto la consulta
         if (!$dato){
+<<<<<<< HEAD
             //echo "Fallo en incertar fila";
+=======
+<<<<<<< HEAD
+            //echo "Fallo en incertar fila";
+=======
+            echo "Fallo en incertar fila";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         } else {
             // retorno  el array
             return $dato[0];
@@ -906,11 +1020,25 @@ class pagos extends imcrea {
             // si se ejecuto la consulta
             if ($resultado){
                 // completo los atributos en funcion de la consulta
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
                 // echo "<br>se inserto un nuevo pago";
             }
         }
         else {
             //echo "<br>ya existia una matricula para ese periodo";
+<<<<<<< HEAD
+=======
+=======
+                echo "<br>se inserto un nuevo pago";
+            }
+        }
+        else {
+            echo "<br>ya existia una matricula para ese periodo";
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         }
     
     } // fin de constructor de la clase
@@ -986,6 +1114,10 @@ class listado_estudiantes extends imcrea {
 
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
 ////////////////////////////////////// 
 // clase que define los docentes    //
@@ -995,6 +1127,13 @@ class listado_estudiantes extends imcrea {
  
 class docentes extends imcrea {
   
+<<<<<<< HEAD
+=======
+=======
+// clase que define los docentes
+class docentes extends imcrea {
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     //  atributos
     public $id;
     public $admin;
@@ -1015,9 +1154,20 @@ class docentes extends imcrea {
         parent::__construct();
     }
 
+<<<<<<< HEAD
     // funcion para obtener los datos del docente
     // a partir del codigo id del docente
 
+=======
+<<<<<<< HEAD
+    // funcion para obtener los datos del docente
+    // a partir del codigo id del docente
+
+=======
+    //funcion para obtener los datos del docente
+    // a partir de la base de datos
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     public function get_docente_id($id) {
         //consulta para recuperar el docente
         $q = "select * from docentes where  id_docente = $id";
@@ -1063,16 +1213,31 @@ class docentes extends imcrea {
         $this->materias = $a['materias'];
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
     // funcion que retorna las materias que se dictan en un año
     // en forma de array,  requiere:
     // grado --> $g
     // año   --> $y
     
+<<<<<<< HEAD
+=======
+=======
+    //funcion que retorna las materias que se dictan en un año
+    //en forma de array,  requiere el grado $g y el año $y
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     public function get_materias_por_grado($g,$y) {
         $arr = array();
         $q = "";
         if($this->admin == 1){
             // consulta para obtener las materias
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
             $q ="SELECT M.id_materia, M.materia  FROM requisitos R
 	    INNER JOIN materia M ON M.id_materia = R.id_materia
 		WHERE R.id_grado = ".$g;
@@ -1080,6 +1245,16 @@ class docentes extends imcrea {
         {
             $q = "SELECT DISTINCT M.id_materia, M.materia FROM materia M
 	      INNER JOIN matricula_docente D ON M.id_materia = D.id_materia  WHERE D.year = '".$y."'
+<<<<<<< HEAD
+=======
+=======
+            $q ="SELECT M.id_materia, M.materia  FROM requisitos R INNER JOIN materia M ON M.id_materia = R.id_materia
+		WHERE R.id_grado = ".$g;
+        } else
+        {
+            $q = "SELECT DISTINCT M.id_materia, M.materia FROM materia M INNER JOIN matricula_docente D ON M.id_materia = D.id_materia  WHERE D.year = '".$y."'
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 		AND  D.id_docente = ".$this->id." AND D.id_grado =".$g;
         }
 
@@ -1092,6 +1267,10 @@ class docentes extends imcrea {
         }
         $this->materias = $arr;
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
     // total de docentes
     // Retorna  un listado de los docentenes con
@@ -1154,6 +1333,13 @@ class ponderado  extends imcrea{
 //  Clase que identifica las calificaciones     //
 //////////////////////////////////////////////////
 
+<<<<<<< HEAD
+=======
+=======
+}
+
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 class calificaciones extends  imcrea {
     // si esta calificado 1 si no 0
     public $calificado;
@@ -1180,12 +1366,25 @@ class calificaciones extends  imcrea {
     public function __construct(){
         // hereda parametros de la clase padre
         parent::__construct();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
       
     }
 
     // Metodo que obtiene la calificación semanal
     // 
+<<<<<<< HEAD
+=======
+=======
+    }
+
+    // verifica la calificacion semanal
+    // requiere 
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     public function get_calificacion_semanal($id_a,$id_m,$id_s , $y, $id_p) {
 
         $q = "select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year  from calificaciones where year = $y and  id_alumno = $id_a and    id_materia = $id_m and       id_ponderado = $id_p and   id_semana = $id_s";
@@ -1218,6 +1417,10 @@ class calificaciones extends  imcrea {
          }
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
     
     //////////////////////////////////////////////////////////////////////////////
     // obtiene la nota del periodo                                              //
@@ -1302,6 +1505,15 @@ class calificaciones extends  imcrea {
       // en una materia especifica
     public function get_rendimiento_alummno_periodo($id_a, $id_m, $ano, $id_periodo){
       // consulta para recuperar alumnos
+<<<<<<< HEAD
+=======
+=======
+    // funcion que recupera los datos de rendimiento de un alumno
+    // en una materia especifica
+    public function get_rendimiento_alummno_periodo($id_a, $id_m, $ano, $id_periodo){
+        // consulta para recuperar alumnos
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         $q = "select p.id_ponderado, ponderado, por_periodo, cantidad from ponderado as p inner join
 (select id_ponderado, count(*)  as cantidad from calificaciones where id_alumno = $id_a and id_materia = $id_m and year = $ano and periodo = $id_periodo
 group by id_ponderado order by id_ponderado) as c on p.id_ponderado = c.id_ponderado
@@ -1319,6 +1531,10 @@ order by id_ponderado";
         return $arr;
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
      public function get_logro_id($id_logro) {
 
         $q = "select * from  logros where id_logro= $id_logro";
@@ -1330,10 +1546,22 @@ order by id_ponderado";
         $this->logro = $r['logro'] ;
         $this->id_logro = $r['id_logro'] ;            
     }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 
     // verifica la calificacion semanal
     // requiere 
     public function get_logro($id_a,$id_m, $y, $id_periodo) {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         $q = "select * from calificaciones where year = $y
                                         and id_alumno = $id_a
                                        and id_materia = $id_m
@@ -1361,6 +1589,10 @@ order by id_ponderado";
             
         }
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
     // Método que establece  la calificación semanal
     public function set_calificacion_semanal($id_a,$id_m,$nota,$id_d,$p, $y,$id_p, $id_s){
@@ -1381,11 +1613,22 @@ order by id_ponderado";
                 $p = 4;
          
         }
+<<<<<<< HEAD
+=======
+=======
+    
+    public function set_calificacion_semanal($id_a,$id_m,$nota,$id_d,$p, $y,$id_p, $id_s){
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         // creo la consulta
         $q= "insert into calificaciones
             ( id_alumno,id_materia, nota,id_docente,periodo,year,modificado,id_ponderado,id_semana )
             values($id_a,$id_m,$nota,$id_d,$p,$y,NOW(),$id_p,$id_s)";
         // ejecuto la consulta
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
         if( $this->_db->query($q) === True) {
             $this->calificado = true;
         } else {
@@ -1407,15 +1650,30 @@ order by id_ponderado";
 	  ( id_alumno,id_materia, nota,id_docente,periodo,year,modificado,corte )
 	  values($id_a,$id_m,$nota,$id_d,$p,$y,NOW(),'R' )";
         // ejecuto la consulta
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
         if( $this->_db->query($q) === True){
             $this->calificado = true;
         } else{
             $this->calificado = false; }
     }
 
+<<<<<<< HEAD
     
     // Método que establese el logro del periodo
     
+=======
+<<<<<<< HEAD
+    
+    // Método que establese el logro del periodo
+    
+=======
+
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     public function set_logro($id_a,$id_m,$logro, $id_d , $p, $y){
         // creo la consulta
         $q= "insert into calificaciones
@@ -1429,6 +1687,10 @@ order by id_ponderado";
     }
 
     
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
     // Método que actualiza la recuperación
     // para lo cual utiliza el id de la recuperación
@@ -1446,6 +1708,13 @@ order by id_ponderado";
 
     // Método que actualiza la calificación semanal    
     // para lo cual utiliza el id de la recuperación
+<<<<<<< HEAD
+=======
+=======
+        
+    
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 
     public function update_calificacion_semanal($id,$nota){
 
@@ -1458,7 +1727,14 @@ order by id_ponderado";
             $this->calificado = false; }
     }
 
+<<<<<<< HEAD
     // Método para actualizar los logros
+=======
+<<<<<<< HEAD
+    // Método para actualizar los logros
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     public function update_logro($id,$logro){
 
         $q = "update calificaciones set id_logro = $logro where id = $id";
@@ -1500,6 +1776,10 @@ order by id_ponderado";
 
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
     public function get_criterio_faltantes($id_e, $id_m, $id_s, $p, $year){
 
         // Consulta fallida
@@ -1528,6 +1808,11 @@ select id_alumno, id_semana, id_ponderado, id_materia from calificaciones where 
         
     }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 
 }
 
@@ -1667,6 +1952,10 @@ class materia extends imcrea {
         }
         return $arr;
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
     // obtengo un array con todas las materas
     public function get_all(){
         $arr = array();
@@ -1678,6 +1967,11 @@ class materia extends imcrea {
         return $arr;
         
     }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 }
 
 // clase que representa las semanas
@@ -1743,6 +2037,10 @@ class semana extends imcrea{
 
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
     // funcion que actuliza los datos de  la semana
     public function set_semana($semana,$year,$inicio,$fin){
         $q="update semanas set inicio = '$inicio' , fin = '$fin', year = $year where id_semana = $semana";
@@ -1767,6 +2065,11 @@ class semana extends imcrea{
         
     }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
     
 
 }
@@ -1806,6 +2109,10 @@ class logro extends imcrea{
         return $arr;
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
 
     public function get_logro() { 
         $q = "select * from  logros where id_logro= $id_logro";
@@ -1968,6 +2275,13 @@ class requisitos extends imcrea{
             return false;
         
     }
+<<<<<<< HEAD
+=======
+=======
+    
+
+>>>>>>> refs/remotes/origin/main
+>>>>>>> refs/remotes/origin/main
 }
 
 ?>
