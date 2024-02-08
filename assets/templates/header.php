@@ -95,6 +95,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="./docentes.php">Docentes</a></li>
+                                <li><a href="./blog/blog.php">Blog</a></li>
                                 <li><a href="#Contactos">Contactos</a></li>
                             </ul>
                         </div>
@@ -122,6 +123,7 @@
                                                     <!-- <li><a href="./educacionciclos.php">Educación por Ciclos</a></li> -->
                                                     <!-- <li><a href="./cursoscortos.html">Cursos y Seminarios</a></li> -->
                                                 </ul>
+                                                <li><a href="./blog/blog.php">Blog</a></li>
                                                 <li><a href="./docentes.php">Docentes</a></li>
 
                                             <li><a href="#Contactos">Contactos</a></li>
