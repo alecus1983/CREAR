@@ -114,7 +114,7 @@
                                         <ul class="metismenu" id="mobile-menu">
                                             </li>
                                             <li><a href="#">Inicio</a> </li>
-                                            <li><a href="./Nosotros.html">Nosotros</a> </li>
+                                            <li><a href="./Nosotros.php">Nosotros</a> </li>
                                             <li><a href="#">Servicios <i class="fas fa-angle-down"></i></a>
                                                 <ul class="sub-menu">
                                                     <li><a href="./colegio.php">Colegio</a></li>

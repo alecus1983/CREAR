@@ -1025,7 +1025,7 @@ class docentes extends imcrea {
         $c = $this->_db->query($q);
         // obtengo el primer dato de de la consulta
         $a = $c->fetch_array(MYSQLI_ASSOC);
-
+        //echo "El usuairo es ".$a['id_docente']." ".$a['nombres'];
         // asigno el valor devuelto a los atributos del ob jeto
         $this->id = $a['id_docente'];
         $this->admin =  $a['admin']; 
@@ -1046,6 +1046,7 @@ class docentes extends imcrea {
         $q = "select * from docentes where  cedula = $id";
         // se obtiene la variable resultado de consulta
         $c = $this->_db->query($q);
+        
         // obtengo el primer dato de de la consulta
         $a = $c->fetch_array(MYSQLI_ASSOC);
 

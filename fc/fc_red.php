@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION["usuario"])){
-    $usuario =  $_SESSION["usuario"];
+$usuario =  $_SESSION["usuario"];
 } else {
-    header("Location:login_boletines.php");
-    exit;
+header("Location:login_boletines.php");
+exit;
 }
 
 require_once('datos.php');
@@ -13,6 +13,7 @@ $d = new docentes();
 $d->get_docente_cc($usuario);
 $id = $d->id;
 $admin = $d->admin ;
+echo "El estado de administrador es  $admin";
 $ano = date('Y');
 ?>
 <!DOCTYPE html>
@@ -553,7 +554,7 @@ $ano = date('Y');
 					       min="2015"
 					       max="2100" step="1"
 
-					<?php if ($admin !== 1) { ?>
+					<?php if ($admin == 0) { ?>
 					    readonly="readonly"
 					<?php } ?>
 					class="form-control ">
@@ -659,7 +660,7 @@ $ano = date('Y');
                 <div id="layoutSidenav_content">
                     <main>
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
+                            <h1 class="mt-4">FORMULARIO  <?php echo date('Y');  ?></h1>
                             <ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item active">Para  la gestión de calificaciones</li>
                             </ol>
