@@ -5,7 +5,7 @@ include_once "./assets/templates/header.php";
 <!-- 2.Home -->
 <section class="hero-slide-wrapper hero-3">
     <div class="hero-slider-3">
-        <div class="single-slide bg-cover" style="background-image: url('assets/img/index/slideimgcolegio.png')">
+        <div class="single-slide bg-cover" style="background-image: url('assets/images/slideimgcolegio.webp')">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-8 mt-5 mt-lg-0 order-2 order-lg-1 text-center text-lg-left">
