@@ -116,9 +116,10 @@
                 </div>
             </div>
         </div>
-        <div class="text-center p-3  style="">
-        © 2022 Copyright: Instituto Mundo Creativo - Oficial.
-    </div>
+        <div class="text-center p-3 style">
+    © <?php echo date("Y"); ?> Copyright: Instituto Mundo Creativo - Oficial.
+</div>
+
     <!-- Copyright -->
     </footer>
 </div>
