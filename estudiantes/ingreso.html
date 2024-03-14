@@ -1,0 +1,25 @@
+<html>
+  <body>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="44739736249-rbm1l8u3pt4fin1200a1hqpti3ivtoll.apps.googleusercontent.com">
+    <div class="g-signin2" data-onsuccess="handleCredentialResponse" data-onfailure="onFailure"></div>
+
+    <script>
+        function handleCredentialResponse(googleUser) {
+            var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // No se usa, pero aquí tienes el ID del usuario
+      console.log('Nombre: ' + profile.getName()); // Nombre del usuario
+      console.log('Imagen URL: ' + profile.getImageUrl()); // URL de la imagen del perfil del usuario
+      console.log('Email: ' + profile.getEmail()); // Email del usuario
+      // 
+        }
+
+
+        function onFailure(error) {
+      console.error('Error al iniciar sesión con Google:', error);
+      // Puedes manejar el error aquí, mostrar un mensaje de error al usuario, etc.
+    }
+    
+    </script>
+  </body>
+</html>

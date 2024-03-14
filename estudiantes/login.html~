@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="">
+
+	<meta name="google-signin-client_id"
+		content="44739736249-nriidha7gbc0np8uf65n4ohq4aug4hkk.apps.googleusercontent.com">
+	<script src="https://accounts.google.com/gsi/client" async></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
+	<!-- Libreria boostrap-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+	<div class="content">
+
+		<h1>Pagina de login con google</h1>
+		<p>En esta página se realiza el login con google :</p>
+		<!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+
+		<div id="g_id_onload" data-client_id="44739736249-nriidha7gbc0np8uf65n4ohq4aug4hkk.apps.googleusercontent.com"
+			data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
+			data-auto_prompt="false">
+		</div>
+
+		<div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+			data-text="signin_with" data-size="large" data-logo_alignment="left">
+		</div>
+
+		<div class="pro-data hidden"></div>
+
+	</div>
+
+	
+
+	<!-- <script>
+	
+		function onSignIn(googleUser) {
+			var profile = googleUser.getBasicProfile();
+			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+			console.log('Name: ' + profile.getName());
+			console.log('Image URL: ' + profile.getImageUrl());
+			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		}
+
+		function signOut() {
+			var auth2 = gapi.auth2.getAuthInstance();
+			auth2.signOut().then(function () {
+				console.log('User signed out.');
+			});
+		}
+
+		function onSuccess(googleUser) {
+			// we have googleUser as an object to get user details
+			onSignIn(googleUser);
+			//   console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+		}
+		function onFailure(error) {
+			console.log(error);
+		}
+
+		function renderButton() {
+			gapi.signin2.render('my-signin2', {
+				'scope': 'profile email',
+				'height': 50,
+				'longtitle': true,
+				'theme': 'dark',
+				'onsuccess': onSuccess,
+				'onfailure': onFailure
+			});
+		}
+
+		//Esta función es la que te está faltando
+		function onLoad() {
+			gapi.load('auth2', function () {
+				gapi.auth2.init();
+			});
+		}
+
+	</script> -->
+
+	<script>
+		// Credential response handler function
+		function handleCredentialResponse(response) {
+			// Post JWT token to server-side
+			fetch("auth_init.php", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ request_type: 'user_auth', credential: response.credential }),
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.status == 1) {
+						let responsePayload = data.pdata;
+
+						// Display the user account data
+						let profileHTML = '<h3>Welcome ' + responsePayload.given_name + '! <a href="javascript:void(0);" onclick="signOut(' + responsePayload.sub + ');">Sign out</a></h3>';
+						profileHTML += '<img src="' + responsePayload.picture + '"/><p><b>Auth ID: </b>' + responsePayload.sub + '</p><p><b>Name: </b>' + responsePayload.name + '</p><p><b>Email: </b>' + responsePayload.email + '</p>';
+						document.getElementsByClassName("pro-data")[0].innerHTML = profileHTML;
+
+						document.querySelector("#btnWrap").classList.add("hidden");
+						document.querySelector(".pro-data").classList.remove("hidden");
+					}
+				})
+				.catch(console.error);
+		}
+
+		// Sign out the user
+		function signOut(authID) {
+			document.getElementsByClassName("pro-data")[0].innerHTML = '';
+			document.querySelector("#btnWrap").classList.remove("hidden");
+			document.querySelector(".pro-data").classList.add("hidden");
+		}    
+	</script>
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+
+</body>
+
+</html>
