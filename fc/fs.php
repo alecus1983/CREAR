@@ -386,7 +386,7 @@ $ano = date('Y');
 		<a class="navbar-brand ps-3" href="fc.php">INICIO</a>
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -447,19 +447,19 @@ $ano = date('Y');
 
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
-						style="background: transparent;color: darkgreen;border: 0px"
-						class="form-control"
-						onchange="actualizar();">
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    class="form-control"
+						    onchange="actualizar();">
 					    <option value="1">Mañana</option>
 					    <option value="2">Tarde</option>
 					</select>
 
 					<label for="periodos"> Periodo</label>
 					<select id="periodos"
-						style="background: transparent;color: darkgreen;border: 0px"
-						name="periodos"
-						class="form-control" required=""
-						    onchange="load_();">
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    name="periodos"
+						    class="form-control" required=""
+						onchange="load_();">
 					    <?php
 
 					    if($admin){
@@ -483,9 +483,9 @@ $ano = date('Y');
 
 					<label for="semana">Semana</label>
 					<select id="semana"
-						    class="form-control"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    onchange="load_lista_estudiantes();">
+						class="form-control"
+						style="background: transparent;color: darkgreen;border: 0px"
+						onchange="load_lista_estudiantes();">
 
                                             <?php
 
@@ -515,9 +515,9 @@ $ano = date('Y');
 
 					<label class="Control-label">Grado</label>
 					<select id="id_g" name="id_gs"
-						class ="form-control"
-						style="background: transparent;color: darkgreen;border:  0px"
-						onchange="actualizar();">
+						    class ="form-control"
+						    style="background: transparent;color: darkgreen;border:  0px"
+						    onchange="actualizar();">
 					    <?php
 					    // creo un nuevo objeto  matricula docente
 					    $mt = new matricula_docente();
@@ -539,18 +539,18 @@ $ano = date('Y');
 
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
-						    style="background: transparent;color: darkgreen;border:0px;"
-						    onchange = "load_lista_estudiantes();"
-						    class ="form-control">
+						style="background: transparent;color: darkgreen;border:0px;"
+						onchange = "load_lista_estudiantes();"
+						class ="form-control">
 					    <option value="0">A</opcion>
 						<option value="1">B</opcion>
 					</select>
 
 					<label for="id_ms">Materia</label>
 					<select id="id_ms"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    name="id_ms" onchange="load_lista_estudiantes();"
-						    class="form-control">
+						style="background: transparent;color: darkgreen;border: 0px"
+						name="id_ms" onchange="load_lista_estudiantes();"
+						class="form-control">
 					</select>
 
 				    </nav>
@@ -580,484 +580,413 @@ $ano = date('Y');
                             <ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item active">Para la gestistión de las semanas</li>
                             </ol>
-			    
+
                             <div class="row container">
-				
+
 				<div class="col-md-5">
-<<<<<<< HEAD
-				    <div class="card border-primary border-5">
-=======
+
 				    <div class="card border-primary border-6">
->>>>>>> origin/fc
-					<div class="card-header">
-					    <i class="fas fa-chart-area me-1"></i>
-					    semanas primer periodo
-					</div>
-					<div class="card-body container">
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio1" class="form-label text-muted fst-italic">inicio semana 1</label>
-=======
-							<label for="inicio1"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 1</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio1" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin1" class="form-label text-muted fst-italic">fin semana 1</label>
-=======
-							<label for="fin1"
-							       class="form-label text-muted fst-italic">
-							    fin semana 1
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin1" class="form-control" >
-						    </div>
-						</div>
-						
+					<div class="card border-primary border-5">
+					    <div class="card-header">
+						<i class="fas fa-chart-area me-1"></i>
+						semanas primer periodo
 					    </div>
+					    <div class="card-body container">
+						<div class="row align-items-center">
 
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio2" class="form-label text-muted fst-italic">inicio semana 2</label>
-=======
-							<label for="inicio2"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 2
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio2" class="form-control" >
+						    <div class="col-md-6">
+							<div class="form-group">
+							    <label for="inicio1"
+								   class="form-label text-muted fst-italic">
+								inicio semana 1</label>
+							    <label for="inicio1" class="form-label text-muted fst-italic">inicio semana 1</label>
+							    <input type="date" id="inicio1" class="form-control" >
+							</div>
+						    </div>
+						    <div class="col-md-6">
+							<div class="form-group ">
+							    <label for="fin1"
+								   class="form-label text-muted fst-italic">
+								fin semana 1
+							    </label>
+							    <label for="fin1" class="form-label text-muted fst-italic">fin semana 1</label>
+							    <input type="date" id="fin1" class="form-control" >
+							</div>
+						    </div>
+
+						</div>
+
+						<div class="row align-items-center">
+
+						    <div class="col-md-6">
+							<div class="form-group">
+							    <label for="inicio2"
+								   class="form-label text-muted fst-italic">
+								inicio semana 2
+							    </label>
+							    <label for="inicio2" class="form-label text-muted fst-italic">inicio semana 2</label>
+							    <input type="date" id="inicio2" class="form-control" >
+							</div>
+						    </div>
+						    <div class="col-md-6">
+							<div class="form-group ">
+							    <label for="fin2"
+								   class="form-label text-muted fst-italic">
+								fin semana 2
+							    </label>
+							    <label for="fin2" class="form-label text-muted fst-italic">fin semana 2</label>
+							    <input type="date" id="fin2" class="form-control" >
+							</div>
+						    </div>
+
+						</div>
+
+						<div class="row align-items-center">
+
+						    <div class="col-md-6">
+							<div class="form-group">
+							    <label for="inicio3"
+								   class="form-label text-muted fst-italic">
+								inicio semana 3
+							    </label>
+							    <label for="inicio3" class="form-label text-muted fst-italic">inicio semana 3</label>
+							    <input type="date" id="inicio3" class="form-control" >
+							</div>
+						    </div>
+						    <div class="col-md-6">
+							<div class="form-group ">
+							    <label for="fin3"
+								   class="form-label text-muted fst-italic">
+								fin semana 3
+							    </label>
+							    <label for="fin3" class="form-label text-muted fst-italic">fin semana 3</label>
+							    <input type="date" id="fin3" class="form-control" >
+							</div>
+						    </div>
+
+						</div>
+
+						<div class="row align-items-center">
+
+						    <div class="col-md-6">
+							<div class="form-group">
+							    <label for="inicio4"
+								   class="form-label text-muted fst-italic">
+								inicio semana 4
+							    </label>
+							    <label for="inicio4" class="form-label text-muted fst-italic">inicio semana 4</label>
+							    <input type="date" id="inicio4" class="form-control" >
+							</div>
+						    </div>
+						    <div class="col-md-6">
+							<div class="form-group ">
+							    <label for="fin4"
+								   class="form-label text-muted fst-italic">
+								fin semana 4
+							    </label>
+							    <label for="fin4" class="form-label text-muted fst-italic">fin semana 4</label>
+							    <input type="date" id="fin4" class="form-control" >
+							</div>
 						    </div>
 						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin2" class="form-label text-muted fst-italic">fin semana 2</label>
-=======
-							<label for="fin2"
-							       class="form-label text-muted fst-italic">
-							    fin semana 2
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin2" class="form-control" >
+						<div class="row align-items-center">
+
+						    <div class="col-md-6">
+							<div class="form-group">
+							    <label for="inicio5"
+								   class="form-label text-muted fst-italic">
+								inicio semana 5
+							    </label>
+							    <label for="inicio5" class="form-label text-muted fst-italic">inicio semana 5</label>
+							    <input type="date" id="inicio2" class="form-control" >
+							</div>
 						    </div>
+						    <div class="col-md-6">
+							<div class="form-group ">
+							    <label for="fin5"
+								   class="form-label text-muted fst-italic">
+								fin semana 5
+							    </label>
+							    <label for="fin5" class="form-label text-muted fst-italic">fin semana 5</label>
+							    <input type="date" id="fin5" class="form-control" >
+							</div>
+						    </div>
+
 						</div>
-						
+
+						<div class="row align-items-center">
+
+						    <div class="col-md-6">
+							<div class="form-group">
+							    <label for="inicio6"
+								   class="form-label text-muted fst-italic">
+								inicio semana 6
+							    </label>
+							    <label for="inicio6" class="form-label text-muted fst-italic">inicio semana 6</label>
+							    <input type="date" id="inicio6" class="form-control" >
+							</div>
+						    </div>
+						    <div class="col-md-6">
+							<div class="form-group ">
+							    <label for="fin6"
+								   class="form-label text-muted fst-italic">
+								fin semana 6
+							    </label>
+							    <label for="fin6" class="form-label text-muted fst-italic">fin semana 6</label>
+							    <input type="date" id="fin6" class="form-control" >
+							</div>
+						    </div>
+
+						</div>
+
+						<div class="row align-items-center">
+
+						    <div class="col-md-6">
+							<div class="form-group">
+							    <label for="inicio7"
+								   class="form-label text-muted fst-italic">
+								inicio semana 7
+							    </label>
+							    <label for="inicio7" class="form-label text-muted fst-italic">inicio semana 7</label>
+							    <input type="date" id="inicio7" class="form-control" >
+							</div>
+						    </div>
+						    <div class="col-md-6">
+							<div class="form-group ">
+							    <label for="fin7"
+								   class="form-label text-muted fst-italic">
+								fin semana 7
+							    </label>
+							    <label for="fin7" class="form-label text-muted fst-italic">fin semana 7</label>
+							    <input type="date" id="fin7" class="form-control" >
+							</div>
+						    </div>
+
+						</div>
+
+						<div class="row align-items-center">
+
+						    <div class="col-md-6">
+							<div class="form-group">
+							    <label for="inicio8"
+								   class="form-label text-muted fst-italic">
+								inicio semana 8
+							    </label>
+							    <label for="inicio8" class="form-label text-muted fst-italic">inicio semana 8</label>
+							    <input type="date" id="inicio8" class="form-control" >
+							</div>
+						    </div>
+						    <div class="col-md-6">
+							<div class="form-group ">
+							    <label for="fin2"
+								   class="form-label text-muted fst-italic">
+								fin semana 8
+							    </label>
+							    <label for="fin2" class="form-label text-muted fst-italic">fin semana 8</label>
+							    <input type="date" id="fin2" class="form-control" >
+							</div>
+						    </div>
+
+						</div>
+
 					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio3" class="form-label text-muted fst-italic">inicio semana 3</label>
-=======
-							<label for="inicio3"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 3
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio3" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin3" class="form-label text-muted fst-italic">fin semana 3</label>
-=======
-							<label for="fin3"
-							       class="form-label text-muted fst-italic">
-							    fin semana 3
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin3" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio4" class="form-label text-muted fst-italic">inicio semana 4</label>
-=======
-							<label for="inicio4"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 4
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio4" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin4" class="form-label text-muted fst-italic">fin semana 4</label>
-=======
-							<label for="fin4"
-							       class="form-label text-muted fst-italic">
-							    fin semana 4
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin4" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio5" class="form-label text-muted fst-italic">inicio semana 5</label>
-=======
-							<label for="inicio5"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 5
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio2" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin5" class="form-label text-muted fst-italic">fin semana 5</label>
-=======
-							<label for="fin5"
-							       class="form-label text-muted fst-italic">
-							    fin semana 5
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin5" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio6" class="form-label text-muted fst-italic">inicio semana 6</label>
-=======
-							<label for="inicio6"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 6
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio6" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin6" class="form-label text-muted fst-italic">fin semana 6</label>
-=======
-							<label for="fin6"
-							       class="form-label text-muted fst-italic">
-							    fin semana 6
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin6" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio7" class="form-label text-muted fst-italic">inicio semana 7</label>
-=======
-							<label for="inicio7"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 7
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio7" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin7" class="form-label text-muted fst-italic">fin semana 7</label>
-=======
-							<label for="fin7"
-							       class="form-label text-muted fst-italic">
-							    fin semana 7
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin7" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio8" class="form-label text-muted fst-italic">inicio semana 8</label>
-=======
-							<label for="inicio8"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 8
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio8" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin2" class="form-label text-muted fst-italic">fin semana 8</label>
-=======
-							<label for="fin2"
-							       class="form-label text-muted fst-italic">
-							    fin semana 8
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin2" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
 					</div>
 				    </div>
-				</div>
+				    <div class="col-md-6">
+					<div class="col-md-5">
+					    <div class="card border-success">
+						<div class="card-header">
+						    <i class="fas fa-chart-area me-1"></i>
+						    semanas segundo periodo
+						</div>
+						<div class="card-body container">
+						    <div class="row align-items-center">
 
-<<<<<<< HEAD
-				<div class="col-md-5">
-=======
-				<div class="col-md-6">
->>>>>>> origin/fc
-				    <div class="card border-success">
-					<div class="card-header">
-					    <i class="fas fa-chart-area me-1"></i>
-					    semanas segundo periodo
+							<div class="col-md-6">
+							    <div class="form-group">
+								<label for="inicio9"
+								       class="form-label text-muted fst-italic">
+								    inicio semana 9
+								</label>
+								<label for="inicio9" class="form-label text-muted fst-italic">inicio semana 9</label>
+								<input type="date" id="inicio9" class="form-control" >
+							    </div>
+							</div>
+							<div class="col-md-6">
+							    <div class="form-group ">
+								<label for="fin9"
+								       class="form-label text-muted fst-italic">
+								    fin semana 9
+								</label>
+								<label for="fin9" class="form-label text-muted fst-italic">fin semana 9</label>
+								<input type="date" id="fin9" class="form-control" >
+							    </div>
+							</div>
+
+						    </div>
+
+						    <div class="row align-items-center">
+
+							<div class="col-md-6">
+							    <div class="form-group">
+								<label for="inicio10"
+								       class="form-label text-muted fst-italic">
+								    inicio semana 10
+								</label>
+								<label for="inicio10" class="form-label text-muted fst-italic">inicio semana 10</label>
+								<input type="date" id="inicio2" class="form-control" >
+							    </div>
+							</div>
+							<div class="col-md-6">
+							    <div class="form-group ">
+								<label for="fin10"
+								       class="form-label text-muted fst-italic">
+								    fin semana 10
+								</label>
+								<label for="fin10" class="form-label text-muted fst-italic">fin semana 10</label>
+								<input type="date" id="fin10" class="form-control" >
+							    </div>
+							</div>
+
+						    </div>
+
+						    <div class="row align-items-center">
+
+							<div class="col-md-6">
+							    <div class="form-group">
+								<label for="inicio11"
+								       class="form-label text-muted fst-italic">
+								    inicio semana 11
+								</label>
+								<label for="inicio11" class="form-label text-muted fst-italic">inicio semana 11</label>
+								<input type="date" id="inicio11" class="form-control" >
+							    </div>
+							</div>
+							<div class="col-md-6">
+							    <div class="form-group ">
+								<label for="fin11" class="form-label text-muted fst-italic">fin semana 11</label>
+								<input type="date" id="fin11" class="form-control" >
+							    </div>
+							</div>
+
+						    </div>
+
+						    <div class="row align-items-center">
+
+							<div class="col-md-6">
+							    <div class="form-group">
+								<label for="inicio12" class="form-label text-muted fst-italic">inicio semana 12</label>
+								<input type="date" id="inicio12" class="form-control" >
+							    </div>
+							</div>
+							<div class="col-md-6">
+							    <div class="form-group ">
+								<label for="fin12" class="form-label text-muted fst-italic">fin semana 12</label>
+								<input type="date" id="fin12" class="form-control" >
+							    </div>
+							</div>
+
+						    </div>
+
+						    <div class="row align-items-center">
+
+							<div class="col-md-6">
+							    <div class="form-group">
+								<label for="inicio5" class="form-label text-muted fst-italic">inicio semana 13</label>
+								<input type="date" id="inicio2" class="form-control" >
+							    </div>
+							</div>
+							<div class="col-md-6">
+							    <div class="form-group ">
+								<label for="fin13" class="form-label text-muted fst-italic">fin semana 13</label>
+								<input type="date" id="fin13" class="form-control" >
+							    </div>
+							</div>
+
+						    </div>
+
+						    <div class="row align-items-center">
+
+							<div class="col-md-6">
+							    <div class="form-group">
+								<label for="inicio6" class="form-label text-muted fst-italic">inicio semana 14</label>
+								<input type="date" id="inicio6" class="form-control" >
+							    </div>
+							</div>
+							<div class="col-md-6">
+							    <div class="form-group ">
+								<label for="fin14" class="form-label text-muted fst-italic">fin semana 14</label>
+								<input type="date" id="fin14" class="form-control" >
+							    </div>
+							</div>
+
+						    </div>
+
+						    <div class="row align-items-center">
+
+							<div class="col-md-6">
+							    <div class="form-group">
+								<label for="inicio7" class="form-label text-muted fst-italic">inicio semana 15</label>
+								<input type="date" id="inicio7" class="form-control" >
+							    </div>
+							</div>
+							<div class="col-md-6">
+							    <div class="form-group ">
+								<label for="fin15" class="form-label text-muted fst-italic">fin semana 15</label>
+								<input type="date" id="fin15" class="form-control" >
+							    </div>
+							</div>
+
+						    </div>
+
+						    <div class="row align-items-center">
+
+							<div class="col-md-6">
+							    <div class="form-group">
+								<label for="inicio16" class="form-label text-muted fst-italic">inicio semana 16</label>
+								<input type="date" id="inicio16" class="form-control" >
+							    </div>
+							</div>
+							<div class="col-md-6">
+							    <div class="form-group ">
+								<label for="fin16" class="form-label text-muted fst-italic">fin semana 16</label>
+								<input type="date" id="fin16" class="form-control" >
+							    </div>
+							</div>
+
+						    </div>
+
+						</div>
+					    </div>
 					</div>
-					<div class="card-body container">
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio9" class="form-label text-muted fst-italic">inicio semana 9</label>
-=======
-							<label for="inicio9"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 9
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio9" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin9" class="form-label text-muted fst-italic">fin semana 9</label>
-=======
-							<label for="fin9"
-							       class="form-label text-muted fst-italic">
-							    fin semana 9
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin9" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
 
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio10" class="form-label text-muted fst-italic">inicio semana 10</label>
-=======
-							<label for="inicio10"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 10
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio2" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-<<<<<<< HEAD
-							<label for="fin10" class="form-label text-muted fst-italic">fin semana 10</label>
-=======
-							<label for="fin10"
-							       class="form-label text-muted fst-italic">
-							    fin semana 10
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="fin10" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-<<<<<<< HEAD
-							<label for="inicio11" class="form-label text-muted fst-italic">inicio semana 11</label>
-=======
-							<label for="inicio11"
-							       class="form-label text-muted fst-italic">
-							    inicio semana 11
-							</label>
->>>>>>> origin/fc
-							<input type="date" id="inicio11" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-							<label for="fin11" class="form-label text-muted fst-italic">fin semana 11</label>
-							<input type="date" id="fin11" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-							<label for="inicio12" class="form-label text-muted fst-italic">inicio semana 12</label>
-							<input type="date" id="inicio12" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-							<label for="fin12" class="form-label text-muted fst-italic">fin semana 12</label>
-							<input type="date" id="fin12" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-							<label for="inicio5" class="form-label text-muted fst-italic">inicio semana 13</label>
-							<input type="date" id="inicio2" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-							<label for="fin13" class="form-label text-muted fst-italic">fin semana 13</label>
-							<input type="date" id="fin13" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-							<label for="inicio6" class="form-label text-muted fst-italic">inicio semana 14</label>
-							<input type="date" id="inicio6" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-							<label for="fin14" class="form-label text-muted fst-italic">fin semana 14</label>
-							<input type="date" id="fin14" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-							<label for="inicio7" class="form-label text-muted fst-italic">inicio semana 15</label>
-							<input type="date" id="inicio7" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-							<label for="fin15" class="form-label text-muted fst-italic">fin semana 15</label>
-							<input type="date" id="fin15" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					    <div class="row align-items-center">
-						
-						<div class="col-md-6">
-						    <div class="form-group">
-							<label for="inicio16" class="form-label text-muted fst-italic">inicio semana 16</label>
-							<input type="date" id="inicio16" class="form-control" >
-						    </div>
-						</div>
-						<div class="col-md-6">
-						    <div class="form-group ">
-							<label for="fin16" class="form-label text-muted fst-italic">fin semana 16</label>
-							<input type="date" id="fin16" class="form-control" >
-						    </div>
-						</div>
-						
-					    </div>
-
-					</div>
 				    </div>
-				</div>
-				
-                            </div>
 
-			    
-                        </div>
+
+				</div>
                     </main>
-                </div>
-            </div>
-        </div>
-
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
-                    <div>
-                        <a href="#">Politica privacidad</a>
-                        &middot;
-			<a href="#">Terminos &amp; Condiciones</a>
-		    </div>
+			    </div>
+			</div>
 		</div>
-	    </div>
-	</footer>
-	<script src="./js/bootstrap.bundle.min.js" ></script>
-        <script src="./js/scripts.js"></script>
-        <script src="./js/Chart.min.js" ></script>
-        <script src="./assets/demo/chart-area-demo.js"></script>
-        <script src="./assets/demo/chart-bar-demo.js"></script>
-        <script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="./js/datatables-simple-demo.js"></script>
+
+		<footer class="py-4 bg-light mt-auto">
+		    <div class="container-fluid px-4">
+			<div class="d-flex align-items-center justify-content-between small">
+			    <div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
+			    <div>
+				<a href="#">Politica privacidad</a>
+				&middot;
+				<a href="#">Terminos &amp; Condiciones</a>
+			    </div>
+			</div>
+		    </div>
+		</footer>
+		<script src="./js/bootstrap.bundle.min.js" ></script>
+		<script src="./js/scripts.js"></script>
+		<script src="./js/Chart.min.js" ></script>
+		<script src="./assets/demo/chart-area-demo.js"></script>
+		<script src="./assets/demo/chart-bar-demo.js"></script>
+		<script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
+		<script src="./js/datatables-simple-demo.js"></script>
     </body>
 </html>

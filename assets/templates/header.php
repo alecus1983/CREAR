@@ -95,6 +95,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="./docentes.php">Docentes</a></li>
+                                <li><a href="./blog/blog.php">Blog</a></li>
                                 <li><a href="#Contactos">Contactos</a></li>
                             </ul>
                         </div>
@@ -114,7 +115,7 @@
                                         <ul class="metismenu" id="mobile-menu">
                                             </li>
                                             <li><a href="#">Inicio</a> </li>
-                                            <li><a href="./Nosotros.html">Nosotros</a> </li>
+                                            <li><a href="./Nosotros.php">Nosotros</a> </li>
                                             <li><a href="#">Servicios <i class="fas fa-angle-down"></i></a>
                                                 <ul class="sub-menu">
                                                     <li><a href="./colegio.php">Colegio</a></li>
@@ -122,6 +123,7 @@
                                                     <!-- <li><a href="./educacionciclos.php">Educación por Ciclos</a></li> -->
                                                     <!-- <li><a href="./cursoscortos.html">Cursos y Seminarios</a></li> -->
                                                 </ul>
+                                                <li><a href="./blog/blog.php">Blog</a></li>
                                                 <li><a href="./docentes.php">Docentes</a></li>
 
                                             <li><a href="#Contactos">Contactos</a></li>

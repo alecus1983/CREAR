@@ -8,6 +8,7 @@
  //Redireccionar a login.php
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  header("location: login_boletines_prueba.php");
 =======
  header("location: login_boletines.php");
@@ -15,4 +16,7 @@
 =======
  header("location: login_boletines.php");
 >>>>>>> origin/fc
+=======
+ header("location: login_boletines_prueba.php");
+>>>>>>> refs/remotes/origin/main
 ?>

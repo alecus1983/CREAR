@@ -194,7 +194,7 @@ foreach($list->id_alumno  as $e) {
 
 	    
            
-      // obtengo la nota del periodo 3
+      // obtengo la nota del periodo
       $notax->get_nota_periodo($e,$id_materia,3,$year);
       // guardo la nota del tercer periodo para mostrarlo
       // en la tabla 
@@ -215,7 +215,7 @@ foreach($list->id_alumno  as $e) {
       }
 	    
            
-      // obtengo la nota del periodo 4
+      // obtengo la nota del periodo
       $notax->get_nota_periodo($e,$id_materia,4,$year);
       $p4 = number_format($notax->nota, 1, '.', '');
       $spot[$e][$id_area][$id_materia][4] =  floatval($p4);

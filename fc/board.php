@@ -64,11 +64,6 @@ $ano = date('Y');
 
 	 a{
 	     color: black;
-<<<<<<< HEAD
-=======
-	     
-
->>>>>>> origin/fc
 	 }
 	 @-webkit-keyframes spin {
 	     0% { -webkit-transform: rotate(0deg); }
@@ -82,28 +77,13 @@ $ano = date('Y');
 	</style>
 
     </head>
-
     <body class="sb-nav-fixed">
-
-
 	<div class="loader" style="display:none" id="loader"></div>
-
-
 	<div id="content" class="container">
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
-<<<<<<< HEAD
-	    
-<<<<<<< HEAD
 	    <div class="align-items-center"><h2 class="text-center fs-2">PANEL <b>DOCENTE</b></h2></div>
-=======
-	    <div class="align-items-center"><h2 class="display-2">PANEL <b>DOCENTE</b></h2></div>
->>>>>>> refs/remotes/origin/main
-=======
-
-
->>>>>>> origin/fc
 	    <div class="row align-items-center" style="height:10em;">
-		
+
 		<div class="col"></div>
 		<div class="col align-items-center">
 		    <a href="fc.php" class="d-flex justify-content-center">
@@ -114,7 +94,7 @@ $ano = date('Y');
 		    </a>
 		    <a href="fc.php" class="d-flex justify-content-center">	Calificaciones</a>
 		</div>
-		
+
 		<div class="col">
 		    <a href="fc_admin.php" class="d-flex justify-content-center">
 			<svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
@@ -126,7 +106,7 @@ $ano = date('Y');
 		<div class="col"></div>
 	    </div>
 
-	  
+
 
 	    <div class="row align-items-center" style="height:10em;">
 		<div class="col"></div>
@@ -138,25 +118,20 @@ $ano = date('Y');
 		    </a>
 		    <a href="fc_red.php" class="d-flex justify-content-center">Extra</a>
 		</div>
-		
-		<div class="col">
-<<<<<<< HEAD
 
-<<<<<<< HEAD
+		<div class="col">
+		    <<<<<<< HEAD
+		    <<<<<<< HEAD
+		    =======
+		    >>>>>>> refs/remotes/origin/main
+
 		    <a class="d-flex justify-content-center" href="./recuperacion.php">
-=======
-		    <a class="d-flex justify-content-center">
->>>>>>> refs/remotes/origin/main
 			<svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16" style="color:darkblue;">
 			    <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
 
 			</svg>
 		    </a>
-<<<<<<< HEAD
 		    <a href="./recuperacion.php" class="d-flex justify-content-center">Recuperación</A>
-=======
-		    <a href="" class="d-flex justify-content-center">Recuperación</A>
->>>>>>> refs/remotes/origin/main
 
 		</div>
 		<div class="col"></div>
@@ -168,24 +143,19 @@ $ano = date('Y');
 		    <a href="../" class="d-flex justify-content-center">
 			<img src="../imagenes/escudo.gif" height="70em" >
 		    </a>
-
-		    
-		  
 		</div>
-			
+
 		<div class="col">
 		</div>
 	    </div>
-            </div>
-=======
-		    <a href="../" class="d-flex justify-content-center">
-			<img src="../imagenes/escudo.gif" height="70em" >
-		    </a>
-		</div>
-		<div class="col"></div>
-	    </div>
         </div>
->>>>>>> origin/fc
+	<a href="../" class="d-flex justify-content-center">
+	    <img src="../imagenes/escudo.gif" height="70em" >
+	</a>
+	</div>
+	<div class="col"></div>
+	</div>
+        </div>
 
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">

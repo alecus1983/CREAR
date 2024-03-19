@@ -13,6 +13,7 @@ $d = new docentes();
 $d->get_docente_cc($usuario);
 $id = $d->id;
 $admin = $d->admin ;
+echo "El estado de administrador es  $admin";
 $ano = date('Y');
 ?>
 <!DOCTYPE html>
@@ -298,15 +299,13 @@ $ano = date('Y');
 
 
 	 }// funcion para la carga de los alumnos
-<<<<<<< HEAD
+
 	 function est(id_a){
 	     swal("Has ingresado el alumno"+id_a);
 
 
 	 }
-=======
-	 
->>>>>>> origin/fc
+
 
 	 // funsion que carga las semanas correctas cuando cambia
 	 // el Periodo de calificaciones
@@ -328,11 +327,7 @@ $ano = date('Y');
 	     // el listado de estudiantes
 	     $.ajax({
 		 type: "POST",
-<<<<<<< HEAD
-		 url: "listado_estudiantes.php",
-=======
 		 url: "listado_estudiantes_red.php",
->>>>>>> origin/fc
 		 data: {
                      years: $("#years").val(),
 		     id_g: $("#id_g").val(),
@@ -508,7 +503,7 @@ $ano = date('Y');
 		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -561,7 +556,7 @@ $ano = date('Y');
 					       min="2015"
 					       max="2100" step="1"
 
-					<?php if ($admin !== 1) { ?>
+					<?php if ($admin == 0) { ?>
 					    readonly="readonly"
 					<?php } ?>
 					class="form-control ">
@@ -571,72 +566,42 @@ $ano = date('Y');
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
 
-						class="sel form-control"
-						    onchange="actualizar();">
+						    class="sel form-control"
+						onchange="actualizar();">
 					    <option value="1">Mañana</option>
 					    <option value="2">Tarde</option>
 					</select>
 
 					<label for="periodos"> Periodo</label>
 					<select id="periodos"
-
-						name="periodos"
-						    class="sel form-control" required=""
-						onchange="load_();">
-<<<<<<< HEAD
-<<<<<<< HEAD
-					 
-
-					    					    <option value="4">4</option>
-
-=======
+						    name="periodos"
+						class="sel form-control" required=""
+						    onchange="load_();">
+					    <option value="4">4</option>
 					    <option value="3">3</option>
->>>>>>> refs/remotes/origin/main
-=======
 					    <option value="2">2</option>
->>>>>>> origin/fc
-
-
 					</select>
 
 					<label for="semana">Semana</label>
 					<select id="semana"
-						class="sel form-control"
-						    onchange="load_lista_estudiantes();">
-<<<<<<< HEAD
-					    
-					    
-<<<<<<< HEAD
-					 
-<option value="26">26</option>
-					      				 <option value="27">27</option>
-					    					    					    		 <option value="28">28</option>
-					    					    					    		  <option value="29">29</option>
-					    					    					    		  					    					    					    		  <option value="30">30</option>
-					    					    					    		  					    					    					    		  <option value="31">31</option>
-
-
-=======
-					    					   	<option value="16">16</option>
-
-					    					<option value="17">17</option>
-					    										    					<option value="18">18</option>
-
-
-					       					    <option value="19">19</option>
-					    
-				    					    <option value="20">20</option>
-
-					    					     <option value="21">21</option>
-					    					    <option value="22">22</option>
-					    					    <option value="23">23</option>
-
-
-<option value="24">24</option>
-					    					    <option value="25">25</option>
->>>>>>> refs/remotes/origin/main
-=======
-
+						    class="sel form-control"
+						onchange="load_lista_estudiantes();">
+					    <option value="26">26</option>
+					    <option value="27">27</option>
+					    <option value="28">28</option>
+					    <option value="29">29</option>
+					    <option value="30">30</option>
+					    <option value="31">31</option>
+					    <option value="16">16</option>
+					    <option value="17">17</option>
+					    <option value="18">18</option>
+					    <option value="19">19</option>
+				    	    <option value="20">20</option>
+					    <option value="21">21</option>
+					    <option value="22">22</option>
+					    <option value="23">23</option>
+					    <option value="24">24</option>
+					    <option value="25">25</option>
 					    <option value="9">9</option>
 					    <option value="10">10</option>
 					    <option value="11">11</option>
@@ -645,18 +610,14 @@ $ano = date('Y');
 					    <option value="14">14</option>
 					    <option value="15">15</option>
 					    <option value="16">16</option>
-
->>>>>>> origin/fc
-
-
 					</select>
 
 
 					<label class="Control-label">Grado</label>
 					<select id="id_g" name="id_gs"
-						    class ="sel form-control"
+						class ="sel form-control"
 
-						    onchange="actualizar();">
+						onchange="actualizar();">
 					    <?php
 					    // creo un nuevo objeto  matricula docente
 					    $mt = new matricula_docente();
@@ -679,8 +640,8 @@ $ano = date('Y');
 					<label class="Control-label">Curso</label>
 					<select id="id_c"
 
-						onchange = "load_lista_estudiantes();"
-						class ="sel form-control">
+						    onchange = "load_lista_estudiantes();"
+						    class ="sel form-control">
 					    <option value="0">A</opcion>
 						<option value="1">B</opcion>
 					</select>
@@ -688,8 +649,8 @@ $ano = date('Y');
 					<label for="id_ms">Materia</label>
 					<select id="id_ms"
 
-						name="id_ms" onchange="load_lista_estudiantes();"
-						class="sel form-control">
+						    name="id_ms" onchange="load_lista_estudiantes();"
+						    class="sel form-control">
 					</select>
 
 				    </nav>
@@ -698,13 +659,8 @@ $ano = date('Y');
                         </div>
 
 			<div class="sb-sidenav-footer">
-<<<<<<< HEAD
-                            <div class="small">Logged in as:</div>
-                            Start Bootstrap
-=======
                             <div class="small">Registrado(a) como:</div>
                             <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?>
->>>>>>> origin/fc
                         </div>
                     </nav>
                 </div>
@@ -713,7 +669,7 @@ $ano = date('Y');
                 <div id="layoutSidenav_content">
                     <main>
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
+                            <h1 class="mt-4">FORMULARIO  <?php echo date('Y');  ?></h1>
                             <ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item active">Para  la gestión de calificaciones</li>
                             </ol>
@@ -728,10 +684,7 @@ $ano = date('Y');
 					    </svg>
 					    estadísticas
                                         </div>
-<<<<<<< HEAD
-=======
 					<div id="estadisicas" class="card-body"></div>
->>>>>>> origin/fc
 				    </div>
 				</div>
 
