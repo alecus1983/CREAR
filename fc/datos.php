@@ -25,8 +25,8 @@ class imcrea {
 
     public function __construct(){
 
-        $this->_db= new mysqli('localhost','imcreati_admin','conezioncrear21','imcreati_data');
-        //$this->_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+        //$this->_db= new mysqli('localhost','imcreati_admin','conezioncrear21','imcreati_data');
+        $this->_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
         if ($this->_db->connect_errno) {
             echo "fallo al conectar bd".$this->_db->connect_errno;
             return;
