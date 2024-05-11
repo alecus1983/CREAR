@@ -13,6 +13,6 @@ $client = new Google_Client();
 $client->setClientId($clientID);
 $client->setClientSecret($ClientSecret);
 #$client->setRedirectUrl($red_url);
-
+$cli
 
 ?>
