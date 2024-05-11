@@ -823,13 +823,15 @@ foreach($list->id_alumno  as $e) {
  
   $pdf->Cell(50,3,utf8_decode("Promedio: ".number_format($promedio[$e],1,'.')),1,0,'L');
   // si hay notas perdidas
-  if($materia_perdidas){
-    $pdf->Cell(50,3,utf8_decode("Materias: ".$num_m.", perdidas : ".$materia_perdidas),1,0,'L');    
+  if($materia_perdidas and $id_periodo == 4){
+    $pdf->Cell(50,3,utf8_decode("Materias: ".$num_m.", perdidas : ".$materia_perdidas),1,0,'L');
+    $pdf->Cell(80,3,utf8_decode("Areas Perdidas: ".$a_perdidas),1,0,'L');
   } else {
     $pdf->Cell(50,3,utf8_decode("Materias: ".$num_m),1,0,'L');
+    $pdf->Cell(80,3,"",1,0,'L');
   }
 
-  $pdf->Cell(80,3,utf8_decode("Areas Perdidas: ".$a_perdidas),1,0,'L');
+  
     
   //detalle de cada materia
 

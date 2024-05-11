@@ -77,13 +77,19 @@ $ano = date('Y');
 	</style>
 
     </head>
+
     <body class="sb-nav-fixed">
+
+
 	<div class="loader" style="display:none" id="loader"></div>
+
+
 	<div id="content" class="container">
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
+	    
 	    <div class="align-items-center"><h2 class="text-center fs-2">PANEL <b>DOCENTE</b></h2></div>
 	    <div class="row align-items-center" style="height:10em;">
-
+		
 		<div class="col"></div>
 		<div class="col align-items-center">
 		    <a href="fc.php" class="d-flex justify-content-center">
@@ -94,7 +100,7 @@ $ano = date('Y');
 		    </a>
 		    <a href="fc.php" class="d-flex justify-content-center">	Calificaciones</a>
 		</div>
-
+		
 		<div class="col">
 		    <a href="fc_admin.php" class="d-flex justify-content-center">
 			<svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
@@ -106,7 +112,7 @@ $ano = date('Y');
 		<div class="col"></div>
 	    </div>
 
-
+	  
 
 	    <div class="row align-items-center" style="height:10em;">
 		<div class="col"></div>
@@ -118,12 +124,8 @@ $ano = date('Y');
 		    </a>
 		    <a href="fc_red.php" class="d-flex justify-content-center">Extra</a>
 		</div>
-
+		
 		<div class="col">
-		    <<<<<<< HEAD
-		    <<<<<<< HEAD
-		    =======
-		    >>>>>>> refs/remotes/origin/main
 
 		    <a class="d-flex justify-content-center" href="./recuperacion.php">
 			<svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16" style="color:darkblue;">
@@ -143,19 +145,15 @@ $ano = date('Y');
 		    <a href="../" class="d-flex justify-content-center">
 			<img src="../imagenes/escudo.gif" height="70em" >
 		    </a>
-		</div>
 
+		    
+		  
+		</div>
+			
 		<div class="col">
 		</div>
 	    </div>
-        </div>
-	<a href="../" class="d-flex justify-content-center">
-	    <img src="../imagenes/escudo.gif" height="70em" >
-	</a>
-	</div>
-	<div class="col"></div>
-	</div>
-        </div>
+            </div>
 
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
