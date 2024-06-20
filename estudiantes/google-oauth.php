@@ -4,7 +4,8 @@ session_start();
 // Update the following variables
 $google_oauth_client_id = '44739736249-v3gmg4q0abunp3fcr7nj5mi3u9l48uve.apps.googleusercontent.com';
 $google_oauth_client_secret = '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';
-$google_oauth_redirect_uri = 'https://estudiantes.imcreativo.edu.co/google-oauth.php';
+$google_oauth_redirect_uri = 'http://redirectmeto.com/http://localhost/CREAR/estudiantes/google-oauth.php';
+//$google_oauth_redirect_uri = 'https://estudiantes.imcreativo.edu.co/google-oauth.php';
 $google_oauth_version = 'v3';
 
 // If the captured code param exists and is valid
@@ -68,7 +69,4 @@ if (isset($_GET['code']) && !empty($_GET['code'])) {
     header('Location: https://accounts.google.com/o/oauth2/auth?' . http_build_query($params));
     exit;
 }
-
-
-
 ?>
