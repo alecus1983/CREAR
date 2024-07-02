@@ -1286,6 +1286,8 @@ class calificaciones extends  imcrea {
                order by p.id_ponderado";}
       
       try {
+          //echo $q."<br><br>";
+          
 	// realizo la consulta
 	$c = $this->_db->query($q);
 	//extraigo un dato
@@ -1824,8 +1826,10 @@ class logro extends imcrea{
         // recorre el array 
         $r = $c->fetch_array(MYSQLI_ASSOC);
             // agrego un elemento al array
+        if (isset($r['id_logro'])) { 
         $this->logro = $r['logro'] ;
-        $this->id_logro = $r['id_logro'] ;            
+        $this->id_logro = $r['id_logro'] ;
+        }
     }
 
 }
