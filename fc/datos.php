@@ -1188,7 +1188,7 @@ class calificaciones extends  imcrea {
     // 
     public function get_calificacion_semanal($id_a,$id_m,$id_s , $y, $id_p) {
 
-        $q = "select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year  from calificaciones where year = $y and  id_alumno = $id_a and    id_materia = $id_m and       id_ponderado = $id_p and   id_semana = $id_s";
+        $q = "select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year  from calificaciones_".$y." where year = $y and  id_alumno = $id_a and    id_materia = $id_m and       id_ponderado = $id_p and   id_semana = $id_s";
         // ejecuto la consulta
         // echo $q;
         
@@ -1234,7 +1234,7 @@ class calificaciones extends  imcrea {
     public function get_recuperacion_periodo($id_a,$id_m,$y, $periodo) {
 
       // Consulta que obtiene mediante SQL la cantidad de recuperaciones
-        $q = "select id_alumno, id, nota, id_materia, year, corte  from calificaciones
+        $q = "select id_alumno, id, nota, id_materia, year, corte  from calificaciones_".$y."
 	where year = $y
 	and  id_alumno = $id_a
 	and  id_materia = $id_m
@@ -1271,7 +1271,7 @@ class calificaciones extends  imcrea {
     public function get_nota_periodo($id_a, $id_m, $periodo, $year){
       // si la materia es disciplina se calcula como un promedio
       if($id_m == 20){
-	$q = "select avg( nota) nota from calificaciones
+	$q = "select avg( nota) nota from calificaciones_".$year."
                   where id_alumno = $id_a and id_materia = $id_m and
                   periodo = $periodo and year = $year and  id_semana > 0";
       }
@@ -1279,19 +1279,21 @@ class calificaciones extends  imcrea {
       else {
         $q = "select  sum(valor*nota)/100 as nota from
               ponderado as p inner join 
-              (select id_ponderado, nota from calificaciones
+              (select id_ponderado, nota from calificaciones_".$year."
                where id_alumno = $id_a and id_materia = $id_m and
                periodo = $periodo and year = $year and id_ponderado > 0
                order by id_ponderado) as  cal on cal.id_ponderado = p.id_ponderado
                order by p.id_ponderado";}
       
       try {
+          echo $q."<br><br>";
+          
 	// realizo la consulta
 	$c = $this->_db->query($q);
 	//extraigo un dato
              $r = $c->fetch_array(MYSQLI_ASSOC); }
       catch (Exeption $e) {
-	//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+	echo 'Excepción capturada: ',  $e->getMessage(), "\n";
       }
       // guardo la nota en el objeto
          $this->nota = $r['nota'];
@@ -1303,7 +1305,7 @@ class calificaciones extends  imcrea {
     public function get_rendimiento_alummno_periodo($id_a, $id_m, $ano, $id_periodo){
       // consulta para recuperar alumnos
         $q = "select p.id_ponderado, ponderado, por_periodo, cantidad from ponderado as p inner join
-(select id_ponderado, count(*)  as cantidad from calificaciones where id_alumno = $id_a and id_materia = $id_m and year = $ano and periodo = $id_periodo
+(select id_ponderado, count(*)  as cantidad from calificaciones_".$ano." where id_alumno = $id_a and id_materia = $id_m and year = $ano and periodo = $id_periodo
 group by id_ponderado order by id_ponderado) as c on p.id_ponderado = c.id_ponderado
 order by id_ponderado";
 
@@ -1334,7 +1336,7 @@ order by id_ponderado";
     // verifica la calificacion semanal
     // requiere 
     public function get_logro($id_a,$id_m, $y, $id_periodo) {
-        $q = "select * from calificaciones where year = $y
+        $q = "select * from calificaciones_".$y." where year = $y
                                         and id_alumno = $id_a
                                        and id_materia = $id_m
                                           and periodo = $id_periodo
@@ -1382,7 +1384,7 @@ order by id_ponderado";
          
         }
         // creo la consulta
-        $q= "insert into calificaciones
+        $q= "insert into calificaciones_".$y."
             ( id_alumno,id_materia, nota,id_docente,periodo,year,modificado,id_ponderado,id_semana )
             values($id_a,$id_m,$nota,$id_d,$p,$y,NOW(),$id_p,$id_s)";
         // ejecuto la consulta
@@ -1403,7 +1405,7 @@ order by id_ponderado";
     
     public function set_recuperacion($id_a,$id_m,$nota,$id_d,$p,$y){
         // creo la consulta
-        $q= "insert into calificaciones
+        $q= "insert into calificaciones_".$y."
 	  ( id_alumno,id_materia, nota,id_docente,periodo,year,modificado,corte )
 	  values($id_a,$id_m,$nota,$id_d,$p,$y,NOW(),'R' )";
         // ejecuto la consulta
@@ -1418,7 +1420,7 @@ order by id_ponderado";
     
     public function set_logro($id_a,$id_m,$logro, $id_d , $p, $y){
         // creo la consulta
-        $q= "insert into calificaciones
+        $q= "insert into calificaciones_".$y."
             (id_alumno, id_materia, id_logro, nota , id_docente, periodo, year, modificado)
             values($id_a, $id_m, $logro, 0 ,  $id_d, $p, $y,NOW())";
         // ejecuto la consulta
@@ -1433,10 +1435,9 @@ order by id_ponderado";
     // Método que actualiza la recuperación
     // para lo cual utiliza el id de la recuperación
 
-    public function update_recuperacion($id,$nota){
+    public function update_recuperacion($id, $nota, $year){
 
-        $q = "update calificaciones set nota = $nota where id = $id";
-
+        $q = "update calificaciones_".$year." set nota = $nota where id = $id";
         
         if( $this->_db->query($q) === True){
             $this->calificado = true;
@@ -1447,10 +1448,9 @@ order by id_ponderado";
     // Método que actualiza la calificación semanal    
     // para lo cual utiliza el id de la recuperación
 
-    public function update_calificacion_semanal($id,$nota){
+    public function update_calificacion_semanal($id,$nota, $year){
 
-        $q = "update calificaciones set nota = $nota where id = $id";
-
+        $q = "update calificaciones_".$year." set nota = $nota where id = $id";
         
         if( $this->_db->query($q) === True){
             $this->calificado = true;
@@ -1459,10 +1459,9 @@ order by id_ponderado";
     }
 
     // Método para actualizar los logros
-    public function update_logro($id,$logro){
+    public function update_logro($id,$logro, $year){
 
-        $q = "update calificaciones set id_logro = $logro where id = $id";
-
+        $q = "update calificaciones_".$year." set id_logro = $logro where id = $id";
         
         if( $this->_db->query($q) === True){
             $this->calificado = true;
@@ -1493,7 +1492,7 @@ order by id_ponderado";
 
     public function get_docente_semana($id_docente, $ano, $semana) {
 
-        $q = "select count(*) cantidad from calificaciones where id_docente = $id_docente and year = $ano  and id_semana = ".$semana;
+        $q = "select count(*) cantidad from calificaciones_".$ano." where id_docente = $id_docente and year = $ano  and id_semana = ".$semana;
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
         return $r['cantidad'];
@@ -1506,7 +1505,7 @@ order by id_ponderado";
         $q = "select v.criterio, tipo, id_semana from 
 (select concat(validar,$id_m) as criterio, tipo, id_semana from validar where id_semana < $id_s) as v left join
 (select  concat (tipo,id_semana, id_materia) as  criterio , c.id_ponderado from ponderado as p inner join ( 
-select id_alumno, id_semana, id_ponderado, id_materia from calificaciones where year = $year and periodo = $p and id_materia = $id_m  and   id_semana < $id_s and  id_alumno in ($id_e)) as c on c.id_ponderado = p.id_ponderado) as n on n.criterio = v.criterio where n.criterio is null";
+select id_alumno, id_semana, id_ponderado, id_materia from calificaciones_".$year." where year = $year and periodo = $p and id_materia = $id_m  and   id_semana < $id_s and  id_alumno in ($id_e)) as c on c.id_ponderado = p.id_ponderado) as n on n.criterio = v.criterio where n.criterio is null";
 
         //echo $q;
         
@@ -1827,8 +1826,10 @@ class logro extends imcrea{
         // recorre el array 
         $r = $c->fetch_array(MYSQLI_ASSOC);
             // agrego un elemento al array
+        if (isset($r['id_logro'])) { 
         $this->logro = $r['logro'] ;
-        $this->id_logro = $r['id_logro'] ;            
+        $this->id_logro = $r['id_logro'] ;
+        }
     }
 
 }

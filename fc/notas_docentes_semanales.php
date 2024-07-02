@@ -15,7 +15,7 @@ if($ano > 2015 and $ano < 2040) {
     echo "<h2>Avance semana $semana del $ano</h2>";
 
     $matriculas = new matricula_docente();
-    $matriculas->listado_docentes(2023);
+    $matriculas->listado_docentes($ano);
 
     foreach($matriculas->listado_docentes as $d){
 
