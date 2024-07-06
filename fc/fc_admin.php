@@ -146,31 +146,31 @@ if (isset($_SESSION["usuario"])){
                          type: "POST",
                          url: "notas_semanales.php",
                          data: {
-                             year: $("#years").val(),
-                             semana: $("#semana").val(),
-                             id_gs: $("#id_g").val(),
-                             id_ms: $("#id_ms").val(),
-                             id_jornada: $("#jornada").val(),
-                             id_docente: $("#id_d").val(),
-                             corte: $("#corte").val(),
-                             periodo: $("#periodos").val(),
-			     id_curso: $("#id_c").val(),
-                             logro1: JSON.stringify(logros1),
-                             logro2: JSON.stringify(logros2),
-                             logro3: JSON.stringify(logros3),
-                             codigo: JSON.stringify(codigos),
-                             faltas: JSON.stringify(faltas),
-                             A: JSON.stringify(A),
-                             B: JSON.stringify(B),
-                             C: JSON.stringify(C),
-                             D: JSON.stringify(D),
-                             E: JSON.stringify(E),
-                             F: JSON.stringify(F),
-                             G: JSON.stringify(G),
-                             H: JSON.stringify(H),
-                             I: JSON.stringify(I),
-                             J: JSON.stringify(J),
-			     L: JSON.stringify(L)
+                                 year: $("#years").val(),
+                      semana: $("#semana").val(),
+                      id_gs: $("#id_g").val(),
+                      id_ms: $("#id_ms").val(),
+                      id_jornada: $("#jornada").val(),
+                      id_docente: $("#id_d").val(),
+                      corte: $("#corte").val(),
+                      periodo: $("#periodos").val(),
+                      id_curso: $("#id_c").val(),
+                      logro1: JSON.stringify(logros1),
+                      logro2: JSON.stringify(logros2),
+                      logro3: JSON.stringify(logros3),
+                      codigo: JSON.stringify(codigos),
+                      faltas: JSON.stringify(faltas),
+                      A: JSON.stringify(A),
+                      B: JSON.stringify(B),
+                      C: JSON.stringify(C),
+                      D: JSON.stringify(D),
+                      E: JSON.stringify(E),
+                      F: JSON.stringify(F),
+                      G: JSON.stringify(G),
+                      H: JSON.stringify(H),
+                      I: JSON.stringify(I),
+                      J: JSON.stringify(J),
+                      L: JSON.stringify(L)
                          },
 
                          success: function(data) {
@@ -266,9 +266,8 @@ if (isset($_SESSION["usuario"])){
 	 // avance semanal de notas de docentes
 	 function avance_semanal() {
 
-
 	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
+	     // el avance de notas semanales
 	     $.ajax({
 		 type: "POST",
 		 url: "notas_docentes_semanales.php",
@@ -294,10 +293,8 @@ if (isset($_SESSION["usuario"])){
 
 	 // avance semanal de notas de docentes
 	 function notas_faltantes() {
-
-
 	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
+	     //  el listado de calificaciones faltantes
 	     $.ajax({
 		 type: "POST",
 		 url: "listado_calificaciones_faltantes.php",
@@ -328,8 +325,6 @@ if (isset($_SESSION["usuario"])){
 
 
 	 	 function eliminar_semana(){
-
-
 	     // se invoca al metodo ajax para solicitar
 	     // el listado de las semanas
 	     $.ajax({
@@ -496,8 +491,6 @@ if (isset($_SESSION["usuario"])){
 
 	 function agregar_matricula_docente() {
 
-	     
-
 	     // se invoca al metodo ajax para solicitar
 	     // el listado de estudiantes
 	     $.ajax({
@@ -541,8 +534,6 @@ if (isset($_SESSION["usuario"])){
 	  }
 
 	 function eliminar_matricula_docente(id) {
-
-	     
 
 	     // se invoca al metodo ajax para solicitar
 	     // el listado de estudiantes
@@ -748,7 +739,105 @@ if (isset($_SESSION["usuario"])){
 		 obtener_pdf();
              }
 	 }
+	 // funcion que crea un cuadro de notas por cada alumno de un grado para un determinado año
+	 function cuadro() {
 
+         $('#loader').show();
+	     // esta función permite generar un un boletin en formato pdf
+	     // se almacena  en la variable año
+	     // alamcena el año seleccionado ( año lectivo calendario A)
+	     var year = $("#years").val();
+	     // se almacena la variable periodos con el periodo academico
+	     // a seleccionar
+	     var periodos = $('select#periodos').val();//
+	     // la variable grados guarda codigo del grado del estudiante
+	     var grados = $("#id_g").val();
+	     // agrego la jornada
+	     var jornada = $("#jornada").val();
+	     // describo el curso
+	     var curso = $("#id_c").val();
+         // listado de estudiantes
+         // var l = array();
+
+	     // si el grado es negativo significa que  no se ha seleccionado ningun atributo
+	     // en el selector
+             if (grados <0){
+		 swal("Favor seleccione un grado");
+	     }
+	     // si los periodos son iguales a menos uno es porque no se ha seleccionado ningun
+	     // atributo en el selector de peridos
+	     else if(periodos <0){
+		 swal("Favor seleccione un periodo");
+	     }
+	     else{
+
+             // se invoca a funcion que retorna el listado de estudiantes de un grado
+             $("#avance").html("");
+             // se carga el loader
+             $(".loader").show();
+             // variable para almacenar las listas
+             var l ;
+
+             // se consulta cada estudiante
+             $.ajax({
+                     type:"POST",
+                         async: false,
+              dataType: "json",
+              url: "listado_estudiantes_json.php",
+              data:{
+                   id_jornada: $("#jornada").val(),
+                   curso : $("#id_c").val(),
+                   semana:  $("#semana").val(),
+                   periodo: $("#periodos").val() ,
+                   grado: $("#id_g").val(),
+                   years: $("#years").val()
+              },
+              success: function(listado) {
+                  //si se hizo la consulta arrojo la lista de estudiante
+                  //console.log(listado.id_alumno);
+                  //swal("Se ejecuto con exito");
+                  // por cada alumno ejecuto este codigo
+                  l = listado.id_alumno;
+              }
+              });
+             
+             //  estructura de repeticion para buscar
+             // el cuadro de notas por cada estudiante
+             for (var ii=0; ii < l.length; ii ++) {
+                 // salida por consola
+                 console.log('algoritmo para el alumno '+ii+" codigo "+l[ii]);
+                      // solicito un cuadro de dialogo para un estudiante
+                      $.ajax({
+                              type: "POST",
+                                  async: false,
+                              url: "cuadro.php",
+                              data: {
+                                  years: $("#years").val(),
+                                  jornada: $("#jornada").val(),
+                                  periodo: $("#periodos").val(),
+                                  id_g: $("#id_g").val(),
+                                  id_curso: $("#id_c").val(),
+                                  id_alumno: l[ii]
+                              },
+                                  
+                             success : function(cuadro) {
+                                     $("#avance").append(cuadro);
+                             },
+                        error: function(xhr, status) {
+                            swal('Disculpe, existió un problema'+status);
+                            console.log(xhr);
+                        }
+      
+                       });
+                      
+                  }
+
+             // Por cada estudiante se ejecuta la iguiente rutina
+             
+             // se llama mediante ajax la
+         }
+             $('#loader').hide();       
+     }
 	 function crear_pdf(){
 	     // esta función permite generar un un boletin en formato pdf
 	     // se almacena  en la variable año
@@ -899,10 +988,10 @@ if (isset($_SESSION["usuario"])){
 
 	 jQuery.ajaxSetup({
              beforeSend: function() {
-		 $('#loader').show();
+                 //$('#loader').show();
              },
 	     complete: function(){
-		 $('#loader').hide();
+             //$('#loader').hide();
 	     }
 	 });
 
@@ -1083,9 +1172,6 @@ if (isset($_SESSION["usuario"])){
 
 				    </nav>
 
-
-
-
 				</div>
 
 				<a class="nav-link collapsed" href="#"
@@ -1150,6 +1236,7 @@ if (isset($_SESSION["usuario"])){
 					   class="nav-link"
 					   href="#"
 					   onclick="avance_semanal();">Avance notas semanales
+					</a>
 					
 					<a style="margin: 0.5rem;"
 					   class="nav-link"
@@ -1158,12 +1245,14 @@ if (isset($_SESSION["usuario"])){
 
 					<a style="margin: 0.5rem;"
 					   class="nav-link"
+					   onclick="cuadro();">Generar cuadro de notas
+					</a>
+					
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
 					   href="#" target="_self"
 					   onclick="notas_faltantes()">Notas faltantes
 					</a>
-
-					
-
 				    </nav>
 				</div>
 
