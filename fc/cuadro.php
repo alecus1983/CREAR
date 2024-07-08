@@ -54,7 +54,8 @@ foreach ($lista_a as  $id_area =>$a) {
     
     //LISTA DE MATERIAS DEL AREA
     foreach($lista_m_a as $id_materia => $materia) {
-            
+        
+
         // a partir de aqui comienso a computar las calificaciones
         $notax = new calificaciones();
         // obtengo la nota del periodo
@@ -140,7 +141,37 @@ foreach ($lista_a as  $id_area =>$a) {
         echo  $alumno->nombres." ".$alumno->apellidos." ($id_alumno) </td><td>".$a[0]."</td><td>$materia</td><td>$p1</td><td>$r1</td><td>$p2</td><td>$r2</td><td>$p3</td><td>$r3</td><td>$p4</td><td>$r4</td>";
         echo "</tr>" ;
 
-        $cuadro->set_cuadro($id_alumno, $id_materia, $id_area, $year,$periodo,$p1,$p2,$p3,$p4,$r1,$r2,$r3,$r4,0);
+                // verifico si hay notas insertadas en el cuadro
+        $res = $cuadro->consultar_cuado_por_alumno_ano_periodo($id_alumno, $id_materia, $year,$periodo);
+        
+        // si hay notas insertadas  actualizo las que hay
+        if ($res) {
+            echo "$res --> actualizo el alumno $id_alumno, de la materia  $id_materia \t";
+            
+        } else {
+            echo "inserto el alumno $id_alumno, de la materia  $id_materia \t";
+            
+            //  inserto la funcion en el cuadro de notas
+            $cuadro->set_cuadro(
+                $id_alumno,
+                $id_materia,
+                $id_area,
+                $id_grado,
+                $year,
+                $periodo,
+                $p1,
+                $p2,
+                $p3,
+                $p4,
+                $r1,
+                $r2,
+                $r3,
+                $r4,
+                0);
+
+        }
+     
+        
     } // lista de materias
 } // lista de areas
 

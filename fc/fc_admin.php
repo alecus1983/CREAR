@@ -769,7 +769,7 @@ if (isset($_SESSION["usuario"])){
 	     else if(periodos <0){
 		 swal("Favor seleccione un periodo");
 	     }
-	     else{
+	     else {
 
              // se invoca a funcion que retorna el listado de estudiantes de un grado
              $("#avance").html("");
@@ -835,7 +835,8 @@ if (isset($_SESSION["usuario"])){
              // Por cada estudiante se ejecuta la iguiente rutina
              
              // se llama mediante ajax la
-         }
+                $('#loader').hide();       
+         } // fin del else
              $('#loader').hide();       
      }
 	 function crear_pdf(){
@@ -845,14 +846,14 @@ if (isset($_SESSION["usuario"])){
 	     var year = $("#years").val();
 	     // se almacena la variable periodos con el periodo academico
 	     // a seleccionar
-	     var periodos = $('select#periodos').val();//
+	     var periodos = $('select#periodos').val();
 	     // la variable grados guarda codigo del grado del estudiante
 	     var grados = $("#id_g").val();
 	     // agrego la jornada
 	     var jornada = $("#jornada").val();
 	     // describo el curso
 	     var curso = $("#id_c").val();
-
+         // si no ha seleccionado grado
 	     if (grados <0){
 		 swal("Favor seleccione un grado");
 	     }

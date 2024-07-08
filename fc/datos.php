@@ -2004,7 +2004,7 @@ class cuadro extends imcrea {
     public function consultar_cuado_por_alumno_ano_periodo($id_alumno, $id_materia,  $year, $periodo,){
         
         // consulta
-        $q = "SELECT id_cuadro from cuadro   WHERE id_alumno = $id_alumno  and id_materia = $id_materia  and year = $year and periodo $periodo ";
+        $q = "SELECT id_cuadro  from cuadro   WHERE id_alumno = $id_alumno  and id_materia = $id_materia  and year = $year and periodo = $periodo ";
         //echo $q;
         // ejecuto la consulta
         $c = $this->_db->query($q);
@@ -2012,21 +2012,22 @@ class cuadro extends imcrea {
         $a = $c->fetch_array(MYSQLI_ASSOC);
 
         //  si hay notas en el cuadro de notas
-        if ($a['id_cuadro']){
+        if ( is_null($a['id_cuadro'])){
             // retorno verdadero
-            return true;
+            return false;
         }
         else
         {
             // de lo contrario retorno falso
-            return false;
+            return $a['id_cuadro'];
         }
     }
     // insrto una instancia con la nota del periodo uno para el alumno en el año dado
-    public function set_cuadro($id_alumno , $id_materia, $id_area,  $year, $periodo,$p1,$p2,$p3,$p4,$r1,$r2,$r3,$r4,$promedio){
-        $q = "insert into cuadro id_alumno, id_materia, id_area, year, periodo, p1,p2,p3,p4,r1,r2,r3,r4 values ()".
-            " values ($id_alumno, $id_materia, $id_area, $year,  $periodo, $p1, $p2, $p3, $p4, $r1, $r2, $r3, $r4. $promedio)";
-
+    public function set_cuadro($id_alumno , $id_materia, $id_area, $id_grado, $year, $periodo,$p1,$p2,$p3,$p4,$r1,$r2,$r3,$r4,$promedio){
+        // texto de consulta
+        $q = "insert into cuadro (id_alumno, id_materia, id_area, id_grado, year, periodo, p1,p2,p3,p4,r1,r2,r3,r4,promedio) ".
+            " values ($id_alumno, $id_materia, $id_area, $id_grado,$year,  $periodo, $p1, $p2, $p3, $p4, $r1, $r2, $r3, $r4,$promedio)";
+        //muestro el texto
         //echo $q;
         $c = $this->_db->query($q);
         // si la consulta se ejecuta entonces
@@ -2035,6 +2036,20 @@ class cuadro extends imcrea {
         }else
         {return false;}
             
+    }
+
+    // acutaliza noas del cuadro
+    public function update_cuadro ($id_cuadro, $p1,$p2,$p3,$p4,$r1,$r2,$r3,$r4,$promedio) {
+        
+        //texto de consulta
+        $q = "update cuadro set  p1 = $p1, p2 =$p2, p3 =$p3, p4 = $p4, r1 = $r1 where id_cuadro = $id_cuadro";
+        //ejecuto la consulta
+         $c = $this->_db->query($q);
+        // si la consulta se ejecuta entonces
+        if($c === true){
+            return true;
+        }else
+        {return false;}
     }
 }
 
