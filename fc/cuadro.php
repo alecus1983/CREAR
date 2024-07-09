@@ -12,20 +12,10 @@ $id_alumno = $_POST['id_alumno'];
 $gr = new grados();
 //obtengo las caracteristicas del grado
 $gr->get_grado_id($id_grado);
-// objeto de la clase jornada
-$jo = new jornada();
-// recupero la jornada solicitada
-$jo->get_jornada_por_id($id_jornada);
-// objeto tipo matricula docente
-$md = new matricula_docente();
-// creo una nueva matricula docente vacia
-$d  = new docentes();
 // creo un objeto tipo calificaciones
 $notax = new calificaciones();
-// creo un objeto tipo logro 
-$lo = new logro();
 // creo un objeto tipo promedio 
-$promedio = array();
+$promedio = 0;
 // un nuevo objeto tipo area
 $a = new area();
 // lista de areas
@@ -141,13 +131,19 @@ foreach ($lista_a as  $id_area =>$a) {
         echo  $alumno->nombres." ".$alumno->apellidos." ($id_alumno) </td><td>".$a[0]."</td><td>$materia</td><td>$p1</td><td>$r1</td><td>$p2</td><td>$r2</td><td>$p3</td><td>$r3</td><td>$p4</td><td>$r4</td>";
         echo "</tr>" ;
 
-                // verifico si hay notas insertadas en el cuadro
+        // verifico si hay notas insertadas en el cuadro
         $res = $cuadro->consultar_cuado_por_alumno_ano_periodo($id_alumno, $id_materia, $year,$periodo);
         
         // si hay notas insertadas  actualizo las que hay
         if ($res) {
-            echo "$res --> actualizo el alumno $id_alumno, de la materia  $id_materia \t";
-            
+            // si se actualiza el cuadro
+            if ($cuadro->update_cuadro($id_alumno, $p1, $p2, $p3, $p4, $r1, $r2, $r3, $r4, $promedio)){
+                // echo "$res --> actualizo el alumno $id_alumno, de la materia  $id_materia \t<br>";                
+            }
+            // de lo contrario
+            else {
+                // echo "$res --> no se puedo actualizar el alumno $id_alumno, de la materia  $id_materia \t<br>";                
+            }
         } else {
             echo "inserto el alumno $id_alumno, de la materia  $id_materia \t";
             

@@ -2042,7 +2042,7 @@ class cuadro extends imcrea {
     public function update_cuadro ($id_cuadro, $p1,$p2,$p3,$p4,$r1,$r2,$r3,$r4,$promedio) {
         
         //texto de consulta
-        $q = "update cuadro set  p1 = $p1, p2 =$p2, p3 =$p3, p4 = $p4, r1 = $r1 where id_cuadro = $id_cuadro";
+        $q = "update cuadro set  p1 = $p1, p2 =$p2, p3 =$p3, p4 = $p4, r1 = $r1, r2 = $r2, r3 = $r3, r4 = $r4, promedio = $promedio where id_cuadro = $id_cuadro";
         //ejecuto la consulta
          $c = $this->_db->query($q);
         // si la consulta se ejecuta entonces
