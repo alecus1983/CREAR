@@ -1741,7 +1741,7 @@ class semana extends imcrea{
 
     // funcion que actuliza los datos de  la semana
     public function set_semana($semana,$year,$inicio,$fin){
-        $q="update semanas set inicio = '$inicio' , fin = '$fin', year = $year where id_semana = $semana";
+        $q="update emanas set inicio = '$inicio' , fin = '$fin', year = $year where id_semana = $semana";
         //echo $q;
         $c = $this->_db->query($q);
         if($c === true){

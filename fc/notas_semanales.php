@@ -69,7 +69,7 @@ if($ano > 2015 and $ano < 2050) {
 
                                 // si además es la misma nota no hago nada
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);}
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);}
                                 else {
                                     // texto a salir  por consola
                                     //echo " y a exise una nota para el estudiante $cal->id_alumno el la materia $cal->id_materia \n";
@@ -89,7 +89,7 @@ if($ano > 2015 and $ano < 2050) {
                             } // fin del else
                         }
                     }
-
+                    
                     if(isset($_POST['B'])){ 
                         // recupero los logros para el criterio B
                         $B = json_decode($_POST['B'], True);
@@ -111,7 +111,7 @@ if($ano > 2015 and $ano < 2050) {
                             if($cal->calificado){
                                 // update
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota); }
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano); }
         
                             }else
                             {
@@ -153,7 +153,7 @@ if($ano > 2015 and $ano < 2050) {
                             if($cal->calificado){
                                 // update
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);}
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);}
         
                             }else
                             {
@@ -172,7 +172,7 @@ if($ano > 2015 and $ano < 2050) {
                         } // fin del for
                     }
 
-
+                    
 
                     if(isset($_POST['D'])){ 
                         // recupero los logros para el criterio D
@@ -195,7 +195,7 @@ if($ano > 2015 and $ano < 2050) {
                             if($cal->calificado){
                                 // update
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);}
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);}
         
                             }else
                             {
@@ -236,7 +236,7 @@ if($ano > 2015 and $ano < 2050) {
                             if($cal->calificado){
                                 // update
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);}
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);}
         
                             }else
                             {
@@ -278,7 +278,7 @@ if($ano > 2015 and $ano < 2050) {
                             if($cal->calificado){
                                 // update
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);}
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);}
         
                             }else
                             {
@@ -297,7 +297,7 @@ if($ano > 2015 and $ano < 2050) {
                         } // fin del for
 
                     }
-
+                    
                     if(isset($_POST['G'])){ 
                         // recupero los logros para el criterio G
                         $G = json_decode($_POST['G'], True);
@@ -320,7 +320,7 @@ if($ano > 2015 and $ano < 2050) {
                             if($cal->calificado){
                                 // update
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);}
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);}
         
                             }else
                             {
@@ -363,7 +363,7 @@ if($ano > 2015 and $ano < 2050) {
                             if($cal->calificado){
                                 // update
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);}
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);}
         
                             }else
                             {
@@ -382,7 +382,7 @@ if($ano > 2015 and $ano < 2050) {
                         } // fin del for
                 
                     }
-
+                    
                     if(isset($_POST['I'])){ 
                         // recupero los logros para el criterio I
                         $I = json_decode($_POST['I'], True);
@@ -405,7 +405,7 @@ if($ano > 2015 and $ano < 2050) {
                             if($cal->calificado){
                                 // update
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);}
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);}
         
                             }else
                             {
@@ -425,7 +425,7 @@ if($ano > 2015 and $ano < 2050) {
 
                     }
 
-
+                    
                     if(isset($_POST['J'])) { 
                         // recupero los logros para el criterio J
                         $J = json_decode($_POST['J'], True);
@@ -447,7 +447,7 @@ if($ano > 2015 and $ano < 2050) {
                             if($cal->calificado){
                                 // update
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);}
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);}
         
                             }else
                             {
@@ -468,7 +468,7 @@ if($ano > 2015 and $ano < 2050) {
                     }
 
                     //     //////////////////////////////////////////////////////////////////////////////
-
+                    
 
                     if(isset($_POST['L'])) { 
                         // recupero los logros para el criterio J
@@ -490,7 +490,7 @@ if($ano > 2015 and $ano < 2050) {
                             // si esta calificado actualizo la nota
                             if($cal->calificado){
                                 // update
-                                $cal->update_logro($cal->id,$logro);
+                                $cal->update_logro($cal->id,$logro, $ano);
         
                             }else
                             {
@@ -535,7 +535,7 @@ if($ano > 2015 and $ano < 2050) {
 
                                 // si además es la misma nota no hago nada
                                 if (floatval($cal->nota) !== $nota){
-                                    $cal->update_calificacion_semanal($cal->id,$nota);
+                                    $cal->update_calificacion_semanal($cal->id,$nota,$ano);
                                     
                                 }
                                 else {
@@ -597,7 +597,7 @@ if($ano > 2015 and $ano < 2050) {
                     }
 
                     
-                } // fin de 
+                    } // fin de 
             } // fin del if periodos
             else { echo "Por favor indique un periodo valido";}
         } //fin del if materias
