@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> refs/remotes/origin/main
 # ignora el archivo de composer
 composer.phar
 composer-setup
@@ -25,4 +21,4 @@ fc/listado_docentes.php~
 fc/estilos.css~
 #cambios.sql#
 fc/*.php~
-
+fc/error_log
