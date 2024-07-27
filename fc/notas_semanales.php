@@ -579,7 +579,7 @@ if($ano > 2015 and $ano < 2050) {
                             // si esta calificado actualizo la nota
                             if($cal->calificado){
                                 // update
-                                $cal->update_logro($cal->id,$logro);
+                                $cal->update_logro($cal->id,$logro,$ano);
         
                             }else
                             {

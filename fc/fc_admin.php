@@ -32,8 +32,10 @@ if (isset($_SESSION["usuario"])){
 	<script src="js/all.js" ></script>
 	<link href="../imagenes/escudo.gif" rel="shortcut icon"/>
 	<script src="./js/sweetalert.min.js"></script>
-	<script src="./js/jquery-3.5.1.min.js"></scrip>
+	<script src="./js/jquery-3.5.1.min.js"></script>
 	 <script src="./js/ajax.js"></script>
+	 <script src="../boostrap/css/bootstrap.css" type="text/css"></script>
+	 <script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
 	<link rel="stylesheet" href="estilos.css" type="text/css">
 
 	<style>
@@ -729,6 +731,7 @@ if (isset($_SESSION["usuario"])){
              grado = $("#id_g").val();
 
              if (grado == -1) {
+		 // en caso de que no se halla digitado un grado 
 		 swal("Datos", "Por favor seleccione un grado", "info");
              } else if (grado < 7 || grado > 9) {
 		 // llama a la funcion generar para generar el boletin
@@ -909,8 +912,8 @@ if (isset($_SESSION["usuario"])){
 	     // se almacena el periodo
 	     var periodos = $("#periodos").val();
 	     // y se almacenan las variables grados
-	     var gradosx = $("#id_gs").val();
-	     var grados = $("#id_gs").val();
+	     var gradosx = $("#id_g").val();
+	     var grados = $("#id_g").val();
 
 	     // se almacenan todas las variables dentro de la variable parametros
 	     var parametros= "year="+year+"&periodos="+periodos+"&grados="+gradosx+"&id_gs="+gradosx+"";
@@ -1241,7 +1244,7 @@ if (isset($_SESSION["usuario"])){
 					
 					<a style="margin: 0.5rem;"
 					   class="nav-link"
-					   onclick="crear_pdf()">Boletin
+					   onclick="boletin()">Boletin  <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo <br>preescolar</span>
 					</a>
 
 					<a style="margin: 0.5rem;"
