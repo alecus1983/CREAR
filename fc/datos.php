@@ -499,11 +499,8 @@ select distinct id_docente from matricula_docente where year = $year) and admin=
         if($c === true){
             return true;
         }else
-            return false;
-        
+            return false;   
     }
-    
-    
 }
 
 // Clase que define la inscripcion
@@ -565,9 +562,9 @@ class grados extends imcrea {
         }
     } // fin de la funcion
 
-    //////////////////////////////
-    // calcula el valor maximo  //
-    /////////////////////////////
+    //***************************
+    // calcula el valor maximo      *
+    //***************************
 
     public function maximo(){
         // se realiza la consulta
@@ -580,7 +577,6 @@ class grados extends imcrea {
         } else {
             // retorno  el array
             return $dato;
-            $dato -> close();
             $this -> _db -> close();
         }
     } // fin de la cuncion
@@ -597,7 +593,7 @@ class grados extends imcrea {
             //echo "Fallo en incertar fila";
         } else {
             // retorno  el array
-            $this->n_grado = $dato[0];
+            $this->nombre_g = $dato[0];
             $this -> _db -> close();
         }
     } // fin de la funcion
@@ -614,7 +610,7 @@ class grados extends imcrea {
             //echo "Fallo en incertar fila";
         } else {
             // retorno  el array
-            $this->n_grado = $dato["nombre_g"];
+            $this->nombre_g = $dato["nombre_g"];
             $this->promovido = $dato["promovido"];
             $this->grado = $dato["grado"];
             $this -> _db -> close();
@@ -639,6 +635,7 @@ class matricula extends imcrea {
     public $mes;
     // mes de retiro
     public $retiro;
+    
 
     //constructor de la clase
     public function __construct($i){
@@ -658,8 +655,7 @@ class matricula extends imcrea {
             $this->year = $dato["year"];
             $this->mes = $dato["mes"];
             $this->retiro = $dato["retiro"];
-            // return $dato[0];
-            // $dato -> close();
+            
         }
     }
 
@@ -690,6 +686,7 @@ class alumnos extends imcrea {
     public $telefono;
     public $inscripcion;
     public $correo;
+    public $celular;
 
     public function __construct($codigo){
 
@@ -709,15 +706,19 @@ class alumnos extends imcrea {
             $this->fecha = $dato["fecha"];
             $this->telefono = $dato["telefono"];
             $this->inscripcion = $dato["inscripcion"];
-            //return $dato[0];
-            //$resultado -> close();
+            $this->correo = $dato["correo"];
+            
         }
-        // $this -> _db -> close();
     }
 
     // crear alumnos
     public function set_alumno(){
-        $q ="INSERT INTO alumnos (nombres, apellidos, cedula, fecha, correo, telefono, login, inscripcion)
+        $q ="INSERT INTO alumnos (nombres,
+                                                             apellidos,
+                                                             cedula,
+                                                             fecha, correo,
+                                                             telefono, login,
+                                                             inscripcion)
           values ('".$this->nombres."' ,'"
             .$this->apellidos."' ,'"
             .$this->cedula."' ,'"
@@ -727,8 +728,6 @@ class alumnos extends imcrea {
             ."'creativo'"." ,"
             .$this->inscripcion.")";
 
-        //echo "<br>".$q;
-
         // ejecuto la consulta
         $dato = $this->_db->query($q);
 
@@ -736,19 +735,18 @@ class alumnos extends imcrea {
         if (!$dato){
             //echo "Fallo en incertar fila";
         } else {
-            // retorno  el valor 0 del array
-            //return $dato[0];
-            //$dato -> close();
+         
             $this -> _db -> close();
         }
     }
 
     // método para actualizar alumnos
-    public function update_alumno(){
+    public function update_alumno() {
+        
         // actualizacion de los datos del alumno
-        $texto = "UPDATE alumnos SET  nombres ='$this->nombre_estudiante',
-                                  apellidos='$this->apellido_estudiante' ,
-                                  cedula = '$this->documento_estudiante' ,
+        $texto = "UPDATE alumnos SET  nombres ='$this->nombres',
+                                  apellidos='$this->apellidos' ,
+                                  cedula = '$this->cedula' ,
                                   telefono = '$this->celular',
                                   fecha = '$this->fecha' ,
                                   correo = '$this->correo'
@@ -764,7 +762,6 @@ class alumnos extends imcrea {
             // retorno  el valor 0 del array
             $dato -> close();
             $this -> _db -> close();
-
         }
     }
 
@@ -813,6 +810,8 @@ class alumnos extends imcrea {
 
     }
 
+    // obtengo los atributos de un estudiante en funcion
+    // de su id
     public function get_id_nombre($id_alumno){
         // se realiza la consulta
         $resultado = $this->_db->query("SELECT nombres FROM  alumnos where  id_alumno = ".$id_alumno );
@@ -824,7 +823,6 @@ class alumnos extends imcrea {
         } else {
             // retorno  el valor 0 del array
             return $dato[0];
-            $dato -> close();
             $this -> _db -> close();
         }
     } // fin de la funcion
@@ -841,7 +839,6 @@ class alumnos extends imcrea {
         } else {
             // retorno  el valor 0 del array
             return $dato[0];
-            $dato -> close();
             $this -> _db -> close();
         }
     } // fin de la funcion
@@ -858,10 +855,12 @@ class alumnos extends imcrea {
         } else {
             // retorno  el array
             return $dato[0];
-            $dato -> close();
             $this -> _db -> close();
         }
     }
+
+   
+    
 }
 
 // clase que indica las graficas a crear
@@ -920,18 +919,27 @@ class pagos extends imcrea {
 // recupera todos las matriculas realizadas en un año
 class matriculas_year extends imcrea {
     // los atributos de la clase
+    // el año de publicacion
     public $year;
+    // array que guarda las matriculas
     public $matriculas;
   
 
-    // constructor de la clase  
+    // constructor de la clase  recibe como parametro
+    // el año en curso
     public function __construct($a) {
         // invoco al constructor de la clase padre (imcrea)
         parent::__construct();
         // genero una consulta a la base de datos
-        $q2 = $this->_db->query("select id from matricula where year = $a");
+        // con el sistado de id de matriculas en un
+        // año ordenados por nombre de estudiantes
+        $q2 = $this->_db->query("select id ,a.nombres from  alumnos as a
+                                                      inner join matricula as m on a.id_alumno = m.id_alumno
+                                                      where m.year = $a
+                                                      order by a.nombres");
         // guardo el resoltado en un array inicialmente vacio
         $aa = array();
+        // exploro el resultado 
         while($resultado = $q2->fetch_array(MYSQLI_NUM)){
             // agrego elementos al array $aa
             array_push($aa,$resultado[0]);
@@ -941,10 +949,31 @@ class matriculas_year extends imcrea {
         $this->year = $a;
         $this->matriculas =  $aa;
     }
+
+     // funcion que obtiene el listado de alumnos matriculados en un año
+    // public function listado_matriculados_ano($year) {
+    //     // query
+    //     $q = "SELECT id_alumno FROM `alumnos`
+    //               WHERE id_alumno in
+    //               (select id_alumno from matricula WHERE year = $year) 
+    //               order by nombres, apellidos";
+    //     $c = $this->_db->query($q);
+    //     // obtengo el primer dato de de la consulta
+    //     $a = $c->fetch_array(MYSQLI_ASSOC);
+    //     return $a;
+    // }
+    
 }
 
-// clase de listado de estudiantes
-// requiere el año, el grado y el curso
+
+////////////////////////////////////////////////////
+//                                                                            //
+//       clase de listado de estudiantes            //
+//       requiere el año, el grado y el curso    //
+//                                                                            //
+////////////////////////////////////////////////////
+
+
 class listado_estudiantes extends imcrea {
  
     // variable del año
@@ -986,10 +1015,11 @@ class listado_estudiantes extends imcrea {
 }
 
 
-////////////////////////////////////// 
-// clase que define los docentes    //
-//                                  //
-//////////////////////////////////////
+///////////////////////////////////////////
+//                                                              //
+//   clase que define los docentes    //
+//                                                             //
+//////////////////////////////////////////
 
  
 class docentes extends imcrea {
@@ -1014,8 +1044,12 @@ class docentes extends imcrea {
         parent::__construct();
     }
 
-    // funcion para obtener los datos del docente
-    // a partir del codigo id del docente
+    ////////////////////////////////////////////////////////////////
+    //                                                                                                //
+    //      funcion para obtener los datos del docente         //
+    //      a partir del codigo id del docente                           //
+    //                                                                                               //
+    ///////////////////////////////////////////////////////////////
 
     public function get_docente_id($id) {
         //consulta para recuperar el docente
@@ -1117,7 +1151,13 @@ order by completo asc";
     }
 }
 
-// clase que define los poderados
+////////////////////////////////////////////////////////////
+//                                                                                         //
+//          clase que define los poderados                     //
+//                                                                                        //
+///////////////////////////////////////////////////////////
+
+
 class ponderado  extends imcrea{
 
     public $id_ponderado;
@@ -1149,9 +1189,11 @@ class ponderado  extends imcrea{
 }
     
     
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////
+//                                                                             //
 //  Clase que identifica las calificaciones     //
-//////////////////////////////////////////////////
+//                                                                            //
+////////////////////////////////////////////////////
 
 class calificaciones extends  imcrea {
     // si esta calificado 1 si no 0
@@ -1219,16 +1261,17 @@ class calificaciones extends  imcrea {
 
     
     //////////////////////////////////////////////////////////////////////////////
-    // obtiene la nota del periodo                                              //
-    //                                                                          //
-    // Función que obtiene las recuperaciones enviadas a un determinado periodo,//
-    // para ello recibe las variables:                                          //
-    // $id_a --> código del alumno                                              //
-    // $id_m --> código de la materia                                           //
-    // $y    --> año de consulta                                                //
-    // $periodo --> identificación del periodo                                  //
-    //                                                                          //
-    //////////////////////////////////////////////////////////////////////////////
+    // obtiene la nota del periodo                                                                 //
+    //                                                                                                                     //
+    // Función que obtiene las recuperaciones enviadas a un               //
+    // determinado periodo                                                                            //
+    // para ello recibe las variables:                                                             //
+    // $id_a --> código del alumno                                                                // 
+    // $id_m --> código de la materia                                                          //
+    // $y    --> año de consulta                                                                       //
+    // $periodo --> identificación del periodo                                          //
+    //                                                                                                                   //
+    ////////////////////////////////////////////////////////////////////////////
     
     public function get_recuperacion_periodo($id_a,$id_m,$y, $periodo) {
 
@@ -1506,8 +1549,6 @@ order by id_ponderado";
 (select concat(validar,$id_m) as criterio, tipo, id_semana from validar where id_semana < $id_s) as v left join
 (select  concat (tipo,id_semana, id_materia) as  criterio , c.id_ponderado from ponderado as p inner join ( 
 select id_alumno, id_semana, id_ponderado, id_materia from calificaciones_".$year." where year = $year and periodo = $p and id_materia = $id_m  and   id_semana < $id_s and  id_alumno in ($id_e)) as c on c.id_ponderado = p.id_ponderado) as n on n.criterio = v.criterio where n.criterio is null";
-
-        //echo $q;
         
         // realizo la consulta
         $c = $this->_db->query($q);
@@ -1731,11 +1772,25 @@ class semana extends imcrea{
 
     }
 
+    // funcion que busca el periodo activo en
+    // la tabla semans
     public function get_periodo_activo($ano) {
-        $q = "select id_periodo from semanas where year = $ano and inicio < NOW() and fin > NOW() order by semana asc;";
+        // string de consulta
+        $q = "select id_periodo from semanas
+                  where year = $ano and inicio < NOW() and fin > NOW()
+                  order by semana asc;";
+        // se ejecuta la consulta
         $c = $this->_db->query($q);
+        // se recupera los registros 
         $r = $c->fetch_array(MYSQLI_ASSOC);
-        return $r["id_periodo"];
+
+        // si obtiene  algun periodo
+        if (is_null($r["id_periodo"]) ){
+            // en caso de que ninguno retorna 0
+            return 0;
+        }
+        // de lo contrado retorna  el periodo
+        else {   return $r["id_periodo"];}
 
     }
 

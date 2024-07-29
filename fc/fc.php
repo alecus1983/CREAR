@@ -567,19 +567,24 @@ $ano = date('Y');
 					    <?php
 
 					    if($admin){
-						echo '<option value="1">1</option>
-					    <option value="2">2</option>
-					    <option value="3">3</option>
-					    <option value="4">4</option>
-					    <option value="5">Recuperacion</option>';
+                            // si es administrador puede seleccionar cualquier periodo
+                            
+                            echo '<option value="1">1</option>
+					        <option value="2">2</option>
+					       <option value="3">3</option>
+					       <option value="4">4</option>
+					       <option value="5">Recuperacion</option>';
 					    }
 
 					    else {
-
-						$s = new semana();
-						$sem  = $s->get_periodo_activo($ano);
-						echo "<option value='$sem' selectecd>$sem </option>";
-					    }
+                            // se crea un objeto semana 
+                            $s = new semana();
+                            // obtengo el periodo activo para este año
+                            // en la fecha actual
+                            $periodo  = $s->get_periodo_activo($ano);
+                            // lo muestro en pantalla
+                            echo "<option value='$periodo' selectecd>$periodo </option>";                                
+                        }
 					    ?>
 
 					    

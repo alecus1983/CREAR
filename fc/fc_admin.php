@@ -490,6 +490,40 @@ if (isset($_SESSION["usuario"])){
 
 	 }
 
+	 // funcion que muestra la lista de estudiantes  matriculados
+	 	 function listado_estudiantes_matriculados() {
+
+	     // se invoca al metodo ajax para solicitar
+	     // el listado de estudiantes
+	     $.ajax({
+		 type: "POST",
+		 url: "listado_estudiantes_matriculados_ano.php",
+		 dataType: "json",
+		 data: {
+                     years: $("#years").val(),
+
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+		     // si la respuesta es positiva
+		     if(respuesta['status']==1){
+			 //swal('Datos actualizados');
+			 //$("#calificador").html(respuesta);
+			 $("#avance").html(respuesta['html']);
+		     } else {
+			 
+			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
+			 		 
+		     }
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
+	     });
+
+		 }
+
 
 	 function agregar_matricula_docente() {
 
@@ -1100,8 +1134,8 @@ if (isset($_SESSION["usuario"])){
 
 					    else {
 						$s = new semana();
-						$sem  = $s->get_periodo_activo($ano);
-						echo "<option value='$sem' selectecd>$sem </option>";
+						$periodo  = $s->get_periodo_activo($ano);
+						echo "<option value='$periodo' selectecd>$periodo </option>";
 					    }
 					    ?>
 					</select>
@@ -1215,6 +1249,15 @@ if (isset($_SESSION["usuario"])){
 					   onclick="matricula_docente()">Matricula Docente
 					</a>
 				    </nav>
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_estudiantes_matriculados();">Listado estudiantes matriculados<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
+					</a>
+				    </nav>
+				    
 				</div>
 				<a class="nav-link collapsed" href="#"
 				   data-bs-toggle="collapse"
