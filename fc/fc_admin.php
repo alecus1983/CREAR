@@ -490,8 +490,50 @@ if (isset($_SESSION["usuario"])){
 
 	 }
 
+	 // carga una lista de notas generada para un estudiante 
+	   function listado_notas_estudiantes()  {
+
+	     // se invoca al metodo ajax para solicitar
+	     // el listado de estudiantes
+	     $.ajax({
+		 type: "POST",
+		 url: "listado_notas_alumno_periodo.php",
+		 dataType: "json",
+		 data: {
+                     years: $("#years").val(),
+		     periodo: $("#periodos").val(),
+		     semana: $("#semana").val(),
+		     id_g: $("#id_g").val(),
+		     id_ms: $("#id_ms").val(),
+		     id_jornada: $("#jornada").val(),
+		     id_curso: $("#id_c").val(),
+
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+		     // si la respuesta es positiva
+		     if(respuesta['status']==1){
+			 //swal('Datos actualizados');
+			 //$("#calificador").html(respuesta);
+			 $("#avance").html(respuesta['html']);
+		     } else {
+			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
+			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
+			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
+			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
+			 
+		     }
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
+	     });
+
+	 }
+
 	 // funcion que muestra la lista de estudiantes  matriculados
-	 	 function listado_estudiantes_matriculados() {
+	 function listado_estudiantes_matriculados() {
 
 	     // se invoca al metodo ajax para solicitar
 	     // el listado de estudiantes
@@ -1255,6 +1297,14 @@ if (isset($_SESSION["usuario"])){
 					   class="nav-link"
 					   href="#" target="_self"
 					   onclick="listado_estudiantes_matriculados();">Listado estudiantes matriculados<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
+					</a>
+				    </nav>
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_notas_estudiantes();">Notas por estudiantes<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
 					</a>
 				    </nav>
 				    
