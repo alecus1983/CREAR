@@ -85,7 +85,7 @@ if ($valido) {
     $cr->get_materia($id_m);
     //echo "<div class='row'><div class='col-md-12>";
     // saco este mensaje por consola
-    echo "<p>Listado de  estudiantes  del grado <b>".$gr->n_grado."  ".$cu->curso."</b>, en la jornada ".$jo->jornada.", en la semana $semana  en la materia : <b>".$cr->materia."</b></p>";
+    echo "<p>Listado de  estudiantes  del grado <b>".$gr->nombre_g."  ".$cu->curso."</b>, en la jornada ".$jo->jornada.", en la semana $semana  en la materia : <b>".$cr->materia."</b></p>";
     
     echo "<div class='row'><div class='col-md-8'>";
 

@@ -91,7 +91,7 @@ if ($valido) {
 
     echo "<p>Listado de  notas pendientes de <b>"
         .$cr->materia."</b> del grado <b>"
-        .$gr->n_grado."</b> de la semana <b>1</b> a la semana <b>$semana</b>, docente <span class='text-danger'>"
+        .$gr->nombre_g."</b> de la semana <b>1</b> a la semana <b>$semana</b>, docente <span class='text-danger'>"
         .ucwords(strtolower($d->nombres))
         ." ".ucwords(strtolower($d->apellidos))."</span></p>";
 

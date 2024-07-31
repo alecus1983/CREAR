@@ -520,7 +520,7 @@ if (isset($_SESSION["usuario"])){
 			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
 			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
 			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
+			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una mareria','error');}
 			 
 		     }
 		 },
@@ -532,7 +532,7 @@ if (isset($_SESSION["usuario"])){
 
 	 }
 
-	 // funcion que muestra la lista de estudiantes  matriculados
+// funcion que muestra la lista de estudiantes  matriculados
 	 function listado_estudiantes_matriculados() {
 
 	     // se invoca al metodo ajax para solicitar

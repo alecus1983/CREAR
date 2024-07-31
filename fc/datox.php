@@ -588,7 +588,7 @@ class grados extends imcrea {
             //echo "Fallo en incertar fila";
         } else {
             // retorno  el array
-            $this->n_grado = $dato[0];
+            $this->nombre_g = $dato[0];
             $this -> _db -> close();
         }
     } // fin de la funcion
@@ -605,7 +605,7 @@ class grados extends imcrea {
             //echo "Fallo en incertar fila";
         } else {
             // retorno  el array
-            $this->n_grado = $dato["nombre_g"];
+            $this->nombre_g = $dato["nombre_g"];
             $this->promovido = $dato["promovido"];
             $this->grado = $dato["grado"];
             $this -> _db -> close();

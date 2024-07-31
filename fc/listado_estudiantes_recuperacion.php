@@ -91,7 +91,7 @@ if ($valido) {
 
   
   // saco este mensaje por consola
-  echo "<p>Listado de  recuperaciones cargadas para los estudiantes matriculados en  <b>".$cr->materia."</b> del grado <b>".$gr->n_grado."</b>  de la jornada de la <b>".$jo->jornada."</b> ,durante el periodo <span style='color:red; font-weight:bold;'>".$periodo."</span>.</p>";
+  echo "<p>Listado de  recuperaciones cargadas para los estudiantes matriculados en  <b>".$cr->materia."</b> del grado <b>".$gr->nombre_g."</b>  de la jornada de la <b>".$jo->jornada."</b> ,durante el periodo <span style='color:red; font-weight:bold;'>".$periodo."</span>.</p>";
     
   echo "<div class='row'><div class='col-md-8'>";
 
