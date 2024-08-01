@@ -566,7 +566,7 @@ if (isset($_SESSION["usuario"])){
 
 		 }
 
-
+	 // funcion que agrega una matricaula docente al listado
 	 function agregar_matricula_docente() {
 
 	     // se invoca al metodo ajax para solicitar
@@ -609,7 +609,50 @@ if (isset($_SESSION["usuario"])){
 		 }
 	     });
 
-	  }
+	 }
+	 // busca las  notas de un alumno 
+	 function find_nota_alumno() {
+
+	     // se invoca al metodo ajax para solicitar
+	     // el listado de estudiantes
+	     $.ajax({
+		 type: "POST",
+		 url: "find_nota_alumno.php",
+		 dataType: "json",
+		 data: {
+                     years: $("#years").val(),
+		     periodo: $("#periodos").val(),
+		     semana: $("#semana").val(),
+		     id_g: $("#id_g").val(),
+		     id_ms: $("#id_ms").val(),
+		     id_jornada: $("#jornada").val(),
+		     id_curso: $("#id_c").val(),
+		     id_alumno: $("#id_alumno").val()
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+		     // si la respuesta es positiva
+		     if(respuesta['status']==1){
+			 //swal('Datos actualizados');
+			 //swal('Actualizacion','Se insertaron los dastos con éxito','success');
+			 $("#tabla").html(respuesta['html']);
+		     } else {
+			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
+			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
+			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
+			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
+			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
+			 if(respuesta['status'] == 26){swal('Curso','Porfavor seleccione un curso','error');}
+			 if(respuesta['status'] == 28){swal('Alumno','Porfavor seleccione un alumno','error');}
+		     }
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
+	     });
+
+	 }
 
 	 function eliminar_matricula_docente(id) {
 
@@ -1068,10 +1111,11 @@ if (isset($_SESSION["usuario"])){
 
 	 jQuery.ajaxSetup({
              beforeSend: function() {
-                 //$('#loader').show();
+                 $('#loader').show();
+		 $('#tabla').html("");
              },
 	     complete: function(){
-             //$('#loader').hide();
+		 $('#loader').hide();
 	     }
 	 });
 
@@ -1373,8 +1417,11 @@ if (isset($_SESSION["usuario"])){
                             <ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
                             </ol>
-
+			    
+			    <!--  contenedores dinamicos -->
 			    <div id="avance" class="row"></div>
+			    <div id="grafica" class="row"></div>
+			    <div id="tabla" class="row"></div>
 
                             <div id="f_semanas" class="row container" style="display:none;">
 

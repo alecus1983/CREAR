@@ -87,7 +87,7 @@ if ($valido) {
     // selector de docentes
     $html = $html. "";
     $html = $html. "<div class='form-floating'>";
-    $html = $html. '<select id="id_docente_mt"  class="form-select">';
+    $html = $html. '<select id="id_alumno"  class="form-select">';
     $html = $html.'<option value""></option>';
     foreach($listado->id_alumno as $e){
         // creo nuevo estudiante
@@ -95,7 +95,7 @@ if ($valido) {
         $html = $html.'<option value="'.$estudiante->id_alumno.'">'.ucwords(strtolower($estudiante->nombres))." ".ucwords(strtolower($estudiante->apellidos))."</option> ";
     }
     $html = $html. "</select>";
-    $html = $html. "<label for='id_docente_mt'>Estuadiante</label>";
+    $html = $html. "<label for='id_alumno'>Estuadiante</label>";
     $html = $html. "</div>";
     $html = $html. "</div>";
     $html = $html. "<div class='col-4'>";
@@ -119,50 +119,10 @@ if ($valido) {
     
     $html = $html. "</div>";
     $html = $html. "<div class='col-2'>";
-    $html = $html. '<button type="button" class="btn btn-outline-success" onclick="agregar_matricula_docente();">Consultar</button>';
+    $html = $html. '<button type="button" class="btn btn-outline-success" onclick="find_nota_alumno();">Consultar</button>';
     $html = $html. "</div>";
     $html = $html. "</div>";
-
-    $html = $html. "<table class='table''>";
-    $html = $html. "<thead>";
-    $html = $html. "<th scope='col'>Nota</th>";
-    $html = $html. "<th scope='col'>Semana</th>";
-    $html = $html. "<th scope='col'>Criterio</th>";
-    $html = $html. "<th scope='col'>Ponderado</th>";
-    $html = $html. "<th scope='col'>Aporte parcial</th>";
-    $html = $html. "</thead>";
-    $html = $html. "<tbody>";
-
-    $html = $html. "<tr>";
-    
-    // ciclo de repeticion para el intervalo de las semanas
-    for ($s = 1 ; $s < 5 ; $s++) {
-        // crear nuevas calificacion
-        $cal = new calificaciones();
-        // si el periodo es el primero
-
-        // obtengo la calificacion
-        $cal->get_calificacion_semanal($estudiante->id_alumno, $id_materia, $s, $ano, $periodo);
-        $html = $html . "<td>";
-        $html = $html . $cal->nota;
-        $html = $html . "</td>";
-        $html = $html . "<td>";
-        $html = $html . $s;
-        $html = $html . "</td>";
-
-        $html = $html . "<td>";
-
-        $html = $html . "</td>";
-        $html = $html . "<td>";
-
-        $html = $html . "</td>";
-        
-
-        
-    }
-
-    
-    $html = $html. "</tr>";   
+    // $html = $html. "</tr>";   
     
     // // por cada matricula docente  
     // foreach($listado as $id){
@@ -184,9 +144,7 @@ if ($valido) {
     //     $html = $html. "</td>";
     //     $html = $html. "</tr>";          
     // }
-    
-    
-    $html = $html. "</tbody>";
+    // $html = $html. "</tbody>";
        
     $html = $html. "</div>";
     $html = $html. "</div>";

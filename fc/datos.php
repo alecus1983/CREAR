@@ -1542,6 +1542,7 @@ order by id_ponderado";
 
     }
 
+    // 
     public function get_criterio_faltantes($id_e, $id_m, $id_s, $p, $year){
 
         // Consulta fallida
@@ -1566,6 +1567,29 @@ select id_alumno, id_semana, id_ponderado, id_materia from calificaciones_".$yea
         // retorna un array con el conjunto de areas
         return $arr;   
     }
+    
+    // funcion que me permite obtener los criterios
+    // de evaluacion
+    public function get_validar_periodo($semana) {
+
+        // consulta
+        $q = "SELECT tipo FROM `validar` WHERE id_semana = $semana order by tipo";
+
+        // realizo la consulta
+        $c = $this->_db->query($q);
+        //$arr = array(array());
+        $arr = array();
+        // recorro el array
+        while($a = $c->fetch_array(MYSQLI_ASSOC)){
+            
+            $criterio = $a['tipo'];
+            array_push($arr,$criterio) ;
+        }
+        // retorna un array con el conjunto de areas
+        return $arr;   
+    }
+
+   
 }
 
 // clase areas   las cuales son un conjunto de
