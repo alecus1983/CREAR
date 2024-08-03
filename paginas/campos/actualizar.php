@@ -112,7 +112,7 @@
 				
 		case 11:
 			
-			$q1 = "UPDATE calificaciones SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
+			$q1 = "UPDATE calificaciones_$year SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
 			WHERE id_alumno = ".$estudiante." AND id_materia =".$id_m." AND periodo =".$periodo." AND year =".$year;
 														
 			//echo $q1;
@@ -124,7 +124,7 @@
 		
 		case 12:
 			
-			$q1 = "UPDATE calificaciones SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
+			$q1 = "UPDATE calificaciones_$year SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
 			WHERE id_alumno = ".$estudiante." AND id_materia =".$id_m." AND periodo =".$periodo." AND year =".$year;
 														
 			//echo $q1;

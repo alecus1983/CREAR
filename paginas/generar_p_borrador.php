@@ -85,15 +85,15 @@ $promovido = $datog['promovido'];
 // el año   y el perdiodo seleccionado
 $q3 = "SELECT DISTINCT  alumnos.id_alumno,
 alumnos.nombres, alumnos.apellidos , jornada.jornada
-FROM ((((calificaciones INNER JOIN alumnos ON
-  calificaciones.id_alumno = alumnos.id_alumno)
-INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
-INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
-INNER JOIN materia ON calificaciones.id_materia = materia.id_materia)
-INNER JOIN matricula ON (calificaciones.id_alumno = matricula.id_alumno AND matricula.id_grado =".$grado." AND matricula.year = ".$fecha.")
+FROM ((((calificaciones_$fecha  INNER JOIN alumnos ON
+  calificaciones_$fecha.id_alumno = alumnos.id_alumno)
+INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id_logro)
+INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id_docente)
+INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia)
+INNER JOIN matricula ON (calificaciones_$fecha.id_alumno = matricula.id_alumno AND matricula.id_grado =".$grado." AND matricula.year = ".$fecha.")
 INNER JOIN jornada ON matricula.id_jornada = jornada.id_jornada
-WHERE calificaciones.year =".$fecha."
-AND calificaciones.periodo =".$periodo;
+WHERE calificaciones_$fecha.year =".$fecha."
+AND calificaciones_$fecha.periodo =".$periodo;
 // se crea la consulta
 $q3x = mysqli_query($link, $q3) or die('Consulta fallida q3: ' . mysqli_error());;
 
@@ -162,15 +162,15 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
     // la tabla de  contenidos
 
     $q4 = "SELECT  DISTINCT materia.id_area, materia.area
-    FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
+    FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
     INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
-    INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
-    INNER JOIN materia ON calificaciones.id_materia = materia.id_materia)
-    INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno
+    INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id_docente)
+    INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia)
+    INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno
     AND matricula.id_grado =".$grado."
-    WHERE calificaciones.id_alumno=" .$id_n."
-    AND calificaciones.year =".$fecha."
-    AND calificaciones.periodo =".$periodo."
+    WHERE calificaciones_$fecha.id_alumno=" .$id_n."
+    AND calificaciones_$fecha.year =".$fecha."
+    AND calificaciones_$fecha.periodo =".$periodo."
     ORDER BY materia.id_area";
 
     // ejecucion de la consulta para obtener las areas de competencia evaluadas por el estudiante
@@ -200,16 +200,16 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
         /////////////////////////////////////////////
         // consulta para estructurar las materias que pertenecen a cada área
         $q5 = "SELECT  DISTINCT materia.id_materia, materia.materia, materia.id_area
-        FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
-        INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
-        INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
-        INNER JOIN materia ON calificaciones.id_materia = materia.id_materia)
-        INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno
+        FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
+        INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id_logro)
+        INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id_docente)
+        INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia)
+        INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno
         AND matricula.id_grado =".$grado."
-        WHERE calificaciones.id_alumno=" .$id_n. "
+        WHERE calificaciones_$fecha.id_alumno=" .$id_n. "
         AND materia.id_area =".$id_a."
-        AND calificaciones.year =".$fecha."
-        AND calificaciones.periodo =".$periodo."
+        AND calificaciones_$fecha.year =".$fecha."
+        AND calificaciones_$fecha.periodo =".$periodo."
         ORDER BY materia.id_area, materia.id_materia";
 
         // ejecucion de la consulta para investigar  por las materias relacionadas con el area
@@ -238,22 +238,22 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
                 // para cuatro periodos
                 $q6 = "SELECT  DISTINCT materia.id_materia, materia.id_area,
                 materia.materia,
-                calificaciones.nota,
+                calificaciones_$fecha.nota,
                 docentes.nombres,
                 docentes.apellidos,
-                calificaciones.corte,
+                calificaciones_$fecha.corte,
                 calificaciones.faltas
-                FROM ((((calificaciones INNER JOIN alumnos ON
-                  calificaciones.id_alumno = alumnos.id_alumno)
-                INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
-                INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
-                INNER JOIN materia ON calificaciones.id_materia = materia.id_materia)
-                INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno
+                FROM ((((calificaciones_$fecha INNER JOIN alumnos ON
+                  calificaciones_$fecha.id_alumno = alumnos.id_alumno)
+                INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id_logro)
+                INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id_docente)
+                INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia)
+                INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno
                 AND	 matricula.id_grado =".$grado."
                 WHERE calificaciones.id_alumno=" .$id_n. "
                 AND materia.id_materia =".$id_m."
-                AND calificaciones.year ='".$fecha."'
-                AND calificaciones.periodo =".$i."
+                AND calificaciones_$fecha.year ='".$fecha."'
+                AND calificaciones_$fecha.periodo =".$i."
                 ORDER BY materia.id_area, materia.id_materia";
 
                 // se crea la consulta  para la materia del
@@ -335,13 +335,13 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
             /// calcular  si la nota tiene recuperacion
 
             $qp = "SELECT  *
-                  FROM (calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
-                  INNER JOIN materia ON calificaciones.id_materia = materia.id_materia
-                  WHERE calificaciones.id_alumno= $id_n
-                  AND calificaciones.year = $fecha
-                  AND calificaciones.periodo = 5
-                  AND calificaciones.nota > 0
-                  AND calificaciones.id_materia = $id_m";
+                  FROM (calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id_alumno)
+                  INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia
+                  WHERE calificaciones_$fecha.id_alumno= $id_n
+                  AND calificaciones_$fecha.year = $fecha
+                  AND calificaciones_$fecha.periodo = 5
+                  AND calificaciones_$fecha.nota > 0
+                  AND calificaciones_$fecha.id_materia = $id_m";
 
 
             $qpx = mysqli_query($link, $qp) or die('Consulta fallida qp, mostrando las materia recuperada, error: ' . mysql_error());;
@@ -529,12 +529,12 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
 
 
       $qp = "SELECT  *
-      FROM (calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
-      INNER JOIN materia ON calificaciones.id_materia = materia.id_materia
+      FROM (calificaciones_$fecha INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
+      INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia
       WHERE calificaciones.id_alumno= $id_n
-      AND calificaciones.year = $fecha
-      AND calificaciones.periodo = 5
-      AND calificaciones.nota > 0 ";
+      AND calificaciones_$fecha.year = $fecha
+      AND calificaciones_$fecha.periodo = 5
+      AND calificaciones_$fecha.nota > 0 ";
 
 
       // algoritmo para buscar las recuperaciones pendientes para este estudiante
@@ -585,10 +585,10 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
 
     $q7 = "SELECT  DISTINCT materia.id_area, materia.area
     FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
-    INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
-    INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
-    INNER JOIN materia ON calificaciones.id_materia = materia.id_materia)
-    INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno
+    INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id_logro)
+    INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id_docente)
+    INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia)
+    INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno
     AND matricula.id_grado =".$grado."
     WHERE calificaciones.id_alumno=" .$id_n."
     AND calificaciones.year =".$fecha."
@@ -615,11 +615,11 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
         $pdf->Ln(5);
 
         $q8 = "SELECT  DISTINCT materia.id_materia, materia.materia, materia.id_area
-        FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
-        INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
-        INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
-        INNER JOIN materia ON calificaciones.id_materia = materia.id_materia)
-        INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno
+        FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id_alumno)
+        INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id_logro)
+        INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id_docente)
+        INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia)
+        INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno
         AND matricula.id_grado =".$grado."
         WHERE calificaciones.id_alumno=" .$id_n. "
         AND materia.id_area =".$id_a."
@@ -641,12 +641,12 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
             // de materias para los encabezado  de las materias
 
             $q9 = "SELECT  DISTINCT materia.id_materia, materia.materia, format(sum(calificaciones.nota)/count(*),1)  as nota,
-            docentes.nombres, docentes.apellidos, sum(calificaciones.faltas) as faltas, materia.id_area
-            FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
-            INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
-            INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
-            INNER JOIN materia ON calificaciones.id_materia = materia.id_materia)
-            INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno
+            docentes.nombres, docentes.apellidos, sum(calificaciones_$fecha.faltas) as faltas, materia.id_area
+            FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
+            INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id_logro)
+            INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id_docente)
+            INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia)
+            INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno
             AND	 matricula.id_grado =".$grado."
             WHERE (calificaciones.id_alumno=" .$id_n."
             AND calificaciones.year =".$fecha."
@@ -717,17 +717,17 @@ while($dato2 = mysqli_fetch_array($q3x)) { //extrae los datos de la consulta q3x
                     // y de un alumno en particular
 
                     $q10 = "SELECT  logros.logro
-                    FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id_alumno)
-                    INNER JOIN logros ON calificaciones.id_logro = logros.id_logro)
-                    INNER JOIN docentes ON calificaciones.id_docente = docentes.id_docente)
-                    INNER JOIN materia ON calificaciones.id_materia = materia.id_materia)
-                    INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno
+                    FROM ((((calificaciones INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id_alumno)
+                    INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id_logro)
+                    INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id_docente)
+                    INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id_materia)
+                    INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno
                     WHERE (matricula.id_grado =".$grado."
                       AND calificaciones.id_alumno=".$id_n."
                       AND materia.id_materia =".$id_m."
                       AND calificaciones.year =".$fecha."
                       AND calificaciones.periodo =".$periodo."
-                      AND calificaciones.corte = 'F')";
+                      AND calificaciones_$fecha.corte = 'F')";
 
                     $q10x = mysqli_query($link, $q10) or die('Consulta fallida q10: ' . mysqli_error());;
 

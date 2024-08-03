@@ -27,7 +27,7 @@
                 
         FROM 
 
-        ((((calificaciones  C INNER JOIN alumnos  A ON C.id_alumno = A.id)
+        ((((calificaciones_$year  C INNER JOIN alumnos  A ON C.id_alumno = A.id)
 
         INNER JOIN logros ON C.id_logro = logros.id)
 

@@ -78,15 +78,15 @@
 	
 						
 		$q3 = "SELECT DISTINCT  alumnos.id, alumnos.nombres, alumnos.apellidos  
-		FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id) 
-		INNER JOIN logros ON calificaciones.id_logro = logros.id) 
-		INNER JOIN docentes ON calificaciones.id_docente = docentes.id) 
-		INNER JOIN materia ON calificaciones.id_materia = materia.id) 
-		INNER JOIN matricula ON (calificaciones.id_alumno = matricula.id_alumno AND matricula.grado =".$grado." AND matricula.year = ".$fecha.")
+		FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id) 
+		INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id) 
+		INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id) 
+		INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id) 
+		INNER JOIN matricula ON (calificaciones_$fecha.id_alumno = matricula.id_alumno AND matricula.grado =".$grado." AND matricula.year = ".$fecha.")
 		
 		ORDER BY alumnos.id"; 
-                //WHERE calificaciones.year =".$fecha."
-		//AND calificaciones.periodo =".$periodo."
+                //WHERE calificaciones_$fecha.year =".$fecha."
+		//AND calificaciones_$fecha.periodo =".$periodo."
 		$q3x = mysql_query($q3, $link_pdf) or die('Consulta fallida q3: ' . mysql_error());
                
 		//
@@ -145,15 +145,15 @@
 			// la tabla de  contenidos 
 		
 			$q4 = "SELECT  DISTINCT materia.id_a, materia.area
-				FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id) 
-				INNER JOIN logros ON calificaciones.id_logro = logros.id) 
-				INNER JOIN docentes ON calificaciones.id_docente = docentes.id) 
-				INNER JOIN materia ON calificaciones.id_materia = materia.id) 
-				INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno 
+				FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id) 
+				INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id) 
+				INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id) 
+				INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id) 
+				INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno 
 				AND matricula.grado =".$grado."
-				WHERE calificaciones.id_alumno=" .$id_n."
-				AND calificaciones.year =".$fecha."
-				AND calificaciones.periodo =".$periodo."
+				WHERE calificaciones_$fecha.id_alumno=" .$id_n."
+				AND calificaciones_$fecha.year =".$fecha."
+				AND calificaciones_$fecha.periodo =".$periodo."
 				ORDER BY materia.id_a";
 			
 			
@@ -179,16 +179,16 @@
 				// consulta para estructurar las materias que pertenecen a cada área
 			
 				$q5 = "SELECT  DISTINCT materia.id, materia.materia
-				FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id) 
-				INNER JOIN logros ON calificaciones.id_logro = logros.id) 
-				INNER JOIN docentes ON calificaciones.id_docente = docentes.id) 
-				INNER JOIN materia ON calificaciones.id_materia = materia.id) 
-				INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno 
+				FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id) 
+				INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id) 
+				INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id) 
+				INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id) 
+				INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno 
 				AND matricula.grado =".$grado."
-				WHERE calificaciones.id_alumno=" .$id_n. "
+				WHERE calificaciones_$fecha.id_alumno=" .$id_n. "
 				AND materia.id_a =".$id_a."
-				AND calificaciones.year =".$fecha."
-				AND calificaciones.periodo =".$periodo."
+				AND calificaciones_$fecha.year =".$fecha."
+				AND calificaciones_$fecha.periodo =".$periodo."
 				ORDER BY materia.id_a, materia.id"
 				;
 				// ejecucion de la consulta para investigar  por las materias relacionadas con el area
@@ -218,19 +218,19 @@
 						
 						// consulta que selecciona una materia especifica para cuatro periodos
 							
-						$q6 = "SELECT  DISTINCT materia.id, materia.materia, calificaciones.nota, docentes.nombres, docentes.apellidos
-						FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id) 
-						INNER JOIN logros ON calificaciones.id_logro = logros.id) 
-						INNER JOIN docentes ON calificaciones.id_docente = docentes.id) 
-						INNER JOIN materia ON calificaciones.id_materia = materia.id) 
-						INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno 
+						$q6 = "SELECT  DISTINCT materia.id, materia.materia, calificaciones_$fecha.nota, docentes.nombres, docentes.apellidos
+						FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id) 
+						INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id) 
+						INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id) 
+						INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id) 
+						INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno 
 						AND	 matricula.grado =".$grado."
-						WHERE calificaciones.id_alumno=" .$id_n. "
+						WHERE calificaciones_$fecha.id_alumno=" .$id_n. "
 						AND materia.id =".$id_m."
-						AND calificaciones.year ='".$fecha."'
-						AND calificaciones.periodo =".$i."
+						AND calificaciones_$fecha.year ='".$fecha."'
+						AND calificaciones_$fecha.periodo =".$i."
 						ORDER BY materia.id_a, materia.id";
-						//AND calificaciones.periodo =".$periodo
+						//AND calificaciones_$fecha.periodo =".$periodo
 						//;
 						
 						$q6x = mysql_query($q6, $link_pdf) or die('Consulta fallida q6: ' . mysql_error());;
@@ -379,15 +379,15 @@
 		/// CONSULTA POR AREA ///////////////////////////////
 			
 	 	$q7 = "SELECT  DISTINCT materia.id_a, materia.area
-				FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id) 
-				INNER JOIN logros ON calificaciones.id_logro = logros.id) 
-				INNER JOIN docentes ON calificaciones.id_docente = docentes.id) 
-				INNER JOIN materia ON calificaciones.id_materia = materia.id) 
-				INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno 
+				FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id) 
+				INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id) 
+				INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id) 
+				INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id) 
+				INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno 
 				AND matricula.grado =".$grado."
-				WHERE calificaciones.id_alumno=" .$id_n."
-				AND calificaciones.year =".$fecha."
-				AND calificaciones.periodo =".$periodo."
+				WHERE calificaciones_$fecha.id_alumno=" .$id_n."
+				AND calificaciones_$fecha.year =".$fecha."
+				AND calificaciones_$fecha.periodo =".$periodo."
 				ORDER BY materia.id_a, materia.id"
 				;
 				
@@ -411,16 +411,16 @@
 			$pdf->Ln(4);
 			
 			$q8 = "SELECT  DISTINCT materia.id, materia.materia
-			FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id) 
-			INNER JOIN logros ON calificaciones.id_logro = logros.id) 
-			INNER JOIN docentes ON calificaciones.id_docente = docentes.id) 
-			INNER JOIN materia ON calificaciones.id_materia = materia.id) 
-			INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno 
+			FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id) 
+			INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id) 
+			INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id) 
+			INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id) 
+			INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno 
 			AND matricula.grado =".$grado."
-			WHERE calificaciones.id_alumno=" .$id_n. "
+			WHERE calificaciones_$fecha.id_alumno=" .$id_n. "
 			AND materia.id_a =".$id_a."
-			AND calificaciones.year =".$fecha."
-			AND calificaciones.periodo =".$periodo."
+			AND calificaciones_$fecha.year =".$fecha."
+			AND calificaciones_$fecha.periodo =".$periodo."
 			ORDER BY materia.id_a, materia.id"
 			;
 					
@@ -435,16 +435,16 @@
 				// para los encabezado  de las materias
 				// 
 				
-				$q9 = "SELECT  DISTINCT materia.id, materia.materia, calificaciones.nota, docentes.nombres, docentes.apellidos, calificaciones.faltas
-				FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id) 
-				INNER JOIN logros ON calificaciones.id_logro = logros.id) 
-				INNER JOIN docentes ON calificaciones.id_docente = docentes.id) 
-				INNER JOIN materia ON calificaciones.id_materia = materia.id) 
-				INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno 
+				$q9 = "SELECT  DISTINCT materia.id, materia.materia, calificaciones_$fecha.nota, docentes.nombres, docentes.apellidos, calificaciones_$fecha.faltas
+				FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id) 
+				INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id) 
+				INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id) 
+				INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id) 
+				INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno 
 				AND	 matricula.grado =".$grado."
-				WHERE (calificaciones.id_alumno=" .$id_n. "
-				AND calificaciones.year =".$fecha."
-				AND calificaciones.periodo =".$periodo."
+				WHERE (calificaciones_$fecha.id_alumno=" .$id_n. "
+				AND calificaciones_$fecha.year =".$fecha."
+				AND calificaciones_$fecha.periodo =".$periodo."
 				AND materia.id =".$id_m.						
 				")	ORDER BY materia.id_a, materia.id";
 						
@@ -485,16 +485,16 @@
 							// y de un alumno en particular
 							
 							$q10 = "SELECT  logros.logro
-							FROM ((((calificaciones INNER JOIN alumnos ON calificaciones.id_alumno = alumnos.id) 
-							INNER JOIN logros ON calificaciones.id_logro = logros.id) 
-							INNER JOIN docentes ON calificaciones.id_docente = docentes.id) 
-							INNER JOIN materia ON calificaciones.id_materia = materia.id) 
-							INNER JOIN matricula ON calificaciones.id_alumno = matricula.id_alumno 
+							FROM ((((calificaciones_$fecha INNER JOIN alumnos ON calificaciones_$fecha.id_alumno = alumnos.id) 
+							INNER JOIN logros ON calificaciones_$fecha.id_logro = logros.id) 
+							INNER JOIN docentes ON calificaciones_$fecha.id_docente = docentes.id) 
+							INNER JOIN materia ON calificaciones_$fecha.id_materia = materia.id) 
+							INNER JOIN matricula ON calificaciones_$fecha.id_alumno = matricula.id_alumno 
 							WHERE (matricula.grado =".$grado."
-							AND calificaciones.id_alumno=".$id_n."
+							AND calificaciones_$fecha.id_alumno=".$id_n."
 							AND materia.id =".$id_m."
-							AND calificaciones.year =".$fecha."
-							AND calificaciones.periodo =".$periodo.")";
+							AND calificaciones_$fecha.year =".$fecha."
+							AND calificaciones_$fecha.periodo =".$periodo.")";
 						
 					
 					
