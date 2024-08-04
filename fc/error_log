@@ -1,0 +1,109 @@
+[12-Jul-2024 07:38:58 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[12-Jul-2024 07:38:58 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[12-Jul-2024 07:49:27 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[12-Jul-2024 07:49:27 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[12-Jul-2024 07:49:52 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[12-Jul-2024 07:49:52 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[14-Jul-2024 16:06:53 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[14-Jul-2024 16:06:53 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[14-Jul-2024 21:38:58 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[14-Jul-2024 21:38:58 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[14-Jul-2024 21:39:35 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[14-Jul-2024 21:39:41 America/Bogota] PHP Warning:  Undefined variable $r in /home/imcreati/public_html/fc/datos.php on line 1252
+[14-Jul-2024 21:39:41 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and id_logro > 0' at line 5 in /home/imcreati/public_html/fc/datos.php:1345
+Stack trace:
+#0 /home/imcreati/public_html/fc/datos.php(1345): mysqli->query()
+#1 /home/imcreati/public_html/fc/listado_estudiantes_recuperacion.php(176): calificaciones->get_logro()
+#2 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1345
+[14-Jul-2024 23:50:26 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[14-Jul-2024 23:50:26 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[19-Jul-2024 06:49:59 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[19-Jul-2024 06:49:59 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[19-Jul-2024 06:50:57 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[19-Jul-2024 06:50:57 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[19-Jul-2024 06:51:52 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[19-Jul-2024 06:51:52 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[19-Jul-2024 06:52:27 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[19-Jul-2024 06:52:27 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[19-Jul-2024 07:06:50 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[19-Jul-2024 07:06:50 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[19-Jul-2024 07:07:06 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[19-Jul-2024 07:07:06 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[19-Jul-2024 11:18:25 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function calificaciones::update_logro(), 2 passed in /home/imcreati/public_html/fc/notas_semanales.php on line 582 and exactly 3 expected in /home/imcreati/public_html/fc/datos.php:1462
+Stack trace:
+#0 /home/imcreati/public_html/fc/notas_semanales.php(582): calificaciones->update_logro()
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1462
+[19-Jul-2024 11:18:33 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function calificaciones::update_logro(), 2 passed in /home/imcreati/public_html/fc/notas_semanales.php on line 582 and exactly 3 expected in /home/imcreati/public_html/fc/datos.php:1462
+Stack trace:
+#0 /home/imcreati/public_html/fc/notas_semanales.php(582): calificaciones->update_logro()
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1462
+[19-Jul-2024 11:18:47 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function calificaciones::update_logro(), 2 passed in /home/imcreati/public_html/fc/notas_semanales.php on line 582 and exactly 3 expected in /home/imcreati/public_html/fc/datos.php:1462
+Stack trace:
+#0 /home/imcreati/public_html/fc/notas_semanales.php(582): calificaciones->update_logro()
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1462
+[19-Jul-2024 11:19:04 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function calificaciones::update_logro(), 2 passed in /home/imcreati/public_html/fc/notas_semanales.php on line 582 and exactly 3 expected in /home/imcreati/public_html/fc/datos.php:1462
+Stack trace:
+#0 /home/imcreati/public_html/fc/notas_semanales.php(582): calificaciones->update_logro()
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1462
+[19-Jul-2024 11:19:40 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function calificaciones::update_logro(), 2 passed in /home/imcreati/public_html/fc/notas_semanales.php on line 582 and exactly 3 expected in /home/imcreati/public_html/fc/datos.php:1462
+Stack trace:
+#0 /home/imcreati/public_html/fc/notas_semanales.php(582): calificaciones->update_logro()
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1462
+[19-Jul-2024 11:19:58 America/Bogota] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function calificaciones::update_logro(), 2 passed in /home/imcreati/public_html/fc/notas_semanales.php on line 582 and exactly 3 expected in /home/imcreati/public_html/fc/datos.php:1462
+Stack trace:
+#0 /home/imcreati/public_html/fc/notas_semanales.php(582): calificaciones->update_logro()
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/datos.php on line 1462
+[27-Jul-2024 14:52:36 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'undefined' in 'where clause' in /home/imcreati/public_html/fc/generarx.php:74
+Stack trace:
+#0 /home/imcreati/public_html/fc/generarx.php(74): mysqli_query()
+#1 {main}
+  thrown in /home/imcreati/public_html/fc/generarx.php on line 74
+[28-Jul-2024 12:17:59 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[28-Jul-2024 12:17:59 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[28-Jul-2024 17:21:46 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[28-Jul-2024 17:21:46 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[28-Jul-2024 17:23:51 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[28-Jul-2024 17:23:51 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[28-Jul-2024 20:15:28 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[28-Jul-2024 20:15:28 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[29-Jul-2024 07:47:22 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1738
+[29-Jul-2024 07:47:22 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1730
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1052
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1053
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1054
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1055
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1056
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1057
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1058
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1059
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1060
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1061
+[31-Jul-2024 07:01:08 America/Bogota] PHP Warning:  Trying to access array offset on null in /home/imcreati/public_html/fc/datos.php on line 1062
+[01-Aug-2024 20:15:50 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[01-Aug-2024 20:16:30 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[01-Aug-2024 20:37:16 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[01-Aug-2024 20:37:51 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[01-Aug-2024 20:40:50 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 10:38:03 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 10:39:16 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 10:42:26 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 10:43:27 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 10:52:47 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 10:52:47 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 10:53:33 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 10:53:37 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 10:54:13 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 11:31:01 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 11:31:29 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 12:00:14 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[02-Aug-2024 12:00:55 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[03-Aug-2024 12:00:11 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[03-Aug-2024 12:01:02 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103
+[03-Aug-2024 12:02:03 America/Bogota] PHP Warning:  Undefined property: grados::$n_grado in /home/imcreati/public_html/fc/listado_requisitos.php on line 103

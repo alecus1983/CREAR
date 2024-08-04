@@ -1,15 +1,6 @@
 <?php
 //session_start();
 
-//if(!isset($_SESSION['usuario']))
-/* {
-//Sila secciÃ³n no esta iniciada entonces retorna a la pagina principal
-header('Location:login_boletines.php');
-session_destroy();
-//termina el programa php
-exit();
-} */
-
 // Contiente los modelo de clase  que apunta a la base de datos
 // Configuración de constantes
 define('DB_HOST', 'localhost');
@@ -18,14 +9,42 @@ define('DB_PASS','conezioncrear21');
 define('DB_NAME','imcreati_data');
 define('DB_CHARSET','utf8');
 
+//
+//  CLASES
+//
+// imcrea
+//            |_____  inscripcion : inscripciones a programas
+//                        matricula_docente : docente asignados a cursos
+//                        grados:  grados del educacion
+//                        matricula :  matricula en un curso,grado,jornada
+//                        alumnos: personas en el rol de alumnos
+//                        grafica: graficas para mostrar estadisticas
+//                        pagos : pagos efectuados por alumnos
+//                        matriculas_year: matriculas realizadas en un año
+//                        listado_estudiantes: listado de estudiantes
+//                        docentes: personas en el rol de docentes
+//                        ponderado: ponderados de las calificaciones en una materia
+//                        calificaciones: calificaciones insertadas para una materia
+//                        area: grupo de materias relacionadas
+//                        materia: materias dadas dentro de un curso, grado, jornada
+//                        semana : semana academica
+//                        logro : logros cualitativo para la valoracion academica
+//                        jornada: jornadas academicas de acuerdo a los tiempos de asistencia precencial
+//                        curso: grupos de estudiantes 
+//                        requisitos : materias requeridas por un grupo de estudantes
+//                        cuadro: cuadro de notas
+//                        personas: clase personas
+//
+//
+
 // clase que determina la conexion con la base de datos
 class imcrea {
-
+    // atributo de la base de datos
     protected $_db;
-
+    // constructor de la clase
     public function __construct(){
 
-        //$this->_db= new mysqli('localhost','imcreati_admin','conezioncrear21','imcreati_data');
+        // se realiza la consulta usando el metodo mysqli
         $this->_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
         if ($this->_db->connect_errno) {
             echo "fallo al conectar bd".$this->_db->connect_errno;
@@ -37,7 +56,8 @@ class imcrea {
 
 } // fin de la clase
 
-// Clase que define la inscripcion
+// Clase que define la inscripcion la cual es un proceso
+// que recoge un proseso 
 class inscripcion extends imcrea {
     // consecutivo inscripciones
     public $id;
@@ -1024,7 +1044,7 @@ class listado_estudiantes extends imcrea {
  
 class docentes extends imcrea {
   
-    //  atributos
+    //  atributos de la clase
     public $id;
     public $admin;
     public $nombres;
@@ -1037,6 +1057,14 @@ class docentes extends imcrea {
     public $i_correo;
     public $materias;
     public $listado;
+
+    //  METODOS DE LA CLASE             
+    //
+    // constructor
+    // +get_docente($id):
+    // +get_docente_cc($id):
+    // +get_materias_por_grado($g,$y):
+    // +get_total_docentes():
     
     //cosntructor de la clase
     public function __construct(){
@@ -1044,13 +1072,8 @@ class docentes extends imcrea {
         parent::__construct();
     }
 
-    ////////////////////////////////////////////////////////////////
-    //                                                                                                //
-    //      funcion para obtener los datos del docente         //
-    //      a partir del codigo id del docente                           //
-    //                                                                                               //
-    ///////////////////////////////////////////////////////////////
-
+    //      funcion para obtener los datos del docente
+    //      a partir del codigo id del docente
     public function get_docente_id($id) {
         //consulta para recuperar el docente
         $q = "select * from docentes where  id_docente = $id";
@@ -1073,7 +1096,7 @@ class docentes extends imcrea {
         $this->materias = $a['materias'];
     }
 
-
+    // obtengo el docente por cedula
     public function get_docente_cc($id){
         //consulta para recuperar el docente
         $q = "select * from docentes where  cedula = $id";
@@ -1100,10 +1123,17 @@ class docentes extends imcrea {
     // en forma de array,  requiere:
     // grado --> $g
     // año   --> $y
-    
+ 
     public function get_materias_por_grado($g,$y) {
+
+        // array de retorno donde se va a
+        // de volvel la lista de materias
+        // de acuerdo a su codigo de materia
+        // y el nombre de la misma
         $arr = array();
         $q = "";
+
+        // si es administrativo
         if($this->admin == 1){
             // consulta para obtener las materias
             $q ="SELECT M.id_materia, M.materia  FROM requisitos R
@@ -1111,6 +1141,8 @@ class docentes extends imcrea {
 		WHERE R.id_grado = ".$g;
         } else
         {
+            // si no es administrativo solo lista las materias
+            // en el cual esta asignano
             $q = "SELECT DISTINCT M.id_materia, M.materia FROM materia M
 	      INNER JOIN matricula_docente D ON M.id_materia = D.id_materia  WHERE D.year = '".$y."'
 		AND  D.id_docente = ".$this->id." AND D.id_grado =".$g;
@@ -1118,11 +1150,16 @@ class docentes extends imcrea {
 
         // realizo la consulta
         $c = $this->_db->query($q);
+        
+        // exploro el valor retornado
         while($a = $c->fetch_array(MYSQLI_ASSOC)){
+            // codigo de la materia
             $id_m = $a['id_materia'];
+            // nombre de la matera
             $m = $a['materia'];
             $arr[$id_m] = $m; 
         }
+        // retorno como un atributo del objeto
         $this->materias = $arr;
     }
 
@@ -1157,9 +1194,9 @@ order by completo asc";
 //                                                                                        //
 ///////////////////////////////////////////////////////////
 
-
 class ponderado  extends imcrea{
 
+    // atributo de la clase ponderado 
     public $id_ponderado;
     public $ponderado;
     public $valor;
@@ -1788,6 +1825,24 @@ class semana extends imcrea{
 
     }
 
+    // recupera el listado de semanas para un año
+    public function get_lista_semanas_periodo($ano,$periodo) {
+        $q = "select semana from  semanas where year = $ano and id_periodo = $periodo";
+        $c = $this->_db->query($q);
+
+        $arr = array();
+        // recorro el array
+        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
+            // añade elementos al array
+            $sem =$r['semana'];
+            $arr[ $sem] = $sem; 
+        }
+        //retorno listado
+        // echo var_dump($arr);
+        return $arr;
+
+    }
+
     public function get_semana_activa($ano) {
         $q = "select semana from semanas where year = $ano and inicio < NOW() and fin > NOW() order by semana asc;";
         $c = $this->_db->query($q);
@@ -2132,6 +2187,12 @@ class cuadro extends imcrea {
         }else
         {return false;}
     }
+}
+
+// clase personas que extiende de
+// imcrea
+class personas extends imcrea {
+    
 }
 
 ?>

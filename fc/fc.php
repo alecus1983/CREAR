@@ -293,6 +293,17 @@ $ano = date('Y');
 
 	     
 	 }
+
+	 //fucion de carga incial
+         function load_semanas(){
+             //  variable periodo
+             var periodo = $("#periodos").val();
+	     // variable año
+	     var year = $("#years").val();
+
+             // carga en un selector  de semanas
+             carga("#semana", "load_semanas.php", {periodo:periodo, year:year});
+         }
 	 
 	 // funsion que carga las semanas correctas cuando cambia
 	 // el Periodo de calificaciones
@@ -560,16 +571,17 @@ $ano = date('Y');
 
 					<label for="periodos"> Periodo</label>
 					<select id="periodos"
-						style="background: transparent;color: darkgreen;border: 0px"
-						name="periodos"
-						class="form-control" required=""
-						    onchange="load_();">
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    name="periodos"
+						    class="form-control" required=""
+						onchange="load_semanas();">
 					    <?php
 
 					    if($admin){
-                            // si es administrador puede seleccionar cualquier periodo
-                            
-                            echo '<option value="1">1</option>
+						// si es administrador puede seleccionar cualquier periodo
+						
+						echo '<option value="-1" selected>seleccione</option>
+                                                          <option value="1">1</option>
 					        <option value="2">2</option>
 					       <option value="3">3</option>
 					       <option value="4">4</option>
@@ -577,14 +589,14 @@ $ano = date('Y');
 					    }
 
 					    else {
-                            // se crea un objeto semana 
-                            $s = new semana();
-                            // obtengo el periodo activo para este año
-                            // en la fecha actual
-                            $periodo  = $s->get_periodo_activo($ano);
-                            // lo muestro en pantalla
-                            echo "<option value='$periodo' selectecd>$periodo </option>";                                
-                        }
+						// se crea un objeto semana 
+						$s = new semana();
+						// obtengo el periodo activo para este año
+						// en la fecha actual
+						$periodo  = $s->get_periodo_activo($ano);
+						// lo muestro en pantalla
+						echo "<option value='$periodo' selectecd>$periodo </option>";                                
+					    }
 					    ?>
 
 					    
@@ -598,13 +610,7 @@ $ano = date('Y');
 
                                             <?php
 					    if ($admin) {
-						// opciones
-						$s = new semana();
-						$lista = $s->get_lista_semanas($ano);
-
-						foreach($lista as $sem) {
-						    echo "<option value='$sem'>$sem </option>";
-						}
+						
 					    }
 
 					    else

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('datos.php');
+
 if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
     $d = new docentes();
@@ -79,124 +80,20 @@ if (isset($_SESSION["usuario"])){
 	 }
 	</style>
 
+	<script >
+        
+         //fucion de carga incial
+         function load_semanas(){
+             //  variable periodo
+             var periodo = $("#periodos").val();
+	     // variable año
+	     var year = $("#years").val();
 
-	<script type="text/javascript">
-
-	 // Funcion en java scrip para ingresar valores en la base de datos
-	 // para todas las opciones del menu adiccionar
-	 // permite agregar estudiantes, docentes, notas etc ...
-
-	 function deposit() {
-
-             // para ello comienza
-             // almacenando el codigo del grado en la variable j
-             var j = $("#id_g").val();
-
-
-             swal({
-                 title: 'INSERTAR NOTAS',
-                 text: "Esta seguro que quiere insertar las notas!",
-                 icon: 'warning',
-                 buttons: true,
-                 buttons: ["cancelar", "insertar"],
-             }).then((value) => {
-                 if (value) {
-
-                     // creo un array a partir de los
-                     // elementos pertenecientes a  una misma clase
-
-                     // serializo los campos clase  logro 1
-                     var logros1 = $('.logros1').serializeArray();
-                     // serializo los campos clase logro 2
-                     var logros2 = $('.logros2').serializeArray();
-                     // serializo los campos clase logro 3
-                     var logros3 = $('.logros3').serializeArray();
-                     // serializo los codigos
-                     var codigos = $('.codigo').serializeArray();
-                     // serializo las  faltas
-                     var faltas = $('.faltas').serializeArray();
-
-                     // categorias para el seguimiento semanal
-
-                     // serializo los  campos del criterio A
-                     var A = $('.A').serializeArray();
-                     // serializo los  campos del criterio B
-                     var B = $('.B').serializeArray();
-                     // serializo los  campos del criterio C
-                     var C = $('.C').serializeArray();
-                     // serializo los  campos del criterio D
-                     var D = $('.D').serializeArray();
-                     // serializo los  campos del criterio E
-                     var E = $('.E').serializeArray();
-                     // serializo los  campos del criterio F
-                     var F = $('.F').serializeArray();
-                     // serializo los  campos del criterio G
-                     var G = $('.G').serializeArray();
-                     // serializo los  campos del criterio H
-                     var H = $('.H').serializeArray();
-                     // serializo los  campos del criterio I
-                     var I = $('.I').serializeArray();
-                     // serializo los  campos del criterio J
-                     var J = $('.J').serializeArray();
-                     // serializo los  campos del criterio L
-                     var L = $('.L').serializeArray();
-
-
-		     // llamo al metodo ajax para el envío de la  información
-		     // se emplea en envío por POST
-                     $.ajax({
-                         type: "POST",
-                         url: "notas_semanales.php",
-                         data: {
-                                 year: $("#years").val(),
-                      semana: $("#semana").val(),
-                      id_gs: $("#id_g").val(),
-                      id_ms: $("#id_ms").val(),
-                      id_jornada: $("#jornada").val(),
-                      id_docente: $("#id_d").val(),
-                      corte: $("#corte").val(),
-                      periodo: $("#periodos").val(),
-                      id_curso: $("#id_c").val(),
-                      logro1: JSON.stringify(logros1),
-                      logro2: JSON.stringify(logros2),
-                      logro3: JSON.stringify(logros3),
-                      codigo: JSON.stringify(codigos),
-                      faltas: JSON.stringify(faltas),
-                      A: JSON.stringify(A),
-                      B: JSON.stringify(B),
-                      C: JSON.stringify(C),
-                      D: JSON.stringify(D),
-                      E: JSON.stringify(E),
-                      F: JSON.stringify(F),
-                      G: JSON.stringify(G),
-                      H: JSON.stringify(H),
-                      I: JSON.stringify(I),
-                      J: JSON.stringify(J),
-                      L: JSON.stringify(L)
-                         },
-
-                         success: function(data) {
-			     // respuesta a la carga de notas
-                             //$("#resultado").html("Se ingresaron las notas con exito");
-                             //$("#resultado").html(data);
-                             console.log(data);
-
-                         },
-                         error: function(xhr, status) {
-                             swal('Disculpe, existió un problema');
-                             console.log(xhr);
-                         }
-                     });
-                 }
-
-             });
-	 } // fin de la funsion deposit
-
-	</script>
-
-
-	<script>
-	 // funsion que carga las semanas correctas cuando cambia
+             // carga en un selector  de semanas
+            carga("#semana", "load_semanas.php", {periodo:periodo, year:year});
+         }
+	 
+	 // funcion que carga las semanas correctas cuando cambia
 	 // el Periodo de calificaciones
 	 // funcion para cargar las materias en el cuadro de dialogo
 	 // de acurdo al grado seleccionado
@@ -205,64 +102,8 @@ if (isset($_SESSION["usuario"])){
              var id_docente = $("#id_d").val();
              var id_grado = $("#id_g").val();
              var year = $("#years").val();
+             // carga las materias dentro del selector de materias
              carga("#id_ms", "materias_grado.php",{grados:id_grado,id: id_docente, year:year});
-	 }
-
-	 // funcion para cargar la lista de  estudiantes en el
-	 // div calificador
-	 function load_lista_estudiantes(){
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_estudiantes.php",
-		 data: {
-                     years: $("#years").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     periodo: $("#periodos").val(),
-		     curso: $("#id_c").val(),
-		     semana: $("#semana").val()
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-
-		     $("#calificador").html(respuesta);
-		     $("#resultado").html("");
-
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 // funcion para la carga de logros
-	 function load_logros () {
-
-	     $.ajax({
-		 type: "POST",
-		 url: "logros.php",
-		 data: {
-		     grado: $("#id_g").val(),
-		     materia: $("#id_ms").val(),
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-
-		     $("#logros_materia").html(respuesta);
-		     //$("#resultado").html("");
-
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema al cargar los logros');
-		     console.log(xhr);
-		 }
-	     });
 	 }
 
 	 // avance semanal de notas de docentes
@@ -281,9 +122,10 @@ if (isset($_SESSION["usuario"])){
 		 // si los datos son correctos entonces ...
 		 success: function(respuesta) {
 
-		     //$("#calificador").html(respuesta);
+		     // si el reaultado es positivo retorna un
+		     // documento con el avance
 		     $("#avance").html(respuesta);
-
+		     
 		 },
 		 error: function(xhr, status) {
 		     swal('Disculpe, existió un problema');
@@ -324,27 +166,24 @@ if (isset($_SESSION["usuario"])){
 	     });
 
 	 }
-
-
-	 	 function eliminar_semana(){
+	 
+	 // funcion para eliminar  semanas de las vijentes para
+	 // el presente año
+	 
+	 function eliminar_semana(){
 	     // se invoca al metodo ajax para solicitar
 	     // el listado de las semanas
 	     $.ajax({
 		 type: "POST",
-		 url: "eliminar_semana.php",
-		 dataType: "json",
-		 data: {
+		     url: "eliminar_semana.php",
+		     dataType: "json",
+		     data: {
 		     semana:$("#lista_semanas").val()
-		     
-
-		 } ,
+		     } ,
 		 // si los datos son correctos entonces ...
 		 success: function(respuesta) {
 		     // si la respuesta es positiva
 		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 //$("#avance").html(respuesta['html']);
 			 gestion_semanas();
 			 swal("Completado","Se actualizo la semana","success");
 		     } else {
@@ -361,11 +200,10 @@ if (isset($_SESSION["usuario"])){
 		     console.log(xhr);
 		 }
 	     });
-		 }
+	 }
+	 
 	 // funcion que cambia semanas
 	 function actualizar_semana(){
-
-
 	     // se invoca al metodo ajax para solicitar
 	     // el listado de las semanas
 	     $.ajax({
@@ -377,8 +215,6 @@ if (isset($_SESSION["usuario"])){
 		     inicio: $("#inicio").val(),
 		     fin: $("#fin").val(),
 		     semana:$("#lista_semanas").val()
-		     
-
 		 } ,
 		 // si los datos son correctos entonces ...
 		 success: function(respuesta) {
@@ -490,47 +326,6 @@ if (isset($_SESSION["usuario"])){
 
 	 }
 
-	 // carga una lista de notas generada para un estudiante 
-	   function listado_notas_estudiantes()  {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_notas_alumno_periodo.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#avance").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una mareria','error');}
-			 
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
 
 // funcion que muestra la lista de estudiantes  matriculados
 	 function listado_estudiantes_matriculados() {
@@ -610,6 +405,8 @@ if (isset($_SESSION["usuario"])){
 	     });
 
 	 }
+
+	 
 	 // busca las  notas de un alumno 
 	 function find_nota_alumno() {
 
@@ -999,27 +796,6 @@ if (isset($_SESSION["usuario"])){
 		 window.open("generar_p.php?"+parametros);
 	     }
 
-	     // si la opcion seleccionada es boletines entra aqui
-	     //if (opcion == 6)
-	     //{
-
-
-	     //}
-	     // de lo contrario mira si la opcion seleccionada es
-	     // el certificado
-	     //else if (opcion == 16)
-	     //{
-	     // almacena los parametros para enviar
-	     // por el método GET
-	     // var parametros= "year="+year+
-	     //		 "&grado="+grados;
-	     // muestro los parámetos por consola
-	     //console.log("los parametros son : %s",parametros);
-	     // abro el certificado en una nueva ventana
-	     // llamando para ello al archivo cetificado.php
-	     //window.open("certificado.php?"+parametros);
-	     //}
-
 	 }
 
 
@@ -1122,7 +898,7 @@ if (isset($_SESSION["usuario"])){
 	</script>
     </head>
 
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" onload="load();">
 
 	<div class="loader" style="display:none" id="loader"></div>
 
@@ -1207,23 +983,14 @@ if (isset($_SESSION["usuario"])){
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    name="periodos"
 						    class="form-control" required=""
-						onchange="">
-					    <?php
-
-					    if($admin){
-						echo '<option value="1">1</option>
+         					    onchange="load_semanas();">
+					    <option value="-1" selected>seleccione</option>
+					    <option value="1">1</option>
 					    <option value="2">2</option>
 					    <option value="3">3</option>
 					    <option value="4">4</option>
-					    <option value="5">Recuperacion</option>';
-					    }
-
-					    else {
-						$s = new semana();
-						$periodo  = $s->get_periodo_activo($ano);
-						echo "<option value='$periodo' selectecd>$periodo </option>";
-					    }
-					    ?>
+					    <option value="5">Recuperacion</option>
+					    
 					</select>
 
 					<label for="semana">Semana</label>
@@ -1232,15 +999,9 @@ if (isset($_SESSION["usuario"])){
 						style="background: transparent;color: darkgreen;border: 0px"
 						onchange="">
                                             <?php
-
+					    
 					    if ($admin) {
-						// opciones
-						$s = new semana();
-						$lista = $s->get_lista_semanas($ano);
-
-						foreach($lista as $sem) {
-						    echo "<option value='$sem'>$sem </option>";
-						}
+					
 					    }
 
 					    else

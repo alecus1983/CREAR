@@ -456,9 +456,10 @@ $ano = date('Y');
 
 	     console.log("Valor a: %s",a); 	// variable que almacena el codigo del campo
 	     console.log("Valor b: %s",b);	// variable que almacena el nombre del archivo PHP
-	     console.log(JSON.stringify(c));	// parametro que se transmite  mediante ajax
+	     console.log(JSON.stringify(c));	// atributos del archivo en PHP
 
-	     // $.post(b, c,
+	     // metodo ajax para el envío de datos
+         // al servidor 
 	     $.ajax({
 		 async: true,
 		 method: "POST",
