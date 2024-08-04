@@ -326,8 +326,87 @@ if (isset($_SESSION["usuario"])){
 
 	 }
 
+	 // carga una lista de notas generada para un estudiante
+  function listado_notas_estudiantes()  {
 
-// funcion que muestra la lista de estudiantes  matriculados
+    // se invoca al metodo ajax para solicitar
+    // el listado de estudiantes
+    $.ajax({
+type: "POST",
+url: "listado_notas_alumno_periodo.php",
+dataType: "json",
+data: {
+                     years: $("#years").val(),
+    periodo: $("#periodos").val(),
+    semana: $("#semana").val(),
+    id_g: $("#id_g").val(),
+    id_ms: $("#id_ms").val(),
+    id_jornada: $("#jornada").val(),
+    id_curso: $("#id_c").val(),
+
+} ,
+// si los datos son correctos entonces ...
+success: function(respuesta) {
+    // si la respuesta es positiva
+    if(respuesta['status']==1){
+//swal('Datos actualizados');
+//$("#calificador").html(respuesta);
+$("#avance").html(respuesta['html']);
+    } else {
+if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
+if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
+if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
+if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una mareria','error');}
+
+    }
+},
+error: function(xhr, status) {
+    swal('Disculpe, existió un problema');
+    console.log(xhr);
+}
+    });
+
+}
+
+
+
+
+
+// funcion para cargar la lista de  estudiantes en el
+// div calificador
+function load_lista_estudiantes(){
+
+    // se invoca al metodo ajax para solicitar
+    // el listado de estudiantes
+    $.ajax({
+type: "POST",
+url: "listado_estudiantes.php",
+data: {
+                     years: $("#years").val(),
+    id_g: $("#id_g").val(),
+    id_ms: $("#id_ms").val(),
+    id_jornada: $("#jornada").val(),
+    periodo: $("#periodos").val(),
+    curso: $("#id_c").val(),
+    semana: $("#semana").val()
+} ,
+// si los datos son correctos entonces ...
+success: function(respuesta) {
+
+    $("#calificador").html(respuesta);
+    $("#resultado").html("");
+
+},
+error: function(xhr, status) {
+    swal('Disculpe, existió un problema');
+    console.log(xhr);
+}
+    });
+
+	 }
+
+
+	 // funcion que muestra la lista de estudiantes  matriculados
 	 function listado_estudiantes_matriculados() {
 
 	     // se invoca al metodo ajax para solicitar
