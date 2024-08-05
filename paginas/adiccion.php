@@ -279,22 +279,22 @@ case 11:
     {
 
         // se crea la consulta para el primer logro
-        $q = "SELECT  DISTINCT  id  FROM calificaciones WHERE id_alumno = ".$estudiante." AND id_materia =".$id_m." AND periodo =".$periodo." AND year ='".$year."'";
+        $q = "SELECT  DISTINCT  id  FROM calificaciones_$ano WHERE id_alumno = ".$estudiante." AND id_materia =".$id_m." AND periodo =".$periodo." AND year ='".$year."'";
 
-        $qq = mysqli_query($link, $q) or die('Error al contar registros de  calificaciones  : ' . mysql_error());
+        $qq = mysqli_query($link, $q) or die('Error al contar registros de  calificaciones_$ano  : ' . mysql_error());
 
 
         $ids = mysqli_fetch_array($qq);
 
         if ($logro_1)
                          {
-                             $q = "UPDATE calificaciones SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
+                             $q = "UPDATE calificaciones_$ano SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
                             WHERE id = $ids[0]";
 
                              //echo "Consulta: $q";
 
                              // se ejecuta la consulta para el primer logro
-                             $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones logro 1 : ' . mysql_error());
+                             $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones_$ano logro 1 : ' . mysql_error());
 
                          }
 
@@ -303,12 +303,12 @@ case 11:
         if($logro_2 > 0)
         {
             // se crea la consulta para el segundo logro
-            $q = "UPDATE calificaciones SET id_logro = ".$logro_2.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
+            $q = "UPDATE calificaciones_$ano SET id_logro = ".$logro_2.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
                             WHERE id = $ids[0]";
 
             //echo "Consulta: $q";
             // se ejecuta la consulta para el logro 2
-                            $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones logro 2: ' . mysql_error());
+                            $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones_$ano logro 2: ' . mysql_error());
 
         }
 
@@ -319,25 +319,25 @@ case 11:
                         {
 
                             // se crea la consulta para el logro 3
-                            $q = "UPDATE calificaciones SET id_logro = ".$logro_3.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
+                            $q = "UPDATE calificaciones_$ano SET id_logro = ".$logro_3.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
                             WHERE id = $ids[0]";
 
                             //echo "Consulta: $q";
 
                             //se ejecuta la consulta para el logro 3
 
-                            $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones : ' . mysql_error());
+                            $qx = mysqli_query($link, $q) or die('Error al actualizar calificaciones_$ano : ' . mysql_error());
                         }
 
                         echo 'Se actualiza la nota con exito!';
 
                         // se muestra nuevamente la tabla
-                        $q1 = "SELECT C.id i, L.id, C.nota, L.logro, C.faltas FROM ( calificaciones C INNER JOIN logros L ON L.id = C.id_logro)
+                        $q1 = "SELECT C.id i, L.id, C.nota, L.logro, C.faltas FROM ( calificaciones_$ano C INNER JOIN logros L ON L.id = C.id_logro)
                         WHERE C.year ='".$year."' AND C.periodo =".$periodo." AND id_alumno =".$estudiante." AND C.id_materia =".$id_m." ORDER BY C.id_materia" ;
 
                         $q1x = mysqli_query($link, $q1) or die('Consulta fallida, no se encontraron logros: ' . mysql_error());;
 
-                        $tabla = "calificaciones";
+                        $tabla = "calificaciones_$ano";
                         echo "<tr bgcolor = '#F0F000'><td  colspan='1', width = '10%' ><font size = 3>CODIGO</font></td>";
                         echo "<td colspan='1', width = '80%' ><font size = 3>LOGRO</font></td>";
                         echo "<td colspan='1', width = '10%' ><font size = 3>NOTA</font></td>";
@@ -392,7 +392,7 @@ case 11:
         else
         {
 
-            $q1 = "UPDATE calificaciones SET id_logro = "
+            $q1 = "UPDATE calificaciones_$ano SET id_logro = "
                 .$logro_1.
                 ", nota = ".$nota.
                 ", id_docente = ".$id_docente.
@@ -407,17 +407,17 @@ case 11:
 
             //echo $q1;
 
-            $q1x = mysqli_query($link, $q1) or die('Error al actualizar calificaciones logro 1 en formato primaria : ' . mysql_error());
+            $q1x = mysqli_query($link, $q1) or die('Error al actualizar calificaciones_$ano logro 1 en formato primaria : ' . mysql_error());
 
             echo 'Se actualiza la nota con exito!';
 
             // se muestra nuevamente la tabla
-            $q1 = "SELECT C.id i, L.id, C.nota, L.logro, C.faltas FROM ( calificaciones C INNER JOIN logros L ON L.id = C.id_logro)
+            $q1 = "SELECT C.id i, L.id, C.nota, L.logro, C.faltas FROM ( calificaciones_$ano C INNER JOIN logros L ON L.id = C.id_logro)
 			WHERE C.year ='".$year."' AND C.periodo =".$periodo." AND id_alumno =".$estudiante." AND C.id_materia =".$id_m." ORDER BY C.id_materia" ;
 
             $q1x = mysqli_query($link, $q1) or die('Consulta fallida, no se encontraron logros: ' . mysql_error());;
 
-            $tabla = "calificaciones";
+            $tabla = "calificaciones_$ano";
             echo "<tr bgcolor = '#F0F000'><td  colspan='1', width = '10%' ><font size = 3>CODIGO</font></td>";
             echo "<td colspan='1', width = '80%' ><font size = 3>LOGRO</font></td>";
             echo "<td colspan='1', width = '10%' ><font size = 3>NOTA</font></td>";

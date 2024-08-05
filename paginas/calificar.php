@@ -127,7 +127,7 @@
 
 // consulta de notas para el alumno
 
-		$q2 = "SELECT * FROM calificaciones WHERE".
+		$q2 = "SELECT * FROM calificaciones_$ano WHERE".
 					"  year = ".$ano.
 					" AND periodo = ".$periodo.
 					" AND corte = '".$corte."'".
@@ -184,7 +184,7 @@
 
 			// consulta para obtener el segundo logro (serie = 1)
 
-			$q3 = "SELECT * FROM calificaciones WHERE".
+			$q3 = "SELECT * FROM calificaciones_$ano WHERE".
 						"  year = ".$ano.
 						" AND periodo = ".$periodo.
 						" AND corte = '".$corte."'".
@@ -210,7 +210,7 @@
 
 			// consulta para obtener el tercer logro (serie = 2)
 
-			$q4 = "SELECT * FROM calificaciones WHERE".
+			$q4 = "SELECT * FROM calificaciones_$ano WHERE".
 						"  year = ".$ano.
 						" AND periodo = ".$periodo.
 						" AND corte = '".$corte."'".
@@ -281,7 +281,7 @@
 		.ucwords(strtolower($dato1['apellidos']))." ".ucwords(strtolower($dato1['nombres']))."</td>";
 
 		// consulta de notas para el alumo
-		$q2 = "SELECT * FROM calificaciones WHERE".
+		$q2 = "SELECT * FROM calificaciones_$ano WHERE".
 					"  year = ".$ano.
 					" AND periodo = ".$periodo.
 					" AND corte = '".$corte."'".
@@ -336,7 +336,7 @@
 
 			// consulta para obtener el segundo logro (serie = 1)
 
-			$q3 = "SELECT * FROM calificaciones WHERE".
+			$q3 = "SELECT * FROM calificaciones_$ano WHERE".
 						"  year = ".$ano.
 						" AND periodo = ".$periodo.
 						" AND corte = '".$corte."'".
@@ -363,7 +363,7 @@
 
 			// consulta para obtener el segundo logro (serie = 1)
 
-			$q3 = "SELECT * FROM calificaciones WHERE".
+			$q3 = "SELECT * FROM calificaciones_$ano WHERE".
 						"  year = ".$ano.
 						" AND periodo = ".$periodo.
 						" AND corte = '".$corte."'".

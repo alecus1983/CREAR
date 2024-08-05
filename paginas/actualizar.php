@@ -156,24 +156,24 @@ case 12:
     /*
       case 11:
       //
-      $q1 = "UPDATE calificaciones SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
+      $q1 = "UPDATE calificaciones_$ano SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
       WHERE id_alumno = ".$estudiante." AND id_materia =".$id_m." AND periodo =".$periodo." AND year =".$year;
 														
       //echo $q1;
 			
-      $q1x = mysql_query($q1, $link) or die('Error al actualizar calificaciones : ' . mysql_error());
+      $q1x = mysql_query($q1, $link) or die('Error al actualizar calificaciones_$ano : ' . mysql_error());
 			
       break;			
 		
 		
       case 12:
 			
-      $q1 = "UPDATE calificaciones SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
+      $q1 = "UPDATE calificaciones_$ano SET id_logro = ".$logro_1.", nota = ".$nota.", id_docente = ".$id_docente.", faltas =".$faltas."
       WHERE id_alumno = ".$estudiante." AND id_materia =".$id_m." AND periodo =".$periodo." AND year =".$year;
 														
       //echo $q1;
 			
-      $q1x = mysql_query($q1, $link) or die('Error al actualizar calificaciones : ' . mysql_error());
+      $q1x = mysql_query($q1, $link) or die('Error al actualizar calificaciones_$ano : ' . mysql_error());
 			
       break;*/
 }

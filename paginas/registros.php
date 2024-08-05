@@ -81,7 +81,7 @@ for($i= 1; $i <= 5 ; $i++) {
 
    		// CONSULTA LOS REGISTROS DE CALIFICACIONES EN EL AÑO PERIODO MATERIA Y ALUMNO
    		// PARA EL CORTE A
-   		$qa = "SELECT count(id) FROM calificaciones	WHERE year = '".$ano
+   		$qa = "SELECT count(id) FROM calificaciones_$ano	WHERE year = '".$ano
    		."' AND periodo =".$i
    		." AND corte = 'A' "
    		." AND id_materia =".$id_m
@@ -89,7 +89,7 @@ for($i= 1; $i <= 5 ; $i++) {
 
    		// CONSULTA DE LA CANTIDAD DE CALIFICACIONES CREADAS PARA EL CORTE FINAL DEL
    		// PERIODO
-   		$qf = "SELECT count(id) FROM calificaciones	WHERE year = '".$ano
+   		$qf = "SELECT count(id) FROM calificaciones_$ano	WHERE year = '".$ano
    		."' AND periodo =".$i
    		." AND corte = 'F' "
    		." AND id_materia =".$id_m
@@ -98,7 +98,7 @@ for($i= 1; $i <= 5 ; $i++) {
    		// realiza la consulta en la matrix de calificaiones para el
    		// primer corte
 
-   		$qax = mysqli_query( $link, $qa) or die('Consulta calificaciones fallida : '
+   		$qax = mysqli_query( $link, $qa) or die('Consulta calificaciones_$ano fallida : '
    		. mysqli_error($link));
 
    		// recupera las calificaciones  obtenidas para el alumno en cuestion
@@ -110,9 +110,9 @@ for($i= 1; $i <= 5 ; $i++) {
 
 	      // realiza la consulta en la matrix de calificaiones
 	      // para el corte final
-   		$qfx = mysqli_query( $link, $qf) or die('Consulta calificaciones fallida : '
+   		$qfx = mysqli_query( $link, $qf) or die('Consulta calificaciones_$ano fallida : '
    		. mysqli_error($link));
-   		// recupera las calificaciones  obtenidas para el alumno en cuestion
+   		// recupera las calificaciones_$ano  obtenidas para el alumno en cuestion
 
    		// los coloco en la variable corte final
    		$data = mysqli_fetch_array($qfx);
@@ -146,8 +146,8 @@ for($i= 1; $i <= 5 ; $i++) {
                // que el maximo numero de registros sena tres elementos ( de 0 a 2)
 
          		for ( $ii = $numero_f; $ii<3 ; $ii++){
-                  // insrto en la tabla calificaciones un registro con los campos predefinidos
-          			$q4 = "INSERT INTO calificaciones (id_alumno, id_docente, id_materia, periodo, corte, year, serie, id_logro,nota, limite, modificado, own)
+                  // insrto en la tabla calificaciones_$ano un registro con los campos predefinidos
+          			$q4 = "INSERT INTO calificaciones_$ano (id_alumno, id_docente, id_materia, periodo, corte, year, serie, id_logro,nota, limite, modificado, own)
 								VALUES ('$id_a', 0, '$id_m', '$i', 'F' , '$ano',$ii,0 , 0 ,'$fecha_f' ,'$hoy' , 99)";
                   // ejecuto la consulta en la base de datos
 	            		$q4x = mysqli_query( $link, $q4) or die('Error al insertar calificaciones : '. mysqli_error($link));
@@ -173,7 +173,7 @@ for($i= 1; $i <= 5 ; $i++) {
 					// creo nuevas calificaciones para el estudiante en la materia espesífica
 
 					// creo la coonsulata para crear las calificaciones
-					$q4 = "INSERT INTO calificaciones (id_alumno, id_docente, id_materia, periodo, corte, year, id_logro, nota, limite, modificado, own, serie)
+					$q4 = "INSERT INTO calificaciones_$ano (id_alumno, id_docente, id_materia, periodo, corte, year, id_logro, nota, limite, modificado, own, serie)
 					VALUES ('$id_a', 0, '$id_m',  '$i', 'A', '$ano', 0, 0, '$fecha_f' , '$hoy', 99, 0 )";
             	//echo "<font color='green'>consulta: $q4 </font><br>";
 					// ejecuto la consulta en la base de datos
@@ -192,7 +192,7 @@ for($i= 1; $i <= 5 ; $i++) {
 					// creo nuevas calificaciones para el estudiante en la materia espesífica
 
 					// creo la coonsulata para crear las calificaciones
-					$q4 = "INSERT INTO calificaciones (id_alumno, id_docente, id_materia, periodo, corte, year, id_logro, nota, limite, modificado, own, serie)
+					$q4 = "INSERT INTO calificaciones_$ano (id_alumno, id_docente, id_materia, periodo, corte, year, id_logro, nota, limite, modificado, own, serie)
 					VALUES ('$id_a', 0 , '$id_m', '$i', 'F', '$ano', 0, 0 ,'$fecha_f' ,'$hoy', 99, 0)";
             	//echo "<font color='green'>consulta: $q4 </font><br>";
 					// ejecuto la consulta en la base de datos

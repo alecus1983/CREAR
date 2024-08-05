@@ -62,7 +62,7 @@
 		// de las $notas el tama;o de las notas es
 		// proporcional a la cantidad de estudiantes
 
-   $q2 = "UPDATE calificaciones SET".
+   $q2 = "UPDATE calificaciones_$ano SET".
 				" nota = ".$notas[$l]['value'].
 				", id_logro = ".$logro1[$l]['value'].
 				", faltas = ".$faltas[$l]['value'].
@@ -74,7 +74,7 @@
 				" AND periodo = ".$periodo.
 				" AND serie = 0";
 
-				// echo "<br><br>consulta 0 :".$q2;
+				echo "<br><br>consulta 0 :".$q2;
 				$l++;
 // se ejecuta la consulta
 	$q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas: ' . mysqli_error($link));
@@ -105,7 +105,7 @@ if($grado == 7 || $grado == 8 || $grado == 9 ){
 	 // de las $notas el tama;o de las notas es
 	 // proporcional a la cantidad de estudiantes
 
-	$q2 = "UPDATE calificaciones SET".
+	$q2 = "UPDATE calificaciones_$ano SET".
 			 " nota = ".$notas[$l]['value'].
 			 ", id_logro = ".$logro2[$l]['value'].
 			 ", faltas = ".$faltas[$l]['value'].
@@ -142,7 +142,7 @@ if($grado == 7 || $grado == 8 || $grado == 9 ){
 	// de las $notas el tama;o de las notas es
 	// proporcional a la cantidad de estudiantes
 
- $q2 = "UPDATE calificaciones SET".
+ $q2 = "UPDATE calificaciones_$ano SET".
 			" nota = ".$notas[$l]['value'].
 			", id_logro = ".$logro3[$l]['value'].
 			", faltas = ".$faltas[$l]['value'].
