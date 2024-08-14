@@ -1,3 +1,4 @@
+
 [12-Aug-2024 22:28:35 America/Bogota] PHP Warning:  Undefined array key "cedula" in /home/imcreati/public_html/fc/profile.php on line 18
 [12-Aug-2024 22:28:35 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home/imcreati/public_html/fc/datos.php:1130
 Stack trace:
@@ -711,3 +712,4 @@ Stack trace:
 #0 /home/imcreati/public_html/fc/fc_admin.php(1110): matricula_docente->get_matricula()
 #1 {main}
   thrown in /home/imcreati/public_html/fc/datos.php on line 422
+

@@ -4,7 +4,7 @@ session_start();
 // Update the following variables
 $google_oauth_client_id = '44739736249-v3gmg4q0abunp3fcr7nj5mi3u9l48uve.apps.googleusercontent.com';
 $google_oauth_client_secret = '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';
-$google_oauth_redirect_uri = 'https://estudiantes.imcreativo.edu.co/google-oauth.php';
+$google_oauth_redirect_uri = 'https://www.imcreativo.edu.co/fc/google-oauth.php';
 $google_oauth_version = 'v3';
 
 // If the captured code param exists and is valid

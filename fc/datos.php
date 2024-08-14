@@ -419,7 +419,7 @@ class matricula_docente extends imcrea {
     // se obtiene un listado de los grados matriculados por un docente
     // en $this year y $this id_docente
     
-    public function get_matricula(){
+    public function get_matricula($formato){
         // consulta que interroga si es un administrador
         $resultado = $this->_db->query("select admin from docentes where id_docente = ".$this->id_docente);
         // consulta que devuelve un array numérico
@@ -429,7 +429,8 @@ class matricula_docente extends imcrea {
         // si es  un administrativo
         if ($admin[0] == 1){
             // obtengo el query resultado
-            $resultado = $this->_db->query("SELECT * FROM grados ORDER BY grado");
+            $resultado = $this->_db->query("SELECT * FROM grados  where formato_boletin = $formato ORDER BY grado");
+            echo "SELECT * FROM grados  where formato_boletin = $formato ORDER BY grado";
             // convierto la consulta en un array
             while($g = $resultado->fetch_array(MYSQLI_ASSOC)){
                 //      $id = $g["id_grado"];
@@ -1100,6 +1101,33 @@ class docentes extends imcrea {
     public function get_docente_cc($id){
         //consulta para recuperar el docente
         $q = "select * from docentes where  cedula = $id";
+        // se obtiene la variable resultado de consulta
+        $c = $this->_db->query($q);
+        // obtengo el primer dato de de la consulta
+        $a = $c->fetch_array(MYSQLI_ASSOC);
+
+        // asigno el valor devuelto a los atributos del ob jeto
+        $this->id = $a['id_docente'];
+        $this->admin =  $a['admin']; 
+        $this->nombres = $a['nombres'];
+        $this->apellidos = $a['apellidos'];
+        $this->cedula = $a['cedula'];
+        $this->login = $a['login'];
+        $this->fecha = $a['fecha'];
+        $this->celular = $a['celular'];
+        $this->correo = $a['correo'];
+        $this->i_correo = $a['i_correo'];
+        $this->materias = $a['materias'];
+    }
+
+
+    //      funcion para obtener los datos del docente
+    //      a partir del codigo id del docente
+    public function get_docente_email($email) {
+        //consulta para recuperar el docente
+        $q = "select * from docentes where  i_correo = '$email'";
+
+        //echo $q;
         // se obtiene la variable resultado de consulta
         $c = $this->_db->query($q);
         // obtengo el primer dato de de la consulta

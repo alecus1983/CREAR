@@ -635,14 +635,16 @@ $ano = date('Y');
 					    $mt->year = date('Y');
 					    // defino el codigo del docente de la matricula
 					    $mt->id_docente = $id;
-					    //actuliza el listado de cursos disponibles
-					    $mt->get_matricula();
+					    //actuliza el listado de grados disponibles
+					    $mt->get_matricula(2);
 					    // conviere el dato en un json
-					    //echo json_encode($mt->listado);
+					    echo json_encode($mt->listado);
 					    $lista = $mt->listado;
 					    echo '<option value="-1">seleccione</option>';
 					    foreach ($lista as $key => $value) {
+                            
 						echo '<option value="'.$key.'">'.$value.'</option>';
+                        
 					    }
 					    ?>
 					</select>

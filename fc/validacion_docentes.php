@@ -29,8 +29,8 @@ $d->get_docente_cc($_POST["cedula"]);
 
     if($d->login == $password)
     {
-        //Creamos sesi�n
-        //Almacenamos el nombre de usuario//  en una variable de sesi�n usuario
+        //Creamos sesion
+        //Almacenamos el nombre de usuario
         $_SESSION['usuario'] = $usuario;
         // guardo el codigo del docete  en la variable de seccion  id
         $_SESSION['id'] = $d->id;

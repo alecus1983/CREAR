@@ -100,7 +100,7 @@ if ($valido) {
     // array de id's de docentes de un curso/grado/jornada
     $listado = $md->get_lista_por_grado ($grado,$id_jornada, $id_curso, $ano);
 
-    $html = "<p>Listado materias requieridas para el grado <b>".$gr->n_grado
+    $html = "<p>Listado materias requieridas para el grado <b>".$gr->nombre_g
          ."</b>, </p>";
 
     

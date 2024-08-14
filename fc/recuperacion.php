@@ -504,7 +504,7 @@ $ano = date('Y');
 					// defino el codigo del docente de la matricula
 					$mt->id_docente = $id;
 					//actuliza el listado de cursos disponibles
-					$mt->get_matricula();
+					$mt->get_matricula(2);
 					// conviere el dato en un json
 					//echo json_encode($mt->listado);
 					$lista = $mt->listado;
