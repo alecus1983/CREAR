@@ -492,7 +492,7 @@ $ano = date('Y');
     </head>
 
     <body class="sb-nav-fixed">
-
+<div><p> El usuario es <?php $usuario  ?> </div>
 	<div class="loader" style="display:none" id="loader"></div>
 	<div id="content">
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>

@@ -978,7 +978,7 @@ error: function(xhr, status) {
     </head>
 
     <body class="sb-nav-fixed" onload="load();">
-
+<div><p> El usuario es <?php $usuario  ?> </div>
 	<div class="loader" style="display:none" id="loader"></div>
 
 	<div id="content">
