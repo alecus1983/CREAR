@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "PHP Debug",
+            "type": "php",
+            "request": "launch",
+            "program": "${file}",
+            "args": ["--server=4711"],
+            "cwd": "${workspaceFolder}",
+        }
+    ]
+}
