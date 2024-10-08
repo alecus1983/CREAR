@@ -421,33 +421,29 @@ class matricula_docente extends imcrea {
     
     public function get_matricula($formato){
         // consulta que interroga si es un administrador
-        $resultado = $this->_db->query("select admin from docentes where id_docente = ".$this->id_docente);
+        $r = $this->_db->query("select admin from docentes where id_docente = ".$this->id_docente);
         // consulta que devuelve un array numérico
-        $admin = $resultado->fetch_array(MYSQLI_NUM);
+        $admin = $r->fetch_array(MYSQLI_NUM);
         // array para almacenar el listado de grados
         $data = array();
         // si es  un administrativo
         if ($admin[0] == 1){
+            $q = "SELECT * FROM grados  where formato_boletin = $formato ORDER BY grado";
             // obtengo el query resultado
-            $resultado = $this->_db->query("SELECT * FROM grados  where formato_boletin = $formato ORDER BY grado");
-            echo "SELECT * FROM grados  where formato_boletin = $formato ORDER BY grado";
-            // convierto la consulta en un array
-            while($g = $resultado->fetch_array(MYSQLI_ASSOC)){
-                //      $id = $g["id_grado"];
-                //$grado = $g["grado"];
-                $data[$g["id_grado"]] = $g["grado"];
-            }
-        } 
-        // si no es un administrativo
-        else{
+            $resultado = $this->_db->query($q);
+             // convierto la consulta en un array
+             while($g = $resultado->fetch_array(MYSQLI_ASSOC)){
+                 $data[$g["id_grado"]] = $g["grado"];
+             }
+         } 
+        // // si no es un administrativo
+         else{
             $q1 = "SELECT DISTINCT G.id_grado, G.grado FROM grados G INNER JOIN matricula_docente D ON G.id_grado = D.id_grado  WHERE D.year = '".$this->year."' AND  D.id_docente = ".$this->id_docente;
             $resultado = $this->_db->query($q1);
             while($g = $resultado->fetch_array(MYSQLI_ASSOC)){
-                //      $id = $g["id_grado"];
-                //$grado = $g["grado"];
                 $data[$g["id_grado"]] = $g["grado"];
             }
-        }
+         }
         $this->listado = $data;
     }
 
@@ -1742,30 +1738,30 @@ class materia extends imcrea {
 
     //funcion que retorna las materias que se dictan en un año
     //en forma de array,  requiere el grado $g y el año $y
-    public function get_materias_por_grado($g,$y){
-        $arr = array();
-        $q = "";
-        if($this->admin == 1){
-            // consulta para obtener las materias
-            $q ="SELECT M.id_materia, M.materia  FROM requisitos R INNER JOIN materia M ON M.id_materia = R.id_materia
-		WHERE R.id_grado = ".$g;
-        } else
-        {
-            $q = "SELECT DISTINCT M.id_materia, M.materia FROM materia M INNER JOIN matricula_docente D ON M.id_materia = D.id_materia  WHERE D.year = '".$y."'
-		AND  D.id_docente = ".$this->id." AND D.id_grado =".$g;
-        }
+    // public function get_materias_por_grado($g,$y){
+    //     $arr = array();
+    //     $q = "";
+    //     if($this->admin == 1){
+    //         // consulta para obtener las materias
+    //         $q ="SELECT M.id_materia, M.materia  FROM requisitos R INNER JOIN materia M ON M.id_materia = R.id_materia
+	// 	WHERE R.id_grado = ".$g;
+    //     } else
+    //     {
+    //         $q = "SELECT DISTINCT M.id_materia, M.materia FROM materia M INNER JOIN matricula_docente D ON M.id_materia = D.id_materia  WHERE D.year = '".$y."'
+	// 	AND  D.id_docente = ".$this->id." AND D.id_grado =".$g;
+    //     }
 
-        // realizo la consulta
-        $c = $this->_db->query($q);
-        while($a = $c->fetch_array(MYSQLI_ASSOC)){
-            $id_m = $a['id_materia'];
-            $m = $a['materia'];
-            $arr[$id_m] = $m; 
+    //     // realizo la consulta
+    //     $c = $this->_db->query($q);
+    //     while($a = $c->fetch_array(MYSQLI_ASSOC)){
+    //         $id_m = $a['id_materia'];
+    //         $m = $a['materia'];
+    //         $arr[$id_m] = $m; 
 
-        }
-        $this->materias = $arr;
+    //     }
+    //     $this->materias = $arr;
 
-    }
+    // }
 
     // retorna un conjunto de materias que pertenecen a un grado en un area
     // parametros $g ->  grado
@@ -1962,16 +1958,16 @@ class logro extends imcrea{
     }
 
 
-    public function get_logro() { 
-        $q = "select * from  logros where id_logro= $id_logro";
-        $c = $this->_db->query($q);
+    // public function get_logro() { 
+    //     $q = "select * from  logros where id_logro= $id_logro";
+    //     $c = $this->_db->query($q);
        
-        // recorre el array 
-        $r = $c->fetch_array(MYSQLI_ASSOC);
-        // agrego un elemento al array
-        $this->logro = $r['logro'] ;
-        $this->id_logro = $r['id_logro'] ;            
-    }
+    //     // recorre el array 
+    //     $r = $c->fetch_array(MYSQLI_ASSOC);
+    //     // agrego un elemento al array
+    //     $this->logro = $r['logro'] ;
+    //     $this->id_logro = $r['id_logro'] ;            
+    // }
 
 
     public function get_logro_id($id_logro) {
@@ -1996,7 +1992,7 @@ class logro extends imcrea{
 //se dictan la clases
 class jornada extends imcrea{
     // codigo de la jornada
-    public $id_materia;
+    public $id_jornada;
     // nombre de la jornada
     public $jornada;
 

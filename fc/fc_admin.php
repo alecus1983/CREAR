@@ -1113,7 +1113,7 @@ error: function(xhr, status) {
 					    $lista = $mt->listado;
 					    echo '<option value="-1">seleccione</option>';
 					    foreach ($lista as $key => $value) {
-						echo '<option value="'.$key.'">'.$value.'</option>';
+					    	echo '<option value="'.$key.'">'.$value.'</option>';
 					    }
 					    ?>
 					</select>
