@@ -126,7 +126,11 @@ if ($valido) {
             $html = $html. "</tr>";
 
             $nota_total = $nota_total + $ponderado->valor * $cal->nota * 0.01;
-            $ponderado_total = $ponderado_total + $ponderado->valor;
+
+            if ($cal->nota > 0){
+                $ponderado_total = $ponderado_total + $ponderado->valor;                
+            }
+
         }
     }
     $html = $html. "</tbody>";

@@ -2,9 +2,7 @@
 session_start();
 require_once('datos.php');
 
-// si el usuario ha iniciado seccion
 if (isset($_SESSION["usuario"])){
-    // variable de usuario
     $usuario =  $_SESSION["usuario"];
     $d = new docentes();
     $d->get_docente_cc($usuario);
@@ -12,8 +10,6 @@ if (isset($_SESSION["usuario"])){
     $admin = $d->admin ;
 
     $ano = date('Y');
-    // si no es administrador
-    // lo devuelve a la pagina de presentacion
     if($admin == 0){
         header("Location:board.php");
     }
@@ -1104,21 +1100,21 @@ error: function(xhr, status) {
 						    style="background: transparent;color: darkgreen;border:  0px"
 						    onchange="actualizar()">
 					    <?php
-         // creo un nuevo objeto  matricula docente
-                            $mt = new matricula_docente();
-// asigno el año a la matricula como el a actual
+					    // creo un nuevo objeto  matricula docente
+					    $mt = new matricula_docente();
+					    // asigno el año a la matricula como el a actual
 					    $mt->year = date('Y');
 					    // defino el codigo del docente de la matricula
-					     $mt->id_docente = $id;
-					    // //actuliza el listado de cursos disponibles
+					    $mt->id_docente = $id;
+					    //actuliza el listado de cursos disponibles
 					    $mt->get_matricula(2);
-					    // // conviere el dato en un json
-					    // //echo json_encode($mt->listado);
-					    // $lista = $mt->listado;
-					    // echo '<option value="-1">seleccione</option>';
-					    // foreach ($lista as $key => $value) {
-						// echo '<option value="'.$key.'">'.$value.'</option>';
-                        //     }
+					    // conviere el dato en un json
+					    //echo json_encode($mt->listado);
+					    $lista = $mt->listado;
+					    echo '<option value="-1">seleccione</option>';
+					    foreach ($lista as $key => $value) {
+					    	echo '<option value="'.$key.'">'.$value.'</option>';
+					    }
 					    ?>
 					</select>
 
