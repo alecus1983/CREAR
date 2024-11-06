@@ -2216,6 +2216,17 @@ class cuadro extends imcrea {
 // clase personas que extiende de
 // imcrea
 class personas extends imcrea {
+
+    //cosntructor de la clase
+    public function __construct(){
+        // hereda parametros de la clase padre
+        parent::__construct();
+    }
+
+    
+
+
+
     
 }
 
