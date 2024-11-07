@@ -2216,6 +2216,46 @@ class cuadro extends imcrea {
 // clase personas que extiende de
 // imcrea
 class personas extends imcrea {
+
+    //cosntructor de la clase
+    public function __construct(){
+        // hereda parametros de la clase padre
+        parent::__construct();
+    }
+
+    
+    // funcion que permite buscar personas
+    public function buscar_persona($nombres, $apellidos, $cedula){
+
+        $q = "select nombres,  apellidos  from personas where".
+                 "nombres like '%$nombres%' and ".
+           "apellidos like '%$apellidos%' or  ".
+           "identificacion like '%$cedula%' ";
+
+        //echo $q;
+        // ejecuto la consulta
+        $c = $this->_db->query($q);
+        // se ejecuta la consulta
+        $a = $c->fetch_array(MYSQLI_ASSOC);
+
+        // guardo el resoltado en un array inicialmente vacio
+        $aa = array();
+        // exploro el resultado 
+        while($resultado = $c->fetch_array(MYSQLI_NUM)){
+            // agrego elementos al array $aa
+            array_push($aa,$resultado[0]);
+        }
+    
+        // doy valores a los atributos del objeto
+        return   $aa;
+
+        
+    }
+
+    
+
+
+
     
 }
 
