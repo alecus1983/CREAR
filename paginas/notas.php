@@ -74,7 +74,7 @@
 				" AND periodo = ".$periodo.
 				" AND serie = 0";
 
-				echo "<br><br>consulta 0 :".$q2;
+   //echo "<br><br>consulta 0 :".$q2;
 				$l++;
 // se ejecuta la consulta
 	$q2x = mysqli_query($link, $q2 ) or die('Consulta fallida  de notas: ' . mysqli_error($link));
