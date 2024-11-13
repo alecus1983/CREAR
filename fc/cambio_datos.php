@@ -36,11 +36,12 @@ $html = $html. "<thead>";
 // emcabezado de la tabla
 // $html = $html. "<th scope='col'>Codigo</th>";
 $html = $html. "<th scope='col'>Nombres</th>";
+$html = $html. "<th scope='col'>Apellidos</th>";
 $html = $html. "<th scope='col'>D. de identidad</th>";
 // $html = $html. "<th scope='col'>Correo</th>";
 // $html = $html. "<th scope='col'>Telefono</th>";
-// $html = $html. "<th scope='col'>Actualizar</th>";
-// $html = $html. "<th scope='col'>Eliminar</th>";
+ $html = $html. "<th scope='col'>Actualizar</th>";
+ $html = $html. "<th scope='col'>Eliminar</th>";
 $html = $html. "</thead>";
 $html = $html. "<tbody>";
     
@@ -54,12 +55,22 @@ foreach  ( $lista as $id ) {
     // var_dump($id);
          $html = $html."<tr>";
          $html = $html."<td>";
-         $html = $html." ".$id;
+         $html = $html." ".$id[0];
          $html = $html."</td>";
          $html = $html."<td>";
-         $html = $html."";
+         $html = $html." ".$id[1];
          $html = $html."</td>";
-         $html = $html."</tr>";    
+         $html = $html."<td>";
+         $html = $html." ".$id[2];
+         $html = $html."</td>";
+         $html = $html. "<td>";
+        $html = $html. "<button type='button' class='btn btn-info' onclick='e(\"$id[3]\");'>actualizar</button>";
+        $html = $html. "</td>";
+        $html = $html. "<td>";
+        $html = $html. "<button type='button' class='btn btn-warning' onclick='e(\"$id[3]\");'>eliminar</button>";
+        $html = $html. "</td>";
+         $html = $html."</tr>";
+         
  }
 
 $html = $html. "</tbody>";

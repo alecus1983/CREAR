@@ -78,10 +78,10 @@ if ($valido) {
         $html = $html.$alumno->telefono;
         $html = $html."</td>";
         $html = $html. "<td>";
-        $html = $html. "<button type='button' class='btn btn-info' onclick='e(\"$id\");'>actualizar</button>";
+        $html = $html. "<button type='button' class='btn btn-info' onclick='actualizar(\"$id\");'>actualizar</button>";
         $html = $html. "</td>";
         $html = $html. "<td>";
-        $html = $html. "<button type='button' class='btn btn-warning' onclick='e(\"$id\");'>eliminar</button>";
+        $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar(\"$id\");'>eliminar</button>";
         $html = $html. "</td>";
         $html = $html."</tr>";
                 
