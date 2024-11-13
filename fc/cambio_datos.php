@@ -18,7 +18,7 @@ $html = "";
 // creo un nuevo objeto matricula para el año actual
 // $mt =     new matriculas_year($ano);
 $personas = new personas();
-$personas->buscar_persona($nombres, $apellidos, $identificacion);    
+$lista = $personas->buscar_persona($nombres, $apellidos, $identificacion);    
 // div que crea un afila bootrap
 $html = $html."<div class='row'>";
 // fila de todo el ancho 
@@ -44,23 +44,23 @@ $html = $html. "<th scope='col'>D. de identidad</th>";
 $html = $html. "</thead>";
 $html = $html. "<tbody>";
     
-// // por cada estudiante matriculado
-// foreach  ( $mt->matriculas as $id ) {
-//     //creo una matricula
-//     $matricula =  new matricula($id);
-//     // creo un nuevo alumno
-//     $alumno = new alumnos($matricula->id_alumno);
-        
-//     $html = $html."<tr>";
-//     $html = $html."<td>";
-//     $html = $html.$alumno->nombres." ".$alumno->apellidos;
-//     $html = $html."</td>";
-//     $html = $html."<td>";
-//     $html = $html.$alumno->cedula;
-//     $html = $html."</td>";
-//     $html = $html."</tr>";
-                
-// }
+// por cada estudiante matriculado
+foreach  ( $lista as $id ) {
+    // //creo una matricula
+    // $matricula =  new matricula($id);
+    // // creo un nuevo alumno
+    // $alumno = new alumnos($matricula->id_alumno);
+    // var_dump($id);
+    // var_dump($id);
+         $html = $html."<tr>";
+         $html = $html."<td>";
+         $html = $html." ".$id;
+         $html = $html."</td>";
+         $html = $html."<td>";
+         $html = $html."";
+         $html = $html."</td>";
+         $html = $html."</tr>";    
+ }
 
 $html = $html. "</tbody>";
 $html = $html. "</div>";

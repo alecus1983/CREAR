@@ -2228,8 +2228,8 @@ class personas extends imcrea {
     public function buscar_persona($nombres, $apellidos, $cedula){
 
         $q = "select nombres,  apellidos  from personas where".
-                 " nombres like '%$nombres%' and ".
-           " apellidos like '%$apellidos%' or  ".
+                 " ( nombres like '%$nombres%' and ".
+           " apellidos like '%$apellidos%' ) and  ".
            " identificacion like '%$cedula%' ";
 
         // echo $q;
@@ -2243,21 +2243,15 @@ class personas extends imcrea {
         // exploro el resultado 
         while($resultado = $c->fetch_array(MYSQLI_NUM)){
             // agrego elementos al array $aa
-            array_push($aa,$resultado[0]);
+            array_push($aa,$resultado[0].' '.$resultado[1]);
         }
 
         // var_dump($aa);
         // doy valores a los atributos del objeto
         return   $aa;
         
-        
     }
 
-    
-
-
-
-    
 }
 
 ?>
