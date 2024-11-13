@@ -495,8 +495,9 @@ error: function(xhr, status) {
 		 url: "cambio_datos.php",
 		 dataType: "json",
 		 data: {
-                     years: $("#years").val(),
-
+                     nombres: $("#nombres").val(),
+		     apellidos: $("#apellidos").val(),
+		     identificacion: $("#identificacion").val()
 		 } ,
 		 // si los datos son correctos entonces ...
 		 success: function(respuesta) {
