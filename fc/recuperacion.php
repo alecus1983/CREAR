@@ -492,27 +492,27 @@ $ano = date('Y');
 
 
 				    <label class="Control-label">Grado</label>
-				    <select id="id_g" name="id_gs"
-						class ="form-control"
-						style="background: transparent;color: darkgreen;border:  0px"
-						onchange="actualizar();">
-					<?php
-					// creo un nuevo objeto  matricula docente
-					$mt = new matricula_docente();
-					// asigno el año a la matricula como el a actual
-					$mt->year = date('Y');
-					// defino el codigo del docente de la matricula
-					$mt->id_docente = $id;
-					//actuliza el listado de cursos disponibles
-					$mt->get_matricula(2);
-					// conviere el dato en un json
-					//echo json_encode($mt->listado);
-					$lista = $mt->listado;
-					echo '<option value="-1">seleccione</option>';
-					foreach ($lista as $key => $value) {
-					    echo '<option value="'.$key.'">'.$value.'</option>';
-					}
-					?>
+				   	<select id="id_g" name="id_gs"
+						    class ="form-control"
+						    style="background: transparent;color: darkgreen;border:  0px"
+						    onchange="actualizar()">
+					    <?php
+					    // creo un nuevo objeto  matricula docente
+					    $mt = new matricula_docente();
+					    // asigno el año a la matricula como el a actual
+					    $mt->year = date('Y');
+					    // defino el codigo del docente de la matricula
+					    $mt->id_docente = $id;
+					    //actuliza el listado de cursos disponibles
+					    $mt->get_matricula(2);
+					    // conviere el dato en un json
+					    //echo json_encode($mt->listado);
+					    $lista = $mt->listado;
+					    echo '<option value="-1">seleccione</option>';
+					    foreach ($lista as $key => $value) {
+					    	echo '<option value="'.$key.'">'.$value.'</option>';
+					    }
+					    ?>
 				    </select>
 
 				    <label class="Control-label">Curso</label>
