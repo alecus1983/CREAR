@@ -30,6 +30,7 @@ if (isset($_SESSION["usuario"])){
 	<title>calificaciones</title>
 	<link href="css/style.min.css" rel="stylesheet" />
 	<link href="css/styles.css" rel="stylesheet" />
+	<link href="estilos.css" rel="stylesheet" />
 	<script src="js/all.js" ></script>
 	<link href="../imagenes/escudo.gif" rel="shortcut icon"/>
 	<script src="./js/sweetalert.min.js"></script>
@@ -610,6 +611,7 @@ error: function(xhr, status) {
 
 	 }
 
+	 // elimina la matricula docente
 	 function eliminar_matricula_docente(id) {
 
 	     // se invoca al metodo ajax para solicitar
@@ -620,7 +622,6 @@ error: function(xhr, status) {
 		 dataType: "json",
 		 data: {
                      id: id
-
 		 } ,
 		 // si los datos son correctos entonces ...
 		 success: function(respuesta) {
@@ -640,6 +641,33 @@ error: function(xhr, status) {
 		 }
 	     });
 
+	 }
+
+	 // funcion que solicitar datos de la persona
+	 function datos_persona(id){
+	     //  realizo la consulta en de los datos
+	     $.ajax({
+		 type: "POST",
+		 url: "datos_persona.php",
+		 dataType: "json",
+		 data: {
+                     id: id
+		 } ,
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
+		     // si la respuesta es positiva
+		     if(respuesta['status']==1){
+			 $("#tabla").html(respuesta['html']);
+		     } else {
+			 if(respuesta['status'] == 20){swal('Error','Hubo un error al eliminar la matricula docente','error');}
+			 if(respuesta['status'] == 21){swal('Error','Hubo un error al eliminar la matricula docente','error');}
+		     }
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
+	     });
 	 }
 
 	 function requisitos_grado() {

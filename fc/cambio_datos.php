@@ -64,10 +64,10 @@ foreach  ( $lista as $id ) {
          $html = $html." ".$id[2];
          $html = $html."</td>";
          $html = $html. "<td>";
-        $html = $html. "<button type='button' class='btn btn-info' onclick='e(\"$id[3]\");'>actualizar</button>";
+        $html = $html. "<button type='button' class='btn btn-info' onclick='datos_persona(\"$id[3]\");'>actualizar</button>";
         $html = $html. "</td>";
         $html = $html. "<td>";
-        $html = $html. "<button type='button' class='btn btn-warning' onclick='e(\"$id[3]\");'>eliminar</button>";
+        $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_persona(\"$id[3]\");'>eliminar</button>";
         $html = $html. "</td>";
          $html = $html."</tr>";
          

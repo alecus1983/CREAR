@@ -2217,6 +2217,20 @@ class cuadro extends imcrea {
 // imcrea
 class personas extends imcrea {
 
+    // atributos
+    public $id_persona;
+    public $nombres;
+    public $apellidos;
+    public $identicacion;
+    public $tipo_identificacion;
+    public $nacimiento;
+    public $correo;
+    public $i_correo;
+    public $celular;
+    public $telefono;
+    public $u_alumnos;
+    public $u_docentes;
+
     //cosntructor de la clase
     public function __construct(){
         // hereda parametros de la clase padre
@@ -2251,6 +2265,30 @@ class personas extends imcrea {
         return   $aa;
         
     }
+
+    // obtengo los datos de la persona
+    public function get_persona_por_id($id){
+        // texto de consulta
+        $q = "select * from  personas where id_personas =$id ";
+        // ejecuto la consulta
+        $c = $this->_db->query($q);
+        // recupero un registro
+        $a = $c->fetch_array(MYSQLI_ASSOC);
+
+        $this->id_persona = $a['id_personas'];
+        $this->nombres = $a['nombres'];
+        $this->apellidos = $a['apellidos'];
+        $this->identicacion = $a['identificacion'];
+        $this->tipo_identificacion = $a['tipo_identificacion'];
+        $this->nacimiento = $a['nacimiento'];
+        $this->correo = $a['correo'];
+        $this->i_correo = $a['i_correo'];
+        $this->celular = $a['celular'];
+        $this->telefono = $a['telefono'];
+        $this->u_alumnos = $a['u_alumnos'];
+        $this->u_docentes = $a['u_docentes'];
+    }
+
 
 }
 
