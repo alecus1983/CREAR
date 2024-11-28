@@ -13,12 +13,12 @@ $err = "";
 //array de respuesta
 $respuesta = array();
 
-$html = "Formulario para la gestión de personas que pertenecen a a la institución <br>";
-$html = $html. "<ol>";
-$html = $html . "<li>Buscar personas</li>";
-$html = $html . "<li>Agregar personas</li>";
-$html = $html . "<li>Borrar personas</li>";
-$html = $html . "<li>Actualizar personas</li>";
+$html = "Formulario para la gestión de personas que pertenecen a a la institución: <br><br>";
+$html = $html. "<ol style = 'margin : 10px;'>";
+$html = $html . "<li><i>Buscar personas</i></li>";
+$html = $html . "<li><i>Agregar personas</i></li>";
+$html = $html . "<li><i>Borrar personas</i></li>";
+$html = $html . "<li><i>Actualizar personas</i></li>";
 $html = $html . "</ol>";
 $html = $html . "<div class='container container-sm'>";
 $html = $html . "<div class='row'>";
@@ -40,7 +40,8 @@ $html = $html . "<input  class='form-control' id='identificacion' aria-described
 $html = $html . "<div id='ayuda_identificacion' class='form-text'>digite parte del documento de identicación por favor.</div>";
 $html = $html . "</div>";
 $html = $html . "<div class='col mx-auto justify-content-md'>";
-$html = $html . "<button type='button' class='btn btn-outline-dark'>Agregar persona</button>";
+$html = $html . "<br>";
+$html = $html . "<button type='button' class='btn btn-outline-dark' style = 'margin: 5px'>Agregar persona</button>";
 $html = $html . "</div>";
 
 $html = $html . "</div>";
