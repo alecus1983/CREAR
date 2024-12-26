@@ -25,13 +25,14 @@ $html = $html . "<div class='container container-sm actualizar_personas'>";
 $html = $html . "<div class='row'>";
 $html = $html . "<div class='col'>";
 $html = $html . "<label for='nombres' class='form-label'>Nombre</label>";
-$html = $html . "<input  value = '".$persona->nombres."' class='form-control' id='nombres' aria-describedby='nombres' >";
+$html = $html . "<input  value = '".$persona->nombres."' class='form-control' id='ac_nombres' aria-describedby='nombres' >";
+$html = $html . "<input  type='hidden' id='ac_id_persona' value='".$persona->id_persona."'>";
 $html = $html . "<div id='ayuda_nombre' class='form-text'>actualize el  nombre por favor.</div>";
 $html = $html . "</div>";
 $html = $html . "<div class='col'>";
 $html = $html . "<label for='apellidos' class='form-label'>Apellidos</label>";
-$html = $html . "<input  value = '".$persona->apellidos."'class='form-control' id='apellidos' aria-describedby='apellidos' onkeydown='cambio_datos();'>";
-$html = $html . "<div id='ayuda_apellidos' class='form-text'>digite el nombre o parte de los apellidos por favor.</div>";
+$html = $html . "<input  value = '".$persona->apellidos."'class='form-control' id='ac_apellidos' aria-describedby='apellidos' >";
+$html = $html . "<div id='ayuda_apellidos' class='form-text'>digite el apellido o parte del mismo por favor.</div>";
 $html = $html . "</div>";
 $html = $html . "</div>";
 
@@ -39,8 +40,8 @@ $html = $html . "</div>";
 
 $html = $html . "<div class='row'>";
 $html = $html . "<div class='col'>";
-$html = $html . "<label for='nombres' class='form-label'>tipo de identificación</label>";
-$html = $html . "<select class='form-control'>";
+$html = $html . "<label for='ac_tipo_identificacion' class='form-label'>tipo de identificación</label>";
+$html = $html . "<select class='form-control' id='ac_tipo_identificacion'>";
 
 // si la persona tiene un tipo de identificacion 1
 if ($persona->tipo_identificacion == 1){
@@ -94,49 +95,49 @@ $html = $html . "</select>";
 $html = $html . "<div id='ayuda_nombre' class='form-text'>actualize el  tipo de identificación.</div>";
 $html = $html . "</div>";
 $html = $html . "<div class='col'>";
-$html = $html . "<label for='apellidos' class='form-label'>identificacion</label>";
-$html = $html . "<input  value = '".$persona->identicacion."'class='form-control' id='apellidos' aria-describedby='apellidos' onkeydown='cambio_datos();'>";
-$html = $html . "<div id='ayuda_apellidos' class='form-text'>digite el nombre o parte de los apellidos por favor.</div>";
+$html = $html . "<label for='ac_identificacion' class='form-label'>identificacion</label>";
+$html = $html . "<input  value = '".$persona->identificacion."'class='form-control' id='ac_identificacion' aria-describedby='identificacion' onkeydown='cambio_datos();'>";
+$html = $html . "<div id='ayuda_identificacion' class='form-text'>digite la identificacion por favor.</div>";
 $html = $html . "</div>";
 $html = $html . "</div>";
 
 
 $html = $html . "<div class='row'>";
 $html = $html . "<div class='col'>";
-$html = $html . "<label for='correo' class='form-label'>correo personal</label>";
-$html = $html . "<input  value = '".$persona->correo."' class='form-control' id='correo' aria-describedby='correo' type='email'>";
+$html = $html . "<label for='ac_correo' class='form-label'>correo personal</label>";
+$html = $html . "<input  value = '".$persona->correo."' class='form-control' id='ac_correo' aria-describedby='correo' type='email'>";
 $html = $html . "<div id='ayuda_correo' class='form-text'>actualize el  correo por favor.</div>";
 $html = $html . "</div>";
 $html = $html . "<div class='col'>";
-$html = $html . "<label for='i_correo' class='form-label'>correo  institucional</label>";
-$html = $html . "<input  value = '".$persona->i_correo."'class='form-control' id='i_correo' aria-describedby='i_correo' type='email' >";
-$html = $html . "<div id='ayuda_apellidos' class='form-text'>digite el nombre o parte de los apellidos por favor.</div>";
+$html = $html . "<label for='ac_i_correo' class='form-label'>correo  institucional</label>";
+$html = $html . "<input  value = '".$persona->i_correo."'class='form-control' id='ac_i_correo' aria-describedby='i_correo' type='email' >";
+$html = $html . "<div id='ayuda_i_correo' class='form-text'>digite el correo institucional por favor.</div>";
 $html = $html . "</div>";
 $html = $html . "</div>";
 
 $html = $html . "<div class='row'>";
 $html = $html . "<div class='col'>";
-$html = $html . "<label for='nombres' class='form-label'>número de celular</label>";
-$html = $html . "<input  value = '".$persona->celular."' class='form-control' id='celular' aria-describedby='celular' >";
-$html = $html . "<div id='ayuda_nombre' class='form-text'>actualize su celular favor.</div>";
+$html = $html . "<label for='ac_celular' class='form-label'>número de celular</label>";
+$html = $html . "<input  value = '".$persona->celular."' class='form-control' id='ac_celular' aria-describedby='celular' >";
+$html = $html . "<div id='ayuda_celular' class='form-text'>actualize su celular favor.</div>";
 $html = $html . "</div>";
 $html = $html . "<div class='col'>";
-$html = $html . "<label for='apellidos' class='form-label'>número telefono fijo</label>";
-$html = $html . "<input  value = '".$persona->telefono."'class='form-control' id='telefono' aria-describedby='telefono' >";
-$html = $html . "<div id='ayuda_apellidos' class='form-text'>actulize su telefono por favor.</div>";
+$html = $html . "<label for='ac_telefono' class='form-label'>número telefono fijo</label>";
+$html = $html . "<input  value = '".$persona->telefono."'class='form-control' id='ac_telefono' aria-describedby='telefono' >";
+$html = $html . "<div id='ayuda_telefono' class='form-text'>actulize su telefono por favor.</div>";
 $html = $html . "</div>";
 $html = $html . "</div>";
 
 
 $html = $html . "<div class='row'>";
 $html = $html . "<div class='col'>";
-$html = $html . "<label for='nacimiento' class='form-label'>fecha de nacimiento</label>";
-$html = $html . "<input  class='form-control' id='nacimiento' aria-describedby='nacimiento' type='date' min='1920-01-01' >";
+$html = $html . "<label for='ac_nacimiento' class='form-label'>fecha de nacimiento</label>";
+$html = $html . "<input  class='form-control' id='ac_nacimiento' aria-describedby='nacimiento' type='date' min='1920-01-01' value='".$persona->nacimiento."' >";
 $html = $html . "<div id='ayuda_nacimiento' class='form-text'>seleccione la fecha de nacimiento  por favor.</div>";
 $html = $html . "</div>";
 $html = $html . "<div class='col mx-auto justify-content-md'>";
 $html = $html . "<br>";
-$html = $html . "<button type='button' class='btn btn-outline-dark' style = 'margin: 5px'>actualizar </button>";
+$html = $html . "<button type='button' id='actualizar_persona' class='btn btn-outline-dark' style = 'margin: 5px' onclick='actualizar_persona();'>actualizar </button>";
 $html = $html . "</div>";
 
 $html = $html . "</div>";

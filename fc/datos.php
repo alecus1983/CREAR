@@ -2218,17 +2218,30 @@ class cuadro extends imcrea {
 class personas extends imcrea {
 
     // atributos
+
+    // codigo de la persona 
     public $id_persona;
+    // nombres de las personas 
     public $nombres;
+    // apellidos de las personas
     public $apellidos;
-    public $identicacion;
+    // numro de identificacion 
+    public $identificacion;
+    // tipo de identificacion
     public $tipo_identificacion;
+    // fecha de nacimiento
     public $nacimiento;
+    // correo de la persona 
     public $correo;
+    // correo institucional de la persona 
     public $i_correo;
+    // celular de la persona 
     public $celular;
+    // telefono de la persona 
     public $telefono;
+    // clave foranea de la pesona cuando es alumno 
     public $u_alumnos;
+    // clave foranea de la persna cuando es docente 
     public $u_docentes;
 
     //cosntructor de la clase
@@ -2238,8 +2251,9 @@ class personas extends imcrea {
     }
 
     
-    // funcion que permite buscar personas
-    public function buscar_persona($nombres, $apellidos, $cedula){
+    // funcion que permite buscar personas en funcion del
+    // nombre apellido y/o la cedula
+    public function buscar_persona($nombres, $apellidos, $cedula) {
 
         $q = "select nombres,  apellidos , identificacion, id_personas  from personas where".
                  " ( nombres like '%$nombres%' and ".
@@ -2267,6 +2281,7 @@ class personas extends imcrea {
     }
 
     // obtengo los datos de la persona
+    // en base a su numero de identificacion
     public function get_persona_por_id($id){
         // texto de consulta
         $q = "select * from  personas where id_personas =$id ";
@@ -2278,7 +2293,7 @@ class personas extends imcrea {
         $this->id_persona = $a['id_personas'];
         $this->nombres = $a['nombres'];
         $this->apellidos = $a['apellidos'];
-        $this->identicacion = $a['identificacion'];
+        $this->identificacion = $a['identificacion'];
         $this->tipo_identificacion = $a['tipo_identificacion'];
         $this->nacimiento = $a['nacimiento'];
         $this->correo = $a['correo'];
@@ -2287,6 +2302,134 @@ class personas extends imcrea {
         $this->telefono = $a['telefono'];
         $this->u_alumnos = $a['u_alumnos'];
         $this->u_docentes = $a['u_docentes'];
+    }
+
+    //  funcion que actualiza uno o varios datos de la persona
+    // actualizar nombres de  la  persona
+    public function actualizar_nombres_persona(){
+        $texto = "UPDATE personas SET  nombres ='$this->nombres',
+                          apellidos='$this->apellidos' where id_personas = $this->id_persona";
+        // ejecuto la consulta
+        $dato = $this->_db->query($texto);
+
+        // si se ejecuto la consulta
+        if (!$dato){
+            //echo "Fallo al actualizar alumno";
+        } else {
+            // retorno  el valor 0 del array
+            //$this -> _db -> close();
+        }
+        
+    }
+
+    // actualizar apellidos de  la  persona
+    public function actualizar_nacimiento_persona(){
+        $texto = "UPDATE personas SET
+                          nacimiento ='$this->nacimiento'
+                          where id_personas = $this->id_persona";
+
+        //echo $texto;
+        // ejecuto la consulta
+        $dato = $this->_db->query($texto);
+
+        // si se ejecuto la consulta
+        if (!$dato){
+            echo "Fallo al actualizar fecha de nacimiento";
+        } else {
+            // retorno  el valor 0 del array
+            //$this ->_db ->close();
+            //echo "se cambio la fecha con exito";
+        }   
+    }
+
+      // actualizar identificacion de  la  persona
+    public function actualizar_identificacion_persona(){
+        $texto = "UPDATE personas SET
+                          identificacion ='$this->identificacion' ,
+                          tipo_identificacion =   '$this->tipo_identificacion'
+                           where id_personas = $this->id_persona";
+        
+        // ejecuto la consulta
+        $dato = $this->_db->query($texto);
+
+        // si se ejecuto la consulta
+        if (!$dato){
+            //echo "Fallo al actualizar alumno";
+        } else {
+            // retorno  el valor 0 del array
+            //$dato -> close();
+            //$this ->_db ->close();
+        }   
+    }
+
+    // actualizar identificacion de  la  persona
+    public function actualizar_correo_persona(){
+        $texto = "UPDATE personas SET correo ='$this->correo'";
+        //echo $texto;
+        // ejecuto la consulta
+        $this->_db->query($texto);
+    }
+
+    // actualizar identificacion de  la  persona
+    public function actualizar_i_correo_persona(){
+        $texto = "UPDATE personas SET
+                          i_correo =   '$this->i_correo'
+                           where id_personas = $this->id_persona";
+        //echo $texto;
+        // ejecuto la consulta
+        $this->_db->query($texto);
+    }
+
+    // actualizar telefono persona
+    public function actualizar_telefono_persona(){
+        $texto = "UPDATE personas SET telefono ='$this->telefono'
+                          where id_personas = $this->id_persona";
+        // ejecuto la consulta
+        $this->_db->query($texto);
+    }
+
+     // actualizar telefono persona
+    public function actualizar_celular_persona(){
+        $texto = "UPDATE personas SET celular ='$this->celular'
+                         where id_personas = $this->id_persona";
+        // ejecuto la consulta
+        $this->_db->query($texto);
+    }
+    // agregar persona
+    public function add(){
+
+        // consulta
+        $texto  = "INSERT INTO personas
+                            (nombres, apellidos,
+                             identificacion ,tipo_identificacion,
+                             nacimiento, correo, i_correo,
+                             celular, telefono)
+
+                            VALUES
+                            ('$this->nombres','$this->apellidos',
+                             $this->identificacion,$this->tipo_identificacion,
+                             '$this->nacimiento','$this->correo', '$this->i_correo',
+                             $this->celular, $this->telefono)";
+
+        
+        // ejecuto la consulta
+        $c = $this->_db->query($texto);
+        if($c === true){
+            return true;
+        }else
+        {return false;}
+
+        
+    }
+
+    public function del($id_personas){
+        $q= "delete from  personas where id_personas = $id_personas";
+
+        $c = $this->_db->query($q);
+        if($c === true){
+            return true;
+        }else
+            return false;   
     }
 
 
