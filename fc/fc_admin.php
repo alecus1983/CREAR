@@ -397,7 +397,25 @@ if (isset($_SESSION["usuario"])) {
 
 		}
 
+		// formulario para gestionar la matricula
+		function gestion_matriculas (){
+			
+			// creo una instancia de una matricula
+			// del servidor
 
+			// consulto si el estudiante es nuevo o antiguo
+
+			// si es nuevo solicito los datos y lo selecciono
+
+			// si es antiguo lo busco y selecciono
+
+			// obtengo el estudiante seleccionado
+
+			
+
+
+
+		}
 		// funcion que llama el formulario de gestionar las
 		// semas
 		function gestion_personas() {
@@ -1698,6 +1716,14 @@ if (isset($_SESSION["usuario"])) {
 										class="nav-link"
 										href="#" target="_self"
 										onclick="gestion_personas()">Gestión de Personas
+									</a>
+								</nav>
+
+								<nav class="sb-sidenav-menu-nested nav">
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#" target="_self"
+										onclick="gestion_matriculas()">Gestión de Matriculas
 									</a>
 								</nav>
 

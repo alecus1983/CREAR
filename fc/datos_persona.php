@@ -96,7 +96,7 @@ $html = $html . "<div id='ayuda_nombre' class='form-text'>actualize el  tipo de 
 $html = $html . "</div>";
 $html = $html . "<div class='col'>";
 $html = $html . "<label for='ac_identificacion' class='form-label'>identificacion</label>";
-$html = $html . "<input  value = '".$persona->identificacion."'class='form-control' id='ac_identificacion' aria-describedby='identificacion' onkeydown='cambio_datos();'>";
+$html = $html . "<input  value = '".$persona->identificacion."'class='form-control' id='ac_identificacion' aria-describedby='identificacion' >";
 $html = $html . "<div id='ayuda_identificacion' class='form-text'>digite la identificacion por favor.</div>";
 $html = $html . "</div>";
 $html = $html . "</div>";
