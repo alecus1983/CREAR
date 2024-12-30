@@ -2,26 +2,27 @@
 session_start();
 require_once('datos.php');
 
-if (isset($_SESSION["usuario"])){
-    $usuario =  $_SESSION["usuario"];
-    $d = new docentes();
-    $d->get_docente_cc($usuario);
-    $id = $d->id;
-    $admin = $d->admin ;
+if (isset($_SESSION["usuario"])) {
+	$usuario =  $_SESSION["usuario"];
+	$d = new docentes();
+	$d->get_docente_cc($usuario);
+	$id = $d->id;
+	$admin = $d->admin;
 
-    $ano = date('Y');
-    if($admin == 0){
-        header("Location:board.php");
-    }
+	$ano = date('Y');
+	if ($admin == 0) {
+		header("Location:board.php");
+	}
 } else {
-    header("Location:board.php");
-    exit;
+	header("Location:board.php");
+	exit;
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="es">
-    <head>
+
+<head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -31,1381 +32,1834 @@ if (isset($_SESSION["usuario"])){
 	<link href="css/style.min.css" rel="stylesheet" />
 	<link href="css/styles.css" rel="stylesheet" />
 	<link href="estilos.css" rel="stylesheet" />
-	<script src="js/all.js" ></script>
-	<link href="../imagenes/escudo.gif" rel="shortcut icon"/>
+	<script src="js/all.js"></script>
+	<link href="../imagenes/escudo.gif" rel="shortcut icon" />
 	<script src="./js/sweetalert.min.js"></script>
 	<script src="./js/jquery-3.5.1.min.js"></script>
-	 <script src="./js/ajax.js"></script>
-	 <script src="../boostrap/css/bootstrap.css" type="text/css"></script>
-	 <script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
+	<script src="./js/ajax.js"></script>
+	<script src="../boostrap/css/bootstrap.css" type="text/css"></script>
+	<script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
 	<link rel="stylesheet" href="estilos.css" type="text/css">
 
 	<style>
-	 input[type=number]::-webkit-inner-spin-button,
-	 input[type=number]::-webkit-outer-spin-button {
-             -webkit-appearance: none;
-	     margin: 0;
-	 }
+		input[type=number]::-webkit-inner-spin-button,
+		input[type=number]::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
 
-	 input[type=number] { -moz-appearance:textfield; }
-
+		input[type=number] {
+			-moz-appearance: textfield;
+		}
 	</style>
 
 	<style>
-	 .loader {
-	     position: absolute;
-	     left: 50%;
-	     top: 50%;
-	     z-index: 1;
-	     border: 30px solid #f3f3f3;
-             border-radius: 50%;
-	     border-top: 16px solid blue;
-	     border-right: 16px solid green;
-	     border-bottom: 16px solid red;
-	     border-left: 16px solid orange;
-	     width: 10rem;
-	     height: 10rem;
-	     -webkit-animation: spin 2s linear infinite;
-	     animation: spin 2s linear infinite;
-	 }
+		.loader {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 1;
+			border: 30px solid #f3f3f3;
+			border-radius: 50%;
+			border-top: 16px solid blue;
+			border-right: 16px solid green;
+			border-bottom: 16px solid red;
+			border-left: 16px solid orange;
+			width: 10rem;
+			height: 10rem;
+			-webkit-animation: spin 2s linear infinite;
+			animation: spin 2s linear infinite;
+		}
 
 
-	 @-webkit-keyframes spin {
-	     0% { -webkit-transform: rotate(0deg); }
-	     100% { -webkit-transform: rotate(360deg); }
-	 }
+		@-webkit-keyframes spin {
+			0% {
+				-webkit-transform: rotate(0deg);
+			}
 
-	 @keyframes spin {
-	     0% { transform: rotate(0deg); }
-	     100% { transform: rotate(360deg); }
-	 }
+			100% {
+				-webkit-transform: rotate(360deg);
+			}
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
 	</style>
 
-	<script >
-        
-         //fucion de carga incial
-         function load_semanas(){
-             //  variable periodo
-             var periodo = $("#periodos").val();
-	     // variable año
-	     var year = $("#years").val();
+	<script>
+		//fucion de carga incial
+		function load_semanas() {
+			//  variable periodo
+			var periodo = $("#periodos").val();
+			// variable año
+			var year = $("#years").val();
 
-             // carga en un selector  de semanas
-            carga("#semana", "load_semanas.php", {periodo:periodo, year:year});
-         }
-	 
-	 // funcion que carga las semanas correctas cuando cambia
-	 // el Periodo de calificaciones
-	 // funcion para cargar las materias en el cuadro de dialogo
-	 // de acurdo al grado seleccionado
+			// carga en un selector  de semanas
+			carga("#semana", "load_semanas.php", {
+				periodo: periodo,
+				year: year
+			});
+		}
 
-	 function load_materias(){
-             var id_docente = $("#id_d").val();
-             var id_grado = $("#id_g").val();
-             var year = $("#years").val();
-             // carga las materias dentro del selector de materias
-             carga("#id_ms", "materias_grado.php",{grados:id_grado,id: id_docente, year:year});
-	 }
+		// funcion que carga las semanas correctas cuando cambia
+		// el Periodo de calificaciones
+		// funcion para cargar las materias en el cuadro de dialogo
+		// de acurdo al grado seleccionado
 
-	 // avance semanal de notas de docentes
-	 function avance_semanal() {
+		function load_materias() {
+			var id_docente = $("#id_d").val();
+			var id_grado = $("#id_g").val();
+			var year = $("#years").val();
+			// carga las materias dentro del selector de materias
+			carga("#id_ms", "materias_grado.php", {
+				grados: id_grado,
+				id: id_docente,
+				year: year
+			});
+		}
 
-	     // se invoca al metodo ajax para solicitar
-	     // el avance de notas semanales
-	     $.ajax({
-		 type: "POST",
-		 url: "notas_docentes_semanales.php",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val()
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
+		// avance semanal de notas de docentes
+		function avance_semanal() {
 
-		     // si el reaultado es positivo retorna un
-		     // documento con el avance
-		     $("#avance").html(respuesta);
-		     
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
+			// se invoca al metodo ajax para solicitar
+			// el avance de notas semanales
+			$.ajax({
+				type: "POST",
+				url: "notas_docentes_semanales.php",
+				data: {
+					years: $("#years").val(),
+					periodo: $("#periodos").val(),
+					semana: $("#semana").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
 
-	 }
+					// si el reaultado es positivo retorna un
+					// documento con el avance
+					$("#avance").html(respuesta);
 
-	 // avance semanal de notas de docentes
-	 function notas_faltantes() {
-	     // se invoca al metodo ajax para solicitar
-	     //  el listado de calificaciones faltantes
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_calificaciones_faltantes.php",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
 
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
+		}
 
-		     //$("#calificador").html(respuesta);
-		     $("#avance").html(respuesta);
+		// avance semanal de notas de docentes
+		function notas_faltantes() {
+			// se invoca al metodo ajax para solicitar
+			//  el listado de calificaciones faltantes
+			$.ajax({
+				type: "POST",
+				url: "listado_calificaciones_faltantes.php",
+				data: {
+					years: $("#years").val(),
+					periodo: $("#periodos").val(),
+					semana: $("#semana").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					id_curso: $("#id_c").val(),
 
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
 
-	 }
-	 
-	 // funcion para eliminar  semanas de las vijentes para
-	 // el presente año
-	 
-	 function eliminar_semana(){
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de las semanas
-	     $.ajax({
-		 type: "POST",
-		     url: "eliminar_semana.php",
-		     dataType: "json",
-		     data: {
-		     semana:$("#lista_semanas").val()
-		     } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 gestion_semanas();
-			 swal("Completado","Se actualizo la semana","success");
-		     } else {
-			 if(respuesta['status'] == 20){swal('Error','no se pudo actualizar la semana','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Fecha','Porfavor seleccione una fecha de inicio','error');}
-			 if(respuesta['status'] == 24){swal('Fecha','Porfavor seleccione una fecha de fin','error');}
-			 if(respuesta['status'] == 25){swal('Año','Porfavor seleccione una fecha de inicio menor a la de fin','error');}
-			 if(respuesta['status'] == 26){swal('Semana','Porfavor seleccione una semana','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-	 }
-	 
-	 // funcion que cambia semanas
-	 function actualizar_semana(){
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de las semanas
-	     $.ajax({
-		 type: "POST",
-		 url: "actualizar_semana.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     inicio: $("#inicio").val(),
-		     fin: $("#fin").val(),
-		     semana:$("#lista_semanas").val()
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 //$("#avance").html(respuesta['html']);
-			 gestion_semanas();
-			 swal("Completado","Se actualizo la semana","success");
-		     } else {
-			 if(respuesta['status'] == 20){swal('Error','no se pudo actualizar la semana','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Fecha','Porfavor seleccione una fecha de inicio','error');}
-			 if(respuesta['status'] == 24){swal('Fecha','Porfavor seleccione una fecha de fin','error');}
-			 if(respuesta['status'] == 25){swal('Año','Porfavor seleccione una fecha de inicio menor a la de fin','error');}
-			 if(respuesta['status'] == 26){swal('Semana','Porfavor seleccione una semana','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-	 }
+					//$("#calificador").html(respuesta);
+					$("#avance").html(respuesta);
 
-	 // funcion que llama el formulario de gestionar las
-	 // semas
-	 function gestion_semanas() {
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
 
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de las semanas
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_semanas.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
+		}
 
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#avance").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
+		// funcion para eliminar  semanas de las vijentes para
+		// el presente año
+
+		function eliminar_semana() {
+			// se invoca al metodo ajax para solicitar
+			// el listado de las semanas
+			$.ajax({
+				type: "POST",
+				url: "eliminar_semana.php",
+				dataType: "json",
+				data: {
+					semana: $("#lista_semanas").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						gestion_semanas();
+						swal("Completado", "Se actualizo la semana", "success");
+					} else {
+						if (respuesta['status'] == 20) {
+							swal('Error', 'no se pudo actualizar la semana', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Fecha', 'Porfavor seleccione una fecha de inicio', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Fecha', 'Porfavor seleccione una fecha de fin', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Año', 'Porfavor seleccione una fecha de inicio menor a la de fin', 'error');
+						}
+						if (respuesta['status'] == 26) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+		}
+
+		// funcion para acutualizar los datos una persona
+		// require datos_persona.php
+		// requere actualizar_persona()
+		function actualizar_persona() {
+
+			// invoco el metodo ajax
+			// para solicitar los datos del servidor
+
+			$.ajax({
+				type: "POST",
+				url: "actualizar_persona.php",
+				dataType: "json",
+				data: {
+					id_persona: $("#ac_id_persona").val(),
+					nombres: $("#ac_nombres").val(),
+					apellidos: $("#ac_apellidos").val(),
+					tipo_identificacion: $("#ac_tipo_identificacion").val(),
+					identificacion: $("#ac_identificacion").val(),
+					correo: $("#ac_correo").val(),
+					i_correo: $("#ac_i_correo").val(),
+					celular: $("#ac_celular").val(),
+					telefono: $("#ac_telefono").val(),
+					nacimiento: $("#ac_nacimiento").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//$("#calificador").html(respuesta);
+						//$("#avance").html(respuesta['html']);
+						//gestion_semanas();
+						swal("Completado", respuesta["html"], "success");
+					} else {
+						if (respuesta['status'] == 20) {
+							swal('Error', 'no se pudo actualizar la semana', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Fecha', 'Porfavor seleccione una fecha de inicio', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Fecha', 'Porfavor seleccione una fecha de fin', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Año', 'Porfavor seleccione una fecha de inicio menor a la de fin', 'error');
+						}
+						if (respuesta['status'] == 26) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		// funcion que cambia semanas
+		function actualizar_semana() {
+			// se invoca al metodo ajax para solicitar
+			// el listado de las semanas
+			$.ajax({
+				type: "POST",
+				url: "actualizar_semana.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					inicio: $("#inicio").val(),
+					fin: $("#fin").val(),
+					semana: $("#lista_semanas").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//$("#calificador").html(respuesta);
+						//$("#avance").html(respuesta['html']);
+						gestion_semanas();
+						swal("Completado", "Se actualizo la semana", "success");
+					} else {
+						if (respuesta['status'] == 20) {
+							swal('Error', 'no se pudo actualizar la semana', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Fecha', 'Porfavor seleccione una fecha de inicio', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Fecha', 'Porfavor seleccione una fecha de fin', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Año', 'Porfavor seleccione una fecha de inicio menor a la de fin', 'error');
+						}
+						if (respuesta['status'] == 26) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+		}
+
+		// funcion que llama el formulario de gestionar las
+		// semas
+		function gestion_semanas() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de las semanas
+			$.ajax({
+				type: "POST",
+				url: "listado_semanas.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					periodo: $("#periodos").val(),
+					semana: $("#semana").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					id_curso: $("#id_c").val(),
+
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//$("#calificador").html(respuesta);
+						$("#avance").html(respuesta['html']);
+					} else {
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		// formulario para gestionar la matricula
+		function gestion_matriculas (){
+			
+			// creo una instancia de una matricula
+			// del servidor
+
+			// consulto si el estudiante es nuevo o antiguo
+
+			// si es nuevo solicito los datos y lo selecciono
+
+			// si es antiguo lo busco y selecciono
+
+			// obtengo el estudiante seleccionado
+
+			
+
+
+
+		}
+		// funcion que llama el formulario de gestionar las
+		// semas
+		function gestion_personas() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de las semanas
+			$.ajax({
+				type: "POST",
+				url: "gestion_personas.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					periodo: $("#periodos").val(),
+					semana: $("#semana").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					id_curso: $("#id_c").val(),
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//$("#calificador").html(respuesta);
+						$("#avance").html(respuesta['html']);
+					} else {
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		// muesta el formulario de docentes en un grado 
+		function matricula_docente() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "listado_matricula_docente.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					periodo: $("#periodos").val(),
+					semana: $("#semana").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					id_curso: $("#id_c").val(),
+
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//$("#calificador").html(respuesta);
+						$("#avance").html(respuesta['html']);
+					} else {
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		// carga una lista de notas generada para un estudiante
+		function listado_notas_estudiantes() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "listado_notas_alumno_periodo.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					periodo: $("#periodos").val(),
+					semana: $("#semana").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					id_curso: $("#id_c").val(),
+
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//$("#calificador").html(respuesta);
+						$("#avance").html(respuesta['html']);
+					} else {
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Materia', 'Porfavor seleccione una mareria', 'error');
+						}
+
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+
+
+
+
+		// funcion para cargar la lista de  estudiantes en el
+		// div calificador
+		function load_lista_estudiantes() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "listado_estudiantes.php",
+				data: {
+					years: $("#years").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					periodo: $("#periodos").val(),
+					curso: $("#id_c").val(),
+					semana: $("#semana").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+
+					$("#calificador").html(respuesta);
+					$("#resultado").html("");
+
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+
+		// funcion que muestra la lista de estudiantes  matriculados
+		function listado_estudiantes_matriculados() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "listado_estudiantes_matriculados_ano.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//$("#calificador").html(respuesta);
+						$("#avance").html(respuesta['html']);
+					} else {
+
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+
+		// funcion que muestra listado de personas que  coinciden con los datos
+
+		function cambio_datos() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de personas
+			$.ajax({
+				type: "POST",
+				url: "cambio_datos.php",
+				dataType: "json",
+				data: {
+					nombres: $("#nombres").val(),
+					apellidos: $("#apellidos").val(),
+					identificacion: $("#identificacion").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//$("#calificador").html(respuesta);
+						$("#tabla").html(respuesta['html']);
+					} else {
+
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		// funcion que agrega una matricaula docente al listado
+		function agregar_matricula_docente() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "add_matricula_docente.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					periodo: $("#periodos").val(),
+					semana: $("#semana").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_materia_md").val(),
+					id_jornada: $("#jornada").val(),
+					id_curso: $("#id_c").val(),
+					id_docente: $("#id_docente_mt").val()
+
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						swal('Actualizacion', 'Se insertaron los dastos con éxito', 'success');
+						matricula_docente();
+					} else {
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Materia', 'Porfavor seleccione una materia', 'error');
+						}
+						if (respuesta['status'] == 26) {
+							swal('Curso', 'Porfavor seleccione un curso', 'error');
+						}
+						if (respuesta['status'] == 27) {
+							swal('Docente', 'Porfavor seleccione un docente', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+
+		// busca las  notas de un alumno 
+		function find_nota_alumno() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "find_nota_alumno.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					periodo: $("#periodos").val(),
+					semana: $("#semana").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					id_curso: $("#id_c").val(),
+					id_alumno: $("#id_alumno").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//swal('Actualizacion','Se insertaron los dastos con éxito','success');
+						$("#tabla").html(respuesta['html']);
+					} else {
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Materia', 'Porfavor seleccione una materia', 'error');
+						}
+						if (respuesta['status'] == 26) {
+							swal('Curso', 'Porfavor seleccione un curso', 'error');
+						}
+						if (respuesta['status'] == 28) {
+							swal('Alumno', 'Porfavor seleccione un alumno', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		// elimina la matricula docente
+		function eliminar_matricula_docente(id) {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "del_matricula_docente.php",
+				dataType: "json",
+				data: {
+					id: id
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						swal('Actualizacion', 'Se elimino el docente del curso', 'success');
+						matricula_docente();
+					} else {
+						if (respuesta['status'] == 20) {
+							swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+						}
+						if (respuesta['status'] == 21) {
+							swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		// formulario para agregar personas
+		function formulario_agregar_persona() {
+			//  realizo la consulta en de los datos
+			$("#tabla").html("");
+			$("#tabla").append(
+				"<div class='container container-sm agregar_personas'>" +
+
+				"<div class='row'><div class='col'>" +
+				"<h1 class='display-6'>Datos de la persona</h1>" +
+				"</div></div>" +
+
+				"<div class='row'>" +
+
+				"<div class='col'>" +
+				"<label for='ad_nombres' class='form-label'>Nombre</label>" +
+				"<input  value = '' class='form-control' id='ad_nombres' aria-describedby='nombres' >" +
+				"<div id='ayuda_nombre' class='form-text'>agrege el  nombre por favor.</div>" +
+				"</div>" +
+
+				"<div class='col'>" +
+				"<label for='ad_apellidos' class='form-label'>Apellidos</label>" +
+				"<input  class='form-control' id='ad_apellidos' aria-describedby='apellidos' >" +
+				"<div id='ayuda_apellidos' class='form-text'>digite el apellido o parte del mismo por favor.</div>" +
+				"</div>" +
+
+				"</div>" +
+
+				"<div class='row'>" +
+
+				"<div class='col'>" +
+				"<label for='ad_tipo_identificacion' class='form-label'>tipo de identificación</label>" +
+				"<select class='form-control' id='ad_tipo_identificacion'>" +
+				"<option value = '1' selected>targeta de identidad</option>" +
+				"<option value = '2'>cedula de ciudadania</option>" +
+				"<option value = '3'>cedula de extranjeria</option>" +
+				"<option value = '4' >visa</option>" +
+				"<option value = '5'>permiso de proteccion temporal</option>" +
+				"<option value = '6'>permiso especial de permanencia</option>" +
+				"</select>" +
+				"<div id='ayuda_ad_tipo_identificacion' class='form-text'>actualize el  tipo de identificación.</div>" +
+				"</div>" +
+
+				"<div class='col'>" +
+				"<label for='ad_identificacion' class='form-label'>identificacion</label>" +
+				"<input  class='form-control' id='ad_identificacion' aria-describedby='ad_identificacion' >" +
+				"<div id='ayuda_identificacion' class='form-text'>digite la identificacion por favor.</div>" +
+				"</div>" +
+
+				"</div>" +
+				"<div class='row'>" +
+				"<div class='col'>" +
+				"<label for='ad_correo' class='form-label'>correo personal</label>" +
+				"<input   class='form-control' id='ad_correo' aria-describedby='correo' type='email'>" +
+				"<div id='ayuda_correo' class='form-text'>actualize el  correo por favor.</div>" +
+				"</div>" +
+				"<div class='col'>" +
+				"<label for='ad_i_correo' class='form-label'>correo  institucional</label>" +
+				"<input  class='form-control' id='ad_i_correo' aria-describedby='i_correo' type='email' >" +
+				"<div id='ayuda_i_correo' class='form-text'>digite el correo institucional por favor.</div>" +
+				"</div>" +
+				"</div>" +
+
+				"<div class='row'>" +
+				"<div class='col'>" +
+				"<label for='ad_celular' class='form-label'>número de celular</label>" +
+				"<input   class='form-control' id='ad_celular' aria-describedby='celular' >" +
+				"<div id='ayuda_celular' class='form-text'>actualize su celular favor.</div>" +
+				"</div>" +
+				"<div class='col'>" +
+				"<label for='ad_telefono' class='form-label'>número telefono fijo</label>" +
+				"<input  class='form-control' id='ad_telefono' aria-describedby='telefono' >" +
+				"<div id='ayuda_telefono' class='form-text'>actulize su telefono por favor.</div>" +
+				"</div>" +
+
+				"</div>" +
+
+				"<div class='row'>" +
+				"<div class='col'>" +
+				"<label for='ad_nacimiento' class='form-label'>fecha de nacimiento</label>" +
+				"<input  class='form-control' id='ad_nacimiento' aria-describedby='nacimiento' type='date' min='1920-01-01'  >" +
+				"<div id='ayuda_nacimiento' class='form-text'>seleccione la fecha de nacimiento  por favor.</div>" +
+				"</div>" +
+				"<div class='col mx-auto justify-content-md'>" +
+				"<br>" +
+				"<button  id='agregar_persona' class='btn btn - outline - success' onclick='agregar_persona();'>" +
+				"agregar" +
+				"<img src='./svg/send.svg' />" +
+				"</button > </div></div> " +
+
+
+				"</div>"
+			); // fin container
+
+		}
+
+		// funcion para agregar personas
+		function agregar_persona() {
+			// envio datos 
+			$.ajax({
+				type: "POST",
+				url: "add_persona.php",
+				dataType: "json",
+				data: {
+					nombres: $("#ad_nombres").val(),
+					apellidos: $("#ad_apellidos").val(),
+					tipo_identificacion: $("#ad_tipo_identificacion").val(),
+					identificacion: $("#ad_identificacion").val(),
+					correo: $("#ad_correo").val(),
+					i_correo: $("#ad_i_correo").val(),
+					celular: $("#ad_celular").val(),
+					telefono: $("#ad_telefono").val(),
+					nacimiento: $("#ad_nacimiento").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						swal('Actualizacion', 'Se agrego a la persona correctamente', 'success');
+						matricula_docente();
+					} else {
+						if (respuesta['status'] == 21) {
+							swal('Error', 'Falata el nombre de la persona', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Error', 'Falta a los apellidos', 'error');
+						}
+
+						if (respuesta['status'] == 23) {
+							swal('Error', 'Falta el tipo de identificacion', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Error', 'Falta el numro de identificacion', 'error');
+						}
+
+						if (respuesta['status'] == 25) {
+							swal('Error', 'Falta de nacimiento', 'error');
+						}
+
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+
+		}
+
+		// funcion que solicitar datos de la persona
+		function datos_persona(id) {
+			//  realizo la consulta en de los datos
+			$.ajax({
+				type: "POST",
+				url: "datos_persona.php",
+				dataType: "json",
+				data: {
+					id: id
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						$("#tabla").html(respuesta['html']);
+					} else {
+						if (respuesta['status'] == 20) {
+							swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+						}
+						if (respuesta['status'] == 21) {
+							swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+		}
+
+		function requisitos_grado() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "listado_requisitos.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_materia_mt").val(),
+					id_curso: $("#id_c").val(),
+					periodo: $("#periodos").val(),
+					id_jornada: $("#jornada").val(),
+					semana: $("#semana").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						//swal('Datos actualizados');
+						//$("#calificador").html(respuesta);
+						$("#avance").html(respuesta['html']);
+					} else {
+						if (respuesta['status'] == 20) {
+							swal('Consulta', 'Fallo al intentar ingresar el requisito', 'error');
+						}
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Materia', 'Porfavor seleccione una materia', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		function agregar_requisito() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "add_requisitos.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_materia_mt").val(),
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						swal('Actualizacion', 'Se insertaron los dastos con éxito', 'success');
+						requisitos_grado();
+					} else {
+						if (respuesta['status'] == 20) {
+							swal('Consulta', 'Fallo al intentar ingresar el requisito', 'error');
+						}
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Materia', 'Porfavor seleccione una materia', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+
+		function eliminar_requisitos(id_materia, id_grado) {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "del_requisito.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					id_g: id_grado,
+					id_ms: id_materia,
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						swal('Actualizacion', 'Se elimino los requisitos con éxito', 'success');
+						requisitos_grado();
+					} else {
+						if (respuesta['status'] == 20) {
+							swal('Consulta', 'Fallo al intentar ingresar el requisito', 'error');
+						}
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Materia', 'Porfavor seleccione una materia', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+	 // permite eliminar una persona
+	 function eliminar_persona(id_personas) {
+	     
+	     swal({
+		 title: "Esta seguro?",
+		 text: "Una vez eliminado no podra obtener los datos de la persona!",
+		 icon: "warning",
+		 buttons: true,
+		 dangerMode: true,
+	     })
+		 .then((willDelete) => {
+		     if (willDelete) {
+			 
+			 // se invoca al metodo ajax para solicitar
+			 // el listado de estudiantes
+			 $.ajax({
+			     type: "POST",
+			     url: "del_persona.php",
+			     dataType: "json",
+			     data: {
+				 id_personas: id_personas,
+			     },
+			     // si los datos son correctos entonces ...
+			     success: function(respuesta) {
+				 // si la respuesta es positiva
+				 if (respuesta['status'] == 1) {
+				     swal('Persona', 'Se elimino la persona con  éxito', 'success');
+				     
+				 } else {
+				     if (respuesta['status'] == 20) {
+					 swal('Consulta', 'Fallo al intentar eliminar la persona', 'error');
+				     }
+				     if (respuesta['status'] == 21) {
+					 swal('Persona', 'Por favor seleccione una persona', 'error');
+				     }
+				     
+				 }
+			     },
+			     error: function(xhr, status) {
+				 swal('Disculpe, existió un problema');
+				 console.log(xhr);
+			     }
+			 }); // fin de ajax
 			 
 		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-
-	 // funcion que llama el formulario de gestionar las
-	 // semas
-	 function gestion_personas  () {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de las semanas
-	     $.ajax({
-		 type: "POST",
-		 url: "gestion_personas.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#avance").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 
+		     else {
+			 swal("Se conserva la persona");
 		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 // muesta el formulario de docentes en un grado 
-	 function matricula_docente() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_matricula_docente.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#avance").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 // carga una lista de notas generada para un estudiante
-  function listado_notas_estudiantes()  {
-
-    // se invoca al metodo ajax para solicitar
-    // el listado de estudiantes
-    $.ajax({
-type: "POST",
-url: "listado_notas_alumno_periodo.php",
-dataType: "json",
-data: {
-                     years: $("#years").val(),
-    periodo: $("#periodos").val(),
-    semana: $("#semana").val(),
-    id_g: $("#id_g").val(),
-    id_ms: $("#id_ms").val(),
-    id_jornada: $("#jornada").val(),
-    id_curso: $("#id_c").val(),
-
-} ,
-// si los datos son correctos entonces ...
-success: function(respuesta) {
-    // si la respuesta es positiva
-    if(respuesta['status']==1){
-//swal('Datos actualizados');
-//$("#calificador").html(respuesta);
-$("#avance").html(respuesta['html']);
-    } else {
-if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una mareria','error');}
-
-    }
-},
-error: function(xhr, status) {
-    swal('Disculpe, existió un problema');
-    console.log(xhr);
-}
-    });
-
-}
-
-
-
-
-
-// funcion para cargar la lista de  estudiantes en el
-// div calificador
-function load_lista_estudiantes(){
-
-    // se invoca al metodo ajax para solicitar
-    // el listado de estudiantes
-    $.ajax({
-type: "POST",
-url: "listado_estudiantes.php",
-data: {
-                     years: $("#years").val(),
-    id_g: $("#id_g").val(),
-    id_ms: $("#id_ms").val(),
-    id_jornada: $("#jornada").val(),
-    periodo: $("#periodos").val(),
-    curso: $("#id_c").val(),
-    semana: $("#semana").val()
-} ,
-// si los datos son correctos entonces ...
-success: function(respuesta) {
-
-    $("#calificador").html(respuesta);
-    $("#resultado").html("");
-
-},
-error: function(xhr, status) {
-    swal('Disculpe, existió un problema');
-    console.log(xhr);
-}
-    });
-
-	 }
-
-
-	 // funcion que muestra la lista de estudiantes  matriculados
-	 function listado_estudiantes_matriculados() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_estudiantes_matriculados_ano.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#avance").html(respuesta['html']);
-		     } else {
-			 
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 		 
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-
-	 // funcion que muestra listado de personas que  coinciden con los datos
-	 
-	 function cambio_datos () {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de personas
-	     $.ajax({
-		 type: "POST",
-		 url: "cambio_datos.php",
-		 dataType: "json",
-		 data: {
-                     nombres: $("#nombres").val(),
-		     apellidos: $("#apellidos").val(),
-		     identificacion: $("#identificacion").val()
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#tabla").html(respuesta['html']);
-		     } else {
-			 
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 		 
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 // funcion que agrega una matricaula docente al listado
-	 function agregar_matricula_docente() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "add_matricula_docente.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_materia_md").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
-		     id_docente: $("#id_docente_mt").val()
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 swal('Actualizacion','Se insertaron los dastos con éxito','success');
-			 matricula_docente();
-		     } else {
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-			 if(respuesta['status'] == 26){swal('Curso','Porfavor seleccione un curso','error');}
-			 if(respuesta['status'] == 27){swal('Docente','Porfavor seleccione un docente','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 
-	 // busca las  notas de un alumno 
-	 function find_nota_alumno() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "find_nota_alumno.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     periodo: $("#periodos").val(),
-		     semana: $("#semana").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_curso: $("#id_c").val(),
-		     id_alumno: $("#id_alumno").val()
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //swal('Actualizacion','Se insertaron los dastos con éxito','success');
-			 $("#tabla").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-			 if(respuesta['status'] == 26){swal('Curso','Porfavor seleccione un curso','error');}
-			 if(respuesta['status'] == 28){swal('Alumno','Porfavor seleccione un alumno','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 // elimina la matricula docente
-	 function eliminar_matricula_docente(id) {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "del_matricula_docente.php",
-		 dataType: "json",
-		 data: {
-                     id: id
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 swal('Actualizacion','Se elimino el docente del curso','success');
-			 matricula_docente();
-		     } else {
-			 if(respuesta['status'] == 20){swal('Error','Hubo un error al eliminar la matricula docente','error');}
-			 if(respuesta['status'] == 21){swal('Error','Hubo un error al eliminar la matricula docente','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 // funcion que solicitar datos de la persona
-	 function datos_persona(id){
-	     //  realizo la consulta en de los datos
-	     $.ajax({
-		 type: "POST",
-		 url: "datos_persona.php",
-		 dataType: "json",
-		 data: {
-                     id: id
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 $("#tabla").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 20){swal('Error','Hubo un error al eliminar la matricula docente','error');}
-			 if(respuesta['status'] == 21){swal('Error','Hubo un error al eliminar la matricula docente','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-	 }
-
-	 function requisitos_grado() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "listado_requisitos.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_materia_mt").val(),
-		     id_curso: $("#id_c").val(),
-		     periodo: $("#periodos").val(),
-		     id_jornada: $("#jornada").val(),
-		     semana: $("#semana").val()
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 //swal('Datos actualizados');
-			 //$("#calificador").html(respuesta);
-			 $("#avance").html(respuesta['html']);
-		     } else {
-			 if(respuesta['status'] == 20){swal('Consulta','Fallo al intentar ingresar el requisito','error');}
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 function agregar_requisito() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "add_requisitos.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_materia_mt").val(),		     
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 swal('Actualizacion','Se insertaron los dastos con éxito','success');
-			 requisitos_grado();
-		     } else {
-			 if(respuesta['status'] == 20){swal('Consulta','Fallo al intentar ingresar el requisito','error');}
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-
-	 function eliminar_requisitos(id_materia,id_grado) {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "del_requisito.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     id_g: id_grado,
-		     id_ms: id_materia,		     
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 swal('Actualizacion','Se elimino los requisitos con éxito','success');
-			 requisitos_grado();
-		     } else {
-			 if(respuesta['status'] == 20){swal('Consulta','Fallo al intentar ingresar el requisito','error');}
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-	 
-	 // funcion que obtiene los requisitos del grado 
-	 function eliminar_grado() {
-
-	     // se invoca al metodo ajax para solicitar
-	     // el listado de estudiantes
-	     $.ajax({
-		 type: "POST",
-		 url: "del_requisito.php",
-		 dataType: "json",
-		 data: {
-                     years: $("#years").val(),
-		     id_g: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     
-
-		 } ,
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
-		     // si la respuesta es positiva
-		     if(respuesta['status']==1){
-			 swal('Actualizacion','Se eliminaron los dastos con éxito','success');
-			 requisitos_grado();
-		     } else {
-			 if(respuesta['status'] == 20){swal('Consulta','Fallo al intentar ingresar el requisito','error');}
-			 if(respuesta['status'] == 21){swal('Grado','Porfavor seleccione un grado','error');}
-			 if(respuesta['status'] == 22){swal('Año','Porfavor seleccione un año','error');}
-			 if(respuesta['status'] == 23){swal('Jornada','Porfavor seleccione un jornada','error');}
-			 if(respuesta['status'] == 24){swal('Semana','Porfavor seleccione una semana','error');}
-			 if(respuesta['status'] == 25){swal('Materia','Porfavor seleccione una materia','error');}
-		     }
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-	     });
-
-	 }
-
-	 // actualiza el formulario
-	 function actualizar(){
-	     load_materias();
-	     load_lista_estudiantes();
-	 }
-
-	 function boletin() {
-             // almaceno el valor del grado
-             grado = $("#id_g").val();
-
-             if (grado == -1) {
-		 // en caso de que no se halla digitado un grado 
-		 swal("Datos", "Por favor seleccione un grado", "info");
-             } else if (grado < 7 || grado > 9) {
-		 // llama a la funcion generar para generar el boletin
-		 // que corresponde al modelo de primaria
-		 crear_pdf();
-             } else {
-		 // llama a la funcion generarx la cual genera el boletin tipo preescolar
-		 obtener_pdf();
-             }
-	 }
-	 // funcion que crea un cuadro de notas por cada alumno de un grado para un determinado año
-	 function cuadro() {
-
-         $('#loader').show();
-	     // esta función permite generar un un boletin en formato pdf
-	     // se almacena  en la variable año
-	     // alamcena el año seleccionado ( año lectivo calendario A)
-	     var year = $("#years").val();
-	     // se almacena la variable periodos con el periodo academico
-	     // a seleccionar
-	     var periodos = $('select#periodos').val();//
-	     // la variable grados guarda codigo del grado del estudiante
-	     var grados = $("#id_g").val();
-	     // agrego la jornada
-	     var jornada = $("#jornada").val();
-	     // describo el curso
-	     var curso = $("#id_c").val();
-         // listado de estudiantes
-         // var l = array();
-
-	     // si el grado es negativo significa que  no se ha seleccionado ningun atributo
-	     // en el selector
-             if (grados <0){
-		 swal("Favor seleccione un grado");
-	     }
-	     // si los periodos son iguales a menos uno es porque no se ha seleccionado ningun
-	     // atributo en el selector de peridos
-	     else if(periodos <0){
-		 swal("Favor seleccione un periodo");
-	     }
-	     else {
-
-             // se invoca a funcion que retorna el listado de estudiantes de un grado
-             $("#avance").html("");
-             // se carga el loader
-             $(".loader").show();
-             // variable para almacenar las listas
-             var l ;
-
-             // se consulta cada estudiante
-             $.ajax({
-                     type:"POST",
-                         async: false,
-              dataType: "json",
-              url: "listado_estudiantes_json.php",
-              data:{
-                   id_jornada: $("#jornada").val(),
-                   curso : $("#id_c").val(),
-                   semana:  $("#semana").val(),
-                   periodo: $("#periodos").val() ,
-                   grado: $("#id_g").val(),
-                   years: $("#years").val()
-              },
-              success: function(listado) {
-                  //si se hizo la consulta arrojo la lista de estudiante
-                  //console.log(listado.id_alumno);
-                  //swal("Se ejecuto con exito");
-                  // por cada alumno ejecuto este codigo
-                  l = listado.id_alumno;
-              }
-              });
-             
-             //  estructura de repeticion para buscar
-             // el cuadro de notas por cada estudiante
-             for (var ii=0; ii < l.length; ii ++) {
-                 // salida por consola
-                 console.log('algoritmo para el alumno '+ii+" codigo "+l[ii]);
-                      // solicito un cuadro de dialogo para un estudiante
-                      $.ajax({
-                              type: "POST",
-                                  async: false,
-                              url: "cuadro.php",
-                              data: {
-                                  years: $("#years").val(),
-                                  jornada: $("#jornada").val(),
-                                  periodo: $("#periodos").val(),
-                                  id_g: $("#id_g").val(),
-                                  id_curso: $("#id_c").val(),
-                                  id_alumno: l[ii]
-                              },
-                                  
-                             success : function(cuadro) {
-                                     $("#avance").append(cuadro);
-                             },
-                        error: function(xhr, status) {
-                            swal('Disculpe, existió un problema'+status);
-                            console.log(xhr);
-                        }
-      
-                       });
-                      
-                  }
-
-             // Por cada estudiante se ejecuta la iguiente rutina
-             
-             // se llama mediante ajax la
-                $('#loader').hide();       
-         } // fin del else
-             $('#loader').hide();       
-     }
-	 function crear_pdf(){
-	     // esta función permite generar un un boletin en formato pdf
-	     // se almacena  en la variable año
-	     // alamcena el año seleccionado ( año lectivo calendario A)
-	     var year = $("#years").val();
-	     // se almacena la variable periodos con el periodo academico
-	     // a seleccionar
-	     var periodos = $('select#periodos').val();
-	     // la variable grados guarda codigo del grado del estudiante
-	     var grados = $("#id_g").val();
-	     // agrego la jornada
-	     var jornada = $("#jornada").val();
-	     // describo el curso
-	     var curso = $("#id_c").val();
-         // si no ha seleccionado grado
-	     if (grados <0){
-		 swal("Favor seleccione un grado");
-	     }
-	     else if(periodos <0){
-		 swal("Favor seleccione un periodo");
-	     }
-	     else{
-
-		 // se almacenan todas las variables dentro
-		 // de la variable parametros
-		 var parametros= "year="+year+
-				 "&periodos="+
-				 periodos+
-				 "&grado="+grados+
-				 "&jornada="+jornada+
-				 "&curso="+curso;
-
-		 console.log("los parametros son : %s",parametros);
-		 // abro boletin en una nueva ventana
-		 // llamando para ello al archivo cetificado.php
-		 window.open("generar_p.php?"+parametros);
-	     }
-
-	 }
-
-
-
-	 function obtener_pdf(){
-	     // esta funcion crea un pdf para preescolar
-	     // se almacena el año en la variable year
-	     var year = $("#years").val();
-	     // se almacena el periodo
-	     var periodos = $("#periodos").val();
-	     // y se almacenan las variables grados
-	     var gradosx = $("#id_g").val();
-	     var grados = $("#id_g").val();
-
-	     // se almacenan todas las variables dentro de la variable parametros
-	     var parametros= "year="+year+"&periodos="+periodos+"&grados="+gradosx+"&id_gs="+gradosx+"";
-	     console.log("los parametros son : %s",parametros);
-	     window.open("generarx.php?"+parametros);
-	 }
-
+		 });
+	     
+
+		    
+		}
+
+		// funcion que obtiene los requisitos del grado 
+		function eliminar_grado() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "del_requisito.php",
+				dataType: "json",
+				data: {
+					years: $("#years").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+
+
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					// si la respuesta es positiva
+					if (respuesta['status'] == 1) {
+						swal('Actualizacion', 'Se eliminaron los dastos con éxito', 'success');
+						requisitos_grado();
+					} else {
+						if (respuesta['status'] == 20) {
+							swal('Consulta', 'Fallo al intentar ingresar el requisito', 'error');
+						}
+						if (respuesta['status'] == 21) {
+							swal('Grado', 'Porfavor seleccione un grado', 'error');
+						}
+						if (respuesta['status'] == 22) {
+							swal('Año', 'Porfavor seleccione un año', 'error');
+						}
+						if (respuesta['status'] == 23) {
+							swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+						}
+						if (respuesta['status'] == 24) {
+							swal('Semana', 'Porfavor seleccione una semana', 'error');
+						}
+						if (respuesta['status'] == 25) {
+							swal('Materia', 'Porfavor seleccione una materia', 'error');
+						}
+					}
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		// actualiza el formulario
+		function actualizar() {
+			load_materias();
+			load_lista_estudiantes();
+		}
+
+		function boletin() {
+			// almaceno el valor del grado
+			grado = $("#id_g").val();
+
+			if (grado == -1) {
+				// en caso de que no se halla digitado un grado 
+				swal("Datos", "Por favor seleccione un grado", "info");
+			} else if (grado < 7 || grado > 9) {
+				// llama a la funcion generar para generar el boletin
+				// que corresponde al modelo de primaria
+				crear_pdf();
+			} else {
+				// llama a la funcion generarx la cual genera el boletin tipo preescolar
+				obtener_pdf();
+			}
+		}
+		// funcion que crea un cuadro de notas por cada alumno de un grado para un determinado año
+		function cuadro() {
+
+			$('#loader').show();
+			// esta función permite generar un un boletin en formato pdf
+			// se almacena  en la variable año
+			// alamcena el año seleccionado ( año lectivo calendario A)
+			var year = $("#years").val();
+			// se almacena la variable periodos con el periodo academico
+			// a seleccionar
+			var periodos = $('select#periodos').val(); //
+			// la variable grados guarda codigo del grado del estudiante
+			var grados = $("#id_g").val();
+			// agrego la jornada
+			var jornada = $("#jornada").val();
+			// describo el curso
+			var curso = $("#id_c").val();
+			// listado de estudiantes
+			// var l = array();
+
+			// si el grado es negativo significa que  no se ha seleccionado ningun atributo
+			// en el selector
+			if (grados < 0) {
+				swal("Favor seleccione un grado");
+			}
+			// si los periodos son iguales a menos uno es porque no se ha seleccionado ningun
+			// atributo en el selector de peridos
+			else if (periodos < 0) {
+				swal("Favor seleccione un periodo");
+			} else {
+
+				// se invoca a funcion que retorna el listado de estudiantes de un grado
+				$("#avance").html("");
+				// se carga el loader
+				$(".loader").show();
+				// variable para almacenar las listas
+				var l;
+
+				// se consulta cada estudiante
+				$.ajax({
+					type: "POST",
+					async: false,
+					dataType: "json",
+					url: "listado_estudiantes_json.php",
+					data: {
+						id_jornada: $("#jornada").val(),
+						curso: $("#id_c").val(),
+						semana: $("#semana").val(),
+						periodo: $("#periodos").val(),
+						grado: $("#id_g").val(),
+						years: $("#years").val()
+					},
+					success: function(listado) {
+						//si se hizo la consulta arrojo la lista de estudiante
+						//console.log(listado.id_alumno);
+						//swal("Se ejecuto con exito");
+						// por cada alumno ejecuto este codigo
+						l = listado.id_alumno;
+					}
+				});
+
+				//  estructura de repeticion para buscar
+				// el cuadro de notas por cada estudiante
+				for (var ii = 0; ii < l.length; ii++) {
+					// salida por consola
+					console.log('algoritmo para el alumno ' + ii + " codigo " + l[ii]);
+					// solicito un cuadro de dialogo para un estudiante
+					$.ajax({
+						type: "POST",
+						async: false,
+						url: "cuadro.php",
+						data: {
+							years: $("#years").val(),
+							jornada: $("#jornada").val(),
+							periodo: $("#periodos").val(),
+							id_g: $("#id_g").val(),
+							id_curso: $("#id_c").val(),
+							id_alumno: l[ii]
+						},
+
+						success: function(cuadro) {
+							$("#avance").append(cuadro);
+						},
+						error: function(xhr, status) {
+							swal('Disculpe, existió un problema' + status);
+							console.log(xhr);
+						}
+
+					});
+
+				}
+
+				// Por cada estudiante se ejecuta la iguiente rutina
+
+				// se llama mediante ajax la
+				$('#loader').hide();
+			} // fin del else
+			$('#loader').hide();
+		}
+
+		function crear_pdf() {
+			// esta función permite generar un un boletin en formato pdf
+			// se almacena  en la variable año
+			// alamcena el año seleccionado ( año lectivo calendario A)
+			var year = $("#years").val();
+			// se almacena la variable periodos con el periodo academico
+			// a seleccionar
+			var periodos = $('select#periodos').val();
+			// la variable grados guarda codigo del grado del estudiante
+			var grados = $("#id_g").val();
+			// agrego la jornada
+			var jornada = $("#jornada").val();
+			// describo el curso
+			var curso = $("#id_c").val();
+			// si no ha seleccionado grado
+			if (grados < 0) {
+				swal("Favor seleccione un grado");
+			} else if (periodos < 0) {
+				swal("Favor seleccione un periodo");
+			} else {
+
+				// se almacenan todas las variables dentro
+				// de la variable parametros
+				var parametros = "year=" + year +
+					"&periodos=" +
+					periodos +
+					"&grado=" + grados +
+					"&jornada=" + jornada +
+					"&curso=" + curso;
+
+				console.log("los parametros son : %s", parametros);
+				// abro boletin en una nueva ventana
+				// llamando para ello al archivo cetificado.php
+				window.open("generar_p.php?" + parametros);
+			}
+
+		}
+
+
+
+		function obtener_pdf() {
+			// esta funcion crea un pdf para preescolar
+			// se almacena el año en la variable year
+			var year = $("#years").val();
+			// se almacena el periodo
+			var periodos = $("#periodos").val();
+			// y se almacenan las variables grados
+			var gradosx = $("#id_g").val();
+			var grados = $("#id_g").val();
+
+			// se almacenan todas las variables dentro de la variable parametros
+			var parametros = "year=" + year + "&periodos=" + periodos + "&grados=" + gradosx + "&id_gs=" + gradosx + "";
+			console.log("los parametros son : %s", parametros);
+			window.open("generarx.php?" + parametros);
+		}
 	</script>
 
 	<!-- scrip -->
 	<script>
-	 //////////////////////////////////////////////////////////////////////////////////////////
-	 // Este script contiene la funcion para generar las graficas                            //
-	 // Esta foncion no recive parametros                                                    //
-	 //////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////
+		// Este script contiene la funcion para generar las graficas                            //
+		// Esta foncion no recive parametros                                                    //
+		//////////////////////////////////////////////////////////////////////////////////////////
 
 
-	 function grafica() {
+		function grafica() {
 
-             // se invoca al metodo ajax para solicitar el los datos del grafico
-             $.ajax({
-                 type: "POST",
-		 url: "grafica_boletin.php",
-		 data: {
-                     year: $("#years").val(),
-		     id_gs: $("#id_g").val(),
-		     id_ms: $("#id_ms").val(),
-		     id_jornada: $("#jornada").val(),
-		     id_docente: $("#id_docentes").val(),
-		     corte: $("#corte").val(),
-		     periodo: $("#periodos").val(),
-		     opcion: $("#opcion").val()
+			// se invoca al metodo ajax para solicitar el los datos del grafico
+			$.ajax({
+				type: "POST",
+				url: "grafica_boletin.php",
+				data: {
+					year: $("#years").val(),
+					id_gs: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					id_docente: $("#id_docentes").val(),
+					corte: $("#corte").val(),
+					periodo: $("#periodos").val(),
+					opcion: $("#opcion").val()
 
-		 },
-		 // si los datos son correctos entonces ...
-		 success: function(respuesta) {
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
 
-		     $("#grafo").html(respuesta);
+					$("#grafo").html(respuesta);
 
-		 },
-		 error: function(xhr, status) {
-		     swal('Disculpe, existió un problema');
-		     console.log(xhr);
-		 }
-             });
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
 
-	 }
+		}
 
-	 // funcion para cargar datos en un selector
-	 function carga ( a ,b,c ) {
+		// funcion para cargar datos en un selector
+		function carga(a, b, c) {
 
-	     console.log("Valor a: %s",a); 	// variable que almacena el codigo del campo
-	     console.log("Valor b: %s",b);	// variable que almacena el nombre del archivo PHP
-	     console.log(JSON.stringify(c));	// parametro que se transmite  mediante ajax
+			console.log("Valor a: %s", a); // variable que almacena el codigo del campo
+			console.log("Valor b: %s", b); // variable que almacena el nombre del archivo PHP
+			console.log(JSON.stringify(c)); // parametro que se transmite  mediante ajax
 
-	     // $.post(b, c,
-	     $.ajax({
-		 async: true,
-		 method: "POST",
-		 url : b,
-		 data: c,
-		 dataType:"json",
+			// $.post(b, c,
+			$.ajax({
+				async: true,
+				method: "POST",
+				url: b,
+				data: c,
+				dataType: "json",
 
-	     }).done(  function (dato) {
-		 $(a).empty();
+			}).done(function(dato) {
+				$(a).empty();
 
-		 $(a).append("<option value = -1> Seleccione </option>");
-		 $.each(dato, function(index, materia) {
-		     $(a).append("<option value ="+ index+">" + materia + "</option>");
+				$(a).append("<option value = -1> Seleccione </option>");
+				$.each(dato, function(index, materia) {
+					$(a).append("<option value =" + index + ">" + materia + "</option>");
 
-		 });
-	     });
+				});
+			});
 
-	 }
+		}
 
 
-	 jQuery.ajaxSetup({
-             beforeSend: function() {
-                 $('#loader').show();
-		 $('#tabla').html("");
-             },
-	     complete: function(){
-		 $('#loader').hide();
-	     }
-	 });
-
+		jQuery.ajaxSetup({
+			beforeSend: function() {
+				$('#loader').show();
+				$('#tabla').html("");
+			},
+			complete: function() {
+				$('#loader').hide();
+			}
+		});
 	</script>
-    </head>
+</head>
 
-    <body class="sb-nav-fixed" onload="load();">
-<div><p> El usuario es <?php $usuario  ?> </div>
+<body class="sb-nav-fixed" onload="load();">
+	<div>
+		<p> El usuario es <?php $usuario  ?>
+	</div>
 	<div class="loader" style="display:none" id="loader"></div>
 
 	<div id="content">
 
-	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
-	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-		<!-- Navbar Brand-->
-		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
-		<!-- Sidebar Toggle-->
-		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-		<a style="color:FFF" href="#"></a>
-		<!-- Navbar-->
-		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		    <li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle"
-			   id="navbarDropdown" href="#"
-			   role="button" data-bs-toggle="dropdown"
-			   aria-expanded="false"><i class="fas fa-user fa-fw"></i>
-			    <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?> </a>
-			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+		<?php $hoy = Date("Y-m-d hh:mm"); ?>
+		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+			<!-- Navbar Brand-->
+			<a class="navbar-brand ps-3" href="board.php">INICIO</a>
+			<!-- Sidebar Toggle-->
+			<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+				id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+			<a style="color:FFF" href="#"></a>
+			<!-- Navbar-->
+			<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle"
+						id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"><i class="fas fa-user fa-fw"></i>
+						<?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?> </a>
+					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-			    <li><a class="dropdown-item" href="logout.php">Salir</a></li>
+						<li><a class="dropdown-item" href="logout.php">Salir</a></li>
+					</ul>
+				</li>
 			</ul>
-		    </li>
-		</ul>
-	    </nav>
+		</nav>
 
 
-	    <div id="layoutSidenav">
-		<div id="layoutSidenav_nav">
-		    <nav class="sb-sidenav accordion sb-sidenav-dark"
-			 id="sidenavAccordion"
-			 style="background-color: cadetblue">
+		<div id="layoutSidenav">
+			<div id="layoutSidenav_nav">
+				<nav class="sb-sidenav accordion sb-sidenav-dark"
+					id="sidenavAccordion"
+					style="background-color: cadetblue">
 
-			<div class="sb-sidenav-menu">
-			    <div class="nav">
-				
-				
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#collapseLayouts1"
-				   aria-expanded="false" aria-controls="collapseLayouts1">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i></div>
-				    Datos
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i></div>
-				</a>
-				<div class="collapse" id="collapseLayouts1"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+					<div class="sb-sidenav-menu">
+						<div class="nav">
 
-				    <nav class="sb-sidenav-menu-nested nav">
 
-					<label for="years">Año</label>
-					<input type="number"
-					       value="<?php echo date('Y'); ?>"
-					       id="years"
-					       name="years"
-					       min="2015"
-					       max="2100" step="1"
-					       style="background: transparent;color: darkgreen;border: 0px;"
-					<?php if ($admin < 1) { ?>
-					    readonly="readonly"
-					<?php } ?>
-					class="form-control ">
+							<a class="nav-link collapsed" href="#"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseLayouts1"
+								aria-expanded="false" aria-controls="collapseLayouts1">
+								<div class="sb-nav-link-icon">
+									<i class="fas fa-columns"></i>
+								</div>
+								Datos
+								<div class="sb-sidenav-collapse-arrow">
+									<i class="fas fa-angle-down"></i>
+								</div>
+							</a>
+							<div class="collapse" id="collapseLayouts1"
+								aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
-					<input type="hidden" value="<?php echo $id; ?>" id="id_d">
+								<nav class="sb-sidenav-menu-nested nav">
 
-					<label for="jornada">Jornada</label>
-					<select id="jornada"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    class="form-control"
-						    onchange=";">
-					    <option value="1">Mañana</option>
-					    <option value="2">Tarde</option>
-					</select>
+									<label for="years">Año</label>
+									<input type="number"
+										value="<?php echo date('Y'); ?>"
+										id="years"
+										name="years"
+										min="2015"
+										max="2100" step="1"
+										style="background: transparent;color: darkgreen;border: 0px;"
+										<?php if ($admin < 1) { ?>
+										readonly="readonly"
+										<?php } ?>
+										class="form-control ">
 
-					<label for="periodos">Periodo</label>
-					<select id="periodos"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    name="periodos"
-						    class="form-control" required=""
-         					    onchange="load_semanas();">
-					    <option value="-1" selected>seleccione</option>
-					    <option value="1">1</option>
-					    <option value="2">2</option>
-					    <option value="3">3</option>
-					    <option value="4">4</option>
-					    <option value="5">Recuperacion</option>
-					    
-					</select>
+									<input type="hidden" value="<?php echo $id; ?>" id="id_d">
 
-					<label for="semana">Semana</label>
-					<select id="semana"
-						class="form-control"
-						style="background: transparent;color: darkgreen;border: 0px"
-						onchange="">
-                                            <?php
-					    
-					    if ($admin) {
-					
-					    }
+									<label for="jornada">Jornada</label>
+									<select id="jornada"
+										style="background: transparent;color: darkgreen;border: 0px"
+										class="form-control"
+										onchange=";">
+										<option value="1">Mañana</option>
+										<option value="2">Tarde</option>
+									</select>
 
-					    else
-					    {
-						$s = new semana();
-						$sem  = $s->get_semana_activa($ano);
-						echo "<option value='$sem' selectecd>$sem </option>";
-					    }
+									<label for="periodos">Periodo</label>
+									<select id="periodos"
+										style="background: transparent;color: darkgreen;border: 0px"
+										name="periodos"
+										class="form-control" required=""
+										onchange="load_semanas();">
+										<option value="-1" selected>seleccione</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">Recuperacion</option>
 
-					    ?>
+									</select>
 
-					</select>
+									<label for="semana">Semana</label>
+									<select id="semana"
+										class="form-control"
+										style="background: transparent;color: darkgreen;border: 0px"
+										onchange="">
+										<?php
 
-					<label class="Control-label">Grado</label>
-					<select id="id_g" name="id_gs"
-						    class ="form-control"
-						    style="background: transparent;color: darkgreen;border:  0px"
-						    onchange="actualizar()">
-					    <?php
-					    // creo un nuevo objeto  matricula docente
-					    $mt = new matricula_docente();
-					    // asigno el año a la matricula como el a actual
-					    $mt->year = date('Y');
-					    // defino el codigo del docente de la matricula
-					    $mt->id_docente = $id;
-					    //actuliza el listado de cursos disponibles
-					    $mt->get_matricula(2);
-					    // conviere el dato en un json
-					    //echo json_encode($mt->listado);
-					    $lista = $mt->listado;
-					    echo '<option value="-1">seleccione</option>';
-					    foreach ($lista as $key => $value) {
-					    	echo '<option value="'.$key.'">'.$value.'</option>';
-					    }
-					    ?>
-					</select>
+										if ($admin) {
+										} else {
+											$s = new semana();
+											$sem  = $s->get_semana_activa($ano);
+											echo "<option value='$sem' selectecd>$sem </option>";
+										}
 
-					<label class="Control-label">Curso</label>
-					<select id="id_c"
-						style="background: transparent;color: darkgreen;border:0px;"
-						onchange = ";"
-						class ="form-control">
-					    <option value="0">A</opcion>
-						<option value="1">B</opcion>
-					</select>
+										?>
 
-					<label for="id_ms">Materia</label>
-					<select id="id_ms"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    name="id_ms" onchange=""
-						    class="form-control">
-					</select>
+									</select>
 
-				    </nav>
+									<label class="Control-label">Grado</label>
+									<select id="id_g" name="id_gs"
+										class="form-control"
+										style="background: transparent;color: darkgreen;border:  0px"
+										onchange="actualizar()">
+										<?php
+										// creo un nuevo objeto  matricula docente
+										$mt = new matricula_docente();
+										// asigno el año a la matricula como el a actual
+										$mt->year = date('Y');
+										// defino el codigo del docente de la matricula
+										$mt->id_docente = $id;
+										//actuliza el listado de cursos disponibles
+										$mt->get_matricula(2);
+										// conviere el dato en un json
+										//echo json_encode($mt->listado);
+										$lista = $mt->listado;
+										echo '<option value="-1">seleccione</option>';
+										foreach ($lista as $key => $value) {
+											echo '<option value="' . $key . '">' . $value . '</option>';
+										}
+										?>
+									</select>
 
-				</div>
+									<label class="Control-label">Curso</label>
+									<select id="id_c"
+										style="background: transparent;color: darkgreen;border:0px;"
+										onchange=";"
+										class="form-control">
+										<option value="0">A</opcion>
+										<option value="1">B</opcion>
+									</select>
 
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#collapseLayouts2"
-				   aria-expanded="false" aria-controls="collapseLayouts2">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i></div>
-				    Elementos
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i></div>
-				</a>
-			
-				<div class="collapse" id="collapseLayouts2"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+									<label for="id_ms">Materia</label>
+									<select id="id_ms"
+										style="background: transparent;color: darkgreen;border: 0px"
+										name="id_ms" onchange=""
+										class="form-control">
+									</select>
 
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_semanas()">Gestión de Semanas
-					</a>
-				    </nav>
+								</nav>
 
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_personas()">Gestión de Personas
-					</a>
-				    </nav>
-				    
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="requisitos_grado()">Requisitos de grado
-					</a>
-				    </nav>
+							</div>
 
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="matricula_docente()">Matricula Docente
-					</a>
-				    </nav>
+							<a class="nav-link collapsed" href="#"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseLayouts2"
+								aria-expanded="false" aria-controls="collapseLayouts2">
+								<div class="sb-nav-link-icon">
+									<i class="fas fa-columns"></i>
+								</div>
+								Elementos
+								<div class="sb-sidenav-collapse-arrow">
+									<i class="fas fa-angle-down"></i>
+								</div>
+							</a>
 
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_estudiantes_matriculados();">Listado estudiantes matriculados<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
-					</a>
-				    </nav>
+							<div class="collapse" id="collapseLayouts2"
+								aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_notas_estudiantes();">Notas por estudiantes<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
-					</a>
-				    </nav>
-				    
-				</div>
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#collapseLayouts3"
-				   aria-expanded="false" aria-controls="collapseLayouts3">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i></div>
-				    Procesos
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i></div>
-				</a>
-				<div class="collapse" id="collapseLayouts3"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+								<nav class="sb-sidenav-menu-nested nav">
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#" target="_self"
+										onclick="gestion_semanas()">Gestión de Semanas
+									</a>
+								</nav>
 
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#"
-					   href="listado_docentes.php"
-					   target="_blank">lista de docentes
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#"
-					   onclick="avance_semanal();">Avance notas semanales
-					</a>
-					
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   onclick="boletin()">Boletin  <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo <br>preescolar</span>
-					</a>
+								<nav class="sb-sidenav-menu-nested nav">
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#" target="_self"
+										onclick="gestion_personas()">Gestión de Personas
+									</a>
+								</nav>
 
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   onclick="cuadro();">Generar cuadro de notas
-					</a>
-					
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="notas_faltantes()">Notas faltantes
-					</a>
-				    </nav>
-				</div>
+								<nav class="sb-sidenav-menu-nested nav">
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#" target="_self"
+										onclick="gestion_matriculas()">Gestión de Matriculas
+									</a>
+								</nav>
 
-                            </div>
-                        </div>
-                        <div>
+								<nav class="sb-sidenav-menu-nested nav">
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#" target="_self"
+										onclick="requisitos_grado()">Requisitos de grado
+									</a>
+								</nav>
 
+								<nav class="sb-sidenav-menu-nested nav">
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#" target="_self"
+										onclick="matricula_docente()">Matricula Docente
+									</a>
+								</nav>
+
+								<nav class="sb-sidenav-menu-nested nav">
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#" target="_self"
+										onclick="listado_estudiantes_matriculados();">Listado estudiantes matriculados<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
+									</a>
+								</nav>
+
+								<nav class="sb-sidenav-menu-nested nav">
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#" target="_self"
+										onclick="listado_notas_estudiantes();">Notas por estudiantes<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
+									</a>
+								</nav>
+
+							</div>
+							<a class="nav-link collapsed" href="#"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseLayouts3"
+								aria-expanded="false" aria-controls="collapseLayouts3">
+								<div class="sb-nav-link-icon">
+									<i class="fas fa-columns"></i>
+								</div>
+								Procesos
+								<div class="sb-sidenav-collapse-arrow">
+									<i class="fas fa-angle-down"></i>
+								</div>
+							</a>
+							<div class="collapse" id="collapseLayouts3"
+								aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+								<nav class="sb-sidenav-menu-nested nav">
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#"
+										href="listado_docentes.php"
+										target="_blank">lista de docentes
+									</a>
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#"
+										onclick="avance_semanal();">Avance notas semanales
+									</a>
+
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										onclick="boletin()">Boletin <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo <br>preescolar</span>
+									</a>
+
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										onclick="cuadro();">Generar cuadro de notas
+									</a>
+
+									<a style="margin: 0.5rem;"
+										class="nav-link"
+										href="#" target="_self"
+										onclick="notas_faltantes()">Notas faltantes
+									</a>
+								</nav>
+							</div>
+
+						</div>
+					</div>
+					<div>
+
+					</div>
+					<div class="sb-sidenav-footer">
+						<div class="small">Registrado como:</div>
+						<?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?>
+					</div>
+				</nav>
 			</div>
-			<div class="sb-sidenav-footer">
-                            <div class="small">Registrado como:</div>
-                            <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?>
-                        </div>
-                    </nav>
-                </div>
 
 
-                <div id="layoutSidenav_content">
-                    <main>
-                        <div class="container-fluid px-4">
-                            <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
-                            <ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
-                            </ol>
-			    
-			    <!--  contenedores dinamicos -->
-			    <div id="avance" class="row"></div>
-			    <div id="grafica" class="row"></div>
-			    <div id="tabla" class="row"></div>
+			<div id="layoutSidenav_content">
+				<main>
+					<div class="container-fluid px-4">
+						<h1 class="mt-4">FORMULARIO <?php echo date('Y'); ?></h1>
+						<ol class="breadcrumb mb-4">
+							<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
+						</ol>
 
-                            
-                        </div>
-                    </main>
-                </div>
-            </div>
+						<!--  contenedores dinamicos -->
+						<div id="avance" class="row"></div>
+						<div id="grafica" class="row"></div>
+						<div id="tabla" class="row"></div>
 
 
-        </div><!-- fin del contenido -->
-
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
-                    <div>
-                        <a href="#">Politica privacidad</a>
-                        &middot;
-			<a href="#">Terminos &amp; Condiciones</a>
-		    </div>
+					</div>
+				</main>
+			</div>
 		</div>
-	    </div>
+
+
+	</div><!-- fin del contenido -->
+
+	<footer class="py-4 bg-light mt-auto">
+		<div class="container-fluid px-4">
+			<div class="d-flex align-items-center justify-content-between small">
+				<div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
+				<div>
+					<a href="#">Politica privacidad</a>
+					&middot;
+					<a href="#">Terminos &amp; Condiciones</a>
+				</div>
+			</div>
+		</div>
 	</footer>
-	<script src="./js/bootstrap.bundle.min.js" ></script>
-        <script src="./js/scripts.js"></script>
-        <script src="./js/Chart.min.js" ></script>
-        <script src="./assets/demo/chart-area-demo.js"></script>
-        <script src="./assets/demo/chart-bar-demo.js"></script>
-        <script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="./js/datatables-simple-demo.js"></script>
-    </body>
+	<script src="./js/bootstrap.bundle.min.js"></script>
+	<script src="./js/scripts.js"></script>
+	<script src="./js/Chart.min.js"></script>
+	<script src="./assets/demo/chart-area-demo.js"></script>
+	<script src="./assets/demo/chart-bar-demo.js"></script>
+	<script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
+	<script src="./js/datatables-simple-demo.js"></script>
+</body>
+
 </html>
