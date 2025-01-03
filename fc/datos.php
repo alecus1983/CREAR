@@ -6,6 +6,7 @@ require_once("acudientes.php");
 require_once("personas.php");
 require_once("u_alumnos.php");
 require_once("u_docentes.php");
+require_once("docentes.php");
 require_once("matricula_docente.php");
 require_once("calificaciones.php");
 require_once("inscripciones.php");
@@ -14,13 +15,16 @@ require_once("cuadro.php");
 require_once("logros.php");
 require_once("matricula.php");
 require_once("semanas.php");
-require_once("materias.php");
-require_once("alumno.php");
-require_once("ponderado.php");
-require_once("requisitos.php");
+require_once("jornada.php");
 require_once("grados.php");
 require_once("area.php");
 require_once("curso.php");
+require_once("materias.php");
+require_once("alumnos.php");
+require_once("ponderado.php");
+require_once("requisitos.php");
+
+
 
 
 //session_start();
