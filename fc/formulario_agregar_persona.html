@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script src="../boostrap/css/bootstrap.css" type="text/css"></script>
+	<script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
+    <link href="css/style.min.css" rel="stylesheet" />
+	<link href="css/styles.css" rel="stylesheet" />
+	<link href="estilos.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class='container container-sm agregar_personas'>
+
+    <div class='row'>
+        <div class='col'>
+            <h1 class='display-6'>Datos de la persona</h1>
+        </div>
+    </div>
+
+    <div class='row'>
+
+        <div class='col'>
+            <label for='ad_nombres' class='form-label'>Nombre</label>
+            <input value='' class='form-control' id='ad_nombres' aria-describedby='nombres'>
+            <div id='ayuda_nombre' class='form-text'>agrege el nombre por favor.</div>
+        </div>
+
+        <div class='col'>
+            <label for='ad_apellidos' class='form-label'>Apellidos</label>
+            <input class='form-control' id='ad_apellidos' aria-describedby='apellidos'>
+            <div id='ayuda_apellidos' class='form-text'>digite el apellido o parte del mismo por favor.</div>
+        </div>
+
+    </div>
+
+    <div class='row'>
+
+        <div class='col'>
+            <label for='ad_tipo_identificacion' class='form-label'>tipo de identificación</label>
+            <select class='form-control' id='ad_tipo_identificacion'>
+                <option value='1' selected>targeta de identidad</option>
+                <option value='2'>cedula de ciudadania</option>
+                <option value='3'>cedula de extranjeria</option>
+                <option value='4'>visa</option>
+                <option value='5'>permiso de proteccion temporal</option>
+                <option value='6'>permiso especial de permanencia</option>
+            </select>
+            <div id='ayuda_ad_tipo_identificacion' class='form-text'>actualize el tipo de identificación.</div>
+        </div>
+
+        <div class='col'>
+            <label for='ad_identificacion' class='form-label'>identificacion</label>
+            <input class='form-control' id='ad_identificacion' aria-describedby='ad_identificacion'>
+            <div id='ayuda_identificacion' class='form-text'>digite la identificacion por favor.</div>
+        </div>
+
+    </div>
+    <div class='row'>
+        <div class='col'>
+            <label for='ad_correo' class='form-label'>correo personal</label>
+            <input class='form-control' id='ad_correo' aria-describedby='correo' type='email'>
+            <div id='ayuda_correo' class='form-text'>actualize el correo por favor.</div>
+        </div>
+        <div class='col'>
+            <label for='ad_i_correo' class='form-label'>correo institucional</label>
+            <input class='form-control' id='ad_i_correo' aria-describedby='i_correo' type='email'>
+            <div id='ayuda_i_correo' class='form-text'>digite el correo institucional por favor.</div>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col'>
+            <label for='ad_celular' class='form-label'>número de celular</label>
+            <input class='form-control' id='ad_celular' aria-describedby='celular'>
+            <div id='ayuda_celular' class='form-text'>actualize su celular favor.</div>
+        </div>
+        <div class='col'>
+            <label for='ad_telefono' class='form-label'>número telefono fijo</label>
+            <input class='form-control' id='ad_telefono' aria-describedby='telefono'>
+            <div id='ayuda_telefono' class='form-text'>actulize su telefono por favor.</div>
+        </div>
+
+    </div>
+
+    <div class='row'>
+        <div class='col'>
+            <label for='ad_nacimiento' class='form-label'>fecha de nacimiento</label>
+            <input class='form-control' id='ad_nacimiento' aria-describedby='nacimiento' type='date' min='1920-01-01'>
+            <div id='ayuda_nacimiento' class='form-text'>seleccione la fecha de nacimiento por favor.</div>
+        </div>
+        <div class='col mx-auto justify-content-md'>
+            <br>
+            <button id='agregar_persona' class='btn btn - outline - success' onclick='agregar_persona();'>
+                agregar
+                <img src='./svg/send.svg' />
+            </button>
+        </div>
+    </div>
+
+
+</div>
+<script src="./js/bootstrap.bundle.min.js"></script>
+</body>

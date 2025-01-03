@@ -57,7 +57,11 @@ if ($valido) {
     // por cada estudiante matriculado
     foreach  ( $mt->matriculas as $id ) {
         //creo una matricula
-        $matricula =  new matricula($id);
+        $matricula =  new matricula();
+
+        // obtengo los atrbutos de una matricula
+        $matricula->get_matricula_id($id);
+
         // creo un nuevo alumno
         $alumno = new alumnos($matricula->id_alumno);
         
