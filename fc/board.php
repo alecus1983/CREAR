@@ -6,7 +6,7 @@ if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
 } else {
     // de lo contrario lo redirecciono a la pagina de loggin
-    header("Login_boletin_prueba.php");
+    header("Login_boletines_prueba.php");
     exit;
 }
 
@@ -15,7 +15,7 @@ require_once('datos.php');
 $d = new docentes();
 $d->get_docente_cc($usuario);
 $id = $d->id;
-$admin = $d->admin ;
+$admin = $d->admin;
 $ano = date('Y');
 ?>
 <!DOCTYPE html>
@@ -32,7 +32,7 @@ $ano = date('Y');
 	<script src="js/all.js" ></script>
 	<link href="../imagenes/escudo.gif" rel="shortcut icon"/>
 	<script src="./js/sweetalert.min.js"></script>
-	<script src="./js/jquery-3.5.1.min.js"></scrip>
+	<script src="./js/jquery-3.5.1.min.js"></script>
 	 <script src="./js/ajax.js"></script>
 	<link rel="stylesheet" href="estilos.css" type="text/css">
 
@@ -54,7 +54,7 @@ $ano = date('Y');
 	     top: 50%;
 	     z-index: 1;
 	     border: 30px solid #f3f3f3;
-             border-radius: 50%;
+        border-radius: 50%;
 	     border-top: 16px solid blue;
 	     border-right: 16px solid green;
 	     border-bottom: 16px solid red;
@@ -101,7 +101,7 @@ $ano = date('Y');
 			    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 			</svg>
 		    </a>
-		    <a href="fc.php" class="d-flex justify-content-center">	Calificaciones</a>
+		    <a href="fc.php" class="d-flex justify-content-center">Calificaciones</a>
 		</div>
 		
 		<div class="col">
