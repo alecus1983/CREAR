@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script src="../boostrap/css/bootstrap.css" type="text/css"></script>
+	<script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
+    <link href="css/style.min.css" rel="stylesheet" />
+	<link href="css/styles.css" rel="stylesheet" />
+	<link href="estilos.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class='container container-sm agregar_personas'>
+
+    <div class='row'>
+        <div class='col'>
+            <h1 class='display-6'>Datos de direcci&oacute;n</h1>
+        </div>
+    </div>
+
+    <div class='row'>
+
+        <div class='col'>
+            <label for='ac_direccion' class='form-label'>Direcci&oacute;n de residencia</label>
+            <input value='' class='form-control' id='ac_direccion' aria-describedby='ac_direccion'>
+            <div id='ayuda_direccion' class='form-text'>agrege o actulize la direcci&oacute;n por favor.</div>
+        </div>
+
+        <div class='col'>
+            <label for='ac_estrato' class='form-label'>Estrato</label>
+            <select class='form-control' id='ac_estrato'>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3' selected>3</option>
+                <option value='4'>4</option>
+                <option value='5'>5</option>
+            </select>
+            <div id='ayuda_ac_estrato' class='form-text'>por favor serleccone el estrato del mismo por favor.</div>
+        </div>
+
+    </div>
+
+    <div class='row'>
+        <div class='col'>
+            <label for='ac_barrio' class='form-label'>barrio</label>
+            <input class='form-control' id='ac_barrio' aria-describedby='ac_barrio'>
+            <div id='ayuda_correo' class='form-text'>agrege o actualice el barrio por favor.</div>
+        </div>
+        <div class='col mx-auto justify-content-md'>
+            <br>
+            <button id='agregar_persona' class='btn btn btn-dark' onclick="update_direccion(2);">
+                agregar/actualizar
+                <img src='./svg/send.svg' />
+            </button>
+        </div>
+        
+    </div>
+
+    
+    
+
+</div>
+<script src="./js/bootstrap.bundle.min.js"></script>
+</body>

@@ -2,6 +2,75 @@
 let id_persona = 0;
 // codigo de alumno
 let id_alumno = 0;
+
+// objeto tipo acudiente
+let id_acudiente = {
+	id_acudiente: 0,
+	id_persona: 0,
+	id_hijo: 0,
+	fecha : "",
+};
+
+// objeto tipo padre
+let padre = {
+	id_padre : 0,
+	id_persona : 0,
+	id_hijo : 0, 
+	fecha : ""
+};
+
+// objeto docente
+let docente = {
+	id_docente : 0,
+	id_persona :  0,
+	fecha : ""
+};
+
+// objeto almno
+let alumno = {
+	id_alumno : 0,
+	id_persona : 0,
+	fecha : ""
+};
+
+// objeto persona
+let persona = {
+	id_persona : 0,
+	nombres : "",
+	apellidos : "",
+	identificacion : "",
+	tipo_identificacion : "",
+	nacimiento : "",
+	correo : "",
+	i_correo : "",
+	celular : "",
+	telefono : "",
+	u_alumno : "",
+	u_docentes : "",
+	direccion_residencia : "",
+	barrio : "",
+	estrato : "",
+	sisben : "",
+	familias_accion : false,
+	regimen_salud : false,
+	eps: "",
+	vive_con : "",
+	tipo_victima_conflicto : "",
+	municipio_expulsor : "",
+	discapacitado: false,
+	tipo_discapacidad : "",
+	capacidad_excepcional : "",
+	etnia : false ,
+	tipo_etnia : "",
+	resguardo_consejo : "",
+	antecedentes_patologicos_medicos : "",
+	antecedentes_patologicos_quirurgicos : "",
+	antecedentes_patologicos_toxicos : "",
+	antecedentes_patologicos_psiquiatricos : "",
+	antecedentes_patologicos_psicologicos : "",
+	antecedentes_patologicos_morbilidad : "",
+};
+
 // codigo de docente
 let id_docente = 0;
 
@@ -24,12 +93,163 @@ function load_materias() {
 }
 
 
+
+
 // formulario para gestionar la matricula
-function gestion_matriculas() {
+function gestion_matriculas(id) {
 
 	// 1. INFORMACION DEL ESTUDIANTE
 	// creo una instancia de una matricula
 	// del servidor
+	switch (id) {
+
+		case 1: // cargo el primer formulario de matricula
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_1.html");
+			break;
+
+		case 2: // para personas nuevas coloco este formulario
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_2.html", function () {
+				//	agrega el formulario de personas
+				$("#paginas").load("formulario_agregar_persona.html", function (){
+					$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
+				});
+				
+			});
+			break;
+
+		case 3: // para personas antiguas coloco este formulario
+			$("#avance").html("");
+			$("#tabla").html("");
+			// Cargar formulario_matricula_3.html
+			$("#avance").load("formulario_matricula_3.html", function(){
+				$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
+
+			});
+			break;
+
+		case 4:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_4.html", function () {
+				$("#paginas").html("<p>Se ha selecionado la persona <b>"+persona["nombres"]+" "+persona["apellidos"]+"</b>, con codigo " + persona["id_persona"] + ", con identificacion "+persona["identificacion"]+"</p>");
+				$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
+				$("#paginas").append('<button type="button" class="btn btn-dark" onclick="gestion_matriculas(5);">siguiente</button>');
+				
+			});
+			break;
+
+		case 5:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_5.html", function(){
+				// obtengo la direccion de la persona
+				get_direccion(persona["id_persona"],2);
+				
+				
+			});
+			break;
+
+		case 6:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_6.html");
+
+			break;
+
+		case 7:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_7.html");
+			break;
+
+
+		case 8:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_8.html");
+			break;
+
+		case 9:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_9.html");
+			break;
+
+
+		case 10:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_10.html");
+			break;
+
+		case 11:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_11.html");
+			break;
+
+		case 12:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_12.html");
+			break;
+
+		case 13:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_13.html");
+			break;
+
+
+		case 14:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_14.html");
+			break;
+
+		case 15:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_15.html");
+			break;
+
+
+		case 16:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_16.html");
+			break;
+
+		case 17:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_17.html");
+			break;
+
+		case 18:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_18.html");
+			break;
+
+		case 19:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_19.html");
+			break;
+
+		case 20:
+			$("#avance").html("");
+			$("#tabla").html("");
+			$("#avance").load("formulario_matricula_20.html");
+			break;
+
+	}
+
 
 	// consulto si el estudiante es nuevo o antiguo
 
@@ -214,6 +434,7 @@ function agregar_matricula_docente() {
 			// si la respuesta es positiva
 			if (respuesta['status'] == 1) {
 				//swal('Datos actualizados');
+				
 				swal('Actualizacion', 'Se insertaron los dastos con éxito', 'success');
 				matricula_docente();
 			} else {

@@ -6,7 +6,7 @@ if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
 } else {
     // de lo contrario lo redirecciono a la pagina de loggin
-    header("Login_boletines_prueba.php");
+    header("location:login_boletines_prueba.php");
     exit;
 }
 

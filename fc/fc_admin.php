@@ -375,7 +375,7 @@ if (isset($_SESSION["usuario"])) {
 									<a style="margin: 0.5rem;"
 										class="nav-link"
 										href="#" target="_self"
-										onclick="gestion_matriculas()">Gestión de Matriculas
+										onclick="gestion_matriculas(1)">Gestión de Matriculas
 									</a>
 								</nav>
 

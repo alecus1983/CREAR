@@ -235,16 +235,23 @@ class personas extends imcrea {
 
 
     // actualiza la direccion de residencia
-    public function actualizar_direccion_residencia(){
-        $texto = "UPDATE personas SET direccion_residencia ='$this->correo'";
-        //echo $texto;
+    public function actualizar_direccion_residencia($direccion,$estrato, $barrio, $id_persona){
+        $texto = "UPDATE personas SET direccion_residencia ='$direccion', estrato = '$estrato', barrio = '$barrio' where id_personas = $id_persona";
+        
         // ejecuto la consulta
-        $this->_db->query($texto);
+        $c = $this->_db->query($texto);
+        // retorno   es estado de la consulta
+        return $c;
+
     }
 
     // agregar persona
+    // se agrega una nueva instancia del objeto
+    // en la tabla persona
+    // no requiere atributos 
     public function add(){
 
+        try{ 
         // consulta
         $texto  = "INSERT INTO personas
                             (nombres, apellidos,
@@ -256,16 +263,23 @@ class personas extends imcrea {
                             ('$this->nombres','$this->apellidos',
                              $this->identificacion,$this->tipo_identificacion,
                              '$this->nacimiento','$this->correo', '$this->i_correo',
-                             $this->celular, $this->telefono)";
+                             '$this->celular', '$this->telefono')";
 
         
         // ejecuto la consulta
         $c = $this->_db->query($texto);
+
         if($c === true){
+            // recupero el id de la persona insertada
+            $this->id_persona = $this->_db->insert_id;
+            // retorno la confirmacion
             return true;
         }else
         {return false;}
-
+    }
+    catch(Exception $e) {
+        echo 'Message: ' .$e->getMessage();
+      }
         
     }
 
@@ -277,6 +291,21 @@ class personas extends imcrea {
             return true;
         }else
             return false;   
+    }
+
+    // funcion para obtener la persona
+    public function get_direccion($id_persona){
+
+
+        $q = "SELECT direccion_residencia, estrato, barrio from personas where id_personas = $id_persona";
+
+        // ejecuto la consulta
+        $c = $this->_db->query($q);
+        // recupero un registro
+        $a = $c->fetch_array(MYSQLI_ASSOC);
+        //  retorno el valor obtenido
+        return $a;
+
     }
 
 

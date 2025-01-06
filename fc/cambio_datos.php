@@ -41,11 +41,12 @@ $html = $html. "<th scope='col'>D. de identidad</th>";
 // $html = $html. "<th scope='col'>Correo</th>";
 // $html = $html. "<th scope='col'>Telefono</th>";
  $html = $html. "<th scope='col'>Actualizar</th>";
+ $html = $html. "<th scope='col'>Selecionar</th>";
  $html = $html. "<th scope='col'>Eliminar</th>";
 $html = $html. "</thead>";
 $html = $html. "<tbody>";
     
-// por cada estudiante matriculado
+// por cada estudiante 
 foreach  ( $lista as $id ) {
     // //creo una matricula
     // $matricula =  new matricula($id);
@@ -65,6 +66,9 @@ foreach  ( $lista as $id ) {
          $html = $html."</td>";
          $html = $html. "<td>";
         $html = $html. "<button type='button' class='btn btn-info' onclick='datos_persona(\"$id[3]\");'>actualizar</button>";
+        $html = $html. "</td>";
+        $html = $html. "<td>";
+        $html = $html. "<button type='button' class='btn btn-success' onclick='seleccionar_persona(\"$id[3]\");'>seleccioar</button>";
         $html = $html. "</td>";
         $html = $html. "<td>";
         $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_persona(\"$id[3]\");'>eliminar</button>";
