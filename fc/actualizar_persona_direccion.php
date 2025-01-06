@@ -34,7 +34,7 @@ if ($valido) {
         $respuesta['status'] = 1;    
         $respuesta['barrio'] = $barrio;
         $respuesta['estrato'] = $estrato;
-        $respuesta['direccion'] = $direccion;
+        $respuesta['direccion_residencia'] = $direccion;
 
     }
     

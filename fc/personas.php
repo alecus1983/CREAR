@@ -308,6 +308,21 @@ class personas extends imcrea {
 
     }
 
+    // funcion para obtener la persona
+    public function get_afiliacion($id_persona){
+
+
+        $q = "SELECT familias_accion, regimen_salud, eps, vive_con, tipo_victima_conflicto, municipio_expulsor, discapacitado, tipo_discapacidad, capacidad_excepcional, etnia, tipo_enia, resguardo_consejo  from personas where id_personas = $id_persona";
+
+        // ejecuto la consulta
+        $c = $this->_db->query($q);
+        // recupero un registro
+        $a = $c->fetch_array(MYSQLI_ASSOC);
+        //  retorno el valor obtenido
+        return $a;
+
+    }
+
 
 }
 

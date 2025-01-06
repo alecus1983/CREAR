@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script src="../boostrap/css/bootstrap.css" type="text/css"></script>
+    <script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
+    <link href="css/style.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="estilos.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class='container container-sm agregar_personas'>
+
+        <div class='row'>
+            <div class='col'>
+                <h1 class='display-6'>Datos de afiliaciones</h1>
+            </div>
+        </div>
+
+        <div class='row'>
+
+            <div class='col'>
+                <label for='ac_sisben' class='form-label'>Sisben</label>
+                <select class='form-control' id='ac_sisben'>
+                    <option value='N' selected>ninguno</option>
+                    <option value='A'>Grupo A</option>
+                    <option value='B'>Grupo B</option>
+                    <option value='C'>Grupo C</option>
+                    <option value='D'>Grupo D</option>
+
+                </select>
+                <div id='ayuda_sisben' class='form-text'>agrege o actulize la afilici&oacute;n del sisben por favor.
+                </div>
+            </div>
+
+            <div class='col'>
+                <label for='ac_eps' class='form-label'>Vive con:</label>
+                <select class='form-control' id='ac_sisben'>
+                    <option value='N' selected>ninguno</option>
+                    <option value='A'>Ambos padres</option>
+                    <option value='B'>Solo madre</option>
+                    <option value='C'>Solo padre</option>
+                    <option value='D'>otro familiar</option>
+
+                </select>
+                <div id='ayuda_ac_estrato' class='form-text'>por favor serleccone la persona con la que vive.</div>
+            </div>
+
+            <div class='col'>
+                <div class="form-check">
+                    <label for='ac_familias_accion' class='form-label'>Familias en acci&oacute;n</label>
+                    <input value='ac_familias_accion' class='form-check-input' id='ac_familias_accion'
+                        aria-describedby='ac_familias_accion' type="checkbox">
+                </div>
+                <!--<div id='ayuda_sisben' class='form-text'>agrege o actulize la afilici&oacute;n a familias en accion por favor.</div>-->
+            
+                <div class="input-group">
+                    
+                    <div class="input-group-prepend">
+                        <div class="form-check">
+                            <!--<label for='ac_regimen_salud' class='form-label'>Regimen de salud</label>-->
+                            <input value='ac_regimen_salud' class='form-check-input' id='ac_regimen_salud'
+                                aria-describedby='ac_regimen_salud' type="checkbox">
+                        </div>
+                    </div>
+
+                    <label for='ac_eps' class='form-label'>EPS</label>
+                    <input class='form-control' id='ac_eps' aria-describedby='ac_eps'>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="form-check">
+                            <input value='ac_tipo_victima_conflicto' class='form-check-input' id='ac_tipo_victima_conflicto'
+                                aria-describedby='ac_tipo_victima_conflicto' type="checkbox">
+                        </div>
+                    </div>
+
+                    <label for='ac_eps' class='form-label'>Victima del conflicto</label>
+                    <input class='form-control' id='ac_eps' aria-describedby='ac_eps'>
+                    <div id='ayuda_sisben' class='form-text'>agrege o actulize el municipio expulsor favor.</div>
+                </div>
+                
+            </div>
+
+            
+
+        </div>
+
+        <div class='row'>
+            <div class='col'>
+                <label for='ac_barrio' class='form-label'>barrio</label>
+                <input class='form-control' id='ac_barrio' aria-describedby='ac_barrio'>
+                <div id='ayuda_correo' class='form-text'>agrege o actualice el barrio por favor.</div>
+            </div>
+            <div class='col mx-auto justify-content-md'>
+                <br>
+                <button id='agregar_persona' class='btn btn btn-dark' onclick="update_direccion(2);">
+                    agregar/actualizar
+                    <img src='./svg/send.svg' />
+                </button>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+</body>

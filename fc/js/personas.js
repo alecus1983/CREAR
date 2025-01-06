@@ -127,8 +127,8 @@ function agregar_persona(formulario) {
     persona.correo = $("#ad_correo").val();
     persona.i_correo = $("#ad_i_correo").val();
     persona.celular = $("#ad_celular").val();
-    persona.telefono =  $("#ad_telefono").val();
-    persona.nacimiento =  $("#ad_nacimiento").val();
+    persona.telefono = $("#ad_telefono").val();
+    persona.nacimiento = $("#ad_nacimiento").val();
 
     // envio datos 
     $.ajax({
@@ -142,24 +142,24 @@ function agregar_persona(formulario) {
             if (respuesta['status'] == 1) {
                 //swal('Datos actualizados');
                 swal('Actualizacion', 'Se agrego a la persona correctamente', 'success');
-                
-                switch (formulario){
-                    case 1: 
 
-                    break;
+                switch (formulario) {
+                    case 1:
+
+                        break;
 
                     case 2:
 
                         persona["nombres"] = respuesta["nombres"];
                         persona["apellidos"] = respuesta["apellidos"];
-                        persona["identificacion"] =respuesta["idetificacion"];
+                        persona["identificacion"] = respuesta["idetificacion"];
                         // tomo como persona seleccionada la presona 
                         // retornada
-                        seleccionar_persona(respuesta["id_persona"]); 
+                        seleccionar_persona(respuesta["id_persona"]);
                         // voy al formulario cuatro
                         gestion_matriculas(4)
 
-                    break;
+                        break;
                 }
             } else {
                 if (respuesta['status'] == 21) {
@@ -345,15 +345,18 @@ function seleccionar_persona(id) {
     //  cargo el los datos de la persona
     persona["id_persona"] = id;
     // los muestro
-    swal("seleccion","Se selecciono la persona "+persona["id_persona"],  'success');
-    // voy al formulario 4
+    swal("seleccion", "Se selecciono la persona " + persona["id_persona"], 'success');
+    // voy al formulario 4 de matriculas
     gestion_matriculas(4);
 }
 
 
 // funcion que obtiene los datos de direccion
+// el estrato y el barrio
+// require el codigo de la persona
+// y el codigo del formulario
 
-function get_direccion(id, form){
+function get_direccion(id, form) {
 
     // solicito datos en ajax
     $.ajax({
@@ -369,13 +372,41 @@ function get_direccion(id, form){
             if (respuesta['status'] == 1) {
 
                 // salta de acuerdo al formulario
-                switch (form){
+                switch (form) {
 
                     case 2:
                         // se carga  el formulario
-				        $("#paginas").load("formulario_actualizar_direccion.html"); 
+                        $("#paginas").load("formulario_actualizar_direccion.html", function () {
+                            // obtengo el valor de la direccion
+                            $("#ac_direccion").val(respuesta["direccion_residencia"]);
+                            // obtengo el valor del barrio
+                            $("#ac_barrio").val(respuesta["barrio"]);
+                            switch (respuesta["estrato"]) {
+                                case "1":
+                                    $("#ac_estrato").val("1");
+                                    break;
 
-                    break;
+                                case "2":
+                                    $("#ac_estrato").val("2");
+                                    break;
+
+                                case "3":
+                                    $("#ac_estrato").val("3");
+                                    break;
+
+                                case "4":
+                                    $("#ac_estrato").val("4");
+                                    break;
+
+                                case "5":
+                                    $("#ac_estrato").val("5");
+                                    break;
+                            }
+
+
+                        });
+
+                        break;
                 }
 
             } else {
@@ -396,7 +427,7 @@ function get_direccion(id, form){
 }
 
 // actualizar direccion
-function update_direccion (form){
+function update_direccion(form) {
 
     // tomo el dato
     persona["estrato"] = $("#ac_estrato").val();
@@ -417,40 +448,45 @@ function update_direccion (form){
             if (respuesta['status'] == 1) {
 
                 // salta de acuerdo al formulario
-                switch (form){
+                switch (form) {
 
                     case 2:
                         // se carga  el formulario
-				        $("#ac_direccion").html(respuesta['direccion']); 
-                        $("#ac_barrio").html(respuesta['barrio']);
+                        $("#ac_direccion").val(respuesta['direccion_residencia']);
+                        $("#ac_barrio").val(respuesta['barrio']);
 
-                        switch (respuesta["estrato"]){
+                        switch (respuesta["estrato"]) {
                             case "1":
                                 $("#ac_estrato").val("1");
-                            break;
-                            
+                                break;
+
                             case "2":
                                 $("#ac_estrato").val("2");
-                            break;
+                                break;
 
                             case "3":
                                 $("#ac_estrato").val("3");
-                            break;
+                                break;
 
                             case "4":
                                 $("#ac_estrato").val("4");
-                            break;
+                                break;
 
                             case "5":
                                 $("#ac_estrato").val("5");
-                            break;
+                                break;
                         }
 
-                    break;
+                        // muestro confirmacion
+                        swal("actualizacion dirección","se actualizo con exito la dirección", "success");
+                        // voy a la seccion 6 del formulario matricula
+                        gestion_matriculas(6);
+
+                        break;
                 }
             }
 
-             else {
+            else {
                 if (respuesta['status'] == 20) {
                     swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
                 }
@@ -463,7 +499,96 @@ function update_direccion (form){
         error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
-        }} );
+        }
+    });
 
+
+}
+
+
+// funcion que obtiene los datos de afiliacions
+// sisben : ""
+//	familias_accion : false
+//	regimen_salud : false
+//  eps: ""
+//	vive_con : ""
+//	tipo_victima_conflicto : ""
+//	municipio_expulsor : ""
+//	discapacitado: false
+//	tipo_discapacidad : ""
+//	capacidad_excepcional : ""
+//	etnia : false 
+//	tipo_etnia : ""
+//	resguardo_consejo : ""
+// require el codigo de la persona
+// y el codigo del formulario
+
+function get_afiliaciones(id, form) {
+
+    // solicito datos en ajax
+    $.ajax({
+        type: "POST",
+        url: "afiliacion_persona.php",
+        dataType: "json",
+        data: {
+            id: id
+        },
+        // si los datos son correctos entonces ...
+        success: function (respuesta) {
+            // si la respuesta es positiva
+            if (respuesta['status'] == 1) {
+
+                // salta de acuerdo al formulario
+                switch (form) {
+
+                    case 2:
+                        // se carga  el formulario
+                        $("#paginas").load("formulario_actualizar_afiliacion.html", function () {
+                            // obtengo el valor de la direccion
+                            $("#ac_direccion").val(respuesta["direccion_residencia"]);
+                            // obtengo el valor del barrio
+                            $("#ac_barrio").val(respuesta["barrio"]);
+                            switch (respuesta["estrato"]) {
+                                case "1":
+                                    $("#ac_estrato").val("1");
+                                    break;
+
+                                case "2":
+                                    $("#ac_estrato").val("2");
+                                    break;
+
+                                case "3":
+                                    $("#ac_estrato").val("3");
+                                    break;
+
+                                case "4":
+                                    $("#ac_estrato").val("4");
+                                    break;
+
+                                case "5":
+                                    $("#ac_estrato").val("5");
+                                    break;
+                            }
+
+
+                        });
+
+                        break;
+                }
+
+            } else {
+                if (respuesta['status'] == 20) {
+                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                }
+                if (respuesta['status'] == 21) {
+                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                }
+            }
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema');
+            console.log(xhr);
+        }
+    });
 
 }
