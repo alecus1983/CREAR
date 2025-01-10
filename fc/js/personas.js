@@ -192,6 +192,7 @@ function agregar_persona(formulario) {
 }
 
 // funcion para acutualizar los datos una persona
+// toma los datos de los los campos que inician con  #ac_  ...
 // require datos_persona.php
 // requere actualizar_persona()
 function actualizar_persona() {
@@ -254,7 +255,73 @@ function actualizar_persona() {
 }
 
 
+// Función para actualizar los datos de una persona con relación a sus afiliaciones
+function actualizar_afiliaciones(personax) {
+    // Se precargan los atributos del formulario
+    personax.sisben = $("#ac_sisben").val();
+    personax.vive_con = $("#ac_vive_con").val();
+    personax.etnia = $("#ac_etnia")[0].checked ? true : false;
+    personax.tipo_etnia = $("#ac_tipo_etnia").val();
+    personax.resguardo_consejo = $("#ac_resguardo_consejo").val();
+    personax.familias_accion = $("#ac_familias_accion")[0].checked ? true : false;
+    personax.tipo_victima_conflicto = $("#ac_tipo_victima_conflicto")[0].checked ? true : false;
+    personax.municipio_expulsor = $("#ac_municipio_expulsor").val();
+    // si esta chequeado la opcion de discapacitad
+    personax.discapacitado = $("#ac_discapacitado")[0].checked ? true : false;
+    personax.tipo_discapacidad = $("#ac_tipo_discapacidad").val();
+    personax.capacidad_excepcional = $("#ac_capacidad_excepcional").val();
+    personax.regimen_salud = $("#ac_regimen_salud")[0].checked ? true : false;
+    personax.eps = $("#ac_eps").val();
+    personax.ips = $("#ac_ips").val();
+    personax.tipo_sangre = $("#ac_tipo_sangre").val();
+    personax.rh = $("#ac_rh").val();
+
+    // Validación de datos antes de enviar (puedes agregar más validaciones)
+    if (!personax.sisben) {
+        swal('Error', 'Por favor, seleccione un valor para SISBEN.', 'error');
+        return;
+    }
+
+    // Solicitar datos al servidor mediante AJAX
+    $.ajax({
+        type: "POST",
+        url: "actualizar_afiliaciones.php",
+        dataType: "json",
+        data: personax,
+        success: function (respuesta) {
+            // Mapa de errores
+            const errorMap = {
+                20: 'No se pudo actualizar la semana.',
+                22: 'Por favor seleccione un año.',
+                23: 'Por favor seleccione una fecha de inicio.',
+                24: 'Por favor seleccione una fecha de fin.',
+                25: 'La fecha de inicio debe ser menor que la de fin.',
+                26: 'Por favor seleccione una semana.'
+            };
+
+            // Si la respuesta es positiva
+            if (respuesta['status'] == 1) {
+                swal("Completado", "Se completó el registro", "success");
+            } else if (errorMap[respuesta['status']]) {
+                // Si el código de error existe en el mapa
+                swal('Error', errorMap[respuesta['status']], 'error');
+            } else {
+                swal('Error', 'Se produjo un error inesperado', 'error');
+            }
+        },
+        error: function (xhr, status, error) {
+            swal('Disculpe, existió un problema');
+            console.log("Error AJAX:", status, error);
+        }
+    });
+}
+
+
+
 // funcion que solicitar datos de la persona
+// y los coloca en el el div #tabla
+// requiere como entrada el codigo de la persona
+
 function datos_persona(id) {
     //  realizo la consulta en de los datos
     $.ajax({
@@ -269,6 +336,43 @@ function datos_persona(id) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 $("#tabla").html(respuesta['html']);
+            } else {
+                if (respuesta['status'] == 20) {
+                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                }
+                if (respuesta['status'] == 21) {
+                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                }
+            }
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema');
+            console.log(xhr);
+        }
+    });
+}
+
+
+// funcion que solicitar datos de la persona
+// y los coloca en el el div #tabla
+// requiere como entrada el codigo de la persona
+
+function get_persona(id) {
+    //  realizo la consulta en de los datos
+    $.ajax({
+        type: "POST",
+        url: "get_persona.php",
+        dataType: "json",
+        data: {
+            id: id
+        },
+        // si los datos son correctos entonces ...
+        success: function (respuesta) {
+            // si la respuesta es positiva
+            if (respuesta['status'] == 1) {
+                persona["nombres"] = respuesta["nombres"];
+                persona["apellidos"] = respuesta["apellidos"];
+                persona["identificacion"] = respuesta["identificacion"];
             } else {
                 if (respuesta['status'] == 20) {
                     swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
@@ -344,10 +448,105 @@ function eliminar_persona(id_personas) {
 function seleccionar_persona(id) {
     //  cargo el los datos de la persona
     persona["id_persona"] = id;
+    // obtengo los datos de la persona en el json persona
+    get_persona(id);
     // los muestro
     swal("seleccion", "Se selecciono la persona " + persona["id_persona"], 'success');
     // voy al formulario 4 de matriculas
     gestion_matriculas(4);
+}
+
+
+// solicito los datos para el formaulario de afiliacion
+
+
+function get_afiliacion(id, form) {
+    // Solicito datos por AJAX
+    $.ajax({
+        type: "POST",
+        url: "afiliacion_persona.php",
+        dataType: "json",
+        data: { id: id },
+        success: function (respuesta) {
+            if (respuesta['status'] == 1) {
+                // Validamos según el formulario
+                if (form === 2) {
+
+                    // Asignar SISBEN
+                    let sisben = respuesta["sisben"] || "N";
+                    $("#ac_sisben").val(sisben);
+
+                    // Asignar con quién vive
+                    let viveCon = respuesta["vive_con"] || "N";
+                    $("#ac_vive_con").val(viveCon);
+
+                    // Propiedad `checked` para etnia
+                    respuesta["etnia"] === 1 ? $("#ac_etnia").prop("checked", true) : $("#ac_etnia").prop("checked", false);
+
+                    // Asignar el tipo de etnia
+                    let tipoetnia = respuesta["tipo_etnia"] || "otro";
+                    $("#ac_tipo_etnia").val(tipoetnia);
+                    // asignar resguardo o consejo comunitario
+                    $("#ac_resguardo_consejo").val(respuesta["resguardo_consejo"]);
+
+                    // Propiedad `checked` para familias en accion
+                    respuesta["familias_accion"] === 1 ? $("#ac_familias_accion").prop("checked", true) : $("#ac_familias_accion").prop("checked", false);
+
+                    // Propiedad `checked` para victima del conflicto
+                    if (respuesta["tipo_victima_conflicto"] == 1) 
+                        { $("#ac_tipo_victima_conflicto").prop("checked", true) }
+                    
+                    else{ $("#ac_tipo_victima_conflicto").prop("checked", false)};
+
+                    // asignar municipio_expulsor	
+                    $("#ac_municipio_expulsor").val(respuesta["municipio_expulsor"]);
+
+                    // Propiedad `checked` para discapacitado
+                    respuesta["discapacitado"] === 1 ? $("#ac_discapacitado").prop("checked", true) : $("#ac_discapacitado").prop("checked", false);
+
+                    // asignar tipo_discapacidad		
+                    $("#ac_tipo_discapacidad").val(respuesta["tipo_discapacidad"]);
+
+                    // asignar tipo_discapacidad		
+                    $("#ac_capacidad_excepcional").val(respuesta["capacidad_excepcional"]);
+
+                    // Propiedad `checked` para regimen_salud
+                    respuesta["regimen_salud"] === 1 ? $("#ac_regimen_salud").prop("checked", true) : $("#ac_regimen_salud").prop("checked", false);
+
+                    // asignar eps		
+                    $("#ac_eps").val(respuesta["eps"]);
+
+                    // asignar ips		
+                    $("#ac_ips").val(respuesta["ips"]);
+
+                    // Asignar con el tipo de sangre
+                    let tiposangre = respuesta["tipo_sangre"] || "O";
+                    $("#ac_tipo_sangre").val(tiposangre);
+
+                    // Asignar con el tipo de sangre
+                    let rh = respuesta["rh"] || "+";
+                    $("#ac_rh").val(rh);
+
+
+
+                }
+
+            } else {
+                // Manejo de errores según el código de estado
+                let mensaje = "Hubo un error desconocido.";
+                if (respuesta['status'] == 20) {
+                    mensaje = "Hubo un error al eliminar la matrícula docente.";
+                } else if (respuesta['status'] == 21) {
+                    mensaje = "Hubo un error al actualizar la información.";
+                }
+                swal('Error', mensaje, 'error');
+            }
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema');
+            console.log(xhr);
+        }
+    });
 }
 
 
@@ -478,7 +677,7 @@ function update_direccion(form) {
                         }
 
                         // muestro confirmacion
-                        swal("actualizacion dirección","se actualizo con exito la dirección", "success");
+                        swal("actualizacion dirección", "se actualizo con exito la dirección", "success");
                         // voy a la seccion 6 del formulario matricula
                         gestion_matriculas(6);
 
@@ -543,7 +742,7 @@ function get_afiliaciones(id, form) {
 
                     case 2:
                         // se carga  el formulario
-                        $("#paginas").load("formulario_actualizar_afiliacion.html", function () {
+                        $("#paginas").load("formulario_actualizar_afiliaciones.html", function () {
                             // obtengo el valor de la direccion
                             $("#ac_direccion").val(respuesta["direccion_residencia"]);
                             // obtengo el valor del barrio

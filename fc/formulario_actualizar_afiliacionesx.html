@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Formulario Responsive</title>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <form>
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h1 class="display-6">Datos de afiliaciones</h1>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-6 col-md-4">
+                    <label for="ac_sisben" class="form-label">Sisben</label>
+                    <select class="form-control" id="ac_sisben">
+                        <option value="N" selected>ninguno</option>
+                        <option value="A">Grupo A</option>
+                        <option value="B">Grupo B</option>
+                        <option value="C">Grupo C</option>
+                        <option value="D">Grupo D</option>
+                    </select>
+                    <small id="ayuda_sisben" class="form-text text-muted">Agregue o actualice la afiliación del Sisben, por favor.</small>
+                </div>
+
+                <div class="col-sm-6 col-md-4">
+                    <label for="ac_vive_con" class="form-label">Vive con:</label>
+                    <select class="form-control" id="ac_vive_con">
+                        <option value="N" selected>ninguno</option>
+                        <option value="A">Ambos padres</option>
+                        <option value="B">Solo madre</option>
+                        <option value="C">Solo padre</option>
+                        <option value="D">Otro familiar</option>
+                    </select>
+                    <small id="ayuda_ac_estrato" class="form-text text-muted">Por favor, seleccione la persona con la que vive.</small>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-6 col-md-3">
+                    <label for="ac_etnia" class="form-label">Etnia</label>
+                    <select class="form-control" id="ac_tipo_etnia">
+                        <option value="indigena">Indígena</option>
+                        <option value="negritudes">Negritudes</option>
+                        <option value="gitano">Gitano</option>
+                        <option value="otro" selected>Otro</option>
+                    </select>
+                    <small id="ayuda_etnia" class="form-text text-muted">Ingrese o actualice el grupo étnico.</small>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <input type="checkbox" class="form-check-input" id="ac_etnia">
+                    <label class="form-check-label" for="ac_etnia">¿Perteneces a algún grupo étnico?</label>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-6 col-md-3">
+                    <label for="ac_familias_accion" class="form-label">Familias en acción</label>
+                    <input type="checkbox" class="form-check-input" id="ac_familias_accion">
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <label for="ac_victima_conflicto" class="form-label">Víctima del conflicto</label>
+                    <input type="checkbox" class="form-check-input" id="ac_victima_conflicto">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-6 col-md-3">
+                    <label for="ac_discapacitado" class="form-label">Discapacitado</label>
+                    <input type="checkbox" class="form-check-input" id="ac_discapacitado">
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <input class="form-control" id="ac_tipo_discapacidad" placeholder="Tipo de discapacidad">
+                    <small id="ayuda_tipo_discapacidad" class="form-text text-muted">Ingrese o actualice el tipo de discapacidad.</small>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-6 col-md-3">
+                    <label for="ac_eps" class="form-label">EPS/IPS</label>
+                    <input class="form-control" id="ac_eps" placeholder="EPS">
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <input class="form-control" id="ac_ips" placeholder="IPS">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-6 col-md-3">
+                    <label for="ac_tipo_sangre" class="form-label">Tipo de sangre</label>
+                    <select class="form-control" id="ac_tipo_sangre">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="AB">AB</option>
+                        <option value="O" selected>O</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <select class="form-control" id="ac_rh">
+                        <option value="+" selected>+</option>
+                        <option value="-">-</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-dark">Agregar/Actualizar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

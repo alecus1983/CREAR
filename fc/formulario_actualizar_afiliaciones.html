@@ -2,8 +2,8 @@
 <html lang="es">
 
 <head>
-    <script src="../boostrap/css/bootstrap.css" type="text/css"></script>
-    <script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
+    <link href="../boostrap/css/bootstrap.css" type="text/css"></link>
+    <link href="../boostrap/css/bootstrap.min.css" type="text/css"></link>
     <link href="css/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="estilos.css" rel="stylesheet" />
@@ -11,100 +11,205 @@
 
 <body>
 
-    <div class='container container-sm agregar_personas'>
+    <div class='container mt-5 agregar_personas'>
 
-        <div class='row'>
-            <div class='col'>
-                <h1 class='display-6'>Datos de afiliaciones</h1>
-            </div>
-        </div>
+        <form>
 
-        <div class='row'>
-
-            <div class='col'>
-                <label for='ac_sisben' class='form-label'>Sisben</label>
-                <select class='form-control' id='ac_sisben'>
-                    <option value='N' selected>ninguno</option>
-                    <option value='A'>Grupo A</option>
-                    <option value='B'>Grupo B</option>
-                    <option value='C'>Grupo C</option>
-                    <option value='D'>Grupo D</option>
-
-                </select>
-                <div id='ayuda_sisben' class='form-text'>agrege o actulize la afilici&oacute;n del sisben por favor.
+            <div class='row mb-5'>
+                <div class='col col-12'>
+                    <h1 class='display-6'>Datos de afiliaciones</h1>
                 </div>
             </div>
 
-            <div class='col'>
-                <label for='ac_eps' class='form-label'>Vive con:</label>
-                <select class='form-control' id='ac_sisben'>
-                    <option value='N' selected>ninguno</option>
-                    <option value='A'>Ambos padres</option>
-                    <option value='B'>Solo madre</option>
-                    <option value='C'>Solo padre</option>
-                    <option value='D'>otro familiar</option>
+            <div class='row mb-3'>
 
-                </select>
-                <div id='ayuda_ac_estrato' class='form-text'>por favor serleccone la persona con la que vive.</div>
+                <div class='col-md-6 col-sm-10'>
+                    <label for='ac_sisben' class='form-label'>Sisben</label>
+                    <select class='form-control' id='ac_sisben'>
+                        <option value='N' selected>ninguno</option>
+                        <option value='A'>Grupo A</option>
+                        <option value='B'>Grupo B</option>
+                        <option value='C'>Grupo C</option>
+                        <option value='D'>Grupo D</option>
+
+                    </select>
+                    <div id='ayuda_sisben' class='form-text'>agrege o actulize la afilici&oacute;n del sisben por favor.
+                    </div>
+                </div>
+
+                <div class='col-md-6 col-sm-10'>
+                    <label for='ac_vive_con' class='form-label'>Vive con:</label>
+                    <select class='form-control' id='ac_vive_con'>
+                        <option value='N' selected>ninguno</option>
+                        <option value='A'>Ambos padres</option>
+                        <option value='B'>Solo madre</option>
+                        <option value='C'>Solo padre</option>
+                        <option value='D'>otro familiar</option>
+
+                    </select>
+                    <div id='ayuda_ac_estrato' class='form-text'>por favor serleccone la persona con la que vive.</div>
+                </div>
+
             </div>
 
-            <div class='col'>
-                <div class="form-check">
+            <div class="row mb-3">
+                <div class="col-md-3 col-lg-3">
+                    <label>Etnia</label>
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <input type="checkbox" class="form-check-input" id="ac_etnia">
+                </div>
+
+                <div class="col-md-4 col-sm-10">
+                    <select class='form-control' id='ac_tipo_etnia'>
+
+                        <option value='indigena'>indigena</option>
+                        <option value='negritudes'>negritudes</option>
+                        <option value='gitano'>gitano</option>
+                        <option value='otro' selected>otro</option>
+
+                    </select>
+                    <div id="ayuda_etnia" class="form-text>">ingrese o actualize el grupo etnico</div>
+                </div>
+                <div class="col-md-4 col-sm-10">
+                    <input class="form-control" id="ac_resguardo_consejo">
+                    <div id="ayuda_resguardo_consejo" class="form-text>">ingrese o actualize el resguardo o consejo</div>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+
+                <div class="col col-md-3 col-lg-3">
                     <label for='ac_familias_accion' class='form-label'>Familias en acci&oacute;n</label>
-                    <input value='ac_familias_accion' class='form-check-input' id='ac_familias_accion'
+
+                </div>
+                <div class="col col-md-1 col-lg-1">
+                    <input value='' class='form-check-input' id='ac_familias_accion'
                         aria-describedby='ac_familias_accion' type="checkbox">
                 </div>
-                <!--<div id='ayuda_sisben' class='form-text'>agrege o actulize la afilici&oacute;n a familias en accion por favor.</div>-->
-            
-                <div class="input-group">
+                <div class="col">
+
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <div class="col col-md-3 col-lg-3">
+
+                    <label for='ac_victima_conflicto' class='form-label'>Victima del conflicto</label>
+                </div>
+
+                <div class="col col-md-1 col-lg-1">
+                    <input value='' class='form-check-input' id='ac_tipo_victima_conflicto'
+                        aria-describedby='ac_tipo_victima_conflicto' type="checkbox">
+
+                </div>
+
+                <div class="col l-8 sm-8 md-8">
+                    <input class='form-control' id='ac_municipio_expulsor' aria-describedby='ac_municipio_expulsor'>
+                    <div id='ayuda_municipio_expulsor' class='form-text'>agrege o actulize el municipio expulsor favor.
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-10 col-md-3 col-lg-3">
+
+                    <span for='ac_discapacitado' class='form-label'>Discapacitado</span>
+                </div>
+
+                <div class="col-sm-2 col-md-1 col-lg-1">
+                    <input value='true' class='form-check-input' id='ac_discapacitado'
+                        aria-describedby='ac_discapacitado' type="checkbox">
+
+                </div>
+
+                <div class="col-md-4 col-sm-10 col-lg-4">
+                    <input class='form-control' id='ac_tipo_discapacidad' aria-describedby='ac_tipo_discapacidad'>
+                    <div id='ayuda_tipo_discapacidad' class='form-text'>agrege o actulize el tipo de discapacidad
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-10 col-lg-4">
+                    <input class='form-control' id='ac_capacidad_excepcional'
+                        aria-describedby='ac_capacidad_excepcional'>
+                    <div id='ayuda_capacidad_excepcional' class='form-text'>agrege o actulize para una capacidad
+                        excepcional
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-10 col-md-3 col-lg-3">
+                    <label>EPS/IPS</label>
+                </div>
+
+                <div class="col-md-1 col-lg-1 col-sm-2">
+                    <input type="checkbox" class="form-check-input" id="ac_regimen_salud">
+                </div>
+
+                <div class="col-sm-10 col-md-4 col-lg-4">
+                    <input class="form-control" id="ac_eps" aria-describedby="ac_eps">
+                    <div id="ayuda_eps" class="form-text>">ingrese o actualize la EPS</div>
+                </div>
+
+                <div class="col-sm-10 col-md-4 col-lg-4">
+                    <input class="form-control" id="ac_ips" aria-describedby="ac_eips">
+                    <div id="ayuda_ips" class="form-text>">ingrese o actualize la IPS</div>
+                </div>
+
+            </div>
+
+
+            <div class="row mb-3">
+                <div class="col-sm-10 col-md-4 col-lg-4">
+                    <label>Tipo de sangre</label>
+                </div>
+
+                <div class="col-sm-10 col-md-4 col-lg-4">
+                    <select class='form-control' id='ac_tipo_sangre'>
+
+                        <option value='A'>A</option>
+                        <option value='B'>B</option>
+                        <option value='AB'>AB</option>
+                        <option value='O' selected>O</option>
+
+                    </select>
+                </div>
+
+                <div class="col-sm-10 col-md-4 col-lg-4">
+                    <select class='form-control' id='ac_rh'>
+
+                        <option value='+' selected>+</option>
+                        <option value='-'>-</option>
+                        
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class='col-md-4'>
                     
-                    <div class="input-group-prepend">
-                        <div class="form-check">
-                            <!--<label for='ac_regimen_salud' class='form-label'>Regimen de salud</label>-->
-                            <input value='ac_regimen_salud' class='form-check-input' id='ac_regimen_salud'
-                                aria-describedby='ac_regimen_salud' type="checkbox">
-                        </div>
-                    </div>
-
-                    <label for='ac_eps' class='form-label'>EPS</label>
-                    <input class='form-control' id='ac_eps' aria-describedby='ac_eps'>
                 </div>
-
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="form-check">
-                            <input value='ac_tipo_victima_conflicto' class='form-check-input' id='ac_tipo_victima_conflicto'
-                                aria-describedby='ac_tipo_victima_conflicto' type="checkbox">
-                        </div>
-                    </div>
-
-                    <label for='ac_eps' class='form-label'>Victima del conflicto</label>
-                    <input class='form-control' id='ac_eps' aria-describedby='ac_eps'>
-                    <div id='ayuda_sisben' class='form-text'>agrege o actulize el municipio expulsor favor.</div>
+                <div class='col-md-4'>
+                    
                 </div>
-                
+                <div class='col-md-4'>
+                    <br>
+                    <button  id='actualizar_afiliacion' class='btn btn btn-dark' onclick="actualizar_afiliaciones(persona)">
+                        agregar/actualizar
+                        
+                    </button>
+                </div>
             </div>
 
-            
+        </form>
 
-        </div>
-
-        <div class='row'>
-            <div class='col'>
-                <label for='ac_barrio' class='form-label'>barrio</label>
-                <input class='form-control' id='ac_barrio' aria-describedby='ac_barrio'>
-                <div id='ayuda_correo' class='form-text'>agrege o actualice el barrio por favor.</div>
-            </div>
-            <div class='col mx-auto justify-content-md'>
-                <br>
-                <button id='agregar_persona' class='btn btn btn-dark' onclick="update_direccion(2);">
-                    agregar/actualizar
-                    <img src='./svg/send.svg' />
-                </button>
-            </div>
-
-        </div>
-
+    
 
 
 

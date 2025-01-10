@@ -18,7 +18,7 @@ $respuesta = array();
 // creo nueva persona
 $persona = new personas();
 // obtengo los datos de la persona
-$persona->get_persona_por_id($id);
+$a = $persona->get_persona_por_id($id);
 
 $html = "";
 $html = $html . "<div class='container container-sm actualizar_personas'>";

@@ -36,17 +36,17 @@ class personas extends imcrea {
     // barrio varchar(50)
     private $barrio;
     // estrato int(1)
-    private $estrato;
+    public $estrato;
     // sisben bit (1)
-    private $sisben;
+    public $sisben;
     // familia en accion bit(1)
     public $familias_accion;
     // regimen en salud 1 contributivo, 2 subsidiado int(1)
     public $regimen_salud;
     // eps varchar(100)
-    private $eps;
+    public $eps;
     // persona con la que vive varchar (30)
-    private $vive_con ;
+    public $vive_con ;
     // victima de conflicto , bit(1)
     public $victima_conflicto;
     // tipo de victima de conflicto , varchar (100)
@@ -60,7 +60,7 @@ class personas extends imcrea {
     // capacidad excepcional, varchar(100)
     public $capacidad_excepcional;
     // etnia, bit(1)
-    private $etnia;
+    public $etnia;
     // tipo de etnia,  varchar (50)
     public $tipo_etnia;
     // resguardo o consejo, varchar(100) 
@@ -71,6 +71,8 @@ class personas extends imcrea {
     public $tipo_sangre;
     // rh,  varchar(3)
     public $rh;
+    // capacidad excepcional , varchar(100)
+    public $capacidad_exepcional;
 
 
     // datos de antecedentes patologicos, varchar(100)
@@ -139,6 +141,9 @@ class personas extends imcrea {
         $this->telefono = $a['telefono'];
         $this->u_alumnos = $a['u_alumnos'];
         $this->u_docentes = $a['u_docentes'];
+
+        // retorna todos los atributos de la persona
+        return $a;
     }
 
     //  funcion que actualiza uno o varios datos de la persona
@@ -245,6 +250,39 @@ class personas extends imcrea {
 
     }
 
+    // actualiza las afiliaciones de la persona
+    public function actualizar_afiliacion( ){
+
+        try {
+        $texto = "UPDATE personas SET 
+        sisben = '$this->sisben',
+        vive_con = '$this->vive_con',
+        etnia = $this->etnia,
+        tipo_etnia = '$this->tipo_etnia',
+        resguardo_consejo = '$this->resguardo_consejo',
+        familias_accion = $this->familias_accion,
+        tipo_victima_conflicto = $this->tipo_victima_conflicto,
+        municipio_expulsor = '$this->municipio_expulsor',
+        discapacitado = $this->discapacitado,
+        tipo_discapacidad = '$this->tipo_discapacidad',
+        capacidad_excepcional = '$this->capacidad_excepcional',
+        regimen_salud = $this->regimen_salud,
+        eps ='$this->eps',
+        ips = '$this->ips',
+        tipo_sangre = '$this->tipo_sangre',
+        rh = '$this->rh'
+         where id_personas = $this->id_persona";
+        
+        // ejecuto la consulta
+        $c = $this->_db->query($texto);
+        // retorno   es estado de la consulta
+
+        return $c;
+}   catch(Exception $e) {
+    echo 'Message: ' .$e->getMessage();
+  }
+    }
+
     // agregar persona
     // se agrega una nueva instancia del objeto
     // en la tabla persona
@@ -308,19 +346,44 @@ class personas extends imcrea {
 
     }
 
-    // funcion para obtener la persona
-    public function get_afiliacion($id_persona){
-
-
-        $q = "SELECT familias_accion, regimen_salud, eps, vive_con, tipo_victima_conflicto, municipio_expulsor, discapacitado, tipo_discapacidad, capacidad_excepcional, etnia, tipo_enia, resguardo_consejo  from personas where id_personas = $id_persona";
-
-        // ejecuto la consulta
-        $c = $this->_db->query($q);
-        // recupero un registro
-        $a = $c->fetch_array(MYSQLI_ASSOC);
-        //  retorno el valor obtenido
+    public function get_afiliacion($id_persona) {
+        // Verificar que el ID sea un valor entero para evitar inyecciones de tipo SQL
+        if (!is_numeric($id_persona)) {
+            throw new Exception("El ID de la persona no es válido.");
+        }
+    
+        // Consulta SQL con parámetros
+        $q = "SELECT sisben, familias_accion, regimen_salud, eps, vive_con, tipo_victima_conflicto, municipio_expulsor, discapacitado, tipo_discapacidad, capacidad_excepcional, etnia, tipo_etnia, resguardo_consejo, ips, tipo_sangre, rh FROM personas WHERE id_personas = ?";
+    
+        // Preparar la consulta
+        if ($stmt = $this->_db->prepare($q)) {
+            // Enlazar el parámetro
+            $stmt->bind_param("i", $id_persona); // 'i' significa que el parámetro es un entero
+    
+            // Ejecutar la consulta
+            $stmt->execute();
+    
+            // Obtener el resultado
+            $result = $stmt->get_result();
+    
+            // Verificar si se encontró la persona
+            if ($result->num_rows > 0) {
+                // Recuperar los datos
+                $a = $result->fetch_array(MYSQLI_ASSOC);
+            } else {
+                // Si no se encuentra la persona
+                $a = null;
+            }
+    
+            // Cerrar la declaración
+            $stmt->close();
+        } else {
+            // Si la preparación de la consulta falla
+            throw new Exception("Error al preparar la consulta.");
+        }
+    
+        // Retornar el resultado
         return $a;
-
     }
 
 

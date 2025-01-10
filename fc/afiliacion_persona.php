@@ -1,36 +1,59 @@
 <?php
-// Archivo prar realizar la gestion de personas
-// permite la busqueda de personas
-// permite agregar personas
-// asignarle correos
+// Archivo para realizar la gestión de personas
+// Permite la búsqueda de personas, agregar personas y asignar correos
 
-// archivo de datos
+// Archivo de datos
 require_once("datos.php");
-// obtencion de id
-$id = $_POST["id"];
-//variables de validacion
-$valido = true;
 
-$err = "";
-//array de respuesta
+// Inicializar variables de respuesta
 $respuesta = array();
 
-// creo nueva persona
-$persona = new personas();
-
-// si los datos son validos
-if ($valido) {
-
-    // obtengo los datos de la persona
-    $respuesta = $persona->get_afiliacion($id);
-    // agrego el estado de la peticion
-    $respuesta['status']=1;
-}
-else {
+// Verificar que el ID esté presente en la solicitud POST
+if (isset($_POST["id"]) && !empty($_POST["id"])) {
+    $id = $_POST["id"];
+    
+    // Validación básica del ID (asegúrate de que sea un número válido si corresponde)
+    if (!is_numeric($id)) {
+        $respuesta['status'] = 20;
+        $respuesta['mensaje'] = "ID inválido. Debe ser un número.";
+    } else {
+        // Variables de validación
+        $valido = true;
+        
+        // Crear una nueva persona
+        $persona = new personas();
+        
+        // Si los datos son válidos
+        if ($valido) {
+            try {
+                // Obtengo los datos de la persona
+                $respuesta = $persona->get_afiliacion($id);
+                
+                // Verificar si la respuesta contiene los datos esperados
+                if ($respuesta) {
+                    $respuesta['status'] = 1; // Operación exitosa
+                } else {
+                    $respuesta['status'] = 21;
+                    $respuesta['mensaje'] = "No se encontró la persona con el ID proporcionado.";
+                }
+            } catch (Exception $e) {
+                // En caso de error en la obtención de datos
+                $respuesta['status'] = 500;
+                $respuesta['mensaje'] = "Error interno en el servidor: " . $e->getMessage();
+            }
+        } else {
+            // Si no es válido
+            $respuesta['status'] = 20;
+            $respuesta['mensaje'] = "Error en la validación de los datos.";
+        }
+    }
+} else {
+    // Si no se ha enviado el ID
     $respuesta['status'] = 20;
+    $respuesta['mensaje'] = "ID no proporcionado.";
 }
 
-$respuesta_json = json_encode($respuesta);
-echo $respuesta_json;
+// Convertir la respuesta a formato JSON y devolverla
+echo json_encode($respuesta);
 
 ?>

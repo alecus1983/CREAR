@@ -4,11 +4,21 @@ let id_persona = 0;
 let id_alumno = 0;
 
 // objeto tipo acudiente
-let id_acudiente = {
+let acudiente = {
 	id_acudiente: 0,
 	id_persona: 0,
 	id_hijo: 0,
 	fecha : "",
+	nombres : "",
+	apellidos : "",
+	identificacion : "",
+	tipo_identificacion : "",
+	nacimiento : "",
+	correo : "",
+	i_correo : "",
+	celular : "",
+	telefono : "",
+	
 };
 
 // objeto tipo padre
@@ -16,21 +26,94 @@ let padre = {
 	id_padre : 0,
 	id_persona : 0,
 	id_hijo : 0, 
-	fecha : ""
+	fecha : "",
+	nombres : "",
+	apellidos : "",
+	identificacion : "",
+	tipo_identificacion : "",
+	nacimiento : "",
+	correo : "",
+	i_correo : "",
+	celular : "",
+	telefono : "",
+	
 };
+
+// objeto tipo padre
+let madre = {
+	id_padre : 0,
+	id_persona : 0,
+	id_hijo : 0, 
+	fecha : "",
+	nombres : "",
+	apellidos : "",
+	identificacion : "",
+	tipo_identificacion : "",
+	nacimiento : "",
+	correo : "",
+	i_correo : "",
+	celular : "",
+	telefono : "",
+	
+};
+
+
 
 // objeto docente
 let docente = {
 	id_docente : 0,
 	id_persona :  0,
-	fecha : ""
+	fecha : "",
+	nombres : "",
+	apellidos : "",
+	identificacion : "",
+	tipo_identificacion : "",
+	nacimiento : "",
+	correo : "",
+	i_correo : "",
+	celular : "",
+	telefono : ""
 };
 
 // objeto almno
 let alumno = {
 	id_alumno : 0,
 	id_persona : 0,
-	fecha : ""
+	fecha : "",
+	nombres : "",
+	apellidos : "",
+	identificacion : "",
+	tipo_identificacion : "",
+	nacimiento : "",
+	correo : "",
+	i_correo : "",
+	celular : "",
+	telefono : "",
+	direccion_residencia : "",
+	barrio : "",
+	estrato : "",
+	sisben : "",
+	familias_accion : false,
+	regimen_salud : false,
+	eps: "",
+	vive_con : "",
+	tipo_victima_conflicto : "",
+	municipio_expulsor : "",
+	discapacitado: false,
+	tipo_discapacidad : "",
+	capacidad_excepcional : "",
+	etnia : false ,
+	tipo_etnia : "",
+	resguardo_consejo : "",
+	antecedentes_patologicos_medicos : "",
+	antecedentes_patologicos_quirurgicos : "",
+	antecedentes_patologicos_toxicos : "",
+	antecedentes_patologicos_psiquiatricos : "",
+	antecedentes_patologicos_psicologicos : "",
+	antecedentes_patologicos_morbilidad : "",
+	ips : "",
+	rh : "",
+	tipo_sangre :""
 };
 
 // objeto persona
@@ -69,6 +152,9 @@ let persona = {
 	antecedentes_patologicos_psiquiatricos : "",
 	antecedentes_patologicos_psicologicos : "",
 	antecedentes_patologicos_morbilidad : "",
+	ips : "",
+	rh : "",
+	tipo_sangre :""
 };
 
 // codigo de docente
@@ -156,14 +242,27 @@ function gestion_matriculas(id) {
 		case 6:
 			$("#avance").html("");
 			$("#tabla").html("");
-			$("#avance").load("formulario_matricula_6.html");
+			$("#avance").load("formulario_matricula_6.html", function (){
+				
+				$("#paginas").load("formulario_actualizar_afiliaciones.html", function(){
+					$("#paginas").prepend("<p>Se ha selecionado la persona <b>"+persona["nombres"]+" "+persona["apellidos"]+"</b>, con codigo " + persona["id_persona"] + ", con identificacion "+persona["identificacion"]+"</p>");
+					get_afiliacion(persona["id_persona"],2);
+				});
+				
+			});
 
 			break;
 
 		case 7:
 			$("#avance").html("");
 			$("#tabla").html("");
-			$("#avance").load("formulario_matricula_7.html");
+			$("#avance").load("formulario_matricula_7.html" ,  function() {
+				
+				$("#paginas").load("formulario_actualizar_antecedentes_patologicos.html", function(){
+					$("#paginas").prepend("<p>Se ha selecionado la persona <b>"+persona["nombres"]+" "+persona["apellidos"]+"</b>, con codigo " + persona["id_persona"] + ", con identificacion "+persona["identificacion"]+"</p>");
+				});
+				
+			});
 			break;
 
 
