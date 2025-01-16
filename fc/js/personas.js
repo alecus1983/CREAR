@@ -61,7 +61,7 @@ function gestion_personas() {
 
 // funcion que muestra listado de personas que  coinciden con los datos
 
-function cambio_datos(repo) {
+function cambio_datos(repo, personax, form) {
 
     // se invoca al metodo ajax para solicitar
     // el listado de personas
@@ -72,7 +72,9 @@ function cambio_datos(repo) {
         data: {
             nombres: $("#nombres").val(),
             apellidos: $("#apellidos").val(),
-            identificacion: $("#identificacion").val()
+            identificacion: $("#identificacion").val(),
+            personax: personax,
+            form: form
         },
         // si los datos son correctos entonces ...
         success: function (respuesta) {
@@ -116,7 +118,7 @@ function formulario_agregar_persona() {
 }
 
 // funcion para agregar personas
-function agregar_persona(formulario) {
+function agregar_persona(formulario, personax) {
 
     // almaceno los datos en el json
     // a partir de los campos del formulario
@@ -150,12 +152,12 @@ function agregar_persona(formulario) {
 
                     case 2:
 
-                        persona["nombres"] = respuesta["nombres"];
-                        persona["apellidos"] = respuesta["apellidos"];
-                        persona["identificacion"] = respuesta["idetificacion"];
+                        personax["nombres"] = respuesta["nombres"];
+                        personax["apellidos"] = respuesta["apellidos"];
+                        personax["identificacion"] = respuesta["idetificacion"];
                         // tomo como persona seleccionada la presona 
                         // retornada
-                        seleccionar_persona(respuesta["id_persona"]);
+                        seleccionar_persona(respuesta["id_persona"], personax, 4);
                         // voy al formulario cuatro
                         gestion_matriculas(4)
 
@@ -302,9 +304,13 @@ function actualizar_afiliaciones(personax) {
             // Si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 swal("Completado", "Se completó el registro", "success");
+                // voy a la seccion 6 del formulario matricula
+                gestion_matriculas(7);
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
                 swal('Error', errorMap[respuesta['status']], 'error');
+
+
             } else {
                 swal('Error', 'Se produjo un error inesperado', 'error');
             }
@@ -316,6 +322,58 @@ function actualizar_afiliaciones(personax) {
     });
 }
 
+
+
+// Función para actualizar los datos de una persona con relación a sus afiliaciones
+function actualizar_antecedentes_patologicos(personax) {
+    // Se precargan los atributos del formulario
+
+    personax.antecedentes_patologicos_medicos = $("#ac_medicos").val();
+    personax.antecedentes_patologicos_quirurgicos = $("#ac_quirurgicos").val();
+    personax.antecedentes_patologicos_toxicos = $("#ac_toxicos").val();
+    personax.antecedentes_patologicos_psiquiatricos = $("#ac_psiquiatricos").val();
+    personax.antecedentes_patologicos_psicologicos = $("#ac_psicologicos").val();
+    personax.antecedentes_patologicos_morbilidad = $("#ac_morbilidad").val();
+
+
+
+    // Solicitar datos al servidor mediante AJAX
+    $.ajax({
+        type: "POST",
+        url: "actualizar_antecedentes.php",
+        dataType: "json",
+        data: personax,
+        success: function (respuesta) {
+            // Mapa de errores
+            const errorMap = {
+                20: 'No se pudo actualizar la semana.',
+                22: 'Por favor seleccione un año.',
+                23: 'Por favor seleccione una fecha de inicio.',
+                24: 'Por favor seleccione una fecha de fin.',
+                25: 'La fecha de inicio debe ser menor que la de fin.',
+                26: 'Por favor seleccione una semana.'
+            };
+
+            // Si la respuesta es positiva
+            if (respuesta['status'] == 1) {
+                swal("Completado", "Se completó el registro", "success");
+                // voy a la seccion 8 del formulario matricula
+                gestion_matriculas(8);
+            } else if (errorMap[respuesta['status']]) {
+                // Si el código de error existe en el mapa
+                swal('Error', errorMap[respuesta['status']], 'error');
+
+
+            } else {
+                swal('Error', 'Se produjo un error inesperado', 'error');
+            }
+        },
+        error: function (xhr, status, error) {
+            swal('Disculpe, existió un problema');
+            console.log("Error AJAX:", status, error);
+        }
+    });
+}
 
 
 // funcion que solicitar datos de la persona
@@ -357,7 +415,7 @@ function datos_persona(id) {
 // y los coloca en el el div #tabla
 // requiere como entrada el codigo de la persona
 
-function get_persona(id) {
+function get_persona(id, personax) {
     //  realizo la consulta en de los datos
     $.ajax({
         type: "POST",
@@ -370,9 +428,9 @@ function get_persona(id) {
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-                persona["nombres"] = respuesta["nombres"];
-                persona["apellidos"] = respuesta["apellidos"];
-                persona["identificacion"] = respuesta["identificacion"];
+                personax["nombres"] = respuesta["nombres"];
+                personax["apellidos"] = respuesta["apellidos"];
+                personax["identificacion"] = respuesta["identificacion"];
             } else {
                 if (respuesta['status'] == 20) {
                     swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
@@ -445,15 +503,15 @@ function eliminar_persona(id_personas) {
 
 // funcion que permite seleccionar una persona en 
 // el formaulario
-function seleccionar_persona(id) {
+function seleccionar_persona(id, personax, form) {
     //  cargo el los datos de la persona
-    persona["id_persona"] = id;
+    personax["id_persona"] = id;
     // obtengo los datos de la persona en el json persona
-    get_persona(id);
+    get_persona(id, personax);
     // los muestro
-    swal("seleccion", "Se selecciono la persona " + persona["id_persona"], 'success');
+    swal("seleccion", "Se selecciono la persona " + personax["id_persona"], 'success');
     // voy al formulario 4 de matriculas
-    gestion_matriculas(4);
+    gestion_matriculas(form);
 }
 
 
@@ -493,10 +551,9 @@ function get_afiliacion(id, form) {
                     respuesta["familias_accion"] === 1 ? $("#ac_familias_accion").prop("checked", true) : $("#ac_familias_accion").prop("checked", false);
 
                     // Propiedad `checked` para victima del conflicto
-                    if (respuesta["tipo_victima_conflicto"] == 1) 
-                        { $("#ac_tipo_victima_conflicto").prop("checked", true) }
-                    
-                    else{ $("#ac_tipo_victima_conflicto").prop("checked", false)};
+                    if (respuesta["tipo_victima_conflicto"] == 1) { $("#ac_tipo_victima_conflicto").prop("checked", true) }
+
+                    else { $("#ac_tipo_victima_conflicto").prop("checked", false) };
 
                     // asignar municipio_expulsor	
                     $("#ac_municipio_expulsor").val(respuesta["municipio_expulsor"]);
@@ -555,7 +612,7 @@ function get_afiliacion(id, form) {
 // require el codigo de la persona
 // y el codigo del formulario
 
-function get_direccion(id, form) {
+function get_direccion(personax, form) {
 
     // solicito datos en ajax
     $.ajax({
@@ -563,50 +620,18 @@ function get_direccion(id, form) {
         url: "direccion_persona.php",
         dataType: "json",
         data: {
-            id: id
+            id: personax["id_persona"]
         },
         // si los datos son correctos entonces ...
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
 
-                // salta de acuerdo al formulario
-                switch (form) {
-
-                    case 2:
-                        // se carga  el formulario
-                        $("#paginas").load("formulario_actualizar_direccion.html", function () {
-                            // obtengo el valor de la direccion
-                            $("#ac_direccion").val(respuesta["direccion_residencia"]);
-                            // obtengo el valor del barrio
-                            $("#ac_barrio").val(respuesta["barrio"]);
-                            switch (respuesta["estrato"]) {
-                                case "1":
-                                    $("#ac_estrato").val("1");
-                                    break;
-
-                                case "2":
-                                    $("#ac_estrato").val("2");
-                                    break;
-
-                                case "3":
-                                    $("#ac_estrato").val("3");
-                                    break;
-
-                                case "4":
-                                    $("#ac_estrato").val("4");
-                                    break;
-
-                                case "5":
-                                    $("#ac_estrato").val("5");
-                                    break;
-                            }
-
-
-                        });
-
-                        break;
-                }
+                // retorno la direccion de la persona
+                personax["direccion_residencia"] = respuesta["direccion_residencia"];
+                personax["estrato"] = respuesta["estrato"];
+                personax["barrio"] = respuesta["barrio"];
+                return 1;
 
             } else {
                 if (respuesta['status'] == 20) {
@@ -615,6 +640,9 @@ function get_direccion(id, form) {
                 if (respuesta['status'] == 21) {
                     swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
                 }
+
+                //  retorno cero
+                return 0;
             }
         },
         error: function (xhr, status) {
@@ -626,21 +654,21 @@ function get_direccion(id, form) {
 }
 
 // actualizar direccion
-function update_direccion(form) {
+function update_direccion(form, personax) {
 
     // tomo el dato
-    persona["estrato"] = $("#ac_estrato").val();
+    personax["estrato"] = $("#ac_estrato").val();
     // tomo el dato dle barrio
-    persona["barrio"] = $("#ac_barrio").val();
+    personax["barrio"] = $("#ac_barrio").val();
     // tomo el id
-    persona["direccion_residencia"] = $("#ac_direccion").val();
+    personax["direccion_residencia"] = $("#ac_direccion").val();
 
     // solicito datos en ajax
     $.ajax({
         type: "POST",
         url: "actualizar_persona_direccion.php",
         dataType: "json",
-        data: persona,
+        data: personax,
         // si los datos son correctos entonces ...
         success: function (respuesta) {
             // si la respuesta es positiva
@@ -742,9 +770,9 @@ function get_afiliaciones(id, form) {
 
                     case 2:
                         // se carga  el formulario
-                        $("#paginas").load("formulario_actualizar_afiliaciones.html", function () {
-                            // obtengo el valor de la direccion
-                            $("#ac_direccion").val(respuesta["direccion_residencia"]);
+                        $("#paginas").load("formulario_actualizar_antecedentes.html", function () {
+                            // obtengo el valor de los antecedentes medicos
+                            $("#ac_medicos").val(respuesta["antecedents_patologicos_medicos"]);
                             // obtengo el valor del barrio
                             $("#ac_barrio").val(respuesta["barrio"]);
                             switch (respuesta["estrato"]) {
@@ -789,5 +817,75 @@ function get_afiliaciones(id, form) {
             console.log(xhr);
         }
     });
+
+}
+
+// funcion que obtiene los datos de antecedentes
+
+
+function get_antecedemtes(id, form) {
+
+    // solicito datos en ajax
+    $.ajax({
+        type: "POST",
+        url: "antecedentes_persona.php",
+        dataType: "json",
+        data: {
+            id: id
+        },
+        // si los datos son correctos entonces ...
+        success: function (respuesta) {
+            // si la respuesta es positiva
+            if (respuesta['status'] == 1) {
+
+                // salta de acuerdo al formulario
+                switch (form) {
+
+                    case 2:
+                        // se carga  el formulario
+                        $("#paginas").load("formulario_actualizar_antecedentes.html", function () {
+                            // obtengo el valor de los antecedentes medicos
+                            $("#ac_medicos").val(respuesta["antecedents_patologicos_medicos"]);
+                            // obtengo el valor de los antecedentes quirurgicos
+                            $("#ac_quirurgicos").val(respuesta["antecedentes_patologicos_quirurgicos"]);
+                            // obtengo el valor de los antecedentes quirurgicos
+                            $("#ac_toxicos").val(respuesta["antecedentes_patologicos_toxicos"]);
+                            // obtengo el valor de los antecedentes quirurgicos
+                            $("#ac_psiquiatricos").val(respuesta["antecedentes_patologicos_psiquiatricos"]);
+                            // obtengo el valor de los antecedentes quirurgicos
+                            $("#ac_psicologicos").val(respuesta["antecedentes_patologicos_psicologicos"]);
+                            // obtengo el valor de los antecedentes quirurgicos
+                            $("#ac_morbilidad").val(respuesta["antecendentes_patologicos_morbilidad"]);
+
+                        });
+
+                        break;
+                }
+
+            } else {
+                if (respuesta['status'] == 20) {
+                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                }
+                if (respuesta['status'] == 21) {
+                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                }
+            }
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema');
+            console.log(xhr);
+        }
+    });
+
+}
+
+// funcion para copiar los datos de un acudinte
+function cp_acudiente(personax) {
+    // tomo los datos del padre
+    acudiente = personax;
+    
+
+	// va la pagina 19 de gestion matriculas
+    gestion_matriculas(19);
 
 }

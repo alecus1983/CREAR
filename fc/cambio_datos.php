@@ -12,6 +12,8 @@ $respuesta = array();
 $nombres = $_POST["nombres"];
 $apellidos = $_POST["apellidos"];
 $identificacion = $_POST["identificacion"];
+$personax = $_POST["personax"];
+$form = $_POST["form"];
 
 $html = "";
 // si los datos son validos
@@ -68,7 +70,7 @@ foreach  ( $lista as $id ) {
         $html = $html. "<button type='button' class='btn btn-info' onclick='datos_persona(\"$id[3]\");'>actualizar</button>";
         $html = $html. "</td>";
         $html = $html. "<td>";
-        $html = $html. "<button type='button' class='btn btn-success' onclick='seleccionar_persona(\"$id[3]\");'>seleccioar</button>";
+        $html = $html. "<button type='button' class='btn btn-success' onclick='seleccionar_persona(\"$id[3]\",$personax, $form);'>seleccioar</button>";
         $html = $html. "</td>";
         $html = $html. "<td>";
         $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_persona(\"$id[3]\");'>eliminar</button>";

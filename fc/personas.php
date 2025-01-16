@@ -283,6 +283,30 @@ class personas extends imcrea {
   }
     }
 
+
+// actualiza las afiliaciones de la persona
+public function actualizar_antecedentes( ){
+
+    try {
+    $texto = "UPDATE personas SET 
+    antecedents_patologicos_medicos = '$this->antecedentes_patologicos_medicos',
+    antecedentes_patologicos_quirurgicos = '$this->antecedentes_patologicos_quirurgicos',
+    antecedentes_patologicos_psiquiatricos = '$this->antecedentes_patologicos_psiquiatricos',
+    antecedentes_patologicos_psicologicos = '$this->antecedentes_patologicos_psicologicos',
+    antecedentes_patologicos_toxicos = '$this->antecedentes_patologicos_toxicos',
+    antecendentes_patologicos_morbilidad = '$this->antecedentes_patologicos_morbilidad'
+     where id_personas = $this->id_persona";
+    
+    // ejecuto la consulta
+    $c = $this->_db->query($texto);
+    // retorno   es estado de la consulta
+
+    return $c;
+}   catch(Exception $e) {
+echo 'Message: ' .$e->getMessage();
+}
+}
+
     // agregar persona
     // se agrega una nueva instancia del objeto
     // en la tabla persona
@@ -346,6 +370,7 @@ class personas extends imcrea {
 
     }
 
+    // obtengo los datos de las afiliaciones de un estudiante
     public function get_afiliacion($id_persona) {
         // Verificar que el ID sea un valor entero para evitar inyecciones de tipo SQL
         if (!is_numeric($id_persona)) {
@@ -354,6 +379,54 @@ class personas extends imcrea {
     
         // Consulta SQL con parámetros
         $q = "SELECT sisben, familias_accion, regimen_salud, eps, vive_con, tipo_victima_conflicto, municipio_expulsor, discapacitado, tipo_discapacidad, capacidad_excepcional, etnia, tipo_etnia, resguardo_consejo, ips, tipo_sangre, rh FROM personas WHERE id_personas = ?";
+    
+        // Preparar la consulta
+        if ($stmt = $this->_db->prepare($q)) {
+            // Enlazar el parámetro
+            $stmt->bind_param("i", $id_persona); // 'i' significa que el parámetro es un entero
+    
+            // Ejecutar la consulta
+            $stmt->execute();
+    
+            // Obtener el resultado
+            $result = $stmt->get_result();
+    
+            // Verificar si se encontró la persona
+            if ($result->num_rows > 0) {
+                // Recuperar los datos
+                $a = $result->fetch_array(MYSQLI_ASSOC);
+            } else {
+                // Si no se encuentra la persona
+                $a = null;
+            }
+    
+            // Cerrar la declaración
+            $stmt->close();
+        } else {
+            // Si la preparación de la consulta falla
+            throw new Exception("Error al preparar la consulta.");
+        }
+    
+        // Retornar el resultado
+        return $a;
+    }
+
+
+    // obtengo los datos de los antecedentes de un estudiante
+
+    public function get_antecedentes($id_persona) {
+        // Verificar que el ID sea un valor entero para evitar inyecciones de tipo SQL
+        if (!is_numeric($id_persona)) {
+            throw new Exception("El ID de la persona no es válido.");
+        }
+    
+        // Consulta SQL con parámetros
+        $q = "SELECT antecedents_patologicos_medicos,
+                antecedentes_patologicos_quirurgicos,
+                antecedentes_patologicos_toxicos,
+                antecedentes_patologicos_psiquiatricos,
+                antecedentes_patologicos_psicologicos,
+                antecendentes_patologicos_morbilidad FROM personas WHERE id_personas = ?";
     
         // Preparar la consulta
         if ($stmt = $this->_db->prepare($q)) {

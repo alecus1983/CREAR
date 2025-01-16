@@ -22,22 +22,24 @@
                 <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(2);">2</a></li>
                 <li class="page-item active"><a class="page-link">3</a></li>
                 <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(4);">4</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(5);">5</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(6);">6</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(7);">7</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(8);">8</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(9);">9</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(10);">10</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(11);">11</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(12);">12</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(13);">13</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(14);">14</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(15);">15</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(16);">16</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(17);">17</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(18);">18</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(19);">19</a></li>
-                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(20);">20</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(5);">5</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(6);">6</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(7);">7</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(8);">8</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(9);">9</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(10);">10</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(11);">11</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(12);">12</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(13);">13</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(14);">14</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(15);">15</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(16);">16</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(17);">17</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(18);">18</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(19);">19</a></li>
+                <li class="page-item disabled"><a class="page-link" onclick="gestion_matriculas(20);">20</a></li>
+                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(21);">21</a></li>
+                <li class="page-item disabled"><a class="page-link"  onclick="gestion_matriculas(21);">21</a></li>
 
             </ul>
         </nav>
@@ -47,37 +49,44 @@
             <p>En el siguiente formulario podras buscar la información correspondinte al estudiante que ya ha estado
                 registrado en la institución</p>
             <div id="paginas" class="container text-start">
-                <div class="container container-sm">
-                    <div class="row">
-                        <div class="col">
+                <form>
+
+          
+        
+        
+                    <div class="row mb-5">
+                        <div class="col-md-4 col-sm-10 col-lg-4">
                             <label for="nombres" class="form-label">Nombre</label>
                             <input class="form-control" id="nombres" aria-describedby="nombres"
-                                onkeydown="cambio_datos('#tabla');">
+                                onkeydown="cambio_datos('#tabla', 'alumno',4);">
                             <div id="ayuda_nombre" class="form-text">digite el nombre o parte del nombre por favor.
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-md-4 col-sm-10 col-lg-4">
                             <label for="apellidos" class="form-label">Apellidos</label>
                             <input class="form-control" id="apellidos" aria-describedby="apellidos"
-                                onkeydown="cambio_datos('#tabla');">
+                                onkeydown="cambio_datos('#tabla', 'alumno',4);">
                             <div id="ayuda_apellidos" class="form-text">digite el nombre o parte de los apellidos por
                                 favor.</div>
                         </div>
-
-                        <div class="col">
+        
+                        <div class="col-md-4 col-sm-10 col-lg-4">
                             <label for="identificacion" class="form-label">Numero de identificación</label>
-                            <input class="form-control" id="identificacion" aria-describedby="identificacion"
-                                type="number" onkeydown="cambio_datos('#tabla');">
+                            <input class="form-control" id="identificacion" aria-describedby="identificacion" type="number"
+                                onkeydown="cambio_datos('#tabla', 'alumno',4);">
                             <div id="ayuda_identificacion" class="form-text">digite parte del documento de
                                 identicación por favor.</div>
                         </div>
-                        <div class="col mx-auto justify-content-md"><br>
-
-                        </div>
-
+                        
+        
                     </div>
+        
+        
+                
+        
+                </form>
 
-                </div>
+
             </div>
         </div>
 

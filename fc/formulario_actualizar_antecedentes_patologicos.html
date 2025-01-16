@@ -15,22 +15,13 @@
 
         <form>
 
-            <div class='row'>
-                <div class='col'>
-                    <h1 class='display-6'>Datos de antecedentes_patologicos</h1>
-                </div>
-            </div>
-
-
-
-            <div class="row">
-                <div class="col col-md-2 col-lg-2">
+            <div class="row mb-3">
+                <div class="col-md-2 col-lg-2">
                     <label>M&eacute;dicos</label>
                 </div>
 
-                <div class="col">
+                <div class="col-md-10 ">
                     <div class="form-group">
-                        
                         <textarea class="form-control" id="ac_medicos"></textarea>
                         <label id="ayuda_medicos" class="form-text>">ingrese o actualize los antecedentes
                             m&eacute;dicos</label>
@@ -40,14 +31,13 @@
 
 
 
-            <div class="row">
-                <div class="col col-md-2 col-lg-2">
+            <div class="row mb-3">
+                <div class="col-sm-10 col-md-2 col-lg-2">
                     <label>Quirurgicos</label>
                 </div>
 
-                <div class="col">
+                <div class="col-sm-10 col-md-10">
                     <div class="form-group">
-                        
                         <textarea class="form-control" id="ac_quirurgicos"></textarea>
                         <label id="ayuda_quirurgicos" class="form-text>">ingrese o actualize los antecedentes
                             quirurgicos</label>
@@ -55,76 +45,77 @@
                 </div>
             </div>
 
-    
 
-    <div class="row">
-        <div class="col col-md-2 col-lg-2">
-            <label>T&oacute;xicos</label>
-        </div>
 
-        <div class="col">
-            <div class="form-group">
-                
-                <textarea class="form-control" id="ac_quirurgicos"></textarea>
-                <label id="ayuda_quirurgicos" class="form-text>">ingrese o actualize los antecedentes toxicos</label>
+            <div class="row mb-3">
+                <div class="col-sm-10 col-md-2 col-lg-2">
+                    <label>T&oacute;xicos</label>
+                </div>
+
+                <div class="col-sm-10 col-md-10 col-lg-10">
+                    <div class="form-group">
+                        <textarea class="form-control" id="ac_toxicos"></textarea>
+                        <label id="ayuda_toxicos" class="form-text>">ingrese o actualize los antecedentes
+                            toxicos</label>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
 
-    <div class="row">
-        <div class="col col-md-2 col-lg-2">
-            <label>Psiquiatricos</label>
-        </div>
+            <div class="row mb-3">
+                <div class="col col-md-2 col-lg-2">
+                    <label>Psiquiatricos</label>
+                </div>
 
-        <div class="col">
-            <div class="form-group">
-                
-                <textarea class="form-control" id="ac_psiquiatricos"></textarea>
-                <label id="ayuda_psiquiatricos" class="form-text>">ingrese o actualize los antecedentes psiquiatricos</label>
+                <div class="col-sm-10 col-md-10 col-lg-10">
+                    <div class="form-group">
+                        <textarea class="form-control" id="ac_psiquiatricos"></textarea>
+                        <label id="ayuda_psiquiatricos" class="form-text>">ingrese o actualize los antecedentes
+                            psiquiatricos</label>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
 
-    <div class="row">
-        <div class="col col-md-2 col-lg-2">
-            <label>psicologicos</label>
-        </div>
+            <div class="row mb-3">
+                <div class="col col-md-2 col-lg-2">
+                    <label>psicologicos</label>
+                </div>
 
-        <div class="col">
-            <div class="form-group">
-                
-                <textarea class="form-control" id="ac_psicologicos"></textarea>
-                <label id="ayuda_psicologicos" class="form-text>">ingrese o actualize los antecedentes psicologicos</label>
+                <div class="col-sm-10 col-md-10 col-lg-10">
+                    <div class="form-group">
+
+                        <textarea class="form-control" id="ac_psicologicos"></textarea>
+                        <label id="ayuda_psicologicos" class="form-text>">ingrese o actualize los antecedentes
+                            psicologicos</label>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col col-md-2 col-lg-2">
-            <label>Morbilidad</label>
+            <div class="row mb-3">
+                <div class="col col-md-2 col-lg-2">
+                    <label>Morbilidad</label>
+                    </div>
 
-        <div class="col">
-            <div class="form-group">
-                
-                <textarea class="form-control" id="ac_morbilidad"></textarea>
-                <label id="ayuda_morbilidad" class="form-text>">ingrese o actualize los antecedentes morbilidad</label>
+                    <div class="col-sm-10 col-md-10 col-lg-10">
+                        <div class="form-group">
+                            <textarea class="form-control" id="ac_morbilidad"></textarea>
+                            <label id="ayuda_morbilidad" class="form-text>">ingrese o actualize los antecedentes
+                                morbilidad</label>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class='col mx-auto justify-content-md'>
-            <br>
-            <button id='agregar_persona' class='btn btn btn-dark' onclick="update_direccion(2);">
-                agregar/actualizar
-                <img src='./svg/send.svg' />
-            </button>
-        </div>
-    </div>
+            <div class="row mb-3">
+                <div class='col-sm-10 col-md-10 col-lg-10'>
+                    <!-- <button id='agregar_persona' class='btn btn btn-dark' onclick="actualizar_antecedentes_patologicos(alumno);">
+                        agregar/actualizar
+                    </button> -->
+                </div>
+            </div>
 
-    </form>
+        </form>
 
 
     </div>

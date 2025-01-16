@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link href="../boostrap/css/bootstrap.css" type="text/css">
+    </link>
+    <link href="../boostrap/css/bootstrap.min.css" type="text/css">
+    </link>
+    <link href="css/style.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="estilos.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class='container mt-5 agregar_personas'>
+
+        <form>
+
+            <div class='row mb-5'>
+                <div class='col col-12'>
+                    <h1 class='display-6'>Datos para seleccionar persona</h1>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4 col-sm-10 col-lg-4">
+                    <label for="nombres" class="form-label">Nombre</label>
+                    <input class="form-control" id="nombres" aria-describedby="nombres"
+                        onkeydown="cambio_datos('#tabla');">
+                    <div id="ayuda_nombre" class="form-text">digite el nombre o parte del nombre por favor.
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-10 col-lg-4">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input class="form-control" id="apellidos" aria-describedby="apellidos"
+                        onkeydown="cambio_datos('#tabla');">
+                    <div id="ayuda_apellidos" class="form-text">digite el nombre o parte de los apellidos por
+                        favor.</div>
+                </div>
+
+                <div class="col-md-4 col-sm-10 col-lg-4">
+                    <label for="identificacion" class="form-label">Numero de identificación</label>
+                    <input class="form-control" id="identificacion" aria-describedby="identificacion" type="number"
+                        onkeydown="cambio_datos('#tabla');">
+                    <div id="ayuda_identificacion" class="form-text">digite parte del documento de
+                        identicación por favor.</div>
+                </div>
+                
+
+            </div>
+
+
+        
+
+        </form>
+
+
+
+
+
+    </div>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+</body>
