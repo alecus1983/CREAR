@@ -22,7 +22,7 @@ $persona = new personas();
 if ($valido) {
 
     // obtengo los datos de la persona
-    $respuesta = $persona->get_direccion($id);
+    $respuesta = $persona->get_direccion( $id);
     // agrego el estado de la peticion
     $respuesta['status']=1;
 }

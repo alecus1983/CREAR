@@ -99,10 +99,65 @@ class imcrea {
 // Clase de escolaridad
 
 class escolaridad extends imcrea{
+
+    public $id_escolaridad;
+
+    public $escolaridad;
+
+
+
+
     public function __construct()
     {
         // heredo el constructor de la clase
         parent::__construct();
+    }
+
+    // funcion que optiene las escolaridades 
+    // a partir del identificador de la 
+    // escolaridad
+    public function get_escolaridad_por_id($id_escolaridad){
+        
+        // consulata para obtener los datos de la trabla
+        $q = "select * from escolaridad where id_escolaridad = $id_escolaridad";
+
+        // ejecuto la consulta
+        $c = $this->_db->query($q);
+        $a = $c->fetch_array(MYSQLI_ASSOC);
+
+        $this->id_escolaridad = $a["id_escolaridad"];
+        $this->escolaridad = $a["escolaridad"];
+    }
+
+    // lista todas las escolaridades
+    public function lista() {
+
+        // consulta que obtiene todas las escolaridades
+        $q = "select * from escolaridad";
+        // ejecuto la consulta 
+        $c = $this->_db->query($q);
+
+        // array que almacena el dato de salida
+        $aa = [];
+
+        // si el resulatado de la consulta dio mas
+        // de cero registros
+
+        if ($c->num_rows > 0) {
+
+            // esplora iterativamente los registros
+            // consultados
+
+            while ($a = $c->fetch_array(MYSQLI_ASSOC)){
+
+                array_push($aa, array($a["id_escolaridad"], $a["escolaridad"]));
+
+            }
+
+        }
+        // retorno un array con la cantidad
+        // de filas 
+        return $aa;
     }
 }
 

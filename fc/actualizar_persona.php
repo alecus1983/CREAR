@@ -1,4 +1,6 @@
 <?php
+
+
 // archivo que obtiene los docentes matriculados
 // en una materia para un grado/curso/jornada
 
@@ -11,7 +13,7 @@ $err = "";
 $respuesta = array();
 
 // si resibo un codigo de persona
-if($_POST["id_persona"]!== ""){
+if($_POST["id_persona"] !== ""){
     $id_persona = $_POST["id_persona"]; 
 }else {
     $valido = false;

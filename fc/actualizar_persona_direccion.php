@@ -11,7 +11,7 @@ $err = "";
 $respuesta = array();
 
 // si resibo un codigo de persona
-if($_POST["id_presona"]!== ""){
+if($_POST["id_persona"]!== "") {
     $id_persona = $_POST["id_persona"]; 
 }else {
     $valido = false;

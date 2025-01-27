@@ -258,6 +258,7 @@ function actualizar_persona() {
 
 
 // Función para actualizar los datos de una persona con relación a sus afiliaciones
+// 
 function actualizar_afiliaciones(personax) {
     // Se precargan los atributos del formulario
     personax.sisben = $("#ac_sisben").val();

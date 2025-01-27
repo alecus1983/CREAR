@@ -295,11 +295,21 @@ function gestion_matriculas(item) {
 		// DATOS ACADEMICOS
 
 		case 6:
+
+			// borro el contenido del div
 			$("#avance").html("");
+			// borro el contenido del div
 			$("#tabla").html("");
 
+			// cargo el formulario 6 de matricula entonces realizo la funcion ...
 			$("#avance").load("formulario_matricula_6.html", function () {
+				// llamo a la funcion de listar jornadas
 				lista_jornadas("#ac_jornada");
+				// llamo a la funcion lista escolaridad
+				// en el camobo  
+				lista_escolaridad("#ac_escolaridad");
+
+
 			});
 
 			break;
@@ -996,7 +1006,7 @@ function lista_jornadas(id) {
 				console.log(element)
 				valor = element[0];
 				texto = element[1];
-				$(id).append("<option value = "+valor+">"+texto+"</option>");
+				$(id).append("<option value = " + valor + ">" + texto + "</option>");
 			});
 
 		},
@@ -1013,6 +1023,8 @@ function lista_jornadas(id) {
 // agrega las jornadas disponibles
 function lista_escolaridad(id) {
 
+	// solicito la lista de escolaridad
+
 	$.ajax({
 		type: "POST",
 		async: false,
@@ -1023,13 +1035,18 @@ function lista_escolaridad(id) {
 
 		success: function (respuesta) {
 
+			// si se realizo la respuesta
+			// almaceno la respuesta en la variable res
 			res = JSON.parse(respuesta);
+
+			//  agrego la primera opcion al combo
+			$(id).append("<option value = -1>seleccione</option>");
 
 			res.forEach((element) => {
 				console.log(element)
 				valor = element[0];
 				texto = element[1];
-				$(id).append("<option value = "+valor+">"+texto+"</option>");
+				$(id).append("<option value = " + valor + ">" + texto + "</option>");
 			});
 
 		},
@@ -1039,5 +1056,48 @@ function lista_escolaridad(id) {
 		}
 
 	});
+
+}
+
+
+// funcion que lista los grados en funcion de un id_escolaridad
+// que identifica la escolaridad de los estudiantes y 
+function lista_grados(id_escolaridad, id) {
+
+	// solicito la lista de escolaridad
+
+	$.ajax({
+		type: "POST",
+		async: false,
+		url: "lista_grados.php",
+		data: {
+			id: id,
+			id_escolaridad: id_escolaridad
+		},
+
+		success: function (respuesta) {
+
+
+			res = JSON.parse(respuesta);
+
+			// si se realizo la respuesta
+			// almaceno la respuesta en la variable res
+			$(id).find('option').remove();
+
+			res.forEach((element) => {
+				console.log(element)
+				valor = element[0];
+				texto = element[1];
+				$(id).append("<option value = " + valor + ">" + texto + "</option>");
+			});
+
+		},
+		error: function (xhr, status) {
+			swal('Disculpe, existió un problema' + status);
+			console.log(xhr);
+		}
+
+	});
+
 
 }
