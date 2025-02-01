@@ -79,6 +79,11 @@ let docente = {
 let alumno = {
 	id_alumno: 0,
 	id_persona: 0,
+	id_grado : 0,
+	id_jornada : 0,
+	year : 0,
+	id_curso : 0,
+	id_escolaridad : 0,
 	fecha: "",
 	nombres: "",
 	apellidos: "",
@@ -308,8 +313,10 @@ function gestion_matriculas(item) {
 				// llamo a la funcion lista escolaridad
 				// en el camobo  
 				lista_escolaridad("#ac_escolaridad");
+				$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(5)">atras</button>');
+				$("#paginas").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_grado_matricula();">agregar/actualizar</button>');
 
-
+				
 			});
 
 			break;
