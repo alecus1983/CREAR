@@ -210,6 +210,7 @@ function gestion_matriculas(item) {
 				//	agrega el formulario de personas
 				$("#paginas").load("formulario_agregar_persona.html", function () {
 					$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
+					$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="agregar_persona(4,alumno)">agregar</button>');
 				});
 
 			});
@@ -228,7 +229,7 @@ function gestion_matriculas(item) {
 			});
 			break;
 
-		// se selecciona al estudiante	
+		// SELECCIONAR ALUMNO	
 		case 4:
 			$("#avance").html("");
 			$("#tabla").html("");
@@ -320,8 +321,11 @@ function gestion_matriculas(item) {
 			});
 
 			break;
+			
+		// AFILIACIONES
 
 		case 7:
+			// criterio de inicio
 			$("#avance").html("");
 			$("#tabla").html("");
 
@@ -376,6 +380,8 @@ function gestion_matriculas(item) {
 
 			break;
 
+		// AGREGAR  PADRE
+
 		case 10:
 			$("#avance").html("");
 			$("#tabla").html("");
@@ -383,11 +389,13 @@ function gestion_matriculas(item) {
 				//	agrega el formulario de personas
 				$("#paginas").load("formulario_agregar_persona.html", function () {
 					$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(9)">atras</button>');
+					$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="agregar_persona(12,padre)">agregar</button>');
 				});
 
 			});
 			break;
-
+		
+		// PADRE REGISTRADO
 
 		case 11:
 			$("#avance").html("");
@@ -395,10 +403,11 @@ function gestion_matriculas(item) {
 			// Cargar formulario_matricula_11.html
 			$("#avance").load("formulario_matricula_11.html", function () {
 
-				$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(8)">atras</button>');
+				$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(9)">atras</button>');
 			});
 			break;
 
+		// PADRE SELECCIONADO
 		case 12:
 			$("#avance").html("");
 			$("#tabla").html("");
@@ -422,7 +431,7 @@ function gestion_matriculas(item) {
 			$("#avance").load("formulario_matricula_13.html");
 			break;
 
-		// madre nueva
+		// MADRE NUEVA
 
 		case 14:
 			$("#avance").html("");
@@ -432,12 +441,13 @@ function gestion_matriculas(item) {
 				//	agrega el formulario de personas
 				$("#paginas").load("formulario_agregar_persona.html", function () {
 					$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(13)">atras</button>');
+					$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="agregar_persona(16,madre)">agregar</button>');
 				});
 
 			});
 			break;
 
-		// madre registrada
+		// MADRE REGISTRADA
 		case 15:
 			$("#avance").html("");
 			$("#tabla").html("");
@@ -448,7 +458,7 @@ function gestion_matriculas(item) {
 			});
 			break;
 
-		// madre selecionada
+		// MADRE SELECCIONADA
 		case 16:
 			$("#avance").html("");
 			$("#tabla").html("");
@@ -473,7 +483,7 @@ function gestion_matriculas(item) {
 			$("#avance").load("formulario_matricula_17.html");
 			break;
 
-		// agregar acudiente
+		// AGREGAR ACUDIENTE
 		case 18:
 			$("#avance").html("");
 			$("#tabla").html("");
@@ -481,10 +491,13 @@ function gestion_matriculas(item) {
 				//	agrega el formulario de personas
 				$("#paginas").load("formulario_agregar_persona.html", function () {
 					$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(17)">atras</button>');
+					$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="agregar_persona(19,acudinte)">agregar</button>');
 				});
 
 			});
 			break;
+
+		// ACUDIENTE SELECCIONADO
 
 		case 19:
 			$("#avance").html("");
@@ -512,7 +525,7 @@ function gestion_matriculas(item) {
 			});
 			break;
 
-		// DATOS DE GRADO
+		// DATOS FINALES
 
 		case 21:
 			$("#avance").html("");

@@ -9,6 +9,7 @@ $valido = true;
 
 //array de respuesta
 $respuesta = array();
+// almaceno los datos recividos por post
 $datos = $_POST;
 
 

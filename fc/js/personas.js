@@ -118,6 +118,11 @@ function formulario_agregar_persona() {
 }
 
 // funcion para agregar personas
+// los parametros de entrada son 
+
+// formulario --> indica el formulario de destino
+// personax --> inica la persona  a agregar 
+
 function agregar_persona(formulario, personax) {
 
     // almaceno los datos en el json
@@ -145,24 +150,16 @@ function agregar_persona(formulario, personax) {
                 //swal('Datos actualizados');
                 swal('Actualizacion', 'Se agrego a la persona correctamente', 'success');
 
-                switch (formulario) {
-                    case 1:
+                // almaceno en la variable seleccionada
+                personax["nombres"] = respuesta["nombres"];
+                personax["apellidos"] = respuesta["apellidos"];
+                personax["identificacion"] = respuesta["idetificacion"];
+                // tomo como persona seleccionada la presona 
+                // retornada
+                seleccionar_persona(respuesta["id_persona"], personax, 4);
+                // voy al formulario indicado
+                gestion_matriculas(formulario);
 
-                        break;
-
-                    case 2:
-
-                        personax["nombres"] = respuesta["nombres"];
-                        personax["apellidos"] = respuesta["apellidos"];
-                        personax["identificacion"] = respuesta["idetificacion"];
-                        // tomo como persona seleccionada la presona 
-                        // retornada
-                        seleccionar_persona(respuesta["id_persona"], personax, 4);
-                        // voy al formulario cuatro
-                        gestion_matriculas(4)
-
-                        break;
-                }
             } else {
                 if (respuesta['status'] == 21) {
                     swal('Error', 'Falata el nombre de la persona', 'error');
@@ -306,7 +303,7 @@ function actualizar_afiliaciones(personax) {
             if (respuesta['status'] == 1) {
                 swal("Completado", "Se completó el registro", "success");
                 // voy a la seccion 6 del formulario matricula
-                gestion_matriculas(7);
+                gestion_matriculas(8);
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
                 swal('Error', errorMap[respuesta['status']], 'error');
@@ -359,7 +356,7 @@ function actualizar_antecedentes_patologicos(personax) {
             if (respuesta['status'] == 1) {
                 swal("Completado", "Se completó el registro", "success");
                 // voy a la seccion 8 del formulario matricula
-                gestion_matriculas(8);
+                gestion_matriculas(9);
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
                 swal('Error', errorMap[respuesta['status']], 'error');
