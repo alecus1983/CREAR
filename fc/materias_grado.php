@@ -7,6 +7,7 @@ require_once('datos.php');
 
 // se  recupera el nombre por el método POST
 $grado = $_POST["grados"];
+// se recibe el id
 $id = $_POST['id'];
 // el año
 $year = $_POST['year'];

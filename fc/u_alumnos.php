@@ -27,10 +27,10 @@ class u_alumnos extends personas
         $stmt->execute();
         if ($stmt->affected_rows > 0) {
             $stmt->close();
-            return "Registro agregado con ID: " . $this->_db->insert_id;
+            return  $this->_db->insert_id;
         }
         $stmt->close();
-        return "Error al agregar el registro.";
+        return "";
     }
 
     // Método para eliminar un registro
@@ -93,6 +93,31 @@ class u_alumnos extends personas
                 return $result->fetch_all(MYSQLI_ASSOC);
             }
             return "No hay registros.";
+        }
+    }
+
+    // funcion que permite tener los datos de  un alumno
+    // en funcion de su identificacion de persona
+    // $id_presona  --> condigo de la persona (generarmente la cedula o targeta de identidad)
+
+    public function get_alumno_persona($id_personas = null)
+    {
+        if ($id_personas) {
+            // Obtener un solo registro
+            $sql = "SELECT * FROM u_alumnos WHERE id_personas = ?";
+            $stmt = $this->_db->prepare($sql);
+            if (!$stmt) {
+                return "Error en la preparación de la consulta get alumno: " . $this->_db->error;
+            }
+            $stmt->bind_param("i", $id_personas);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $data = $result->fetch_assoc();
+            $stmt->close();
+            return $data ;
+        } else {
+            
+            return "";
         }
     }
 

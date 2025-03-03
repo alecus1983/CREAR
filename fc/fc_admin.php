@@ -325,7 +325,9 @@ if (isset($_SESSION["usuario"])) {
 										onchange=";"
 										class="form-control">
 										<option value="0">A</opcion>
-										<option value="1">B</opcion>
+										    <option value="1">B</opcion>
+											<option value="2">C</opcion>
+											    <option value="3">D</opcion>
 									</select>
 
 									<label for="id_ms">Materia</label>
@@ -368,14 +370,6 @@ if (isset($_SESSION["usuario"])) {
 										class="nav-link"
 										href="#" target="_self"
 										onclick="gestion_personas()">Gestión de Personas
-									</a>
-								</nav>
-
-								<nav class="sb-sidenav-menu-nested nav">
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#" target="_self"
-										onclick="gestion_matriculas(1)">Gestión de Matriculas
 									</a>
 								</nav>
 
@@ -457,6 +451,40 @@ if (isset($_SESSION["usuario"])) {
 									</a>
 								</nav>
 							</div>
+
+							<a class="nav-link collapsed" href="#"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapseLayouts4"
+								aria-expanded="false" aria-controls="collapseLayouts4">
+								<div class="sb-nav-link-icon">
+									<i class="fas fa-columns"></i>
+								</div>
+								Gesti&oacute;n Matricula
+								<div class="sb-sidenav-collapse-arrow">
+								    <i class="fas fa-angle-down"></i>
+								</div>
+							</a>
+
+							<div class="collapse" id="collapseLayouts4"
+								    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+							    <nav class="sb-sidenav-menu-nested nav">
+
+								<a style="margin: 0.5rem;"
+								   class="nav-link"
+								   href="#" target="_self"
+								   onclick="gestion_matriculas(1)">Consultar matrícula
+								</a>
+								<a style="margin: 0.5rem;"
+								   class="nav-link"
+								   href="#" target="_self"
+								   onclick="gestion_matriculas(1)">Nueva matr&iacute;cula
+								    </a>
+						
+							
+							    </nav>
+							</div>
+
 
 						</div>
 					</div>

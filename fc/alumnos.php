@@ -15,6 +15,8 @@ class alumnos extends imcrea {
     public $correo;
     public $celular;
 
+
+
     public function __construct($codigo){
 
         parent::__construct();
