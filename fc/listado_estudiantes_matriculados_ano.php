@@ -27,7 +27,7 @@ if ($valido) {
     
     
     // muestra el contenido html
-    $html = "<p>Listado de estudiantes  matricuados en el año <b>".$ano."</b>  </p>";
+    $html = "<p>Listado de estudiantes  matricuados en el a&oacute;o <b>".$ano."</b>  </p>";
 
     // div que crea un afila bootrap
     $html = $html."<div class='row'>";
