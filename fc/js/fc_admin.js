@@ -807,7 +807,8 @@ function listado_matricula_grado(){
     data: {
       years: $("#years").val(),
       id_grado : $("#id_g").val(),
-      id_curso :  $("#id_c").val()
+      id_curso :  $("#id_c").val(),
+      id_jornada : $("#jornada").val()
 
     },
     // si los datos son correctos entonces ...
