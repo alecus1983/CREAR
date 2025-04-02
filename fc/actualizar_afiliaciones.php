@@ -1,60 +1,62 @@
 <?php
-// Requiere el archivo de datos donde probablemente se define la clase "personas"
+//
+// Actualiza las afiliaciones de una persona a la seguridad social
+//
+// Parámetros de entrada:
+// id_persona: ID de la persona cuya afiliación se actualiza
+// sisben: indica si tiene sisben
+// vivie_con: indica si vive con ambos padres o uno de los dos
+
+
+// Requiere el archivo de datos que incluye la definición de la clase "personas"
 require_once("datos.php");
 
-// Inicialización de variables de validación y respuesta
+// Inicialización de variables de validación y respuesta de la API
 $valido = true;
 $respuesta = array();
 
-// Verificar si se ha recibido un "id_persona" en el formulario y si no está vacío
+// Validar la recepción de "id_persona" desde el formulario
 if (isset($_POST["id_persona"]) && !empty($_POST["id_persona"])) {
-    // Asigna el valor de "id_persona" desde el formulario
-    $id_persona = $_POST["id_persona"];
+    $id_persona = $_POST["id_persona"]; // Asigna ID de persona
 } else {
-    // Si no se ha recibido un "id_persona", se marca como no válido
-    $valido = false;
-    $respuesta['status'] = 32; // Código de error: "ID de persona no recibido"
+    $valido = false; // Marca como no válido si falta el ID
+    $respuesta['status'] = 32; // Error: "ID de persona no recibido"
 }
 
-// Si los datos recibidos son válidos
+// Procesar la actualización si los datos son válidos
 if ($valido) {
-    // Crear una nueva instancia de la clase "personas"
-    $persona = new personas();
+    $persona = new personas(); // Crear instancia de la clase "personas"
     
-    // Asignar los valores recibidos del formulario a las propiedades del objeto "persona"
-    // Cada campo es verificado con "isset" para garantizar que existe en el POST.
-    // En caso de no existir, se asigna un valor vacío.
+    // Asignar valores del formulario a las propiedades del objeto
+    // Se utilizan valores vacíos por defecto si el campo no está presente
     $persona->id_persona = $id_persona;
-    $persona->sisben = isset($_POST["sisben"]) ? $_POST["sisben"] : ''; // Verifica si "sisben" fue enviado
-    $persona->vive_con = isset($_POST["vive_con"]) ? $_POST["vive_con"] : ''; // Verifica si "vive_con" fue enviado
-    $persona->etnia = isset($_POST["etnia"]) ? $_POST["etnia"] : ''; // Verifica si "etnia" fue enviado
-    $persona->tipo_etnia = isset($_POST["tipo_etnia"]) ? $_POST["tipo_etnia"] : ''; // Verifica si "tipo_etnia" fue enviado
-    $persona->resguardo_consejo = isset($_POST["resguardo_consejo"]) ? $_POST["resguardo_consejo"] : ''; // Verifica si "resguardo_consejo" fue enviado
-    $persona->familias_accion = isset($_POST["familias_accion"]) ? $_POST["familias_accion"] : ''; // Verifica si "familias_accion" fue enviado
-    $persona->tipo_victima_conflicto = isset($_POST["tipo_victima_conflicto"]) ? $_POST["tipo_victima_conflicto"] : ''; // Verifica si "tipo_victima_conflicto" fue enviado
-    $persona->municipio_expulsor = isset($_POST["municipio_expulsor"]) ? $_POST["municipio_expulsor"] : ''; // Verifica si "municipio_expulsor" fue enviado (corrige el nombre del campo de "municipio_expulsonr")
-    $persona->discapacitado = isset($_POST["discapacitado"]) ? $_POST["discapacitado"] : ''; // Verifica si "discapacitado" fue enviado
-    $persona->tipo_discapacidad = isset($_POST["tipo_discapacidad"]) ? $_POST["tipo_discapacidad"] : ''; // Verifica si "tipo_discapacidad" fue enviado
-    $persona->capacidad_excepcional = isset($_POST["capacidad_excepcional"]) ? $_POST["capacidad_excepcional"] : ''; // Verifica si "capacidad_excepcional" fue enviado
-    $persona->regimen_salud = isset($_POST["regimen_salud"]) ? $_POST["regimen_salud"] : ''; // Verifica si "regimen_salud" fue enviado
-    $persona->eps = isset($_POST["eps"]) ? $_POST["eps"] : ''; // Verifica si "eps" fue enviado
-    $persona->ips = isset($_POST["ips"]) ? $_POST["ips"] : ''; // Verifica si "ips" fue enviado
-    $persona->tipo_sangre = isset($_POST["tipo_sangre"]) ? $_POST["tipo_sangre"] : ''; // Verifica si "tipo_sangre" fue enviado
-    $persona->rh = isset($_POST["rh"]) ? $_POST["rh"] : ''; // Verifica si "tipo_sangre" fue enviado
+    $persona->sisben = $_POST["sisben"] ?? ''; // Afiliación al SISBEN
+    $persona->vive_con = $_POST["vive_con"] ?? ''; // Situación de convivencia
+    $persona->etnia = $_POST["etnia"] ?? ''; // Etnia de la persona
+    $persona->tipo_etnia = $_POST["tipo_etnia"] ?? ''; // Tipo de etnia
+    $persona->resguardo_consejo = $_POST["resguardo_consejo"] ?? ''; // Resguardo por consejo
+    $persona->familias_accion = $_POST["familias_accion"] ?? ''; // Programas de familias en acción
+    $persona->tipo_victima_conflicto = $_POST["tipo_victima_conflicto"] ?? ''; // Tipo de víctima del conflicto
+    $persona->municipio_expulsor = $_POST["municipio_expulsor"] ?? ''; // Municipio de expulsión
+    $persona->discapacitado = $_POST["discapacitado"] ?? ''; // Indica si es discapacitado
+    $persona->tipo_discapacidad = $_POST["tipo_discapacidad"] ?? ''; // Tipo de discapacidad
+    $persona->capacidad_excepcional = $_POST["capacidad_excepcional"] ?? ''; // Indica capacidad excepcional
+    $persona->regimen_salud = $_POST["regimen_salud"] ?? ''; // Régimen de salud al que pertenece
+    $persona->eps = $_POST["eps"] ?? ''; // Entidad Promotora de Salud
+    $persona->ips = $_POST["ips"] ?? ''; // Institución Prestadora de Salud
+    $persona->tipo_sangre = $_POST["tipo_sangre"] ?? ''; // Tipo de sangre
+    $persona->rh = $_POST["rh"] ?? ''; // Factor RH
 
-    // Intentar actualizar los datos de la persona en la base de datos
-    // El método "actualizar_afiliacion()" se llama para actualizar los datos de la persona.
+    // Actualizar los datos de la persona en la base de datos
     if ($persona->actualizar_afiliacion()) {
-        // Si la actualización es exitosa, se establece el status como 1
-        $respuesta['status'] = 1; // Éxito
+        $respuesta['status'] = 1; // Éxito en la actualización
     } else {
-        // Si la actualización falla, se devuelve un error
-        $respuesta['status'] = 0; // Falla
+        $respuesta['status'] = 0; // Error en la actualización
         $respuesta['error'] = 'Failed to update person\'s data'; // Mensaje de error
     }
 }
 
-// Codifica la respuesta en formato JSON para enviarla al cliente
+// Devolver la respuesta en formato JSON
 echo json_encode($respuesta);
 
 ?>
