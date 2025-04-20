@@ -1366,3 +1366,53 @@ function lista_grados(id_escolaridad, id) {
 
 
 }
+
+// funcion que consulta las matriculas realizadas
+// en un determinado grado
+
+function consultar_matriculas(){
+    
+    // envio los dato por ajax
+    // mediante el metodo post
+    // en el archivo consulta_matriculas.php
+
+
+    $.ajax({
+    type: "POST",
+    async: false,
+    url: "consultar_matriculas.php",
+    data: {
+	id_jornada : $("#jornada").val(),
+	id_curso : $("#id_c").val(),
+	id_grado : $("#id_g").val(),
+	year : $("#years").val()
+    },
+
+    success: function (respuesta) {
+
+	// si la respuesta es positiva
+      //if (respuesta['status'] == 1) {
+	//swal('Datos actualizados');
+	//$("#calificador").html(respuesta);
+	$("#avance").html("");
+	$("#avance").html(respuesta);
+      //} else {
+
+	//if (respuesta['status'] == 22) {
+	 // swal('Año', 'Porfavor seleccione un año ', 'error');
+	//}
+
+	  //if (respuesta['status'] == 23) {
+	 // swal('Año', 'Porfavor seleccione un grado', 'error');
+	//	}
+
+      }
+      //res = JSON.parse(respuesta);
+
+    ,
+    error: function (xhr, status) {
+      swal('Disculpe, existió un problema' + status);
+      console.log(xhr);
+    }} );
+      
+}

@@ -80,26 +80,35 @@ class matricula extends imcrea {
         
     }
 
-    // funcion que permite obtener una  conjunto de matriculas a partir 
-    public function get_matriculas_grado_jornada ($year, $id_grado, $id_jornada){
-        // introdusco el texto de la consulta
-        $q = "select * from matricula m where year = $year
-                  and m.id_jornada = $id_jornada and id_grado =  $id_grado";
-       
-        // ejecuto la consulta
-        $c = $this->_db->query($q);
-        // creo un array inicial
-        $arr = array();
-        // recorro el array
-        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
-            // añade elementos al array
-            array_push($arr, $r);
+
+    // fucncion que retorna un array con los
+    // codigos de los alumnos matriculados en
+    // grado.
+    public function get_matricula_grado($id_jornada,$id_grado,$id_curso,$year){
+
+        // texto de la consulta
+        $texto = "select id_alumno, nombres, apellidos from personas as p inner join 
+                         (select * from u_alumnos as  ua inner join
+                         (select * from matricula 
+                          where
+                          year = $year
+                          and id_grado = $id_grado
+                          and id_jornada = $id_jornada
+                          and id_curso = $id_curso) as  m
+                          on ua.id_alumnos = m.id_alumno) as c
+                          on c.id_personas = p.id_personas";
+        //preparao la consulta
+        $q2 = $this->_db->query($texto);
+        // guardo el resoltado en un array inicialmente vacio
+        $aa = array();
+        // exploro el resultado 
+        while($resultado = $q2->fetch_array(MYSQLI_ASSOC)){
+            // agrego elementos al array $aa
+            array_push($aa,$resultado);
         }
-        //retorno listado de matriculas
-        return $arr;
-        
+        // devuelvo el array con el listado de estudiantes
+        return  $aa;
     }
-    
 } // fin de la clase
 
 

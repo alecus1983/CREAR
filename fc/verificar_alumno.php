@@ -21,9 +21,6 @@ if (isset($datos_a)){
 
     // en caso de  una persona que es un alumno
     // retorna el codigo de alumno
-    //echo "Exitoso se registraron datos";
-    // echo 
-    //echo var_dump($datos_a);
     // codigo del alumno
     $id_alumno = $datos_a["id_alumnos"];
     
@@ -33,6 +30,6 @@ if (isset($datos_a)){
     //echo "no se registran datos ";
     $id_alumno = $alumno->add_alumno($id_persona);
 }
-
+// ajusto el formato
 echo json_encode($id_alumno);
 ?>
