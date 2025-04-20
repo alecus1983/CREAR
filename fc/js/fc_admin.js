@@ -181,18 +181,51 @@ function load_materias() {
     id: id_docente,
     year: year
   });
+
+  // coloco el fondo al selector materias
+  $('#id_ms').css('background-color', 'lightblue');
+  
+}
+
+// Estructura  para  editar matriculas
+function editar_matriculas(item){
+
+  switch (item){
+    // defino el codigo de la matricula
+    // y visualizo los datos principales
+    // del estudiante
+  case 1:
+    
+    break;
+    // edito los datos de la residencia
+  case 2:
+   
+    break;
+ // Edito los dato academicos
+  case 3:
+
+    break;
+// edito los datos de afiliaciones
+  case 4:
+
+    break;
+
+    // edito los antecedentes patologicos
+  case 5:
+
+    break;
+    
+    
+  }
 }
 
 
-
-
-// formulario para gestionar el formulario de agregra matriculas
+// Estructura de seleccion  para gestionar el formulario de agregra matriculas
 // requiere como parametro de entrada el item del formulario
 
 function gestion_matriculas(item) {
 
-
-
+  // estructura de seleccion
   switch (item) {
 
     // 1. INFORMACION DEL ESTUDIANTE
@@ -794,6 +827,43 @@ function load_lista_estudiantes() {
 
 }
 
+// el listado de estudiantes matriculados en un grado
+// en un curso y una jornada
+
+function listado_matricula_escolaridad_jornada(){
+
+  $.ajax({
+    type: "POST",
+    url: "listado_matricula_escolaridad.php",
+    dataType: "json",
+    data: {
+      years: $("#years").val(),
+      id_escolaridad :  $("#escolaridad").val(),
+      id_jornada : $("#jornada").val()
+
+    },
+    // si los datos son correctos entonces ...
+    success: function (respuesta) {
+      // si la respuesta es positiva
+      if (respuesta['status'] == 1) {
+	//swal('Datos actualizados');
+	
+	$("#avance").html(respuesta['html']);
+      } else {
+	// si la respuesta es erronea 
+	if (respuesta['status'] == 22) {
+	  swal('Escolaridad', 'Porfavor seleccione una escolaridad', 'error');
+	}
+
+      }
+    },
+    error: function (xhr, status) {
+      swal('Disculpe, existió un problema');
+      console.log(xhr);
+    }
+  });
+  
+}
 
 // el listado de estudiantes matriculados en un grado
 // en un curso y una jornada
@@ -833,6 +903,8 @@ function listado_matricula_grado(){
   });
   
 }
+
+
 
 // funcion que muestra la lista de estudiantes  matriculados
 function listado_estudiantes_matriculados() {
@@ -1273,12 +1345,16 @@ function lista_grados(id_escolaridad, id) {
       // almaceno la respuesta en la variable res
       $(id).find('option').remove();
 
+      $(id).append("<option value = '-1'>Seleccione</option>");
+      
       res.forEach((element) => {
 	console.log(element)
 	valor = element[0];
 	texto = element[1];
 	$(id).append("<option value = " + valor + ">" + texto + "</option>");
       });
+
+       $(id).css('background-color', 'lightblue');
 
     },
     error: function (xhr, status) {

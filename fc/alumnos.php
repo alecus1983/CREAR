@@ -2,7 +2,7 @@
 
 
 // clase que define a los alumnos
-class alumnos extends imcrea {
+class alumnos extends personas {
 
     public $id_alumno;
     public $nombres;
@@ -21,20 +21,20 @@ class alumnos extends imcrea {
 
         parent::__construct();
         // se realiza la consulta
-        $resultado = $this->_db->query("SELECT * FROM  alumnos where  id_alumno = ".$codigo." order by nombres" );
+        $resultado = $this->_db->query("select * from personas as p inner join u_alumnos as a  on p.id_personas = a.id_personas where a.id_alumnos = $codigo" );
         $dato = $resultado->fetch_array(MYSQLI_ASSOC);
 
         // si se ejecuto la consulta
         if ($dato){
             // completo los atributos en funcion de la consulta
-            $this->id_alumno = $dato["id_alumno"];
+            $this->id_alumno = $dato["id_alumnos"];
             $this->nombres = $dato["nombres"];
             $this->apellidos = $dato["apellidos"];
-            $this->cedula = $dato["cedula"];
-            $this->login = $dato["login"];
-            $this->fecha = $dato["fecha"];
-            $this->telefono = $dato["telefono"];
-            $this->inscripcion = $dato["inscripcion"];
+            //$this->cedula = $dato["cedula"];
+            //$this->login = $dato["login"];
+            //$this->fecha = $dato["fecha"];
+            // $this->telefono = $dato["telefono"];
+            //$this->inscripcion = $dato["inscripcion"];
             $this->correo = $dato["correo"];
             
         }
@@ -143,7 +143,7 @@ class alumnos extends imcrea {
     // de su id
     public function get_id_nombre($id_alumno){
         // se realiza la consulta
-        $resultado = $this->_db->query("SELECT nombres FROM  alumnos where  id_alumno = ".$id_alumno );
+        $resultado = $this->_db->query("select nombres from personas where id_personas in (select id_personas from u_alumnos where id_alumnos = $id_alumno)");
         $dato = $resultado->fetch_array(MYSQLI_NUM);
 
         // si se ejecuto la consulta
@@ -159,7 +159,7 @@ class alumnos extends imcrea {
     // Funcion que permite tener un apellido de un alumno a partir del id
     public function get_id_apellido($id_alumno) {
         // se realiza la consulta
-        $resultado = $this->_db->query("SELECT apellidos FROM  alumnos where  id_alumno = ".$id_alumno );
+        $resultado = $this->_db->query("select apellidos from personas where id_personas in (select id_personas from u_alumnos where id_alumnos = $id_alumno)" );
         $dato = $resultado->fetch_array(MYSQLI_NUM);
 
         // si se ejecuto la consulta

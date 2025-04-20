@@ -1,5 +1,6 @@
 <?php 
-
+// clase que describe las matriculas realizadas
+// en el colegio
 class matricula extends imcrea {
     // clave foranea del alumno
     public $id_alumno;
@@ -58,5 +59,49 @@ class matricula extends imcrea {
         // retorno el estado de la consulta
         return $consulta;
     } // fin de set matricula
+
+    // funcion que permite obtener una  conjunto de matriculas a partir 
+    public function get_matriculas_escolaridad_jornada ($year, $id_escolaridad, $id_jornada){
+        // introdusco el texto de la consulta
+        $q = "select * from matricula m where year = $year
+                  and m.id_jornada = $id_jornada and id_grado in
+                  (select id_grado from grados where id_escolaridad = $id_escolaridad)";
+        // ejecuto la consulta
+        $c = $this->_db->query($q);
+        // creo un array inicial
+        $arr = array();
+        // recorro el array
+        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
+            // añade elementos al array
+            array_push($arr, $r);
+        }
+        //retorno listado de matriculas
+        return $arr;
+        
+    }
+
+    // funcion que permite obtener una  conjunto de matriculas a partir 
+    public function get_matriculas_grado_jornada ($year, $id_grado, $id_jornada){
+        // introdusco el texto de la consulta
+        $q = "select * from matricula m where year = $year
+                  and m.id_jornada = $id_jornada and id_grado =  $id_grado";
+       
+        // ejecuto la consulta
+        $c = $this->_db->query($q);
+        // creo un array inicial
+        $arr = array();
+        // recorro el array
+        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
+            // añade elementos al array
+            array_push($arr, $r);
+        }
+        //retorno listado de matriculas
+        return $arr;
+        
+    }
+    
 } // fin de la clase
+
+
+
 ?>

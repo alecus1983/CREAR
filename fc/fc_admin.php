@@ -253,6 +253,19 @@ if (isset($_SESSION["usuario"])) {
 
 									<input type="hidden" value="<?php echo $id; ?>" id="id_d">
 
+									<label for="escolaridad">Escolaridad</label>
+									<select id="escolaridad"
+										style="background: transparent;color: darkgreen;border: 0px"
+										class="form-control"
+										    onchange="lista_grados($('#escolaridad').val(),'#id_g');">
+									    <option value="-1">Seleccione</option>
+									    <option value="1">Preescolar</option>
+										<option value="2">Básica Primaria</option>
+										<option value="3">Básica Secundaria</option>
+										<option value="4">Tecnico</option>
+										<option value="5">Cursos</option>
+									</select>
+									
 									<label for="jornada">Jornada</label>
 									<select id="jornada"
 										style="background: transparent;color: darkgreen;border: 0px"
@@ -281,42 +294,26 @@ if (isset($_SESSION["usuario"])) {
 									<select id="semana"
 										class="form-control"
 										style="background: transparent;color: darkgreen;border: 0px"
-										onchange="">
-										<?php
+										onchange="$('#semana').css('background-color', 'transparent');">
+									    <?php
 
-										if ($admin) {
-										} else {
-											$s = new semana();
-											$sem  = $s->get_semana_activa($ano);
-											echo "<option value='$sem' selectecd>$sem </option>";
-										}
+									    if ($admin) {
+									    } else {
+										$s = new semana();
+										$sem  = $s->get_semana_activa($ano);
+										echo "<option value='$sem' selectecd>$sem </option>";
+									    }
 
-										?>
+									    ?>
 
 									</select>
 
-									<label class="Control-label">Grado</label>
-									<select id="id_g" name="id_gs"
-										class="form-control"
-										style="background: transparent;color: darkgreen;border:  0px"
-										onchange="actualizar()">
-										<?php
-										// creo un nuevo objeto  matricula docente
-										$mt = new matricula_docente();
-										// asigno el año a la matricula como el a actual
-										$mt->year = date('Y');
-										// defino el codigo del docente de la matricula
-										$mt->id_docente = $id;
-										//actuliza el listado de cursos disponibles
-										$mt->get_matricula(2);
-										// conviere el dato en un json
-										//echo json_encode($mt->listado);
-										$lista = $mt->listado;
-										echo '<option value="-1">seleccione</option>';
-										foreach ($lista as $key => $value) {
-											echo '<option value="' . $key . '">' . $value . '</option>';
-										}
-										?>
+									    <label class="Control-label">Grado</label>
+									
+									    <select id="id_g" name="id_gs"
+											class="form-control"
+											style="background: transparent;color: darkgreen;border:  10px"
+											onchange="actualizar();$('#id_g').css('background-color', 'transparent');">
 									</select>
 
 									<label class="Control-label">Curso</label>
@@ -332,9 +329,9 @@ if (isset($_SESSION["usuario"])) {
 
 									<label for="id_ms">Materia</label>
 									<select id="id_ms"
-										style="background: transparent;color: darkgreen;border: 0px"
-										name="id_ms" onchange=""
-										class="form-control">
+										    style="background: transparent;color: darkgreen;border: 0px"
+										    name="id_ms" onchange="$('#id_ms').css('background-color', 'transparent')"
+										    class="form-control">
 									</select>
 
 								</nav>
@@ -393,7 +390,8 @@ if (isset($_SESSION["usuario"])) {
 									<a style="margin: 0.5rem;"
 										class="nav-link"
 										href="#" target="_self"
-										onclick="listado_estudiantes_matriculados();">Listado estudiantes matriculados<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
+										  onclick="listado_estudiantes_matriculados();">Listado estudiantes matriculados
+									    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
 									</a>
 								</nav>
 
@@ -401,7 +399,8 @@ if (isset($_SESSION["usuario"])) {
 									<a style="margin: 0.5rem;"
 										class="nav-link"
 										href="#" target="_self"
-										onclick="listado_notas_estudiantes();">Notas por estudiantes<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
+										  onclick="listado_notas_estudiantes();">Notas por estudiantes
+									    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
 									</a>
 								</nav>
 
@@ -436,7 +435,8 @@ if (isset($_SESSION["usuario"])) {
 
 									<a style="margin: 0.5rem;"
 										class="nav-link"
-										onclick="boletin()">Boletin <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo <br>preescolar</span>
+										  onclick="boletin()">Boletin
+									    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo <br>preescolar</span>
 									</a>
 
 									<a style="margin: 0.5rem;"
@@ -473,15 +473,18 @@ if (isset($_SESSION["usuario"])) {
 								<a style="margin: 0.5rem;"
 								   class="nav-link"
 								   href="#" target="_self"
-								   onclick="gestion_matriculas(1)">Consultar matrícula
+								   onclick="listado_matricula_escolaridad_jornada()">Consultar matrícula
 								</a>
 								<a style="margin: 0.5rem;"
 								   class="nav-link"
 								   href="#" target="_self"
 								   onclick="gestion_matriculas(1)">Nueva matr&iacute;cula
-								    </a>
-						
-							
+								</a>
+								<a style="margin: 0.5rem;"
+								   class="nav-link"
+								   href="#" target="_self"
+								   onclick="editar_matriculas(1)">Editar matr&iacute;cula
+								</a>
 							    </nav>
 							</div>
 

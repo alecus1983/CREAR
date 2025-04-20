@@ -1,5 +1,6 @@
 <?php
 
+// librerias requeridas
 require_once("conectar.php");
 require_once("padres.php");
 require_once("acudientes.php");

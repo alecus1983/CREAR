@@ -1,6 +1,6 @@
 <?php
-// archivo que obtiene los docentes matriculados
-// en una materia para un grado/curso/jornada
+// archivo que optiene en formato json
+// la lista de grados de una escolaridad dada
 
 require_once "datos.php";
 
@@ -8,7 +8,6 @@ require_once "datos.php";
 $valido = true;
 $err = "";
 
-// var_dump($_POST);
 // se recibe la variable por post
  $id_escolaridad = $_POST["id_escolaridad"];
 //array de respuestals

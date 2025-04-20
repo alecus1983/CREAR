@@ -10,6 +10,9 @@ function load_semanas() {
         periodo: periodo,
         year: year
     });
+
+  // coloco el fondo al selector de semanas
+  $('#semana').css('background-color', 'lightblue');
 }
 
 

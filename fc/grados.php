@@ -1,17 +1,21 @@
 <?php
 
-// Clase que define la inscripcion
+// Clase que define el objeto tipo grado
 class grados extends jornada
 {
 
     // variable de la tabla grados
     protected $id_grado;
+    // codigo del grado
     public $grado;
+    // nombre del grado
     public $nombre_g;
+    // nombre de la escolaridad del grado
     public $escolaridad;
+    // valor al que se esta siendo promovido
     public $promovido;
+    // codigo de la escolaridad a la que pertenece el grado
     public $id_escolaridad;
-
 
     //constructor de la clase
     public function __construct()
@@ -20,7 +24,7 @@ class grados extends jornada
         parent::__construct();
     }
 
-    // Registros
+    // funcion que agrega un grado
     public function registro(
         $grado,
         $nombre_g,
@@ -29,7 +33,6 @@ class grados extends jornada
         $id_escolaridad
     ) {
 
-        // scrip sql
         // String  para realizar la consulta
         $q2 = "INSERT INTO grados
       (
@@ -48,8 +51,6 @@ class grados extends jornada
 
         // se realiza la consulta
         $qx = $this->_db->query($q2);
-        // $dato = $qx->fetch_array();
-
         // si se ejecuto la consulta
         if (!$qx) {
             echo "Fallo en incertar grado";
@@ -76,7 +77,6 @@ class grados extends jornada
         } else {
             // retorno  el array
             return $dato;
-
         }
     } // fin de la cuncion
 
@@ -122,7 +122,7 @@ class grados extends jornada
     // funcion que lista  de los gradsos de acuerdo a una escolaridad dada
     public function lista_escolaridad($id_escolaridad)
     {
-
+        // texto de la consulta
         $c = $this->_db->query("select * from grados where id_escolaridad = $id_escolaridad order by grado");
 
         // array que almacena el dato de salida

@@ -158,6 +158,18 @@ padding-left: 0px;
     font-weight:900;
 }
 
+.border-red {
+            border: 2px solid red !important;
+        }
+
+caption {
+  caption-side: top;
+  text-align: left;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+
 @media only screen 
 and (min-device-width : 320px) 
 and (max-device-width : 480px)  {
