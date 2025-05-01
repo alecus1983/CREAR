@@ -178,7 +178,7 @@ if (isset($_SESSION["usuario"])) {
 	</script>
 </head>
 
-<body class="sb-nav-fixed" onload="load();">
+<body class="sb-nav-fixed" >
 	<div>
 		<p> El usuario es <?php $usuario  ?>
 	</div>
@@ -191,8 +191,8 @@ if (isset($_SESSION["usuario"])) {
 			<!-- Navbar Brand-->
 			<a class="navbar-brand ps-3" href="board.php">INICIO</a>
 			<!-- Sidebar Toggle-->
-			<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-				id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+			<button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-4 me-lg-0"
+				       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 			<a style="color:FFF" href="#"></a>
 			<!-- Navbar-->
 			<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">

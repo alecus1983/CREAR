@@ -135,8 +135,8 @@ function deposit(){
     }
     
     /////////	
-    if (confirm("ALERTA!! va a proceder a ingresar un  registro, "
-		."para confirmar de  click en ACEPTAR\n de lo contrario de click en CANCELAR.") ) 
+    if (confirm("ALERTA!! va a proceder a ingresar un  registro, "+
+		"para confirmar de  click en ACEPTAR\n de lo contrario de click en CANCELAR.") ) 
     {
   	/*
   	// funcion para validar los estudiantes

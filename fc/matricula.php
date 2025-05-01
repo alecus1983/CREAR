@@ -26,7 +26,10 @@ class matricula extends imcrea {
         parent::__construct();
     }
 
-    //constructor de la clase
+    // obtengo la matricula en funcion de su id
+    // retorna los valores en los atributos del
+    // objeto.
+    
     public function get_matricula_id($i){
         
         // se realiza la consulta
@@ -36,6 +39,7 @@ class matricula extends imcrea {
         // si se ejecuto la consulta
         if ($dato){
             // completo los atributos en funcion de la consulta
+            $this->id = $dato["id"];
             $this->id_alumno = $dato["id_alumno"];
             $this->id_grado = $dato["id_grado"];
             $this->id_jornada = $dato["id_jornada"];
@@ -61,11 +65,11 @@ class matricula extends imcrea {
     } // fin de set matricula
 
     // funcion que permite obtener una  conjunto de matriculas a partir 
-    public function get_matriculas_escolaridad_jornada ($year, $id_escolaridad, $id_jornada){
+    public function get_matriculas_grado_jornada ($year, $id_grado, $id_jornada){
         // introdusco el texto de la consulta
         $q = "select * from matricula m where year = $year
-                  and m.id_jornada = $id_jornada and id_grado in
-                  (select id_grado from grados where id_escolaridad = $id_escolaridad)";
+                  and m.id_jornada = $id_jornada and id_grado  = $id_grado";
+        //echo $q;
         // ejecuto la consulta
         $c = $this->_db->query($q);
         // creo un array inicial

@@ -111,7 +111,7 @@ if ($valido) {
              $html = $html. "".ucwords(strtolower($al->apellidos));
              $html = $html. "</td>";
              $html = $html. "<td>";
-             $html = $html. '<button type="button" class="btn btn-outline-success" onclick="actualizar_matricula();">Editar</button>';
+             $html = $html. "<button type='button' class='btn btn-outline-success' onclick='editar_matriculas(1,\"$id_matricula\");'>Editar</button>";
              $html = $html. "</td>";
              $html = $html. "<td>";
              $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_matricula_(\"$id_matricula\");'>eliminar</button>";

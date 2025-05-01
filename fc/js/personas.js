@@ -1,16 +1,50 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Funciones relacionadas con la gestion de personas
 //
 // gestion_personas -> actualiza los datos de una persona
 // cambio_datos-> lista las personas a partir de un criterio de busqueda
 // formulario_agregar_persona -> crea un formaulario para agregar una persona
-// agregar_persona-> se agrega una persona
-// datos_persona -> 
+// agregar_persona-> se agrega una persona a  la base de datos
+// actualizar persona-> funcion que actualiza los datos de una persona
+//                                           en la base de datos
+// actualizar_afiliaciones(personax) -> actualizo los datos de afilicion de personas
+//                                                                         en la base de datos
+// actualizar_antecedentes_patologicos(personax) -> actualizo los datos de
+//                                                                                                         antedentes patologicos de los  estudiantes.
 //
-///////////////////////////////////////////////////////////////////////
+// datos_persona -> funcion que retorna los datos de una persona y los coloca en
+//                                    el div #tabla
+// get_persona -> funcion que solicita los datos de una persona y la coloca en
+//                               el div #tabla
+// eliminar_persona -> funcion que elimina a una persona de la base de datos
+//
+// selecionar_persona(id, pesronax, fom) -> obtengo los datos de  una persona
+//                                                                                  en el objeto personas
+//
+// get_afiliacion(id,form) -> obtengo los datos de afiliacion de una perosona
+//                                                  y los coloco en el formulario
+//
+// get_direccion(personax,form)-> obtengo los datos de la direccion de la persona
+//                                                                y los coloco en  el formulario
+//
+//  update_grado_matricula -> actualizo el grado a los estudiantes en el objeto alumnos
+//
+// update_direccion(form,personas) -> actualizo los datos de direccion
+//
+// get_afiliaciones(id, form) -> get_afiliaciones
+//
+// get_antecedemtes(id, form) -> obtengo los datos del acudite
+//
+// cp_acudiente(personax) -> funcion que copia los datos del acudiente
+//
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 // funcion que llama el formulario de gestionar las
-// semas
+// personas ,  usa el archivo gestion_peresonas.php
+// no recive parametros y responde en html
+// en el campo #avance
+
 function gestion_personas() {
 
     // se invoca al metodo ajax para solicitar
@@ -28,29 +62,37 @@ function gestion_personas() {
             id_jornada: $("#jornada").val(),
             id_curso: $("#id_c").val(),
         },
+      
         // si los datos son correctos entonces ...
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-                //swal('Datos actualizados');
-                //$("#calificador").html(respuesta);
+              // coloco la respuesta en html
+	      // en el div avance
                 $("#avance").html(respuesta['html']);
             } else {
-                if (respuesta['status'] == 21) {
+	      // si no se ha seleccionado el  grado
+              if (respuesta['status'] == 21) {
                     swal('Grado', 'Porfavor seleccione un grado', 'error');
-                }
+              }
+
+	      // si no se ha especificado el año
                 if (respuesta['status'] == 22) {
                     swal('Año', 'Porfavor seleccione un año', 'error');
                 }
+
+	      // si no se ha especificado la jornada
                 if (respuesta['status'] == 23) {
                     swal('Jornada', 'Porfavor seleccione un jornada', 'error');
                 }
+	      // si no se ha especificado la semana
                 if (respuesta['status'] == 24) {
                     swal('Semana', 'Porfavor seleccione una semana', 'error');
                 }
 
             }
         },
+      // si huvo  un error
         error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
@@ -60,6 +102,10 @@ function gestion_personas() {
 }
 
 // funcion que muestra listado de personas que  coinciden con los datos
+// los parametros de entrada:
+// repo:  es el div en que se colocara la respuesta en formato html
+// presonax : id de la  persona que se va a consultar 
+// form : codigo del formulario de donde se hace la cosulta
 
 function cambio_datos(repo, personax, form) {
 
@@ -80,8 +126,7 @@ function cambio_datos(repo, personax, form) {
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-                //swal('Datos actualizados');
-                //$("#calificador").html(respuesta);
+                // coloco la respuesta en el campo repo
                 $(repo).html(respuesta['html']);
             } else {
 
@@ -100,18 +145,25 @@ function cambio_datos(repo, personax, form) {
 }
 
 
-// formulario para agregar personas
+//  se carga el formulario para agregar personas
+// en el div #tabla
 function formulario_agregar_persona() {
-    //  realizo la consulta en de los datos
+  
+    // borro el div llamado #tabla
     $("#tabla").html("");
-    //  cargo el formulario para agregar personas
-    $("#tabla").load("formulario_agregar_persona.html", function (response, status, xhr) {
-        if (status == "error") {
-            console.error("Error al cargar ");
-            swal("Error", "Error a cargar pagina ");
+  //  cargo el formulario agregar personas en el div #tabla
+  // al finalizar ejecuto la funcion
+  $("#tabla").load("formulario_agregar_persona.html", function (response, status, xhr) {
+    // si status es rerroneo lo muestro por sonsola
+    if (status == "error") {
+      
+      console.error("Error al cargar ");
+      // y muestro una  ven tana emergente al usuario
+            swal("Error", "Error a cargar formulario de agregar personas ");
         }
-        else {
-            console.log("Formulario cargado correctamete");
+    else {
+      // muestro en cosola el resultado
+      console.log("Formulario cargado correctamete");
         }
     });
 
@@ -120,8 +172,8 @@ function formulario_agregar_persona() {
 // funcion para agregar personas
 // los parametros de entrada son 
 
-// formulario --> indica el formulario de destino
-// personax --> inica la persona  a agregar 
+// formulario : indica el formulario de destino
+// personax : inica la persona  a agregar como un objeto
 
 function agregar_persona(formulario, personax) {
 
@@ -147,7 +199,7 @@ function agregar_persona(formulario, personax) {
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-                //swal('Datos actualizados');
+                // si se agrego la persona correctamente
                 swal('Actualizacion', 'Se agrego a la persona correctamente', 'success');
 
                 // almaceno en la variable seleccionada
@@ -190,10 +242,9 @@ function agregar_persona(formulario, personax) {
 
 }
 
-// funcion para acutualizar los datos una persona
-// toma los datos de los los campos que inician con  #ac_  ...
-// require datos_persona.php
-// requere actualizar_persona()
+// funcion que toma los datos ingresados
+// en el formaulario del que se toman los campos
+// del formulario
 function actualizar_persona() {
 
     // invoco el metodo ajax
@@ -254,7 +305,8 @@ function actualizar_persona() {
 }
 
 
-// Función para actualizar los datos de una persona con relación a sus afiliaciones
+// Función para actualizar los datos de una persona
+// con relación a sus afiliaciones a distintas entidades
 // 
 function actualizar_afiliaciones(personax) {
     // Se precargan los atributos del formulario
@@ -446,6 +498,7 @@ function get_persona(id, personax) {
 }
 
 // permite eliminar una persona
+// recibe como entrada el id_persona
 function eliminar_persona(id_personas) {
 
     swal({
@@ -499,8 +552,9 @@ function eliminar_persona(id_personas) {
 
 }
 
-// funcion que permite seleccionar una persona en 
-// el formaulario
+// funcion que permite obtener los datos de una persona
+// de acuerdo a su id y colocarlo el objeto personas
+// y finalmente saltar al item form del formulaio de matricula
 function seleccionar_persona(id, personax, form) {
     //  cargo el los datos de la persona
     personax["id_persona"] = id;
@@ -514,7 +568,6 @@ function seleccionar_persona(id, personax, form) {
 
 
 // solicito los datos para el formaulario de afiliacion
-
 
 function get_afiliacion(id, form) {
     // Solicito datos por AJAX
@@ -681,6 +734,8 @@ function update_grado_matricula() {
 }
 
 // actualizar direccion
+// presronax  : es el id_persona
+// form : es el codigo del formulario donde se actuliza la direccion
 function update_direccion(form, personax) {
 
     // tomo el dato
@@ -915,4 +970,14 @@ function cp_acudiente(personax) {
     // va la pagina 19 de gestion matriculas
     gestion_matriculas(19);
 
+}
+
+// funcion que permite conocer el codigo
+// de una persona en funcion
+// del codigo del estudiante
+
+function get_id_persona_con_id_alumno(){
+
+  
+  
 }

@@ -1,0 +1,8 @@
+<?php
+// archivo que solicita el codigo de una
+// persona a partir del codigo del alumno
+require("datos.php");
+
+
+
+?>

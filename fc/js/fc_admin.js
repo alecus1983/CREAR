@@ -17,8 +17,7 @@ let acudiente = {
   correo: "",
   i_correo: "",
   celular: "",
-  telefono: "",
-
+  telefono: ""
 };
 
 // objeto tipo padre
@@ -35,8 +34,7 @@ let padre = {
   correo: "",
   i_correo: "",
   celular: "",
-  telefono: "",
-
+  telefono: ""
 };
 
 // objeto tipo padre
@@ -53,11 +51,8 @@ let madre = {
   correo: "",
   i_correo: "",
   celular: "",
-  telefono: "",
-
+  telefono: ""
 };
-
-
 
 // objeto docente
 let docente = {
@@ -162,9 +157,20 @@ let persona = {
   tipo_sangre: ""
 };
 
+// variable de matriculas
+let matricula ={
+  id : "",
+  id_alumno : "",
+  id_grado : "",
+  id_jornada : "",
+  year : "",
+  mes : "",
+  retiro : "",
+  id_curso : ""
+};
+
 // codigo de docente
 let id_docente = 0;
-
 
 // funcion que carga las semanas correctas cuando cambia
 // el Periodo de calificaciones
@@ -188,15 +194,38 @@ function load_materias() {
 }
 
 // Estructura  para  editar matriculas
-function editar_matriculas(item){
+function editar_matriculas(item,dato){
 
   switch (item){
-    // defino el codigo de la matricula
+    // tomo el codigo de la matricula
     // y visualizo los datos principales
-    // del estudiante
+    // del estudiante en 
   case 1:
+    // solicito el valor de la matricula
+    // con el id  proveniente en el valor dato
+    matricula = consultar_matricula(dato);
     
+    $("#avance").html("");
+    $("#tabla").html("");
+    // cargo el formulario para un estudiante
+    $("#avance").load("formulario_editar_matricula_1.html",
+		      function () {
+			// si retorno un  numero de matricula dado
+			// entonces 
+			if (matricula.id){ 
+			  // agrego al div #paginas
+			  // el  formulario html
+			  $("#paginas").append(
+			  "<ul>"+
+			    "<li>código de la matricula : "+matricula.id+"</li>"+
+			    "<li>código del alumno : "+matricula.id_alumno+"</li>"+
+			    "</ul>"
+			)};
+    });
+    
+
     break;
+    
     // edito los datos de la residencia
   case 2:
    
@@ -214,8 +243,7 @@ function editar_matriculas(item){
   case 5:
 
     break;
-    
-    
+   
   }
 }
 
@@ -254,11 +282,7 @@ function gestion_matriculas(item) {
     $("#tabla").html("");
     // Cargar formulario_matricula_3.html
     $("#avance").load("formulario_matricula_3.html", function () {
-
       $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
-
-
-
     });
     break;
 
@@ -790,10 +814,6 @@ function matricula_docente() {
 
 }
 
-
-
-
-
 // funcion para cargar la lista de  estudiantes en el
 // div calificador
 function load_lista_estudiantes() {
@@ -840,7 +860,6 @@ function listado_matricula_escolaridad_jornada(){
       years: $("#years").val(),
       id_escolaridad :  $("#escolaridad").val(),
       id_jornada : $("#jornada").val()
-
     },
     // si los datos son correctos entonces ...
     success: function (respuesta) {
@@ -870,6 +889,9 @@ function listado_matricula_escolaridad_jornada(){
 
 function listado_matricula_grado(){
 
+
+  // funcion ajax para importar
+  // los datos desde el archivo listado_matricula_grado.php
   $.ajax({
     type: "POST",
     url: "listado_matricula_grado.php",
@@ -900,13 +922,11 @@ function listado_matricula_grado(){
       swal('Disculpe, existió un problema');
       console.log(xhr);
     }
-  });
-  
+  });  
 }
 
-
-
 // funcion que muestra la lista de estudiantes  matriculados
+// durante un año
 function listado_estudiantes_matriculados() {
 
   // se invoca al metodo ajax para solicitar
@@ -942,8 +962,6 @@ function listado_estudiantes_matriculados() {
 
 }
 
-
-
 // funcion que agrega una matricaula docente al listado
 function agregar_matricula_docente() {
 
@@ -962,7 +980,6 @@ function agregar_matricula_docente() {
       id_jornada: $("#jornada").val(),
       id_curso: $("#id_c").val(),
       id_docente: $("#id_docente_mt").val()
-
     },
     // si los datos son correctos entonces ...
     success: function (respuesta) {
@@ -1001,11 +1018,7 @@ function agregar_matricula_docente() {
       console.log(xhr);
     }
   });
-
 }
-
-
-
 
 // elimina la matricula docente
 function eliminar_matricula_docente(id) {
@@ -1040,16 +1053,14 @@ function eliminar_matricula_docente(id) {
       console.log(xhr);
     }
   });
-
 }
-
-
 
 // actualiza el formulario
 function actualizar() {
   load_materias();
   load_lista_estudiantes();
 }
+
 
 function boletin() {
   // almaceno el valor del grado
@@ -1067,6 +1078,7 @@ function boletin() {
     obtener_pdf();
   }
 }
+
 // funcion que crea un cuadro de notas por cada alumno de un grado para un determinado año
 function cuadro() {
 
@@ -1132,7 +1144,7 @@ function cuadro() {
     // el cuadro de notas por cada estudiante
     for (var ii = 0; ii < l.length; ii++) {
       // salida por consola
-      console.log('algoritmo para el alumno ' + ii + " codigo " + l[ii]);
+      //console.log('algoritmo para el alumno ' + ii + " codigo " + l[ii]);
       // solicito un cuadro de dialogo para un estudiante
       $.ajax({
 	type: "POST",
@@ -1256,7 +1268,8 @@ function lista_jornadas(id) {
 }
 
 
-// agrega las jornadas disponibles
+// agrega las escolaridades disponibles disponibles
+// al campo select id
 function lista_escolaridad(id) {
 
   // solicito la lista de escolaridad
@@ -1295,7 +1308,7 @@ function lista_escolaridad(id) {
 
 }
 
-// Esta funcion verifica si la persona con co codigo
+// Esta funcion verifica si la persona con codigo
 // id_persona tiene un codigo de estudiante, si no
 // le asigna un codigo
 function verificar_alumno(id_personax) {
@@ -1348,7 +1361,7 @@ function lista_grados(id_escolaridad, id) {
       $(id).append("<option value = '-1'>Seleccione</option>");
       
       res.forEach((element) => {
-	console.log(element)
+	//console.log(element)
 	valor = element[0];
 	texto = element[1];
 	$(id).append("<option value = " + valor + ">" + texto + "</option>");
@@ -1361,10 +1374,7 @@ function lista_grados(id_escolaridad, id) {
       swal('Disculpe, existió un problema' + status);
       console.log(xhr);
     }
-
   });
-
-
 }
 
 // funcion que consulta las matriculas realizadas
@@ -1375,7 +1385,6 @@ function consultar_matriculas(){
     // envio los dato por ajax
     // mediante el metodo post
     // en el archivo consulta_matriculas.php
-
 
     $.ajax({
     type: "POST",
@@ -1389,30 +1398,49 @@ function consultar_matriculas(){
     },
 
     success: function (respuesta) {
-
-	// si la respuesta es positiva
-      //if (respuesta['status'] == 1) {
-	//swal('Datos actualizados');
-	//$("#calificador").html(respuesta);
 	$("#avance").html("");
 	$("#avance").html(respuesta);
-      //} else {
-
-	//if (respuesta['status'] == 22) {
-	 // swal('Año', 'Porfavor seleccione un año ', 'error');
-	//}
-
-	  //if (respuesta['status'] == 23) {
-	 // swal('Año', 'Porfavor seleccione un grado', 'error');
-	//	}
-
       }
       //res = JSON.parse(respuesta);
-
     ,
     error: function (xhr, status) {
       swal('Disculpe, existió un problema' + status);
       console.log(xhr);
     }} );
-      
+}
+
+// funcion que consulta una matricula realizada
+
+function consultar_matricula(id_matricula){
+  // variable que almacena
+  // el resultado
+  let res = 0;
+  
+    // envio los dato por ajax
+    // mediante el metodo post
+    // en el archivo consulta_matricula.php
+
+    $.ajax({
+    type: "POST",
+    async: false,
+    url: "consultar_matricula.php",
+    data: {
+	id_matricula : id_matricula
+    },
+
+    success: function (respuesta) {
+      // salida por consola
+      // console.log(respuesta);
+      // paso los atributos a la variable matricula
+      // a un objeto json y lo retorno
+     res = JSON.parse(respuesta);
+     
+      }
+    ,
+    error: function (xhr, status) {
+      swal('Disculpe, existió un problema' + status);
+      console.log(xhr);
+    }} );
+  // restorna la respuesta
+   return res;
 }
