@@ -1,7 +1,8 @@
 <?php
 
 // clase personas que extiende de
-// imcrea
+// imcrea representa a las personas
+// que intervienen en la organizacion
 
 class personas extends imcrea {
 
@@ -74,7 +75,6 @@ class personas extends imcrea {
     // capacidad excepcional , varchar(100)
     public $capacidad_exepcional;
 
-
     // datos de antecedentes patologicos, varchar(100)
     public $antecedentes_patologicos_medicos;
     public $antecedentes_patologicos_quirurgicos;
@@ -141,13 +141,56 @@ class personas extends imcrea {
         $this->telefono = $a['telefono'];
         $this->u_alumnos = $a['u_alumnos'];
         $this->u_docentes = $a['u_docentes'];
+        $this->direccion_residencia = $a['direccion_residencia'];
+        $this->id_persona = $a['id_persona'];
+        $this->nombres = $a['nombres'];
+        $this->apellidos = $a['apellidos'];
+        $this->identificacion = $a['identificacion'];
+        $this->tipo_identificacion = $a['tipo_identificacion'];
+        $this->nacimiento = $a['nacimiento'];
+        $this->correo = $a['correo'];
+        $this->i_correo = $a['i_correo'];
+        $this->celular = $a['celular'];
+        $this->telefono = $a['telefono'];
+        $this->u_alumnos = $a['u_alumnos'];
+        $this->u_docentes = $a['u_docentes'];
+        $this->direccion_residencia = $a['direccion_residencia'];
+        $this->barrio = $a['barrio'];
+        $this->estrato = $a['estrato'];
+        $this->sisben = $a['sisben'];
+        $this->familias_accion = $a['familias_accion'];
+        $this->regimen_salud = $a['regimen_salud'];
+        $this->eps = $a['eps'];
+        $this->vive_con = $a['vive_con'];
+        $this->victima_conflicto = $a['victima_conflicto'];
+        $this->tipo_victima_conflicto = $a['tipo_victima_conflicto'];
+        $this->municipio_expulsor = $a['municipio_expulsor'];
+        $this->discapacitado = $a['discapacitado'];
+        $this->tipo_discapacidad = $a['tipo_discapacidad'];
+        $this->capacidad_excepcional = $a['capacidad_excepcional'];
+        $this->etnia = $a['etnia'];
+        $this->tipo_etnia = $a['tipo_etnia'];
+        $this->resguardo_consejo = $a['resguardo_consejo'];
+        $this->ips = $a['ips'];
+        $this->tipo_sangre = $a['tipo_sangre'];
+        $this->rh = $a['rh'];
+        $this->capacidad_exepcional = $a['capacidad_exepcional'];
+        $this->antecedentes_patologicos_medicos = $a['antecedentes_patologicos_medicos'];
+        $this->antecedentes_patologicos_quirurgicos = $a['antecedentes_patologicos_quirurgicos'];
+        $this->antecedentes_patologicos_toxicos = $a['antecedentes_patologicos_toxicos'];
+        $this->antecedentes_patologicos_psiquiatricos = $a['antecedentes_patologicos_psiquiatricos'];
+        $this->antecedentes_patologicos_psicologicos = $a['antecedentes_patologicos_psicologicos'];
+        $this->antecedentes_patologicos_morbilidad = $a['antecedentes_patologicos_morbilidad'];
+        
 
         // retorna todos los atributos de la persona
         return $a;
     }
 
-    //  funcion que actualiza uno o varios datos de la persona
-    // actualizar nombres de  la  persona
+    // funcion que actualiza uno o varios datos de la persona
+    // como dato de entrada se debe suministrar dentro de los atributos
+    // del objeto los parametros que se desean actualizar
+    
     public function actualizar_nombres_persona(){
         $texto = "UPDATE personas SET  nombres ='$this->nombres',
                           apellidos='$this->apellidos' where id_personas = $this->id_persona";
