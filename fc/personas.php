@@ -93,12 +93,12 @@ class personas extends imcrea {
     
     // funcion que permite buscar personas en funcion del
     // nombre apellido y/o la cedula
-    public function buscar_persona($nombres, $apellidos, $cedula) {
+    public function buscar_persona() {
 
         $q = "select nombres,  apellidos , identificacion, id_personas  from personas where".
-                 " ( nombres like '%$nombres%' and ".
-                " apellidos like '%$apellidos%' ) and  ".
-                " identificacion like '%$cedula%' ";
+                 " ( nombres like '%".$this->nombres."%' and ".
+                " apellidos like '%".$this->apellidos."%' ) and  ".
+                " identificacion like '%".$this->identificacion."%' ";
 
         // ejecuto la consulta
         $c = $this->_db->query($q);

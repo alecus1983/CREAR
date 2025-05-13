@@ -20,7 +20,14 @@ $html = "";
 // creo un nuevo objeto matricula para el año actual
 // $mt =     new matriculas_year($ano);
 $personas = new personas();
-$lista = $personas->buscar_persona($nombres, $apellidos, $identificacion);    
+// asigno el atributo nombre
+$personas->nombres = $nombres;
+// asigno el atributo de apellido
+$personas->apellidos = $apellidos;
+// asigno la identificacion
+$pesonas->identificacion =  $identificacion;
+// obtengo la lista de personas que coinciden con el criterio
+$lista = $personas->buscar_persona();    
 // div que crea un afila bootrap
 $html = $html."<div class='row'>";
 // fila de todo el ancho 
