@@ -283,8 +283,14 @@ class personas extends imcrea {
 
 
     // actualiza la direccion de residencia
-    public function actualizar_direccion_residencia($direccion,$estrato, $barrio, $id_persona){
-        $texto = "UPDATE personas SET direccion_residencia ='$direccion', estrato = '$estrato', barrio = '$barrio' where id_personas = $id_persona";
+    public function actualizar_direccion_residencia(){
+
+        
+        $texto = "UPDATE personas SET direccion_residencia ='".
+            $this->direccion_residencia."', estrato = '".
+            $this->estrato."', barrio = '".
+            $this->barrio."' where id_personas = ".
+            $this->id_persona;
         
         // ejecuto la consulta
         $c = $this->_db->query($texto);
@@ -388,6 +394,8 @@ echo 'Message: ' .$e->getMessage();
         
     }
 
+
+    // funcion que elimina la persona dado un id de la persona
     public function del($id_personas){
         $q= "delete from  personas where id_personas = $id_personas";
 

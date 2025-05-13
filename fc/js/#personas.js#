@@ -5,7 +5,7 @@
 // cambio_datos-> lista las personas a partir de un criterio de busqueda (select)
 //                consulta el archivo cambio_datos.php
 //                usa el método buscar_persona($nombres, $apellidos, $identificacion)
-//                el cual retorna un array con un listado de 4 x n  donde n es esl número de personas encontradas
+//                el cual retorna un array con un listado de 4 x n  donde n es esl número de personas
 //
 // datos_persona -> funcion que retorna los datos de una persona y los coloca en el div #tabla (select)
 //                  consulta el archivo datos_persona.php
@@ -62,6 +62,7 @@
 //
 // eliminar_persona -> funcion que elimina a una persona de la base de datos (delete)
 //                     consulta el archivo del_persona.php
+//                     utiliza el método del($id_persona)
 //
 // formulario_agregar_persona -> crea un formaulario para agregar una persona
 //

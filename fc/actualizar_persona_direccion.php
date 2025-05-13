@@ -27,9 +27,15 @@ $direccion = $_POST["direccion_residencia"];
 if ($valido) {
 
     $persona = new personas();
+
+    // agrego datos a travéz de los atributos
+    $persona->estrato = $estrato ;
+    $persona->barrio = $barrio;
+    $persona->id_persona = $id_persona;
+    $persona->direccion = $direccion_residencia;
     
     //metodo para actualizar la persona
-    if($persona->actualizar_direccion_residencia($direccion, $estrato, $barrio, $id_persona)){
+    if($persona->actualizar_direccion_residencia()){
 
         $respuesta['status'] = 1;    
         $respuesta['barrio'] = $barrio;

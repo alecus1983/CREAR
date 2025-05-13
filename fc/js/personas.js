@@ -62,6 +62,7 @@
 //
 // eliminar_persona -> funcion que elimina a una persona de la base de datos (delete)
 //                     consulta el archivo del_persona.php
+//                     
 //
 // formulario_agregar_persona -> crea un formaulario para agregar una persona
 //
