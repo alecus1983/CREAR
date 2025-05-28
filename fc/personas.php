@@ -98,7 +98,7 @@ class personas extends imcrea {
         $q = "select nombres,  apellidos , identificacion, id_personas  from personas where".
                  " ( nombres like '%".$this->nombres."%' and ".
                 " apellidos like '%".$this->apellidos."%' ) and  ".
-                " identificacion like '%".$this->identificacion."%' ";
+                " identificacion like '%".$this->identificacion."%' LIMIT 25";
 
         // ejecuto la consulta
         $c = $this->_db->query($q);
@@ -145,8 +145,6 @@ class personas extends imcrea {
         $this->id_persona = $a['id_persona'];
         $this->nombres = $a['nombres'];
         $this->apellidos = $a['apellidos'];
-        $this->identificacion = $a['identificacion'];
-        $this->tipo_identificacion = $a['tipo_identificacion'];
         $this->nacimiento = $a['nacimiento'];
         $this->correo = $a['correo'];
         $this->i_correo = $a['i_correo'];

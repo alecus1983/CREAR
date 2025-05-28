@@ -134,6 +134,7 @@ function gestion_personas() {
 // repo:  es el div en que se colocara la respuesta en formato html
 // presonax : id de la  persona que se va a consultar 
 // form : codigo del formulario de donde se hace la cosulta
+// retorna un html con la tabla de personas
 
 function cambio_datos(repo, personax, form) {
 
@@ -151,12 +152,41 @@ function cambio_datos(repo, personax, form) {
             form: form
         },
         // si los datos son correctos entonces ...
-        success: function (respuesta) {
+      success: function (respuesta) {
+	
             // si la respuesta es positiva
-            if (respuesta['status'] == 1) {
+        if (respuesta['status'] == 1) {
+
                 // coloco la respuesta en el campo repo
-                $(repo).html(respuesta['html']);
-            } else {
+                $(repo).html( "<table class='table' id='lista_e'>"+
+			      "<thead>"+
+			      // emcabezado de la tabla
+			      "<th scope='col'>Nombres</th>"+
+			      "<th scope='col'>Apellidos</th>"+
+			      "<th scope='col'>D. de identidad</th>"+
+			      //  "<th scope='col'>Correo</th>"+
+			      //  "<th scope='col'>Telefono</th>"+
+			      "<th scope='col'>Actualizar</th>"+
+			      "<th scope='col'>Selecionar</th>"+
+			      "<th scope='col'>Eliminar</th>"+
+			      "</thead>"+
+			      "<tbody>");
+
+	  
+	  respuesta['json'].forEach(  id => {
+	    // se agrega fila a la tabla
+	    $('#lista_e').append( "<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-success' onclick='seleccionar_persona(\"" + id[3] + "\", personax, form);'>seleccionar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
+	    
+	 });
+
+	 
+
+	  // agrego el  final de la tabla
+	  $(repo).append( "</tbody>"+
+			  "</div>"+
+			  "</div>"+
+			  "</div>");
+	    } else {
 
                 if (respuesta['status'] == 22) {
                     swal('Año', 'Porfavor seleccione un año', 'error');
@@ -905,13 +935,9 @@ function get_afiliaciones(id, form) {
                                     $("#ac_estrato").val("5");
                                     break;
                             }
-
-
                         });
-
                         break;
                 }
-
             } else {
                 if (respuesta['status'] == 20) {
                     swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');

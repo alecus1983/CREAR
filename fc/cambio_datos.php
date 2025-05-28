@@ -8,6 +8,8 @@ require_once("datos.php");
 $valido = true;
 $err = "";
 //array de respuestals
+
+//obtengo los datos por _POST
 $respuesta = array();
 $nombres = $_POST["nombres"];
 $apellidos = $_POST["apellidos"];
@@ -25,10 +27,14 @@ $personas->nombres = $nombres;
 // asigno el atributo de apellido
 $personas->apellidos = $apellidos;
 // asigno la identificacion
-$pesonas->identificacion =  $identificacion;
+$personas->identificacion =  $identificacion;
 // obtengo la lista de personas que coinciden con el criterio
-$lista = $personas->buscar_persona();    
-// div que crea un afila bootrap
+$lista = $personas->buscar_persona();
+
+
+// inicio de la tabla
+/*
+// div que crea una fila bootrap
 $html = $html."<div class='row'>";
 // fila de todo el ancho 
 $html = $html. " <div class='col-md-12 '>";
@@ -91,9 +97,13 @@ $html = $html. "</div>";
 $html = $html. "</div>";
 $html = $html. "</div>";
 
+// fin de la tabla
+*/
+    
 // parte de la respuesta HTML
 $respuesta['html']=$html;
 $respuesta['status']=1;
+$respuesta['json']=$lista;
 
 // encapsulo  la respuesta en modo json
 $respuesta_json = json_encode($respuesta);
