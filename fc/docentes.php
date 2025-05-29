@@ -40,7 +40,11 @@ class docentes extends imcrea {
     //      a partir del codigo id del docente
     public function get_docente_id($id) {
         //consulta para recuperar el docente
-        $q = "select * from docentes where  id_docente = $id";
+        $q = "select * from u_docentes ud
+              inner join personas p
+              on ud.id_personas = p.id_personas
+              where id_docentes = $id";
+        
         // se obtiene la variable resultado de consulta
         $c = $this->_db->query($q);
         // obtengo el primer dato de de la consulta
@@ -63,7 +67,7 @@ class docentes extends imcrea {
     // obtengo el docente por cedula
     public function get_docente_cc($id){
         //consulta para recuperar el docente
-        $q = "select * from docentes where  cedula = $id";
+        $q = "select * from u_docentes ud inner join personas p on ud.id_personas = p.id_personas where identificacion = $id";
         // se obtiene la variable resultado de consulta
         $c = $this->_db->query($q);
         // obtengo el primer dato de de la consulta
@@ -74,7 +78,7 @@ class docentes extends imcrea {
         $this->admin =  $a['admin']; 
         $this->nombres = $a['nombres'];
         $this->apellidos = $a['apellidos'];
-        $this->cedula = $a['cedula'];
+        $this->cedula = $a['identificacion'];
         $this->login = $a['login'];
         $this->fecha = $a['fecha'];
         $this->celular = $a['celular'];
@@ -88,7 +92,7 @@ class docentes extends imcrea {
     //      a partir del codigo id del docente
     public function get_docente_email($email) {
         //consulta para recuperar el docente
-        $q = "select * from docentes where  i_correo = '$email'";
+        $q = "select * from u_docentes ud inner join personas p on ud.id_personas = p.id_personas where i_correo = '$email'";
 
         //echo $q;
         // se obtiene la variable resultado de consulta
@@ -166,7 +170,7 @@ class docentes extends imcrea {
         $arr = array();
         // consulta
         $q ="select id_docente, completo from 
-            (select id_docente,  nombres, apellidos, lower(concat(nombres, apellidos)) completo from docentes) as c
+            (select id_docente,  nombres, apellidos, lower(concat(nombres, apellidos)) completo from (select * from u_docentes ud inner join personas p on ud.id_personas = p.id_personas)) as c
             order by completo asc";
         // realizar consulta
         $c = $this->_db->query($q);

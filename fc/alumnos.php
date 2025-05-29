@@ -16,12 +16,14 @@ class alumnos extends personas {
     public $celular;
 
 
-
+    // funcion de constructor requiere que se ingrese
+    // el id del estudiante
     public function __construct($codigo){
 
         parent::__construct();
         // se realiza la consulta
         $resultado = $this->_db->query("select * from personas as p inner join u_alumnos as a  on p.id_personas = a.id_personas where a.id_alumnos = $codigo" );
+        // se ejecuta la consulta
         $dato = $resultado->fetch_array(MYSQLI_ASSOC);
 
         // si se ejecuto la consulta
@@ -30,6 +32,7 @@ class alumnos extends personas {
             $this->id_alumno = $dato["id_alumnos"];
             $this->nombres = $dato["nombres"];
             $this->apellidos = $dato["apellidos"];
+            $this-
             //$this->cedula = $dato["cedula"];
             //$this->login = $dato["login"];
             //$this->fecha = $dato["fecha"];
@@ -112,8 +115,9 @@ class alumnos extends personas {
 
             // convierte el nombre en un array
             $nombres = explode(" ",$nombre);
-            // iniciale del nombre
+            // inicial del nombre
             $i_nombre = substr($nombre,0,1);
+            // inicial del apelldio
             $i_apellido = substr($apellido,0,1);
 
             // comvierte el apellido en un array
@@ -175,7 +179,7 @@ class alumnos extends personas {
     // obtengo el ultimo alumno ingresado
     function maximo() {
         // se realiza la consulta
-        $qx = $this->_db->query("SELECT max(id_alumno) as cantidad FROM  alumnos");
+        $qx = $this->_db->query("SELECT max(id_alumno) as cantidad FROM  u_alumnos");
         $dato = $qx->fetch_array(MYSQLI_NUM);
 
         // si se ejecuto la consulta
