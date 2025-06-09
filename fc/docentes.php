@@ -39,29 +39,41 @@ class docentes extends imcrea {
     //      funcion para obtener los datos del docente
     //      a partir del codigo id del docente
     public function get_docente_id($id) {
+
+        if (!empty($id)) {
+           
+        
         //consulta para recuperar el docente
-        $q = "select * from u_docentes ud
+        $q = "select id_docente, admin, nombres, apellidos, identificacion, login, fecha, celular, correo, i_correo, materias  from u_docentes ud
               inner join personas p
               on ud.id_personas = p.id_personas
-              where id_docentes = $id";
-        
+              where id_docente = $id";
+        //
+
+        // echo $q."<br>";
         // se obtiene la variable resultado de consulta
         $c = $this->_db->query($q);
         // obtengo el primer dato de de la consulta
         $a = $c->fetch_array(MYSQLI_ASSOC);
 
+        // pruebas de salida
+        //echo ".................................<br>".$a['id_docente']." nombres".$a['nombres']." ".$a['apellidos']."<br><br>-----------------------------------------------";
+
+        if (!empty($a['nombres'])) {
         // asigno el valor devuelto a los atributos del ob jeto
         $this->id = $a['id_docente'];
         $this->admin =  $a['admin']; 
         $this->nombres = $a['nombres'];
         $this->apellidos = $a['apellidos'];
-        $this->cedula = $a['cedula'];
+        $this->cedula = $a['identificacion'];
         $this->login = $a['login'];
         $this->fecha = $a['fecha'];
         $this->celular = $a['celular'];
         $this->correo = $a['correo'];
         $this->i_correo = $a['i_correo'];
         $this->materias = $a['materias'];
+        }
+        }
     }
 
     // obtengo el docente por cedula
@@ -168,18 +180,32 @@ class docentes extends imcrea {
     public function get_total_docentes(){
         // array
         $arr = array();
+
+        // echo "Array inicial : <br><br>:".var_dump($arr);
         // consulta
         $q ="select id_docente, completo from 
-            (select id_docente,  nombres, apellidos, lower(concat(nombres, apellidos)) completo from (select * from u_docentes ud inner join personas p on ud.id_personas = p.id_personas)) as c
+            ( select id_docente,  nombres, apellidos, lower(concat(nombres, apellidos)) completo 
+            from (select p.id_personas, p.nombres, p.apellidos, ud.id_docente from u_docentes ud 
+            inner join personas p on ud.id_personas = p.id_personas) as a ) as c
             order by completo asc";
         // realizar consulta
         $c = $this->_db->query($q);
         // recorro el array 
         while($a = $c->fetch_array(MYSQLI_ASSOC)){
             // el arrray
-            array_push($arr, $a['id_docente']);
+            //echo "<br><br>Agregando  al docente codigo ...".$a['id_docente']." al array".var_dump($arr);
+
+            if ( !empty( $a['id_docente'] )){
+              array_push($arr, $a['id_docente']);  
+            }
+            
+            
         }
+
+        //echo "<br><br><br><br>Total docentes : <br><br>:".var_dump($arr);
         return $arr;
+
+        
     }
 }
     

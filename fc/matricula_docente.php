@@ -38,7 +38,7 @@ class matricula_docente extends imcrea {
     
     public function get_matricula($formato){
         // consulta que interroga si es un administrador
-        $r = $this->_db->query("select admin from docentes where id_docente = ".$this->id_docente);
+        $r = $this->_db->query("select admin from u_docentes where id_docente = ".$this->id_docente);
         // consulta que devuelve un array numérico
         $admin = $r->fetch_array(MYSQLI_NUM);
         // array para almacenar el listado de grados
@@ -68,8 +68,8 @@ class matricula_docente extends imcrea {
     
     public function listado_docentes ($year){
         $arr = array();
-        $q = "select id_docente,cedula, login, nombres, apellidos from docentes where id_docente in (
-                select distinct id_docente from matricula_docente where year = $year) and admin= 0";
+        $q = "select id_docente,identificacion, login, nombres, apellidos from u_docentes ud inner join personas p on ud.id_personas  = p.id_personas
+ where id_docente in (   select distinct id_docente from matricula_docente where year = $year) and admin= 0";
         $c = $this->_db->query($q);
         while($a = $c->fetch_array(MYSQLI_ASSOC)){
             // agrego el codigo de un docente matriculado en el año
@@ -85,6 +85,8 @@ class matricula_docente extends imcrea {
         $arr = array();
         $q = "select id from matricula_docente where id_grado = $id_grado and ".
             " id_jornada = $id_jornada and id_curso = $id_curso and year = $year order by id_docente";
+
+        //echo $q;
         
         $c = $this->_db->query($q);
         while($a = $c->fetch_array(MYSQLI_ASSOC)){

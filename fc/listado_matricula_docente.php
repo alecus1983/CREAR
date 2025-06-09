@@ -99,6 +99,8 @@ if ($valido) {
     // array de id's de docentes de un curso/grado/jornada
     $listado = $md->get_lista_por_grado ($grado,$id_jornada, $id_curso, $ano);
 
+
+
     $html = "<p>Listado de docentes matricuados en el grado <b>".$gr->nombre_g." ".$cu->curso
          ."</b>, jornada <b>".$jo->jornada."</b>, durante el año lectivo <b>".$ano."</b>  </p>";
 
@@ -112,23 +114,28 @@ if ($valido) {
     $html = $html. "<div class='form-floating'>";
     $html = $html. '<select id="id_docente_mt"  class="form-select">';
     $html = $html.'<option value""></option>';
-    foreach($total_docente as $td){
-        $d->get_docente_id($td);
 
+    //echo var_dump($total_docente);
+        
+    foreach($total_docente as $td){
+
+        //echo "Docente :  ".$td."<br>";
+        $d->get_docente_id($td);
         $html = $html.'<option value="'.$d->id.'">'.ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos))."</option> ";
     }
-    
+
     $html = $html. "</select>";
     $html = $html. "<label for='id_docente_mt'>Docente</label>";
     $html = $html. "</div>";
     $html = $html. "</div>";
     $html = $html. "<div class='col-4'>";
 
+    
     $html = $html. "<div class='form-floating'>";
     $html = $html. '<select id="id_materia_md"  class="form-select">';
     $html = $html.'<option value""></option>';
     $lista_mt = $rq->get_requisitos_grado($grado);
-
+    
     foreach($lista_mt as $r){
         // obtengo las caracteristicas del requisito 
          $rq->get_requisitos_id($r);
@@ -156,10 +163,14 @@ if ($valido) {
     $html = $html. "<tbody>";
     // por cada matricula docente  
     foreach($listado as $id){
+
+        
         // obtengo los atributos de la matricula 
         $md->get_matricula_por_id($id);
+        
         // obtengo las caracteristicas del docente 
         $d->get_docente_id($md->id_docente);
+        
         // obtengo las caracteristicas de la materia
         $cr->get_materia($md->id_materia);
         $html = $html. "<tr>";
@@ -173,6 +184,7 @@ if ($valido) {
         $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_matricula_docente(\"$id\");'>eliminar</button>";
         $html = $html. "</td>";
         $html = $html. "</tr>";
+        
                 
     }
     
@@ -184,14 +196,17 @@ if ($valido) {
     
 
     $html = $html. "</div>";
+    
 
     // parte de la respuesta HTML
     $respuesta['html']=$html;
     $respuesta['status']=1;
+   
 }
 else {
     $respuesta['html'] = "";
 }
+
 
 $respuesta_json = json_encode($respuesta);
 echo $respuesta_json;

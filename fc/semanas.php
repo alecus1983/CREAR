@@ -61,7 +61,6 @@ class semana extends imcrea{
         //retorno listado
         // echo var_dump($arr);
         return $arr;
-
     }
 
     public function get_semana_activa($ano) {

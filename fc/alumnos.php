@@ -32,7 +32,6 @@ class alumnos extends personas {
             $this->id_alumno = $dato["id_alumnos"];
             $this->nombres = $dato["nombres"];
             $this->apellidos = $dato["apellidos"];
-            $this-
             //$this->cedula = $dato["cedula"];
             //$this->login = $dato["login"];
             //$this->fecha = $dato["fecha"];

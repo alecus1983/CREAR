@@ -14,8 +14,8 @@ $respuesta = array();
 $nombres = $_POST["nombres"];
 $apellidos = $_POST["apellidos"];
 $identificacion = $_POST["identificacion"];
-$personax = $_POST["personax"];
-$form = $_POST["form"];
+//$personax = $_POST["personax"];
+//$form = $_POST["form"];
 
 $html = "";
 // si los datos son validos
