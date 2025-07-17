@@ -264,7 +264,7 @@ $ano = date('Y');
 	 function est(id_a) {
 	     //swal("Has ingresado el alumno"+id_a);
 
-
+	     // enviar mediante ajax
 	     $.ajax({
 		 type: "POST",
 		 url: "rendiminento_alumno_periodo.php",
