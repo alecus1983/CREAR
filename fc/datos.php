@@ -26,6 +26,20 @@ require_once("ponderado.php");
 require_once("requisitos.php");
 
 
+//// For Development PHP
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+//// For Production (log errors, don't display them to users) PHP
+
+// ini_set('display_errors', 0);
+// ini_set('display_startup_errors', 0);
+// error_reporting(E_ALL);
+// ini_set('log_errors', 1);
+// ini_set('error_log', '/path/to/your/php-error.log'); // Specify your error log 
+
 
 
 //session_start();
