@@ -244,6 +244,7 @@ class matriculas_year extends imcrea {
     public function __construct($a) {
         // invoco al constructor de la clase padre (imcrea)
         parent::__construct();
+	
         // genero una consulta a la base de datos
         // con el sistado de id de matriculas en un
         // año ordenados por nombre de estudiantes
@@ -264,18 +265,6 @@ class matriculas_year extends imcrea {
         $this->matriculas =  $aa;
     }
 
-     // funcion que obtiene el listado de alumnos matriculados en un año
-    // public function listado_matriculados_ano($year) {
-    //     // query
-    //     $q = "SELECT id_alumno FROM `alumnos`
-    //               WHERE id_alumno in
-    //               (select id_alumno from matricula WHERE year = $year) 
-    //               order by nombres, apellidos";
-    //     $c = $this->_db->query($q);
-    //     // obtengo el primer dato de de la consulta
-    //     $a = $c->fetch_array(MYSQLI_ASSOC);
-    //     return $a;
-    // }
     
 }
 

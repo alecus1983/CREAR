@@ -23,8 +23,9 @@ if($_POST["years"]!== ""){
 // si los datos son validos
 if ($valido) {
     // creo un nuevo objeto matricula para el año actual
-    $mt =     new matriculas_year($ano);
-    
+    // $mt =     new matriculas_year($ano);
+    $mt = new matricula();
+    //$mts = $mt->get_matricula_ano($ano);
     
     // muestra el contenido html
     $html = "<p>Listado de estudiantes  matricuados en el a&oacute;o <b>".$ano."</b>  </p>";
@@ -53,17 +54,15 @@ if ($valido) {
     $html = $html. "<th scope='col'>Eliminar</th>";
     $html = $html. "</thead>";
     $html = $html. "<tbody>";
-    
+
+     
     // por cada estudiante matriculado
-    foreach  ( $mt->matriculas as $id ) {
+    foreach  ( $mt->get_matricula_ano($ano) as $id ) {
         //creo una matricula
-        $matricula =  new matricula();
+        $alumno =  new alumnos();
 
         // obtengo los atrbutos de una matricula
-        $matricula->get_matricula_id($id);
-
-        // creo un nuevo alumno
-        $alumno = new alumnos($matricula->id_alumno);
+        $alumno->get_alumno_codigo($id["id_alumno"]);
         
         $html = $html."<tr>";
         $html = $html."<td>";
@@ -82,10 +81,10 @@ if ($valido) {
         $html = $html.$alumno->telefono;
         $html = $html."</td>";
         $html = $html. "<td>";
-        $html = $html. "<button type='button' class='btn btn-info' onclick='actualizar(\"$id\");'>actualizar</button>";
+       // $html = $html. "<button type='button' class='btn btn-info' onclick='actualizar(\"$id\");'>actualizar</button>";
         $html = $html. "</td>";
         $html = $html. "<td>";
-        $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar(\"$id\");'>eliminar</button>";
+        //$html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar(\"$id\");'>eliminar</button>";
         $html = $html. "</td>";
         $html = $html."</tr>";
                 

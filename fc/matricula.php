@@ -124,9 +124,30 @@ class matricula extends imcrea {
 	    if(empty($year)){
 		throw new InvalidArgumentException("No se ha seleccionando ningun año para la matricula");
 	    }
+	    // texto de la consulta
+	    $q = "select id_alumno,id_grado,id_jornada, id_curso  from matricula where year = ? ";
+	    
+	    // preparo la consulta
+	    $stmt = $this->_db->prepare($q);
 
+	    if ($stmt === false) {
+                throw new Exception("Error al preparar la consulta para buscar alumno en matriculas: " . $this->_db->error);
+            }
     
+	    // asigno el parámetro tipo string
+	    $stmt->bind_param("s",$year);
+	    $stmt->execute();
+	    $result = $stmt->get_result();
+	    return $result->fetch_all(MYSQLI_ASSOC);
+
 	}
+catch (Exception $e) {
+        error_log("Error en obtener los alumnos matriculados: " . $e->getMessage());
+        // Dependiendo de la aplicación, podrías querer relanzar la excepción
+        // throw $e;
+    }
+
+
 	
 	
     }

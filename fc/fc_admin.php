@@ -108,7 +108,6 @@ if (isset($_SESSION["usuario"])) {
 
 
 		function grafica() {
-
 			// se invoca al metodo ajax para solicitar el los datos del grafico
 			$.ajax({
 				type: "POST",
@@ -251,31 +250,9 @@ if (isset($_SESSION["usuario"])) {
 										<?php } ?>
 										class="form-control ">
 
-									<input type="hidden" value="<?php echo $id; ?>" id="id_d">
+								  <input type="hidden" value="<?php echo $id; ?>" id="id_d">
 
-									<label for="escolaridad">Escolaridad</label>
-									<select id="escolaridad"
-										style="background: transparent;color: darkgreen;border: 0px"
-										class="form-control"
-										    onchange="lista_grados($('#escolaridad').val(),'#id_g');">
-									    <option value="-1">Seleccione</option>
-									    <option value="1">Preescolar</option>
-										<option value="2">Básica Primaria</option>
-										<option value="3">Básica Secundaria</option>
-										<option value="4">Tecnico</option>
-										<option value="5">Cursos</option>
-									</select>
-									
-									<label for="jornada">Jornada</label>
-									<select id="jornada"
-										style="background: transparent;color: darkgreen;border: 0px"
-										class="form-control"
-										onchange=";">
-										<option value="1">Mañana</option>
-										<option value="2">Tarde</option>
-									</select>
-
-									<label for="periodos">Periodo</label>
+								    <label for="periodos">Periodo</label>
 									<select id="periodos"
 										style="background: transparent;color: darkgreen;border: 0px"
 										name="periodos"
@@ -290,7 +267,7 @@ if (isset($_SESSION["usuario"])) {
 
 									</select>
 
-									<label for="semana">Semana</label>
+								  <label for="semana">Semana</label>
 									<select id="semana"
 										class="form-control"
 										style="background: transparent;color: darkgreen;border: 0px"
@@ -308,13 +285,39 @@ if (isset($_SESSION["usuario"])) {
 
 									</select>
 
-									    <label class="Control-label">Grado</label>
+								  <label for="jornada">Jornada</label>
+									<select id="jornada"
+										style="background: transparent;color: darkgreen;border: 0px"
+										class="form-control"
+										onchange=";">
+										<option value="1">Mañana</option>
+										<option value="2">Tarde</option>
+									</select>
+
+									<label for="escolaridad">Escolaridad</label>
+									<select id="escolaridad"
+										style="background: transparent;color: darkgreen;border: 0px"
+										class="form-control"
+										    onchange="lista_grados($('#escolaridad').val(),'#id_g');">
+									    <option value="-1">Seleccione</option>
+									    <option value="1">Preescolar</option>
+										<option value="2">Básica Primaria</option>
+										<option value="3">Básica Secundaria</option>
+										<option value="4">Tecnico</option>
+										<option value="5">Cursos</option>
+									</select>
+									
+									<label class="Control-label">Grado</label>
 									
 									    <select id="id_g" name="id_gs"
 											class="form-control"
 											style="background: transparent;color: darkgreen;border:  10px"
 											onchange="actualizar();$('#id_g').css('background-color', 'transparent');">
 									</select>
+
+									
+
+									    
 
 									<label class="Control-label">Curso</label>
 									<select id="id_c"

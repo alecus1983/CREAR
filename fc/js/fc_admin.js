@@ -1072,10 +1072,42 @@ function boletin() {
   } else if (grado < 7 || grado > 9) {
     // llama a la funcion generar para generar el boletin
     // que corresponde al modelo de primaria
-    crear_pdf();
+      //crear_pdf();
+
+      var year = $("#years").val();
+      // se almacena la variable periodos con el periodo academico
+      // a seleccionar
+      var periodos = $('select#periodos').val();
+      // la variable grados guarda codigo del grado del estudiante
+      var grados = $("#id_g").val();
+      // agrego la jornada
+      var jornada = $("#jornada").val();
+      // describo el curso
+      var curso = $("#id_c").val();
+      // si no ha seleccionado grado
+       if (grados < 0) {
+        swal("Favor seleccione un grado");
+      } else if (periodos < 0) {
+        swal("Favor seleccione un periodo");
+      } else {
+
+      // se almacenan todas las variables dentro
+      // de la variable parametros
+      var parametros = "year=" + year +
+      	"&periodos=" +
+      	periodos +
+      	"&grado=" + grados +
+      	"&jornada=" + jornada +
+      	"&curso=" + curso;
+
+        console.log("los parametros son : %s", parametros);
+      // abro boletin en una nueva ventana
+      // llamando para ello al archivo cetificado.php
+        window.open("generar_p.php?" + parametros);
+      } 
   } else {
-    // llama a la funcion generarx la cual genera el boletin tipo preescolar
-    obtener_pdf();
+      // llama a la funcion generarx la cual genera el boletin tipo preescolar
+      obtener_pdf();
   }
 }
 
@@ -1182,38 +1214,39 @@ function cuadro() {
 function crear_pdf() {
   // esta función permite generar un un boletin en formato pdf
   // se almacena  en la variable año
-  // alamcena el año seleccionado ( año lectivo calendario A)
-  var year = $("#years").val();
+    // alamcena el año seleccionado ( año lectivo calendario A)
+    var a = 1;
+  //var year = $("#years").val();
   // se almacena la variable periodos con el periodo academico
   // a seleccionar
-  var periodos = $('select#periodos').val();
+  //var periodos = $('select#periodos').val();
   // la variable grados guarda codigo del grado del estudiante
-  var grados = $("#id_g").val();
+  //var grados = $("#id_g").val();
   // agrego la jornada
-  var jornada = $("#jornada").val();
+  // jornada = $("#jornada").val();
   // describo el curso
-  var curso = $("#id_c").val();
+  //var curso = $("#id_c").val();
   // si no ha seleccionado grado
-  if (grados < 0) {
-    swal("Favor seleccione un grado");
-  } else if (periodos < 0) {
-    swal("Favor seleccione un periodo");
-  } else {
+  // if (grados < 0) {
+  //  swal("Favor seleccione un grado");
+  //} else if (periodos < 0) {
+  //  swal("Favor seleccione un periodo");
+  //} else {
 
     // se almacenan todas las variables dentro
     // de la variable parametros
-    var parametros = "year=" + year +
-	"&periodos=" +
-	periodos +
-	"&grado=" + grados +
-	"&jornada=" + jornada +
-	"&curso=" + curso;
+    //var parametros = "year=" + year +
+//	"&periodos=" +
+//	periodos +
+//	"&grado=" + grados +
+//	"&jornada=" + jornada +
+//	"&curso=" + curso;
 
-    console.log("los parametros son : %s", parametros);
+  //  console.log("los parametros son : %s", parametros);
     // abro boletin en una nueva ventana
     // llamando para ello al archivo cetificado.php
-    window.open("generar_p.php?" + parametros);
-  }
+  //  window.open("generar_p.php?" + parametros);
+  //} 
 
 }
 

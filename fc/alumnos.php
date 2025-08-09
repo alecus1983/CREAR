@@ -124,7 +124,6 @@ class alumnos extends personas {
             $stmt->execute();
             $result = $stmt->get_result();
             $alumno_data = $result->fetch_assoc(); // Usar fetch_assoc es común
-            echo var_dump($alumno_data);
             $this->id_persona = $alumno_data['id_personas'];
             $this->id_alumno = $id_alumno;
             parent::get_persona_por_id($this->id_persona);
