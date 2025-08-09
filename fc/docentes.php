@@ -82,7 +82,7 @@ class docentes extends personas {
                 $this->admin = $a['admin']; 
                 $this->nombres = $a['nombres'];
                 $this->apellidos = $a['apellidos'];
-                $this->cedula = $a['identificacion']; // Usar propiedad de la clase padre
+                $this->identificacion = $a['identificacion']; // Usar propiedad de la clase padre
                 $this->login = $a['login'];
                 $this->fecha = $a['fecha'];
                 $this->celular = $a['celular']; // Usar propiedad de la clase padre
@@ -133,7 +133,7 @@ class docentes extends personas {
                 $this->admin = $a['admin']; 
                 $this->nombres = $a['nombres'];
                 $this->apellidos = $a['apellidos'];
-                $this->cedula = $a['identificacion'];
+                $this->identificacion = $a['identificacion'];
                 $this->login = $a['login'];
                 $this->fecha = $a['fecha'];
                 $this->celular = $a['celular'];
@@ -221,7 +221,8 @@ class docentes extends personas {
             if ($this->admin == 1) {
                 $q = "SELECT M.id_materia, M.materia FROM requisitos R
                       INNER JOIN materia M ON M.id_materia = R.id_materia
-                      WHERE R.id_grado = ?";
+WHERE R.id_grado = ?";
+		//echo $q;
                 $stmt = $this->_db->prepare($q);
                 if ($stmt === false) {
                     throw new Exception("Error al preparar la consulta de materias (admin): " . $this->_db->error);
@@ -248,7 +249,9 @@ class docentes extends personas {
             while($a = $result->fetch_array(MYSQLI_ASSOC)){
                 $id_m = $a['id_materia'];
                 $m = $a['materia'];
-                $arr[$id_m] = $m; 
+                $arr[$id_m] = $m;
+
+		
             }
             $stmt->close();
             $this->materias = $arr; // Asignar al atributo del objeto

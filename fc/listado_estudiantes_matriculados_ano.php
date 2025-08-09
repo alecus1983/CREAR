@@ -73,7 +73,7 @@ if ($valido) {
         $html = $html.$alumno->nombres." ".$alumno->apellidos;
         $html = $html."</td>";
         $html = $html."<td>";
-        $html = $html.$alumno->cedula;
+        $html = $html.$alumno->identificacion;
         $html = $html."</td>";
         $html = $html."<td>";
         $html = $html.$alumno->correo;

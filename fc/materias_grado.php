@@ -15,6 +15,7 @@ $year = $_POST['year'];
 $doc = new docentes();
 // recupero sus datos  si existe
 $doc->get_docente_id($id);
+//echo $doc->nombres." admin  =  ".$doc->admin;
 // obtego las materias desarrolladas en un grado
 $doc->get_materias_por_grado($grado,$year);
 // lo codifico  en formato json

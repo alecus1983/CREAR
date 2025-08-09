@@ -26,6 +26,7 @@ require_once("ponderado.php");
 require_once("requisitos.php");
 
 
+
 //// For Development PHP
 
 ini_set('display_errors', 1);

@@ -113,6 +113,23 @@ class matricula extends imcrea {
         // devuelvo el array con el listado de estudiantes
         return  $aa;
     }
+
+    // funcion que devuelve las matriculas realizadas
+    // durante el año lectivo
+    
+    public function get_matricula_ano($year){
+	// funcion de prueba
+	try{
+	    // si el argumento $year es nulo
+	    if(empty($year)){
+		throw new InvalidArgumentException("No se ha seleccionando ningun año para la matricula");
+	    }
+
+    
+	}
+	
+	
+    }
 } // fin de la clase
 
 
