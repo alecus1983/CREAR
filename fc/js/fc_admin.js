@@ -726,14 +726,6 @@ function gestion_matriculas(item) {
   // si no esta registrado lo registro
 
 
-
-
-
-
-
-
-
-
 }
 
 // funcion que realiza la matricula de un alumno
@@ -1369,7 +1361,7 @@ function verificar_alumno(id_personax) {
 
 // funcion que lista los grados en funcion de un id_escolaridad
 // que identifica la escolaridad de los estudiantes y 
-function lista_grados(id_escolaridad, id) {
+function lista_grados(id_escolaridad, id, id_docente) {
 
   // solicito la lista de escolaridad
 
@@ -1378,7 +1370,7 @@ function lista_grados(id_escolaridad, id) {
     async: false,
     url: "lista_grados.php",
     data: {
-      id: id,
+      id_docente: id_docente,
       id_escolaridad: id_escolaridad
     },
 
@@ -1409,6 +1401,7 @@ function lista_grados(id_escolaridad, id) {
     }
   });
 }
+
 
 // funcion que consulta las matriculas realizadas
 // en un determinado grado

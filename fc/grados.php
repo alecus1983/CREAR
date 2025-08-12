@@ -119,34 +119,7 @@ class grados extends jornada
     }
 
 
-    // funcion que lista  de los gradsos de acuerdo a una escolaridad dada
-    public function lista_escolaridad($id_escolaridad)
-    {
-        // texto de la consulta
-        $c = $this->_db->query("select * from grados where id_escolaridad = $id_escolaridad order by grado");
-
-        // array que almacena el dato de salida
-        $aa = [];
-
-        // si el resulatado de la consulta dio mas
-        // de cero registros
-
-        if ($c->num_rows > 0) {
-
-            // esplora iterativamente los registros
-            // consultados
-
-            while ($a = $c->fetch_array(MYSQLI_ASSOC)) {
-
-                array_push($aa, array($a["id_grado"], $a["grado"]));
-
-            }
-
-        }
-        // retorno un array con la cantidad
-        // de filas 
-        return $aa;
-    }
+    
 }
 // fin de la clase
 ?>

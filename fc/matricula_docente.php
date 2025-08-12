@@ -30,7 +30,7 @@ class matricula_docente extends imcrea {
         if(isset($r["id_docente"])){
             return $r["id_docente"];}
         else
-        {return null;}
+            {return null;}
     } 
 
     // se obtiene un listado de los grados matriculados por un docente
@@ -48,19 +48,19 @@ class matricula_docente extends imcrea {
             $q = "SELECT * FROM grados  where formato_boletin = $formato ORDER BY grado";
             // obtengo el query resultado
             $resultado = $this->_db->query($q);
-             // convierto la consulta en un array
-             while($g = $resultado->fetch_array(MYSQLI_ASSOC)){
-                 $data[$g["id_grado"]] = $g["grado"];
-             }
-         } 
-        // // si no es un administrativo
-         else{
+            // convierto la consulta en un array
+            while($g = $resultado->fetch_array(MYSQLI_ASSOC)){
+                $data[$g["id_grado"]] = $g["grado"];
+            }
+        } 
+            // // si no es un administrativo
+        else{
             $q1 = "SELECT DISTINCT G.id_grado, G.grado FROM grados G INNER JOIN matricula_docente D ON G.id_grado = D.id_grado  WHERE D.year = '".$this->year."' AND  D.id_docente = ".$this->id_docente;
             $resultado = $this->_db->query($q1);
             while($g = $resultado->fetch_array(MYSQLI_ASSOC)){
                 $data[$g["id_grado"]] = $g["grado"];
             }
-         }
+        }
         $this->listado = $data;
     }
 
@@ -69,7 +69,7 @@ class matricula_docente extends imcrea {
     public function listado_docentes ($year){
         $arr = array();
         $q = "select id_docente,identificacion, login, nombres, apellidos from u_docentes ud inner join personas p on ud.id_personas  = p.id_personas
- where id_docente in (   select distinct id_docente from matricula_docente where year = $year) and admin= 0";
+where id_docente in (   select distinct id_docente from matricula_docente where year = $year) and admin= 0";
         $c = $this->_db->query($q);
         while($a = $c->fetch_array(MYSQLI_ASSOC)){
             // agrego el codigo de un docente matriculado en el año
@@ -84,7 +84,7 @@ class matricula_docente extends imcrea {
     public function get_lista_por_grado ($id_grado,$id_jornada, $id_curso, $year){
         $arr = array();
         $q = "select id from matricula_docente where id_grado = $id_grado and ".
-            " id_jornada = $id_jornada and id_curso = $id_curso and year = $year order by id_docente";
+             " id_jornada = $id_jornada and id_curso = $id_curso and year = $year order by id_docente";
 
         //echo $q;
         
@@ -98,6 +98,101 @@ class matricula_docente extends imcrea {
         return $arr;
 
     }
+
+    // funcion que lista  de los gradsos de acuerdo
+    // a una escolaridad dada $id_escolaridad ,
+    // para un docente $id_docente y un año $year
+    public function lista_escolaridad($id_escolaridad, $id_docente, $year)
+    {
+	
+
+	try {
+    
+	    // determinar si el docente es administrativo
+	    $q = "SELECT admin from u_docentes u where id_docente = ? limit 1";
+	    // preparao la consulta en la variable $stmt
+	    $stmt = $this->_db->prepare($q);
+
+	    if ($stmt === false) {
+                throw new Exception("Error al preparar la consulta : " . $this->_db->error);
+            }
+
+	   
+	    // agrego los parametros a la consulta
+	    $stmt->bind_param("i", $id_docente);
+	    // ejecuto la consulta
+	    $stmt->execute();
+	    $result = $stmt->get_result();
+	    //obtengo el primer registro
+            $a = $result->fetch_array();
+	   
+
+	    // si es un administrativo aplico estas politicas
+	    if($a[0] == 1){
+
+		// texto de la consulta
+		// selecciono todos los grados de una escolaridad
+		$c = $this->_db->query("select * from grados where id_escolaridad = $id_escolaridad order by grado");
+
+		// array que almacena el dato de salida
+		$aa = [];
+
+		// si el resulatado de la consulta dio mas
+		// de cero registros
+
+		if ($c->num_rows > 0) {
+
+		    // esplora iterativamente los registros
+		    // consultados
+
+		    while ($a = $c->fetch_array(MYSQLI_ASSOC)) {
+
+			array_push($aa, array($a["id_grado"], $a["grado"]));
+
+		    }
+
+		}
+		// retorno un array con la cantidad
+		// de filas 
+		return $aa;
+
+	    }
+		// si es otro docente aplico estas
+	    else 
+		{
+		    // variable de consultas
+		    $q = "select gd.id_grado, gr.grado from grados as gr inner join ( select distinct m.id_grado  from matricula_docente m where m.`year` = ? and m.id_docente =?) as gd
+on gr.id_grado = gd.id_grado
+where gr.id_escolaridad = ?";
+
+		    // preparo la consulta
+		    $stmt = $this->_db->prepare($q);
+
+		    // valido la consulta
+		    if ($stmt === false) {
+			throw new Exception("Error al preparar la consulta escolaridades: " . $this->_db->error);
+		    }
+
+		    // agrego parametros
+		    $stmt->bind_param("sii",$year, $id_docente, $id_escolaridad);
+
+		    // ejecuto la consulta
+		    $stmt->execute();
+		    $result = $stmt->get_result();
+
+		    // retorno los datos
+		    return $result->fetch_all();
+    
+		}
+
+	}catch (Exception $e) {
+            error_log("Error en listado de escolaridades: " . $e->getMessage());
+            
+	}
+
+    
+    }
+    
 
     public function get_matricula_por_id($id){
         $q = "select * from  matricula_docente where id =$id ";
@@ -118,13 +213,13 @@ class matricula_docente extends imcrea {
 
     public function  add($id_grado,$id_curso,$id_materia,$id_docente,$ano,$id_jornada){
         $q = "insert into matricula_docente (id_grado, id_curso,id_materia,id_docente,year,id_jornada,mes,fecha)".
-            " values($id_grado,$id_curso,$id_materia,$id_docente,$ano,$id_jornada,4,NOW())";
+             " values($id_grado,$id_curso,$id_materia,$id_docente,$ano,$id_jornada,4,NOW())";
         //echo $q;
         $c = $this->_db->query($q);
         if($c === true){
             return true;
         }else
-        {return false;}
+            {return false;}
         
     }
 

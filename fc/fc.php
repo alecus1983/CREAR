@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if (isset($_SESSION["usuario"])){
     $usuario =  $_SESSION["usuario"];
@@ -29,7 +29,8 @@ $ano = date('Y');
 	<script src="js/all.js" ></script>
 	<link href="../imagenes/escudo.gif" rel="shortcut icon"/>
 	<script src="./js/sweetalert.min.js"></script>
-	<script src="./js/jquery-3.5.1.min.js"></scrip>
+	<script src="./js/jquery-3.5.1.min.js"></script>
+	<script src="./js/fc_admin.js"></script>
 	 <script src="./js/ajax.js"></script>
 	<link rel="stylesheet" href="estilos.css" type="text/css">
 
@@ -61,7 +62,7 @@ $ano = date('Y');
 	     -webkit-animation: spin 2s linear infinite;
 	     animation: spin 2s linear infinite;
 	 }
-	 
+
 
 	 @-webkit-keyframes spin {
 	     0% { -webkit-transform: rotate(0deg); }
@@ -139,113 +140,113 @@ $ano = date('Y');
 		     // valido los datos antes de enviarlos
 
 		     $('.A').each( function (a){
-			 
-			     if($(this)[0].value > 5){
-				 valido = false;
+
+			 if($(this)[0].value > 5){
+			     valido = false;
 			 }
 		     } )
 
 		     $(' .B').each( function (a){
-			 
+
 			 if($(this)[0].value > 5){
 			     valido = false;
 			 }
 		     } )
 
 		     $(' .C').each( function (a){
-			 
+
 			 if($(this)[0].value > 5){
 			     valido = false;
 			 }
 		     } )
 
 		     $(' .D').each( function (a){
-			 
+
 			 if($(this)[0].value > 5){
 			     valido = false;
 			 }
 		     } )
 
 		     $('.E').each( function (a){
-			 
+
 			 if($(this)[0].value > 5){
 			     valido = false;
 			 }
 		     } )
 
 		     $( '.F').each( function (a){
-			 
+
 			 if($(this)[0].value > 5){
 			     valido = false;
 			 }
 		     } )
 
 		     $(' .G').each( function (a){
-			 
+
 			 if($(this)[0].value > 5){
 			     valido = false;
 			 }
 		     } )
-		     
+
 		     $('.H').each( function (a){
-			 
+
 			 if($(this)[0].value > 5){
 			     valido = false;
 			 }
 		     } )
 
 		     $(' .I').each( function (a){
-			 
+
 			 if($(this)[0].value > 5){
 			     valido = false;
 			 }
 		     } )
-		     
-		     if(valido){ 
+
+		     if(valido){
 			 // llamo al metodo ajax para el envío de la  información
 			 // se emplea en envío por POST
 			 $.ajax({
-                         type: "POST",
-                         url: "notas_semanales.php",
-                         data: {
-                             year: $("#years").val(),
-                             semana: $("#semana").val(),
-                             id_gs: $("#id_g").val(),
-                             id_ms: $("#id_ms").val(),
-                             id_jornada: $("#jornada").val(),
-                             id_docente: $("#id_d").val(),
-                             corte: $("#corte").val(),
-                             periodo: $("#periodos").val(),
-                             logro1: JSON.stringify(logros1),
-                             logro2: JSON.stringify(logros2),
-                             logro3: JSON.stringify(logros3),
-                             codigo: JSON.stringify(codigos),
-                             faltas: JSON.stringify(faltas),
-                             A: JSON.stringify(A),
-                             B: JSON.stringify(B),
-                             C: JSON.stringify(C),
-                             D: JSON.stringify(D),
-                             E: JSON.stringify(E),
-                             F: JSON.stringify(F),
-                             G: JSON.stringify(G),
-                             H: JSON.stringify(H),
-                             I: JSON.stringify(I),
-                             J: JSON.stringify(J),
-			     L: JSON.stringify(L)
-                         },
+                             type: "POST",
+                             url: "notas_semanales.php",
+                             data: {
+				 year: $("#years").val(),
+				 semana: $("#semana").val(),
+				 id_gs: $("#id_g").val(),
+				 id_ms: $("#id_ms").val(),
+				 id_jornada: $("#jornada").val(),
+				 id_docente: $("#id_d").val(),
+				 corte: $("#corte").val(),
+				 periodo: $("#periodos").val(),
+				 logro1: JSON.stringify(logros1),
+				 logro2: JSON.stringify(logros2),
+				 logro3: JSON.stringify(logros3),
+				 codigo: JSON.stringify(codigos),
+				 faltas: JSON.stringify(faltas),
+				 A: JSON.stringify(A),
+				 B: JSON.stringify(B),
+				 C: JSON.stringify(C),
+				 D: JSON.stringify(D),
+				 E: JSON.stringify(E),
+				 F: JSON.stringify(F),
+				 G: JSON.stringify(G),
+				 H: JSON.stringify(H),
+				 I: JSON.stringify(I),
+				 J: JSON.stringify(J),
+				 L: JSON.stringify(L)
+                             },
 
-                         success: function(data) {
-			     // respuesta a la carga de notas
-                             //$("#resultado").html("Se ingresaron las notas con exito");
-                             //$("#resultado").html(data);
-                             console.log(data);
+                             success: function(data) {
+				 // respuesta a la carga de notas
+				 //$("#resultado").html("Se ingresaron las notas con exito");
+				 //$("#resultado").html(data);
+				 console.log(data);
 
-                         },
-                         error: function(xhr, status) {
-                             swal('Disculpe, existió un problema');
-                             console.log(xhr);
-                         }
-                     });
+                             },
+                             error: function(xhr, status) {
+				 swal('Disculpe, existió un problema');
+				 console.log(xhr);
+                             }
+			 });
 		     } // fin de valido
 		     else {
 			 swal("Revise los datos","No se ingresaron los datos \t porque tiene notas mayores que 5","error");
@@ -273,7 +274,7 @@ $ano = date('Y');
 		     materia: $("#id_ms").val(),
 		     year : $("#years").val(),
 		     periodo: $("#periodos").val()
-		     
+
 		 } ,
 		 // si los datos son correctos entonces ...
 		 success: function(respuesta) {
@@ -291,7 +292,7 @@ $ano = date('Y');
 	     $("#estadisticas").focus();
              //event.preventDefault();
 
-	     
+
 	 }
 
 	 //fucion de carga incial
@@ -304,7 +305,7 @@ $ano = date('Y');
              // carga en un selector  de semanas
              carga("#semana", "load_semanas.php", {periodo:periodo, year:year});
          }
-	 
+
 	 // funsion que carga las semanas correctas cuando cambia
 	 // el Periodo de calificaciones
 	 // funcion para cargar las materias en el cuadro de dialogo
@@ -492,287 +493,300 @@ $ano = date('Y');
     </head>
 
     <body class="sb-nav-fixed">
-<div><p> El usuario es <?php $usuario  ?> </div>
-	<div class="loader" style="display:none" id="loader"></div>
-	<div id="content">
-	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
-	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-		<!-- Navbar Brand-->
-		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
-		<!-- Sidebar Toggle-->
-		<button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-4 me-lg-0" id="sidebarToggle">
-		    <i class="fas fa-bars"></i>
-		</button>
-		<a style="color:FFF" href="#"></a>
-		<!-- Navbar-->
-		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-		    <li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle"
-			   id="navbarDropdown" href="#"
-			   role="button" data-bs-toggle="dropdown"
-			   aria-expanded="false"><i class="fas fa-user fa-fw"></i>
-			    <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?> </a>
-			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+	<div><p> El usuario es <?php $usuario  ?> </div>
+	    <div class="loader" style="display:none" id="loader"></div>
+	    <div id="content">
+		<?php $hoy = Date("Y-m-d hh:mm"); ?>
+		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+		    <!-- Navbar Brand-->
+		    <a class="navbar-brand ps-3" href="board.php">INICIO</a>
+		    <!-- Sidebar Toggle-->
+		    <button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-4 me-lg-0" id="sidebarToggle">
+			<i class="fas fa-bars"></i>
+		    </button>
+		    <a style="color:FFF" href="#"></a>
+		    <!-- Navbar-->
+		    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+			<li class="nav-item dropdown">
+			    <a class="nav-link dropdown-toggle"
+			       id="navbarDropdown" href="#"
+			       role="button" data-bs-toggle="dropdown"
+			       aria-expanded="false"><i class="fas fa-user fa-fw"></i>
+				<?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?> </a>
+			    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-			    <li><a class="dropdown-item" href="logout.php">Salir</a></li>
-			</ul>
-		    </li>
-		</ul>
-	    </nav>
-	    <div id="layoutSidenav">
-		<div id="layoutSidenav_nav">
-		    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-			<div class="sb-sidenav-menu">
-			    <div class="nav">
-				<div class="sb-sidenav-menu-heading">Core</div>
-				<a class="nav-link" href="fc.php">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-tachometer-alt"></i></div>
-				    FORMULARIO
-				</a>
-				<div class="sb-sidenav-menu-heading">DATOS</div>
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#collapseLayouts"
-				   aria-expanded="false" aria-controls="collapseLayouts">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i></div>
-				    Datos
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i></div>
-				</a>
-				<div class="collapse" id="collapseLayouts"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+				<li><a class="dropdown-item" href="logout.php">Salir</a></li>
+			    </ul>
+			</li>
+		    </ul>
+		</nav>
+		<div id="layoutSidenav">
+		    <div id="layoutSidenav_nav">
+			<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+			    <div class="sb-sidenav-menu">
+				<div class="nav">
+				    <div class="sb-sidenav-menu-heading">Core</div>
+				    <a class="nav-link" href="fc.php">
+					<div class="sb-nav-link-icon">
+					    <i class="fas fa-tachometer-alt"></i></div>
+					FORMULARIO
+				    </a>
+				    <div class="sb-sidenav-menu-heading">DATOS</div>
+				    <a class="nav-link collapsed" href="#"
+				       data-bs-toggle="collapse"
+				       data-bs-target="#collapseLayouts"
+				       aria-expanded="false" aria-controls="collapseLayouts">
+					<div class="sb-nav-link-icon">
+					    <i class="fas fa-columns"></i></div>
+					Datos
+					<div class="sb-sidenav-collapse-arrow">
+					    <i class="fas fa-angle-down"></i></div>
+				    </a>
+				    <div class="collapse" id="collapseLayouts"
+					 aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
-				    <nav class="sb-sidenav-menu-nested nav">
+					<nav class="sb-sidenav-menu-nested nav">
 
-					<label for="years">Año</label>
-					<input type="number"
-					       value="<?php echo date('Y'); ?>"
-					       id="years"
-					       name="years"
-					       min="2015"
-					       max="2100" step="1"
-					       style="background: transparent;color: darkgreen;border: 0px;"
-					<?php if ($admin == 0) { ?>
-					    readonly="readonly"
-					<?php } ?>
-					class="form-control ">
+					    <label for="years">Año</label>
+					    <input type="number"
+						   value="<?php echo date('Y'); ?>"
+						   id="years"
+						   name="years"
+						   min="2015"
+						   max="2100" step="1"
+						   style="background: transparent;color: darkgreen;border: 0px;"
+					    <?php if ($admin == 0) { ?>
+						readonly="readonly"
+					    <?php } ?>
+					    class="form-control ">
 
-					<input type="hidden" value="<?php echo $id; ?>" id="id_d">
-
-					<label for="jornada">Jornada</label>
-					<select id="jornada"
-						style="background: transparent;color: darkgreen;border: 0px"
-						class="form-control"
-						onchange="actualizar();">
-					    <option value="1">Mañana</option>
-					    <option value="2">Tarde</option>
-					</select>
-
-					<label for="periodos"> Periodo</label>
-					<select id="periodos"
+					    <label for="periodos"> Periodo</label>
+					    <select id="periodos"
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    name="periodos"
 						    class="form-control" required=""
-						onchange="load_semanas();">
-					    <?php
+							onchange="load_semanas();">
+						<?php
 
-					    if($admin){
-						// si es administrador puede seleccionar cualquier periodo
-						
-						echo '<option value="-1" selected>seleccione</option>
+						if($admin){
+						    // si es administrador puede seleccionar cualquier periodo
+
+						    echo '<option value="-1" selected>seleccione</option>
                                                           <option value="1">1</option>
 					        <option value="2">2</option>
 					       <option value="3">3</option>
 					       <option value="4">4</option>
 					       <option value="5">Recuperacion</option>';
-					    }
+						}
 
-					    else {
-						// se crea un objeto semana 
-						$s = new semana();
-						// obtengo el periodo activo para este año
-						// en la fecha actual
-						$periodo  = $s->get_periodo_activo($ano);
-						// lo muestro en pantalla
-						echo "<option value='$periodo' selectecd>$periodo </option>";                                
-					    }
-					    ?>
+						else {
+						    // se crea un objeto semana
+						    $s = new semana();
+						    // obtengo el periodo activo para este año
+						    // en la fecha actual
+						    $periodo  = $s->get_periodo_activo($ano);
+						    // lo muestro en pantalla
+						    echo "<option value='$periodo' selectecd>$periodo </option>";
+						}
+						?>
+					    </select>
 
-					    
-					</select>
-
-					<label for="semana">Semana</label>
-					<select id="semana"
+					    <label for="semana">Semana</label>
+					    <select id="semana"
 						    class="form-control"
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    onchange="load_lista_estudiantes();">
 
-                                            <?php
-					    if ($admin) {
-						
-					    }
+						<?php
+						if ($admin) {
 
-					    else
-					    {
-						$s = new semana();
-						$sem  = $s->get_semana_activa($ano);
-						echo "<option value='$sem' selectecd>$sem </option>";
-					    }
-					    ?>
-					</select>
+						}
+
+						else
+						{
+						    $s = new semana();
+						    $sem  = $s->get_semana_activa($ano);
+						    echo "<option value='$sem' selectecd>$sem </option>";
+						}
+						?>
+					    </select>
+
+					    <input type="hidden" value="<?php echo $id; ?>" id="id_d">
+
+					    <label for="jornada">Jornada</label>
+					    <select id="jornada"
+							style="background: transparent;color: darkgreen;border: 0px"
+							class="form-control"
+							onchange="actualizar();">
+						<option value="1">Mañana</option>
+						<option value="2">Tarde</option>
+					    </select>
+
+					    <label for="escolaridad">Escolaridad</label>
+					    <select id="escolaridad"
+							style="background: transparent;color: darkgreen;border: 0px"
+							class="form-control"
+						    onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_d').val());">
+						<option value="-1">Seleccione</option>
+						<option value="1">Preescolar</option>
+						<option value="2">Básica Primaria</option>
+						<option value="3">Básica Secundaria</option>
+						<option value="4">Tecnico</option>
+						<option value="5">Cursos</option>
+					    </select>
 
 
-					<label class="Control-label">Grado</label>
-					<select id="id_g" name="id_gs"
-						class ="form-control"
-						style="background: transparent;color: darkgreen;border:  0px"
-						onchange="actualizar();">
-					    <?php
-					    // creo un nuevo objeto  matricula docente
-					    $mt = new matricula_docente();
-					    // asigno el año a la matricula como el a actual
-					    $mt->year = date('Y');
-					    // defino el codigo del docente de la matricula
-					    $mt->id_docente = $id;
-					    //actuliza el listado de grados disponibles
-					    $mt->get_matricula(2);
-					    // conviere el dato en un json
-					    echo json_encode($mt->listado);
-					    $lista = $mt->listado;
-					    echo '<option value="-1">seleccione</option>';
-					    foreach ($lista as $key => $value) {
-                            
-						echo '<option value="'.$key.'">'.$value.'</option>';
-                        
-					    }
-					    ?>
-					</select>
 
-					<label class="Control-label">Curso</label>
-					<select id="id_c"
+
+					    <label class="Control-label">Grado</label>
+					    <select id="id_g" name="id_gs"
+							class ="form-control"
+							style="background: transparent;color: darkgreen;border:  0px"
+							onchange="actualizar();">
+						<?php
+						// creo un nuevo objeto  matricula docente
+						$mt = new matricula_docente();
+						// asigno el año a la matricula como el a actual
+						$mt->year = date('Y');
+						// defino el codigo del docente de la matricula
+						$mt->id_docente = $id;
+						//actuliza el listado de grados disponibles
+						$mt->get_matricula(2);
+						// conviere el dato en un json
+						echo json_encode($mt->listado);
+						$lista = $mt->listado;
+						echo '<option value="-1">seleccione</option>';
+						foreach ($lista as $key => $value) {
+
+						    echo '<option value="'.$key.'">'.$value.'</option>';
+
+						}
+						?>
+					    </select>
+
+					    <label class="Control-label">Curso</label>
+					    <select id="id_c"
 						    style="background: transparent;color: darkgreen;border:0px;"
 						    onchange = "load_lista_estudiantes();"
 						    class ="form-control">
-					    <option value="0">A</opcion>
-						<option value="1">B</opcion>
-					</select>
+						<option value="0">A</opcion>
+						    <option value="1">B</opcion>
+					    </select>
 
-					<label for="id_ms">Materia</label>
-					<select id="id_ms"
+					    <label for="id_ms">Materia</label>
+					    <select id="id_ms"
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    name="id_ms" onchange="load_lista_estudiantes();"
 						    class="form-control">
-					</select>
+					    </select>
 
-				    </nav>
-				</div>
-                            </div>
-                        </div>
-                        <div>
-			    <?php
-                            if($admin){
-                                //echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" href="listado_docentes.php" target="_blank">lista de docentes</a>';
-                                //echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" target="#" onclick="avance_semanal();">Avance notas semanales</a>';
-                                //echo '<a style="margin: 2rem;" class="nav-link collapsed" aria-expanded="false" aria-controls="collapsePages" href="fs.php" target="_self">Gestión de semanas</a>';
-
-                            }
-			    ?>
-			</div>
-			<div class="sb-sidenav-footer">
-                                                <div class="small">Registrado(a) como:</div>
-                            <?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?>
-                        </div>
-                    </nav>
-                </div>
-
-
-                <div id="layoutSidenav_content">
-                    <main>
-                        <div class="container-fluid px-4">
-                            <h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
-                            <ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item active">Para  la gestión de calificaciones</li>
-                            </ol>
-
-                           
-                            <div class="row">
-				<div class="col-md-12">
-				    <div class="card ">
-					<div class="card-header">
-					    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
-						<path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
-					    </svg>
-					    estadísticas
-                                        </div>
-					<div id="estadisicas" class="card-body">
-					    
-					</div>
+					</nav>
 				    </div>
 				</div>
-                                                
                             </div>
-                            <div class="row">
-				<div class="col-md-12">
-				    <div class="card ">
-					<div class="card-header">
-					    <i class="fas fa-chart-area me-1"></i>
-					    notas
-					</div>
-					<div class="card-body">
+                            <div>
+				<?php
+				if($admin){
+                                    //echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" href="listado_docentes.php" target="_blank">lista de docentes</a>';
+                                    //echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" target="#" onclick="avance_semanal();">Avance notas semanales</a>';
+                                    //echo '<a style="margin: 2rem;" class="nav-link collapsed" aria-expanded="false" aria-controls="collapsePages" href="fs.php" target="_self">Gestión de semanas</a>';
 
-					    <div class="row">
-						<div class="col-md-12" id="resultado">
-						    
-						</div>
+				}
+				?>
+			    </div>
+			    <div class="sb-sidenav-footer">
+                                <div class="small">Registrado(a) como:</div>
+				<?php echo ucwords(strtolower($d->nombres))." ".ucwords(strtolower($d->apellidos));?>
+                            </div>
+			</nav>
+                    </div>
+
+
+                    <div id="layoutSidenav_content">
+			<main>
+                            <div class="container-fluid px-4">
+				<h1 class="mt-4">FORMULARIO  <?php echo date('Y'); ?></h1>
+				<ol class="breadcrumb mb-4">
+				    <li class="breadcrumb-item active">Para  la gestión de calificaciones</li>
+				</ol>
+
+
+				<div class="row">
+				    <div class="col-md-12">
+					<div class="card ">
+					    <div class="card-header">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
+						    <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
+						</svg>
+						estadísticas
+                                            </div>
+					    <div id="estadisicas" class="card-body">
+
 					    </div>
-					    <div class="row">
-						<div class="row">
+					</div>
+				    </div>
 
-						    <div id="calificador" class="col-md-12">
-							<!-- formulario de notas> -->
+				</div>
+				<div class="row">
+				    <div class="col-md-12">
+					<div class="card ">
+					    <div class="card-header">
+						<i class="fas fa-chart-area me-1"></i>
+						notas
+					    </div>
+					    <div class="card-body">
+
+						<div class="row">
+						    <div class="col-md-12" id="resultado">
+
 						    </div>
 						</div>
 						<div class="row">
-						    <button type="button"
-							    style="margin: 20px auto auto; display: block;"
-							    class="btn btn-outline-success"
-							    value="INGRESAR"
-							    id="ingresar" onclick="deposit();">
-							Ingresar
-						    </button>
+						    <div class="row">
 
+							<div id="calificador" class="col-md-12">
+							    <!-- formulario de notas> -->
+							</div>
+						    </div>
+						    <div class="row">
+							<button type="button"
+								style="margin: 20px auto auto; display: block;"
+								class="btn btn-outline-success"
+								value="INGRESAR"
+								id="ingresar" onclick="deposit();">
+							    Ingresar
+							</button>
+
+						    </div>
 						</div>
 					    </div>
 					</div>
 				    </div>
 				</div>
                             </div>
-                        </div>
-                    </main>
-                </div>
+			</main>
+                    </div>
+		</div>
             </div>
-        </div>
 
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
-                    <div>
-                        <a href="#">Politica de privacidad</a>
-                        &middot;
-			<a href="#">Terminos &amp; Condiciones</a>
+            <footer class="py-4 bg-light mt-auto">
+		<div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+			<div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
+			<div>
+                            <a href="#">Politica de privacidad</a>
+                            &middot;
+			    <a href="#">Terminos &amp; Condiciones</a>
+			</div>
 		    </div>
 		</div>
-	    </div>
-	</footer>
-	<script src="./js/bootstrap.bundle.min.js" ></script>
-        <script src="./js/scripts.js"></script>
-        <script src="./js/Chart.min.js" ></script>
-        <script src="./assets/demo/chart-area-demo.js"></script>
-        <script src="./assets/demo/chart-bar-demo.js"></script>
-        <script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="./js/datatables-simple-demo.js"></script>
+	    </footer>
+	    <script src="./js/bootstrap.bundle.min.js" ></script>
+            <script src="./js/scripts.js"></script>
+            <script src="./js/Chart.min.js" ></script>
+            <script src="./assets/demo/chart-area-demo.js"></script>
+            <script src="./assets/demo/chart-bar-demo.js"></script>
+            <script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
+            <script src="./js/datatables-simple-demo.js"></script>
     </body>
 </html>

@@ -3,26 +3,26 @@ session_start();
 require_once('datos.php');
 
 if (isset($_SESSION["usuario"])) {
-	$usuario =  $_SESSION["usuario"];
-	$d = new docentes();
-	$d->get_docente_cc($usuario);
-	$id = $d->id;
-	$admin = $d->admin;
+    $usuario =  $_SESSION["usuario"];
+    $d = new docentes();
+    $d->get_docente_cc($usuario);
+    $id = $d->id;
+    $admin = $d->admin;
 
-	$ano = date('Y');
-	if ($admin == 0) {
-		header("Location:board.php");
-	}
-} else {
+    $ano = date('Y');
+    if ($admin == 0) {
 	header("Location:board.php");
-	exit;
+    }
+} else {
+    header("Location:board.php");
+    exit;
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
+    <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -47,497 +47,493 @@ if (isset($_SESSION["usuario"])) {
 	<link rel="stylesheet" href="estilos.css" type="text/css">
 
 	<style>
-		input[type=number]::-webkit-inner-spin-button,
-		input[type=number]::-webkit-outer-spin-button {
-			-webkit-appearance: none;
-			margin: 0;
-		}
+	 input[type=number]::-webkit-inner-spin-button,
+	 input[type=number]::-webkit-outer-spin-button {
+	     -webkit-appearance: none;
+	     margin: 0;
+	 }
 
-		input[type=number] {
-			-moz-appearance: textfield;
-		}
+	 input[type=number] {
+	     -moz-appearance: textfield;
+	 }
 	</style>
 
 	<style>
-		.loader {
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			z-index: 1;
-			border: 30px solid #f3f3f3;
-			border-radius: 50%;
-			border-top: 16px solid blue;
-			border-right: 16px solid green;
-			border-bottom: 16px solid red;
-			border-left: 16px solid orange;
-			width: 10rem;
-			height: 10rem;
-			-webkit-animation: spin 2s linear infinite;
-			animation: spin 2s linear infinite;
-		}
+	 .loader {
+	     position: absolute;
+	     left: 50%;
+	     top: 50%;
+	     z-index: 1;
+	     border: 30px solid #f3f3f3;
+	     border-radius: 50%;
+	     border-top: 16px solid blue;
+	     border-right: 16px solid green;
+	     border-bottom: 16px solid red;
+	     border-left: 16px solid orange;
+	     width: 10rem;
+	     height: 10rem;
+	     -webkit-animation: spin 2s linear infinite;
+	     animation: spin 2s linear infinite;
+	 }
 
 
-		@-webkit-keyframes spin {
-			0% {
-				-webkit-transform: rotate(0deg);
-			}
+	 @-webkit-keyframes spin {
+	     0% {
+		 -webkit-transform: rotate(0deg);
+	     }
 
-			100% {
-				-webkit-transform: rotate(360deg);
-			}
-		}
+	     100% {
+		 -webkit-transform: rotate(360deg);
+	     }
+	 }
 
-		@keyframes spin {
-			0% {
-				transform: rotate(0deg);
-			}
+	 @keyframes spin {
+	     0% {
+		 transform: rotate(0deg);
+	     }
 
-			100% {
-				transform: rotate(360deg);
-			}
-		}
+	     100% {
+		 transform: rotate(360deg);
+	     }
+	 }
 	</style>
 
-	
+
 	<!-- scrip -->
 	<script>
-		//////////////////////////////////////////////////////////////////////////////////////////
-		// Este script contiene la funcion para generar las graficas                            //
-		// Esta foncion no recive parametros                                                    //
-		//////////////////////////////////////////////////////////////////////////////////////////
+	 //////////////////////////////////////////////////////////////////////////////////////////
+	 // Este script contiene la funcion para generar las graficas                            //
+	 // Esta foncion no recive parametros                                                    //
+	 //////////////////////////////////////////////////////////////////////////////////////////
 
 
-		function grafica() {
-			// se invoca al metodo ajax para solicitar el los datos del grafico
-			$.ajax({
-				type: "POST",
-				url: "grafica_boletin.php",
-				data: {
-					year: $("#years").val(),
-					id_gs: $("#id_g").val(),
-					id_ms: $("#id_ms").val(),
-					id_jornada: $("#jornada").val(),
-					id_docente: $("#id_docentes").val(),
-					corte: $("#corte").val(),
-					periodo: $("#periodos").val(),
-					opcion: $("#opcion").val()
+	 function grafica() {
+	     // se invoca al metodo ajax para solicitar el los datos del grafico
+	     $.ajax({
+		 type: "POST",
+		 url: "grafica_boletin.php",
+		 data: {
+		     year: $("#years").val(),
+		     id_gs: $("#id_g").val(),
+		     id_ms: $("#id_ms").val(),
+		     id_jornada: $("#jornada").val(),
+		     id_docente: $("#id_docentes").val(),
+		     corte: $("#corte").val(),
+		     periodo: $("#periodos").val(),
+		     opcion: $("#opcion").val()
 
-				},
-				// si los datos son correctos entonces ...
-				success: function(respuesta) {
+		 },
+		 // si los datos son correctos entonces ...
+		 success: function(respuesta) {
 
-					$("#grafo").html(respuesta);
+		     $("#grafo").html(respuesta);
 
-				},
-				error: function(xhr, status) {
-					swal('Disculpe, existió un problema');
-					console.log(xhr);
-				}
-			});
+		 },
+		 error: function(xhr, status) {
+		     swal('Disculpe, existió un problema');
+		     console.log(xhr);
+		 }
+	     });
 
-		}
+	 }
 
-		// funcion para cargar datos en un selector
-		function carga(a, b, c) {
+	 // funcion para cargar datos en un selector
+	 function carga(a, b, c) {
 
-			console.log("Valor a: %s", a); // variable que almacena el codigo del campo
-			console.log("Valor b: %s", b); // variable que almacena el nombre del archivo PHP
-			console.log(JSON.stringify(c)); // parametro que se transmite  mediante ajax
+	     console.log("Valor a: %s", a); // variable que almacena el codigo del campo
+	     console.log("Valor b: %s", b); // variable que almacena el nombre del archivo PHP
+	     console.log(JSON.stringify(c)); // parametro que se transmite  mediante ajax
 
-			// $.post(b, c,
-			$.ajax({
-				async: true,
-				method: "POST",
-				url: b,
-				data: c,
-				dataType: "json",
+	     // $.post(b, c,
+	     $.ajax({
+		 async: true,
+		 method: "POST",
+		 url: b,
+		 data: c,
+		 dataType: "json",
 
-			}).done(function(dato) {
-				$(a).empty();
+	     }).done(function(dato) {
+		 $(a).empty();
 
-				$(a).append("<option value = -1> Seleccione </option>");
-				$.each(dato, function(index, materia) {
-					$(a).append("<option value =" + index + ">" + materia + "</option>");
+		 $(a).append("<option value = -1> Seleccione </option>");
+		 $.each(dato, function(index, materia) {
+		     $(a).append("<option value =" + index + ">" + materia + "</option>");
 
-				});
-			});
+		 });
+	     });
 
-		}
+	 }
 
 
-		jQuery.ajaxSetup({
-			beforeSend: function() {
-				$('#loader').show();
-				$('#tabla').html("");
-			},
-			complete: function() {
-				$('#loader').hide();
-			}
-		});
+	 jQuery.ajaxSetup({
+	     beforeSend: function() {
+		 $('#loader').show();
+		 $('#tabla').html("");
+	     },
+	     complete: function() {
+		 $('#loader').hide();
+	     }
+	 });
 	</script>
-</head>
+    </head>
 
-<body class="sb-nav-fixed" >
+    <body class="sb-nav-fixed" >
 	<div>
-		<p> El usuario es <?php $usuario  ?>
+	    <p> El usuario es <?php $usuario  ?>
 	</div>
 	<div class="loader" style="display:none" id="loader"></div>
 
 	<div id="content">
 
-		<?php $hoy = Date("Y-m-d hh:mm"); ?>
-		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-			<!-- Navbar Brand-->
-			<a class="navbar-brand ps-3" href="board.php">INICIO</a>
-			<!-- Sidebar Toggle-->
-			<button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-4 me-lg-0"
-				       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-			<a style="color:FFF" href="#"></a>
-			<!-- Navbar-->
-			<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle"
-						id="navbarDropdown" href="#"
-						role="button" data-bs-toggle="dropdown"
-						aria-expanded="false"><i class="fas fa-user fa-fw"></i>
-						<?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?> </a>
-					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
+	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+		<!-- Navbar Brand-->
+		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
+		<!-- Sidebar Toggle-->
+		<button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-4 me-lg-0"
+			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+		<a style="color:FFF" href="#"></a>
+		<!-- Navbar-->
+		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+		    <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle"
+				  id="navbarDropdown" href="#"
+				  role="button" data-bs-toggle="dropdown"
+				  aria-expanded="false"><i class="fas fa-user fa-fw"></i>
+			    <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?> </a>
+			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-						<li><a class="dropdown-item" href="logout.php">Salir</a></li>
-					</ul>
-				</li>
+			    <li><a class="dropdown-item" href="logout.php">Salir</a></li>
 			</ul>
-		</nav>
+		    </li>
+		</ul>
+	    </nav>
 
 
-		<div id="layoutSidenav">
-			<div id="layoutSidenav_nav">
-				<nav class="sb-sidenav accordion sb-sidenav-dark"
-					id="sidenavAccordion"
-					style="background-color: cadetblue">
+	    <div id="layoutSidenav">
+		<div id="layoutSidenav_nav">
+		    <nav class="sb-sidenav accordion sb-sidenav-dark"
+				id="sidenavAccordion"
+				style="background-color: cadetblue">
 
-					<div class="sb-sidenav-menu">
-						<div class="nav">
-
-
-							<a class="nav-link collapsed" href="#"
-								data-bs-toggle="collapse"
-								data-bs-target="#collapseLayouts1"
-								aria-expanded="false" aria-controls="collapseLayouts1">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-columns"></i>
-								</div>
-								Datos
-								<div class="sb-sidenav-collapse-arrow">
-									<i class="fas fa-angle-down"></i>
-								</div>
-							</a>
-							<div class="collapse" id="collapseLayouts1"
-								aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-								<nav class="sb-sidenav-menu-nested nav">
-
-									<label for="years">Año</label>
-									<input type="number"
-										value="<?php echo date('Y'); ?>"
-										id="years"
-										name="years"
-										min="2015"
-										max="2100" step="1"
-										style="background: transparent;color: darkgreen;border: 0px;"
-										<?php if ($admin < 1) { ?>
-										readonly="readonly"
-										<?php } ?>
-										class="form-control ">
-
-								  <input type="hidden" value="<?php echo $id; ?>" id="id_d">
-
-								    <label for="periodos">Periodo</label>
-									<select id="periodos"
-										style="background: transparent;color: darkgreen;border: 0px"
-										name="periodos"
-										class="form-control" required=""
-										onchange="load_semanas();">
-										<option value="-1" selected>seleccione</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">Recuperacion</option>
-
-									</select>
-
-								  <label for="semana">Semana</label>
-									<select id="semana"
-										class="form-control"
-										style="background: transparent;color: darkgreen;border: 0px"
-										onchange="$('#semana').css('background-color', 'transparent');">
-									    <?php
-
-									    if ($admin) {
-									    } else {
-										$s = new semana();
-										$sem  = $s->get_semana_activa($ano);
-										echo "<option value='$sem' selectecd>$sem </option>";
-									    }
-
-									    ?>
-
-									</select>
-
-								  <label for="jornada">Jornada</label>
-									<select id="jornada"
-										style="background: transparent;color: darkgreen;border: 0px"
-										class="form-control"
-										onchange=";">
-										<option value="1">Mañana</option>
-										<option value="2">Tarde</option>
-									</select>
-
-									<label for="escolaridad">Escolaridad</label>
-									<select id="escolaridad"
-										style="background: transparent;color: darkgreen;border: 0px"
-										class="form-control"
-										    onchange="lista_grados($('#escolaridad').val(),'#id_g');">
-									    <option value="-1">Seleccione</option>
-									    <option value="1">Preescolar</option>
-										<option value="2">Básica Primaria</option>
-										<option value="3">Básica Secundaria</option>
-										<option value="4">Tecnico</option>
-										<option value="5">Cursos</option>
-									</select>
-									
-									<label class="Control-label">Grado</label>
-									
-									    <select id="id_g" name="id_gs"
-											class="form-control"
-											style="background: transparent;color: darkgreen;border:  10px"
-											onchange="actualizar();$('#id_g').css('background-color', 'transparent');">
-									</select>
-
-									
-
-									    
-
-									<label class="Control-label">Curso</label>
-									<select id="id_c"
-										style="background: transparent;color: darkgreen;border:0px;"
-										onchange=";"
-										class="form-control">
-										<option value="0">A</opcion>
-										    <option value="1">B</opcion>
-											<option value="2">C</opcion>
-											    <option value="3">D</opcion>
-									</select>
-
-									<label for="id_ms">Materia</label>
-									<select id="id_ms"
-										    style="background: transparent;color: darkgreen;border: 0px"
-										    name="id_ms" onchange="$('#id_ms').css('background-color', 'transparent')"
-										    class="form-control">
-									</select>
-
-								</nav>
-
-							</div>
-
-							<a class="nav-link collapsed" href="#"
-								data-bs-toggle="collapse"
-								data-bs-target="#collapseLayouts2"
-								aria-expanded="false" aria-controls="collapseLayouts2">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-columns"></i>
-								</div>
-								Elementos
-								<div class="sb-sidenav-collapse-arrow">
-									<i class="fas fa-angle-down"></i>
-								</div>
-							</a>
-
-							<div class="collapse" id="collapseLayouts2"
-								aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-								<nav class="sb-sidenav-menu-nested nav">
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#" target="_self"
-										onclick="gestion_semanas()">Gestión de Semanas
-									</a>
-								</nav>
-
-								<nav class="sb-sidenav-menu-nested nav">
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#" target="_self"
-										onclick="gestion_personas()">Gestión de Personas
-									</a>
-								</nav>
-
-								<nav class="sb-sidenav-menu-nested nav">
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#" target="_self"
-										onclick="requisitos_grado()">Requisitos de grado
-									</a>
-								</nav>
-
-								<nav class="sb-sidenav-menu-nested nav">
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#" target="_self"
-										onclick="matricula_docente()">Matricula Docente
-									</a>
-								</nav>
-
-								<nav class="sb-sidenav-menu-nested nav">
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#" target="_self"
-										  onclick="listado_estudiantes_matriculados();">Listado estudiantes matriculados
-									    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
-									</a>
-								</nav>
-
-								<nav class="sb-sidenav-menu-nested nav">
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#" target="_self"
-										  onclick="listado_notas_estudiantes();">Notas por estudiantes
-									    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
-									</a>
-								</nav>
-
-							</div>
-							<a class="nav-link collapsed" href="#"
-								data-bs-toggle="collapse"
-								data-bs-target="#collapseLayouts3"
-								aria-expanded="false" aria-controls="collapseLayouts3">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-columns"></i>
-								</div>
-								Procesos
-								<div class="sb-sidenav-collapse-arrow">
-									<i class="fas fa-angle-down"></i>
-								</div>
-							</a>
-							<div class="collapse" id="collapseLayouts3"
-								aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-								<nav class="sb-sidenav-menu-nested nav">
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#"
-										href="listado_docentes.php"
-										target="_blank">lista de docentes
-									</a>
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#"
-										onclick="avance_semanal();">Avance notas semanales
-									</a>
-
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										  onclick="boletin()">Boletin
-									    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo <br>preescolar</span>
-									</a>
-
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										onclick="cuadro();">Generar cuadro de notas
-									</a>
-
-									<a style="margin: 0.5rem;"
-										class="nav-link"
-										href="#" target="_self"
-										onclick="notas_faltantes()">Notas faltantes
-									</a>
-								</nav>
-							</div>
-
-							<a class="nav-link collapsed" href="#"
-								data-bs-toggle="collapse"
-								data-bs-target="#collapseLayouts4"
-								aria-expanded="false" aria-controls="collapseLayouts4">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-columns"></i>
-								</div>
-								Gesti&oacute;n Matricula
-								<div class="sb-sidenav-collapse-arrow">
-								    <i class="fas fa-angle-down"></i>
-								</div>
-							</a>
-
-							<div class="collapse" id="collapseLayouts4"
-								    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-							    <nav class="sb-sidenav-menu-nested nav">
-
-								<a style="margin: 0.5rem;"
-								   class="nav-link"
-								   href="#" target="_self"
-								   onclick="listado_matricula_escolaridad_jornada()">Consultar matrícula
-								</a>
-								<a style="margin: 0.5rem;"
-								   class="nav-link"
-								   href="#" target="_self"
-								   onclick="gestion_matriculas(1)">Nueva matr&iacute;cula
-								</a>
-								<a style="margin: 0.5rem;"
-								   class="nav-link"
-								   href="#" target="_self"
-								   onclick="editar_matriculas(1)">Editar matr&iacute;cula
-								</a>
-							    </nav>
-							</div>
+			<div class="sb-sidenav-menu">
+			    <div class="nav">
 
 
-						</div>
-					</div>
-					<div>
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#collapseLayouts1"
+					  aria-expanded="false" aria-controls="collapseLayouts1">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Datos
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				<div class="collapse" id="collapseLayouts1"
+					    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
-					</div>
-					<div class="sb-sidenav-footer">
-						<div class="small">Registrado como:</div>
-						<?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?>
-					</div>
-				</nav>
+				    <nav class="sb-sidenav-menu-nested nav">
+
+					<label for="years">Año</label>
+					<input type="number"
+						     value="<?php echo date('Y'); ?>"
+						     id="years"
+						     name="years"
+						     min="2015"
+						     max="2100" step="1"
+						     style="background: transparent;color: darkgreen;border: 0px;"
+					<?php if ($admin < 1) { ?>
+					    readonly="readonly"
+					<?php } ?>
+					class="form-control ">
+
+					<input type="hidden" value="<?php echo $id; ?>" id="id_d">
+
+					<label for="periodos">Periodo</label>
+					<select id="periodos"
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    name="periodos"
+						    class="form-control" required=""
+						    onchange="load_semanas();">
+					    <option value="-1" selected>seleccione</option>
+					    <option value="1">1</option>
+					    <option value="2">2</option>
+					    <option value="3">3</option>
+					    <option value="4">4</option>
+					    <option value="5">Recuperacion</option>
+
+					</select>
+
+					<label for="semana">Semana</label>
+					<select id="semana"
+						    class="form-control"
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    onchange="$('#semana').css('background-color', 'transparent');">
+					    <?php
+
+					    if ($admin) {
+					    } else {
+						$s = new semana();
+						$sem  = $s->get_semana_activa($ano);
+						echo "<option value='$sem' selectecd>$sem </option>";
+					    }
+
+					    ?>
+
+					</select>
+
+					<label for="jornada">Jornada</label>
+					<select id="jornada"
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    class="form-control"
+						    onchange=";">
+					    <option value="1">Mañana</option>
+					    <option value="2">Tarde</option>
+					</select>
+
+					<label for="escolaridad">Escolaridad</label>
+					<select id="escolaridad"
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    class="form-control"
+						onchange="lista_grados($('#escolaridad').val(),'#id_g');">
+					    <option value="-1">Seleccione</option>
+					    <option value="1">Preescolar</option>
+					    <option value="2">Básica Primaria</option>
+					    <option value="3">Básica Secundaria</option>
+					    <option value="4">Tecnico</option>
+					    <option value="5">Cursos</option>
+					</select>
+
+					<label class="Control-label">Grado</label>
+
+					<select id="id_g" name="id_gs"
+						    class="form-control"
+						    style="background: transparent;color: darkgreen;border:  10px"
+						    onchange="actualizar();$('#id_g').css('background-color', 'transparent');">
+					</select>
+
+					<label class="Control-label">Curso</label>
+					<select id="id_c"
+						    style="background: transparent;color: darkgreen;border:0px;"
+						    onchange=";"
+						    class="form-control">
+					    <option value="0">A</opcion>
+						<option value="1">B</opcion>
+						    <option value="2">C</opcion>
+							<option value="3">D</opcion>
+					</select>
+
+					<label for="id_ms">Materia</label>
+					<select id="id_ms"
+						style="background: transparent;color: darkgreen;border: 0px"
+						name="id_ms" onchange="$('#id_ms').css('background-color', 'transparent')"
+						class="form-control">
+					</select>
+
+				    </nav>
+
+				</div>
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#collapseLayouts2"
+					  aria-expanded="false" aria-controls="collapseLayouts2">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Elementos
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+
+				<div class="collapse" id="collapseLayouts2"
+					    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  href="#" target="_self"
+						  onclick="gestion_semanas()">Gestión de Semanas
+					</a>
+				    </nav>
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  href="#" target="_self"
+						  onclick="gestion_personas()">Gestión de Personas
+					</a>
+				    </nav>
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  href="#" target="_self"
+						  onclick="requisitos_grado()">Requisitos de grado
+					</a>
+				    </nav>
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  href="#" target="_self"
+						  onclick="matricula_docente()">Matricula Docente
+					</a>
+				    </nav>
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  href="#" target="_self"
+					   onclick="listado_estudiantes_matriculados();">Listado estudiantes matriculados
+					    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
+					</a>
+				    </nav>
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  href="#" target="_self"
+					   onclick="listado_notas_estudiantes();">Notas por estudiantes
+					    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
+					</a>
+				    </nav>
+
+				</div>
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#collapseLayouts3"
+					  aria-expanded="false" aria-controls="collapseLayouts3">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Procesos
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				<div class="collapse" id="collapseLayouts3"
+					    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  href="#"
+						  href="listado_docentes.php"
+						  target="_blank">lista de docentes
+					</a>
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  href="#"
+						  onclick="avance_semanal();">Avance notas semanales
+					</a>
+
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+					   onclick="boletin()">Boletin
+					    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo <br>preescolar</span>
+					</a>
+
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  onclick="cuadro();">Generar cuadro de notas
+					</a>
+
+					<a style="margin: 0.5rem;"
+						  class="nav-link"
+						  href="#" target="_self"
+						  onclick="notas_faltantes()">Notas faltantes
+					</a>
+				    </nav>
+				</div>
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#collapseLayouts4"
+					  aria-expanded="false" aria-controls="collapseLayouts4">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Gesti&oacute;n Matricula
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+
+				<div class="collapse" id="collapseLayouts4"
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_matricula_escolaridad_jornada()">Consultar matrícula
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_matriculas(1)">Nueva matr&iacute;cula
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="editar_matriculas(1)">Editar matr&iacute;cula
+					</a>
+				    </nav>
+				</div>
+
+
+			    </div>
 			</div>
+			<div>
 
-
-			<div id="layoutSidenav_content">
-				<main>
-					<div class="container-fluid px-4">
-						<h1 class="mt-4">FORMULARIO <?php echo date('Y'); ?></h1>
-						<ol class="breadcrumb mb-4">
-							<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
-						</ol>
-
-						<!--  contenedores dinamicos -->
-						<div id="avance" class="row"></div>
-						<div id="grafica" class="row"></div>
-						<div id="tabla" class="row"></div>
-
-
-					</div>
-				</main>
 			</div>
+			<div class="sb-sidenav-footer">
+			    <div class="small">Registrado como:</div>
+			    <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?>
+			</div>
+		    </nav>
 		</div>
+
+
+		<div id="layoutSidenav_content">
+		    <main>
+			<div class="container-fluid px-4">
+			    <h1 class="mt-4">FORMULARIO <?php echo date('Y'); ?></h1>
+			    <ol class="breadcrumb mb-4">
+				<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
+			    </ol>
+
+			    <!--  contenedores dinamicos -->
+			    <div id="avance" class="row"></div>
+			    <div id="grafica" class="row"></div>
+			    <div id="tabla" class="row"></div>
+
+
+			</div>
+		    </main>
+		</div>
+	    </div>
 
 
 	</div><!-- fin del contenido -->
 
 	<footer class="py-4 bg-light mt-auto">
-		<div class="container-fluid px-4">
-			<div class="d-flex align-items-center justify-content-between small">
-				<div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
-				<div>
-					<a href="#">Politica privacidad</a>
-					&middot;
-					<a href="#">Terminos &amp; Condiciones</a>
-				</div>
-			</div>
+	    <div class="container-fluid px-4">
+		<div class="d-flex align-items-center justify-content-between small">
+		    <div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
+		    <div>
+			<a href="#">Politica privacidad</a>
+			&middot;
+			<a href="#">Terminos &amp; Condiciones</a>
+		    </div>
 		</div>
+	    </div>
 	</footer>
 	<script src="./js/bootstrap.bundle.min.js"></script>
 	<script src="./js/scripts.js"></script>
@@ -546,6 +542,6 @@ if (isset($_SESSION["usuario"])) {
 	<script src="./assets/demo/chart-bar-demo.js"></script>
 	<script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
 	<script src="./js/datatables-simple-demo.js"></script>
-</body>
+    </body>
 
 </html>
