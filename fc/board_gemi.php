@@ -125,16 +125,7 @@ $ano = date('Y');
 
 	  
 	    
-      <div class="align-items-center">
-	<h2 class="text-center fs-2">PANEL <b>DOCENTE</b></h2>
-	
-	 <a class="text-center nav-link dropdown-toggle"
-               id="navbarDropdown" href="#"
-               role="button" data-bs-toggle="dropdown"
-               aria-expanded="false">
-                <i class="fas fa-user fa-fw"></i>
-               <i class="nombres" > <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?></i>            </a>
-      </div>
+      <div class="align-items-center"><h2 class="text-center fs-2">PANEL <b>DOCENTE</b></h2></div>
       
       <div class="row align-items-center" style="height:10em;margin-top: 5%;">
 		
@@ -190,7 +181,7 @@ $ano = date('Y');
 	<div class="col"></div>
 	<div class="col align-items-center">
 
-	  <a href="login_boletines.php" class="d-flex justify-content-center">
+	  <a href="../" class="d-flex justify-content-center">
 	    <img src="../imagenes/escudo.gif" height="70em" >
 	  </a>
 	</div>

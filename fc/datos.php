@@ -11,7 +11,7 @@ require_once("docentes.php");
 require_once("matricula_docente.php");
 require_once("calificaciones.php");
 require_once("inscripciones.php");
-require_once("listado_estudiantes.php");
+require_once("lista_estudiantes.php");
 require_once("cuadro.php");
 require_once("logros.php");
 require_once("matricula.php");

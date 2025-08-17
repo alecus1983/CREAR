@@ -816,13 +816,14 @@ function load_lista_estudiantes() {
     type: "POST",
     url: "listado_estudiantes.php",
     data: {
-      years: $("#years").val(),
-      id_g: $("#id_g").val(),
-      id_ms: $("#id_ms").val(),
-      id_jornada: $("#jornada").val(),
-      periodo: $("#periodos").val(),
-      curso: $("#id_c").val(),
-      semana: $("#semana").val()
+	years: $("#years").val(),
+	id_g: $("#id_g").val(),
+	id_ms: $("#id_ms").val(),
+	id_jornada: $("#jornada").val(),
+	periodo: $("#periodos").val(),
+	curso: $("#id_c").val(),
+	semana: $("#semana").val(),
+	escolaridad: $("#escolaridad").val()
     },
     // si los datos son correctos entonces ...
     success: function (respuesta) {

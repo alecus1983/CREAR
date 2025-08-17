@@ -42,7 +42,7 @@ class calificaciones extends  imcrea {
 
         $q = "select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year  from calificaciones_".$y." where year = $y and  id_alumno = $id_a and    id_materia = $id_m and       id_ponderado = $id_p and   id_semana = $id_s";
         // ejecuto la consulta
-        // echo $q;
+         //echo $q;
         
         try { 
             $c = $this->_db->query($q);

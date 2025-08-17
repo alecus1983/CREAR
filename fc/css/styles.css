@@ -249,7 +249,8 @@ a {
   text-decoration: underline;
 }
 a:hover {
-  color: var(--bs-link-hover-color);
+    color: darkblue;
+    
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -11242,4 +11243,8 @@ body {
   width: 20px !important;
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
+}
+
+.nombres{
+    color:cadetblue;
 }
