@@ -34,6 +34,8 @@ if (isset($_SESSION["usuario"])) {
 	<link href="estilos.css" rel="stylesheet" />
 	<script src="js/all.js"></script>
 	<link href="../imagenes/escudo.gif" rel="shortcut icon" />
+
+	
 	<script src="./js/sweetalert.min.js"></script>
 	<script src="./js/jquery-3.5.1.min.js"></script>
 	<script src="./js/fc_admin.js"></script>
@@ -101,6 +103,19 @@ if (isset($_SESSION["usuario"])) {
 
 	<!-- scrip -->
 	<script>
+
+	 // CONFIGURACION AJAX
+	 jQuery.ajaxSetup({
+	     beforeSend: function() {
+		 $('#loader-overlay').show();
+		 $('#loader').show();
+		 $('#tabla').html("");
+	     },
+	     complete: function() {
+		 $('#loader-overlay').hide();
+		 $('#loader').hide();
+	     }
+	 });
 	 //////////////////////////////////////////////////////////////////////////////////////////
 	 // Este script contiene la funcion para generar las graficas                            //
 	 // Esta foncion no recive parametros                                                    //
@@ -164,24 +179,17 @@ if (isset($_SESSION["usuario"])) {
 
 	 }
 
-
-	 jQuery.ajaxSetup({
-	     beforeSend: function() {
-		 $('#loader').show();
-		 $('#tabla').html("");
-	     },
-	     complete: function() {
-		 $('#loader').hide();
-	     }
-	 });
+	
 	</script>
     </head>
 
-    <body class="sb-nav-fixed" >
+<body class="sb-nav-fixed">
+    <div id="loader-overlay"></div>
+    <div class="loader" style="display:none" id="loader"></div>
+
 	<div>
 	    <p> El usuario es <?php $usuario  ?>
 	</div>
-	<div class="loader" style="display:none" id="loader"></div>
 
 	<div id="content">
 
@@ -212,14 +220,18 @@ if (isset($_SESSION["usuario"])) {
 
 	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
+
+		    <!-- barra de navegacion -->
 		    <nav class="sb-sidenav accordion sb-sidenav-dark"
 				id="sidenavAccordion"
 				style="background-color: cadetblue">
 
 			<div class="sb-sidenav-menu">
+
+			    <!-- barra de navegacion -->
 			    <div class="nav">
 
-
+				<!-- menú de datos -->
 				<a class="nav-link collapsed" href="#"
 					  data-bs-toggle="collapse"
 					  data-bs-target="#collapseLayouts1"
@@ -232,6 +244,8 @@ if (isset($_SESSION["usuario"])) {
 					<i class="fas fa-angle-down"></i>
 				    </div>
 				</a>
+
+				<!-- contenido de menú de datos -->
 				<div class="collapse" id="collapseLayouts1"
 					    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
@@ -291,14 +305,13 @@ if (isset($_SESSION["usuario"])) {
 						    class="form-control"
 						    onchange=";">
 					    <option value="1">Mañana</option>
-					    <option value="2">Tarde</option>
-					</select>
+					    <option value="2">Tarde</option>				</select>
 
 					<label for="escolaridad">Escolaridad</label>
 					<select id="escolaridad"
 						    style="background: transparent;color: darkgreen;border: 0px"
 						    class="form-control"
-						onchange="lista_grados($('#escolaridad').val(),'#id_g');">
+					  onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_d').val());">
 					    <option value="-1">Seleccione</option>
 					    <option value="1">Preescolar</option>
 					    <option value="2">Básica Primaria</option>
@@ -306,6 +319,8 @@ if (isset($_SESSION["usuario"])) {
 					    <option value="4">Tecnico</option>
 					    <option value="5">Cursos</option>
 					</select>
+
+					<input type="hidden" value="<?php echo $id; ?>" id="id_d">
 
 					<label class="Control-label">Grado</label>
 
@@ -316,15 +331,15 @@ if (isset($_SESSION["usuario"])) {
 					</select>
 
 					<label class="Control-label">Curso</label>
-					<select id="id_c"
-						    style="background: transparent;color: darkgreen;border:0px;"
-						    onchange=";"
-						    class="form-control">
-					    <option value="0">A</opcion>
-						<option value="1">B</opcion>
-						    <option value="2">C</opcion>
-							<option value="3">D</opcion>
-					</select>
+				      <select id="id_c"
+					style="background: transparent;color: darkgreen;border:0px;"
+					onchange=";"
+					class="form-control">
+					<option value="0">A</opcion>
+					  <option value="1">B</opcion>
+					    <option value="2">C</opcion>
+					      <option value="3">D</opcion>
+				      </select>
 
 					<label for="id_ms">Materia</label>
 					<select id="id_ms"
@@ -336,11 +351,16 @@ if (isset($_SESSION["usuario"])) {
 				    </nav>
 
 				</div>
+				<!-- fin de datos -->
 
+
+							
+				
+				<!-- elementos -->
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#collapseLayouts2"
-					  aria-expanded="false" aria-controls="collapseLayouts2">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#collapseLayouts2"
+				   aria-expanded="false" aria-controls="collapseLayouts2">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -404,6 +424,8 @@ if (isset($_SESSION["usuario"])) {
 				    </nav>
 
 				</div>
+				<!-- fin de procesos -->
+				
 				<a class="nav-link collapsed" href="#"
 					  data-bs-toggle="collapse"
 					  data-bs-target="#collapseLayouts3"
@@ -451,6 +473,9 @@ if (isset($_SESSION["usuario"])) {
 				    </nav>
 				</div>
 
+
+			      
+			      <!-- gestion matricula -->
 				<a class="nav-link collapsed" href="#"
 					  data-bs-toggle="collapse"
 					  data-bs-target="#collapseLayouts4"
@@ -483,6 +508,303 @@ if (isset($_SESSION["usuario"])) {
 					   class="nav-link"
 					   href="#" target="_self"
 					   onclick="editar_matriculas(1)">Editar matr&iacute;cula
+					</a>
+				    </nav>
+				</div>
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#menu_gestionpersona"
+					  aria-expanded="false" aria-controls="menu_gestionpersona">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Gesti&oacute;n Personas
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				
+				<div class="collapse" id="menu_gestionpersona"
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_matricula_escolaridad_jornada()">Consultar persona
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_matriculas(1)">Nueva persona
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="editar_matriculas(1)">Editar persona
+					</a>
+				    </nav>
+				</div>
+
+				<!-- gestion de grados -->
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#menu_gestiongrados"
+					  aria-expanded="false" aria-controls="menu_gestiongrados">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Gesti&oacute;n Grados
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				
+				<div class="collapse" id="menu_gestiongrados"
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_matricula_escolaridad_jornada()">Consultar grados
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_matriculas(1)">Nuevo grado
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="editar_matriculas(1)">Editar grado
+					</a>
+				    </nav>
+				</div>
+
+				<!-- gestion de materias -->
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#menu_gestionmaterias"
+					  aria-expanded="false" aria-controls="menu_gestionmaterias">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Gesti&oacute;n Materias
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				
+				<div class="collapse" id="menu_gestionmaterias"
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_matricula_escolaridad_jornada()">Consultar materias
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_matriculas(1)">Nueva materias
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="editar_matriculas(1)">Editar materia
+					</a>
+				    </nav>
+				</div>
+
+
+				<!-- gestion de cursos -->
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#menu_gestioncursos"
+					  aria-expanded="false" aria-controls="menu_gestioncursos">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Gesti&oacute;n Cursos
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				
+				<div class="collapse" id="menu_gestioncursos"
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_matricula_escolaridad_jornada()">Consultar cursos
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_matriculas(1)">Nuevo curso
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="editar_matriculas(1)">Editar curso
+					</a>
+				    </nav>
+				</div>
+
+
+				<!-- gestion de logros -->
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#menu_gestionlogros"
+					  aria-expanded="false" aria-controls="menu_gestionlogros">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Gesti&oacute;n Logros
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				
+				<div class="collapse" id="menu_gestionlogros"
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_matricula_escolaridad_jornada()">Consultar logros
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_matriculas(1)">Nuevo logros
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="editar_matriculas(1)">Editar logros
+					</a>
+				    </nav>
+				</div>
+
+				<!-- gestion de escolaridad -->
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#menu_gestionescolaridad"
+					  aria-expanded="false" aria-controls="menu_gestionescolaridad">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Gesti&oacute;n Escolaridad
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				
+				<div class="collapse" id="menu_gestionescolaridad"
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_matricula_escolaridad_jornada()">Consultar escolaridad
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_matriculas(1)">Nueva escolaridad
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="editar_matriculas(1)">Editar escolaridad
+					</a>
+				    </nav>
+				</div>
+
+				<!-- gestion de padres -->
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#menu_gestionpadre"
+					  aria-expanded="false" aria-controls="menu_gestionpadre">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Gesti&oacute;n Padre
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				
+				<div class="collapse" id="menu_gestionpadre"
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_matricula_escolaridad_jornada()">Consultar padres
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_matriculas(1)">Nuevo padre
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="editar_matriculas(1)">Editar padre
+					</a>
+				    </nav>
+				</div>
+
+				<!-- gestion de madre -->
+
+				<a class="nav-link collapsed" href="#"
+					  data-bs-toggle="collapse"
+					  data-bs-target="#menu_gestionmadre"
+					  aria-expanded="false" aria-controls="menu_gestionmadre">
+				    <div class="sb-nav-link-icon">
+					<i class="fas fa-columns"></i>
+				    </div>
+				    Gesti&oacute;n Madre
+				    <div class="sb-sidenav-collapse-arrow">
+					<i class="fas fa-angle-down"></i>
+				    </div>
+				</a>
+				
+				<div class="collapse" id="menu_gestionmadre"
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+				    <nav class="sb-sidenav-menu-nested nav">
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="listado_matricula_escolaridad_jornada()">Consultar madre
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_matriculas(1)">Nueva madre
+					</a>
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="editar_matriculas(1)">Editar madre
 					</a>
 				    </nav>
 				</div>

@@ -45,7 +45,7 @@ $d->get_docente_cc($_POST["cedula"]);
         echo"
    		<script >
         alert('Contraseña Incorrecta');
-    			location.href = 'login_boletines.php';
+    			location.href = 'login_boletines_prueba.php';
                 </script>
                 <?";
     }

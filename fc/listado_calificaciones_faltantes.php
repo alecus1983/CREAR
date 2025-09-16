@@ -79,10 +79,13 @@ if ($valido) {
 
     $cr = new materia();
     $cr->get_materia($id_m);
-    //echo "<div class='row'><div class='col-md-12>";
-    // saco este mensaje por consola
+    
     //crea un nuevo objeto listado (año,grado,jornada,curso)
-    $listado  = new listado_estudiantes($ano,$grado,$jornada, $curso);
+    //el cual esta conformado por un array los id de los alumnos
+    //que cumplen este criterio
+    $mtr  = new matricula();
+
+    $listado =  $mtr->getAlumnosPorGrupo($grado,$curso, $ano,$jornada);
     $ponderado = new ponderado();
     $md = new matricula_docente();
     $d = new docentes();
@@ -96,7 +99,7 @@ if ($valido) {
         ." ".ucwords(strtolower($d->apellidos))."</span></p>";
 
     // para cada alumno
-        foreach($listado->id_alumno as $e) {
+        foreach($listado as $e) {
             $estudiante = new alumnos($e);
             // creo un nuevo objeto de calificaciones
             $score = new calificaciones();

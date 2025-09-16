@@ -22,13 +22,13 @@
 
         <div class='col'>
             <label for='ad_nombres' class='form-label'>Nombre</label>
-            <input value='' class='form-control' id='ad_nombres' aria-describedby='nombres'>
+            <input value='' class='form-control' id='ad_nombres' aria-describedby='nombres' required minlength="3">
             <div id='ayuda_nombre' class='form-text'>agrege el nombre por favor.</div>
         </div>
 
         <div class='col'>
             <label for='ad_apellidos' class='form-label'>Apellidos</label>
-            <input class='form-control' id='ad_apellidos' aria-describedby='apellidos'>
+            <input class='form-control' id='ad_apellidos' aria-describedby='apellidos' required minlength="3">
             <div id='ayuda_apellidos' class='form-text'>digite el apellido o parte del mismo por favor.</div>
         </div>
 
@@ -50,9 +50,9 @@
         </div>
 
         <div class='col'>
-            <label for='ad_identificacion' class='form-label'>identificacion</label>
+            <label for='ad_identificacion' class='form-label'>identificación</label>
             <input class='form-control' id='ad_identificacion' aria-describedby='ad_identificacion'>
-            <div id='ayuda_identificacion' class='form-text'>digite la identificacion por favor.</div>
+            <div id='ayuda_identificacion' class='form-text'>digite la identificación por favor.</div>
         </div>
 
     </div>
@@ -72,7 +72,7 @@
     <div class='row'>
         <div class='col'>
             <label for='ad_celular' class='form-label'>número de celular</label>
-            <input class='form-control' id='ad_celular' aria-describedby='celular'>
+            <input class='form-control' id='ad_celular' aria-describedby='celular' required>
             <div id='ayuda_celular' class='form-text'>actualize su celular favor.</div>
         </div>
         <div class='col'>
@@ -94,8 +94,15 @@
             
         </div>
     </div>
-
-
+    
+    <div class='row mt-4'>
+        <div class='col d-flex justify-content-end gap-2'>
+            <button type='button' class='btn btn-secondary'>Cancelar</button>
+            <button type='submit' class='btn btn-primary'>Agregar Persona</button>
+        </div>
+    </div>
 </div>
 <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
+
+</html>

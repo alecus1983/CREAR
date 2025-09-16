@@ -763,6 +763,7 @@ function get_direccion(personax, form) {
 
 
 // funcion actualizar grado
+
 function update_grado_matricula() {
 
     // se actualiza el grado el la variable alumno
@@ -770,13 +771,14 @@ function update_grado_matricula() {
     // actualizo el codigo del grado
     alumno.id_grado = $("#ac_grado").val();
     // actualizo el codigo del curso
-  alumno.id_curso = $("#ac_curso").val();
-  // se actualiza la jornada
-  alumno.id_jornada =  $("#ac_jornada").val();
+    alumno.id_curso = $("#ac_curso").val();
+    // se actualiza la jornada
+    alumno.id_jornada =  $("#ac_jornada").val();
 
     // salida por consola
     console.log("los datos del alumono son " + alumno.id_escolaridad + " codigo del grado " + alumno.id_grado + " codigo del curso" + alumno.id_curso);
 
+    /*
     // si el boton de grado no ha sido digitado
     if ($("#ac_grado").val() !== null) {
 
@@ -787,7 +789,8 @@ function update_grado_matricula() {
     }
     else {
         swal("actualizacion  grado", "Por favor seleccione un grado", "error");
-    }
+	}
+	*/
 }
 
 // actualizar direccion

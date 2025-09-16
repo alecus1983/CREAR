@@ -177,6 +177,50 @@ let id_docente = 0;
 // funcion para cargar las materias en el cuadro de dialogo
 // de acurdo al grado seleccionado
 
+/**
+ * Valida un conjunto de campos de formulario.
+ * @param {Array} fields - Un array de objetos, donde cada objeto representa un campo a validar.
+ * Ej: [{id: 'ac_jornada', name: 'Jornada', type: 'select'}]
+ * @returns {boolean} - Devuelve true si todos los campos son válidos, de lo contrario, false.
+ */
+function validarFormulario(fields) {
+    for (const field of fields) {
+        const element = $(`#${field.id}`);
+        let isValid = true;
+
+        if (!element.length) {
+            console.error(`Elemento no encontrado: #${field.id}`);
+            continue;
+        }
+
+        const value = element.val();
+
+        switch (field.type) {
+            case 'select':
+                if (value === null || value === "-1" || value === "") {
+                    isValid = false;
+                }
+                break;
+            case 'text':
+                if (value.trim() === "") {
+                    isValid = false;
+                }
+                break;
+            // Puedes agregar más tipos de validación (email, number, etc.)
+        }
+
+        if (!isValid) {
+            swal('Campo Requerido', `Por favor, complete el campo: ${field.name}`, 'warning');
+            element.css('border-color', 'red'); // Resaltar el campo inválido
+            return false;
+        } else {
+            element.css('border-color', ''); // Restablecer el borde si es válido
+        }
+    }
+    return true;
+}
+
+
 function load_materias() {
   var id_docente = $("#id_d").val();
   var id_grado = $("#id_g").val();
@@ -358,7 +402,6 @@ function gestion_matriculas(item) {
     // DATOS ACADEMICOS
 
   case 6:
-
     // borro el contenido del div
     $("#avance").html("");
     // borro el contenido del div
@@ -371,14 +414,28 @@ function gestion_matriculas(item) {
       // llamo a la funcion lista escolaridad
       // en el camobo  
       lista_escolaridad("#ac_escolaridad");
-      $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(5)">atras</button>');
-      $("#paginas").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_grado_matricula();">agregar/actualizar</button>');
-
       
-    });
+      // Se reemplaza el botón original por uno que primero valida
+      $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(5)">atras</button>');
+      $("#paginas").append('<button id="btn-siguiente-6" class="btn btn btn-dark">Siguiente</button>');
 
+      $("#btn-siguiente-6").on('click', function() {
+          const camposAValidar = [
+              {id: 'ac_jornada', name: 'Jornada', type: 'select'},
+              {id: 'ac_escolaridad', name: 'Escolaridad', type: 'select'},
+              {id: 'ac_grado', name: 'Grado', type: 'select'},
+              {id: 'ac_curso', name: 'Curso', type: 'select'}
+          ];
+
+          if (validarFormulario(camposAValidar)) {
+              // Si la validación es exitosa, se actualizan los datos y se procede al siguiente paso
+              update_grado_matricula(); // Asumo que esta función actualiza el objeto 'alumno'
+              gestion_matriculas(7); // Ir al siguiente paso
+          }
+      });
+    });
     break;
-    
+      
     // AFILIACIONES
 
   case 7:
@@ -1106,6 +1163,19 @@ function boletin() {
 
 // funcion que crea un cuadro de notas por cada alumno de un grado para un determinado año
 function cuadro() {
+
+
+    // Validaciones
+    if ($("#periodos").val() == "-1") {
+        swal("Atención", "Por favor, seleccione un periodo.", "warning");
+        $('#periodos').css('background-color', 'lightcoral'); // Resaltar el campo
+        return; // Detiene la ejecución
+    }
+    if ($("#id_g").val() == "-1" || $("#id_g").val() == null) {
+        swal("Atención", "Por favor, seleccione un grado.", "warning");
+        $('#id_g').css('background-color', 'lightcoral'); // Resaltar el campo
+        return; // Detiene la ejecución
+    }
 
   $('#loader').show();
   // esta función permite generar un un boletin en formato pdf

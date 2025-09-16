@@ -1,5 +1,5 @@
 <?php
-// archivo que optiene en formato json
+// archivo que obtiene en formato json
 // la lista de grados de una escolaridad dada
 
 require_once "datos.php";
