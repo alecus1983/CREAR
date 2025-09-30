@@ -49,16 +49,12 @@
             <p>En el siguiente formulario podras buscar la información correspondinte al estudiante que ya ha estado
                 registrado en la institución</p>
             <div id="paginas" class="container text-start">
-                <form>
-
-          
-        
-        
+                <form id="form-estudiante-antiguo">
                     <div class="row mb-5">
                         <div class="col-md-4 col-sm-10 col-lg-4">
                             <label for="nombres" class="form-label">Nombre</label>
                             <input class="form-control" id="nombres" aria-describedby="nombres"
-                                onkeydown="cambio_datos('#tabla', 'alumno',4);">
+                                onkeydown="cambio_datos('#tabla', 'alumno',4);" >
                             <div id="ayuda_nombre" class="form-text">digite el nombre o parte del nombre por favor.
                             </div>
                         </div>

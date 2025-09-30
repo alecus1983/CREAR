@@ -114,7 +114,8 @@ class docentes extends personas {
             $q = "SELECT ud.id_docente, ud.admin, p.nombres, p.apellidos, p.identificacion, ud.login, ud.fecha, p.celular, p.correo, p.i_correo, ud.materias 
                   FROM u_docentes ud 
                   INNER JOIN personas p ON ud.id_personas = p.id_personas 
-                  WHERE p.identificacion = ?";
+WHERE p.identificacion = ?";
+
             
             $stmt = $this->_db->prepare($q);
 
@@ -142,6 +143,7 @@ class docentes extends personas {
                 $this->materias = $a['materias'];
             }
             $stmt->close();
+	    
             return $a;
         } catch (Exception $e) {
             error_log("Error en get_docente_cc: " . $e->getMessage());

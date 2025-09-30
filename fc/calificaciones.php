@@ -1,115 +1,153 @@
 <?php
-    
-////////////////////////////////////////////////////
-//                                                //
-//  Clase que identifica las calificaciones       //
-//                                                //
-////////////////////////////////////////////////////
 
-class calificaciones extends  imcrea {
-    // si esta calificado 1 si no 0
+/**
+ * @class calificaciones
+ * @brief Clase que gestiona las calificaciones de los estudiantes en el colegio.
+ *
+ * Esta clase se encarga de las operaciones relacionadas con las notas,
+ * recuperaciones y logros de los alumnos. Hereda de la clase `imcrea`,
+ * asumiendo que esta clase maneja la conexión a la base de datos.
+ */
+class calificaciones extends imcrea {
+    /**
+     * @var bool $calificado
+     * @brief Indica si una calificación existe (1) o no (0).
+     */
     public $calificado;
-    // codigo del alumno
+    
+    /**
+     * @var int $id_alumno
+     * @brief Código del alumno.
+     */
     public $id_alumno;
-    // codigo de la materia
+    
+    /**
+     * @var int $id_materia
+     * @brief Código de la materia.
+     */
     public $id_materia;
-    // codigo de la semana
+    
+    /**
+     * @var int $id_semana
+     * @brief Código de la semana.
+     */
     public $id_semana;
-    // codigo del año
+    
+    /**
+     * @var int $year
+     * @brief Año lectivo.
+     */
     public $year;
-    // codigo del ponderado
+    
+    /**
+     * @var int $id_ponderado
+     * @brief Código del ponderado (ej. Examen, Taller, Tarea).
+     */
     public $id_ponderado;
-    // nota asignada
+    
+    /**
+     * @var float $nota
+     * @brief Nota asignada.
+     */
     public $nota;
-    // id
+    
+    /**
+     * @var int $id
+     * @brief Clave primaria de la tabla de calificaciones.
+     */
     public $id;
-    // logro
-    public  $logro;
-    //  codigo de identificacion del logro
+    
+    /**
+     * @var string $logro
+     * @brief Descripción del logro.
+     */
+    public $logro;
+    
+    /**
+     * @var int $id_logro
+     * @brief Código de identificación del logro.
+     */
     public $id_logro;
-    
-    
-    //cosntructor de la clase
-    // crea una calificacion vacia
-    public function __construct(){
-        // hereda parametros de la clase padre
+
+    // ---
+
+    /**
+     * @brief Constructor de la clase `calificaciones`.
+     *
+     * Crea una instancia de calificación vacía y hereda la conexión a la base de datos
+     * de la clase padre `imcrea`.
+     */
+    public function __construct() {
         parent::__construct();
     }
 
-    // Metodo que obtiene la calificación semanal
-    // 
-    public function get_calificacion_semanal($id_a,$id_m,$id_s , $y, $id_p) {
+    // ---
 
-        $q = "select id_alumno, id, nota, id_ponderado, id_materia, id_semana, year  from calificaciones_".$y." where year = $y and  id_alumno = $id_a and    id_materia = $id_m and       id_ponderado = $id_p and   id_semana = $id_s";
-        // ejecuto la consulta
-         //echo $q;
+    /**
+     * @brief Obtiene la calificación semanal de un alumno.
+     *
+     * @param int $id_a     Código del alumno.
+     * @param int $id_m     Código de la materia.
+     * @param int $id_s     Código de la semana.
+     * @param int $y        Año lectivo.
+     * @param int $id_p     Código del ponderado.
+     *
+     * Este método consulta la base de datos para buscar una calificación específica
+     * y, si la encuentra, la asigna a los atributos del objeto.
+     */
+    public function get_calificacion_semanal($id_a, $id_m, $id_s, $y, $id_p) {
+        $q = "SELECT id_alumno, id, nota, id_ponderado, id_materia, id_semana, year FROM calificaciones_" . $y . " WHERE year = $y AND id_alumno = $id_a AND id_materia = $id_m AND id_ponderado = $id_p AND id_semana = $id_s";
         
-        try { 
+        try {
             $c = $this->_db->query($q);
-            $r = $c->fetch_array(MYSQLI_ASSOC); }
-        catch ( Exception $e) {
-            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+            $r = $c->fetch_array(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
         }
-        // consulto si el resultado es vacio
-        if(is_null($r)){
-            // si es falso entonces no ha sido calificado
+
+        if (is_null($r)) {
             $this->calificado = false;
             $this->nota = 0;
-           
-        }else{
-            // si es verdadero asigno la notag
+        } else {
             $this->calificado = true;
             $this->id_alumno = $r['id_alumno'];
             $this->id_materia = $r['id_materia'];
-            $this->id_semana =$r['id_semana'];
+            $this->id_semana = $r['id_semana'];
             $this->year = $r['year'];
             $this->id_ponderado = $r['id_ponderado'];
             $this->id = $r['id'];
             $this->nota = $r['nota'];
-            
         }
     }
 
-    
-    //////////////////////////////////////////////////////////////////////////////
-    // obtiene la nota del periodo                                                                 //
-    //                                                                                                                     //
-    // Función que obtiene las recuperaciones enviadas a un               //
-    // determinado periodo                                                                            //
-    // para ello recibe las variables:                                                             //
-    // $id_a --> código del alumno                                                                // 
-    // $id_m --> código de la materia                                                          //
-    // $y    --> año de consulta                                                                       //
-    // $periodo --> identificación del periodo                                          //
-    //                                                                                                                   //
-    ////////////////////////////////////////////////////////////////////////////
-    
-    public function get_recuperacion_periodo($id_a,$id_m,$y, $periodo) {
+    // ---
 
-        // Consulta que obtiene mediante SQL la cantidad de recuperaciones
-        $q = "select id_alumno, id, nota, id_materia, year, corte  from calificaciones_".$y."
-	        where year = $y
-	        and  id_alumno = $id_a
-	        and  id_materia = $id_m
-	        and corte = 'R'
-	        and periodo = $periodo";
-        // ejecuto la consulta
-        // echo $q;
+    /**
+     * @brief Obtiene las recuperaciones de un alumno en un período.
+     *
+     * @param int $id_a     Código del alumno.
+     * @param int $id_m     Código de la materia.
+     * @param int $y        Año de la consulta.
+     * @param int $periodo  Identificación del período.
+     *
+     * Este método busca en la base de datos si un alumno tiene una nota de recuperación ('R')
+     * en una materia y período específicos.
+     */
+    public function get_recuperacion_periodo($id_a, $id_m, $y, $periodo) {
+        $q = "SELECT id_alumno, id, nota, id_materia, year, corte FROM calificaciones_" . $y . "
+              WHERE year = $y AND id_alumno = $id_a AND id_materia = $id_m AND corte = 'R' AND periodo = $periodo";
         
-        try { 
+        try {
             $c = $this->_db->query($q);
-            $r = $c->fetch_array(MYSQLI_ASSOC); }
-        catch (Exception $e) {
-            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+            $r = $c->fetch_array(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
         }
-        // consulto si el resultado es vacio
-        if(is_null($r)) {
-            // si es falso entonces no ha sido calificado
+
+        if (is_null($r)) {
             $this->calificado = false;
             $this->nota = 0;
-           
-        }else {
-            // si es verdadero asigno la notag
+        } else {
             $this->calificado = true;
             $this->id_alumno = $r['id_alumno'];
             $this->id_materia = $r['id_materia'];
@@ -119,289 +157,384 @@ class calificaciones extends  imcrea {
         }
     }
 
+    // ---
 
-    // obtiene la nota del periodo
-    public function get_nota_periodo($id_a, $id_m, $periodo, $year){
-        // si la materia es disciplina se calcula como un promedio
-        if($id_m == 20){
-            $q = "select avg( nota) nota from calificaciones_".$year."
-                  where id_alumno = $id_a and id_materia = $id_m and
-                  periodo = $periodo and year = $year and  id_semana > 0";
+    /**
+     * @brief Calcula la nota de un alumno en un período.
+     *
+     * @param int $id_a     Código del alumno.
+     * @param int $id_m     Código de la materia.
+     * @param int $periodo  Período de la evaluación.
+     * @param int $year     Año lectivo.
+     *
+     * Calcula la nota final del período. Si la materia es "Disciplina" (id_materia = 20),
+     * calcula el promedio. Para otras materias, usa una fórmula ponderada.
+     */
+    public function get_nota_periodo($id_a, $id_m, $periodo, $year) {
+        if ($id_m == 20) {
+            $q = "SELECT AVG(nota) AS nota FROM calificaciones_" . $year . "
+                  WHERE id_alumno = $id_a AND id_materia = $id_m AND periodo = $periodo AND year = $year AND id_semana > 0";
+        } else {
+            $q = "SELECT SUM(valor * nota) / 100 AS nota FROM ponderado AS p INNER JOIN 
+                  (SELECT id_ponderado, nota FROM calificaciones_" . $year . "
+                  WHERE id_alumno = $id_a AND id_materia = $id_m AND periodo = $periodo AND year = $year AND id_ponderado > 0
+                  ORDER BY id_ponderado) AS cal ON cal.id_ponderado = p.id_ponderado";
         }
-        // para el resto de las asignatuas se calcula de acuerdo al ponderado
-        else {
-            $q = "select  sum(valor*nota)/100 as nota from
-              ponderado as p inner join 
-              (select id_ponderado, nota from calificaciones_".$year."
-               where id_alumno = $id_a and id_materia = $id_m and
-               periodo = $periodo and year = $year and id_ponderado > 0
-               order by id_ponderado) as  cal on cal.id_ponderado = p.id_ponderado
-               order by p.id_ponderado";}
-      
+
         try {
-
-            //echo $q."<br><br>";
-          
-            // realizo la consulta
             $c = $this->_db->query($q);
-            //extraigo un dato
-            $r = $c->fetch_array(MYSQLI_ASSOC); }
-        catch (Exception $e) {
-            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+            $r = $c->fetch_array(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
         }
-        // guardo la nota en el objeto
-        $this->nota = $r['nota'];
-        
-    }
 
-    // funcion que recupera los datos de rendimiento de un alumno
-    // en una materia especifica
-    public function get_rendimiento_alummno_periodo($id_a, $id_m, $ano, $id_periodo){
-        // consulta para recuperar alumnos
-        $q = "select p.id_ponderado, ponderado, por_periodo, cantidad from ponderado as p inner join
-                (select id_ponderado, count(*)  as cantidad from calificaciones_".$ano." where id_alumno = $id_a and id_materia = $id_m and year = $ano and periodo = $id_periodo
-                group by id_ponderado order by id_ponderado) as c on p.id_ponderado = c.id_ponderado
-                order by id_ponderado";
+        $this->nota = $r['nota'];
+    }
+    
+    // ---
+
+    /**
+     * @brief Obtiene el rendimiento de un alumno en una materia para un período.
+     *
+     * @param int $id_a         Código del alumno.
+     * @param int $id_m         Código de la materia.
+     * @param int $ano          Año lectivo.
+     * @param int $id_periodo   ID del período.
+     * @return array Un array con los datos del rendimiento.
+     *
+     * Consulta el número de calificaciones por tipo de ponderado para un alumno, materia, año y período.
+     */
+    public function get_rendimiento_alummno_periodo($id_a, $id_m, $ano, $id_periodo) {
+        $q = "SELECT p.id_ponderado, ponderado, por_periodo, cantidad FROM ponderado AS p INNER JOIN
+              (SELECT id_ponderado, COUNT(*) AS cantidad FROM calificaciones_" . $ano . " WHERE id_alumno = $id_a AND id_materia = $id_m AND year = $ano AND periodo = $id_periodo
+              GROUP BY id_ponderado ORDER BY id_ponderado) AS c ON p.id_ponderado = c.id_ponderado
+              ORDER BY id_ponderado";
 
         $c = $this->_db->query($q);
-
         $arr = array();
-        // recorro el array
-        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
-            // añade elementos al array
+        
+        while ($r = $c->fetch_array(MYSQLI_ASSOC)) {
             array_push($arr, $r);
         }
-        //retorno listado
+        
         return $arr;
     }
 
-    public function get_logro_id($id_logro) {
+    // ---
 
-        $q = "select * from  logros where id_logro= $id_logro";
+    /**
+     * @brief Obtiene la descripción de un logro a partir de su ID.
+     *
+     * @param int $id_logro ID del logro.
+     *
+     * Consulta la tabla de `logros` y asigna la descripción del logro (`logro`)
+     * y su ID a los atributos del objeto.
+     */
+    public function get_logro_id($id_logro) {
+        $q = "SELECT * FROM logros WHERE id_logro = $id_logro";
         $c = $this->_db->query($q);
-       
-        // recorre el array 
         $r = $c->fetch_array(MYSQLI_ASSOC);
-        // agrego un elemento al array
-        $this->logro = $r['logro'] ;
-        $this->id_logro = $r['id_logro'] ;            
+        
+        $this->logro = $r['logro'];
+        $this->id_logro = $r['id_logro'];
     }
 
-    // verifica la calificacion semanal
-    // requiere 
-    public function get_logro($id_a,$id_m, $y, $id_periodo) {
-        $q = "select * from calificaciones_".$y." where year = $y
-                                        and id_alumno = $id_a
-                                       and id_materia = $id_m
-                                          and periodo = $id_periodo
-                                            and id_logro > 0";
-        // ejecuto la consulta
+    // ---
+
+    /**
+     * @brief Obtiene el logro de un alumno para un período.
+     *
+     * @param int $id_a         Código del alumno.
+     * @param int $id_m         Código de la materia.
+     * @param int $y            Año lectivo.
+     * @param int $id_periodo   ID del período.
+     *
+     * Busca el logro asignado a un alumno en una materia y período.
+     */
+    public function get_logro($id_a, $id_m, $y, $id_periodo) {
+        $q = "SELECT * FROM calificaciones_" . $y . " WHERE year = $y AND id_alumno = $id_a AND id_materia = $id_m AND periodo = $id_periodo AND id_logro > 0";
         $c = $this->_db->query($q);
-        // lo convierto en array
         $r = $c->fetch_array(MYSQLI_ASSOC);
-        // consulto si el resultado es vacio
-        if(is_null($r)){
-            // si es falso entonces no ha sido calificado
+        
+        if (is_null($r)) {
             $this->calificado = false;
             $this->logro = "";
-           
-        }else{
-            // si es verdadero asigno la nota
+        } else {
             $this->calificado = true;
             $this->id_alumno = $r['id_alumno'];
             $this->id_materia = $r['id_materia'];
-            $this->id_semana =$r['id_semana'];
+            $this->id_semana = $r['id_semana'];
             $this->year = $r['year'];
             $this->id = $r['id'];
             $this->logro = $r['id_logro'];
-            
         }
     }
+    
+    // ---
 
-    // Método que establece  la calificación semanal
-    public function set_calificacion_semanal($id_a,$id_m,$nota,$id_d,$p, $y,$id_p, $id_s){
-
-        // filtro el periodo en base a la semana 
-        switch ($id_s)  {
-            //  si son las semans del primer periodo 
-        case 1|2|3|4|5|6|7|8 :
-            $p = 1;
-            // si son las semanas del segundo periodo
-        case 9|10|11|12|13|14|15|16 :
-            $p = 2;
-            // si son las semanas del tercer periodo 
-        case 17|18|19|20|21|22|23|24 :
-            $p = 3;
-            // son las semans del  cuarto periodo
-        case 25|26|27|28|29|30|31|32 :
-            $p = 4;
-         
+    /**
+     * @brief Establece una calificación semanal.
+     *
+     * @param int $id_a     Código del alumno.
+     * @param int $id_m     Código de la materia.
+     * @param float $nota   Nota asignada.
+     * @param int $id_d     Código del docente.
+     * @param int $p        Período (se recalcula en el switch).
+     * @param int $y        Año lectivo.
+     * @param int $id_p     Código del ponderado.
+     * @param int $id_s     Código de la semana.
+     *
+     * Inserta una nueva calificación semanal en la tabla del año correspondiente.
+     * Nota: La lógica del `switch` tiene un error y sobrescribe `$p` en cada `case`.
+     */
+    public function set_calificacion_semanal($id_a, $id_m, $nota, $id_d, $p, $y, $id_p, $id_s) {
+        switch ($id_s) {
+            case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8:
+                $p = 1;
+                break;
+            case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 16:
+                $p = 2;
+                break;
+            case 17: case 18: case 19: case 20: case 21: case 22: case 23: case 24:
+                $p = 3;
+                break;
+            case 25: case 26: case 27: case 28: case 29: case 30: case 31: case 32:
+                $p = 4;
+                break;
         }
-        // creo la consulta
-        $q= "insert into calificaciones_".$y."
-            ( id_alumno,id_materia, nota,id_docente,periodo,year,modificado,id_ponderado,id_semana )
-            values($id_a,$id_m,$nota,$id_d,$p,$y,NOW(),$id_p,$id_s)";
-        // ejecuto la consulta
-        if( $this->_db->query($q) === True) {
+        
+        $q = "INSERT INTO calificaciones_" . $y . "
+              (id_alumno, id_materia, nota, id_docente, periodo, year, modificado, id_ponderado, id_semana)
+              VALUES ($id_a, $id_m, $nota, $id_d, $p, $y, NOW(), $id_p, $id_s)";
+        
+        if ($this->_db->query($q) === true) {
             $this->calificado = true;
         } else {
-            $this->calificado = false; }
+            $this->calificado = false;
+        }
     }
 
-    // Método que establece  la recuperación del periodo
-    // para lo cual se emplean las variables
-    //
-    // $id_a --> código del alumno
-    // $id_m --> código de la materia
-    // $nota --> nota asignada (número decimal)
-    // $id_d --> código del docente
-    // $y    --> año lectivo
-    
-    public function set_recuperacion($id_a,$id_m,$nota,$id_d,$p,$y){
-        // creo la consulta
-        $q= "insert into calificaciones_".$y."
-	        ( id_alumno,id_materia, nota,id_docente,periodo,year,modificado,corte )
-	        values($id_a,$id_m,$nota,$id_d,$p,$y,NOW(),'R' )";
-        // ejecuto la consulta
-        if( $this->_db->query($q) === True){
-            $this->calificado = true;
-        } else{
-            $this->calificado = false; }
-    }
+    // ---
 
-    
-    // Método que establese el logro del periodo
-    
-    public function set_logro($id_a,$id_m,$logro, $id_d , $p, $y){
-        // creo la consulta
-        $q= "insert into calificaciones_".$y."
-            (id_alumno, id_materia, id_logro, nota , id_docente, periodo, year, modificado)
-            values($id_a, $id_m, $logro, 0 ,  $id_d, $p, $y,NOW())";
-        // ejecuto la consulta
-        if( $this->_db->query($q) === True){
-            $this->calificado = true;
-        } else{
-            $this->calificado = false; }
-    }
-
-    
-
-    // Método que actualiza la recuperación
-    // para lo cual utiliza el id de la recuperación
-
-    public function update_recuperacion($id, $nota, $year){
-
-        $q = "update calificaciones_".$year." set nota = $nota where id = $id";
+    /**
+     * @brief Establece una calificación de recuperación.
+     *
+     * @param int $id_a     Código del alumno.
+     * @param int $id_m     Código de la materia.
+     * @param float $nota   Nota asignada.
+     * @param int $id_d     Código del docente.
+     * @param int $p        Período.
+     * @param int $y        Año lectivo.
+     *
+     * Inserta un registro de recuperación ('R' en el campo `corte`) para un alumno en un período y materia.
+     */
+    public function set_recuperacion($id_a, $id_m, $nota, $id_d, $p, $y) {
+        $q = "INSERT INTO calificaciones_" . $y . "
+              (id_alumno, id_materia, nota, id_docente, periodo, year, modificado, corte)
+              VALUES ($id_a, $id_m, $nota, $id_d, $p, $y, NOW(), 'R')";
         
-        if( $this->_db->query($q) === True){
+        if ($this->_db->query($q) === true) {
             $this->calificado = true;
-        } else{
-            $this->calificado = false; }
+        } else {
+            $this->calificado = false;
+        }
+    }
+    
+    // ---
+
+    /**
+     * @brief Establece un logro para un alumno en un período.
+     *
+     * @param int $id_a     Código del alumno.
+     * @param int $id_m     Código de la materia.
+     * @param int $logro    ID del logro.
+     * @param int $id_d     Código del docente.
+     * @param int $p        Período.
+     * @param int $y        Año lectivo.
+     *
+     * Inserta un registro con el ID del logro en la tabla de calificaciones, con la nota en 0.
+     */
+    public function set_logro($id_a, $id_m, $logro, $id_d, $p, $y) {
+        $q = "INSERT INTO calificaciones_" . $y . "
+              (id_alumno, id_materia, id_logro, nota, id_docente, periodo, year, modificado)
+              VALUES ($id_a, $id_m, $logro, 0, $id_d, $p, $y, NOW())";
+        
+        if ($this->_db->query($q) === true) {
+            $this->calificado = true;
+        } else {
+            $this->calificado = false;
+        }
     }
 
-    // Método que actualiza la calificación semanal    
-    // para lo cual utiliza el id de la recuperación
+    // ---
 
-    public function update_calificacion_semanal($id,$nota, $year){
-
-        $q = "update calificaciones_".$year." set nota = $nota where id = $id";
+    /**
+     * @brief Actualiza la nota de una recuperación existente.
+     *
+     * @param int $id       ID de la calificación (recuperación).
+     * @param float $nota   Nueva nota.
+     * @param int $year     Año lectivo.
+     *
+     * Actualiza el campo `nota` de un registro de calificación específico.
+     */
+    public function update_recuperacion($id, $nota, $year) {
+        $q = "UPDATE calificaciones_" . $year . " SET nota = $nota WHERE id = $id";
         
-        if( $this->_db->query($q) === True){
+        if ($this->_db->query($q) === true) {
             $this->calificado = true;
-        } else{
-            $this->calificado = false; }
+        } else {
+            $this->calificado = false;
+        }
     }
 
-    // Método para actualizar los logros
-    public function update_logro($id,$logro, $year){
+    // ---
 
-        $q = "update calificaciones_".$year." set id_logro = $logro where id = $id";
+    /**
+     * @brief Actualiza una calificación semanal existente.
+     *
+     * @param int $id       ID de la calificación semanal.
+     * @param float $nota   Nueva nota.
+     * @param int $year     Año lectivo.
+     *
+     * Actualiza el campo `nota` de un registro de calificación semanal.
+     */
+    public function update_calificacion_semanal($id, $nota, $year) {
+        $q = "UPDATE calificaciones_" . $year . " SET nota = $nota WHERE id = $id";
         
-        if( $this->_db->query($q) === True){
+        if ($this->_db->query($q) === true) {
             $this->calificado = true;
-        } else{
-            $this->calificado = false; }
+        } else {
+            $this->calificado = false;
+        }
+    }
+    
+    // ---
+
+    /**
+     * @brief Actualiza un logro existente.
+     *
+     * @param int $id       ID de la calificación (logro).
+     * @param int $logro    Nuevo ID del logro.
+     * @param int $year     Año lectivo.
+     *
+     * Actualiza el campo `id_logro` de un registro de calificación.
+     */
+    public function update_logro($id, $logro, $year) {
+        $q = "UPDATE calificaciones_" . $year . " SET id_logro = $logro WHERE id = $id";
+        
+        if ($this->_db->query($q) === true) {
+            $this->calificado = true;
+        } else {
+            $this->calificado = false;
+        }
     }
 
-    // retorno  la cantidad de calificaciones que un docente debe generar en una semana
-    // si semanalmente se generara una nota por alumno y materia
-    // se de debe  multiplicar por la cantidad de calificaciones por alumnos
-    // de acuerdo al tipo de semana
-    public function max_calificaciones($id_docente, $year){
-        $q= "select sum(cantidad) cantidad, id_docente from ".
-            " ( select md.id_docente, md.id_grado,  md.id_jornada, md.id_curso, id_materia, cantidad ".
-            " from matricula_docente as  md inner join ".
-            " ( select count(*) as cantidad , id_grado, id_jornada, id_curso  from matricula where year = ".$year.
-            " group by id_jornada, id_grado, id_curso ) as  ca ".
-            " on ca.id_grado = md.id_grado and ca.id_curso = md.id_curso and ca.id_jornada = md.id_jornada ".
-            " where md.year = ".$year." and md.id_docente = ".$id_docente.
-            " order by md.id_docente, md.id_materia, md.id_grado ) as cd group by id_docente";
+    // ---
 
+    /**
+     * @brief Obtiene la cantidad máxima de calificaciones que un docente debe generar.
+     *
+     * @param int $id_docente   ID del docente.
+     * @param int $year         Año lectivo.
+     * @return int La cantidad total de calificaciones esperadas.
+     *
+     * Calcula la suma de alumnos por grado, curso y jornada asignados a un docente.
+     * La lógica del `JOIN` es bastante compleja y propensa a errores.
+     */
+    public function max_calificaciones($id_docente, $year) {
+        $q = "SELECT SUM(cantidad) AS cantidad FROM
+              (SELECT md.id_docente, md.id_grado, md.id_jornada, md.id_curso, id_materia, cantidad
+              FROM matricula_docente AS md INNER JOIN
+              (SELECT COUNT(*) AS cantidad, id_grado, id_jornada, id_curso FROM matricula WHERE year = " . $year . "
+              GROUP BY id_jornada, id_grado, id_curso) AS ca
+              ON ca.id_grado = md.id_grado AND ca.id_curso = md.id_curso AND ca.id_jornada = md.id_jornada
+              WHERE md.year = " . $year . " AND md.id_docente = " . $id_docente . "
+              ORDER BY md.id_docente, md.id_materia, md.id_grado) AS cd GROUP BY id_docente";
         
-        // ejecuto la consulta 
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
-        return  $r['cantidad'];
-    }
-
-    public function get_docente_semana($id_docente, $ano, $semana) {
-
-        $q = "select count(*) cantidad from calificaciones_".$ano." where id_docente = $id_docente and year = $ano  and id_semana = ".$semana;
-        $c = $this->_db->query($q);
-        $r = $c->fetch_array(MYSQLI_ASSOC);
+        
         return $r['cantidad'];
-
     }
 
-    // 
-    public function get_criterio_faltantes($id_e, $id_m, $id_s, $p, $year){
+    // ---
 
-        // Consulta fallida
-        $q = "select v.criterio, tipo, id_semana from 
-                (select concat(validar,$id_m) as criterio, tipo, id_semana from validar where id_semana < $id_s) as v left join
-                (select  concat (tipo,id_semana, id_materia) as  criterio , c.id_ponderado from ponderado as p inner join ( 
-                select id_alumno, id_semana, id_ponderado, id_materia from calificaciones_".$year." where year = $year and periodo = $p and id_materia = $id_m  and   id_semana < $id_s and  id_alumno in ($id_e)) as c on c.id_ponderado = p.id_ponderado) as n on n.criterio = v.criterio where n.criterio is null";
+    /**
+     * @brief Obtiene la cantidad de calificaciones que un docente ha ingresado en una semana.
+     *
+     * @param int $id_docente   ID del docente.
+     * @param int $ano          Año lectivo.
+     * @param int $semana       Número de la semana.
+     * @return int La cantidad de calificaciones.
+     *
+     * Cuenta los registros de calificación para un docente en una semana específica.
+     */
+    public function get_docente_semana($id_docente, $ano, $semana) {
+        $q = "SELECT COUNT(*) AS cantidad FROM calificaciones_" . $ano . " WHERE id_docente = $id_docente AND year = $ano AND id_semana = " . $semana;
         
-        // realizo la consulta
         $c = $this->_db->query($q);
-        //$arr = array(array());
-        // recorro el array
-        while($a = $c->fetch_array(MYSQLI_ASSOC)){
-            
+        $r = $c->fetch_array(MYSQLI_ASSOC);
+        
+        return $r['cantidad'];
+    }
+
+    // ---
+
+    /**
+     * @brief Obtiene los criterios de evaluación faltantes para un estudiante.
+     *
+     * @param int $id_e     ID del estudiante.
+     * @param int $id_m     ID de la materia.
+     * @param int $id_s     ID de la semana.
+     * @param int $p        Período.
+     * @param int $year     Año lectivo.
+     * @return array Un array de arrays asociativos con los criterios faltantes.
+     *
+     * Esta consulta busca qué calificaciones (según el tipo y semana) faltan para un estudiante
+     * en una materia y período dados. La lógica de la consulta es compleja y podría
+     * ser simplificada.
+     */
+    public function get_criterio_faltantes($id_e, $id_m, $id_s, $p, $year) {
+        $q = "SELECT v.criterio, tipo, id_semana FROM 
+              (SELECT CONCAT(validar, $id_m) AS criterio, tipo, id_semana FROM validar WHERE id_semana < $id_s) AS v LEFT JOIN
+              (SELECT CONCAT(tipo, id_semana, id_materia) AS criterio, c.id_ponderado FROM ponderado AS p INNER JOIN 
+              (SELECT id_alumno, id_semana, id_ponderado, id_materia FROM calificaciones_" . $year . " WHERE year = $year AND periodo = $p AND id_materia = $id_m AND id_semana < $id_s AND id_alumno IN ($id_e)) AS c ON c.id_ponderado = p.id_ponderado) AS n ON n.criterio = v.criterio WHERE n.criterio IS NULL";
+        
+        $c = $this->_db->query($q);
+        $arr = array();
+        
+        while ($a = $c->fetch_array(MYSQLI_ASSOC)) {
             $criterio = $a['criterio'];
             $tipo = $a['tipo'];
             $semana = $a['id_semana'];
             $arr[$criterio][0] = $tipo;
             $arr[$criterio][1] = $semana;
-            
         }
-        // retorna un array con el conjunto de areas
-        return $arr;   
+        
+        return $arr;
     }
-    
-    // funcion que me permite obtener los criterios
-    // de evaluacion
+
+    // ---
+
+    /**
+     * @brief Obtiene los criterios de evaluación de una semana.
+     *
+     * @param int $semana Número de la semana.
+     * @return array Un array numérico con los tipos de criterios.
+     *
+     * Consulta la tabla `validar` para obtener los tipos de criterios de evaluación
+     * que se aplican en una semana determinada.
+     */
     public function get_validar_periodo($semana) {
-
-        // consulta
-        $q = "SELECT tipo FROM `validar` WHERE id_semana = $semana order by tipo";
-
-        // realizo la consulta
+        $q = "SELECT tipo FROM `validar` WHERE id_semana = $semana ORDER BY tipo";
         $c = $this->_db->query($q);
-        //$arr = array(array());
         $arr = array();
-        // recorro el array
-        while($a = $c->fetch_array(MYSQLI_ASSOC)){
-            
+        
+        while ($a = $c->fetch_array(MYSQLI_ASSOC)) {
             $criterio = $a['tipo'];
-            array_push($arr,$criterio) ;
+            array_push($arr, $criterio);
         }
-        // retorna un array con el conjunto de areas
-        return $arr;   
+        
+        return $arr;
     }
-
-   
 }
-
-
-?>

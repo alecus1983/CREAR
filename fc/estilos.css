@@ -380,4 +380,23 @@ and (max-device-width : 480px)  {
 }
 
 
+#loader-overlay {
+    position: fixed; /* Cubre toda la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(254, 254, 254, 0.8); /* Fondo negro semitransparente */
+    z-index: 999; /* Asegura que esté por encima de todo */
+    display: none; /* Oculto por defecto */
+}
+
+/* Ajusta tu loader para que esté centrado sobre el overlay */
+.loader {
+    position: fixed; /* Cambiado de absolute a fixed */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Centrado perfecto */
+    z-index: 1000; /* Por encima del overlay */
+}
 
