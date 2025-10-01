@@ -2,7 +2,12 @@
 // archivo que obtiene los estudiantes matriculados
 // en una jornada y una escolaridad
 
+session_start();
+
 require_once("datos.php");
+
+// Array para la respuesta JSON
+$response = ['status' => 0, 'message' => 'Error desconocido.'];
 
 //variables de validacion
 $valido = true;
@@ -92,7 +97,9 @@ if ($valido) {
              $id_matricula = $a['id'];
              
              // recupero los datos de la persona
-             $al = new alumnos($id_alumno);
+             $al = new alumnos();
+	     // obtengo los datos del alumnos
+	     $al->get_alumno_codigo($id_alumno);
              
              $html = $html. "<tr>";
              $html = $html. "<td>";

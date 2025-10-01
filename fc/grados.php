@@ -118,6 +118,25 @@ class grados extends jornada
         }
     }
 
+    // funcion para obtener  en un array
+    // la lista de grados que pertenecen a una escolaridad
+
+    public function lista_escolaridad($id_escolaridad){
+
+	$q = "select id_grado from grados where id_escolaridad = ?";
+
+	$stmt = $this->_db->prepare($q);
+
+	if ($stmt === false) {
+                throw new Exception("Error al preparar la consulta para buscar alumno: " . $this->_db->error);
+        }
+
+	$stmt->bind_param("i", $id_escolaridad);
+        $stmt->execute();
+        $result = $stmt->get_result();
+	$alumno_data = $result->fetch_all();
+	return $alumno_data;
+    }
 
     
 }
