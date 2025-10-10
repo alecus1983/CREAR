@@ -25,52 +25,29 @@ if($_POST["id_persona"] !== ""){
 if ($valido) {
 
     $persona = new personas();
-    $persona->id_persona = $_POST["id_persona"];
 
-    // si hay correo personal
-    if ( $_POST["correo"] !== "" ){
-        $persona->correo = $_POST["correo"];
-        $persona->actualizar_correo_persona();
-    }
+    $data = array(
+        "id_personas"=>$_POST["id_persona"],
+        "nombres"=>$_POST["nombres"],
+        "apellidos"=>$_POST["apellidos"],
+        "tipo_identificacion"=>$_POST["tipo_identificacion"],
+        "identificacion"=>$_POST["identificacion"],
+        "correo"=>$_POST["correo"],
+        "i_correo"=>$_POST["i_correo"],
+        "telefono"=>$_POST["telefono"],
+        "celular"=>$_POST["celular"],
+        "nacimiento"=>$_POST["nacimiento"],
+            
+    );
 
-    // si hay datos de correo institucional
-    if ( $_POST["i_correo"] !== "" ){
-        $persona->i_correo = $_POST["i_correo"];
-        $persona->actualizar_i_correo_persona();
-    }
-
-    // si hay datos de telefono
-    if ( $_POST["telefono"] !== "" ){
-        $persona->telefono = $_POST["telefono"];
-        $persona->actualizar_telefono_persona();
-    }
-
-    // si hay datos de celular
-    if ( $_POST["celular"] !== "" ){
-        $persona->celular = $_POST["celular"];
-        $persona->actualizar_celular_persona();}
-
-    // si hay nacimiento
-    if ( $_POST["nacimiento"] !== "" ){
-        $persona->nacimiento = $_POST["nacimiento"];
-        $persona->actualizar_nacimiento_persona();
-            }
-    
-    
-    $persona->nombres = $_POST["nombres"];
-    $persona->apellidos = $_POST["apellidos"];
-    $persona->tipo_identificacion = $_POST["tipo_identificacion"];
-    $persona->identificacion = $_POST["identificacion"];
-
-
-
-    // actualizo los datos de la persona
-    $persona->actualizar_nombres_persona();
-    $persona->actualizar_identificacion_persona();
-    
 
     $respuesta['html'] = "Actualizado correctamente la persona \n".ucwords(strtolower($persona->nombres))." ".ucwords(strtolower($persona->apellidos ));
-    $respuesta['status'] = 1;    
+    $respuesta['status'] = 1;
+    // se acutualiza la persona
+    if ($persona->update_persona($data)){
+        
+    }
+        
 }
 else {
     $respuesta['html'] = "";

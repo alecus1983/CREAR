@@ -315,6 +315,8 @@ function agregar_persona(formulario, personax) {
 // del formulario
 function actualizar_persona() {
 
+    valida_actualizar_persona();
+
     // invoco el metodo ajax
     // para solicitar los datos del servidor
 
@@ -370,6 +372,85 @@ function actualizar_persona() {
         }
     });
 
+}
+
+
+/**
+ * Función para validar el formulario de actualización de persona del lado del cliente.
+ * Muestra errores visuales y devuelve true si es válido, o false si no lo es.
+ */
+function valida_actualizar_persona() {
+    // 1. Limpiar errores previos para una nueva validación.
+    $('.form-control').removeClass('is-invalid');
+    $('.invalid-feedback').remove();
+
+    let esValido = true;
+    let errores = {};
+
+    // 2. Recolectar y validar cada campo.
+    const nombres = $('#ac_nombres').val().trim();
+    if (nombres === '') {
+        errores.nombres = 'El nombre es obligatorio.';
+    }
+
+    const apellidos = $('#ac_apellidos').val().trim();
+    if (apellidos === '') {
+        errores.apellidos = 'Los apellidos son obligatorios.';
+    }
+
+    const tipo_identificacion = $('#ac_tipo_identificacion').val();
+    if (!tipo_identificacion || tipo_identificacion === '0') { // Suponiendo que el valor por defecto sea 0 o nulo
+        errores.tipo_identificacion = 'Debe seleccionar un tipo de identificación.';
+    }
+
+    const identificacion = $('#ac_identificacion').val().trim();
+    if (identificacion === '') {
+        errores.identificacion = 'El número de identificación es obligatorio.';
+    }
+
+    const correo = $('#ac_correo').val().trim();
+    // Expresión regular simple para validar el formato de un email.
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (correo === '') {
+        errores.correo = 'El correo electrónico es obligatorio.';
+    } else if (!emailRegex.test(correo)) {
+        errores.correo = 'El formato del correo electrónico no es válido.';
+    }
+
+    const i_correo = $('#ac_i_correo').val().trim();
+    // El correo institucional es opcional, pero si se escribe, debe ser válido.
+    if (i_correo !== '' && !emailRegex.test(i_correo)) {
+        errores.i_correo = 'El formato del correo institucional no es válido.';
+    }
+
+    const celular = $('#ac_celular').val().trim();
+    // El celular es opcional, pero si se escribe, debe contener solo números.
+    const soloNumerosRegex = /^[0-9]+$/;
+    if (celular !== '' && !soloNumerosRegex.test(celular)) {
+        errores.celular = 'El número de celular solo debe contener dígitos.';
+    }
+    
+    const nacimiento = $('#ac_nacimiento').val();
+    if (nacimiento === '') {
+        errores.nacimiento = 'La fecha de nacimiento es obligatoria.';
+    } else if (new Date(nacimiento) > new Date()) {
+        errores.nacimiento = 'La fecha de nacimiento no puede ser en el futuro.';
+    }
+
+
+    // 3. Comprobar si se encontraron errores.
+    if (Object.keys(errores).length > 0) {
+        esValido = false;
+        // Si hay errores, mostrarlos debajo de los campos correspondientes.
+        $.each(errores, function(campo, mensaje) {
+            const input = $('#ac_' + campo);
+            input.addClass('is-invalid'); // Añade un borde rojo (estilo de Bootstrap).
+            // Añade el mensaje de error debajo del input.
+            input.after('<div class="invalid-feedback">' + mensaje + '</div>');
+        });
+    }
+
+    return esValido;
 }
 
 
