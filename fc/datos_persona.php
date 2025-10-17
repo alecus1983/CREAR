@@ -15,6 +15,13 @@ $err = "";
 //array de respuesta
 $respuesta = array();
 
+if (!filter_var($id, FILTER_VALIDATE_INT) || $id <= 0) {
+        $respuesta['status'] = 0;
+        $respuesta['html'] = "<div class='alert alert-danger'>Error: ID de persona no válido.</div>";
+        echo json_encode($respuesta);
+        return;
+    }
+
 // creo nueva persona
 $persona = new personas();
 // obtengo los datos de la persona
@@ -138,6 +145,7 @@ $html = $html . "</div>";
 $html = $html . "<div class='col mx-auto justify-content-md'>";
 $html = $html . "<br>";
 $html = $html . "<button type='button' id='actualizar_persona' class='btn btn-outline-dark' style = 'margin: 5px' onclick='actualizar_persona();'>actualizar </button>";
+$html = $html . "<button type='button' id='actualizar_persona_cancelar' class='btn btn-outline-danger' style = 'margin: 5px' onclick=';'>cancelar </button>";
 $html = $html . "</div>";
 
 $html = $html . "</div>";

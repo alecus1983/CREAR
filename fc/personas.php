@@ -252,6 +252,9 @@ class personas extends imcrea {
             }
 
             $q = "UPDATE personas SET " . implode(', ', $setClauses) . " WHERE id_personas = ?";
+
+            echo $q;
+            
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
@@ -318,7 +321,8 @@ class personas extends imcrea {
                             (nombres, apellidos, identificacion, tipo_identificacion,
                              nacimiento, correo, i_correo, celular, telefono)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            
+
+                        
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
