@@ -25,7 +25,7 @@ if($_POST["id_personas"] >0 ){
 if ($valido) {
 
     $p = new personas();
-    if( $p->del($id_personas)){
+    if( $p->deleteById($id_personas)){
     $respuesta['status'] = "1";    
     }else{
     $respuesta['status'] = "20";        

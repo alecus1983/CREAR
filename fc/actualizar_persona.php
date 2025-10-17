@@ -25,7 +25,7 @@ if($_POST["id_persona"] !== ""){
 if ($valido) {
 
     $persona = new personas();
-    $persona->id_persona = $_POST["id_persona"];
+    $persona->id_persona = $id_persona;
 
     // si hay correo personal
     if ( $_POST["correo"] !== "" ){

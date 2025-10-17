@@ -359,6 +359,8 @@ class personas extends imcrea {
                 throw new InvalidArgumentException("El ID de la persona debe ser un valor numérico.");
             }
 
+	    
+
             $q = "DELETE FROM personas WHERE id_personas = ?";
             $stmt = $this->_db->prepare($q);
 
@@ -369,10 +371,14 @@ class personas extends imcrea {
             $stmt->bind_param("i", $id_personas);
             $c = $stmt->execute();
 
+	     
+
             if ($c === true) {
                 $stmt->close();
+		echo "eliminada";
                 return true;
             } else {
+		echo "no eliminada";
                 throw new Exception("Error al eliminar la persona con ID " . $id_personas . ": " . $stmt->error);
             }
         } catch (Exception $e) {
@@ -380,6 +386,60 @@ class personas extends imcrea {
             return false;
         }
     }
+
+
+    /**
+ * Elimina una persona de la base de datos por su ID.
+ *
+ * @param int $personId El ID de la persona a eliminar.
+ * @return bool Devuelve true si la eliminación fue exitosa, de lo contrario false.
+ */
+public function deleteById($personId)
+{
+    $stmt = null; // Inicializar la variable fuera del bloque try
+    try {
+        // 1. Validar que el ID sea un entero válido
+        if (!filter_var($personId, FILTER_VALIDATE_INT) || $personId <= 0) {
+            throw new InvalidArgumentException("El ID proporcionado no es válido.");
+        }
+
+        // 2. Preparar la consulta
+        $query = "DELETE FROM personas WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+
+        if ($stmt === false) {
+            // Usamos RuntimeException para errores que ocurren durante la ejecución
+            throw new RuntimeException("Error al preparar la consulta de eliminación: " . $this->_db->error);
+        }
+
+        // 3. Vincular el parámetro y ejecutar
+        $stmt->bind_param("i", $personId);
+
+        if (!$stmt->execute()) {
+            throw new RuntimeException("Error al ejecutar la eliminación para el ID " . $personId . ": " . $stmt->error);
+        }
+        
+        // 4. Verificar si alguna fila fue afectada
+        if ($stmt->affected_rows === 0) {
+            // Opcional: Considerar esto un error si se esperaba que el ID existiera
+            // throw new Exception("No se encontró ninguna persona con el ID " . $personId . " para eliminar.");
+            return false; // O simplemente retornar false si el ID no existía
+        }
+
+        return true; // Éxito
+
+    } catch (Exception $e) {
+        // Registrar el error detallado para el desarrollador
+        error_log("Error en deleteById: " . $e->getMessage());
+        // Devolver un simple false a quien llamó la función
+        return false;
+    } finally {
+        // 5. Garantizar que el statement se cierre siempre
+        if ($stmt) {
+            $stmt->close();
+        }
+    }
+}
 
     /**
      * Obtiene la dirección de residencia, estrato y barrio de una persona.
@@ -482,6 +542,138 @@ class personas extends imcrea {
             error_log("Error en get_antecedentes: " . $e->getMessage());
             return null;
         }
+    }
+
+
+    /**
+     * Actualiza el correo personal de una persona.
+     */
+    public function actualizar_correo_persona() {
+        $query = "UPDATE personas SET correo = ? WHERE id_personas = ?";
+	//echo $query;
+        $stmt = $this->_db->prepare($query);
+
+        // Limpiar datos
+        $this->correo = htmlspecialchars(strip_tags($this->correo));
+        
+
+        // Vincular parámetros
+        $stmt->bind_param("si", $this->correo, $this->id_persona);
+
+        // Ejecutar consulta
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza el correo institucional de una persona.
+     */
+    public function actualizar_i_correo_persona() {
+        $query = "UPDATE personas SET i_correo = ? WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+
+        $this->i_correo = htmlspecialchars(strip_tags($this->i_correo));
+       
+        $stmt->bind_param("si", $this->i_correo, $this->id_persona);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza el teléfono de una persona.
+     */
+    public function actualizar_telefono_persona() {
+        $query = "UPDATE personas SET telefono = ? WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+        
+        $this->telefono = htmlspecialchars(strip_tags($this->telefono));
+       
+
+        $stmt->bind_param("si", $this->telefono, $this->id_persona);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza el celular de una persona.
+     */
+    public function actualizar_celular_persona() {
+        $query = "UPDATE personas SET celular = ? WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+        
+        $this->celular = htmlspecialchars(strip_tags($this->celular));
+        
+
+        $stmt->bind_param("si", $this->celular, $this->id_persona);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza la fecha de nacimiento de una persona.
+     */
+    public function actualizar_nacimiento_persona() {
+        $query = "UPDATE personas SET nacimiento = ?  WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+        
+        $this->nacimiento = htmlspecialchars(strip_tags($this->nacimiento));
+
+
+        $stmt->bind_param("si", $this->nacimiento , $this->id_persona);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza los nombres y apellidos de una persona.
+     */
+    public function actualizar_nombres_persona() {
+        $query = "UPDATE personas SET nombres = ?, apellidos = ? WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+        
+        $this->nombres = htmlspecialchars(strip_tags($this->nombres));
+        $this->apellidos = htmlspecialchars(strip_tags($this->apellidos));
+
+
+        $stmt->bind_param("ssi", $this->nombres, $this->apellidos, $this->id_persona);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza el tipo de identificación y el número de identificación de una persona.
+     */
+    public function actualizar_identificacion_persona() {
+        $query = "UPDATE personas SET tipo_identificacion = ?, identificacion = ? WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+        
+        $this->tipo_identificacion = htmlspecialchars(strip_tags($this->tipo_identificacion));
+        $this->identificacion = htmlspecialchars(strip_tags($this->identificacion));
+      
+
+        $stmt->bind_param("ssi", $this->tipo_identificacion , $this->identificacion, $this->id_persona);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
     }
 }
 
