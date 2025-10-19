@@ -23,12 +23,13 @@ if($_POST["id_persona"] !== ""){
 
 // si los datos son validos
 if ($valido) {
-
+    // se crea una nueva persona
     $persona = new personas();
+    // asigno el atributo al objeto
+    $persona->id_persona = $_POST["id_persona"];
 
-
+    // se incetan los datos de la persona
     $data = array(
-        "id_personas"=>$_POST["id_persona"],
         "nombres"=>$_POST["nombres"],
         "apellidos"=>$_POST["apellidos"],
         "tipo_identificacion"=>$_POST["tipo_identificacion"],
@@ -37,25 +38,22 @@ if ($valido) {
         "i_correo"=>$_POST["i_correo"],
         "telefono"=>$_POST["telefono"],
         "celular"=>$_POST["celular"],
-        "nacimiento"=>$_POST["nacimiento"],
-            
+        "nacimiento"=>$_POST["nacimiento"]            
     );
 
-
-    $respuesta['html'] = "Actualizado correctamente la persona \n".ucwords(strtolower($persona->nombres))." ".ucwords(strtolower($persona->apellidos ));
-    $respuesta['status'] = 1;
     // se acutualiza la persona
     if ($persona->update_persona($data)){
-        
+	// se agrega la respuesta
+	$respuesta['html'] = "Actualizado correctamente la persona \n".ucwords(strtolower($_POST["nombres"]))." ".ucwords(strtolower($_POST["apellidos"]));
+	$respuesta['status'] = 1;   
     }
-        
 }
 else {
-    $respuesta['html'] = "";
+    $respuesta['html'] = "no se puedo actualizar la persona";
+    $respuesta['status'] = 2;
 }
 
 $respuesta_json = json_encode($respuesta);
 echo $respuesta_json;
 
-//$lista = new $matriculas();
 ?>

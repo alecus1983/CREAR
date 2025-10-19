@@ -210,93 +210,97 @@ class personas extends imcrea {
         }
     }
 
-    /**
-     * Actualiza uno o varios datos de la persona.
-     * Los datos a actualizar se deben suministrar en un array asociativo.
-     *
-     * @param array $data Un array asociativo de campos y sus nuevos valores.
-     * @return bool True si la actualización fue exitosa, false en caso contrario.
-     */
-    public function update_persona(array $data){
-        try {
-            if (!$this->id_persona) {
-                throw new InvalidArgumentException("ID de persona no establecido para la actualización.");
-            }
-            if (empty($data)) {
-                return false; // No hay datos para actualizar
+
+    // funcion para actualizar los parametros de
+    // una persona a partir de un array
+    public function update_persona(array $data)
+    {
+	try {
+            // 1. Validar ID de persona
+            if (empty($this->id_persona)) {
+		// throw new InvalidArgumentException("ID de persona no establecido para la actualización.");
             }
 
+	    // 2. Validar que haya datos para actualizar
+            if (empty($data)) {
+		return false;
+            }
+	    
             $setClauses = [];
             $params = [];
             $types = '';
-
+	    
+            // 3. Construir SET dinámico
             foreach ($data as $key => $value) {
-                // Solo actualizar atributos que existen en la clase
-                if (property_exists($this, $key)) {
+		// Solo actualizar atributos existentes en la clase
+		if (property_exists($this, $key)) {
                     $setClauses[] = "$key = ?";
                     $params[] = $value;
-
-                    // Determinar el tipo para bind_param (simplificado, ajustar según necesidades)
+		    
+                    // Determinar tipo de dato para bind_param
                     if (is_int($value)) {
-                        $types .= 'i';
+			$types .= 'i';
                     } elseif (is_float($value)) {
-                        $types .= 'd';
+			$types .= 'd';
                     } else {
-                        $types .= 's';
+			$types .= 's';
                     }
-                }
+		}
             }
 
+	   
+            // 4. Verificar que haya campos válidos
             if (empty($setClauses)) {
-                return false; // No hay campos válidos para actualizar
+		return false;
             }
-
-            $q = "UPDATE personas SET " . implode(', ', $setClauses) . " WHERE id_personas = ?";
-
-            echo $q;
-            
-            $stmt = $this->_db->prepare($q);
-
-            if ($stmt === false) {
-                throw new Exception("Error al preparar la consulta de actualización de persona: " . $this->_db->error);
-            }
-
-            // Añadir el ID de la persona al final de los parámetros
+	    
+            // 5. Construir la consulta
+            $sql = "UPDATE personas SET " . implode(', ', $setClauses) . " WHERE id_personas = ?";
+	    
+            // 6. Preparar la consulta
+            $stmt = $this->_db->prepare($sql);
+	    
+          
+            // 7. Agregar el ID de persona a los parámetros
             $params[] = $this->id_persona;
-            $types .= 'i'; // Tipo para el ID
+            $types .= 'i'; // Suponiendo que el ID es un entero
+	    
+            // 8. Vincular parámetros
+            $bind_args = array_merge([$types], $params);
+	    
+	    $refs = $this->refValues($bind_args);
 
-            // Usar call_user_func_array para bind_param ya que el número de parámetros es dinámico
-            $bind_names = array_merge([$types], $params);
-            call_user_func_array([$stmt, 'bind_param'], $this->refValues($bind_names));
-
-            $success = $stmt->execute();
-            if ($success === false) {
-                throw new Exception("Error al ejecutar la actualización de persona: " . $stmt->error);
+            if (!call_user_func_array([$stmt, 'bind_param'], $refs)) {
+		throw new Exception("Error al vincular parámetros: " . $stmt->error);
             }
 
+            // 9. Ejecutar consulta
+            if (!$stmt->execute()) {
+		throw new Exception("Error al ejecutar actualización: " . $stmt->error);
+            }
+	    //echo "validado 9";
             $stmt->close();
             return true;
-        } catch (Exception $e) {
+	} catch (Exception $e) {
             error_log("Error en update_persona: " . $e->getMessage());
             return false;
-        }
+	}
     }
 
     /**
-     * Función auxiliar para bind_param con arrays dinámicos.
-     *
-     * @param array $arr El array de valores a enlazar.
-     * @return array El array con referencias a los valores.
+     * Convierte un array en referencias para bind_param.
+     * Necesario porque bind_param requiere referencias.
      */
-    private function refValues($arr){
-        if (strnatcmp(phpversion(),'5.3') >= 0) { // Referencias son obligatorias en PHP 5.3+
-            $refs = array();
-            foreach($arr as $key => $value)
-                $refs[$key] = &$arr[$key];
-            return $refs;
-        }
-        return $arr;
+    private function refValues(array &$arr)
+    {
+	// A partir de PHP 5.3, se necesita pasar referencias
+	$refs = [];
+	foreach ($arr as $key => &$value) {
+            $refs[$key] = &$value;
+	}
+	return $refs;
     }
+
 
 
     /**
