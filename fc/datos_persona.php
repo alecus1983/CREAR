@@ -145,7 +145,7 @@ $html = $html . "</div>";
 $html = $html . "<div class='col mx-auto justify-content-md'>";
 $html = $html . "<br>";
 $html = $html . "<button type='button' id='actualizar_persona' class='btn btn-outline-dark' style = 'margin: 5px' onclick='actualizar_persona();'>actualizar </button>";
-$html = $html . "<button type='button' id='actualizar_persona_cancelar' class='btn btn-outline-danger' style = 'margin: 5px' onclick=';'>cancelar </button>";
+$html = $html . "<button type='button' id='actualizar_persona_cancelar' class='btn btn-outline-danger' style = 'margin: 5px' onclick='borrar_tabla();'>cancelar </button>";
 $html = $html . "</div>";
 
 $html = $html . "</div>";

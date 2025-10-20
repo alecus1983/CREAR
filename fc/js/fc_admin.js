@@ -902,36 +902,37 @@ function load_lista_estudiantes() {
 
 function listado_matricula_escolaridad_jornada(){
 
-  $.ajax({
-    type: "POST",
-    url: "listado_matricula_escolaridad.php",
-    dataType: "json",
-    data: {
-      years: $("#years").val(),
-      id_escolaridad :  $("#escolaridad").val(),
-      id_jornada : $("#jornada").val()
-    },
-    // si los datos son correctos entonces ...
-    success: function (respuesta) {
-      // si la respuesta es positiva
-      if (respuesta['status'] == 1) {
-	//swal('Datos actualizados');
-	
-	$("#avance").html(respuesta['html']);
-      } else {
-	// si la respuesta es erronea 
-	if (respuesta['status'] == 22) {
-	  swal('Escolaridad', 'Porfavor seleccione una escolaridad', 'error');
+    // se envian datos al servidor
+    $.ajax({
+	type: "POST",
+	url: "listado_matricula_escolaridad.php",
+	dataType: "json",
+	data: {
+	    years: $("#years").val(),
+	    id_escolaridad :  $("#escolaridad").val(),
+	    id_jornada : $("#jornada").val()
+	},
+	// si los datos son correctos entonces ...
+	success: function (respuesta) {
+	    // si la respuesta es positiva
+	    if (respuesta['status'] == 1) {
+		// coloco la respuesta en el div
+		// avance
+		$("#avance").html(respuesta['html']);
+		// coloco el año  de acuerdo al criterio  seleccionado
+		$("#ano").html($("#years").val());
+	    } else {
+		// si la respuesta es erronea 
+		if (respuesta['status'] == 22) {
+		    swal('Escolaridad', 'Porfavor seleccione una escolaridad', 'error');
+		}
+	    }
+	},
+	error: function (xhr, status) {
+	    swal('Disculpe, existió un problema');
+	    console.log(xhr);
 	}
-
-      }
-    },
-    error: function (xhr, status) {
-      swal('Disculpe, existió un problema');
-      console.log(xhr);
-    }
-  });
-  
+    });
 }
 
 // el listado de estudiantes matriculados en un grado

@@ -533,7 +533,7 @@ if (isset($_SESSION["usuario"])) {
 					<a style="margin: 0.5rem;"
 					   class="nav-link"
 					   href="#" target="_self"
-					   onclick="listado_matricula_escolaridad_jornada()">Consultar persona
+					   onclick="gestion_personas()">Consultar persona
 					</a>
 					<a style="margin: 0.5rem;"
 					   class="nav-link"
@@ -826,7 +826,7 @@ if (isset($_SESSION["usuario"])) {
 		<div id="layoutSidenav_content">
 		    <main>
 			<div class="container-fluid px-4">
-			    <h1 class="mt-4">FORMULARIO <?php echo date('Y'); ?></h1>
+			    <h1 class="mt-4">FORMULARIO <span id="ano" ><?php echo date('Y'); ?></span></h1> 
 			    <ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
 			    </ol>

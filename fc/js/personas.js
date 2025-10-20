@@ -179,8 +179,6 @@ function cambio_datos(repo, personax, form) {
 	    
 	 });
 
-	 
-
 	  // agrego el  final de la tabla
 	  $(repo).append( "</tbody>"+
 			  "</div>"+
@@ -311,8 +309,8 @@ function agregar_persona(formulario, personax) {
 }
 
 // funcion que toma los datos ingresados
-// en el formaulario del que se toman los campos
-// del formulario
+// en el formaulario de actualizacion de
+// personas y lo envia mendinte ajax
 function actualizar_persona() {
 
     valida_actualizar_persona();
@@ -519,6 +517,12 @@ function actualizar_afiliaciones(personax) {
             console.log("Error AJAX:", status, error);
         }
     });
+}
+
+// funcion  que borra el contenido del div #tabla
+function borrar_tabla(){
+    // borro el contenido del div tabla
+    $("#tabla").html("");
 }
 
 
