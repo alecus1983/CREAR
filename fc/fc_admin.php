@@ -192,7 +192,6 @@ if (isset($_SESSION["usuario"])) {
 	</div>
 
 	<div id="content">
-
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
 	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
@@ -208,21 +207,19 @@ if (isset($_SESSION["usuario"])) {
 				  id="navbarDropdown" href="#"
 				  role="button" data-bs-toggle="dropdown"
 				  aria-expanded="false"><i class="fas fa-user fa-fw"></i>
-			    <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?> </a>
-			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+			      <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?> </a>
+			      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
 			    <li><a class="dropdown-item" href="logout.php">Salir</a></li>
 			</ul>
 		    </li>
 		</ul>
 	    </nav>
-
-
 	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
 
 		    <!-- barra de navegacion -->
-		    <nav class="sb-sidenav accordion sb-sidenav-dark"
+		    <nav class="sb-sisdenav accordion sb-sidenav-dark"
 				id="sidenavAccordion"
 				style="background-color: cadetblue">
 
@@ -259,11 +256,10 @@ if (isset($_SESSION["usuario"])) {
 						     min="2015"
 						     max="2100" step="1"
 						     style="background: transparent;color: darkgreen;border: 0px;"
-					<?php if ($admin < 1) { ?>
-					    readonly="readonly"
-					<?php } ?>
-					class="form-control ">
-
+                             <?php if ($admin < 1) { ?>
+					                      readonly="readonly"
+					         <?php } ?>
+                             class="form-control ">
 					<input type="hidden" value="<?php echo $id; ?>" id="id_d">
 
 					<label for="periodos">Periodo</label>
@@ -278,7 +274,6 @@ if (isset($_SESSION["usuario"])) {
 					    <option value="3">3</option>
 					    <option value="4">4</option>
 					    <option value="5">Recuperacion</option>
-
 					</select>
 
 					<label for="semana">Semana</label>
@@ -294,7 +289,6 @@ if (isset($_SESSION["usuario"])) {
 						$sem  = $s->get_semana_activa($ano);
 						echo "<option value='$sem' selectecd>$sem </option>";
 					    }
-
 					    ?>
 
 					</select>
@@ -353,9 +347,6 @@ if (isset($_SESSION["usuario"])) {
 				</div>
 				<!-- fin de datos -->
 
-
-							
-				
 				<!-- elementos -->
 				<a class="nav-link collapsed" href="#"
 				   data-bs-toggle="collapse"
