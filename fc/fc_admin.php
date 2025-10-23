@@ -179,47 +179,50 @@ if (isset($_SESSION["usuario"])) {
 
 	 }
 
-	
+	 
 	</script>
     </head>
 
-<body class="sb-nav-fixed">
-    <div id="loader-overlay"></div>
-    <div class="loader" style="display:none" id="loader"></div>
+    <body class="sb-nav-fixed">
+	<div id="loader-overlay"></div>
+	<div class="loader" style="display:none" id="loader"></div>
 
 	<div>
 	    <p> El usuario es <?php $usuario  ?>
 	</div>
 
 	<div id="content">
+
 	    <?php $hoy = Date("Y-m-d hh:mm"); ?>
 	    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-4 me-lg-0"
-			id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		    <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle"
-				  id="navbarDropdown" href="#"
-				  role="button" data-bs-toggle="dropdown"
-				  aria-expanded="false"><i class="fas fa-user fa-fw"></i>
-			      <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?> </a>
-			      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+			   id="navbarDropdown" href="#"
+			   role="button" data-bs-toggle="dropdown"
+			   aria-expanded="false"><i class="fas fa-user fa-fw"></i>
+			    <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?> </a>
+			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
 			    <li><a class="dropdown-item" href="logout.php">Salir</a></li>
 			</ul>
 		    </li>
 		</ul>
 	    </nav>
+
+
 	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
 
 		    <!-- barra de navegacion -->
-		    <nav class="sb-sisdenav accordion sb-sidenav-dark"
+		    <nav class="sb-sidenav accordion sb-sidenav-dark"
 				id="sidenavAccordion"
 				style="background-color: cadetblue">
 
@@ -230,9 +233,9 @@ if (isset($_SESSION["usuario"])) {
 
 				<!-- menú de datos -->
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#collapseLayouts1"
-					  aria-expanded="false" aria-controls="collapseLayouts1">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#collapseLayouts1"
+				   aria-expanded="false" aria-controls="collapseLayouts1">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -244,43 +247,45 @@ if (isset($_SESSION["usuario"])) {
 
 				<!-- contenido de menú de datos -->
 				<div class="collapse" id="collapseLayouts1"
-					    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
 				    <nav class="sb-sidenav-menu-nested nav">
 
 					<label for="years">Año</label>
 					<input type="number"
-						     value="<?php echo date('Y'); ?>"
-						     id="years"
-						     name="years"
-						     min="2015"
-						     max="2100" step="1"
-						     style="background: transparent;color: darkgreen;border: 0px;"
-                             <?php if ($admin < 1) { ?>
-					                      readonly="readonly"
-					         <?php } ?>
-                             class="form-control ">
+					       value="<?php echo date('Y'); ?>"
+					       id="years"
+					       name="years"
+					       min="2015"
+					       max="2100" step="1"
+					       style="background: transparent;color: darkgreen;border: 0px;"
+					<?php if ($admin < 1) { ?>
+					    readonly="readonly"
+					<?php } ?>
+					class="form-control ">
+
 					<input type="hidden" value="<?php echo $id; ?>" id="id_d">
 
 					<label for="periodos">Periodo</label>
 					<select id="periodos"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    name="periodos"
-						    class="form-control" required=""
-						    onchange="load_semanas();">
+						style="background: transparent;color: darkgreen;border: 0px"
+						name="periodos"
+						class="form-control" required=""
+						onchange="load_semanas();">
 					    <option value="-1" selected>seleccione</option>
 					    <option value="1">1</option>
 					    <option value="2">2</option>
 					    <option value="3">3</option>
 					    <option value="4">4</option>
 					    <option value="5">Recuperacion</option>
+
 					</select>
 
 					<label for="semana">Semana</label>
 					<select id="semana"
-						    class="form-control"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    onchange="$('#semana').css('background-color', 'transparent');">
+						class="form-control"
+						style="background: transparent;color: darkgreen;border: 0px"
+						onchange="$('#semana').css('background-color', 'transparent');">
 					    <?php
 
 					    if ($admin) {
@@ -289,23 +294,24 @@ if (isset($_SESSION["usuario"])) {
 						$sem  = $s->get_semana_activa($ano);
 						echo "<option value='$sem' selectecd>$sem </option>";
 					    }
+
 					    ?>
 
 					</select>
 
 					<label for="jornada">Jornada</label>
 					<select id="jornada"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    class="form-control"
-						    onchange=";">
+						style="background: transparent;color: darkgreen;border: 0px"
+						class="form-control"
+						onchange=";">
 					    <option value="1">Mañana</option>
 					    <option value="2">Tarde</option>				</select>
 
 					<label for="escolaridad">Escolaridad</label>
 					<select id="escolaridad"
-						    style="background: transparent;color: darkgreen;border: 0px"
-						    class="form-control"
-					  onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_d').val());">
+						style="background: transparent;color: darkgreen;border: 0px"
+						class="form-control"
+						onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_d').val());">
 					    <option value="-1">Seleccione</option>
 					    <option value="1">Preescolar</option>
 					    <option value="2">Básica Primaria</option>
@@ -319,27 +325,27 @@ if (isset($_SESSION["usuario"])) {
 					<label class="Control-label">Grado</label>
 
 					<select id="id_g" name="id_gs"
-						    class="form-control"
-						    style="background: transparent;color: darkgreen;border:  10px"
-						    onchange="actualizar();$('#id_g').css('background-color', 'transparent');">
+						class="form-control"
+						style="background: transparent;color: darkgreen;border:  10px"
+						onchange="actualizar();$('#id_g').css('background-color', 'transparent');">
 					</select>
 
 					<label class="Control-label">Curso</label>
-				      <select id="id_c"
-					style="background: transparent;color: darkgreen;border:0px;"
-					onchange=";"
-					class="form-control">
-					<option value="0">A</opcion>
-					  <option value="1">B</opcion>
-					    <option value="2">C</opcion>
-					      <option value="3">D</opcion>
-				      </select>
+					<select id="id_c"
+						    style="background: transparent;color: darkgreen;border:0px;"
+						    onchange=";"
+						    class="form-control">
+					    <option value="0">A</opcion>
+						<option value="1">B</opcion>
+						    <option value="2">C</opcion>
+							<option value="3">D</opcion>
+					</select>
 
 					<label for="id_ms">Materia</label>
 					<select id="id_ms"
-						style="background: transparent;color: darkgreen;border: 0px"
-						name="id_ms" onchange="$('#id_ms').css('background-color', 'transparent')"
-						class="form-control">
+						    style="background: transparent;color: darkgreen;border: 0px"
+						    name="id_ms" onchange="$('#id_ms').css('background-color', 'transparent')"
+						    class="form-control">
 					</select>
 
 				    </nav>
@@ -347,6 +353,9 @@ if (isset($_SESSION["usuario"])) {
 				</div>
 				<!-- fin de datos -->
 
+
+				
+				
 				<!-- elementos -->
 				<a class="nav-link collapsed" href="#"
 				   data-bs-toggle="collapse"
@@ -362,44 +371,44 @@ if (isset($_SESSION["usuario"])) {
 				</a>
 
 				<div class="collapse" id="collapseLayouts2"
-					    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
 				    <nav class="sb-sidenav-menu-nested nav">
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  href="#" target="_self"
-						  onclick="gestion_semanas()">Gestión de Semanas
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_semanas()">Gestión de Semanas
 					</a>
 				    </nav>
 
 				    <nav class="sb-sidenav-menu-nested nav">
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  href="#" target="_self"
-						  onclick="gestion_personas()">Gestión de Personas
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="gestion_personas()">Gestión de Personas
 					</a>
 				    </nav>
 
 				    <nav class="sb-sidenav-menu-nested nav">
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  href="#" target="_self"
-						  onclick="requisitos_grado()">Requisitos de grado
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="requisitos_grado()">Requisitos de grado
 					</a>
 				    </nav>
 
 				    <nav class="sb-sidenav-menu-nested nav">
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  href="#" target="_self"
-						  onclick="matricula_docente()">Matricula Docente
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="matricula_docente()">Matricula Docente
 					</a>
 				    </nav>
 
 				    <nav class="sb-sidenav-menu-nested nav">
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  href="#" target="_self"
+					   class="nav-link"
+					   href="#" target="_self"
 					   onclick="listado_estudiantes_matriculados();">Listado estudiantes matriculados
 					    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
 					</a>
@@ -407,8 +416,8 @@ if (isset($_SESSION["usuario"])) {
 
 				    <nav class="sb-sidenav-menu-nested nav">
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  href="#" target="_self"
+					   class="nav-link"
+					   href="#" target="_self"
 					   onclick="listado_notas_estudiantes();">Notas por estudiantes
 					    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
 					</a>
@@ -418,9 +427,9 @@ if (isset($_SESSION["usuario"])) {
 				<!-- fin de procesos -->
 				
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#collapseLayouts3"
-					  aria-expanded="false" aria-controls="collapseLayouts3">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#collapseLayouts3"
+				   aria-expanded="false" aria-controls="collapseLayouts3">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -430,47 +439,47 @@ if (isset($_SESSION["usuario"])) {
 				    </div>
 				</a>
 				<div class="collapse" id="collapseLayouts3"
-					    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
 				    <nav class="sb-sidenav-menu-nested nav">
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  href="#"
-						  href="listado_docentes.php"
-						  target="_blank">lista de docentes
+					   class="nav-link"
+					   href="#"
+					   href="listado_docentes.php"
+					   target="_blank">lista de docentes
 					</a>
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  href="#"
-						  onclick="avance_semanal();">Avance notas semanales
+					   class="nav-link"
+					   href="#"
+					   onclick="avance_semanal();">Avance notas semanales
 					</a>
 
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
+					   class="nav-link"
 					   onclick="boletin()">Boletin
 					    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo <br>preescolar</span>
 					</a>
 
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  onclick="cuadro();">Generar cuadro de notas
+					   class="nav-link"
+					   onclick="cuadro();">Generar cuadro de notas
 					</a>
 
 					<a style="margin: 0.5rem;"
-						  class="nav-link"
-						  href="#" target="_self"
-						  onclick="notas_faltantes()">Notas faltantes
+					   class="nav-link"
+					   href="#" target="_self"
+					   onclick="notas_faltantes()">Notas faltantes
 					</a>
 				    </nav>
 				</div>
 
 
-			      
-			      <!-- gestion matricula -->
+				
+				<!-- gestion matricula -->
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#collapseLayouts4"
-					  aria-expanded="false" aria-controls="collapseLayouts4">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#collapseLayouts4"
+				   aria-expanded="false" aria-controls="collapseLayouts4">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -504,9 +513,9 @@ if (isset($_SESSION["usuario"])) {
 				</div>
 
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#menu_gestionpersona"
-					  aria-expanded="false" aria-controls="menu_gestionpersona">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#menu_gestionpersona"
+				   aria-expanded="false" aria-controls="menu_gestionpersona">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -542,9 +551,9 @@ if (isset($_SESSION["usuario"])) {
 				<!-- gestion de grados -->
 
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#menu_gestiongrados"
-					  aria-expanded="false" aria-controls="menu_gestiongrados">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#menu_gestiongrados"
+				   aria-expanded="false" aria-controls="menu_gestiongrados">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -579,9 +588,9 @@ if (isset($_SESSION["usuario"])) {
 				<!-- gestion de materias -->
 
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#menu_gestionmaterias"
-					  aria-expanded="false" aria-controls="menu_gestionmaterias">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#menu_gestionmaterias"
+				   aria-expanded="false" aria-controls="menu_gestionmaterias">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -617,9 +626,9 @@ if (isset($_SESSION["usuario"])) {
 				<!-- gestion de cursos -->
 
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#menu_gestioncursos"
-					  aria-expanded="false" aria-controls="menu_gestioncursos">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#menu_gestioncursos"
+				   aria-expanded="false" aria-controls="menu_gestioncursos">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -655,9 +664,9 @@ if (isset($_SESSION["usuario"])) {
 				<!-- gestion de logros -->
 
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#menu_gestionlogros"
-					  aria-expanded="false" aria-controls="menu_gestionlogros">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#menu_gestionlogros"
+				   aria-expanded="false" aria-controls="menu_gestionlogros">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -692,9 +701,9 @@ if (isset($_SESSION["usuario"])) {
 				<!-- gestion de escolaridad -->
 
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#menu_gestionescolaridad"
-					  aria-expanded="false" aria-controls="menu_gestionescolaridad">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#menu_gestionescolaridad"
+				   aria-expanded="false" aria-controls="menu_gestionescolaridad">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -729,9 +738,9 @@ if (isset($_SESSION["usuario"])) {
 				<!-- gestion de padres -->
 
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#menu_gestionpadre"
-					  aria-expanded="false" aria-controls="menu_gestionpadre">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#menu_gestionpadre"
+				   aria-expanded="false" aria-controls="menu_gestionpadre">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
@@ -766,9 +775,9 @@ if (isset($_SESSION["usuario"])) {
 				<!-- gestion de madre -->
 
 				<a class="nav-link collapsed" href="#"
-					  data-bs-toggle="collapse"
-					  data-bs-target="#menu_gestionmadre"
-					  aria-expanded="false" aria-controls="menu_gestionmadre">
+				   data-bs-toggle="collapse"
+				   data-bs-target="#menu_gestionmadre"
+				   aria-expanded="false" aria-controls="menu_gestionmadre">
 				    <div class="sb-nav-link-icon">
 					<i class="fas fa-columns"></i>
 				    </div>
