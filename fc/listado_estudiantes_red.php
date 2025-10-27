@@ -91,7 +91,7 @@ if ($valido) {
     echo "<div class='row'><div class='col-md-8'>";
 
     //crea un nuevo objeto listado (año,grado,jornada,curso)
-    $listado  = new listado_estudiantes($ano,$grado,$id_jornada, $id_curso);
+    $listado  = new lista_estudiantes($ano,$grado,$id_jornada, $id_curso);
 
     // si se trata de la materia de disciplina entonces
     if ($id_m == 20) {

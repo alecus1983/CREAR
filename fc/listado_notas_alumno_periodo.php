@@ -61,7 +61,7 @@ if ($valido) {
     //objeto matricula docnente
     $md = new matricula_docente();
     //crea un nuevo objeto listado (año,grado,jornada,curso)
-    $listado  = new listado_estudiantes($ano,$grado,$id_jornada, $id_curso);
+    $listado  = new lista_estudiantes($ano,$grado,$id_jornada, $id_curso);
     // objeto tipo curso
     $cu = new curso();
     // obtengo las caracteristicas del curso 

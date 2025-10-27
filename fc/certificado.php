@@ -82,7 +82,7 @@ $gr = new grados();
 //obtengo las caracteristicas del grado
 $gr->get_grado_id($id_grado);
 // creamos un nuevo listado de estudiantes 
-$list = new listado_estudiantes($year, $id_grado, $id_jornada, $id_curso);
+$list = new lista_estudiantes($year, $id_grado, $id_jornada, $id_curso);
 // VARIABLES PARA GUARDAR LOS NOMBRES DE LOS ESTUDIANTES
 $nivel = $gr->grado; 
 // se almacena el grado al que es promovido

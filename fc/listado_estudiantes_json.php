@@ -51,7 +51,7 @@ if ($valido) {
 
     
     //crea un nuevo objeto listado (año,grado,jornada,curso)
-    $listado  = new listado_estudiantes($ano,$grado,$id_jornada, $id_curso);
+    $listado  = new lista_estudiantes($ano,$grado,$id_jornada, $id_curso);
     echo $lista = json_encode($listado);
     
     
