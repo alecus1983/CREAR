@@ -62,6 +62,7 @@ if ($valido) {
     $md = new matricula_docente();
     //crea un nuevo objeto listado (año,grado,jornada,curso)
     $listado  = new lista_estudiantes($ano,$grado,$id_jornada, $id_curso);
+    
     // objeto tipo curso
     $cu = new curso();
     // obtengo las caracteristicas del curso 
@@ -91,7 +92,8 @@ if ($valido) {
     $html = $html.'<option value""></option>';
     foreach($listado->id_alumno as $e){
         // creo nuevo estudiante
-        $estudiante = new alumnos($e);
+        $estudiante = new alumnos();
+	$estudiante->get_alumno_codigo($e);
         $html = $html.'<option value="'.$estudiante->id_alumno.'">'.ucwords(strtolower($estudiante->nombres))." ".ucwords(strtolower($estudiante->apellidos))."</option> ";
     }
     $html = $html. "</select>";

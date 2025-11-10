@@ -201,7 +201,72 @@ if (isset($_SESSION["usuario"])) {
 		<button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-4 me-lg-0"
 			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 		<a style="color:FFF" href="#"></a>
-		<!-- Navbar-->
+	      <!-- Navbar grados y cursos-->
+
+		<ul class="navbar-nav" id="nv_grupos">
+		    <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Grupos</a>
+			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
+			    <li><a class="dropdown-item" href="#">Agregar grado</a></li>
+			    <li><a class="dropdown-item" href="#">Agregar curso</a></li>
+			    <li><a class="dropdown-item" href="#">Agregar escolaridad</a></li>
+			    <li><a class="dropdown-item" href="#">Agregar jornada</a></li>
+			    <li><a class="dropdown-item" href="#">Editar grado</a></li>
+			    <li><a class="dropdown-item" href="#">Editar curso</a></li>
+			    <li><a class="dropdown-item" href="#">Editar escolaridad</a></li>
+			    <li><a class="dropdown-item" href="#">Editar jornada</a></li>
+			</ul>
+		    </li> 
+		</ul>
+
+	      <!-- Nvar de calificaciones -->
+
+	      <ul class="navbar-nav" id="nv_grupos" >
+		<li  class="nav-item dropdown">
+		  <a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Calificaciones</a>
+		  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown">
+		    <li><a class="dropdown-item" href="#" onclick="gestion_semanas()">Gestion semanas</a></li>
+		    <li><a class="dropdown-item" href="#">Gestion periodos</a></li>
+		  </ul>
+		</li>
+	      </ul>
+
+		<!-- estructura académica -->
+
+		<ul class="navbar-nav" id="nv_estructura_academica">
+		    <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Estructura académica</a>
+			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
+			    <li><a class="dropdown-item" href="#">Agregar materia</a></li>
+			    <li><a class="dropdown-item" href="#">Agregar area</a></li>
+			    <li><a class="dropdown-item" href="#">Agregar curso</a></li>
+			    <li><a class="dropdown-item" href="#">Agregar taller</a></li>
+			    <li><a class="dropdown-item" href="#">Editar materia</a></li>
+			    <li><a class="dropdown-item" href="#">Editar área</a></li>
+			    <li><a class="dropdown-item" href="#">Editar curso</a></li>
+			    <li><a class="dropdown-item" href="#">Editar taller</a></li>
+			</ul>
+		    </li> 
+		</ul>
+
+		<ul class="navbar-nav" id="nv_roles_personas">
+		    <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Personas y roles</a>
+			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
+			    <li><a class="dropdown-item" href="#" onclick="formulario_agregar_persona();">Agregar persona</a></li>
+			    <li><a class="dropdown-item" href="#">Matricular docente</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1)">Matricular alumno</a></li>
+			    <li><a class="dropdown-item" href="#">Asignar madre</a></li>
+			    <li><a class="dropdown-item" href="#">Asignar padre</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_personas()">Editar persona</a></li>
+			    <li><a class="dropdown-item" href="#">Editar matricula docente</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="listado_matricula_escolaridad_jornada();">Editar matricula alumno</a></li>
+			    <li><a class="dropdown-item" href="#">Editar padre</a></li>
+			    <li><a class="dropdown-item" href="#">Editar madre</a></li>
+			</ul>
+		    </li> 
+		</ul>
+		
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 		    <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle"
@@ -472,344 +537,7 @@ if (isset($_SESSION["usuario"])) {
 					</a>
 				    </nav>
 				</div>
-
-
 				
-				<!-- gestion matricula -->
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#collapseLayouts4"
-				   aria-expanded="false" aria-controls="collapseLayouts4">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i>
-				    </div>
-				    Gesti&oacute;n Matricula
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i>
-				    </div>
-				</a>
-
-				<div class="collapse" id="collapseLayouts4"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_matricula_escolaridad_jornada()">Consultar matrícula
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_matriculas(1)">Nueva matr&iacute;cula
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="editar_matriculas(1)">Editar matr&iacute;cula
-					</a>
-				    </nav>
-				</div>
-
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#menu_gestionpersona"
-				   aria-expanded="false" aria-controls="menu_gestionpersona">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i>
-				    </div>
-				    Gesti&oacute;n Personas
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i>
-				    </div>
-				</a>
-				
-				<div class="collapse" id="menu_gestionpersona"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_personas()">Consultar persona
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_matriculas(1)">Nueva persona
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="editar_matriculas(1)">Editar persona
-					</a>
-				    </nav>
-				</div>
-
-				<!-- gestion de grados -->
-
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#menu_gestiongrados"
-				   aria-expanded="false" aria-controls="menu_gestiongrados">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i>
-				    </div>
-				    Gesti&oacute;n Grados
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i>
-				    </div>
-				</a>
-				
-				<div class="collapse" id="menu_gestiongrados"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_matricula_escolaridad_jornada()">Consultar grados
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_matriculas(1)">Nuevo grado
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="editar_matriculas(1)">Editar grado
-					</a>
-				    </nav>
-				</div>
-
-				<!-- gestion de materias -->
-
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#menu_gestionmaterias"
-				   aria-expanded="false" aria-controls="menu_gestionmaterias">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i>
-				    </div>
-				    Gesti&oacute;n Materias
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i>
-				    </div>
-				</a>
-				
-				<div class="collapse" id="menu_gestionmaterias"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_matricula_escolaridad_jornada()">Consultar materias
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_matriculas(1)">Nueva materias
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="editar_matriculas(1)">Editar materia
-					</a>
-				    </nav>
-				</div>
-
-
-				<!-- gestion de cursos -->
-
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#menu_gestioncursos"
-				   aria-expanded="false" aria-controls="menu_gestioncursos">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i>
-				    </div>
-				    Gesti&oacute;n Cursos
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i>
-				    </div>
-				</a>
-				
-				<div class="collapse" id="menu_gestioncursos"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_matricula_escolaridad_jornada()">Consultar cursos
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_matriculas(1)">Nuevo curso
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="editar_matriculas(1)">Editar curso
-					</a>
-				    </nav>
-				</div>
-
-
-				<!-- gestion de logros -->
-
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#menu_gestionlogros"
-				   aria-expanded="false" aria-controls="menu_gestionlogros">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i>
-				    </div>
-				    Gesti&oacute;n Logros
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i>
-				    </div>
-				</a>
-				
-				<div class="collapse" id="menu_gestionlogros"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_matricula_escolaridad_jornada()">Consultar logros
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_matriculas(1)">Nuevo logros
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="editar_matriculas(1)">Editar logros
-					</a>
-				    </nav>
-				</div>
-
-				<!-- gestion de escolaridad -->
-
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#menu_gestionescolaridad"
-				   aria-expanded="false" aria-controls="menu_gestionescolaridad">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i>
-				    </div>
-				    Gesti&oacute;n Escolaridad
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i>
-				    </div>
-				</a>
-				
-				<div class="collapse" id="menu_gestionescolaridad"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_matricula_escolaridad_jornada()">Consultar escolaridad
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_matriculas(1)">Nueva escolaridad
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="editar_matriculas(1)">Editar escolaridad
-					</a>
-				    </nav>
-				</div>
-
-				<!-- gestion de padres -->
-
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#menu_gestionpadre"
-				   aria-expanded="false" aria-controls="menu_gestionpadre">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i>
-				    </div>
-				    Gesti&oacute;n Padre
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i>
-				    </div>
-				</a>
-				
-				<div class="collapse" id="menu_gestionpadre"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_matricula_escolaridad_jornada()">Consultar padres
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_matriculas(1)">Nuevo padre
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="editar_matriculas(1)">Editar padre
-					</a>
-				    </nav>
-				</div>
-
-				<!-- gestion de madre -->
-
-				<a class="nav-link collapsed" href="#"
-				   data-bs-toggle="collapse"
-				   data-bs-target="#menu_gestionmadre"
-				   aria-expanded="false" aria-controls="menu_gestionmadre">
-				    <div class="sb-nav-link-icon">
-					<i class="fas fa-columns"></i>
-				    </div>
-				    Gesti&oacute;n Madre
-				    <div class="sb-sidenav-collapse-arrow">
-					<i class="fas fa-angle-down"></i>
-				    </div>
-				</a>
-				
-				<div class="collapse" id="menu_gestionmadre"
-				     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-				    <nav class="sb-sidenav-menu-nested nav">
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="listado_matricula_escolaridad_jornada()">Consultar madre
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="gestion_matriculas(1)">Nueva madre
-					</a>
-					<a style="margin: 0.5rem;"
-					   class="nav-link"
-					   href="#" target="_self"
-					   onclick="editar_matriculas(1)">Editar madre
-					</a>
-				    </nav>
-				</div>
-
-
 			    </div>
 			</div>
 			<div>
