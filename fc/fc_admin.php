@@ -158,7 +158,6 @@ if (isset($_SESSION["usuario"])) {
 	     console.log("Valor a: %s", a); // variable que almacena el codigo del campo
 	     console.log("Valor b: %s", b); // variable que almacena el nombre del archivo PHP
 	     console.log(JSON.stringify(c)); // parametro que se transmite  mediante ajax
-
 	     // $.post(b, c,
 	     $.ajax({
 		 async: true,
@@ -166,20 +165,15 @@ if (isset($_SESSION["usuario"])) {
 		 url: b,
 		 data: c,
 		 dataType: "json",
-
 	     }).done(function(dato) {
 		 $(a).empty();
 
 		 $(a).append("<option value = -1> Seleccione </option>");
 		 $.each(dato, function(index, materia) {
 		     $(a).append("<option value =" + index + ">" + materia + "</option>");
-
 		 });
 	     });
-
 	 }
-
-	 
 	</script>
     </head>
 
@@ -207,7 +201,7 @@ if (isset($_SESSION["usuario"])) {
 		    <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Grupos</a>
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
-			    <li><a class="dropdown-item" href="#">Agregar grado</a></li>
+			  <li><a class="dropdown-item" href="#" onclick="gestionar_grados();">Agregar grado</a></li>
 			    <li><a class="dropdown-item" href="#">Agregar curso</a></li>
 			    <li><a class="dropdown-item" href="#">Agregar escolaridad</a></li>
 			    <li><a class="dropdown-item" href="#">Agregar jornada</a></li>

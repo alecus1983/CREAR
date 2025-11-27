@@ -43,7 +43,6 @@ class semana extends imcrea{
         }
         //retorno listado
         return $arr;
-
     }
 
     // recupera el listado de semanas para un año

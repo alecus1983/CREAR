@@ -102,7 +102,6 @@ class grados extends jornada
     public function get_grado_id($id_grado)
     {
         // se realiza la consulta
-        // echo "consulsta: "."SELECT nombre_g FROM  grados where  id_grado = ".$id_grado;
         $resultado = $this->_db->query("SELECT * FROM  grados where  id_grado = " . $id_grado);
         $dato = $resultado->fetch_array(MYSQLI_ASSOC);
 
@@ -114,7 +113,8 @@ class grados extends jornada
             $this->nombre_g = $dato["nombre_g"];
             $this->promovido = $dato["promovido"];
             $this->grado = $dato["grado"];
-            $this->_db->close();
+	    $this->escolaridad =$dato["escolaridad"];
+            
         }
     }
 
@@ -139,6 +139,20 @@ class grados extends jornada
     }
 
     
+    // recupera el listado de grados pertenecientes a una escolaridad
+    public function get_lista_grado_escolaridad($id_escolaridad) {
+        $q = "select * from  grados where id_escolaridad = $id_escolaridad";
+        $c = $this->_db->query($q);
+	// defino un array vacio
+        $arr = array();
+        // recorro el array
+        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
+            // añade elementos al array
+            array_push($arr, $r['id_grado']);
+        }
+        //retorno listado
+        return $arr;
+    }
 }
 // fin de la clase
 ?>
