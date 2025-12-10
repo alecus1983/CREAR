@@ -30,7 +30,7 @@ if ($valido) {
 
     // echo var_dump($arr_grados);
     
-    $html = "<p>Listado de grados para la escolaridad  </p>";
+    $html = "<p>Formulario para la creación de grados  </p>";
 
     
     $html = $html."<div class='row'>";
@@ -42,32 +42,44 @@ if ($valido) {
     // selector de docentes
     $html = $html. "";
     $html = $html. "<div class='form-floating'>";
-    $html = $html. '<select id="lista_grados"  class="form-select">';
+    $html = $html. '<select id="lista_escolaridades"  class="form-select">';
     $html = $html.'<option value""></option>';
-    //valor de la semana inicial
-    for($ii =1 ; $ii <33; $ii ++){
-	// 
-       $html = $html."<option value='$ii'>$ii</option>";
+
+    // creo objeto de escolaridad
+    $escolaridad = new escolaridad();
+
+    // obtengo un array con las escolaridades disponibles
+    $arr_escolaridad = $escolaridad->lista();
+
+    //echo var_dump($arr_escolaridad);
+    
+    //obtener todas las escolaridades disponibles en el sistema
+    foreach($arr_escolaridad as $ii) {
+
+	echo var_dump($ii['id_escolaridad']);
+	// coloco una opcion con la escolaridad 
+	//$html = $html."<option value='".$arr_escolaridad[$ii]."'>$ii</option>";
     }
+    
     $html = $html. "</select>";
-    $html = $html. "<label for='lista_grados'>Grados</label>";
+    $html = $html. "<label for='lista_escolaridad'>Escolaridades</label>";
     $html = $html. "</div>";
     $html = $html. "</div>";
 
 
     $html = $html. "<div class='col-2'>";
     $html = $html. "<div class='form-floating'>";
-    $html = $html. '<input type="date" id="inicio"  class="form-control">';
-    $html = $html. "<label for='inicio'>Inicio</label>";
+    $html = $html. '<input id="nombre_grado"  class="form-control">';
+    $html = $html. "<label for='nombre_grado'>nombre del grado</label>";
     $html = $html. "</div>";
     $html = $html. "</div>";
 
-    $html = $html. "<div class='col-2'>";
-    $html = $html. "<div class='form-floating'>";
-    $html = $html. '<input type="date" id="fin"  class="form-control">';
-    $html = $html. "<label for='fin'>Fin</label>";
-    $html = $html. "</div>";
-    $html = $html. "</div>";
+    // $html = $html. "<div class='col-2'>";
+    // $html = $html. "<div class='form-floating'>";
+    // $html = $html. '<input type="date" id="fin"  class="form-control">';
+    // $html = $html. "<label for='fin'>Fin</label>";
+    // $html = $html. "</div>";
+    // $html = $html. "</div>";
 
     $html = $html. "<div class='col-2'>";
     $html = $html. '<button type="button" class="btn btn-outline-success" onclick="actualizar_semana();">Agregar/Actualizar</button>';
