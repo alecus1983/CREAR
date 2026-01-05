@@ -1,6 +1,5 @@
 <?php
-// archivo que obtiene los docentes matriculados
-// en una materia para un grado/curso/jornada
+
 
 require_once("datos.php");
 
@@ -10,12 +9,13 @@ $err = "";
 //array de respuesta
 $respuesta = array();
 
-if($_POST["escolaridad"]!== ""){
-    $id_escolaridad = $_POST["escolaridad"];//date("Y");
+if($_POST["escolaridad"]!== "" and $_POST["escolaridad"]!== "-1" and isset($_POST["escolaridad"])) {
+    $id_escolaridad = $_POST["escolaridad"];
 }else {
+    // si no esta ingresada la escolaridad devuelve el error 21
     $valido = false;
     $respuesta['status'] = 21;
-    //$err = $err."<p class='text-danger'>Porfavor seleccione un año</p>";
+    
 }
 
 // si los datos son validos
@@ -56,7 +56,7 @@ if ($valido) {
     //obtener todas las escolaridades disponibles en el sistema
     foreach($arr_escolaridad as $ii) {
 
-	echo var_dump($ii['id_escolaridad']);
+	//echo var_dump($ii['id_escolaridad']);
 	// coloco una opcion con la escolaridad 
 	//$html = $html."<option value='".$arr_escolaridad[$ii]."'>$ii</option>";
     }

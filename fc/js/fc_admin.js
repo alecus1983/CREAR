@@ -1448,7 +1448,6 @@ function lista_grados(id_escolaridad, id, id_docente) {
 
     success: function (respuesta) {
 
-
       res = JSON.parse(respuesta);
 
       // si se realizo la respuesta
@@ -1458,18 +1457,18 @@ function lista_grados(id_escolaridad, id, id_docente) {
       $(id).append("<option value = '-1'>Seleccione</option>");
       
       res.forEach((element) => {
-	//console.log(element)
-	valor = element[0];
-	texto = element[1];
-	$(id).append("<option value = " + valor + ">" + texto + "</option>");
-      });
+	      //console.log(element)
+	      valor = element[0];
+	      texto = element[1];
+	      $(id).append("<option value = " + valor + ">" + texto + "</option>");
+        });
 
-       $(id).css('background-color', 'lightblue');
+        $(id).css('background-color', 'lightblue');
 
-    },
-    error: function (xhr, status) {
-      swal('Disculpe, existió un problema' + status);
-      console.log(xhr);
+      },
+      error: function (xhr, status) {
+        swal('Disculpe, existió un problema' + status);
+        console.log(xhr);
     }
   });
 }
