@@ -14,8 +14,7 @@ if($_POST["escolaridad"]!== "" and $_POST["escolaridad"]!== "-1" and isset($_POS
 }else {
     // si no esta ingresada la escolaridad devuelve el error 21
     $valido = false;
-    $respuesta['status'] = 21;
-    
+    $respuesta['status'] = 21;    
 }
 
 // si los datos son validos
@@ -24,48 +23,30 @@ if ($valido) {
     //objeto grados
     $obj_grados = new grados();
 
+    //creacion de objeto de escolaridad
+    $escolaridad = new escolaridad();
+
+    // recuperar la escolaridad
+    $escolaridad->get_escolaridad_por_id($id_escolaridad);
     
     // array de semanas
     $arr_grados = $obj_grados->get_lista_grado_escolaridad($id_escolaridad);
 
     // echo var_dump($arr_grados);
     
-    $html = "<p>Formulario para la creación de grados  </p>";
+    $html = "<p>Formulario para la creación de grados  en la escolaridad <b>".$escolaridad->escolaridad."</b> </p>";
 
     
     $html = $html."<div class='row'>";
     $html = $html. " <div class='col-md-12 '>";
     $html = $html. "<div class='row'>";
-
     
-    $html = $html. "<div class='col-3'>";
-    // selector de docentes
-    $html = $html. "";
+    $html = $html. "<div class='col-2'>";
     $html = $html. "<div class='form-floating'>";
-    $html = $html. '<select id="lista_escolaridades"  class="form-select">';
-    $html = $html.'<option value""></option>';
-
-    // creo objeto de escolaridad
-    $escolaridad = new escolaridad();
-
-    // obtengo un array con las escolaridades disponibles
-    $arr_escolaridad = $escolaridad->lista();
-
-    //echo var_dump($arr_escolaridad);
-    
-    //obtener todas las escolaridades disponibles en el sistema
-    foreach($arr_escolaridad as $ii) {
-
-	//echo var_dump($ii['id_escolaridad']);
-	// coloco una opcion con la escolaridad 
-	//$html = $html."<option value='".$arr_escolaridad[$ii]."'>$ii</option>";
-    }
-    
-    $html = $html. "</select>";
-    $html = $html. "<label for='lista_escolaridad'>Escolaridades</label>";
+    $html = $html. '<input id="nombre_grado"  class="form-control">';
+    $html = $html. "<label for='nombre_grado'>código del grado</label>";
     $html = $html. "</div>";
     $html = $html. "</div>";
-
 
     $html = $html. "<div class='col-2'>";
     $html = $html. "<div class='form-floating'>";
@@ -73,13 +54,6 @@ if ($valido) {
     $html = $html. "<label for='nombre_grado'>nombre del grado</label>";
     $html = $html. "</div>";
     $html = $html. "</div>";
-
-    // $html = $html. "<div class='col-2'>";
-    // $html = $html. "<div class='form-floating'>";
-    // $html = $html. '<input type="date" id="fin"  class="form-control">';
-    // $html = $html. "<label for='fin'>Fin</label>";
-    // $html = $html. "</div>";
-    // $html = $html. "</div>";
 
     $html = $html. "<div class='col-2'>";
     $html = $html. '<button type="button" class="btn btn-outline-success" onclick="actualizar_semana();">Agregar/Actualizar</button>';
