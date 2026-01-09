@@ -43,8 +43,8 @@ if ($valido) {
     
     $html = $html. "<div class='col-2'>";
     $html = $html. "<div class='form-floating'>";
-    $html = $html. '<input id="nombre_grado"  class="form-control">';
-    $html = $html. "<label for='nombre_grado'>código del grado</label>";
+    $html = $html. '<input id="codigo_grado"  class="form-control">';
+    $html = $html. "<label for='codigo_grado'>código del grado</label>";
     $html = $html. "</div>";
     $html = $html. "</div>";
 
@@ -56,7 +56,7 @@ if ($valido) {
     $html = $html. "</div>";
 
     $html = $html. "<div class='col-2'>";
-    $html = $html. '<button type="button" class="btn btn-outline-success" onclick="actualizar_semana();">Agregar/Actualizar</button>';
+    $html = $html. '<button type="button" id="btn_accion_grado" class="btn btn-outline-success" onclick="actualizar_semana();">Agregar/Actualizar</button>';
     $html = $html. "</div>";
     $html = $html. "</div>";
 
@@ -66,6 +66,7 @@ if ($valido) {
     $html = $html. "<th scope='col'>nombre_g</th>";
     $html = $html. "<th scope='col'>escolaridad</th>";
     $html = $html. "<th scope='col'></th>";
+    // $html = $html. "<th scope='col'></th>";
     $html = $html. "</thead>";
     $html = $html. "<tbody>";
 
@@ -88,8 +89,17 @@ if ($valido) {
         $html = $html. "<td>";
         $html = $html. $obj_grados->escolaridad;
         $html = $html. "</td>";
-        $html = $html. "<td>";
-        $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_semana();'>eliminar</button>";
+        // $html = $html. "<td>";
+        // $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_semana();'>eliminar</button>";
+        // $html = $html. "</td>";
+        // ... dentro del loop
+        $html = $html. "<td>";      
+        // Boton Editar (Pasa los datos actuales como parametros)
+        $html = $html. "<button type='button' class='btn btn-info btn-sm' style='margin-right:5px;' 
+         onclick='preparar_edicion_grado(".$id_grado.", \"".$obj_grados->grado."\", \"".$obj_grados->nombre_g."\")'>
+         <i class='fas fa-edit'></i></button>";
+
+        $html = $html. "<button type='button' class='btn btn-warning btn-sm' onclick='eliminar_grado();'>eliminar</button>";
         $html = $html. "</td>";
         $html = $html. "</tr>";           
     }

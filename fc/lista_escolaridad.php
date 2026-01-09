@@ -24,8 +24,6 @@ $lista = $e->lista();
 // si obtengo un listado entonces
  if (isset($lista)) {
 
-    //$respuesta['status'] = 1;
-    //$respuesta['html'] = $lista;
      // encapsulo  la respuesta en modo json
      echo json_encode($lista);
  }

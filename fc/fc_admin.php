@@ -44,6 +44,8 @@ if (isset($_SESSION["usuario"])) {
 	<script src="./js/notas.js"></script>
 	<script src="./js/semanas.js"></script>
 	<script src="./js/ajax.js"></script>
+	<script src="./js/escolaridad.js"></script>
+	<script src="./js/jornada.js"></script>
 	<script src="../boostrap/css/bootstrap.css" type="text/css"></script>
 	<script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
 	<link rel="stylesheet" href="estilos.css" type="text/css">
@@ -202,8 +204,8 @@ if (isset($_SESSION["usuario"])) {
 			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Grupos</a>
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
 			  <li><a class="dropdown-item" href="#" onclick="gestionar_grados();">Agregar grado</a></li>
-			    <li><a class="dropdown-item" onclick="" href="#">Agregar escolaridad</a></li>
-			    <li><a class="dropdown-item" href="#">Agregar jornada</a></li>
+			    <li><a class="dropdown-item" onclick="gestionar_escolaridad();" href="#">Agregar escolaridad</a></li>
+			    <li><a class="dropdown-item" onclick="gestionar_jornada();" href="#">Agregar jornada</a></li>
 			    <li><a class="dropdown-item" href="#">Editar grado</a></li>
 			    <li><a class="dropdown-item" href="#">Editar escolaridad</a></li>
 			    <li><a class="dropdown-item" href="#">Editar jornada</a></li>

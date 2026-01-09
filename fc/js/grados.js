@@ -274,4 +274,84 @@ function lista_grados(id_escolaridad, id, id_docente) {
   });
 }
 
+// Variable global para saber qué grado se está editando
+let id_grado_edicion = -1;
+
+/**
+ * Función A: Carga los datos de la fila seleccionada en el formulario superior.
+ * Debes agregar un botón en tu tabla HTML: onclick="preparar_edicion_grado(id, 'codigo', 'nombre')"
+ */
+function preparar_edicion_grado(id, codigo, nombre) {
+    // Asignamos los valores a los inputs (Asegúrate de corregir los IDs en listado_grados.php)
+    // He asumido que cambiarás el primer input a id="codigo_grado" y el segundo a id="nombre_grado"
+    $("#codigo_grado").val(codigo);
+    $("#nombre_grado").val(nombre);
+    
+    // Guardamos el ID en la variable global
+    id_grado_edicion = id;
+
+    // Cambiamos visualmente el botón de agregar para que indique "Actualizar"
+    // Nota: Deberás ponerle un ID al botón de agregar en listado_grados.php, ej: id="btn_accion_grado"
+    $("#btn_accion_grado").text("Guardar Cambios");
+    $("#btn_accion_grado").removeClass("btn-outline-success").addClass("btn-success");
+    $("#btn_accion_grado").attr("onclick", "ejecutar_edicion_grado()");
+    
+    // Hacemos scroll hacia arriba para ver el formulario
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+}
+
+/**
+ * Función B: Envía los datos modificados al servidor (AJAX)
+ */
+function ejecutar_edicion_grado() {
+    
+    // Validaciones básicas
+    let codigo = $("#codigo_grado").val();
+    let nombre = $("#nombre_grado").val();
+
+    if (id_grado_edicion == -1) {
+        swal('Error', 'No se ha seleccionado un grado para editar', 'error');
+        return;
+    }
+    if (codigo.trim() == "" || nombre.trim() == "") {
+        swal('Campos vacíos', 'Por favor complete código y nombre', 'warning');
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "edit_grado.php", 
+        dataType: "json",
+        data: {
+            id_grado: id_grado_edicion,
+            codigo: codigo,
+            nombre: nombre
+        },
+        success: function(respuesta) {
+            if (respuesta['status'] == 1) {
+                swal('Éxito', 'El grado ha sido actualizado', 'success');
+                
+                // Limpiar formulario y reiniciar estado
+                $("#codigo_grado").val("");
+                $("#nombre_grado").val("");
+                id_grado_edicion = -1;
+                
+                // Restaurar botón a estado "Agregar"
+                $("#btn_accion_grado").text("Agregar/Actualizar");
+                $("#btn_accion_grado").removeClass("btn-success").addClass("btn-outline-success");
+                $("#btn_accion_grado").attr("onclick", "actualizar_semana()"); // O la función original que tenías para agregar
+
+                // Recargar la tabla para ver cambios
+                gestionar_grados(); 
+            } else {
+                swal('Error', 'No se pudo actualizar. Código error: ' + respuesta['status'], 'error');
+            }
+        },
+        error: function(xhr, status) {
+            swal('Error', 'Fallo de conexión con el servidor', 'error');
+            console.log(xhr);
+        }
+    });
+}
+
 

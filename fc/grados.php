@@ -153,6 +153,32 @@ class grados extends jornada
         //retorno listado
         return $arr;
     }
+
+    // Función para actualizar un grado existente
+    public function actualizar_grado($id_grado, $grado, $nombre_g)
+    {
+        // Preparamos la consulta para evitar inyecciones SQL
+        $q = "UPDATE grados SET grado = ?, nombre_g = ? WHERE id_grado = ?";
+        
+        $stmt = $this->_db->prepare($q);
+
+        if ($stmt === false) {
+            return false;
+        }
+
+        // 'ssi' significa string, string, integer
+        $stmt->bind_param("ssi", $grado, $nombre_g, $id_grado);
+        
+        $resultado = $stmt->execute();
+        
+        $stmt->close();
+
+        return $resultado;
+    }
 }
+
+
 // fin de la clase
 ?>
+
+
