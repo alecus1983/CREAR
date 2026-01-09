@@ -202,11 +202,9 @@ if (isset($_SESSION["usuario"])) {
 			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Grupos</a>
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
 			  <li><a class="dropdown-item" href="#" onclick="gestionar_grados();">Agregar grado</a></li>
-			    <li><a class="dropdown-item" href="#">Agregar curso</a></li>
-			    <li><a class="dropdown-item" href="#">Agregar escolaridad</a></li>
+			    <li><a class="dropdown-item" onclick="" href="#">Agregar escolaridad</a></li>
 			    <li><a class="dropdown-item" href="#">Agregar jornada</a></li>
 			    <li><a class="dropdown-item" href="#">Editar grado</a></li>
-			    <li><a class="dropdown-item" href="#">Editar curso</a></li>
 			    <li><a class="dropdown-item" href="#">Editar escolaridad</a></li>
 			    <li><a class="dropdown-item" href="#">Editar jornada</a></li>
 			</ul>

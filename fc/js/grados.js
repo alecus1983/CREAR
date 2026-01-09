@@ -230,3 +230,48 @@ function  gestionar_grados(){
     });
     
 }
+
+
+// funcion que lista los grados en funcion de un id_escolaridad
+// que identifica la escolaridad de los estudiantes y 
+function lista_grados(id_escolaridad, id, id_docente) {
+
+  // solicito la lista de escolaridad
+
+  $.ajax({
+    type: "POST",
+    async: false,
+    url: "lista_grados.php",
+    data: {
+      id_docente: id_docente,
+      id_escolaridad: id_escolaridad
+    },
+
+    success: function (respuesta) {
+
+      res = JSON.parse(respuesta);
+
+      // si se realizo la respuesta
+      // almaceno la respuesta en la variable res
+      $(id).find('option').remove();
+
+      $(id).append("<option value = '-1'>Seleccione</option>");
+      
+      res.forEach((element) => {
+	      //console.log(element)
+	      valor = element[0];
+	      texto = element[1];
+	      $(id).append("<option value = " + valor + ">" + texto + "</option>");
+        });
+
+        $(id).css('background-color', 'lightblue');
+
+      },
+      error: function (xhr, status) {
+        swal('Disculpe, existió un problema' + status);
+        console.log(xhr);
+    }
+  });
+}
+
+
