@@ -70,3 +70,66 @@ function  gestionar_escolaridad(){
     });
     
 }
+
+/**
+ * Pone los datos de la fila seleccionada en el formulario para editar.
+ * @param {int} id - El ID de la escolaridad
+ * @param {string} nombre - El nombre actual de la escolaridad
+ */
+function preparar_edicion_escolaridad(id, nombre) {
+    // Asignamos los valores a los inputs (Asegúrate de actualizar los IDs en tu HTML, ver punto 4)
+    $("#txt_id_escolaridad").val(id);
+    $("#txt_nombre_escolaridad").val(nombre);
+    
+    // Cambiamos el color o hacemos focus para indicar que se está editando
+    $("#txt_nombre_escolaridad").focus();
+    
+    // Opcional: Desplazarse hacia arriba si el formulario está lejos
+    $('html, body').animate({
+        scrollTop: $("#txt_nombre_escolaridad").offset().top - 100
+    }, 500);
+}
+
+/**
+ * Envía los datos modificados al servidor para actualizar.
+ */
+function actualizar_escolaridad() {
+    // Obtenemos los valores
+    var id = $("#txt_id_escolaridad").val();
+    var nombre = $("#txt_nombre_escolaridad").val();
+
+    // Validamos
+    if (nombre.trim() === "") {
+        swal("Atención", "El nombre es obligatorio", "warning");
+        return;
+    }
+    if (id.trim() === "") {
+        swal("Atención", "Seleccione un registro de la lista para editar", "warning");
+        return;
+    }
+
+    // Petición AJAX
+    $.ajax({
+        type: "POST",
+        url: "guardar_escolaridad.php", // El archivo que creamos en el paso 2
+        dataType: "json",
+        data: {
+            id_escolaridad: id,
+            nombre_escolaridad: nombre
+        },
+        success: function (respuesta) {
+            if (respuesta.status == 1) {
+                swal("Éxito", respuesta.msg, "success");
+                
+                // Recargamos la lista para ver los cambios
+                gestionar_escolaridad(); 
+            } else {
+                swal("Error", respuesta.msg, "error");
+            }
+        },
+        error: function (xhr, status) {
+            swal("Error", "Problema de conexión con el servidor", "error");
+            console.log(xhr);
+        }
+    });
+}

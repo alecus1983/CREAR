@@ -29,7 +29,7 @@ if ($valido) {
     // recuperar la escolaridad
     $escolaridad->get_escolaridad_por_id($id_escolaridad);
     
-    // array de semanas
+    // array de grados
     $arr_grados = $obj_grados->get_lista_grado_escolaridad($id_escolaridad);
 
     // echo var_dump($arr_grados);
@@ -56,7 +56,21 @@ if ($valido) {
     $html = $html. "</div>";
 
     $html = $html. "<div class='col-2'>";
-    $html = $html. '<button type="button" id="btn_accion_grado" class="btn btn-outline-success" onclick="actualizar_semana();">Agregar/Actualizar</button>';
+    $html = $html. "<div class='form-floating'>";
+    $html = $html. '<input id="txt_nuevo_promovido"  class="form-control">';
+    $html = $html. "<label for='txt_nuevo_promovido'>promovido</label>";
+    $html = $html. "</div>";
+    $html = $html. "</div>";
+
+    $html = $html. "<div class='col-2'>";
+    $html = $html. "<div class='form-floating'>";
+    $html = $html. '<input id="formato_boletin"  class="form-control">';
+    $html = $html. "<label for='formato_boletin'>formato boletin</label>";
+    $html = $html. "</div>";
+    $html = $html. "</div>";
+
+    $html = $html. "<div class='col-2'>";
+    $html = $html. '<button type="button" id="btn_accion_grado" class="btn btn-outline-success" onclick="agregar_grado();">Agregar/Actualizar</button>';
     $html = $html. "</div>";
     $html = $html. "</div>";
 
@@ -65,6 +79,8 @@ if ($valido) {
     $html = $html. "<th scope='col'>grado</th>";
     $html = $html. "<th scope='col'>nombre_g</th>";
     $html = $html. "<th scope='col'>escolaridad</th>";
+    $html = $html. "<th scope='col'>promovido</th>";
+    $html = $html. "<th scope='col'>formato boletin</th>";
     $html = $html. "<th scope='col'></th>";
     // $html = $html. "<th scope='col'></th>";
     $html = $html. "</thead>";
@@ -89,6 +105,13 @@ if ($valido) {
         $html = $html. "<td>";
         $html = $html. $obj_grados->escolaridad;
         $html = $html. "</td>";
+        $html = $html. "<td>";
+        $html = $html. $obj_grados->promovido;
+        $html = $html. "</td>";
+        $html = $html. "<td>";
+        $html = $html. $obj_grados->formato_boletin;
+        $html = $html. "</td>";
+
         // $html = $html. "<td>";
         // $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_semana();'>eliminar</button>";
         // $html = $html. "</td>";
@@ -96,7 +119,7 @@ if ($valido) {
         $html = $html. "<td>";      
         // Boton Editar (Pasa los datos actuales como parametros)
         $html = $html. "<button type='button' class='btn btn-info btn-sm' style='margin-right:5px;' 
-         onclick='preparar_edicion_grado(".$id_grado.", \"".$obj_grados->grado."\", \"".$obj_grados->nombre_g."\")'>
+         onclick='preparar_edicion_grado(".$id_grado.", \"".$obj_grados->grado."\", \"".$obj_grados->nombre_g."\", \"".$obj_grados->promovido."\", \"".$obj_grados->formato_boletin."\")'>
          <i class='fas fa-edit'></i></button>";
 
         $html = $html. "<button type='button' class='btn btn-warning btn-sm' onclick='eliminar_grado();'>eliminar</button>";

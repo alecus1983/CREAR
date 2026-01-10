@@ -52,4 +52,21 @@ class jornada extends escolaridad
         }
         return $aa;
     }
+
+    // Actualiza el nombre de una jornada existente
+    public function actualizar($id, $nombre)
+    {
+        // Escapamos los caracteres para evitar inyección SQL básica
+        $nombre = $this->_db->real_escape_string($nombre);
+        $id = intval($id); // Aseguramos que el ID sea un entero
+
+        $q = "UPDATE jornada SET jornada = '$nombre' WHERE id_jornada = $id";
+        
+        // Ejecutamos la consulta
+        if ($this->_db->query($q)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

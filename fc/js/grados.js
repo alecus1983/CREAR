@@ -219,7 +219,7 @@ function  gestionar_grados(){
                 $("#avance").html(respuesta['html']);
             } else {
                 if (respuesta['status'] == 21) {
-                    swal('Escolaridad', 'Porfavor seleccione la escolaridad', 'error');
+                    swal('Escolaridad', 'Porfavor seleccione una escolaridad del menú que se encuentra a la izquierda,  dentro de DATOS.', 'error');
                 }
             }
         },
@@ -279,13 +279,15 @@ let id_grado_edicion = -1;
 
 /**
  * Función A: Carga los datos de la fila seleccionada en el formulario superior.
- * Debes agregar un botón en tu tabla HTML: onclick="preparar_edicion_grado(id, 'codigo', 'nombre')"
+ * Debes agregar un botón en tu tabla HTML: onclick="preparar_edicion_grado(id, 'codigo', 'nombre','promovido', 'formato_boletin')"
  */
-function preparar_edicion_grado(id, codigo, nombre) {
+function preparar_edicion_grado(id, codigo, nombre,promovido, formato_boletin) {
     // Asignamos los valores a los inputs (Asegúrate de corregir los IDs en listado_grados.php)
     // He asumido que cambiarás el primer input a id="codigo_grado" y el segundo a id="nombre_grado"
     $("#codigo_grado").val(codigo);
     $("#nombre_grado").val(nombre);
+    $("#txt_nuevo_promovido").val(promovido);
+    $("#formato_boletin").val(formato_boletin);
     
     // Guardamos el ID en la variable global
     id_grado_edicion = id;
@@ -308,6 +310,8 @@ function ejecutar_edicion_grado() {
     // Validaciones básicas
     let codigo = $("#codigo_grado").val();
     let nombre = $("#nombre_grado").val();
+    let promovido = $("#txt_nuevo_promovido").val();
+    let formato_boletin = $("#formato_boletin").val();
 
     if (id_grado_edicion == -1) {
         swal('Error', 'No se ha seleccionado un grado para editar', 'error');
@@ -325,7 +329,9 @@ function ejecutar_edicion_grado() {
         data: {
             id_grado: id_grado_edicion,
             codigo: codigo,
-            nombre: nombre
+            nombre: nombre,
+            promovido:promovido,
+            formato_boletin: formato_boletin
         },
         success: function(respuesta) {
             if (respuesta['status'] == 1) {
@@ -334,6 +340,10 @@ function ejecutar_edicion_grado() {
                 // Limpiar formulario y reiniciar estado
                 $("#codigo_grado").val("");
                 $("#nombre_grado").val("");
+                $("txt_nuevo_promovido").val("");
+               $("formato_boletin").val("");
+               
+               
                 id_grado_edicion = -1;
                 
                 // Restaurar botón a estado "Agregar"
@@ -349,6 +359,68 @@ function ejecutar_edicion_grado() {
         },
         error: function(xhr, status) {
             swal('Error', 'Fallo de conexión con el servidor', 'error');
+            console.log(xhr);
+        }
+    });
+}
+
+// Función para agregar un nuevo grado
+function agregar_grado() {
+    
+    // Obtenemos los valores del formulario
+    // Nota: Asegúrate de que estos IDs existan en tu archivo listado_grados.php
+    var codigo = $("#codigo_grado").val(); 
+    var nombre = $("#nombre_grado").val();
+    var promovido = $("#txt_nuevo_promovido").val(); 
+    
+    // Tomamos la escolaridad seleccionada en el menú lateral o formulario
+    var id_escolaridad = $("#escolaridad").val(); 
+    var nombre_escolaridad = $("#escolaridad option:selected").text();
+    
+    // Opcional: Input para formato boletin, si no existe enviamos 1 por defecto
+    var formato = $("#txt_formato_boletin").length ? $("#txt_formato_boletin").val() : 1;
+
+    // Validaciones
+    if (id_escolaridad == "-1" || id_escolaridad == null) {
+        swal('Atención', 'Por favor seleccione una escolaridad antes de agregar un grado', 'warning');
+        return;
+    }
+    
+    if (codigo.trim() == "" || nombre.trim() == "") {
+        swal('Campos Vacíos', 'El código y el nombre del grado son obligatorios', 'error');
+        return;
+    }
+
+    // Petición AJAX
+    $.ajax({
+        type: "POST",
+        url: "guardar_nuevo_grado.php", // El archivo PHP creado en el paso 2
+        dataType: "json",
+        data: {
+            grado: codigo,
+            nombre_g: nombre,
+            promovido: promovido,
+            id_escolaridad: id_escolaridad,
+            escolaridad: nombre_escolaridad,
+            formato_boletin: formato
+        },
+        success: function(respuesta) {
+            if (respuesta.status == 1) {
+                swal('Éxito', respuesta.msg, 'success');
+                
+                // Limpiamos los campos
+                $("#txt_nuevo_codigo").val("");
+                $("#txt_nuevo_nombre").val("");
+                $("#txt_nuevo_promovido").val("");
+                
+                // Recargamos la tabla de grados para ver el nuevo registro
+                gestionar_grados();
+            } else {
+                swal('Error', respuesta.msg, 'error');
+            }
+        },
+        error: function(xhr, status) {
+            swal('Error', 'Hubo un problema de conexión', 'error');
             console.log(xhr);
         }
     });

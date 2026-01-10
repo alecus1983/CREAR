@@ -16,6 +16,8 @@ class grados extends jornada
     public $promovido;
     // codigo de la escolaridad a la que pertenece el grado
     public $id_escolaridad;
+    // formato del boletin de calificaciones
+    public $formato_boletin;
 
     //constructor de la clase
     public function __construct()
@@ -24,43 +26,28 @@ class grados extends jornada
         parent::__construct();
     }
 
-    // funcion que agrega un grado
-    public function registro(
-        $grado,
-        $nombre_g,
-        $escolaridad,
-        $promovido,
-        $id_escolaridad
-    ) {
-
-        // String  para realizar la consulta
-        $q2 = "INSERT INTO grados
-      (
-        grado,
-        nombre_g,
-        escolaridad,
-        promovido,
-        id_escolaridad
-      )
-      VALUES ('" . $grado .
-            "',  '" . $nombre_g .
-            "', '" . $escolaridad .
-            "', '" . $promovido .
-            "', '" . $id_escolaridad .
-            "' )";
-
-        // se realiza la consulta
-        $qx = $this->_db->query($q2);
-        // si se ejecuto la consulta
-        if (!$qx) {
-            echo "Fallo en incertar grado";
-        } else {
-            // retorno  el array
-            return $qx;
-
+    // Método actualizado para insertar un grado (incluye formato_boletin)
+    public function registro($grado, $nombre_g, $escolaridad, $promovido, $id_escolaridad, $formato_boletin) {
+        
+        // Sentencia preparada para mayor seguridad y manejo de tipos
+        $q = "INSERT INTO grados (grado, nombre_g, escolaridad, promovido, id_escolaridad, formato_boletin) 
+              VALUES (?, ?, ?, ?, ?, ?)";
+        
+        $stmt = $this->_db->prepare($q);
+        
+        if ($stmt === false) {
+            // Manejo de error en la preparación
+            return false;
         }
-    } // fin de la funcion
 
+        // 'ssssii' corresponde a: string, string, string, string, int, int
+        $stmt->bind_param("ssssii", $grado, $nombre_g, $escolaridad, $promovido, $id_escolaridad, $formato_boletin);
+        
+        $resultado = $stmt->execute();
+        $stmt->close();
+
+        return $resultado;
+    }
     //***************************
     // calcula el valor maximo      *
     //***************************
@@ -113,7 +100,8 @@ class grados extends jornada
             $this->nombre_g = $dato["nombre_g"];
             $this->promovido = $dato["promovido"];
             $this->grado = $dato["grado"];
-	    $this->escolaridad =$dato["escolaridad"];
+	        $this->escolaridad =$dato["escolaridad"];
+            $this->formato_boletin = $dato["formato_boletin"];
             
         }
     }
@@ -175,6 +163,8 @@ class grados extends jornada
 
         return $resultado;
     }
+
+    
 }
 
 

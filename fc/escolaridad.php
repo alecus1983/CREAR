@@ -101,5 +101,35 @@ class escolaridad extends imcrea
         
         return $aa;
     }
+
+    /**
+     * Actualiza el nombre de una escolaridad existente.
+     * @param int $id El ID de la escolaridad.
+     * @param string $nombre El nuevo nombre.
+     * @return bool True si tuvo éxito, False si falló.
+     */
+    public function actualizar($id, $nombre)
+    {
+        // Sentencia SQL para actualizar
+        $q = "UPDATE escolaridad SET escolaridad = ? WHERE id_escolaridad = ?";
+        
+        // Preparamos la sentencia
+        $stmt = $this->_db->prepare($q);
+
+        if ($stmt) {
+            // "si" indica: string (nombre), integer (id)
+            $stmt->bind_param("si", $nombre, $id);
+            
+            // Ejecutamos y verificamos si afectó filas o no hubo errores
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+                $stmt->close();
+                return false;
+            }
+        }
+        return false;
+    }
 }
 ?>

@@ -26,56 +26,61 @@ $respuesta = array();
     $html = $html."<div class='row'>";
     $html = $html. " <div class='col-md-12 '>";
     $html = $html. "<div class='row'>";
+
+    // INPUT ID (Lo hacemos readonly porque es la llave primaria)
+    $html = $html. "<div class='col-2'>";
+    $html = $html. "<div class='form-floating'>";
+    // CAMBIO AQUI: ID único 'txt_id_jornada'
+    $html = $html. '<input id="txt_id_jornada" class="form-control" readonly>'; 
+    $html = $html. "<label for='txt_id_jornada'>Código</label>";
+    $html = $html. "</div>";
+    $html = $html. "</div>";
     
-    $html = $html. "<div class='col-2'>";
-    $html = $html. "<div class='form-floating'>";
-    $html = $html. '<input id="nombre_jornada"  class="form-control">';
-    $html = $html. "<label for='nombre_jornada'>código de la jornada</label>";
-    $html = $html. "</div>";
-    $html = $html. "</div>";
+    
 
     $html = $html. "<div class='col-2'>";
     $html = $html. "<div class='form-floating'>";
-    $html = $html. '<input id="nombre_jornada"  class="form-control">';
-    $html = $html. "<label for='nombre_jornada'>nombre de la jornada</label>";
+    $html = $html. '<input id="txt_nombre_jornada" class="form-control">'; 
+    $html = $html. "<label for='txt_nombre_jornada'>Nombre Jornada</label>";
     $html = $html. "</div>";
     $html = $html. "</div>";
 
+      // BOTÓN GUARDAR
     $html = $html. "<div class='col-2'>";
-    $html = $html. '<button type="button" class="btn btn-outline-success" onclick="actualizar_jornada();">Agregar/Actualizar</button>';
+    // CAMBIO AQUI: Llamamos a guardar_jornada()
+    $html = $html. '<button type="button" class="btn btn-outline-success" onclick="guardar_jornada();">Guardar / Actualizar</button>';
     $html = $html. "</div>";
     $html = $html. "</div>";
 
-    $html = $html. "<table class='table''>";
+    
+    $html = $html. "<table class='table'>";
     $html = $html. "<thead>";
-    $html = $html. "<th scope='col'>codigo ornada</th>";
-    $html = $html. "<th scope='col'>nombre</th>";
-    // $html = $html. "<th scope='col'>escolaridad</th>";
-    $html = $html. "<th scope='col'></th>";
+    $html = $html. "<th scope='col'>Código</th>";
+    $html = $html. "<th scope='col'>Nombre</th>";
+    $html = $html. "<th scope='col'>Acciones</th>"; // Columna acciones
     $html = $html. "</thead>";
     $html = $html. "<tbody>";
 
-    
-    // por cada matricula docente  
-    foreach($l_jornada as $obj_jornada) {
-	
+   
 
-        
+    foreach($l_jornada as $obj_jornada) {
+        $id_j = $obj_jornada[0];
+        $nom_j = $obj_jornada[1];
+
         $html = $html. "<tr>";
+        $html = $html. "<td>" . $id_j . "</td>";
+        $html = $html. "<td>" . $nom_j . "</td>";
         $html = $html. "<td>";
-        $html = $html. $obj_jornada[0];
-        $html = $html. "</td>";
-        $html = $html. "<td>";
-        $html = $html. $obj_jornada[1];
-        $html = $html. "</td>";
-        //$html = $html. "<td>";
-        //$html = $html. $obj_grados->escolaridad;
-        //$html = $html. "</td>";
-        $html = $html. "<td>";
-        $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_jornada();'>eliminar</button>";
+        
+        // BOTÓN EDITAR: Llama a preparar_edicion pasando los datos
+        $html = $html. "<button type='button' class='btn btn-info btn-sm' style='margin-right:5px' onclick='preparar_edicion(\"$id_j\", \"$nom_j\");'><i class='fas fa-edit'></i> Editar</button>";
+        
+        $html = $html. "<button type='button' class='btn btn-danger btn-sm' onclick='eliminar_jornada($id_j);'><i class='fas fa-trash'></i> Eliminar</button>";
         $html = $html. "</td>";
         $html = $html. "</tr>";           
     }
+    
+    
     $html = $html. "</tbody>";
        
     $html = $html. "</div>";
