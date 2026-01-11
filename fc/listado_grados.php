@@ -62,22 +62,42 @@ if ($valido) {
     $html = $html. "</div>";
     $html = $html. "</div>";
 
+
+
     $html = $html. "<div class='col-2'>";
     $html = $html. "<div class='form-floating'>";
-    $html = $html. '<input id="formato_boletin"  class="form-control">';
+    
+    $html = $html. "<select id='formato_boletin'
+						style='background: transparent;color: darkgreen;border: 0px'
+						name='formato_boletin'
+						class='form-control' required=''>
+                        <option value ='1'>1 - preescolar</option>
+                        <option value ='2'>2 - bachillerato</option>
+                    </select>";
+
+    // $html = $html. '<input id="formato_boletin"  class="form-control" data-toggle="tooltip" 
+    //                         data-placement="bottom" 
+    //                         title="1 para el formato de prescolar,  2 para el formato de bachillerato" >';
     $html = $html. "<label for='formato_boletin'>formato boletin</label>";
     $html = $html. "</div>";
     $html = $html. "</div>";
 
     $html = $html. "<div class='col-2'>";
-    $html = $html. '<button type="button" id="btn_accion_grado" class="btn btn-outline-success" onclick="agregar_grado();">Agregar/Actualizar</button>';
+    $html = $html. '<button type="button" 
+                            id="btn_accion_grado"   
+                            class="btn btn-outline-success"
+                            
+                            onclick="agregar_grado();">
+                            Agregar/Actualizar
+                            
+                    </button>';
     $html = $html. "</div>";
     $html = $html. "</div>";
 
     $html = $html. "<table class='table''>";
     $html = $html. "<thead>";
-    $html = $html. "<th scope='col'>grado</th>";
-    $html = $html. "<th scope='col'>nombre_g</th>";
+    $html = $html. "<th scope='col'>código del grado</th>";
+    $html = $html. "<th scope='col'>nombre del grado</th>";
     $html = $html. "<th scope='col'>escolaridad</th>";
     $html = $html. "<th scope='col'>promovido</th>";
     $html = $html. "<th scope='col'>formato boletin</th>";
@@ -112,9 +132,7 @@ if ($valido) {
         $html = $html. $obj_grados->formato_boletin;
         $html = $html. "</td>";
 
-        // $html = $html. "<td>";
-        // $html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar_semana();'>eliminar</button>";
-        // $html = $html. "</td>";
+        
         // ... dentro del loop
         $html = $html. "<td>";      
         // Boton Editar (Pasa los datos actuales como parametros)
@@ -122,7 +140,7 @@ if ($valido) {
          onclick='preparar_edicion_grado(".$id_grado.", \"".$obj_grados->grado."\", \"".$obj_grados->nombre_g."\", \"".$obj_grados->promovido."\", \"".$obj_grados->formato_boletin."\")'>
          <i class='fas fa-edit'></i></button>";
 
-        $html = $html. "<button type='button' class='btn btn-warning btn-sm' onclick='eliminar_grado();'>eliminar</button>";
+        $html = $html. "<button type='button' class='btn btn-warning btn-sm' onclick='del_grado(".$obj_grados->id_grado.");'>eliminar</button>";
         $html = $html. "</td>";
         $html = $html. "</tr>";           
     }

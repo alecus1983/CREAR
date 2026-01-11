@@ -5,7 +5,7 @@ class grados extends jornada
 {
 
     // variable de la tabla grados
-    protected $id_grado;
+    public $id_grado;
     // codigo del grado
     public $grado;
     // nombre del grado
@@ -102,6 +102,7 @@ class grados extends jornada
             $this->grado = $dato["grado"];
 	        $this->escolaridad =$dato["escolaridad"];
             $this->formato_boletin = $dato["formato_boletin"];
+            $this->id_grado = $dato["id_grado"];
             
         }
     }
@@ -143,10 +144,10 @@ class grados extends jornada
     }
 
     // Función para actualizar un grado existente
-    public function actualizar_grado($id_grado, $grado, $nombre_g)
+    public function actualizar_grado($id_grado, $grado, $nombre_g, $promovido, $formato_boletin)
     {
         // Preparamos la consulta para evitar inyecciones SQL
-        $q = "UPDATE grados SET grado = ?, nombre_g = ? WHERE id_grado = ?";
+        $q = "UPDATE grados SET grado = ?, nombre_g = ?, promovido = ?, formato_boletin = ? WHERE id_grado = ?";
         
         $stmt = $this->_db->prepare($q);
 
@@ -155,7 +156,7 @@ class grados extends jornada
         }
 
         // 'ssi' significa string, string, integer
-        $stmt->bind_param("ssi", $grado, $nombre_g, $id_grado);
+        $stmt->bind_param("sssii", $grado, $nombre_g, $promovido, $formato_boletin , $id_grado);
         
         $resultado = $stmt->execute();
         
@@ -163,6 +164,32 @@ class grados extends jornada
 
         return $resultado;
     }
+
+    // ... código existente ...
+
+    // Método para eliminar un grado por su ID
+    public function eliminar_grado_id($id_grado) {
+        
+        // Sentencia preparada DELETE
+        $q = "DELETE FROM grados WHERE id_grado = ?";
+        
+        $stmt = $this->_db->prepare($q);
+        
+        if ($stmt === false) {
+            return false;
+        }
+
+        // 'i' indica que el parámetro es un entero
+        $stmt->bind_param("i", $id_grado);
+        
+        $resultado = $stmt->execute();
+        
+        $stmt->close();
+
+        return $resultado;
+    }
+
+    // ... cierre de la clase ...
 
     
 }

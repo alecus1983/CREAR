@@ -108,7 +108,7 @@ class escolaridad extends imcrea
      * @param string $nombre El nuevo nombre.
      * @return bool True si tuvo éxito, False si falló.
      */
-    public function actualizar($id, $nombre)
+    public function actualizar( $id ,$nombre)
     {
         // Sentencia SQL para actualizar
         $q = "UPDATE escolaridad SET escolaridad = ? WHERE id_escolaridad = ?";
@@ -131,5 +131,77 @@ class escolaridad extends imcrea
         }
         return false;
     }
+
+    // ... código existente ...
+
+    // Método auxiliar para calcular el siguiente ID (ya que la tabla no es Auto Increment)
+    public function maximo()
+    {
+        // Consultamos el ID más alto actual
+        $q = "SELECT max(id_escolaridad) as max_id FROM escolaridad";
+        $resultado = $this->_db->query($q);
+        
+        if ($resultado) {
+            $dato = $resultado->fetch_assoc();
+            // Si hay registros, retornamos el maximo + 1, si no, retornamos 1
+            if ($dato['max_id'] !== null) {
+                return $dato['max_id'] + 1;
+            }
+        }
+        return 1; // Primer registro
+    }
+
+    // Método para crear una nueva escolaridad
+    public function crear($nombre_escolaridad) {
+        
+        // Obtenemos el ID manual
+        $id = $this->maximo();
+        
+        $q = "INSERT INTO escolaridad (id_escolaridad, escolaridad) VALUES (?, ?)";
+        
+        $stmt = $this->_db->prepare($q);
+        
+        if ($stmt) {
+            // 'is' => integer (id), string (nombre)
+            $stmt->bind_param("is", $id, $nombre_escolaridad);
+            
+            $res = $stmt->execute();
+            $stmt->close();
+            
+            return $res;
+        }
+        return false;
+    }
+
+
+    // ... otros métodos de la clase ...
+
+    /**
+     * Elimina una escolaridad por su ID.
+     * @param int $id El ID de la escolaridad a eliminar.
+     * @return bool True si se eliminó correctamente, False si hubo error.
+     */
+    public function eliminar($id) {
+        
+        // Sentencia SQL para eliminar
+        $q = "DELETE FROM escolaridad WHERE id_escolaridad = ?";
+        
+        $stmt = $this->_db->prepare($q);
+        
+        if ($stmt) {
+            // Vinculamos el parámetro entero
+            $stmt->bind_param("i", $id);
+            
+            // Ejecutamos
+            $resultado = $stmt->execute();
+            
+            $stmt->close();
+            return $resultado;
+        }
+        
+        return false;
+    }
+    
+    
 }
 ?>

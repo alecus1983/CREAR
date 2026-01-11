@@ -302,6 +302,7 @@ function preparar_edicion_grado(id, codigo, nombre,promovido, formato_boletin) {
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 }
 
+
 /**
  * Función B: Envía los datos modificados al servidor (AJAX)
  */
@@ -422,6 +423,60 @@ function agregar_grado() {
         error: function(xhr, status) {
             swal('Error', 'Hubo un problema de conexión', 'error');
             console.log(xhr);
+        }
+    });
+}
+
+// Función para eliminar un grado con confirmación
+function del_grado(id_grado) {
+    
+    // Usamos SweetAlert para confirmar la acción
+    swal({
+        title: "¿Está seguro?",
+        text: "Una vez eliminado, no podrá recuperar este grado. ¿Desea continuar?",
+        icon: "warning",
+        buttons: ["Cancelar", "Sí, eliminar"],
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            // Si el usuario confirma, procedemos con AJAX
+            $.ajax({
+                type: "POST",
+                url: "eliminar_grado.php",
+                dataType: "json",
+                data: {
+                    id_grado: id_grado
+                },
+                success: function(respuesta) {
+                    if (respuesta.status == 1) {
+                        swal("Eliminado!", respuesta.msg, "success");
+                        // Recargamos la tabla para ver los cambios
+                        gestionar_grados(); 
+                        
+                        // Si estabas editando ese grado, limpiamos el formulario
+                        if (typeof id_grado_edicion !== 'undefined' && id_grado_edicion == id_grado) {
+                            $("#codigo_grado").val("");
+                            $("#nombre_grado").val("");
+                            $("#txt_nuevo_promovido").val("");
+                            $("#formato_boletin").val("");
+                            id_grado_edicion = -1;
+                            $("#btn_accion_grado").text("Agregar/Actualizar");
+                            $("#btn_accion_grado").removeClass("btn-success").addClass("btn-outline-success");
+                        }
+
+                    } else {
+                        swal("Error", respuesta.msg, "error");
+                    }
+                },
+                error: function(xhr, status) {
+                    swal("Error de conexión", "No se pudo comunicar con el servidor.", "error");
+                    console.log(xhr);
+                }
+            });
+        } else {
+            // Usuario canceló
+            swal("Operación cancelada", "El grado está a salvo :)", "info");
         }
     });
 }

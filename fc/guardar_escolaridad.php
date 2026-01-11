@@ -6,24 +6,27 @@ require_once("datos.php");
 $respuesta = array();
 
 // Verificamos que lleguen los datos
-if (isset($_POST['id_escolaridad']) && isset($_POST['nombre_escolaridad'])) {
+if ( isset($_POST['nombre_escolaridad']) && isset($_POST['id_escolaridad'] )) {
     
-    $id = $_POST['id_escolaridad'];
+  
     $nombre = trim($_POST['nombre_escolaridad']);
+    $id_escolaridad = trim($_POST['id_escolaridad']);
 
     // Validaciones básicas
-    if ($nombre == "") {
+    if ($nombre == ""  ) {
         $respuesta['status'] = 2; 
         $respuesta['msg'] = "El nombre de la escolaridad no puede estar vacío.";
-    } elseif ($id == "") {
-        $respuesta['status'] = 2;
-        $respuesta['msg'] = "No se ha identificado el registro a editar.";
-    } else {
+    } elseif ( $id_escolaridad == "") {
+        $respuesta['status'] = 3; 
+        $respuesta['msg'] = "El codigo de la escolaridad no puede estar vacío.";
+    } 
+    
+    else {
         // Instanciamos la clase
         $obj_escolaridad = new escolaridad();
         
         // Llamamos al método actualizar
-        if ($obj_escolaridad->actualizar($id, $nombre)) {
+        if ($obj_escolaridad->actualizar($id_escolaridad, $nombre)) {
             $respuesta['status'] = 1;
             $respuesta['msg'] = "Escolaridad actualizada correctamente.";
         } else {

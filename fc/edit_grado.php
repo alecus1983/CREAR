@@ -24,7 +24,9 @@ if ($valido) {
     $resultado = $obj_grados->actualizar_grado(
         $_POST['id_grado'], 
         $_POST['codigo'], 
-        $_POST['nombre']
+        $_POST['nombre'],
+        $_POST['promovido'],
+        $_POST['formato_boletin']
     );
 
     if ($resultado) {
