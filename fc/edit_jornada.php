@@ -1,33 +1,41 @@
 <?php
 session_start();
-require_once("datos.php"); // Asegúrate de que este archivo incluya la clase jornada
+require_once("datos.php");
 
-$respuesta = array();
+// Array de respuesta inicial
+$respuesta = array('status' => 0, 'msg' => 'Error desconocido');
 
-if (isset($_POST['id_jornada']) && isset($_POST['nombre_jornada'])) {
+if (isset($_POST['id_jornada']) && isset($_POST['jornada'])) {
     
+    // 1. Recibir datos y limpiar espacios
     $id = $_POST['id_jornada'];
-    $nombre = $_POST['nombre_jornada'];
+    $nombre = trim($_POST['jornada']);
+    
+    // 2. Validaciones básicas en el servidor
+    if (empty($nombre)) {
+        $respuesta['msg'] = "El nombre de la jornada no puede estar vacío.";
+        echo json_encode($respuesta);
+        exit;
+    }
 
-    // Validamos que no estén vacíos
-    if (trim($nombre) == "" || trim($id) == "") {
-        $respuesta['status'] = 2; // Error de validación
-        $respuesta['msg'] = "Los campos no pueden estar vacíos";
+    if (empty($id)) {
+        $respuesta['msg'] = "No se identificó la jornada a editar.";
+        echo json_encode($respuesta);
+        exit;
+    }
+
+    // 3. Instanciar clase y actualizar
+    $obj = new jornada();
+    
+    if ($obj->actualizar($id, $nombre)) {
+        $respuesta['status'] = 1;
+        $respuesta['msg'] = "Jornada actualizada correctamente.";
     } else {
-        $jornada = new jornada();
-        
-        if ($jornada->actualizar($id, $nombre)) {
-            $respuesta['status'] = 1; // Éxito
-            $respuesta['msg'] = "Jornada actualizada correctamente";
-        } else {
-            $respuesta['status'] = 0; // Error en BD
-            $respuesta['msg'] = "Error al actualizar en la base de datos";
-        }
+        $respuesta['msg'] = "Error al actualizar en la base de datos.";
     }
 
 } else {
-    $respuesta['status'] = 3; // Faltan datos
-    $respuesta['msg'] = "Faltan datos por enviar";
+    $respuesta['msg'] = "Faltan datos requeridos (ID o Nombre).";
 }
 
 echo json_encode($respuesta);

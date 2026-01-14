@@ -47,12 +47,7 @@ if($_POST["id_jornada"]!== ""){
     $respuesta['status'] = 23;
     //$err = $err."<p class='text-danger'>Porfavor seleccione un año</p>";
 }
-// if($_POST["id_ms"] >0){
-//     $id_m = $_POST['id_ms'];
-// }else {
-//     $valido = false;
-//     $err = $err."<p class='text-danger'>Porfavor seleccione una materia</p>";
-// }
+
 if($_POST["semana"] > 0){
     // filtro la semana
     $semana = $_POST['semana'];

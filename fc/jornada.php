@@ -53,20 +53,73 @@ class jornada extends escolaridad
         return $aa;
     }
 
-    // Actualiza el nombre de una jornada existente
-    public function actualizar($id, $nombre)
-    {
-        // Escapamos los caracteres para evitar inyección SQL básica
-        $nombre = $this->_db->real_escape_string($nombre);
-        $id = intval($id); // Aseguramos que el ID sea un entero
+    // // Actualiza el nombre de una jornada existente
+    // public function actualizar($id, $nombre)
+    // {
+    //     // Escapamos los caracteres para evitar inyección SQL básica
+    //     $nombre = $this->_db->real_escape_string($nombre);
+    //     $id = intval($id); // Aseguramos que el ID sea un entero
 
-        $q = "UPDATE jornada SET jornada = '$nombre' WHERE id_jornada = $id";
+    //     $q = "UPDATE jornada SET jornada = '$nombre' WHERE id_jornada = $id";
         
-        // Ejecutamos la consulta
-        if ($this->_db->query($q)) {
+    //     // Ejecutamos la consulta
+    //     if ($this->_db->query($q)) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+public function agregar($nombre) {
+        // Asegúrate de usar $this->mysqli o la variable de conexión que uses en tu clase
+        // Se asume que $this->mysqli es la conexión activa
+        $sql = "INSERT INTO jornada (jornada) VALUES ('$nombre')";
+        
+        if ($this->_db->query($sql)) {
             return true;
         } else {
+            error_log("Error SQL: " . $this->_db->error);
             return false;
         }
     }
+
+    /**
+     * Actualiza una jornada existente
+     */
+    public function actualizar($id, $nombre) {
+        $sql = "UPDATE jornada SET jornada = '$nombre' WHERE id_jornada = $id";
+        
+        if ($this->_db->query($sql)) {
+            return true;
+        } else {
+            error_log("Error SQL: " . $this->_db->error);
+            return false;
+        }
+    }
+
+    /**
+     * Elimina una jornada por su ID
+     * @param int $id Identificador de la jornada
+     * @return boolean True si se eliminó, False si falló
+     */
+    public function eliminar($id) {
+        // Es importante escapar el ID o asegurarse que es entero
+        $id = (int)$id; 
+        
+        $sql = "DELETE FROM jornada WHERE id_jornada = $id";
+        
+        if ($this->_db->query($sql)) {
+            // Verifica si realmente se borró alguna fila (por si el ID no existía)
+            if ($this->_db->affected_rows > 0) {
+                return true;
+            } else {
+                return false; // El ID no existía
+            }
+        } else {
+            // Error SQL (probablemente restricción de llave foránea)
+            error_log("Error al eliminar jornada: " . $this->_db->error);
+            return false;
+        }
+    }
+
 }
