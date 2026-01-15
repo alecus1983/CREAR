@@ -1,11 +1,11 @@
 <?php 
 // clase que define los docentes
-class materia extends curso {
+class materia extends area {
     //  atributos
     public $id_materia;
     public $materia;
     public $area;
-    private $id_area;
+    //private $id_area;
     public $ih;
     public $logo;
     
@@ -89,6 +89,7 @@ class materia extends curso {
         }
         return $arr;
     }
+    
     // obtengo un array con todas las materas
     public function get_all(){
         $arr = array();
@@ -99,6 +100,48 @@ class materia extends curso {
         }
         return $arr;
         
+    }
+
+   
+
+    // Método para insertar una nueva materia
+    public function insertar_materia($nombre, $id_area, $ih) {
+        // Escapar datos para prevenir inyeccion SQL básica
+        $nombre = $this->_db->real_escape_string($nombre);
+    
+        $q = "INSERT INTO materia (materia, id_area, ih) 
+          VALUES ('$nombre', $id_area, $ih)";
+          
+        if ($this->_db->query($q)) {
+            return true;
+        }
+        return false;
+    }
+
+    // Método para actualizar una materia existente
+    public function actualizar_materia($id, $nombre, $id_area, $ih) {
+        $nombre = $this->_db->real_escape_string($nombre);
+    
+        $q = "UPDATE materia SET 
+          materia = '$nombre', 
+          id_area = $id_area, 
+          ih = $ih 
+          WHERE id_materia = $id";
+          
+        if ($this->_db->query($q)) {
+            return true;
+        }
+        return false;
+    }
+
+    // Método para eliminar una materia
+    public function eliminar_materia($id) {
+        $q = "DELETE FROM materia WHERE id_materia = $id";
+    
+        if ($this->_db->query($q)) {
+            return true;
+        }
+        return false;
     }
 }
 
