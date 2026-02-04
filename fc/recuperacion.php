@@ -449,9 +449,10 @@ $ano = date('Y');
 					   max="2100" step="1"
 					   style="background: transparent;color: darkgreen;border: 0px;"
 				    <?php if ($admin !== 1) { ?>
-					readonly="readonly"
+					
 				    <?php } ?>
-				    class="form-control ">
+
+                        class="form-control ">
 
 				    <input type="hidden" value="<?php echo $id; ?>" id="id_d">
 
@@ -480,14 +481,11 @@ $ano = date('Y');
 					}
 
 					else {
-
 					    $s = new semana();
 					    $sem  = $s->get_periodo_activo($ano);
 					    echo "<option value='$sem' selectecd>$sem </option>";
 					}
 					?>
-
-
 				    </select>
 
 
