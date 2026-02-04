@@ -46,6 +46,7 @@ if (isset($_SESSION["usuario"])) {
 	<script src="./js/ajax.js"></script>
 	<script src="./js/escolaridad.js"></script>
 	<script src="./js/jornada.js"></script>
+    <script src="./js/materias.js"></script>
 	<script src="../boostrap/css/bootstrap.css" type="text/css"></script>
 	<script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
 	<link rel="stylesheet" href="estilos.css" type="text/css">
@@ -229,15 +230,11 @@ if (isset($_SESSION["usuario"])) {
 		    <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Estructura académica</a>
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
-			    <li><a class="dropdown-item" href="#">Agregar materia</a></li>
-			    <li><a class="dropdown-item" href="#">Agregar area</a></li>
-			    <li><a class="dropdown-item" href="#">Agregar curso</a></li>
-			    <li><a class="dropdown-item" href="#">Agregar taller</a></li>
-			    <li><a class="dropdown-item" href="#">Editar materia</a></li>
-			    <li><a class="dropdown-item" href="#">Editar área</a></li>
-			    <li><a class="dropdown-item" href="#">Editar curso</a></li>
-			    <li><a class="dropdown-item" href="#">Editar taller</a></li>
-			</ul>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_materia();">Gestionar materia</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_area();">Gestionar area</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_curso();">Gestionar curso</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_taller();">Gestionar  taller</a></li>
+			   </ul>
 		    </li> 
 		</ul>
 
@@ -362,7 +359,8 @@ if (isset($_SESSION["usuario"])) {
 						class="form-control"
 						onchange=";">
 					    <option value="1">Mañana</option>
-					    <option value="2">Tarde</option>				</select>
+					    <option value="2">Tarde</option>
+                            </select>
 
 					<label for="escolaridad">Escolaridad</label>
 					<select id="escolaridad"
