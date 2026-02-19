@@ -41,7 +41,7 @@ $html = $html . "<div id='ayuda_identificacion' class='form-text'>digite parte d
 $html = $html . "</div>";
 $html = $html . "<div class='col mx-auto justify-content-md'>";
 $html = $html . "<br>";
-$html = $html . "<button type='button' class='btn btn-outline-dark' style = 'margin: 5px' onclick='formulario_agregar_persona();'>Agregar persona</button>";
+$html = $html . "<button type='button' id='agregar_persona' class='btn btn-outline-dark' style = 'margin: 5px' onclick='formulario_agregar_persona();'>Agregar persona</button>";
 $html = $html . "</div>";
 
 $html = $html . "</div>";

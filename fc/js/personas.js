@@ -219,6 +219,12 @@ function formulario_agregar_persona() {
             console.log("Contenido actual de #tabla: ", $("#tabla").html());
 	}
     });
+
+    // cambio el atributo visual del boton
+    $("#agregar_persona").removeClass("btn btn-outline-dark").addClass("btn btn-dark");
+
+    // asigno una funcion
+    $("#agregar_persona").attr("onclick", "agregar_persona()");
     
 }
 
