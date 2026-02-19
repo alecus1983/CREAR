@@ -236,6 +236,7 @@ function formulario_agregar_persona() {
 
 function agregar_persona(formulario, personax) {
 
+    
     // Si el formulario no es válido, detenemos la ejecución con 'return'.
     if (!validarFormularioPersona()) {
         // Opcional: Mostrar una alerta general
@@ -272,15 +273,22 @@ function agregar_persona(formulario, personax) {
                 // si se agrego la persona correctamente
                 swal('Actualizacion', 'Se agrego a la persona correctamente', 'success');
 
-                // almaceno en la variable seleccionada
-                personax["nombres"] = respuesta["nombres"];
-                personax["apellidos"] = respuesta["apellidos"];
-                personax["identificacion"] = respuesta["idetificacion"];
-                // tomo como persona seleccionada la presona 
-                // retornada
-                seleccionar_persona(respuesta["id_persona"], personax, 4);
-                // voy al formulario indicado
-                gestion_matriculas(formulario);
+		// valido si esta definido la persona x
+		// esto es para el formulario de matricula
+		if(typeof personax === 'undefined'){
+		    console.log("EmpName no está definido");
+		} else {
+                    // almaceno en la variable seleccionada
+                    personax["nombres"] = respuesta["nombres"];
+                    personax["apellidos"] = respuesta["apellidos"];
+                    personax["identificacion"] = respuesta["idetificacion"];
+                    // tomo como persona seleccionada la presona 
+                    // retornada
+                    seleccionar_persona(respuesta["id_persona"], personax, 4);
+                    // voy al formulario indicado
+                    gestion_matriculas(formulario);
+		}
+
 
             } else {
                 if (respuesta['status'] == 21) {
@@ -599,6 +607,7 @@ function datos_persona(id) {
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
+		//coloco la respuesta en el div tabla
                 $("#tabla").html(respuesta['html']);
             } else {
                 if (respuesta['status'] == 20) {
