@@ -2,7 +2,7 @@
 /**
  * Archivo para procesar la eliminación de una materia vía AJAX
  */
-require_once("materias.php"); 
+require_once("datos.php"); 
 
 // Se inicializa el objeto de la clase materia
 $obj_materia = new materia();

@@ -479,7 +479,7 @@ function crear_pdf(){
     // se almacena la variable que inica la opcion seleccionada
     // para validar puede ser boletin (6) o certificado (16)
     // obteniendolo por medio jquery  del selector #opcion
-    var opcion =  $('select#opcion').val();//
+    //var opcion =  $('select#opcion').val();//
 
     // alamcena el año seleccionado ( año lectivo calendario A)
     var year = $("#years").val();
@@ -489,29 +489,29 @@ function crear_pdf(){
     
     // la variable grados guarda codigo del grado del estudiante
     
-    var grados = $("#id_gs").val();
+    var grados = $("#id_g").val();
 
 
     // si la opcion seleccionada es boletines entra aqui
-    if (opcion == 6)
+    //if (opcion == 6)
     {
 	
 	// se almacenan todas las variables dentro
 	// de la variable parametros
-	var parametros= "year="+year+
-	    "&periodos="+
-	    periodos+
-	    "&grado="+grados;
+	//var parametros= "year="+year+
+	//    "&periodos="+
+	//    periodos+
+	//    "&grado="+grados;
 	
-	console.log("los parametros son : %s",parametros);
+	//console.log("los parametros son : %s",parametros);
 	// abro boletin en una nueva ventana
 	// llamando para ello al archivo cetificado.php
-	window.open("generar_p.php?"+parametros);
+	//window.open("generar_p.php?"+parametros);
     }
     // de lo contrario mira si la opcion seleccionada es
     // el certificado
-    else if (opcion == 16)
-    {
+    //else if (opcion == 16)
+    //{
 	// almacena los parametros para enviar
 	// por el método GET
 	var parametros= "year="+year+
@@ -521,7 +521,7 @@ function crear_pdf(){
 	// abro el certificado en una nueva ventana
 	// llamando para ello al archivo cetificado.php
 	window.open("certificado.php?"+parametros);
-    }
+    //}
 	
 }
 

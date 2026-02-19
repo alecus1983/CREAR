@@ -47,6 +47,8 @@ if (isset($_SESSION["usuario"])) {
 	<script src="./js/escolaridad.js"></script>
 	<script src="./js/jornada.js"></script>
     <script src="./js/materias.js"></script>
+    <script src="js/areas.js"></script>
+    <script src="js/cursos.js"></script>
 	<script src="../boostrap/css/bootstrap.css" type="text/css"></script>
 	<script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
 	<link rel="stylesheet" href="estilos.css" type="text/css">
@@ -207,7 +209,7 @@ if (isset($_SESSION["usuario"])) {
 			  <li><a class="dropdown-item" href="#" onclick="gestionar_grados();">Gestionar grado</a></li>
 			    <li><a class="dropdown-item" onclick="gestionar_escolaridad();" href="#">Gestionar escolaridad</a></li>
 			    <li><a class="dropdown-item" onclick="gestionar_jornada();" href="#">Gestionar jornada</a></li>
-			    
+         <li><a class="dropdown-item" href="#" onclick="gestion_cursos();">Gestionar curso</a></li>
 			</ul>
 		    </li> 
 		</ul>
@@ -230,9 +232,9 @@ if (isset($_SESSION["usuario"])) {
 		    <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Estructura académica</a>
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
-			    <li><a class="dropdown-item" href="#" onclick="gestion_materia();">Gestionar materia</a></li>
-			    <li><a class="dropdown-item" href="#" onclick="gestion_area();">Gestionar area</a></li>
-			    <li><a class="dropdown-item" href="#" onclick="gestion_curso();">Gestionar curso</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_materia_area();">Gestionar materia</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_areas();">Gestionar area</a></li>
+
 			    <li><a class="dropdown-item" href="#" onclick="gestion_taller();">Gestionar  taller</a></li>
 			   </ul>
 		    </li> 
@@ -242,7 +244,7 @@ if (isset($_SESSION["usuario"])) {
 		    <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Personas y roles</a>
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
-			    <li><a class="dropdown-item" href="#" onclick="formulario_agregar_persona();">Agregar persona</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_personas();">Gestionar personas</a></li>
 			    <li><a class="dropdown-item" href="#">Matricular docente</a></li>
 			    <li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1)">Matricular alumno</a></li>
 			    <li><a class="dropdown-item" href="#">Asignar madre</a></li>
@@ -479,7 +481,7 @@ if (isset($_SESSION["usuario"])) {
 				    </nav>
 
 				</div>
-				<!-- fin de procesos -->
+				<!-- fin de elementos -->
 				
 				<a class="nav-link collapsed" href="#"
 				   data-bs-toggle="collapse"
@@ -513,6 +515,12 @@ if (isset($_SESSION["usuario"])) {
 					   class="nav-link"
 					   onclick="boletin()">Boletin
 					    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo <br>preescolar</span>
+					</a>
+
+					<a style="margin: 0.5rem;"
+					   class="nav-link"
+					   onclick="crear_pdf()">Certificado
+					    <span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span>
 					</a>
 
 					<a style="margin: 0.5rem;"

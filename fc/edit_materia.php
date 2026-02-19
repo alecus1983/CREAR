@@ -1,6 +1,6 @@
 <?php
 // Se incluyen las clases necesarias (asegúrate de que las rutas sean correctas)
-require_once("materias.php"); 
+require_once("datos.php"); 
 
 // Se inicializa el objeto materia
 $obj_materia = new materia();
@@ -15,7 +15,7 @@ $respuesta = array();
 
 // Validación básica de datos
 if (empty($id_materia) || empty($nombre_materia)) {
-    $respuesta['status'] = 0;
+    $respuesta['status'] = 21;
     $respuesta['msg'] = "Faltan datos obligatorios para la actualización.";
 } else {
     // Se invoca el método de la clase para actualizar

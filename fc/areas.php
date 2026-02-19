@@ -1,5 +1,6 @@
-<?php 
-// clase que define los docentes
+<?php
+
+// clase que define las areas
 class area extends imcrea {
     //  atributos
     public $id_area;
@@ -42,34 +43,29 @@ class area extends imcrea {
         
     }
 
-   
-
     // Método para insertar una nueva materia
-    public function insertar_area($nombre, $id_area) {
-        // Escapar datos para prevenir inyeccion SQL básica
-        $nombre = $this->_db->real_escape_string($nombre);
-    
-        $q = "INSERT INTO area (area, id_area) 
-          VALUES ('$nombre', $id_area)";
-          
+    public function insertar_area($nombre) {
+        // Al ser auto_increment, solo insertamos la columna 'area'
+        $q = "INSERT INTO area (area) VALUES ('$nombre')";
         if ($this->_db->query($q)) {
             return true;
         }
         return false;
     }
 
-    // Método para actualizar una materia existente
-    public function actualizar_area($nombre, $id_area) {
+    // Método para actualizar el nombre de un área
+    public function actualizar_area($id, $nombre) {
+        // Escapar datos para evitar inyecciones si no usas sentencias preparadas
         $nombre = $this->_db->real_escape_string($nombre);
-    
-        $q = "UPDATE area SET area = '$nombre', id_area = $id_area";
-          
+        
+        $q = "UPDATE area SET area = '$nombre' WHERE id_area = $id";
+        
         if ($this->_db->query($q)) {
             return true;
         }
         return false;
     }
-
+    
     // Método para eliminar una materia
     public function eliminar_area($id) {
         $q = "DELETE FROM area WHERE id_area = $id";
@@ -110,6 +106,15 @@ class area extends imcrea {
         // retorna un array con el conjunto de areas
         return $arr;
     }
+
+    public function tiene_materias($id) {
+    $q = "SELECT COUNT(*) as total FROM materia WHERE id_area = $id";
+    $c = $this->_db->query($q);
+    $res = $c->fetch_array(MYSQLI_ASSOC);
+    return ($res['total'] > 0); // Retorna true si hay materias vinculadas
+}
+
+
 }
 
 ?>

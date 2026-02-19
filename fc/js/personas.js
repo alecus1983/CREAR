@@ -207,22 +207,19 @@ function formulario_agregar_persona() {
   
     // borro el div llamado #tabla
     $("#tabla").html("");
-  //  cargo el formulario agregar personas en el div #tabla
-  // al finalizar ejecuto la funcion
-  $("#tabla").load("formulario_agregar_persona.html", function (response, status, xhr) {
-    // si status es rerroneo lo muestro por sonsola
-    if (status == "error") {
-      
-      console.error("Error al cargar ");
-      // y muestro una  ven tana emergente al usuario
-            swal("Error", "Error a cargar formulario de agregar personas ");
-        }
-    else {
-      // muestro en cosola el resultado
-      console.log("Formulario cargado correctamete");
-        }
+    //  cargo el formulario agregar personas en el div #tabla
+    // al finalizar ejecuto la funcion
+    $("#tabla").load("formulario_agregar_persona.html", function (response, status, xhr) {
+	if (status == "error") {
+            console.error("Error al cargar");
+	} else {
+            console.log("Cargado. Longitud del contenido: " + response.length);
+            // Forzamos visibilidad
+            $("#tabla").show(); 
+            console.log("Contenido actual de #tabla: ", $("#tabla").html());
+	}
     });
-
+    
 }
 
 // funcion para agregar personas

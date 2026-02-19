@@ -20,13 +20,11 @@ require_once("semanas.php");
 require_once("jornada.php");
 require_once("grados.php");
 require_once("curso.php");
+require_once("areas.php");
 require_once("materias.php");
 require_once("alumnos.php");
 require_once("ponderado.php");
 require_once("requisitos.php");
-require_once("areas.php");
-
-
 
 
 //// For Development PHP
