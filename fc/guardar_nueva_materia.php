@@ -2,10 +2,14 @@
 /**
  * Archivo para procesar la creación de una nueva materia vía AJAX
  */
-require_once("materias.php"); 
+
+require_once("datos.php");
+ 
 
 // Se inicializa el objeto de la clase materia
 $obj_materia = new materia();
+// creo una instancia del area
+$obj_area = new area;
 
 // Se capturan los datos enviados por POST
 // 'materia', 'id_area' e 'ih' son las llaves definidas en el objeto data de AJAX
@@ -20,8 +24,12 @@ if (empty($nombre_materia)) {
     $respuesta['status'] = 0;
     $respuesta['msg'] = "El nombre de la materia es obligatorio.";
 } else {
+
+    $obj_area->get_area($id_area);
+    
     // Se invoca el método insertar_materia definido anteriormente en la clase materia
-    $ejecucion = $obj_materia->insertar_materia($nombre_materia, $id_area, $ih);
+    $ejecucion = $obj_materia->insertar_materia($nombre_materia, $id_area,$obj_area->area, $ih);
+    
 
     if ($ejecucion) {
         // Status 1 indica éxito para que SweetAlert muestre el mensaje positivo

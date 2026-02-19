@@ -1,11 +1,11 @@
 // Variable global para edición
 let id_materia_edicion = -1;
 
-// 1. Listar materias en el contenedor principal
-function gestion_materia() {
+// 0. obtener la lista de areas 
+function gestion_materia_area() {
     $.ajax({
         type: "POST",
-        url: "listado_materias.php",
+        url: "listado_materias_area.php",
         dataType: "json",
         data: {
             // Puedes pasar filtros si es necesario, ej: id_area
@@ -13,7 +13,35 @@ function gestion_materia() {
         },
         success: function (respuesta) {
             if (respuesta['status'] == 1) {
+		//agrego el resultado al div avance
                 $("#avance").html(respuesta['html']);
+            } else {
+                swal('Error', 'No se pudieron cargar las materias', 'error');
+            }
+        },
+        error: function (xhr) {
+            swal('Error', 'Error de conexión al cargar materias');
+        }
+    });
+}
+
+
+// 1. Listar materias en el contenedor principal
+function gestion_materia() {
+
+    let datos = {
+        id_area: $("#filtro_area").val()
+    };
+    
+    $.ajax({
+        type: "POST",
+        url: "listado_materias.php",
+        dataType: "json",
+        data:  datos,
+        success: function (respuesta) {
+            if (respuesta['status'] == 1) {
+		//agrego el resultado al div avance
+                $("#tabla").html(respuesta['html']);
             } else {
                 swal('Error', 'No se pudieron cargar las materias', 'error');
             }
@@ -36,7 +64,6 @@ function preparar_edicion_materia(id, nombre, id_area, ih) {
     $("#btn_accion_materia").text("Actualizar Materia");
     $("#btn_accion_materia").removeClass("btn-outline-primary").addClass("btn-warning");
     $("#btn_accion_materia").attr("onclick", "ejecutar_edicion_materia()");
-    
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 }
 
@@ -45,7 +72,7 @@ function ejecutar_edicion_materia() {
     let datos = {
         id_materia: id_materia_edicion,
         materia: $("#nombre_materia").val(),
-        id_area: $("#id_area_materia").val(),
+        id_area: $("#filtro_area").val(),
         ih: $("#ih_materia").val()
     };
 
@@ -63,7 +90,7 @@ function ejecutar_edicion_materia() {
             if (res.status == 1) {
                 swal('Éxito', 'Materia actualizada', 'success');
                 resetear_formulario_materia();
-                gestionar_materias();
+                gestion_materia();
             }
         }
     });
@@ -73,7 +100,7 @@ function ejecutar_edicion_materia() {
 function agregar_materia() {
     let datos = {
         materia: $("#nombre_materia").val(),
-        id_area: $("#id_area_materia").val(),
+        id_area: $("#filtro_area").val(),
         ih: $("#ih_materia").val()
     };
 
@@ -86,7 +113,7 @@ function agregar_materia() {
             if (res.status == 1) {
                 swal('Creado', 'Materia registrada con éxito', 'success');
                 resetear_formulario_materia();
-                gestionar_materias();
+                gestion_materia();
             }
         }
     });
@@ -110,7 +137,7 @@ function del_materia(id_materia) {
                 success: function(res) {
                     if (res.status == 1) {
                         swal("Eliminado", "La materia ha sido borrada", "success");
-                        gestionar_materias();
+                        gestion_materia();
                     }
                 }
             });
@@ -118,7 +145,7 @@ function del_materia(id_materia) {
     });
 }
 
-// Función auxiliar para limpiar interfaz
+// 6. Función auxiliar para limpiar interfaz
 function resetear_formulario_materia() {
     $("#nombre_materia").val("");
     $("#ih_materia").val("");
@@ -126,4 +153,32 @@ function resetear_formulario_materia() {
     $("#btn_accion_materia").text("Agregar Materia");
     $("#btn_accion_materia").removeClass("btn-warning").addClass("btn-outline-primary");
     $("#btn_accion_materia").attr("onclick", "agregar_materia()");
+}
+
+// 7. Funcion para cargar la tabla de materias
+function materias_area(){
+
+    let datos = {
+        area: $("#areas").val()
+    };
+
+    // metodo ajax para obtener los datos
+    $.ajax({
+        type: "POST",
+        url: "listado_materias_area.php",
+        dataType: "json",
+        data: datos,
+        success: function(res) {
+            if (respuesta['status'] == 1) {
+		//agrego el resultado al div avance
+                $("#tabla").html(respuesta['html']);
+            } else {
+                swal('Error', 'No se pudieron cargar las materias', 'error');
+            }
+        }
+    });
+
+    
+
+    
 }

@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-// clase que define los docentes
+// clase que define las materias
 class materia extends area {
     //  atributos
     public $id_materia;
@@ -9,8 +9,7 @@ class materia extends area {
     //private $id_area;
     public $ih;
     public $logo;
-    
-    
+
     //cosntructor de la clase
     public function __construct(){
         // hereda parametros de la clase padre
@@ -61,6 +60,20 @@ class materia extends area {
         }
         return $arr;
     }
+
+
+    // obtengo todas las materias  de un area
+    public function get_materias_area($id_area){
+        $arr = array();
+        $q = "select id_materia, materia from materia where id_area  = $id_area order by id_materia";
+        $c = $this->_db->query($q);
+        while($a = $c->fetch_array(MYSQLI_ASSOC)){
+            $id_m = $a['id_materia'];
+            $m = $a['materia'];
+            $arr[$id_m] = $m; 
+        }
+        return $arr;
+    }
     
     // obtengo un array con todas las materas
     public function get_all(){
@@ -77,12 +90,12 @@ class materia extends area {
    
 
     // Método para insertar una nueva materia
-    public function insertar_materia($nombre, $id_area, $ih) {
+    public function insertar_materia($nombre, $id_area,$area, $ih) {
         // Escapar datos para prevenir inyeccion SQL básica
         $nombre = $this->_db->real_escape_string($nombre);
     
-        $q = "INSERT INTO materia (materia, id_area, ih) 
-          VALUES ('$nombre', $id_area, $ih)";
+        $q = "INSERT INTO materia (materia, id_area,area, ih) 
+          VALUES ('$nombre', $id_area, '$area', $ih)";
           
         if ($this->_db->query($q)) {
             return true;
