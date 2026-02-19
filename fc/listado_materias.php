@@ -15,17 +15,14 @@ $html = "";
 // Verificar si hay un filtro de área (opcional, basado en el JS que te di antes)
 $id_area_filtro = isset($_POST['id_area']) ? $_POST['id_area'] : '';
 
-// Construcción de la consulta SQL
-$sql = "SELECT * FROM materia";
 
 // Si deseas filtrar por área, descomenta y ajusta esta lógica:
 // if ($id_area_filtro != "" && $id_area_filtro != "-1") {
 //     $sql .= " WHERE id_area = " . $obj_materia->_db->real_escape_string($id_area_filtro);
 // }
+// se optiene un array con todos las materias creadas para una determinada area
 
-$sql .= " ORDER BY materia ASC";
-
-$resultado = $obj_materia->area;
+$resultado = $obj_materia->get_materia(1);
 //$resultado = $obj_materia->_db->query($sql);
 
 if ($resultado) {
