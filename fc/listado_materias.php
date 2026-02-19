@@ -9,6 +9,7 @@ require_once("datos.php");
 
 // Instanciamos la clase
 $obj_materia = new materia();
+
 $html = "";
 
 // Verificar si hay un filtro de área (opcional, basado en el JS que te di antes)
@@ -24,7 +25,8 @@ $sql = "SELECT * FROM materia";
 
 $sql .= " ORDER BY materia ASC";
 
-$resultado = $obj_materia->_db->query($sql);
+$resultado = $obj_materia->area;
+//$resultado = $obj_materia->_db->query($sql);
 
 if ($resultado) {
     // Iniciamos la construcción de la tabla HTML
