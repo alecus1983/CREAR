@@ -157,6 +157,48 @@ let persona = {
   tipo_sangre: ""
 };
 
+// objeto personax
+let personax = {
+  id_persona: 0,
+  nombres: "",
+  apellidos: "",
+  identificacion: "",
+  tipo_identificacion: "",
+  nacimiento: "",
+  correo: "",
+  i_correo: "",
+  celular: "",
+  telefono: "",
+  u_alumno: "",
+  u_docentes: "",
+  direccion_residencia: "",
+  barrio: "",
+  estrato: "",
+  sisben: "",
+  familias_accion: false,
+  regimen_salud: false,
+  eps: "",
+  vive_con: "",
+  tipo_victima_conflicto: "",
+  municipio_expulsor: "",
+  discapacitado: false,
+  tipo_discapacidad: "",
+  capacidad_excepcional: "",
+  etnia: false,
+  tipo_etnia: "",
+  resguardo_consejo: "",
+  antecedentes_patologicos_medicos: "",
+  antecedentes_patologicos_quirurgicos: "",
+  antecedentes_patologicos_toxicos: "",
+  antecedentes_patologicos_psiquiatricos: "",
+  antecedentes_patologicos_psicologicos: "",
+  antecedentes_patologicos_morbilidad: "",
+  ips: "",
+  rh: "",
+  tipo_sangre: ""
+};
+
+
 // variable de matriculas
 let matricula ={
   id : "",
@@ -332,6 +374,9 @@ function gestion_matriculas(item) {
 
     // SELECCIONAR ALUMNO	
   case 4:
+      //asigno al alumno los datos guardados en persona x
+      alumno = personax;
+     //  borro el avance
     $("#avance").html("");
     $("#tabla").html("");
     $("#avance").load("formulario_matricula_4.html", function () {

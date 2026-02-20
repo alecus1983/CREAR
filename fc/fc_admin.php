@@ -245,15 +245,9 @@ if (isset($_SESSION["usuario"])) {
 			<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Personas y roles</a>
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown"> 
 			    <li><a class="dropdown-item" href="#" onclick="gestion_personas();">Gestionar personas</a></li>
-			    <li><a class="dropdown-item" href="#">Matricular docente</a></li>
-			    <li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1)">Matricular alumno</a></li>
-			    <li><a class="dropdown-item" href="#">Asignar madre</a></li>
-			    <li><a class="dropdown-item" href="#">Asignar padre</a></li>
-			    <li><a class="dropdown-item" href="#" onclick="gestion_personas()">Editar persona</a></li>
-			    <li><a class="dropdown-item" href="#">Editar matricula docente</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="matricula_docente();">Asignar Clases</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1);">Matricular Alumno</a></li>
 			    <li><a class="dropdown-item" href="#" onclick="listado_matricula_escolaridad_jornada();">Editar matricula alumno</a></li>
-			    <li><a class="dropdown-item" href="#">Editar padre</a></li>
-			    <li><a class="dropdown-item" href="#">Editar madre</a></li>
 			</ul>
 		    </li> 
 		</ul>
@@ -410,8 +404,6 @@ if (isset($_SESSION["usuario"])) {
 				</div>
 				<!-- fin de datos -->
 
-
-				
 				
 				<!-- elementos -->
 				<a class="nav-link collapsed" href="#"

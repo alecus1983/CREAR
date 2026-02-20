@@ -17,10 +17,10 @@ class personas extends imcrea {
     public $i_correo;
     public $celular;
     public $telefono;
-    private $u_alumnos; // Clave foránea de la persona cuando es alumno
-    private $u_docentes; // Clave foránea de la persona cuando es docente
-    private $direccion_residencia;
-    private $barrio;
+    public $u_alumnos; // Clave foránea de la persona cuando es alumno
+    public $u_docentes; // Clave foránea de la persona cuando es docente
+    public $direccion_residencia;
+    public $barrio;
     public $estrato;
     public $sisben;
     public $familias_accion;
@@ -567,6 +567,25 @@ public function deleteById($personId)
 
         // Vincular parámetros
         $stmt->bind_param("si", $this->correo, $this->id_persona);
+
+        // Ejecutar consulta
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Actualiza el correo personal de una persona.
+     */
+    public function actualizar_direccion_residencia() {
+        $query = "UPDATE personas SET direccion_residencia = ?, barrio = ?, estrato = ?  WHERE id_personas = ?";
+	//echo $query;
+        $stmt = $this->_db->prepare($query);
+
+        // Vincular parámetros
+        $stmt->bind_param("ssii",  $this->direccion_residencia, $this->barrio, $this->estrato, $this->id_persona);
 
         // Ejecutar consulta
         if($stmt->execute()) {

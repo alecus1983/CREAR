@@ -164,8 +164,6 @@ function cambio_datos(repo, personax, form) {
 			      "<th scope='col'>Nombres</th>"+
 			      "<th scope='col'>Apellidos</th>"+
 			      "<th scope='col'>D. de identidad</th>"+
-			      //  "<th scope='col'>Correo</th>"+
-			      //  "<th scope='col'>Telefono</th>"+
 			      "<th scope='col'>Actualizar</th>"+
 			      "<th scope='col'>Selecionar</th>"+
 			      "<th scope='col'>Eliminar</th>"+
@@ -175,7 +173,7 @@ function cambio_datos(repo, personax, form) {
 	  
 	  respuesta['json'].forEach(  id => {
 	    // se agrega fila a la tabla
-	    $('#lista_e').append( "<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-success' onclick='seleccionar_persona(\"" + id[3] + "\", personax, form);'>seleccionar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
+	    $('#lista_e').append( "<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-success' onclick='seleccionar_persona(" + id[3] + ",  personax, "+form+");'>seleccionar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
 	    
 	 });
 
@@ -675,7 +673,6 @@ function eliminar_persona(id_personas) {
     })
         .then((willDelete) => {
             if (willDelete) {
-
                 // se invoca al metodo ajax para solicitar
                 // el listado de estudiantes
                 $.ajax({
@@ -706,15 +703,11 @@ function eliminar_persona(id_personas) {
                         console.log(xhr);
                     }
                 }); // fin de ajax
-
             }
             else {
                 swal("Se conserva la persona");
             }
         });
-
-
-
 }
 
 // funcion que permite obtener los datos de una persona

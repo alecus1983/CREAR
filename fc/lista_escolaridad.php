@@ -9,9 +9,6 @@ $valido = true;
 $err = "";
 $year = date('Y');
 
-
-// recibo codigo del docente
-$id_docente = $_POST["id_docente"];
 //array de respuestals
 $respuesta = [];
 

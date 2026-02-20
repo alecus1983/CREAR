@@ -20,7 +20,7 @@ if($_POST["id_persona"]!== "") {
 
 $estrato = $_POST["estrato"];
 $barrio = $_POST["barrio"];
-$direccion = $_POST["direccion_residencia"];
+$direccion_residencia = $_POST["direccion_residencia"];
 
 
 // si los datos son validos
@@ -32,7 +32,7 @@ if ($valido) {
     $persona->estrato = $estrato ;
     $persona->barrio = $barrio;
     $persona->id_persona = $id_persona;
-    $persona->direccion = $direccion_residencia;
+    $persona->direccion_residencia = $direccion_residencia;
     
     //metodo para actualizar la persona
     if($persona->actualizar_direccion_residencia()){
@@ -40,7 +40,7 @@ if ($valido) {
         $respuesta['status'] = 1;    
         $respuesta['barrio'] = $barrio;
         $respuesta['estrato'] = $estrato;
-        $respuesta['direccion_residencia'] = $direccion;
+        $respuesta['direccion_residencia'] = $direccion_residencia;
 
     }
     
@@ -53,5 +53,5 @@ else {
 $respuesta_json = json_encode($respuesta);
 echo $respuesta_json;
 
-//$lista = new $matriculas();
+
 ?>
