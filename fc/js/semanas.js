@@ -139,9 +139,12 @@ function gestion_semanas() {
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-                //swal('Datos actualizados');
-                //$("#calificador").html(respuesta);
+		// coloco el contenido en el div avance
                 $("#avance").html(respuesta['html']);
+		// limpio los segmentos restantes del
+		// formulario dinamico
+		$("#grafica").html("");
+		$("#tabla").html("");
             } else {
                 if (respuesta['status'] == 21) {
                     swal('Grado', 'Porfavor seleccione un grado', 'error');

@@ -702,6 +702,103 @@ public function deleteById($personId)
         }
         return false;
     }
+
+
+     /**
+     * Actualiza los datos de antecedentes que tiene la persona.
+     */
+    public function actualizar_antecedentes() {
+        $query = "UPDATE personas SET antecedentes_patologicos_medicos = ?,
+                                      antecedentes_patologicos_quirurgicos = ?,
+                                      antecedentes_patologicos_toxicos = ?,
+                                      antecedentes_patologicos_psiquiatricos = ?,
+                                      antecedentes_patologicos_psicologicos = ?,
+                                      antecedentes_patologicos_morbilidad = ?
+                                      WHERE id_personas = ?";
+        
+        $stmt = $this->_db->prepare($query);
+        
+        $this->antecedentes_patologicos_medicos  = htmlspecialchars(strip_tags($this->antecedentes_patologicos_medicos));
+        $this->antecedentes_patologicos_morbilidad = htmlspecialchars(strip_tags($this->antecedentes_patologicos_morbilidad));
+        $this->antecedentes_patologicos_psicologicos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_psicologicos));
+        $this->antecedentes_patologicos_psiquiatricos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_psiquiatricos));
+        $this->antecedentes_patologicos_quirurgicos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_quirurgicos));
+        $this->antecedentes_patologicos_toxicos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_toxicos));
+
+        $stmt->bind_param("ssssssi",
+                          $this->antecedentes_patologicos_medicos,
+                          $this->antecedentes_patologicos_morbilidad,
+                          $this->antecedentes_patologicos_psicologicos,
+                          $this->antecedentes_patologicos_psiquiatricos,
+                          $this->antecedentes_patologicos_quirurgicos,
+                          $this->antecedentes_patologicos_toxicos,
+                          $this->id_persona);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+
+     /**
+     * Actualiza los datos de afiliaciones que tiene la persona.
+     */
+    public function actualizar_afiliacion() {
+        $query = "UPDATE personas SET sisben = ?,
+                                      vive_con = ?,
+                                      etnia = ?,
+                                      tipo_etnia = ?,
+                                      resguardo_consejo = ?,
+                                      familias_accion = ?,
+                                      tipo_victima_conflicto = ?,
+                                      municipio_expulsor = ?,
+                                      discapacitado = ?,
+                                      tipo_discapacidad = ?,
+                                      capacidad_excepcional = ?,
+                                      regimen_salud = ?,
+                                      eps = ?,
+                                      ips = ?,
+                                      tipo_sangre = ?,
+                                      rh = ?
+                                      WHERE id_personas = ?";
+        
+        $stmt = $this->_db->prepare($query);
+        
+        $this->vive_con  = htmlspecialchars(strip_tags($this->vive_con));
+        $this->municipio_expulsor = htmlspecialchars(strip_tags($this->municipio_expulsor));
+        $this->tipo_etnia = htmlspecialchars(strip_tags($this->tipo_etnia));
+        $this->resguardo_consejo = htmlspecialchars(strip_tags($this->resguardo_consejo));
+        $this->familias_accion = htmlspecialchars(strip_tags($this->familias_accion));
+        $this->tipo_discapacidad = htmlspecialchars(strip_tags($this->tipo_discapacidad));
+        $this->capacidad_excepcional = htmlspecialchars(strip_tags($this->capacidad_excepcional));
+        $this->eps = htmlspecialchars(strip_tags($this->eps));
+        $this->ips = htmlspecialchars(strip_tags($this->ips));
+
+        $stmt->bind_param("ssbssbssbssissssi",
+                          $this->sisben,
+                          $this->vive_con,
+                          $this->etnia,
+                          $this->tipo_etnia,
+                          $this->resguardo_consejo,
+                          $this->familias_accion,
+                          $this->tipo_victima_conflicto,
+                          $this->municipio_expulsor,
+                          $this->discapacitado,
+                          $this->tipo_discapacidad,
+                          $this->capacidad_excepcional,
+                          $this->regimen_salud,
+                          $this->eps,
+                          $this->ips,
+                          $this->tipo_sangre,
+                          $this->rh,
+                          $this->id_persona);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
 
 ?>

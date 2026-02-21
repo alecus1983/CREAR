@@ -41,7 +41,11 @@ function gestion_materia() {
         success: function (respuesta) {
             if (respuesta['status'] == 1) {
 		//agrego el resultado al div avance
-                $("#tabla").html(respuesta['html']);
+                $("#avance").html(respuesta['html']);
+		// limpio los segmentos restantes del
+		// formulario dinamico
+		$("#grafica").html("");
+		$("#tabla").html("");
             } else {
                 swal('Error', 'No se pudieron cargar las materias', 'error');
             }

@@ -13,9 +13,14 @@ function  gestionar_jornada(){
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-                //swal('Datos actualizados');
-                //$("#calificador").html(respuesta);
+                // limpio los segmentos restantes del
+		// formulario dinamico
+		$("#grafica").html("");
+		$("#tabla").html("");
+		// coloco el contenido en el div avance
                 $("#avance").html(respuesta['html']);
+
+		
             } else {
                 if (respuesta['status'] == 21) {
                     swal('Escolaridad', 'Porfavor seleccione la escolaridad', 'error');

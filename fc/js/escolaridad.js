@@ -23,9 +23,9 @@ function lista_escolaridad(id) {
 
       res.forEach((element) => {
 	console.log(element)
-	valor = element[0];
-	texto = element[1];
-	$(id).append("<option value = " + valor + ">" + texto + "</option>");
+	valor = element["id_escolaridad"];
+	texto = element["escolaridad"];
+	  $(id).append("<option value = " + valor + ">" + texto + "</option>");
       });
 
     },
@@ -54,9 +54,14 @@ function  gestionar_escolaridad(){
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-                //swal('Datos actualizados');
-                //$("#calificador").html(respuesta);
+                //coloco el contenido en el div avance
                 $("#avance").html(respuesta['html']);
+		// limpio los segmentos restantes del
+		// formulario dinamico
+		$("#grafica").html("");
+		$("#tabla").html("");
+
+		
             } else {
                 if (respuesta['status'] == 21) {
                     swal('Escolaridad', 'Porfavor seleccione la escolaridad', 'error');

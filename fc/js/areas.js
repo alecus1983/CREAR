@@ -10,6 +10,10 @@ function gestion_areas() {
         success: function (res) {
             if (res.status == 1) {
                 $("#avance").html(res.html); // Coloca el input arriba
+		// limpio los segmentos restantes del
+		// formulario dinamico
+		$("#grafica").html("");
+		$("#tabla").html("");
                 listar_tabla_areas();        // Carga la tabla abajo
             }
         }

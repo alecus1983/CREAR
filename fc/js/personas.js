@@ -88,7 +88,7 @@ function gestion_personas() {
             id_g: $("#id_g").val(),
             id_ms: $("#id_ms").val(),
             id_jornada: $("#jornada").val(),
-            id_curso: $("#id_c").val(),
+            id_curso: $("#id_c").val()
         },
       
         // si los datos son correctos entonces ...
@@ -128,6 +128,73 @@ function gestion_personas() {
     });
 
 }
+
+
+// funcion que muestra listado de personas que  coinciden con los datos
+// los parametros de entrada:
+// repo:  es el div en que se colocara la respuesta en formato html
+// retorna un html con la tabla de personas
+
+function cambio_datos_p(repo) {
+
+    // se invoca al metodo ajax para solicitar
+    // el listado de personas
+    $.ajax({
+        type: "POST",
+        url: "cambio_datos_p.php",
+        dataType: "json",
+        data: {
+            nombres: $("#nombres").val(),
+            apellidos: $("#apellidos").val(),
+            identificacion: $("#identificacion").val()
+        },
+        // si los datos son correctos entonces ...
+      success: function (respuesta) {
+	
+            // si la respuesta es positiva
+        if (respuesta['status'] == 1) {
+
+                // coloco la respuesta en el campo repo
+                $(repo).html( "<table class='table' id='lista_e'>"+
+			      "<thead>"+
+			      // emcabezado de la tabla
+			      "<th scope='col'>Nombres</th>"+
+			      "<th scope='col'>Apellidos</th>"+
+			      "<th scope='col'>D. de identidad</th>"+
+			      "<th scope='col'>Actualizar</th>"+
+			      "<th scope='col'>Eliminar</th>"+
+			      "</thead>"+
+			      "<tbody>");
+
+	  
+	  respuesta['json'].forEach(  id => {
+	    // se agrega fila a la tabla
+	    $('#lista_e').append( "<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
+	    
+	 });
+
+	  // agrego el  final de la tabla
+	  $(repo).append( "</tbody>"+
+			  "</div>"+
+			  "</div>"+
+			  "</div>");
+	    } else {
+
+                if (respuesta['status'] == 22) {
+                    swal('Año', 'Porfavor seleccione un año', 'error');
+                }
+
+            }
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema');
+            console.log(xhr);
+        }
+    });
+
+}
+
+
 
 // funcion que muestra listado de personas que  coinciden con los datos
 // los parametros de entrada:

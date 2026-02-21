@@ -306,8 +306,7 @@ if (isset($_SESSION["usuario"])) {
 					       value="<?php echo date('Y'); ?>"
 					       id="years"
 					       name="years"
-					       min="2015"
-					       max="2100" step="1"
+					       min="2015"					       max="2100" step="1"
 					       style="background: transparent;color: darkgreen;border: 0px;"
 					<?php if ($admin < 1) { ?>
 					    readonly="readonly"

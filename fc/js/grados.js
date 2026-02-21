@@ -214,9 +214,12 @@ function  gestionar_grados(){
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-                //swal('Datos actualizados');
-                //$("#calificador").html(respuesta);
+                // coloco la respuesta en el div avance
                 $("#avance").html(respuesta['html']);
+		// limpio los segmentos restantes del
+		// formulario dinamico
+		$("#grafica").html("");
+		$("#tabla").html("");
             } else {
                 if (respuesta['status'] == 21) {
                     swal('Escolaridad', 'Porfavor seleccione una escolaridad del menú que se encuentra a la izquierda,  dentro de DATOS.', 'error');
