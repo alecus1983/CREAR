@@ -16,17 +16,12 @@ if($_POST["years"]!== ""){
 }else {
     $valido = false;
     $respuesta['status'] = 22;
-    //$err = $err."<p class='text-danger'>Porfavor seleccione un año</p>";
-}
-
+   }
 
 // si los datos son validos
 if ($valido) {
     // creo un nuevo objeto matricula para el año actual
-    // $mt =     new matriculas_year($ano);
     $mt = new matricula();
-    //$mts = $mt->get_matricula_ano($ano);
-    
     // muestra el contenido html
     $html = "<p>Listado de estudiantes  matricuados en el a&oacute;o <b>".$ano."</b>  </p>";
 
@@ -49,7 +44,7 @@ if ($valido) {
     $html = $html. "<th scope='col'>Nombres</th>";
     $html = $html. "<th scope='col'>D. de identidad</th>";
     $html = $html. "<th scope='col'>Correo</th>";
-    $html = $html. "<th scope='col'>Telefono</th>";
+    $html = $html. "<th scope='col'>Editar</th>";
     $html = $html. "<th scope='col'>Actualizar</th>";
     $html = $html. "<th scope='col'>Eliminar</th>";
     $html = $html. "</thead>";
@@ -60,6 +55,7 @@ if ($valido) {
     foreach  ( $mt->get_matricula_ano($ano) as $id ) {
         //creo una matricula
         $alumno =  new alumnos();
+
 
         // obtengo los atrbutos de una matricula
         $alumno->get_alumno_codigo($id["id_alumno"]);
@@ -78,16 +74,13 @@ if ($valido) {
         $html = $html.$alumno->correo;
         $html = $html."</td>";
         $html = $html."<td>";
-        $html = $html.$alumno->telefono;
+        $html = $html. '<button type="button" class="btn btn-warning" onclick="editar_matricula('.$id["id"].', 31);">Editar matricula</button>';
         $html = $html."</td>";
         $html = $html. "<td>";
-       // $html = $html. "<button type='button' class='btn btn-info' onclick='actualizar(\"$id\");'>actualizar</button>";
         $html = $html. "</td>";
         $html = $html. "<td>";
-        //$html = $html. "<button type='button' class='btn btn-warning' onclick='eliminar(\"$id\");'>eliminar</button>";
         $html = $html. "</td>";
-        $html = $html."</tr>";
-                
+        $html = $html."</tr>";                
     }
 
     $html = $html. "</tbody>";
@@ -107,6 +100,4 @@ else {
 $respuesta_json = json_encode($respuesta);
 // emito la respuesta
 echo $respuesta_json;
-
-//$lista = new $matriculas();
 ?>

@@ -8,7 +8,7 @@
  * incluyendo sus datos de inscripción, año lectivo, grado, jornada y curso.
  * Hereda de la clase `imcrea` para la conexión y manipulación de la base de datos.
  */
-class matricula extends imcrea {
+class matricula extends curso {
     /**
      * @var int $id_alumno
      * @brief Clave foránea que referencia al alumno.
@@ -21,25 +21,7 @@ class matricula extends imcrea {
      */
     public $id;
 
-    /**
-     * @var int $id_grado
-     * @brief Clave primaria del grado al que pertenece la matrícula.
-     */
-    public $id_grado;
-
-    /**
-     * @var int $id_jornada
-     * @brief Clave de la jornada (ej. mañana, tarde) de la matrícula.
-     */
-    public $id_jornada;
-
-    /**
-     * @var int $year
-     * @brief Año lectivo de la matrícula.
-     */
-    public $year;
-
-    /**
+        /**
      * @var int $mes
      * @brief Mes en el que se realizó la matrícula.
      */
@@ -51,14 +33,7 @@ class matricula extends imcrea {
      */
     public $retiro;
 
-    /**
-     * @var int $id_curso
-     * @brief Código del curso al que se matriculó el alumno.
-     */
-    public $id_curso;
-    
-    // ---
-    
+    public $year;   
     /**
      * @brief Constructor de la clase `matricula`.
      *
@@ -186,7 +161,7 @@ class matricula extends imcrea {
                 throw new InvalidArgumentException("No se ha seleccionado ningún año para la matrícula");
             }
 
-            $q = "SELECT id_alumno, id_grado, id_jornada, id_curso FROM matricula WHERE year = ?";
+            $q = "SELECT id, id_alumno, id_grado, id_jornada, id_curso FROM matricula WHERE year = ?";
             
             $stmt = $this->_db->prepare($q);
 

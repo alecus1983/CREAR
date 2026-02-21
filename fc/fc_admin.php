@@ -47,6 +47,7 @@ if (isset($_SESSION["usuario"])) {
 	<script src="./js/escolaridad.js"></script>
 	<script src="./js/jornada.js"></script>
     <script src="./js/materias.js"></script>
+    <script src="./js/matricula.js"></script>
     <script src="js/areas.js"></script>
     <script src="js/cursos.js"></script>
 	<script src="../boostrap/css/bootstrap.css" type="text/css"></script>
@@ -247,7 +248,7 @@ if (isset($_SESSION["usuario"])) {
 			    <li><a class="dropdown-item" href="#" onclick="gestion_personas();">Gestionar personas</a></li>
 			    <li><a class="dropdown-item" href="#" onclick="matricula_docente();">Asignar Clases</a></li>
 			    <li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1);">Matricular Alumno</a></li>
-			    <li><a class="dropdown-item" href="#" onclick="listado_matricula_escolaridad_jornada();">Editar matricula alumno</a></li>
+			    <li><a class="dropdown-item" href="#" onclick="listado_estudiantes_matriculados();">Editar matricula alumno</a></li>
 			</ul>
 		    </li> 
 		</ul>
@@ -270,7 +271,6 @@ if (isset($_SESSION["usuario"])) {
 
 	    <div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
-
 		    <!-- barra de navegacion -->
 		    <nav class="sb-sidenav accordion sb-sidenav-dark"
 				id="sidenavAccordion"
@@ -307,7 +307,7 @@ if (isset($_SESSION["usuario"])) {
 					       id="years"
 					       name="years"
 					       min="2015"					       max="2100" step="1"
-					       style="background: transparent;color: darkgreen;border: 0px;"
+					       style="background: transparent;color: darkgreen;border: 0px;" 
 					<?php if ($admin < 1) { ?>
 					    readonly="readonly"
 					<?php } ?>
@@ -348,20 +348,20 @@ if (isset($_SESSION["usuario"])) {
 
 					</select>
 
-					<label for="jornada">Jornada</label>
-					<select id="jornada"
-						style="background: transparent;color: darkgreen;border: 0px"
-						class="form-control"
-						onchange=";">
-					    <option value="1">Mañana</option>
-					    <option value="2">Tarde</option>
+                        <label for="jornada">Jornada</label>
+                            <select id="jornada"
+                            style="background: transparent;color: darkgreen;border: 0px"
+                            class="form-control"
+                            onchange=";">
+                            <option value="1">Mañana</option>
+                            <option value="2">Tarde</option>
                             </select>
 
-					<label for="escolaridad">Escolaridad</label>
-					<select id="escolaridad"
-						style="background: transparent;color: darkgreen;border: 0px"
-						class="form-control"
-						onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_d').val());">
+                            <label for="escolaridad">Escolaridad</label>
+                            <select id="escolaridad"
+                            style="background: transparent;color: darkgreen;border: 0px"
+                            class="form-control"
+                            onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_d').val());">
 					    <option value="-1">Seleccione</option>
 					    <option value="1">Preescolar</option>
 					    <option value="2">Básica Primaria</option>

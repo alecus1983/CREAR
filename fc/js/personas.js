@@ -787,8 +787,15 @@ function seleccionar_persona(id, personax, form) {
     get_persona(id, personax);
     // los muestro
     swal("seleccion", "Se selecciono la persona " + personax["id_persona"], 'success');
-    // voy al formulario 4 de matriculas
-    gestion_matriculas(form);
+    // si es menor de 30 es del formulario de matriculas
+    // de lo contrario es de eliminar matriculas
+    if (form < 30) {
+	// voy al formulario 4 de matriculas
+	gestion_matriculas(form);
+    } else {
+	// en el caso de editar las matriculas
+	//gestion_editar_matricula(form);
+    }
 }
 
 
