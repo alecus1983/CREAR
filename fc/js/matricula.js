@@ -538,66 +538,72 @@ function editar_matricula(id, item){
 
     // inicia el formulario
     
-  // estructura de seleccion
-  switch (item) {
+    // estructura de seleccion
+    switch (item) {
 
-    // 1. INFORMACION DEL ESTUDIANTE
+	// 1. INFORMACION DEL ESTUDIANTE
 
-  case 31: // cargo el primer formulario de matricula
-    $("#avance").html("");
-    $("#tabla").html("");
-      $("#avance").load("formulario_editar_matricula_1.html");
+    case 31: // cargo el primer formulario de matricula
 
-
-      // consulto la matricula
-      r = consultar_matricula(id);
-      // seleciono la persona
-      get_persona(r["id_alumno"], alumno);
-      // obtengo la direccion de la persona
-      get_direccion(alumno);
+	item = id;
+	
+	$("#avance").html("");
+	$("#tabla").html("");
+	// cargo el formulario inicial de edicion de la matricula
+	$("#avance").load("formulario_editar_matricula_1.html",  function(){
 
 
-      // se carga  el formulario
-      $("#form_edit").load("formulario_actualizar_direccion.html", function () {
-	// obtengo el valor de la direccion
-	$("#ac_direccion").val(alumno["direccion_residencia"]);
-	// obtengo el valor del barrio
-	$("#ac_barrio").val(alumno["barrio"]);
-
-	switch (alumno["estrato"]) {
-	case "1":
-	  $("#ac_estrato").val("1");
-	  break;
-
-	case "2":
-	  $("#ac_estrato").val("2");
-	  break;
-
-	case "3":
-	  $("#ac_estrato").val("3");
-	  break;
-
-	case "4":
-	  $("#ac_estrato").val("4");
-	  break;
-
-	case "5":
-	  $("#ac_estrato").val("5");
-	  break;
-	}
-
-	// agrego el encabezado del estudiante
-	$("#form_edit").prepend("<p>Se ha selecionado la persona <b>"
-			      + alumno["nombres"] + " "
-			      + alumno["apellidos"] + "</b>, con codigo "
-			      + alumno["id_persona"] + ", con identificacion "
-			      + alumno["identificacion"] + "</p>");
-	// agrego los botones 
-	$("#form_edit").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
-	$("#form_edit").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_direccion(2,alumno);">agregar/actualizar</button>');
-      });
-      break;
-  }
-    
-    
+	    // consulto la matricula
+	    r = consultar_matricula(id);
+	    // seleciono la persona
+	    get_persona(r["id_alumno"], alumno);
+	    // obtengo la direccion de la persona
+	    get_direccion(alumno);
+	    
+	    
+	    // se carga  el formulario
+	    $("#form_editar").load("formulario_actualizar_direccion.html", function () {
+		// obtengo el valor de la direccion
+		$("#ac_direccion").val(alumno["direccion_residencia"]);
+		// obtengo el valor del barrio
+		$("#ac_barrio").val(alumno["barrio"]);
+	    
+		switch (alumno["estrato"]) {
+		case "1":
+		    $("#ac_estrato").val("1");
+		    break;
+		    
+		case "2":
+		    $("#ac_estrato").val("2");
+		    break;
+		    
+		case "3":
+		    $("#ac_estrato").val("3");
+		    break;
+		    
+	    case "4":
+		    $("#ac_estrato").val("4");
+		    break;
+		    
+		case "5":
+		    $("#ac_estrato").val("5");
+		    break;
+		}
+		
+		// agrego el encabezado del estudiante
+		$("#form_editar").prepend("<p>Se ha selecionado la persona <b>"
+				     + alumno["nombres"] + " "
+				     + alumno["apellidos"] + "</b>, con codigo de alumno "
+				     + alumno["id_alumno"] + ", con identificacion "
+				     + alumno["identificacion"] + "</p>");
+		// agrego los botones 
+		$("#form_editar").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
+		$("#form_editar").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_direccion(2,alumno);">agregar/actualizar</button>');
+	    });
+	    
+	});
+	
+	
+	break;
+  }    
 }
