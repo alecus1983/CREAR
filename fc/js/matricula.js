@@ -597,7 +597,7 @@ function editar_matricula(id, item){
 				     + alumno["id_alumno"] + ", con identificacion "
 				     + alumno["identificacion"] + "</p>");
 		// agrego los botones 
-		$("#form_editar").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
+		$("#form_editar").append('<button type="button" class="btn btn-secondary" onclick="editar_matricula('+id+',32)">atras</button>');
 		$("#form_editar").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_direccion(2,alumno);">agregar/actualizar</button>');
 	    });
 	    
