@@ -971,7 +971,7 @@ function update_grado_matricula() {
 // actualizar direccion
 // presronax  : es el id_persona
 // form : es el codigo del formulario donde se actuliza la direccion
-function update_direccion(form, personax) {
+function update_direccion(form, personax, ea) {
 
     // tomo el dato
     personax["estrato"] = $("#ac_estrato").val();
@@ -1023,8 +1023,14 @@ function update_direccion(form, personax) {
 
                         // muestro confirmacion
                         swal("actualizacion dirección", "se actualizo con exito la dirección", "success");
-                        // voy a la seccion 6 del formulario matricula
+                    // voy a la seccion 6 del formulario matricula
+
+		    if (ea == 1){
                         gestion_matriculas(6);
+		    }
+		    else {
+			editar_matricula(personax["id_alumno"], 32);
+		    }
 
                         break;
                 }

@@ -137,7 +137,7 @@ function gestion_matriculas(item) {
 			      + alumno["identificacion"] + "</p>");
 	// agrego los botones 
 	$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
-	$("#paginas").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_direccion(2,alumno);">agregar/actualizar</button>');
+	  $("#paginas").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_direccion(2,alumno,1);">agregar/actualizar</button>');
       });
     });
 
@@ -598,12 +598,36 @@ function editar_matricula(id, item){
 				     + alumno["identificacion"] + "</p>");
 		// agrego los botones 
 		$("#form_editar").append('<button type="button" class="btn btn-secondary" onclick="editar_matricula('+id+',32)">atras</button>');
-		$("#form_editar").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_direccion(2,alumno);">agregar/actualizar</button>');
+		$("#form_editar").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_direccion(2,alumno,2);">agregar/actualizar</button>');
 	    });
 	    
 	});
 	
 	
 	break;
+
+    case 32 :
+	// criterio de inicio
+	$("#avance").html("");
+	$("#tabla").html("");
+	
+	// cargo en el div acance el formulario 7
+	$("#avance").load("formulario_editar_matricula_2.html", function () {
+	    
+	    $("#paginas").load("formulario_actualizar_afiliaciones.html", function () {
+	$("#paginas").prepend("<p>Se ha selecionado la persona <b>" + alumno["nombres"]
+			      + " " + alumno["apellidos"] + "</b>, con codigo " + alumno["id_persona"]
+			      + ", con identificacion " + alumno["identificacion"] + "</p>");
+	// obtengo los datos de afiliacion en 
+	// este formuulario 	
+	get_afiliacion(alumno["id_persona"], 2);
+      });
+
+    });
+
+    break;
+
+
+	
   }    
 }
