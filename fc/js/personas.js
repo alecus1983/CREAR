@@ -25,7 +25,7 @@
 //                               el cual retorna un array con los datos relativos  los datos de afiacion de la
 //                               persona.
 // 
-// get_antecedemtes(id, form) -> obtengo los datos del acudite (select)
+// get_antecedentes(id, form) -> obtengo los datos del acudite (select)
 //                               consulta el archivo antecedentes_persona.php
 //
 // seleccionar_persona(id, pesronax, fom) -> obtengo los datos de  una persona en el objeto personas
@@ -577,7 +577,7 @@ function actualizar_afiliaciones(personax) {
             // Si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 swal("Completado", "Se completó el registro", "success");
-                // voy a la seccion 6 del formulario matricula
+                // voy a la seccion 8 del formulario matricula
                 gestion_matriculas(8);
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
@@ -604,7 +604,7 @@ function borrar_tabla() {
 
 
 // Función para actualizar los datos de una persona con relación a sus afiliaciones
-function actualizar_antecedentes_patologicos(personax) {
+function actualizar_antecedentes_patologicos(personax, ea) {
     // Se precargan los atributos del formulario
 
     personax.antecedentes_patologicos_medicos = $("#ac_medicos").val();
@@ -637,7 +637,12 @@ function actualizar_antecedentes_patologicos(personax) {
             if (respuesta['status'] == 1) {
                 swal("Completado", "Se completó el registro", "success");
                 // voy a la seccion 8 del formulario matricula
-                gestion_matriculas(9);
+                if (ea = 1) {
+                    gestion_matriculas(9);
+                }
+                else {
+                    editar_matricula(personax["id_persona"], 34);
+                }
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
                 swal('Error', errorMap[respuesta['status']], 'error');
@@ -838,16 +843,16 @@ function seleccionar_persona(id, personax, form) {
 
 // solicito los datos para el formaulario de afiliacion
 
-function get_afiliacion(id, form) {
+function get_afiliacion(id_persona, form) {
     // Solicito datos por AJAX
     $.ajax({
         type: "POST",
         url: "afiliacion_persona.php",
         dataType: "json",
-        data: { id: id },
+        data: { id_persona: id_persona },
         success: function (respuesta) {
             if (respuesta['status'] == 1) {
-                // Validamos según el formulario
+                // Validamos según el formulario agregar persona
                 if (form === 2) {
 
                     // Asignar SISBEN
@@ -1228,7 +1233,7 @@ function get_afiliaciones(id, form) {
 // funcion que obtiene los datos de antecedentes
 
 
-function get_antecedemtes(id, form) {
+function get_antecedentes(id, form) {
 
     // solicito datos en ajax
     $.ajax({
