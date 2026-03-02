@@ -209,6 +209,49 @@ class personas extends imcrea {
             return null;
         }
     }
+    
+    /**
+     * Obtiene los datos de una persona en base al ID de alumno.
+     *
+     * @param int $id_alumno El ID del alumno.
+     * @return array|null Un array asociativo con los datos de la persona o null si no se encuentra.
+     */
+    public function get_persona_por_id_alumno($id_alumno){
+        try {
+            if (!is_numeric($id_alumno)) {
+                throw new InvalidArgumentException("El ID del alumno debe ser un valor numérico.");
+            }
+
+            $q = "SELECT p.* FROM personas p 
+                  INNER JOIN u_alumnos a ON p.id_personas = a.id_personas 
+                  WHERE a.id_alumnos = ?";
+            $stmt = $this->_db->prepare($q);
+
+            if ($stmt === false) {
+                throw new Exception("Error al preparar la consulta get_persona_por_id_alumno: " . $this->_db->error);
+            }
+
+            $stmt->bind_param("i", $id_alumno);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $a = $result->fetch_array(MYSQLI_ASSOC);
+            
+            if ($a) {
+                // Asignar los valores a las propiedades del objeto (opcional pero consistente con get_persona_por_id)
+                $this->id_persona = $a['id_personas'];
+                $this->nombres = $a['nombres'];
+                $this->apellidos = $a['apellidos'];
+                $this->identificacion = $a['identificacion'];
+                // ... se podrían asignar más si fuera necesario, pero para la respuesta AJAX el array es suficiente
+            }
+
+            $stmt->close();
+            return $a;
+        } catch (Exception $e) {
+            error_log("Error en get_persona_por_id_alumno: " . $e->getMessage());
+            return null;
+        }
+    }
 
 
     // funcion para actualizar los parametros de

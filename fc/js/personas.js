@@ -90,37 +90,37 @@ function gestion_personas() {
             id_jornada: $("#jornada").val(),
             id_curso: $("#id_c").val()
         },
-      
+
         // si los datos son correctos entonces ...
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-              // coloco la respuesta en html
-	      // en el div avance
+                // coloco la respuesta en html
+                // en el div avance
                 $("#avance").html(respuesta['html']);
             } else {
-	      // si no se ha seleccionado el  grado
-              if (respuesta['status'] == 21) {
+                // si no se ha seleccionado el  grado
+                if (respuesta['status'] == 21) {
                     swal('Grado', 'Porfavor seleccione un grado', 'error');
-              }
+                }
 
-	      // si no se ha especificado el año
+                // si no se ha especificado el año
                 if (respuesta['status'] == 22) {
                     swal('Año', 'Porfavor seleccione un año', 'error');
                 }
 
-	      // si no se ha especificado la jornada
+                // si no se ha especificado la jornada
                 if (respuesta['status'] == 23) {
                     swal('Jornada', 'Porfavor seleccione un jornada', 'error');
                 }
-	      // si no se ha especificado la semana
+                // si no se ha especificado la semana
                 if (respuesta['status'] == 24) {
                     swal('Semana', 'Porfavor seleccione una semana', 'error');
                 }
 
             }
         },
-      // si huvo  un error
+        // si huvo  un error
         error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
@@ -149,36 +149,36 @@ function cambio_datos_p(repo) {
             identificacion: $("#identificacion").val()
         },
         // si los datos son correctos entonces ...
-      success: function (respuesta) {
-	
+        success: function (respuesta) {
+
             // si la respuesta es positiva
-        if (respuesta['status'] == 1) {
+            if (respuesta['status'] == 1) {
 
                 // coloco la respuesta en el campo repo
-                $(repo).html( "<table class='table' id='lista_e'>"+
-			      "<thead>"+
-			      // emcabezado de la tabla
-			      "<th scope='col'>Nombres</th>"+
-			      "<th scope='col'>Apellidos</th>"+
-			      "<th scope='col'>D. de identidad</th>"+
-			      "<th scope='col'>Actualizar</th>"+
-			      "<th scope='col'>Eliminar</th>"+
-			      "</thead>"+
-			      "<tbody>");
+                $(repo).html("<table class='table' id='lista_e'>" +
+                    "<thead>" +
+                    // emcabezado de la tabla
+                    "<th scope='col'>Nombres</th>" +
+                    "<th scope='col'>Apellidos</th>" +
+                    "<th scope='col'>D. de identidad</th>" +
+                    "<th scope='col'>Actualizar</th>" +
+                    "<th scope='col'>Eliminar</th>" +
+                    "</thead>" +
+                    "<tbody>");
 
-	  
-	  respuesta['json'].forEach(  id => {
-	    // se agrega fila a la tabla
-	    $('#lista_e').append( "<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
-	    
-	 });
 
-	  // agrego el  final de la tabla
-	  $(repo).append( "</tbody>"+
-			  "</div>"+
-			  "</div>"+
-			  "</div>");
-	    } else {
+                respuesta['json'].forEach(id => {
+                    // se agrega fila a la tabla
+                    $('#lista_e').append("<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
+
+                });
+
+                // agrego el  final de la tabla
+                $(repo).append("</tbody>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>");
+            } else {
 
                 if (respuesta['status'] == 22) {
                     swal('Año', 'Porfavor seleccione un año', 'error');
@@ -219,37 +219,37 @@ function cambio_datos(repo, personax, form) {
             form: form
         },
         // si los datos son correctos entonces ...
-      success: function (respuesta) {
-	
+        success: function (respuesta) {
+
             // si la respuesta es positiva
-        if (respuesta['status'] == 1) {
+            if (respuesta['status'] == 1) {
 
                 // coloco la respuesta en el campo repo
-                $(repo).html( "<table class='table' id='lista_e'>"+
-			      "<thead>"+
-			      // emcabezado de la tabla
-			      "<th scope='col'>Nombres</th>"+
-			      "<th scope='col'>Apellidos</th>"+
-			      "<th scope='col'>D. de identidad</th>"+
-			      "<th scope='col'>Actualizar</th>"+
-			      "<th scope='col'>Selecionar</th>"+
-			      "<th scope='col'>Eliminar</th>"+
-			      "</thead>"+
-			      "<tbody>");
+                $(repo).html("<table class='table' id='lista_e'>" +
+                    "<thead>" +
+                    // emcabezado de la tabla
+                    "<th scope='col'>Nombres</th>" +
+                    "<th scope='col'>Apellidos</th>" +
+                    "<th scope='col'>D. de identidad</th>" +
+                    "<th scope='col'>Actualizar</th>" +
+                    "<th scope='col'>Selecionar</th>" +
+                    "<th scope='col'>Eliminar</th>" +
+                    "</thead>" +
+                    "<tbody>");
 
-	  
-	  respuesta['json'].forEach(  id => {
-	    // se agrega fila a la tabla
-	    $('#lista_e').append( "<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-success' onclick='seleccionar_persona(" + id[3] + ",  personax, "+form+");'>seleccionar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
-	    
-	 });
 
-	  // agrego el  final de la tabla
-	  $(repo).append( "</tbody>"+
-			  "</div>"+
-			  "</div>"+
-			  "</div>");
-	    } else {
+                respuesta['json'].forEach(id => {
+                    // se agrega fila a la tabla
+                    $('#lista_e').append("<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-success' onclick='seleccionar_persona(" + id[3] + ",  personax, " + form + ");'>seleccionar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
+
+                });
+
+                // agrego el  final de la tabla
+                $(repo).append("</tbody>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>");
+            } else {
 
                 if (respuesta['status'] == 22) {
                     swal('Año', 'Porfavor seleccione un año', 'error');
@@ -269,20 +269,20 @@ function cambio_datos(repo, personax, form) {
 //  se carga el formulario para agregar personas
 // en el div #tabla
 function formulario_agregar_persona() {
-  
+
     // borro el div llamado #tabla
     $("#tabla").html("");
     //  cargo el formulario agregar personas en el div #tabla
     // al finalizar ejecuto la funcion
     $("#tabla").load("formulario_agregar_persona.html", function (response, status, xhr) {
-	if (status == "error") {
+        if (status == "error") {
             console.error("Error al cargar");
-	} else {
+        } else {
             console.log("Cargado. Longitud del contenido: " + response.length);
             // Forzamos visibilidad
-            $("#tabla").show(); 
+            $("#tabla").show();
             console.log("Contenido actual de #tabla: ", $("#tabla").html());
-	}
+        }
     });
 
     // cambio el atributo visual del boton
@@ -290,7 +290,7 @@ function formulario_agregar_persona() {
 
     // asigno una funcion
     $("#agregar_persona").attr("onclick", "agregar_persona()");
-    
+
 }
 
 // funcion para agregar personas
@@ -301,12 +301,12 @@ function formulario_agregar_persona() {
 
 function agregar_persona(formulario, personax) {
 
-    
+
     // Si el formulario no es válido, detenemos la ejecución con 'return'.
     if (!validarFormularioPersona()) {
         // Opcional: Mostrar una alerta general
         swal('Formulario Incompleto', 'Por favor, corrija los campos marcados en rojo.', 'warning');
-        return; 
+        return;
     }
 
     // almaceno los datos en el json
@@ -338,11 +338,11 @@ function agregar_persona(formulario, personax) {
                 // si se agrego la persona correctamente
                 swal('Actualizacion', 'Se agrego a la persona correctamente', 'success');
 
-		// valido si esta definido la persona x
-		// esto es para el formulario de matricula
-		if(typeof personax === 'undefined'){
-		    console.log("EmpName no está definido");
-		} else {
+                // valido si esta definido la persona x
+                // esto es para el formulario de matricula
+                if (typeof personax === 'undefined') {
+                    console.log("EmpName no está definido");
+                } else {
                     // almaceno en la variable seleccionada
                     personax["nombres"] = respuesta["nombres"];
                     personax["apellidos"] = respuesta["apellidos"];
@@ -352,7 +352,7 @@ function agregar_persona(formulario, personax) {
                     seleccionar_persona(respuesta["id_persona"], personax, 4);
                     // voy al formulario indicado
                     gestion_matriculas(formulario);
-		}
+                }
 
 
             } else {
@@ -503,7 +503,7 @@ function valida_actualizar_persona() {
     if (celular !== '' && !soloNumerosRegex.test(celular)) {
         errores.celular = 'El número de celular solo debe contener dígitos.';
     }
-    
+
     const nacimiento = $('#ac_nacimiento').val();
     if (nacimiento === '') {
         errores.nacimiento = 'La fecha de nacimiento es obligatoria.';
@@ -516,7 +516,7 @@ function valida_actualizar_persona() {
     if (Object.keys(errores).length > 0) {
         esValido = false;
         // Si hay errores, mostrarlos debajo de los campos correspondientes.
-        $.each(errores, function(campo, mensaje) {
+        $.each(errores, function (campo, mensaje) {
             const input = $('#ac_' + campo);
             input.addClass('is-invalid'); // Añade un borde rojo (estilo de Bootstrap).
             // Añade el mensaje de error debajo del input.
@@ -596,7 +596,7 @@ function actualizar_afiliaciones(personax) {
 }
 
 // funcion  que borra el contenido del div #tabla
-function borrar_tabla(){
+function borrar_tabla() {
     // borro el contenido del div tabla
     $("#tabla").html("");
 }
@@ -672,15 +672,13 @@ function datos_persona(id) {
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-		//coloco la respuesta en el div tabla
+                //coloco la respuesta en el div tabla
                 $("#tabla").html(respuesta['html']);
             } else {
                 if (respuesta['status'] == 20) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                    console.log('no se obtuvieron datos de la persona ' + id);
                 }
-                if (respuesta['status'] == 21) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
-                }
+
             }
         },
         error: function (xhr, status) {
@@ -691,9 +689,12 @@ function datos_persona(id) {
 }
 
 
-// funcion que solicitar datos de la persona
-// y los coloca en el el div #tabla
-// requiere como entrada el codigo de la persona
+/**
+ * Solicita los datos básicos de una persona al servidor y los asigna a un objeto.
+ * 
+ * @param {number|string} id - El ID de la persona a consultar.
+ * @param {Object} personax - El objeto donde se almacenarán los nombres, apellidos e identificación.
+ */
 
 function get_persona(id, personax) {
     //  realizo la consulta en de los datos
@@ -713,15 +714,51 @@ function get_persona(id, personax) {
                 personax["identificacion"] = respuesta["identificacion"];
             } else {
                 if (respuesta['status'] == 20) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                    swal('Error', 'Hubo un error al obtener los datos de la persona', 'error');
                 }
                 if (respuesta['status'] == 21) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                    swal('Error', 'No se encontraron los datos de la persona', 'error');
                 }
             }
         },
         error: function (xhr, status) {
             swal('Disculpe, existió un problema');
+            console.log(xhr);
+        }
+    });
+}
+
+/**
+ * Solicita los datos básicos de una persona a partir de su ID de alumno y los asigna a un objeto.
+ * 
+ * @param {number|string} id_alumno - El ID del alumno a consultar.
+ * @param {Object} personax - El objeto donde se almacenarán los nombres, apellidos e identificación.
+ */
+function get_persona_alumno(id_alumno, personax) {
+    // realizo la consulta de los datos
+    $.ajax({
+        type: "POST",
+        url: "get_persona_alumno.php",
+        dataType: "json",
+        data: {
+            id_alumno: id_alumno
+        },
+        // si los datos son correctos entonces ...
+        success: function (respuesta) {
+            // si la respuesta es positiva
+            if (respuesta['status'] == 1) {
+                personax["id_persona"] = respuesta["id_personas"];
+                personax["nombres"] = respuesta["nombres"];
+                personax["apellidos"] = respuesta["apellidos"];
+                personax["identificacion"] = respuesta["identificacion"];
+            } else {
+                if (respuesta['status'] == 20) {
+                    swal('Error', 'No se encontraron datos para el alumno especificado', 'error');
+                }
+            }
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema al obtener los datos del alumno');
             console.log(xhr);
         }
     });
@@ -790,11 +827,11 @@ function seleccionar_persona(id, personax, form) {
     // si es menor de 30 es del formulario de matriculas
     // de lo contrario es de eliminar matriculas
     if (form < 30) {
-	// voy al formulario 4 de matriculas
-	gestion_matriculas(form);
+        // voy al formulario 4 de matriculas
+        gestion_matriculas(form);
     } else {
-	// en el caso de editar las matriculas
-	//gestion_editar_matricula(form);
+        // en el caso de editar las matriculas
+        //gestion_editar_matricula(form);
     }
 }
 
@@ -867,17 +904,15 @@ function get_afiliacion(id, form) {
                     let rh = respuesta["rh"] || "+";
                     $("#ac_rh").val(rh);
 
-
-
                 }
 
             } else {
                 // Manejo de errores según el código de estado
                 let mensaje = "Hubo un error desconocido.";
                 if (respuesta['status'] == 20) {
-                    mensaje = "Hubo un error al eliminar la matrícula docente.";
+                    mensaje = respuesta["mensaje"];
                 } else if (respuesta['status'] == 21) {
-                    mensaje = "Hubo un error al actualizar la información.";
+                    mensaje = respuesta["mensaje"];
                 }
                 swal('Error', mensaje, 'error');
             }
@@ -918,10 +953,7 @@ function get_direccion(personax, form) {
 
             } else {
                 if (respuesta['status'] == 20) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
-                }
-                if (respuesta['status'] == 21) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                    swal('Error', respuesta['mensaje'], 'error');
                 }
 
                 //  retorno cero
@@ -948,7 +980,7 @@ function update_grado_matricula() {
     // actualizo el codigo del curso
     alumno.id_curso = $("#ac_curso").val();
     // se actualiza la jornada
-    alumno.id_jornada =  $("#ac_jornada").val();
+    alumno.id_jornada = $("#ac_jornada").val();
 
     // salida por consola
     console.log("los datos del alumono son " + alumno.id_escolaridad + " codigo del grado " + alumno.id_grado + " codigo del curso" + alumno.id_curso);
@@ -964,14 +996,66 @@ function update_grado_matricula() {
     }
     else {
         swal("actualizacion  grado", "Por favor seleccione un grado", "error");
-	}
-	*/
+    }
+    */
+}
+
+/**
+ * Valida el formulario de dirección del lado del cliente.
+ * 
+ * @returns {boolean} true si todos los campos son válidos, false de lo contrario.
+ */
+function validarFormularioDireccion() {
+    // 1. Limpiar errores previos
+    $('.form-control').removeClass('is-invalid');
+    $('.invalid-feedback').remove();
+
+    let esValido = true;
+    let errores = {};
+
+    // 2. Validar Dirección
+    const direccion = $('#ac_direccion').val().trim();
+    if (direccion === '') {
+        errores.direccion = 'La dirección de residencia es obligatoria.';
+    }
+
+    // 3. Validar Barrio
+    const barrio = $('#ac_barrio').val().trim();
+    if (barrio === '') {
+        errores.barrio = 'El nombre del barrio es obligatorio.';
+    }
+
+    // 4. Validar Estrato
+    const estrato = $('#ac_estrato').val();
+    if (!estrato || estrato === '0' || estrato === '') {
+        errores.estrato = 'Debe seleccionar un estrato válido.';
+    }
+
+    // 5. Mostrar errores si existen
+    if (Object.keys(errores).length > 0) {
+        esValido = false;
+        $.each(errores, function (campo, mensaje) {
+            const input = $('#ac_' + campo);
+            input.addClass('is-invalid');
+            input.after('<div class="invalid-feedback">' + mensaje + '</div>');
+        });
+
+        // Opcional: Alerta general
+        swal('Formulario Incompleto', 'Por favor, complete los campos obligatorios resaltados en rojo.', 'warning');
+    }
+
+    return esValido;
 }
 
 // actualizar direccion
 // presronax  : es el id_persona
 // form : es el codigo del formulario donde se actuliza la direccion
 function update_direccion(form, personax, ea) {
+
+    // Validar antes de procesar
+    if (!validarFormularioDireccion()) {
+        return;
+    }
 
     // tomo el dato
     personax["estrato"] = $("#ac_estrato").val();
@@ -1023,14 +1107,15 @@ function update_direccion(form, personax, ea) {
 
                         // muestro confirmacion
                         swal("actualizacion dirección", "se actualizo con exito la dirección", "success");
-                    // voy a la seccion 6 del formulario matricula
 
-		    if (ea == 1){
-                        gestion_matriculas(6);
-		    }
-		    else {
-			editar_matricula(personax["id_alumno"], 32);
-		    }
+                        // voy a la seccion 6 del formulario matricula
+                        if (ea == 1) {
+                            gestion_matriculas(6);
+                        }
+                        else {
+                            // edito la matricula
+                            editar_matricula(personax["id_alumno"], 32);
+                        }
 
                         break;
                 }
@@ -1038,10 +1123,7 @@ function update_direccion(form, personax, ea) {
 
             else {
                 if (respuesta['status'] == 20) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
-                }
-                if (respuesta['status'] == 21) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                    swal('Error', 'Hubo un error al obtener los datos de direccion', 'error');
                 }
             }
         }
@@ -1124,10 +1206,14 @@ function get_afiliaciones(id, form) {
                 }
             } else {
                 if (respuesta['status'] == 20) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                    swal('Error', respuesta['mensaje'], 'error');
                 }
+
                 if (respuesta['status'] == 21) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                    swal('Error', respuesta['mensaje'], 'error');
+                }
+                if (respuesta['status'] == 500) {
+                    swal('Error', respuesta['mensaje'], 'error');
                 }
             }
         },
@@ -1183,10 +1269,10 @@ function get_antecedemtes(id, form) {
 
             } else {
                 if (respuesta['status'] == 20) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                    swal('Error', respuesta['mensaje'], 'error');
                 }
                 if (respuesta['status'] == 21) {
-                    swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+                    swal('Error', respuesta['mensaje'], 'error');
                 }
             }
         },
@@ -1209,15 +1295,6 @@ function cp_acudiente(personax) {
 
 }
 
-// funcion que permite conocer el codigo
-// de una persona en funcion
-// del codigo del estudiante
-
-function get_id_persona_con_id_alumno(){
-
-  
-  
-}
 
 
 /**
@@ -1251,7 +1328,7 @@ function validarFormularioPersona() {
     let esValido = true;
 
     // Limpiar errores previos antes de volver a validar
-    $('.form-control').each(function() {
+    $('.form-control').each(function () {
         limpiarError($(this).attr('id'));
     });
 
@@ -1284,7 +1361,7 @@ function validarFormularioPersona() {
         mostrarError('ad_identificacion', 'La identificación solo debe contener números.');
         esValido = false;
     }
-    
+
     // 4. Validación de Correo Personal (ad_correo) - Opcional pero si se escribe, debe ser válido
     const correo = $("#ad_correo").val().trim();
     const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1299,7 +1376,7 @@ function validarFormularioPersona() {
         mostrarError('ad_i_correo', 'El formato del correo institucional no es válido.');
         esValido = false;
     }
-    
+
     // 6. Validación de Celular (ad_celular)
     const celular = $("#ad_celular").val().trim();
     if (celular === "") {
@@ -1316,7 +1393,7 @@ function validarFormularioPersona() {
         mostrarError('ad_telefono', 'El teléfono fijo solo debe contener números.');
         esValido = false;
     }
-    
+
     // 8. Validación de Fecha de Nacimiento (ad_nacimiento)
     const nacimiento = $("#ad_nacimiento").val();
     if (nacimiento === "") {

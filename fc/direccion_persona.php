@@ -28,6 +28,7 @@ if ($valido) {
 }
 else {
     $respuesta['status'] = 20;
+    $respuesta['mensaje']="Error al obtener los datos de la persona";
 }
 
 $respuesta_json = json_encode($respuesta);
