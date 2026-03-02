@@ -74,11 +74,11 @@ let docente = {
 let alumno = {
   id_alumno: 0,
   id_persona: 0,
-  id_grado : 0,
-  id_jornada : 0,
-  year : 0,
-  id_curso : 0,
-  id_escolaridad : 0,
+  id_grado: 0,
+  id_jornada: 0,
+  year: 0,
+  id_curso: 0,
+  id_escolaridad: 0,
   fecha: "",
   nombres: "",
   apellidos: "",
@@ -200,15 +200,15 @@ let personax = {
 
 
 // variable de matriculas
-let matricula ={
-  id : "",
-  id_alumno : "",
-  id_grado : "",
-  id_jornada : "",
-  year : "",
-  mes : "",
-  retiro : "",
-  id_curso : ""
+let matricula = {
+  id: "",
+  id_alumno: "",
+  id_grado: "",
+  id_jornada: "",
+  year: "",
+  mes: "",
+  retiro: "",
+  id_curso: ""
 };
 
 // codigo de docente
@@ -226,40 +226,40 @@ let id_docente = 0;
  * @returns {boolean} - Devuelve true si todos los campos son válidos, de lo contrario, false.
  */
 function validarFormulario(fields) {
-    for (const field of fields) {
-        const element = $(`#${field.id}`);
-        let isValid = true;
+  for (const field of fields) {
+    const element = $(`#${field.id}`);
+    let isValid = true;
 
-        if (!element.length) {
-            console.error(`Elemento no encontrado: #${field.id}`);
-            continue;
-        }
-
-        const value = element.val();
-
-        switch (field.type) {
-            case 'select':
-                if (value === null || value === "-1" || value === "") {
-                    isValid = false;
-                }
-                break;
-            case 'text':
-                if (value.trim() === "") {
-                    isValid = false;
-                }
-                break;
-            // Puedes agregar más tipos de validación (email, number, etc.)
-        }
-
-        if (!isValid) {
-            swal('Campo Requerido', `Por favor, complete el campo: ${field.name}`, 'warning');
-            element.css('border-color', 'red'); // Resaltar el campo inválido
-            return false;
-        } else {
-            element.css('border-color', ''); // Restablecer el borde si es válido
-        }
+    if (!element.length) {
+      console.error(`Elemento no encontrado: #${field.id}`);
+      continue;
     }
-    return true;
+
+    const value = element.val();
+
+    switch (field.type) {
+      case 'select':
+        if (value === null || value === "-1" || value === "") {
+          isValid = false;
+        }
+        break;
+      case 'text':
+        if (value.trim() === "") {
+          isValid = false;
+        }
+        break;
+      // Puedes agregar más tipos de validación (email, number, etc.)
+    }
+
+    if (!isValid) {
+      swal('Campo Requerido', `Por favor, complete el campo: ${field.name}`, 'warning');
+      element.css('border-color', 'red'); // Resaltar el campo inválido
+      return false;
+    } else {
+      element.css('border-color', ''); // Restablecer el borde si es válido
+    }
+  }
+  return true;
 }
 
 
@@ -276,60 +276,61 @@ function load_materias() {
 
   // coloco el fondo al selector materias
   $('#id_ms').css('background-color', 'lightblue');
-  
+
 }
 
 // Estructura  para  editar matriculas
-function editar_matriculas(item,dato){
+function editar_matriculas(item, dato) {
 
-  switch (item){
+  switch (item) {
     // tomo el codigo de la matricula
     // y visualizo los datos principales
     // del estudiante en 
-  case 1:
-    // solicito el valor de la matricula
-    // con el id  proveniente en el valor dato
-    matricula = consultar_matricula(dato);
-    
-    $("#avance").html("");
-    $("#tabla").html("");
-    // cargo el formulario para un estudiante
-    $("#avance").load("formulario_editar_matricula_1.html",
-		      function () {
-			// si retorno un  numero de matricula dado
-			// entonces 
-			if (matricula.id){ 
-			  // agrego al div #paginas
-			  // el  formulario html
-			  $("#paginas").append(
-			  "<ul>"+
-			    "<li>código de la matricula : "+matricula.id+"</li>"+
-			    "<li>código del alumno : "+matricula.id_alumno+"</li>"+
-			    "</ul>"
-			)};
-    });
-    
+    case 1:
+      // solicito el valor de la matricula
+      // con el id  proveniente en el valor dato
+      matricula = consultar_matricula(dato);
 
-    break;
-    
+      $("#avance").html("");
+      $("#tabla").html("");
+      // cargo el formulario para un estudiante
+      $("#avance").load("formulario_editar_matricula_1.html",
+        function () {
+          // si retorno un  numero de matricula dado
+          // entonces 
+          if (matricula.id) {
+            // agrego al div #paginas
+            // el  formulario html
+            $("#paginas").append(
+              "<ul>" +
+              "<li>código de la matricula : " + matricula.id + "</li>" +
+              "<li>código del alumno : " + matricula.id_alumno + "</li>" +
+              "</ul>"
+            )
+          };
+        });
+
+
+      break;
+
     // edito los datos de la residencia
-  case 2:
-   
-    break;
- // Edito los dato academicos
-  case 3:
+    case 2:
 
-    break;
-// edito los datos de afiliaciones
-  case 4:
+      break;
+    // Edito los dato academicos
+    case 3:
 
-    break;
+      break;
+    // edito los datos de afiliaciones
+    case 4:
+
+      break;
 
     // edito los antecedentes patologicos
-  case 5:
+    case 5:
 
-    break;
-   
+      break;
+
   }
 }
 
@@ -342,9 +343,9 @@ function editar_matriculas(item,dato){
 // el codigo del curso
 // y  el año, se asume el mes de ingreso y de retiro
 
-function matricular(){
+function matricular() {
 
-   $.ajax({
+  $.ajax({
     type: "POST",
     url: "matricular_alumno.php",
     dataType: "json",
@@ -353,8 +354,8 @@ function matricular(){
     success: function (respuesta) {
       // si la respuesta es positiva
       if (respuesta['status'] == 1) {
-	swal('Se matriculo el alumno con exito');
-	//$("#calificador").html(respuesta);
+        swal('Se matriculo el alumno con exito');
+        //$("#calificador").html(respuesta);
       }
     },
     error: function (xhr, status) {
@@ -387,22 +388,22 @@ function matricula_docente() {
     success: function (respuesta) {
       // si la respuesta es positiva
       if (respuesta['status'] == 1) {
-	//swal('Datos actualizados');
-	//$("#calificador").html(respuesta);
-	$("#avance").html(respuesta['html']);
+        //swal('Datos actualizados');
+        //$("#calificador").html(respuesta);
+        $("#avance").html(respuesta['html']);
       } else {
-	if (respuesta['status'] == 21) {
-	  swal('Grado', 'Porfavor seleccione un grado', 'error');
-	}
-	if (respuesta['status'] == 22) {
-	  swal('Año', 'Porfavor seleccione un año', 'error');
-	}
-	if (respuesta['status'] == 23) {
-	  swal('Jornada', 'Porfavor seleccione un jornada', 'error');
-	}
-	if (respuesta['status'] == 24) {
-	  swal('Semana', 'Porfavor seleccione una semana', 'error');
-	}
+        if (respuesta['status'] == 21) {
+          swal('Grado', 'Porfavor seleccione un grado', 'error');
+        }
+        if (respuesta['status'] == 22) {
+          swal('Año', 'Porfavor seleccione un año', 'error');
+        }
+        if (respuesta['status'] == 23) {
+          swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+        }
+        if (respuesta['status'] == 24) {
+          swal('Semana', 'Porfavor seleccione una semana', 'error');
+        }
 
       }
     },
@@ -424,14 +425,14 @@ function load_lista_estudiantes() {
     type: "POST",
     url: "listado_estudiantes.php",
     data: {
-	years: $("#years").val(),
-	id_g: $("#id_g").val(),
-	id_ms: $("#id_ms").val(),
-	id_jornada: $("#jornada").val(),
-	periodo: $("#periodos").val(),
-	curso: $("#id_c").val(),
-	semana: $("#semana").val(),
-	escolaridad: $("#escolaridad").val()
+      years: $("#years").val(),
+      id_g: $("#id_g").val(),
+      id_ms: $("#id_ms").val(),
+      id_jornada: $("#jornada").val(),
+      periodo: $("#periodos").val(),
+      curso: $("#id_c").val(),
+      semana: $("#semana").val(),
+      escolaridad: $("#escolaridad").val()
     },
     // si los datos son correctos entonces ...
     success: function (respuesta) {
@@ -451,45 +452,45 @@ function load_lista_estudiantes() {
 // el listado de estudiantes matriculados en un grado
 // en un curso y una jornada
 
-function listado_matricula_escolaridad_jornada(){
+function listado_matricula_escolaridad_jornada() {
 
-    // se envian datos al servidor
-    $.ajax({
-	type: "POST",
-	url: "listado_matricula_escolaridad.php",
-	dataType: "json",
-	data: {
-	    years: $("#years").val(),
-	    id_escolaridad :  $("#escolaridad").val(),
-	    id_jornada : $("#jornada").val()
-	},
-	// si los datos son correctos entonces ...
-	success: function (respuesta) {
-	    // si la respuesta es positiva
-	    if (respuesta['status'] == 1) {
-		// coloco la respuesta en el div
-		// avance
-		$("#avance").html(respuesta['html']);
-		// coloco el año  de acuerdo al criterio  seleccionado
-		$("#ano").html($("#years").val());
-	    } else {
-		// si la respuesta es erronea 
-		if (respuesta['status'] == 22) {
-		    swal('Escolaridad', 'Porfavor seleccione una escolaridad', 'error');
-		}
-	    }
-	},
-	error: function (xhr, status) {
-	    swal('Disculpe, existió un problema');
-	    console.log(xhr);
-	}
-    });
+  // se envian datos al servidor
+  $.ajax({
+    type: "POST",
+    url: "listado_matricula_escolaridad.php",
+    dataType: "json",
+    data: {
+      years: $("#years").val(),
+      id_escolaridad: $("#escolaridad").val(),
+      id_jornada: $("#jornada").val()
+    },
+    // si los datos son correctos entonces ...
+    success: function (respuesta) {
+      // si la respuesta es positiva
+      if (respuesta['status'] == 1) {
+        // coloco la respuesta en el div
+        // avance
+        $("#avance").html(respuesta['html']);
+        // coloco el año  de acuerdo al criterio  seleccionado
+        $("#ano").html($("#years").val());
+      } else {
+        // si la respuesta es erronea 
+        if (respuesta['status'] == 22) {
+          swal('Escolaridad', 'Porfavor seleccione una escolaridad', 'error');
+        }
+      }
+    },
+    error: function (xhr, status) {
+      swal('Disculpe, existió un problema');
+      console.log(xhr);
+    }
+  });
 }
 
 // el listado de estudiantes matriculados en un grado
 // en un curso y una jornada
 
-function listado_matricula_grado(){
+function listado_matricula_grado() {
 
 
   // funcion ajax para importar
@@ -500,23 +501,23 @@ function listado_matricula_grado(){
     dataType: "json",
     data: {
       years: $("#years").val(),
-      id_grado : $("#id_g").val(),
-      id_curso :  $("#id_c").val(),
-      id_jornada : $("#jornada").val()
+      id_grado: $("#id_g").val(),
+      id_curso: $("#id_c").val(),
+      id_jornada: $("#jornada").val()
 
     },
     // si los datos son correctos entonces ...
     success: function (respuesta) {
       // si la respuesta es positiva
       if (respuesta['status'] == 1) {
-	//swal('Datos actualizados');
-	//$("#calificador").html(respuesta);
-	$("#avance").html(respuesta['html']);
+        //swal('Datos actualizados');
+        //$("#calificador").html(respuesta);
+        $("#avance").html(respuesta['html']);
       } else {
 
-	if (respuesta['status'] == 22) {
-	  swal('Año', 'Porfavor seleccione un año', 'error');
-	}
+        if (respuesta['status'] == 22) {
+          swal('Año', 'Porfavor seleccione un año', 'error');
+        }
 
       }
     },
@@ -524,7 +525,7 @@ function listado_matricula_grado(){
       swal('Disculpe, existió un problema');
       console.log(xhr);
     }
-  });  
+  });
 }
 
 // funcion que muestra la lista de estudiantes  matriculados
@@ -545,14 +546,14 @@ function listado_estudiantes_matriculados() {
     success: function (respuesta) {
       // si la respuesta es positiva
       if (respuesta['status'] == 1) {
-	//swal('Datos actualizados');
-	//$("#calificador").html(respuesta);
-	$("#avance").html(respuesta['html']);
+        //swal('Datos actualizados');
+        //$("#calificador").html(respuesta);
+        $("#avance").html(respuesta['html']);
       } else {
 
-	if (respuesta['status'] == 22) {
-	  swal('Año', 'Porfavor seleccione un año', 'error');
-	}
+        if (respuesta['status'] == 22) {
+          swal('Año', 'Porfavor seleccione un año', 'error');
+        }
 
       }
     },
@@ -587,32 +588,32 @@ function agregar_matricula_docente() {
     success: function (respuesta) {
       // si la respuesta es positiva
       if (respuesta['status'] == 1) {
-	//swal('Datos actualizados');
+        //swal('Datos actualizados');
 
-	swal('Actualizacion', 'Se insertaron los dastos con éxito', 'success');
-	matricula_docente();
+        swal('Actualizacion', 'Se insertaron los dastos con éxito', 'success');
+        matricula_docente();
       } else {
-	if (respuesta['status'] == 21) {
-	  swal('Grado', 'Porfavor seleccione un grado', 'error');
-	}
-	if (respuesta['status'] == 22) {
-	  swal('Año', 'Porfavor seleccione un año', 'error');
-	}
-	if (respuesta['status'] == 23) {
-	  swal('Jornada', 'Porfavor seleccione un jornada', 'error');
-	}
-	if (respuesta['status'] == 24) {
-	  swal('Semana', 'Porfavor seleccione una semana', 'error');
-	}
-	if (respuesta['status'] == 25) {
-	  swal('Materia', 'Porfavor seleccione una materia', 'error');
-	}
-	if (respuesta['status'] == 26) {
-	  swal('Curso', 'Porfavor seleccione un curso', 'error');
-	}
-	if (respuesta['status'] == 27) {
-	  swal('Docente', 'Porfavor seleccione un docente', 'error');
-	}
+        if (respuesta['status'] == 21) {
+          swal('Grado', 'Porfavor seleccione un grado', 'error');
+        }
+        if (respuesta['status'] == 22) {
+          swal('Año', 'Porfavor seleccione un año', 'error');
+        }
+        if (respuesta['status'] == 23) {
+          swal('Jornada', 'Porfavor seleccione un jornada', 'error');
+        }
+        if (respuesta['status'] == 24) {
+          swal('Semana', 'Porfavor seleccione una semana', 'error');
+        }
+        if (respuesta['status'] == 25) {
+          swal('Materia', 'Porfavor seleccione una materia', 'error');
+        }
+        if (respuesta['status'] == 26) {
+          swal('Curso', 'Porfavor seleccione un curso', 'error');
+        }
+        if (respuesta['status'] == 27) {
+          swal('Docente', 'Porfavor seleccione un docente', 'error');
+        }
       }
     },
     error: function (xhr, status) {
@@ -638,16 +639,16 @@ function eliminar_matricula_docente(id) {
     success: function (respuesta) {
       // si la respuesta es positiva
       if (respuesta['status'] == 1) {
-	//swal('Datos actualizados');
-	swal('Actualizacion', 'Se elimino el docente del curso', 'success');
-	matricula_docente();
+        //swal('Datos actualizados');
+        swal('Actualizacion', 'Se elimino el docente del curso', 'success');
+        matricula_docente();
       } else {
-	if (respuesta['status'] == 20) {
-	  swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
-	}
-	if (respuesta['status'] == 21) {
-	  swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
-	}
+        if (respuesta['status'] == 20) {
+          swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+        }
+        if (respuesta['status'] == 21) {
+          swal('Error', 'Hubo un error al eliminar la matricula docente', 'error');
+        }
       }
     },
     error: function (xhr, status) {
@@ -674,42 +675,42 @@ function boletin() {
   } else if (grado < 7 || grado > 9) {
     // llama a la funcion generar para generar el boletin
     // que corresponde al modelo de primaria
-      //crear_pdf();
+    //crear_pdf();
 
-      var year = $("#years").val();
-      // se almacena la variable periodos con el periodo academico
-      // a seleccionar
-      var periodos = $('select#periodos').val();
-      // la variable grados guarda codigo del grado del estudiante
-      var grados = $("#id_g").val();
-      // agrego la jornada
-      var jornada = $("#jornada").val();
-      // describo el curso
-      var curso = $("#id_c").val();
-      // si no ha seleccionado grado
-       if (grados < 0) {
-        swal("Favor seleccione un grado");
-      } else if (periodos < 0) {
-        swal("Favor seleccione un periodo");
-      } else {
+    var year = $("#years").val();
+    // se almacena la variable periodos con el periodo academico
+    // a seleccionar
+    var periodos = $('select#periodos').val();
+    // la variable grados guarda codigo del grado del estudiante
+    var grados = $("#id_g").val();
+    // agrego la jornada
+    var jornada = $("#jornada").val();
+    // describo el curso
+    var curso = $("#id_c").val();
+    // si no ha seleccionado grado
+    if (grados < 0) {
+      swal("Favor seleccione un grado");
+    } else if (periodos < 0) {
+      swal("Favor seleccione un periodo");
+    } else {
 
       // se almacenan todas las variables dentro
       // de la variable parametros
       var parametros = "year=" + year +
-      	"&periodos=" +
-      	periodos +
-      	"&grado=" + grados +
-      	"&jornada=" + jornada +
-      	"&curso=" + curso;
+        "&periodos=" +
+        periodos +
+        "&grado=" + grados +
+        "&jornada=" + jornada +
+        "&curso=" + curso;
 
-        console.log("los parametros son : %s", parametros);
+      console.log("los parametros son : %s", parametros);
       // abro boletin en una nueva ventana
       // llamando para ello al archivo cetificado.php
-        window.open("generar_p.php?" + parametros);
-      } 
+      window.open("generar_p.php?" + parametros);
+    }
   } else {
-      // llama a la funcion generarx la cual genera el boletin tipo preescolar
-      obtener_pdf();
+    // llama a la funcion generarx la cual genera el boletin tipo preescolar
+    obtener_pdf();
   }
 }
 
@@ -717,17 +718,17 @@ function boletin() {
 function cuadro() {
 
 
-    // Validaciones
-    if ($("#periodos").val() == "-1") {
-        swal("Atención", "Por favor, seleccione un periodo.", "warning");
-        $('#periodos').css('background-color', 'lightcoral'); // Resaltar el campo
-        return; // Detiene la ejecución
-    }
-    if ($("#id_g").val() == "-1" || $("#id_g").val() == null) {
-        swal("Atención", "Por favor, seleccione un grado.", "warning");
-        $('#id_g').css('background-color', 'lightcoral'); // Resaltar el campo
-        return; // Detiene la ejecución
-    }
+  // Validaciones
+  if ($("#periodos").val() == "-1") {
+    swal("Atención", "Por favor, seleccione un periodo.", "warning");
+    $('#periodos').css('background-color', 'lightcoral'); // Resaltar el campo
+    return; // Detiene la ejecución
+  }
+  if ($("#id_g").val() == "-1" || $("#id_g").val() == null) {
+    swal("Atención", "Por favor, seleccione un grado.", "warning");
+    $('#id_g').css('background-color', 'lightcoral'); // Resaltar el campo
+    return; // Detiene la ejecución
+  }
 
   $('#loader').show();
   // esta función permite generar un un boletin en formato pdf
@@ -771,19 +772,19 @@ function cuadro() {
       dataType: "json",
       url: "listado_estudiantes_json.php",
       data: {
-	id_jornada: $("#jornada").val(),
-	curso: $("#id_c").val(),
-	semana: $("#semana").val(),
-	periodo: $("#periodos").val(),
-	grado: $("#id_g").val(),
-	years: $("#years").val()
+        id_jornada: $("#jornada").val(),
+        curso: $("#id_c").val(),
+        semana: $("#semana").val(),
+        periodo: $("#periodos").val(),
+        grado: $("#id_g").val(),
+        years: $("#years").val()
       },
       success: function (listado) {
-	//si se hizo la consulta arrojo la lista de estudiante
-	//console.log(listado.id_alumno);
-	//swal("Se ejecuto con exito");
-	// por cada alumno ejecuto este codigo
-	l = listado.id_alumno;
+        //si se hizo la consulta arrojo la lista de estudiante
+        //console.log(listado.id_alumno);
+        //swal("Se ejecuto con exito");
+        // por cada alumno ejecuto este codigo
+        l = listado.id_alumno;
       }
     });
 
@@ -794,25 +795,25 @@ function cuadro() {
       //console.log('algoritmo para el alumno ' + ii + " codigo " + l[ii]);
       // solicito un cuadro de dialogo para un estudiante
       $.ajax({
-	type: "POST",
-	async: false,
-	url: "cuadro.php",
-	data: {
-	  years: $("#years").val(),
-	  jornada: $("#jornada").val(),
-	  periodo: $("#periodos").val(),
-	  id_g: $("#id_g").val(),
-	  id_curso: $("#id_c").val(),
-	  id_alumno: l[ii]
-	},
+        type: "POST",
+        async: false,
+        url: "cuadro.php",
+        data: {
+          years: $("#years").val(),
+          jornada: $("#jornada").val(),
+          periodo: $("#periodos").val(),
+          id_g: $("#id_g").val(),
+          id_curso: $("#id_c").val(),
+          id_alumno: l[ii]
+        },
 
-	success: function (cuadro) {
-	  $("#avance").append(cuadro);
-	},
-	error: function (xhr, status) {
-	  swal('Disculpe, existió un problema' + status);
-	  console.log(xhr);
-	}
+        success: function (cuadro) {
+          $("#avance").append(cuadro);
+        },
+        error: function (xhr, status) {
+          swal('Disculpe, existió un problema' + status);
+          console.log(xhr);
+        }
 
       });
 
@@ -829,8 +830,8 @@ function cuadro() {
 function crear_pdf() {
   // esta función permite generar un un boletin en formato pdf
   // se almacena  en la variable año
-    // alamcena el año seleccionado ( año lectivo calendario A)
-    var a = 1;
+  // alamcena el año seleccionado ( año lectivo calendario A)
+  var a = 1;
   //var year = $("#years").val();
   // se almacena la variable periodos con el periodo academico
   // a seleccionar
@@ -848,18 +849,18 @@ function crear_pdf() {
   //  swal("Favor seleccione un periodo");
   //} else {
 
-    // se almacenan todas las variables dentro
-    // de la variable parametros
-    //var parametros = "year=" + year +
-//	"&periodos=" +
-//	periodos +
-//	"&grado=" + grados +
-//	"&jornada=" + jornada +
-//	"&curso=" + curso;
+  // se almacenan todas las variables dentro
+  // de la variable parametros
+  //var parametros = "year=" + year +
+  //	"&periodos=" +
+  //	periodos +
+  //	"&grado=" + grados +
+  //	"&jornada=" + jornada +
+  //	"&curso=" + curso;
 
   //  console.log("los parametros son : %s", parametros);
-    // abro boletin en una nueva ventana
-    // llamando para ello al archivo cetificado.php
+  // abro boletin en una nueva ventana
+  // llamando para ello al archivo cetificado.php
   //  window.open("generar_p.php?" + parametros);
   //} 
 
@@ -899,10 +900,10 @@ function lista_jornadas(id) {
       res = JSON.parse(respuesta);
 
       res.forEach((element) => {
-	console.log(element)
-	valor = element[0];
-	texto = element[1];
-	$(id).append("<option value = " + valor + ">" + texto + "</option>");
+        console.log(element)
+        valor = element[0];
+        texto = element[1];
+        $(id).append("<option value = " + valor + ">" + texto + "</option>");
       });
 
     },
@@ -927,7 +928,7 @@ function verificar_alumno(id_personax) {
     async: false,
     url: "verificar_alumno.php",
     data: {
-      id_persona : id_personax
+      id_persona: id_personax
     },
     // si ña respuesta es afirmativa
     success: function (respuesta) {

@@ -15,7 +15,8 @@ if($_POST["id_persona"]!== "") {
     $id_persona = $_POST["id_persona"]; 
 }else {
     $valido = false;
-    $respuesta['status'] = 32;    
+    $respuesta['status'] = 20;   
+    $respuesta['mensaje']="Error al obtener los datos de la persona"; 
 }
 
 $estrato = $_POST["estrato"];
