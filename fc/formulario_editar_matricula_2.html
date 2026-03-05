@@ -1,50 +1,89 @@
-<!DOCTYPE html>
+<div class="container">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item "><a class="page-link" onclick="editar_matricula(id_matricula,31);">1</a></li>
+            <li class="page-item active"><a class="page-link" onclick="editar_matricula(id_matricula,32);">2</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,33);">3</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,34);">4</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,35);">5</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,36);">6</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,37);">7</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,38);">8</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,39);">9</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,40);">10</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,41);">11</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,42);">12</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,43);">13</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,44);">14</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,45);">15</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,46);">16</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,47);">17</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,48);">18</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,49);">19</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,50);">20</a></li>
+            <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,51);">21</a></li>
+        </ul>
 
-<head>
-    <script src="./js/jquery-3.5.1.min.js"></script>
-    <script src="../boostrap/css/bootstrap.css" type="text/css"></script>
-    <script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>
-    <link href="css/style.min.css" rel="stylesheet" />
-    <link href="css/styles.css" rel="stylesheet" />
-    <link href="estilos.css" rel="stylesheet" />
-</head>
+    </nav>
+    <div class="row">
+        <h2>2. Datos acad&eacute;micos </h2>
 
-<body>
+        <div id="paginas">
+            <p>
+                Seleccione los elementos correspondintes a la matricula acad&eacute;mica
+            </p>
+
+            <form class="form-control">
+
+                <div class="row mb-3">
+                    <div class="col-sm-10 col-md-4 col-lg-3">
+                        <label class="Control-label">jornada</label>
+                        <select id="ac_jornada" class="form-control"
+                            style="background: transparent;color: darkgreen;border:  0px">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-10 col-md-4 col-lg-3">
+                        <label class="Control-label">Escolaridad</label>
+                        <select id="ac_escolaridad" class="form-control"
+                            style="background: transparent;color: darkgreen;border:  0px"
+                            onchange="lista_grados($('#ac_escolaridad').val(),'#ac_grado',$('#id_d').val());">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-10 col-md-4 col-lg-3">
+                        <label class="Control-label">Grado</label>
+                        <select id="ac_grado" class="form-control"
+                            style="background: transparent;color: darkgreen;border:  0px">
+
+                        </select>
+                    </div>
+                </div>
 
 
 
-    <div class="container">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
+                <div class="row mb-3">
+                    <div class="col-sm-10 col-md-4 col-lg-3">
+                        <label class="Control-label">curso</label>
+                        <select id="ac_curso" class="form-control"
+                            style="background: transparent;color: darkgreen;border:  0px">
+                            <option value="0" selected>A</option>
+                            <option value="1">B</option>
+                            <option value="2">C</option>
+                            <option value="3">D</option>
+                        </select>
+                    </div>
+                </div>
 
 
-                <li class="page-item "><a class="page-link" onclick="editar_matricula(31);">1</a></li>
-                <li class="page-item active"><a class="page-link" onclick="editar_matricula(32);">7</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(33);">8</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(34);">9</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula();">10</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(11);">11</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(12);">12</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(13);">13</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(14);">14</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(15);">15</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(16);">16</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(17);">17</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(18);">18</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(19);">19</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(20);">20</a></li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(21);">21</a></li>
+            </form>
 
-            </ul>
-        </nav>
+            </select>
 
-        <div class="row">
-            <h2>2. Afiliaciones</h2>
-
-            <div id="paginas">
-
-            </div>
         </div>
     </div>
-
-</body>
+</div>

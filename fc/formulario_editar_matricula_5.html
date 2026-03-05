@@ -10,19 +10,16 @@
 </head>
 
 <body>
-
-
-
     <div class="container">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
+
+
                 <li class="page-item "><a class="page-link" onclick="editar_matricula(id_matricula,31);">1</a></li>
                 <li class="page-item "><a class="page-link" onclick="editar_matricula(id_matricula,32);">2</a></li>
-                <li class="page-item active"><a class="page-link" onclick="editar_matricula(id_matricula,33);">3</a>
-                </li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,34);">4</a>
-                </li>
-                <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,35);">5</a>
+                <li class="page-item "><a class="page-link" onclick="editar_matricula(id_matricula,33);">3</a></li>
+                <li class="page-item "><a class="page-link" onclick="editar_matricula(id_matricula,34);"></a>4</a></li>
+                <li class="page-item active"><a class="page-link" onclick="editar_matricula(id_matricula,35);">5</a>
                 </li>
                 <li class="page-item disabled"><a class="page-link" onclick="editar_matricula(id_matricula,36);">6</a>
                 </li>
@@ -51,9 +48,15 @@
         </nav>
 
         <div class="row">
-            <h2>3. Afiliaciones</h2>
+            <h2>4. Datos del padre </h2>
 
             <div id="paginas">
+                <p>En este apartado seleccione el tipo de padre de acuerdo si ha estado registrado antes o no:</p>
+                <ul class="list-group">
+                    <li class="list-group-item "><a onclick="editar_matricula(35)">nuevo</a></li>
+                    <li class="list-group-item "><a onclick="editar_matricula(36)">registrado</a></li>
+                    <li class="list-group-item "><a onclick="editar_matricula(37)">omitir</a></li>
+                </ul>
 
             </div>
         </div>

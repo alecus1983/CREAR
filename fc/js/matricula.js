@@ -549,10 +549,13 @@ function editar_matricula(id_matricula, item) {
   // inicia el formulario
 
   // estructura de seleccion
-  switch (item) {
-    // 1. INFORMACION DEL ESTUDIANTE
+  // de acuerdo al item se carga un formulario
 
-    case 31: // cargo el primer formulario de matricula
+  switch (item) {
+
+    // 1. ACTUALIZAR DIRECCION
+
+    case 31:
 
       // borro el contenido de los divs
       $("#avance").html("");
@@ -560,16 +563,16 @@ function editar_matricula(id_matricula, item) {
       // cargo el formulario inicial de edicion de la matricula
       $("#avance").load("formulario_editar_matricula_1.html", function () {
 
-
-        // consulto la matricula
-        r = consultar_matricula(id_matricula);
-        // seleciono la persona
-        get_persona_alumno(r["id_alumno"], alumno);
-        // obtengo la direccion de la persona
-        get_direccion(alumno);
-        // asigno el codigo al alumno
-        alumno["id_alumno"] = r["id_alumno"];
-
+        /*
+                // consulto la matricula
+                r = consultar_matricula(id_matricula);
+                // seleciono la persona
+                get_persona_alumno(r["id_alumno"], alumno);
+                // obtengo la direccion de la persona
+                get_direccion(alumno);
+                // asigno el codigo al alumno
+                alumno["id_alumno"] = r["id_alumno"];
+        */
 
         // se carga  el formulario
         $("#form_editar").load("formulario_actualizar_direccion.html", function () {
@@ -608,22 +611,74 @@ function editar_matricula(id_matricula, item) {
             + alumno["id_alumno"] + ", con identificacion "
             + alumno["identificacion"] + "</p>");
           // agrego los botones 
+          $("#form_editar").append('<button id="editar_direccion" class="btn btn btn-dark" >agregar/actualizar</button>');
+          $("#editar_direccion").on("click", function () {
+            // 1. Definir los campos a validar
+            const camposAValidar = [
+              { id: 'ac_direccion', name: 'Dirección', type: 'text' },
+              { id: 'ac_barrio', name: 'Barrio', type: 'text' },
+              { id: 'ac_estrato', name: 'Estrato', type: 'select' }
 
-          $("#form_editar").append('<button id="editar_direccion" class="btn btn btn-dark" onclick="update_direccion(2,alumno,2);">agregar/actualizar</button>');
+            ];
+
+            // 2. Ejecutar la validación
+            if (validarFormulario(camposAValidar)) {
+              // Si la validación es exitosa, se actualizan los datos y se procede al siguiente paso
+              update_direccion(2, alumno, 2); // actualiza la direccion dentro de las matriculas
+              editar_matricula(id_matricula, 32); // Ir al siguiente paso
+            }
+          });
         });
-
       });
-
-
       break;
 
+    // DATOS ACADEMICOS
+
     case 32:
+      // borro el contenido del div
+      $("#avance").html("");
+      // borro el contenido del div
+      $("#tabla").html("");
+
+      // cargo el formulario 6 de matricula entonces realizo la funcion ...
+      $("#avance").load("formulario_editar_matricula_2.html", function () {
+        // llamo a la funcion de listar jornadas
+        lista_jornadas("#ac_jornada");
+        // llamo a la funcion lista escolaridad
+        // en el camobo  
+        lista_escolaridad("#ac_escolaridad");
+
+        // Se reemplaza el botón original por uno que primero valida
+        $("#paginas").append('<button type="button" class="btn btn-secondary">atras</button>');
+        $("#paginas").append('<button id="32-siguiente" class="btn btn btn-dark" >Siguiente</button>');
+
+        $("#32-siguiente").on('click', function () {
+          const camposAValidar = [
+            { id: 'ac_jornada', name: 'Jornada', type: 'select' },
+            { id: 'ac_escolaridad', name: 'Escolaridad', type: 'select' },
+            { id: 'ac_grado', name: 'Grado', type: 'select' },
+            { id: 'ac_curso', name: 'Curso', type: 'select' }
+          ];
+
+          if (validarFormulario(camposAValidar)) {
+            // Si la validación es exitosa, se actualizan los datos y se procede al siguiente paso
+            update_grado_matricula(); // actualiza el grado dentro de las matriculas
+            editar_matricula(id_matricula, 33); // Ir al siguiente paso
+          }
+        });
+      });
+      break;
+
+    case 33:
+
+      // ACTUALIZAR AFILIACIONES
+
       // criterio de inicio
       $("#avance").html("");
       $("#tabla").html("");
 
       // cargo en el div acance el formulario 7
-      $("#avance").load("formulario_editar_matricula_2.html", function () {
+      $("#avance").load("formulario_editar_matricula_3.html", function () {
         $("#paginas").load("formulario_actualizar_afiliaciones.html", function () {
           $("#paginas").prepend("<p>Se ha selecionado la persona <b>" + alumno["nombres"]
             + " " + alumno["apellidos"] + "</b>, con codigo " + alumno["id_persona"]
@@ -631,13 +686,32 @@ function editar_matricula(id_matricula, item) {
           // obtengo los datos de afiliacion en 
           // este formuulario 	
           get_afiliacion(alumno["id_persona"], 2);
+
+          $("#paginas").append("<button id='33-siguiente' class='btn btn btn-dark' >Siguiente</button>");
+          $("#paginas").append("<button id='33-atras' class='btn btn btn-secondary' >Atras</button>");
+
+          $("#33-atras").on('click', function () {
+            editar_matricula(id_matricula, 32);
+          });
+          $("#33-siguiente").on('click', function () {
+            const camposAValidar = [
+              { id: 'ac_eps', name: 'EPS', type: 'select' },
+              { id: 'ac_ips', name: 'IPS', type: 'select' },
+              { id: 'ac_tipo_sangre', name: 'Tipo de sangre', type: 'select' }
+            ];
+
+            if (validarFormulario(camposAValidar)) {
+              // Si la validación es exitosa, se actualizan los datos y se procede al siguiente paso
+              update_afiliaciones(); // actualiza las afiliaciones dentro de las matriculas
+              editar_matricula(id_matricula, 34); // Ir al siguiente paso
+            }
+          });
         });
-        $("#paginas").append()
       });
 
       break;
 
-    case 33:
+    case 34:
 
       // ACTUALIZAR ANTECEDENTES PATOLOGICOS
 
@@ -646,7 +720,7 @@ function editar_matricula(id_matricula, item) {
       $("#tabla").html("");
 
       // cargo en el div acance el formulario 7
-      $("#avance").load("formulario_editar_matricula_3.html", function () {
+      $("#avance").load("formulario_editar_matricula_4.html", function () {
 
         $("#paginas").load("formulario_actualizar_antecedentes.html", function () {
           $("#paginas").prepend("<p>Modificando antecedentes patologicos de <b>" + alumno["nombres"]
@@ -663,42 +737,41 @@ function editar_matricula(id_matricula, item) {
       break;
 
     // DATOS DEL PADRE
-    case 9:
+    case 35:
       $("#avance").html("");
       $("#tabla").html("");
-      $("#avance").load("formulario_matricula_9.html");
+      $("#avance").load("formulario_editar_matricula_5.html");
 
       break;
 
     // AGREGAR  PADRE
 
-    case 10:
+    case 36:
       $("#avance").html("");
       $("#tabla").html("");
-      $("#avance").load("formulario_matricula_10.html", function () {
+      $("#avance").load("formulario_editar_matricula_6html", function () {
         //	agrega el formulario de personas
         $("#paginas").load("formulario_agregar_persona.html", function () {
-          $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(9)">atras</button>');
-          $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="agregar_persona(12,padre)">agregar</button>');
+          $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="editar_matricula(34)">atras</button>');
+          $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="agregar_persona(36,padre)">agregar</button>');
         });
-
       });
       break;
 
     // PADRE REGISTRADO
 
-    case 11:
+    case 37:
       $("#avance").html("");
       $("#tabla").html("");
       // Cargar formulario_matricula_11.html
-      $("#avance").load("formulario_matricula_11.html", function () {
+      $("#avance").load("formulario_editar_matricula_7.html", function () {
 
-        $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(9)">atras</button>');
+        $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="editar_matricula(34)">atras</button>');
       });
       break;
 
     // PADRE SELECCIONADO
-    case 12:
+    case 38:
       $("#avance").html("");
       $("#tabla").html("");
       //  cargo el formulario 11 de matricula en el campo avance
@@ -715,7 +788,7 @@ function editar_matricula(id_matricula, item) {
       break;
 
     // DATOS DE LA MADRE
-    case 13:
+    case 39:
       $("#avance").html("");
       $("#tabla").html("");
       $("#avance").load("formulario_matricula_13.html");
@@ -723,7 +796,7 @@ function editar_matricula(id_matricula, item) {
 
     // MADRE NUEVA
 
-    case 14:
+    case 40:
       $("#avance").html("");
       $("#tabla").html("");
 
@@ -738,7 +811,7 @@ function editar_matricula(id_matricula, item) {
       break;
 
     // MADRE REGISTRADA
-    case 15:
+    case 41:
       $("#avance").html("");
       $("#tabla").html("");
       // Cargar formulario_matricula_15.html
@@ -749,7 +822,7 @@ function editar_matricula(id_matricula, item) {
       break;
 
     // MADRE SELECCIONADA
-    case 16:
+    case 42:
       $("#avance").html("");
       $("#tabla").html("");
       //  cargo el formulario 16 de matricula en el campo avance
@@ -767,14 +840,14 @@ function editar_matricula(id_matricula, item) {
 
     // DATOS DEL ACUDIENTE
 
-    case 17:
+    case 43:
       $("#avance").html("");
       $("#tabla").html("");
       $("#avance").load("formulario_matricula_17.html");
       break;
 
     // AGREGAR ACUDIENTE
-    case 18:
+    case 43:
       $("#avance").html("");
       $("#tabla").html("");
       $("#avance").load("formulario_matricula_18.html", function () {
@@ -789,7 +862,7 @@ function editar_matricula(id_matricula, item) {
 
     // ACUDIENTE SELECCIONADO
 
-    case 19:
+    case 44:
       $("#avance").html("");
       $("#tabla").html("");
       // Cargar formulario_matricula_3.html

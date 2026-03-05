@@ -641,7 +641,7 @@ function actualizar_antecedentes_patologicos(personax, ea) {
                     gestion_matriculas(9);
                 }
                 else {
-                    editar_matricula(personax["id_persona"], 34);
+                    editar_matricula(personax["id_persona"], 35);
                 }
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
@@ -975,6 +975,8 @@ function get_direccion(personax, form) {
 
 
 // funcion actualizar grado
+// actualiza el grado del estudiante
+
 
 function update_grado_matricula() {
 
@@ -989,20 +991,6 @@ function update_grado_matricula() {
 
     // salida por consola
     console.log("los datos del alumono son " + alumno.id_escolaridad + " codigo del grado " + alumno.id_grado + " codigo del curso" + alumno.id_curso);
-
-    /*
-    // si el boton de grado no ha sido digitado
-    if ($("#ac_grado").val() !== null) {
-
-        // muestro confirmacion
-        //swal("actualizacion grado", "se actualizo con exito el grado", "success");
-        // voy a la seccion 7 del formulario matricula
-        gestion_matriculas(7);
-    }
-    else {
-        swal("actualizacion  grado", "Por favor seleccione un grado", "error");
-    }
-    */
 }
 
 /**
@@ -1118,8 +1106,7 @@ function update_direccion(form, personax, ea) {
                             gestion_matriculas(6);
                         }
                         else {
-                            // edito la matricula
-                            editar_matricula(personax["id_alumno"], 32);
+
                         }
 
                         break;
