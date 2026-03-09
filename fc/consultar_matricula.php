@@ -37,8 +37,8 @@ if ($valido) {
         "id_jornada" => $matricula->id_jornada,
         "year" => $matricula->year,
         "mes" => $matricula->mes,
-        "retiro" => $matricula->retiro,
-        "id_curso" => $matricula->id_curso
+        "id_curso" => $matricula->id_curso,
+        "id_escolaridad" => $matricula->id_escolaridad
     );
     
     // encapsulo  la respuesta en modo json

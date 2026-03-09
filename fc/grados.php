@@ -103,7 +103,7 @@ class grados extends jornada
 	        $this->escolaridad =$dato["escolaridad"];
             $this->formato_boletin = $dato["formato_boletin"];
             $this->id_grado = $dato["id_grado"];
-            
+            $this->id_escolaridad = $dato["id_escolaridad"];
         }
     }
 

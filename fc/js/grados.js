@@ -16,7 +16,7 @@ function requisitos_grado() {
             semana: $("#semana").val()
         },
         // si los datos son correctos entonces ...
-        success: function(respuesta) {
+        success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 //swal('Datos actualizados');
@@ -43,7 +43,7 @@ function requisitos_grado() {
                 }
             }
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
         }
@@ -65,7 +65,7 @@ function agregar_requisito() {
             id_ms: $("#id_materia_mt").val(),
         },
         // si los datos son correctos entonces ...
-        success: function(respuesta) {
+        success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 swal('Actualizacion', 'Se insertaron los dastos con éxito', 'success');
@@ -91,7 +91,7 @@ function agregar_requisito() {
                 }
             }
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
         }
@@ -114,7 +114,7 @@ function eliminar_requisitos(id_materia, id_grado) {
             id_ms: id_materia,
         },
         // si los datos son correctos entonces ...
-        success: function(respuesta) {
+        success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 swal('Actualizacion', 'Se elimino los requisitos con éxito', 'success');
@@ -140,7 +140,7 @@ function eliminar_requisitos(id_materia, id_grado) {
                 }
             }
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
         }
@@ -165,7 +165,7 @@ function eliminar_grado() {
 
         },
         // si los datos son correctos entonces ...
-        success: function(respuesta) {
+        success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 swal('Actualizacion', 'Se eliminaron los dastos con éxito', 'success');
@@ -191,7 +191,7 @@ function eliminar_grado() {
                 }
             }
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
         }
@@ -200,8 +200,8 @@ function eliminar_grado() {
 }
 
 // Funcion para mostrar los grados creados
-function  gestionar_grados(){
-    
+function gestionar_grados() {
+
     // metodo ajax
     $.ajax({
         type: "POST",
@@ -216,10 +216,10 @@ function  gestionar_grados(){
             if (respuesta['status'] == 1) {
                 // coloco la respuesta en el div avance
                 $("#avance").html(respuesta['html']);
-		// limpio los segmentos restantes del
-		// formulario dinamico
-		$("#grafica").html("");
-		$("#tabla").html("");
+                // limpio los segmentos restantes del
+                // formulario dinamico
+                $("#grafica").html("");
+                $("#tabla").html("");
             } else {
                 if (respuesta['status'] == 21) {
                     swal('Escolaridad', 'Porfavor seleccione una escolaridad del menú que se encuentra a la izquierda,  dentro de DATOS.', 'error');
@@ -231,50 +231,56 @@ function  gestionar_grados(){
             console.log(xhr);
         }
     });
-    
+
 }
 
 
-// funcion que lista los grados en funcion de un id_escolaridad
-// que identifica la escolaridad de los estudiantes y 
+/**
+ * Obtiene la lista de grados desde el servidor según la escolaridad y el docente,
+ * y puebla un elemento select de HTML con los resultados.
+ * 
+ * @param {string|number} id_escolaridad - ID que identifica el nivel de escolaridad.
+ * @param {string} id - Selector CSS (ej. '#ac_grado') del elemento select a poblar.
+ * @param {string|number} id_docente - ID del docente para filtrar los grados asociados.
+ */
 function lista_grados(id_escolaridad, id, id_docente) {
 
-  // solicito la lista de escolaridad
+    // solicito la lista de escolaridad
 
-  $.ajax({
-    type: "POST",
-    async: false,
-    url: "lista_grados.php",
-    data: {
-      id_docente: id_docente,
-      id_escolaridad: id_escolaridad
-    },
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: "lista_grados.php",
+        data: {
+            id_docente: id_docente,
+            id_escolaridad: id_escolaridad
+        },
 
-    success: function (respuesta) {
+        success: function (respuesta) {
 
-      res = JSON.parse(respuesta);
+            res = JSON.parse(respuesta);
 
-      // si se realizo la respuesta
-      // almaceno la respuesta en la variable res
-      $(id).find('option').remove();
+            // si se realizo la respuesta
+            // almaceno la respuesta en la variable res
+            $(id).find('option').remove();
 
-      $(id).append("<option value = '-1'>Seleccione</option>");
-      
-      res.forEach((element) => {
-	      //console.log(element)
-	      valor = element[0];
-	      texto = element[1];
-	      $(id).append("<option value = " + valor + ">" + texto + "</option>");
-        });
+            $(id).append("<option value = '-1'>Seleccione</option>");
 
-        $(id).css('background-color', 'lightblue');
+            res.forEach((element) => {
+                //console.log(element)
+                valor = element[0];
+                texto = element[1];
+                $(id).append("<option value = " + valor + ">" + texto + "</option>");
+            });
 
-      },
-      error: function (xhr, status) {
-        swal('Disculpe, existió un problema' + status);
-        console.log(xhr);
-    }
-  });
+            $(id).css('background-color', 'lightblue');
+
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema' + status);
+            console.log(xhr);
+        }
+    });
 }
 
 // Variable global para saber qué grado se está editando
@@ -284,14 +290,14 @@ let id_grado_edicion = -1;
  * Función A: Carga los datos de la fila seleccionada en el formulario superior.
  * Debes agregar un botón en tu tabla HTML: onclick="preparar_edicion_grado(id, 'codigo', 'nombre','promovido', 'formato_boletin')"
  */
-function preparar_edicion_grado(id, codigo, nombre,promovido, formato_boletin) {
+function preparar_edicion_grado(id, codigo, nombre, promovido, formato_boletin) {
     // Asignamos los valores a los inputs (Asegúrate de corregir los IDs en listado_grados.php)
     // He asumido que cambiarás el primer input a id="codigo_grado" y el segundo a id="nombre_grado"
     $("#codigo_grado").val(codigo);
     $("#nombre_grado").val(nombre);
     $("#txt_nuevo_promovido").val(promovido);
     $("#formato_boletin").val(formato_boletin);
-    
+
     // Guardamos el ID en la variable global
     id_grado_edicion = id;
 
@@ -300,7 +306,7 @@ function preparar_edicion_grado(id, codigo, nombre,promovido, formato_boletin) {
     $("#btn_accion_grado").text("Guardar Cambios");
     $("#btn_accion_grado").removeClass("btn-outline-success").addClass("btn-success");
     $("#btn_accion_grado").attr("onclick", "ejecutar_edicion_grado()");
-    
+
     // Hacemos scroll hacia arriba para ver el formulario
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 }
@@ -310,7 +316,7 @@ function preparar_edicion_grado(id, codigo, nombre,promovido, formato_boletin) {
  * Función B: Envía los datos modificados al servidor (AJAX)
  */
 function ejecutar_edicion_grado() {
-    
+
     // Validaciones básicas
     let codigo = $("#codigo_grado").val();
     let nombre = $("#nombre_grado").val();
@@ -328,40 +334,40 @@ function ejecutar_edicion_grado() {
 
     $.ajax({
         type: "POST",
-        url: "edit_grado.php", 
+        url: "edit_grado.php",
         dataType: "json",
         data: {
             id_grado: id_grado_edicion,
             codigo: codigo,
             nombre: nombre,
-            promovido:promovido,
+            promovido: promovido,
             formato_boletin: formato_boletin
         },
-        success: function(respuesta) {
+        success: function (respuesta) {
             if (respuesta['status'] == 1) {
                 swal('Éxito', 'El grado ha sido actualizado', 'success');
-                
+
                 // Limpiar formulario y reiniciar estado
                 $("#codigo_grado").val("");
                 $("#nombre_grado").val("");
                 $("txt_nuevo_promovido").val("");
-               $("formato_boletin").val("");
-               
-               
+                $("formato_boletin").val("");
+
+
                 id_grado_edicion = -1;
-                
+
                 // Restaurar botón a estado "Agregar"
                 $("#btn_accion_grado").text("Agregar/Actualizar");
                 $("#btn_accion_grado").removeClass("btn-success").addClass("btn-outline-success");
                 $("#btn_accion_grado").attr("onclick", "actualizar_semana()"); // O la función original que tenías para agregar
 
                 // Recargar la tabla para ver cambios
-                gestionar_grados(); 
+                gestionar_grados();
             } else {
                 swal('Error', 'No se pudo actualizar. Código error: ' + respuesta['status'], 'error');
             }
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Error', 'Fallo de conexión con el servidor', 'error');
             console.log(xhr);
         }
@@ -370,17 +376,17 @@ function ejecutar_edicion_grado() {
 
 // Función para agregar un nuevo grado
 function agregar_grado() {
-    
+
     // Obtenemos los valores del formulario
     // Nota: Asegúrate de que estos IDs existan en tu archivo listado_grados.php
-    var codigo = $("#codigo_grado").val(); 
+    var codigo = $("#codigo_grado").val();
     var nombre = $("#nombre_grado").val();
-    var promovido = $("#txt_nuevo_promovido").val(); 
-    
+    var promovido = $("#txt_nuevo_promovido").val();
+
     // Tomamos la escolaridad seleccionada en el menú lateral o formulario
-    var id_escolaridad = $("#escolaridad").val(); 
+    var id_escolaridad = $("#escolaridad").val();
     var nombre_escolaridad = $("#escolaridad option:selected").text();
-    
+
     // Opcional: Input para formato boletin, si no existe enviamos 1 por defecto
     var formato = $("#txt_formato_boletin").length ? $("#txt_formato_boletin").val() : 1;
 
@@ -389,7 +395,7 @@ function agregar_grado() {
         swal('Atención', 'Por favor seleccione una escolaridad antes de agregar un grado', 'warning');
         return;
     }
-    
+
     if (codigo.trim() == "" || nombre.trim() == "") {
         swal('Campos Vacíos', 'El código y el nombre del grado son obligatorios', 'error');
         return;
@@ -408,22 +414,22 @@ function agregar_grado() {
             escolaridad: nombre_escolaridad,
             formato_boletin: formato
         },
-        success: function(respuesta) {
+        success: function (respuesta) {
             if (respuesta.status == 1) {
                 swal('Éxito', respuesta.msg, 'success');
-                
+
                 // Limpiamos los campos
                 $("#txt_nuevo_codigo").val("");
                 $("#txt_nuevo_nombre").val("");
                 $("#txt_nuevo_promovido").val("");
-                
+
                 // Recargamos la tabla de grados para ver el nuevo registro
                 gestionar_grados();
             } else {
                 swal('Error', respuesta.msg, 'error');
             }
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Error', 'Hubo un problema de conexión', 'error');
             console.log(xhr);
         }
@@ -432,7 +438,7 @@ function agregar_grado() {
 
 // Función para eliminar un grado con confirmación
 function del_grado(id_grado) {
-    
+
     // Usamos SweetAlert para confirmar la acción
     swal({
         title: "¿Está seguro?",
@@ -441,47 +447,47 @@ function del_grado(id_grado) {
         buttons: ["Cancelar", "Sí, eliminar"],
         dangerMode: true,
     })
-    .then((willDelete) => {
-        if (willDelete) {
-            // Si el usuario confirma, procedemos con AJAX
-            $.ajax({
-                type: "POST",
-                url: "eliminar_grado.php",
-                dataType: "json",
-                data: {
-                    id_grado: id_grado
-                },
-                success: function(respuesta) {
-                    if (respuesta.status == 1) {
-                        swal("Eliminado!", respuesta.msg, "success");
-                        // Recargamos la tabla para ver los cambios
-                        gestionar_grados(); 
-                        
-                        // Si estabas editando ese grado, limpiamos el formulario
-                        if (typeof id_grado_edicion !== 'undefined' && id_grado_edicion == id_grado) {
-                            $("#codigo_grado").val("");
-                            $("#nombre_grado").val("");
-                            $("#txt_nuevo_promovido").val("");
-                            $("#formato_boletin").val("");
-                            id_grado_edicion = -1;
-                            $("#btn_accion_grado").text("Agregar/Actualizar");
-                            $("#btn_accion_grado").removeClass("btn-success").addClass("btn-outline-success");
-                        }
+        .then((willDelete) => {
+            if (willDelete) {
+                // Si el usuario confirma, procedemos con AJAX
+                $.ajax({
+                    type: "POST",
+                    url: "eliminar_grado.php",
+                    dataType: "json",
+                    data: {
+                        id_grado: id_grado
+                    },
+                    success: function (respuesta) {
+                        if (respuesta.status == 1) {
+                            swal("Eliminado!", respuesta.msg, "success");
+                            // Recargamos la tabla para ver los cambios
+                            gestionar_grados();
 
-                    } else {
-                        swal("Error", respuesta.msg, "error");
+                            // Si estabas editando ese grado, limpiamos el formulario
+                            if (typeof id_grado_edicion !== 'undefined' && id_grado_edicion == id_grado) {
+                                $("#codigo_grado").val("");
+                                $("#nombre_grado").val("");
+                                $("#txt_nuevo_promovido").val("");
+                                $("#formato_boletin").val("");
+                                id_grado_edicion = -1;
+                                $("#btn_accion_grado").text("Agregar/Actualizar");
+                                $("#btn_accion_grado").removeClass("btn-success").addClass("btn-outline-success");
+                            }
+
+                        } else {
+                            swal("Error", respuesta.msg, "error");
+                        }
+                    },
+                    error: function (xhr, status) {
+                        swal("Error de conexión", "No se pudo comunicar con el servidor.", "error");
+                        console.log(xhr);
                     }
-                },
-                error: function(xhr, status) {
-                    swal("Error de conexión", "No se pudo comunicar con el servidor.", "error");
-                    console.log(xhr);
-                }
-            });
-        } else {
-            // Usuario canceló
-            swal("Operación cancelada", "El grado está a salvo :)", "info");
-        }
-    });
+                });
+            } else {
+                // Usuario canceló
+                swal("Operación cancelada", "El grado está a salvo :)", "info");
+            }
+        });
 }
 
 

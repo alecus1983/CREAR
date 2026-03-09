@@ -239,8 +239,10 @@ function cambio_datos(repo, personax, form) {
 
 
                 respuesta['json'].forEach(id => {
+                    // si el formulario es mayor a 30 es del formulario de editar matriculas
+                    let funcion_seleccion = (form < 30) ? "seleccionar_persona" : "seleccionar_persona_editar";
                     // se agrega fila a la tabla
-                    $('#lista_e').append("<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-success' onclick='seleccionar_persona(" + id[3] + ",  personax, " + form + ");'>seleccionar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
+                    $('#lista_e').append("<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-success' onclick='" + funcion_seleccion + "(" + id[3] + ",  " + respuesta['persona'] + ", " + form + ");'>seleccionar</button></td></tr>");
 
                 });
 
@@ -531,7 +533,12 @@ function valida_actualizar_persona() {
 // Función para actualizar los datos de una persona
 // con relación a sus afiliaciones a distintas entidades
 // 
-function actualizar_afiliaciones(personax) {
+/**
+ * Actualiza los datos de afiliación de una persona.
+ * @param {Object} personax - El objeto persona con los datos a actualizar.
+ * @param {number} ea - El estado de acción (1 para flujo normal, 2 para flujo de edición).
+ */
+function actualizar_afiliaciones(personax, ea) {
     // Se precargan los atributos del formulario
     personax.sisben = $("#ac_sisben").val();
     personax.vive_con = $("#ac_vive_con").val();
@@ -577,8 +584,12 @@ function actualizar_afiliaciones(personax) {
             // Si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 swal("Completado", "Se completó el registro", "success");
-                // voy a la seccion 8 del formulario matricula
-                gestion_matriculas(8);
+                // Redirección condicionada por el parámetro ea
+                if (ea == 1) {
+                    gestion_matriculas(8);
+                } else if (ea == 2) {
+                    editar_matricula(personax['id_matricula'], 34);
+                }
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
                 swal('Error', errorMap[respuesta['status']], 'error');
@@ -637,11 +648,11 @@ function actualizar_antecedentes_patologicos(personax, ea) {
             if (respuesta['status'] == 1) {
                 swal("Completado", "Se completó el registro", "success");
                 // voy a la seccion 8 del formulario matricula
-                if (ea = 1) {
+                if (ea == 1) {
                     gestion_matriculas(9);
                 }
                 else {
-                    editar_matricula(personax["id_persona"], 35);
+                    editar_matricula(personax["id_matricula"], 35);
                 }
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
@@ -839,6 +850,47 @@ function seleccionar_persona(id, personax, form) {
         //gestion_editar_matricula(form);
     }
 }
+
+/**
+ * Función que permite obtener los datos de una persona de acuerdo a su id,
+ * vincularla al alumno en la base de datos como padre, y saltar al item del formulario de edición.
+ * 
+ * @param {number|string} id - El ID de la persona seleccionada.
+ * @param {Object} personax - El objeto donde se almacenarán los datos (padre/madre).
+ * @param {number} form - El ítem del formulario al que saltar después de seleccionar.
+ */
+function seleccionar_persona_editar(id, personax, form) {
+    // Cargo el id de la persona
+    personax["id_persona"] = id;
+    // Obtengo los datos de la persona
+    get_persona(id, personax);
+
+    // Vinculo la persona al alumno en la base de datos
+    $.ajax({
+        type: "POST",
+        url: "vincular_padre.php",
+        dataType: "json",
+        data: {
+            id_persona: id,
+            id_hijo: alumno["id_persona"]
+        },
+        success: function (respuesta) {
+            if (respuesta['status'] == 1) {
+                swal("seleccion", "Se selecciono y vinculo la persona " + id + " con el alumno de código " + alumno["id_persona"], 'success');
+                // Salto al siguiente item del formulario de edición
+                editar_matricula(alumno["id_matricula"], form);
+            } else {
+                swal('Error', 'No se pudo vincular la persona al alumno: ' + (respuesta['mensaje'] || ''), 'error');
+            }
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema en la vinculación');
+            console.log(xhr);
+        }
+    });
+
+}
+
 
 
 // solicito los datos para el formaulario de afiliacion
@@ -1167,7 +1219,7 @@ function get_afiliaciones(id, form) {
 
                     case 2:
                         // se carga  el formulario
-                        $("#paginas").load("formulario_actualizar_antecedentes.html", function () {
+                        $("#paginas").load("formulario_actualizar_afiliaciones.html", function () {
                             // obtengo el valor de los antecedentes medicos
                             $("#ac_medicos").val(respuesta["antecedents_patologicos_medicos"]);
                             // obtengo el valor del barrio
@@ -1239,22 +1291,19 @@ function get_antecedentes(id, form) {
                 switch (form) {
 
                     case 2:
-                        // se carga  el formulario
-                        $("#paginas").load("formulario_actualizar_antecedentes.html", function () {
-                            // obtengo el valor de los antecedentes medicos
-                            $("#ac_medicos").val(respuesta["antecedents_patologicos_medicos"]);
-                            // obtengo el valor de los antecedentes quirurgicos
-                            $("#ac_quirurgicos").val(respuesta["antecedentes_patologicos_quirurgicos"]);
-                            // obtengo el valor de los antecedentes quirurgicos
-                            $("#ac_toxicos").val(respuesta["antecedentes_patologicos_toxicos"]);
-                            // obtengo el valor de los antecedentes quirurgicos
-                            $("#ac_psiquiatricos").val(respuesta["antecedentes_patologicos_psiquiatricos"]);
-                            // obtengo el valor de los antecedentes quirurgicos
-                            $("#ac_psicologicos").val(respuesta["antecedentes_patologicos_psicologicos"]);
-                            // obtengo el valor de los antecedentes quirurgicos
-                            $("#ac_morbilidad").val(respuesta["antecendentes_patologicos_morbilidad"]);
+                        // obtengo el valor de los antecedentes medicos
+                        $("#ac_medicos").val(respuesta["antecedents_patologicos_medicos"]);
+                        // obtengo el valor de los antecedentes quirurgicos
+                        $("#ac_quirurgicos").val(respuesta["antecedentes_patologicos_quirurgicos"]);
+                        // obtengo el valor de los antecedentes quirurgicos
+                        $("#ac_toxicos").val(respuesta["antecedentes_patologicos_toxicos"]);
+                        // obtengo el valor de los antecedentes quirurgicos
+                        $("#ac_psiquiatricos").val(respuesta["antecedentes_patologicos_psiquiatricos"]);
+                        // obtengo el valor de los antecedentes quirurgicos
+                        $("#ac_psicologicos").val(respuesta["antecedentes_patologicos_psicologicos"]);
+                        // obtengo el valor de los antecedentes quirurgicos
+                        $("#ac_morbilidad").val(respuesta["antecendentes_patologicos_morbilidad"]);
 
-                        });
 
                         break;
                 }

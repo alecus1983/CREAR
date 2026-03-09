@@ -67,6 +67,9 @@ class matricula extends curso {
             $this->mes = $dato["mes"];
             $this->retiro = $dato["retiro"];
             $this->id_curso = $dato["id_curso"];
+
+            // Obtengo los datos adicionales del grado (escolaridad, etc.)
+            $this->get_grado_id($this->id_grado);
         }
     }
     
