@@ -301,7 +301,15 @@ function formulario_agregar_persona() {
 // formulario : indica el formulario de destino
 // personax : inica la persona  a agregar como un objeto
 
-function agregar_persona(formulario, personax) {
+/**
+ * Agrega una nueva persona a la base de datos a través de una petición AJAX.
+ * Valida que los campos obligatorios del formulario estén completos.
+ * 
+ * @param {number} formulario - El índice o ID del formulario/paso al que redirigir tras el registro exitoso.
+ * @param {Object} personax - (Opcional) Referencia al objeto global (alumno, padre, madre, acudiente) que recibirá los datos creados.
+ * @param {number} ea - El estado de acción (1 para flujo normal, 2 para flujo de edición).
+ */
+function agregar_persona(formulario, personax, ea) {
 
 
     // Si el formulario no es válido, detenemos la ejecución con 'return'.
@@ -353,7 +361,11 @@ function agregar_persona(formulario, personax) {
                     // retornada
                     seleccionar_persona(respuesta["id_persona"], personax, 4);
                     // voy al formulario indicado
-                    gestion_matriculas(formulario);
+                    if (ea == 1) {
+                        gestion_matriculas(formulario);
+                    } else if (ea == 2) {
+                        editar_matricula(alumno["id_matricula"], formulario);
+                    }
                 }
 
 
@@ -1326,14 +1338,23 @@ function get_antecedentes(id, form) {
 }
 
 // funcion para copiar los datos de un acudinte
-function cp_acudiente(personax) {
+/**
+ * Copia los datos de una persona al objeto acudiente y redirige al siguiente paso.
+ * @param {Object} personax - El objeto persona (padre o madre).
+ * @param {number} ea - El estado de acción (1 para flujo normal, 2 para flujo de edición).
+ */
+function cp_acudiente(personax, ea) {
     // tomo los datos del padre
     acudiente = personax;
 
-
-    // va la pagina 19 de gestion matriculas
-    gestion_matriculas(19);
-
+    // Redirección condicionada por el parámetro ea
+    if (ea == 1) {
+        // va la pagina 19 de gestion matriculas
+        gestion_matriculas(19);
+    } else if (ea == 2) {
+        // va la pagina 44 de editar matricula
+        editar_matricula(alumno["id_matricula"], 44);
+    }
 }
 
 
