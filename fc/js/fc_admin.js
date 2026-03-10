@@ -365,6 +365,30 @@ function matricular() {
   });
 }
 
+/**
+ * Función que realiza la edición de la matrícula de un alumno.
+ * Envía los datos del objeto global 'alumno' al servidor.
+ */
+function editar_matricula() {
+  $.ajax({
+    type: "POST",
+    url: "editar_matricula.php",
+    dataType: "json",
+    data: alumno,
+    success: function (respuesta) {
+      if (respuesta['status'] == 1) {
+        swal('Se actualizó la matrícula con éxito');
+      } else {
+        swal('Error: ' + respuesta['message']);
+      }
+    },
+    error: function (xhr, status) {
+      swal('Disculpe, existió un problema al actualizar la matrícula');
+      console.log(xhr);
+    }
+  });
+}
+
 // muesta el formulario de docentes en un grado 
 function matricula_docente() {
 
