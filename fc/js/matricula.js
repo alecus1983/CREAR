@@ -861,7 +861,6 @@ function flujo_editar_matricula(id_matricula, item) {
           $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="flujo_editar_matricula(alumno[\'id_matricula\'],42)">atras</button>');
           $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="agregar_persona(45,acudinte,2)">agregar</button>');
         });
-
       });
       break;
 
@@ -875,17 +874,6 @@ function flujo_editar_matricula(id_matricula, item) {
         $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="flujo_editar_matricula(alumno[\'id_matricula\'],42)">atras</button>');
         $("#paginas").append('<button type="button" class="btn btn-dark" onclick="flujo_editar_matricula(alumno[\'id_matricula\'],45);">siguiente</button>');
 
-      });
-      break;
-
-
-    case 46:
-      $("#avance").html("");
-      $("#tabla").html("");
-      // Cargar formulario_editar_matricula_16.html
-      $("#avance").load("formulario_editar_matricula_16.html", function () {
-
-        $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="editar_matricula(alumno[id_matricula],39)  ">atras</button>');
       });
       break;
 

@@ -325,15 +325,15 @@ function agregar_persona(formulario, personax, ea) {
 
     // almaceno los datos en el json
     // a partir de los campos del formulario
-    persona.nombres = $("#ad_nombres").val();
-    persona.apellidos = $("#ad_apellidos").val();
-    persona.tipo_identificacion = $("#ad_tipo_identificacion").val();
-    persona.identificacion = $("#ad_identificacion").val();
-    persona.correo = $("#ad_correo").val();
-    persona.i_correo = $("#ad_i_correo").val();
-    persona.celular = $("#ad_celular").val();
-    persona.telefono = $("#ad_telefono").val();
-    persona.nacimiento = $("#ad_nacimiento").val();
+    persona.nombres = ($("#ad_nombres").val() || "");
+    persona.apellidos = ($("#ad_apellidos").val() || "");
+    persona.tipo_identificacion = ($("#ad_tipo_identificacion").val() || "");
+    persona.identificacion = ($("#ad_identificacion").val() || "");
+    persona.correo = ($("#ad_correo").val() || "");
+    persona.i_correo = ($("#ad_i_correo").val() || "");
+    persona.celular = ($("#ad_celular").val() || "");
+    persona.telefono = ($("#ad_telefono").val() || "");
+    persona.nacimiento = ($("#ad_nacimiento").val() || "");
 
     // envio datos 
     $.ajax({
@@ -433,6 +433,11 @@ function actualizar_persona() {
                 //$("#avance").html(respuesta['html']);
                 //gestion_semanas();
                 swal("Completado", respuesta["html"], "success");
+                // borro el contenido del div tabla
+                $("#tabla").html("");
+                // cambio el atributo del boton agregar persona
+                $("#agregar_persona").attr("class", "btn btn-outline-dark");
+
             } else {
                 if (respuesta['status'] == 20) {
                     swal('Error', 'no se pudo actualizar la semana', 'error');
@@ -1071,13 +1076,13 @@ function validarFormularioDireccion() {
     let errores = {};
 
     // 2. Validar Dirección
-    const direccion = $('#ac_direccion').val().trim();
+    const direccion = ($('#ac_direccion').val() || "").trim();
     if (direccion === '') {
         errores.direccion = 'La dirección de residencia es obligatoria.';
     }
 
     // 3. Validar Barrio
-    const barrio = $('#ac_barrio').val().trim();
+    const barrio = ($('#ac_barrio').val() || "").trim();
     if (barrio === '') {
         errores.barrio = 'El nombre del barrio es obligatorio.';
     }
@@ -1387,89 +1392,95 @@ function limpiarError(campoId) {
  * @returns {boolean} - Devuelve true si el formulario es válido, false en caso contrario.
  */
 function validarFormularioPersona() {
-    let esValido = true;
+    try {
+        let esValido = true;
 
-    // Limpiar errores previos antes de volver a validar
-    $('.form-control').each(function () {
-        limpiarError($(this).attr('id'));
-    });
+        // Limpiar errores previos antes de volver a validar
+        $('.form-control').each(function () {
+            limpiarError($(this).attr('id'));
+        });
 
-    // 1. Validación de Nombres (ad_nombres)
-    const nombres = $("#ad_nombres").val().trim();
-    if (nombres === "") {
-        mostrarError('ad_nombres', 'El nombre es obligatorio.');
-        esValido = false;
-    } else if (nombres.length < 3) {
-        mostrarError('ad_nombres', 'El nombre debe tener al menos 3 caracteres.');
-        esValido = false;
-    }
-
-    // 2. Validación de Apellidos (ad_apellidos)
-    const apellidos = $("#ad_apellidos").val().trim();
-    if (apellidos === "") {
-        mostrarError('ad_apellidos', 'El apellido es obligatorio.');
-        esValido = false;
-    } else if (apellidos.length < 3) {
-        mostrarError('ad_apellidos', 'El apellido debe tener al menos 3 caracteres.');
-        esValido = false;
-    }
-
-    // 3. Validación de Identificación (ad_identificacion)
-    const identificacion = $("#ad_identificacion").val().trim();
-    if (identificacion === "") {
-        mostrarError('ad_identificacion', 'El número de identificación es obligatorio.');
-        esValido = false;
-    } else if (!/^\d+$/.test(identificacion)) { // Expresión regular para verificar si son solo números
-        mostrarError('ad_identificacion', 'La identificación solo debe contener números.');
-        esValido = false;
-    }
-
-    // 4. Validación de Correo Personal (ad_correo) - Opcional pero si se escribe, debe ser válido
-    const correo = $("#ad_correo").val().trim();
-    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (correo !== "" && !regexCorreo.test(correo)) {
-        mostrarError('ad_correo', 'El formato del correo no es válido.');
-        esValido = false;
-    }
-
-    // 5. Validación de Correo Institucional (ad_i_correo) - Opcional
-    const iCorreo = $("#ad_i_correo").val().trim();
-    if (iCorreo !== "" && !regexCorreo.test(iCorreo)) {
-        mostrarError('ad_i_correo', 'El formato del correo institucional no es válido.');
-        esValido = false;
-    }
-
-    // 6. Validación de Celular (ad_celular)
-    const celular = $("#ad_celular").val().trim();
-    if (celular === "") {
-        mostrarError('ad_celular', 'El número de celular es obligatorio.');
-        esValido = false;
-    } else if (!/^\d{10}$/.test(celular)) { // Valida que sean exactamente 10 dígitos numéricos
-        mostrarError('ad_celular', 'El celular debe contener 10 dígitos numéricos.');
-        esValido = false;
-    }
-
-    // 7. Validación de Teléfono Fijo (ad_telefono) - Opcional
-    const telefono = $("#ad_telefono").val().trim();
-    if (telefono !== "" && !/^\d+$/.test(telefono)) {
-        mostrarError('ad_telefono', 'El teléfono fijo solo debe contener números.');
-        esValido = false;
-    }
-
-    // 8. Validación de Fecha de Nacimiento (ad_nacimiento)
-    const nacimiento = $("#ad_nacimiento").val();
-    if (nacimiento === "") {
-        mostrarError('ad_nacimiento', 'La fecha de nacimiento es obligatoria.');
-        esValido = false;
-    } else {
-        const fechaNacimiento = new Date(nacimiento);
-        const fechaMinima = new Date('1920-01-01');
-        const fechaActual = new Date();
-        if (fechaNacimiento < fechaMinima || fechaNacimiento > fechaActual) {
-            mostrarError('ad_nacimiento', 'La fecha de nacimiento no es válida.');
+        // 1. Validación de Nombres (ad_nombres)
+        const nombres = ($("#ad_nombres").val() || "").trim();
+        if (nombres === "") {
+            mostrarError('ad_nombres', 'El nombre es obligatorio.');
+            esValido = false;
+        } else if (nombres.length < 3) {
+            mostrarError('ad_nombres', 'El nombre debe tener al menos 3 caracteres.');
             esValido = false;
         }
-    }
 
-    return esValido;
+        // 2. Validación de Apellidos (ad_apellidos)
+        const apellidos = ($("#ad_apellidos").val() || "").trim();
+        if (apellidos === "") {
+            mostrarError('ad_apellidos', 'El apellido es obligatorio.');
+            esValido = false;
+        } else if (apellidos.length < 3) {
+            mostrarError('ad_apellidos', 'El apellido debe tener al menos 3 caracteres.');
+            esValido = false;
+        }
+
+        // 3. Validación de Identificación (ad_identificacion)
+        const identificacion = ($("#ad_identificacion").val() || "").trim();
+        if (identificacion === "") {
+            mostrarError('ad_identificacion', 'El número de identificación es obligatorio.');
+            esValido = false;
+        } else if (!/^\d+$/.test(identificacion)) { // Expresión regular para verificar si son solo números
+            mostrarError('ad_identificacion', 'La identificación solo debe contener números.');
+            esValido = false;
+        }
+
+        // 4. Validación de Correo Personal (ad_correo) - Opcional pero si se escribe, debe ser válido
+        const correo = ($("#ad_correo").val() || "").trim();
+        const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (correo !== "" && !regexCorreo.test(correo)) {
+            mostrarError('ad_correo', 'El formato del correo no es válido.');
+            esValido = false;
+        }
+
+        // 5. Validación de Correo Institucional (ad_i_correo) - Opcional
+        const iCorreo = ($("#ad_i_correo").val() || "").trim();
+        if (iCorreo !== "" && !regexCorreo.test(iCorreo)) {
+            mostrarError('ad_i_correo', 'El formato del correo institucional no es válido.');
+            esValido = false;
+        }
+
+        // 6. Validación de Celular (ad_celular)
+        const celular = ($("#ad_celular").val() || "").trim();
+        if (celular === "") {
+            mostrarError('ad_celular', 'El número de celular es obligatorio.');
+            esValido = false;
+        } else if (!/^\d{10}$/.test(celular)) { // Valida que sean exactamente 10 dígitos numéricos
+            mostrarError('ad_celular', 'El celular debe contener 10 dígitos numéricos.');
+            esValido = false;
+        }
+
+        // 7. Validación de Teléfono Fijo (ad_telefono) - Opcional
+        const telefono = ($("#ad_telefono").val() || "").trim();
+        if (telefono !== "" && !/^\d+$/.test(telefono)) {
+            mostrarError('ad_telefono', 'El teléfono fijo solo debe contener números.');
+            esValido = false;
+        }
+
+        // 8. Validación de Fecha de Nacimiento (ad_nacimiento)
+        const nacimiento = $("#ad_nacimiento").val();
+        if (nacimiento === "") {
+            mostrarError('ad_nacimiento', 'La fecha de nacimiento es obligatoria.');
+            esValido = false;
+        } else {
+            const fechaNacimiento = new Date(nacimiento);
+            const fechaMinima = new Date('1920-01-01');
+            const fechaActual = new Date();
+            if (fechaNacimiento < fechaMinima || fechaNacimiento > fechaActual) {
+                mostrarError('ad_nacimiento', 'La fecha de nacimiento no es válida.');
+                esValido = false;
+            }
+        }
+
+        return esValido;
+    } catch (error) {
+        // En caso de un error inesperado (como elementos faltantes en el DOM)
+        console.error("Error en validarFormularioPersona:", error);
+        return false;
+    }
 }
