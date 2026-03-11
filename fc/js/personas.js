@@ -364,7 +364,7 @@ function agregar_persona(formulario, personax, ea) {
                     if (ea == 1) {
                         gestion_matriculas(formulario);
                     } else if (ea == 2) {
-                        editar_matricula(alumno["id_matricula"], formulario);
+                        flujo_editar_matricula(alumno["id_matricula"], formulario);
                     }
                 }
 
@@ -600,7 +600,7 @@ function actualizar_afiliaciones(personax, ea) {
                 if (ea == 1) {
                     gestion_matriculas(8);
                 } else if (ea == 2) {
-                    editar_matricula(personax['id_matricula'], 34);
+                    flujo_editar_matricula(personax['id_matricula'], 34);
                 }
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
@@ -664,7 +664,7 @@ function actualizar_antecedentes_patologicos(personax, ea) {
                     gestion_matriculas(9);
                 }
                 else {
-                    editar_matricula(personax["id_matricula"], 35);
+                    flujo_editar_matricula(personax["id_matricula"], 35);
                 }
             } else if (errorMap[respuesta['status']]) {
                 // Si el código de error existe en el mapa
@@ -859,7 +859,7 @@ function seleccionar_persona(id, personax, form) {
         gestion_matriculas(form);
     } else {
         // en el caso de editar las matriculas
-        //gestion_editar_matricula(form);
+        //gestion_flujo_editar_matricula(form);
     }
 }
 
@@ -890,7 +890,7 @@ function seleccionar_persona_editar(id, personax, form) {
             if (respuesta['status'] == 1) {
                 swal("seleccion", "Se selecciono y vinculo la persona " + id + " con el alumno de código " + alumno["id_persona"], 'success');
                 // Salto al siguiente item del formulario de edición
-                editar_matricula(alumno["id_matricula"], form);
+                flujo_editar_matricula(alumno["id_matricula"], form);
             } else {
                 swal('Error', 'No se pudo vincular la persona al alumno: ' + (respuesta['mensaje'] || ''), 'error');
             }
@@ -1353,7 +1353,7 @@ function cp_acudiente(personax, ea) {
         gestion_matriculas(19);
     } else if (ea == 2) {
         // va la pagina 44 de editar matricula
-        editar_matricula(alumno["id_matricula"], 46);
+        flujo_editar_matricula(alumno["id_matricula"], 46);
     }
 }
 
