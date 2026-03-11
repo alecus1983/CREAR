@@ -1353,7 +1353,7 @@ function cp_acudiente(personax, ea) {
         gestion_matriculas(19);
     } else if (ea == 2) {
         // va la pagina 44 de editar matricula
-        editar_matricula(alumno["id_matricula"], 44);
+        editar_matricula(alumno["id_matricula"], 46);
     }
 }
 

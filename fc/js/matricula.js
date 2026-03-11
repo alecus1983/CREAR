@@ -865,13 +865,24 @@ function editar_matricula(id_matricula, item) {
       });
       break;
 
-    // ACUDIENTE SELECCIONADO
-
+    // ACUDIENTE REGISTRADO
     case 45:
       $("#avance").html("");
       $("#tabla").html("");
-      // Cargar formulario_matricula_3.html
+      // Cargar formulario_matricula_15.html
       $("#avance").load("formulario_editar_matricula_15.html", function () {
+
+        $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="editar_matricula(alumno[id_matricula],39)  ">atras</button>');
+      });
+      break;
+
+    // ACUDIENTE SELECCIONADO
+
+    case 46:
+      $("#avance").html("");
+      $("#tabla").html("");
+      // Cargar formulario_matricula_3.html
+      $("#avance").load("formulario_editar_matricula_16.html", function () {
 
         // cargo el contenido dentro la seccion paginas dentro del formulario
         $("#paginas").html("<p>Se ha selecionado la persona <b>"
