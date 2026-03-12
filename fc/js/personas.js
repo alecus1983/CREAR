@@ -347,7 +347,9 @@ function agregar_persona(formulario, personax, ea) {
             if (respuesta['status'] == 1) {
                 // si se agrego la persona correctamente
                 swal('Actualizacion', 'Se agrego a la persona correctamente', 'success');
-
+                // cambio el boton de agregar persona por el de actualizar persona
+                $("#agregar_persona").attr("onclick", "formulario_actualizar_persona();");
+                $("#agregar_persona").html("formulario actualizar persona");
                 // valido si esta definido la persona x
                 // esto es para el formulario de matricula
                 if (typeof personax === 'undefined') {
@@ -434,7 +436,7 @@ function actualizar_persona() {
                 //gestion_semanas();
                 swal("Completado", respuesta["html"], "success");
                 // borro el contenido del div tabla
-                $("#tabla").html("");
+                // $("#tabla").html("");
                 // cambio el atributo del boton agregar persona
                 $("#agregar_persona").attr("class", "btn btn-outline-dark");
 
@@ -831,6 +833,10 @@ function eliminar_persona(id_personas) {
                             }
                             if (respuesta['status'] == 21) {
                                 swal('Persona', 'Por favor seleccione una persona', 'error');
+                            }
+                            if (respuesta['status'] == 22) {
+                                let mensaje = 'No se puede eliminar la persona porque está registrada como ' + respuesta['tipo_vinculo'];
+                                swal('Restricción', mensaje, 'warning');
                             }
 
                         }

@@ -4,7 +4,8 @@
 // Representa a las personas que intervienen en la organización
 // Se han implementado mejoras de seguridad, manejo de errores y refactorización.
 
-class personas extends imcrea {
+class personas extends imcrea
+{
 
     // Atributos
     public $id_persona;
@@ -53,7 +54,8 @@ class personas extends imcrea {
      * Constructor de la clase.
      * Hereda parámetros de la clase padre y inicializa los atributos.
      */
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
 
         // Inicializar atributos a valores por defecto para un estado consistente
@@ -104,7 +106,8 @@ class personas extends imcrea {
      *
      * @return array Un array de arrays con nombres, apellidos, identificación e id_personas.
      */
-    public function buscar_persona() {
+    public function buscar_persona()
+    {
         try {
             $q = "SELECT nombres, apellidos, identificacion, id_personas FROM personas WHERE (nombres LIKE ? AND apellidos LIKE ?) AND identificacion LIKE ? LIMIT 25";
             $stmt = $this->_db->prepare($q);
@@ -113,22 +116,23 @@ class personas extends imcrea {
                 throw new Exception("Error al preparar la consulta de búsqueda de persona: " . $this->_db->error);
             }
 
-            $nombres_param = "%".$this->nombres."%";
-            $apellidos_param = "%".$this->apellidos."%";
-            $identificacion_param = "%".$this->identificacion."%";
-            
+            $nombres_param = "%" . $this->nombres . "%";
+            $apellidos_param = "%" . $this->apellidos . "%";
+            $identificacion_param = "%" . $this->identificacion . "%";
+
             $stmt->bind_param("sss", $nombres_param, $apellidos_param, $identificacion_param);
             $stmt->execute();
             $result = $stmt->get_result();
 
             $aa = array();
-            while($resultado = $result->fetch_array(MYSQLI_NUM)){
+            while ($resultado = $result->fetch_array(MYSQLI_NUM)) {
                 array_push($aa, array($resultado[0], $resultado[1], $resultado[2], $resultado[3]));
             }
 
             $stmt->close();
             return $aa;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             error_log("Error en buscar_persona: " . $e->getMessage());
             return []; // Retorna un array vacío en caso de error
         }
@@ -140,7 +144,8 @@ class personas extends imcrea {
      * @param int $id El ID de la persona.
      * @return array|null Un array asociativo con los datos de la persona o null si no se encuentra.
      */
-    public function get_persona_por_id($id){
+    public function get_persona_por_id($id)
+    {
         try {
             if (!is_numeric($id)) {
                 throw new InvalidArgumentException("El ID de la persona debe ser un valor numérico.");
@@ -201,22 +206,24 @@ class personas extends imcrea {
                 $this->antecedentes_patologicos_psicologicos = $a['antecedentes_patologicos_psicologicos'];
                 $this->antecedentes_patologicos_morbilidad = $a['antecedentes_patologicos_morbilidad'];
             }
-            
+
             $stmt->close();
             return $a; // Retorna el array asociativo con los datos
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             error_log("Error en get_persona_por_id: " . $e->getMessage());
             return null;
         }
     }
-    
+
     /**
      * Obtiene los datos de una persona en base al ID de alumno.
      *
      * @param int $id_alumno El ID del alumno.
      * @return array|null Un array asociativo con los datos de la persona o null si no se encuentra.
      */
-    public function get_persona_por_id_alumno($id_alumno){
+    public function get_persona_por_id_alumno($id_alumno)
+    {
         try {
             if (!is_numeric($id_alumno)) {
                 throw new InvalidArgumentException("El ID del alumno debe ser un valor numérico.");
@@ -235,19 +242,20 @@ class personas extends imcrea {
             $stmt->execute();
             $result = $stmt->get_result();
             $a = $result->fetch_array(MYSQLI_ASSOC);
-            
+
             if ($a) {
                 // Asignar los valores a las propiedades del objeto (opcional pero consistente con get_persona_por_id)
                 $this->id_persona = $a['id_personas'];
                 $this->nombres = $a['nombres'];
                 $this->apellidos = $a['apellidos'];
                 $this->identificacion = $a['identificacion'];
-                // ... se podrían asignar más si fuera necesario, pero para la respuesta AJAX el array es suficiente
+            // ... se podrían asignar más si fuera necesario, pero para la respuesta AJAX el array es suficiente
             }
 
             $stmt->close();
             return $a;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             error_log("Error en get_persona_por_id_alumno: " . $e->getMessage());
             return null;
         }
@@ -258,76 +266,87 @@ class personas extends imcrea {
     // una persona a partir de un array
     public function update_persona(array $data)
     {
-	try {
+        try {
             // 1. Validar ID de persona
             if (empty($this->id_persona)) {
-		// throw new InvalidArgumentException("ID de persona no establecido para la actualización.");
+            // throw new InvalidArgumentException("ID de persona no establecido para la actualización.");
             }
 
-	    // 2. Validar que haya datos para actualizar
+            // 2. Validar que haya datos para actualizar
             if (empty($data)) {
-		return false;
+                return false;
             }
-	    
+
             $setClauses = [];
             $params = [];
             $types = '';
-	    
+
             // 3. Construir SET dinámico
             foreach ($data as $key => $value) {
-		// Solo actualizar atributos existentes en la clase
-		if (property_exists($this, $key)) {
+                // Solo actualizar atributos existentes en la clase
+                if (property_exists($this, $key)) {
+                    // Excepción para que nacimiento admita valores nulos
+                    if ($key === 'nacimiento' && (empty($value) || $value === 'null')) {
+                        $value = null;
+                    }
+
                     $setClauses[] = "$key = ?";
                     $params[] = $value;
-		    
+
                     // Determinar tipo de dato para bind_param
-                    if (is_int($value)) {
-			$types .= 'i';
-                    } elseif (is_float($value)) {
-			$types .= 'd';
-                    } else {
-			$types .= 's';
+                    if (is_null($value)) {
+                        $types .= 's'; // mysqli_stmt_bind_param accepts NULL for string types
                     }
-		}
+                    elseif (is_int($value)) {
+                        $types .= 'i';
+                    }
+                    elseif (is_float($value)) {
+                        $types .= 'd';
+                    }
+                    else {
+                        $types .= 's';
+                    }
+                }
             }
 
-	   
+
             // 4. Verificar que haya campos válidos
             if (empty($setClauses)) {
-		return false;
+                return false;
             }
-	    
+
             // 5. Construir la consulta
             $sql = "UPDATE personas SET " . implode(', ', $setClauses) . " WHERE id_personas = ?";
-	    
+
             // 6. Preparar la consulta
             $stmt = $this->_db->prepare($sql);
-	    
-          
+
+
             // 7. Agregar el ID de persona a los parámetros
             $params[] = $this->id_persona;
             $types .= 'i'; // Suponiendo que el ID es un entero
-	    
+
             // 8. Vincular parámetros
             $bind_args = array_merge([$types], $params);
-	    
-	    $refs = $this->refValues($bind_args);
+
+            $refs = $this->refValues($bind_args);
 
             if (!call_user_func_array([$stmt, 'bind_param'], $refs)) {
-		throw new Exception("Error al vincular parámetros: " . $stmt->error);
+                throw new Exception("Error al vincular parámetros: " . $stmt->error);
             }
 
             // 9. Ejecutar consulta
             if (!$stmt->execute()) {
-		throw new Exception("Error al ejecutar actualización: " . $stmt->error);
+                throw new Exception("Error al ejecutar actualización: " . $stmt->error);
             }
-	    //echo "validado 9";
+            //echo "validado 9";
             $stmt->close();
             return true;
-	} catch (Exception $e) {
+        }
+        catch (Exception $e) {
             error_log("Error en update_persona: " . $e->getMessage());
             return false;
-	}
+        }
     }
 
     /**
@@ -336,12 +355,12 @@ class personas extends imcrea {
      */
     private function refValues(array &$arr)
     {
-	// A partir de PHP 5.3, se necesita pasar referencias
-	$refs = [];
-	foreach ($arr as $key => &$value) {
-            $refs[$key] = &$value;
-	}
-	return $refs;
+        // A partir de PHP 5.3, se necesita pasar referencias
+        $refs = [];
+        foreach ($arr as $key => &$value) {
+            $refs[$key] = & $value;
+        }
+        return $refs;
     }
 
 
@@ -353,8 +372,9 @@ class personas extends imcrea {
      *
      * @return bool True si la inserción fue exitosa, false en caso contrario.
      */
-    public function add(){
-        try { 
+    public function add()
+    {
+        try {
             // Validación básica de entrada
             if (empty($this->nombres) || empty($this->apellidos) || empty($this->identificacion)) {
                 throw new InvalidArgumentException("Nombres, apellidos e identificación son campos obligatorios.");
@@ -369,7 +389,7 @@ class personas extends imcrea {
                              nacimiento, correo, i_correo, celular, telefono)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-                        
+
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
@@ -377,21 +397,23 @@ class personas extends imcrea {
             }
 
             $stmt->bind_param("ssissssss", $this->nombres, $this->apellidos,
-                                        $this->identificacion, $this->tipo_identificacion,
-                                        $this->nacimiento, $this->correo, $this->i_correo,
-                                        $this->celular, $this->telefono);
-            
+                $this->identificacion, $this->tipo_identificacion,
+                $this->nacimiento, $this->correo, $this->i_correo,
+                $this->celular, $this->telefono);
+
             $c = $stmt->execute();
 
             if ($c === true) {
                 $this->id_persona = $this->_db->insert_id;
                 $stmt->close();
                 return true;
-            } else {
+            }
+            else {
                 // Esto podría ocurrir si execute() falla por alguna razón no capturada por prepare()
                 throw new Exception("Error al insertar nueva persona: " . $stmt->error);
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             error_log('Error en add: ' . $e->getMessage());
             return false;
         }
@@ -404,13 +426,14 @@ class personas extends imcrea {
      * @param int $id_personas El ID de la persona a eliminar.
      * @return bool True si la eliminación fue exitosa, false en caso contrario.
      */
-    public function del($id_personas){
+    public function del($id_personas)
+    {
         try {
             if (!is_numeric($id_personas)) {
                 throw new InvalidArgumentException("El ID de la persona debe ser un valor numérico.");
             }
 
-	    
+
 
             $q = "DELETE FROM personas WHERE id_personas = ?";
             $stmt = $this->_db->prepare($q);
@@ -422,17 +445,19 @@ class personas extends imcrea {
             $stmt->bind_param("i", $id_personas);
             $c = $stmt->execute();
 
-	     
+
 
             if ($c === true) {
                 $stmt->close();
-		echo "eliminada";
+                echo "eliminada";
                 return true;
-            } else {
-		echo "no eliminada";
+            }
+            else {
+                echo "no eliminada";
                 throw new Exception("Error al eliminar la persona con ID " . $id_personas . ": " . $stmt->error);
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             error_log("Error en del: " . $e->getMessage());
             return false;
         }
@@ -440,57 +465,104 @@ class personas extends imcrea {
 
 
     /**
- * Elimina una persona de la base de datos por su ID.
- *
- * @param int $personId El ID de la persona a eliminar.
- * @return bool Devuelve true si la eliminación fue exitosa, de lo contrario false.
- */
-public function deleteById($personId)
-{
-    $stmt = null; // Inicializar la variable fuera del bloque try
-    try {
-        // 1. Validar que el ID sea un entero válido
-        if (!filter_var($personId, FILTER_VALIDATE_INT) || $personId <= 0) {
-            throw new InvalidArgumentException("El ID proporcionado no es válido.");
+     * Verifica si una persona está registrada en la tabla u_alumnos o u_docentes.
+     * 
+     * @param int $id_persona El ID de la persona a verificar.
+     * @return array|null Un array con el tipo de vínculo ('alumno', 'docente' o 'ambos') o null si no tiene.
+     */
+    public function esAlumnoODocente($id_persona)
+    {
+        try {
+            $vinculos = [];
+
+            // Verificar en u_alumnos
+            $q1 = "SELECT id_alumnos FROM u_alumnos WHERE id_personas = ?";
+            $stmt1 = $this->_db->prepare($q1);
+            $stmt1->bind_param("i", $id_persona);
+            $stmt1->execute();
+            if ($stmt1->get_result()->num_rows > 0) {
+                $vinculos[] = 'alumno';
+            }
+            $stmt1->close();
+
+            // Verificar en u_docentes
+            $q2 = "SELECT id_docentes FROM u_docentes WHERE id_personas = ?";
+            $stmt2 = $this->_db->prepare($q2);
+            $stmt2->bind_param("i", $id_persona);
+            $stmt2->execute();
+            if ($stmt2->get_result()->num_rows > 0) {
+                $vinculos[] = 'docente';
+            }
+            $stmt2->close();
+
+            if (empty($vinculos)) {
+                return null;
+            }
+
+            return [
+                'tipo' => count($vinculos) > 1 ? 'ambos' : $vinculos[0]
+            ];
         }
-
-        // 2. Preparar la consulta
-        $query = "DELETE FROM personas WHERE id_personas = ?";
-        $stmt = $this->_db->prepare($query);
-
-        if ($stmt === false) {
-            // Usamos RuntimeException para errores que ocurren durante la ejecución
-            throw new RuntimeException("Error al preparar la consulta de eliminación: " . $this->_db->error);
-        }
-
-        // 3. Vincular el parámetro y ejecutar
-        $stmt->bind_param("i", $personId);
-
-        if (!$stmt->execute()) {
-            throw new RuntimeException("Error al ejecutar la eliminación para el ID " . $personId . ": " . $stmt->error);
-        }
-        
-        // 4. Verificar si alguna fila fue afectada
-        if ($stmt->affected_rows === 0) {
-            // Opcional: Considerar esto un error si se esperaba que el ID existiera
-            // throw new Exception("No se encontró ninguna persona con el ID " . $personId . " para eliminar.");
-            return false; // O simplemente retornar false si el ID no existía
-        }
-
-        return true; // Éxito
-
-    } catch (Exception $e) {
-        // Registrar el error detallado para el desarrollador
-        error_log("Error en deleteById: " . $e->getMessage());
-        // Devolver un simple false a quien llamó la función
-        return false;
-    } finally {
-        // 5. Garantizar que el statement se cierre siempre
-        if ($stmt) {
-            $stmt->close();
+        catch (Exception $e) {
+            error_log("Error en esAlumnoODocente: " . $e->getMessage());
+            return null;
         }
     }
-}
+
+    /**
+     * Elimina una persona de la base de datos por su ID.
+     *
+     * @param int $personId El ID de la persona a eliminar.
+     * @return bool Devuelve true si la eliminación fue exitosa, de lo contrario false.
+     */
+    public function deleteById($personId)
+    {
+        $stmt = null; // Inicializar la variable fuera del bloque try
+        try {
+            // 1. Validar que el ID sea un entero válido
+            if (!filter_var($personId, FILTER_VALIDATE_INT) || $personId <= 0) {
+                throw new InvalidArgumentException("El ID proporcionado no es válido.");
+            }
+
+            // 2. Preparar la consulta
+            $query = "DELETE FROM personas WHERE id_personas = ?";
+            $stmt = $this->_db->prepare($query);
+
+            if ($stmt === false) {
+                // Usamos RuntimeException para errores que ocurren durante la ejecución
+                throw new RuntimeException("Error al preparar la consulta de eliminación: " . $this->_db->error);
+            }
+
+            // 3. Vincular el parámetro y ejecutar
+            $stmt->bind_param("i", $personId);
+
+            if (!$stmt->execute()) {
+                throw new RuntimeException("Error al ejecutar la eliminación para el ID " . $personId . ": " . $stmt->error);
+            }
+
+            // 4. Verificar si alguna fila fue afectada
+            if ($stmt->affected_rows === 0) {
+                // Opcional: Considerar esto un error si se esperaba que el ID existiera
+                // throw new Exception("No se encontró ninguna persona con el ID " . $personId . " para eliminar.");
+                return false; // O simplemente retornar false si el ID no existía
+            }
+
+            return true; // Éxito
+
+        }
+        catch (Exception $e) {
+            // Registrar el error detallado para el desarrollador
+            error_log("Error en deleteById: " . $e->getMessage());
+            // Devolver un simple false a quien llamó la función
+            return false;
+        }
+        finally {
+            // 5. Garantizar que el statement se cierre siempre
+            if ($stmt) {
+                $stmt->close();
+            }
+        }
+    }
 
     /**
      * Obtiene la dirección de residencia, estrato y barrio de una persona.
@@ -498,7 +570,8 @@ public function deleteById($personId)
      * @param int $id_persona El ID de la persona.
      * @return array|null Un array asociativo con los datos de la dirección o null si no se encuentra.
      */
-    public function get_direccion($id_persona){
+    public function get_direccion($id_persona)
+    {
         try {
             if (!is_numeric($id_persona)) {
                 throw new InvalidArgumentException("El ID de la persona debe ser un valor numérico.");
@@ -515,10 +588,11 @@ public function deleteById($personId)
             $stmt->execute();
             $result = $stmt->get_result();
             $a = $result->fetch_array(MYSQLI_ASSOC);
-            
+
             $stmt->close();
             return $a;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             error_log("Error en get_direccion: " . $e->getMessage());
             return null;
         }
@@ -530,27 +604,29 @@ public function deleteById($personId)
      * @param int $id_persona El ID de la persona.
      * @return array|null Un array asociativo con los datos de afiliación o null si no se encuentra.
      */
-    public function get_afiliacion($id_persona) {
+    public function get_afiliacion($id_persona)
+    {
         try {
             if (!is_numeric($id_persona)) {
                 throw new InvalidArgumentException("El ID de la persona no es válido.");
             }
-        
+
             $q = "SELECT sisben, familias_accion, regimen_salud, eps, vive_con, tipo_victima_conflicto, municipio_expulsor, discapacitado, tipo_discapacidad, capacidad_excepcional, etnia, tipo_etnia, resguardo_consejo, ips, tipo_sangre, rh FROM personas WHERE id_personas = ?";
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
                 throw new Exception("Error al preparar la consulta de afiliación: " . $this->_db->error);
             }
-        
+
             $stmt->bind_param("i", $id_persona);
             $stmt->execute();
             $result = $stmt->get_result();
             $a = $result->fetch_array(MYSQLI_ASSOC);
-            
+
             $stmt->close();
             return $a;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             error_log("Error en get_afiliacion: " . $e->getMessage());
             return null;
         }
@@ -563,33 +639,35 @@ public function deleteById($personId)
      * @param int $id_persona El ID de la persona.
      * @return array|null Un array asociativo con los datos de antecedentes o null si no se encuentra.
      */
-    public function get_antecedentes($id_persona) {
+    public function get_antecedentes($id_persona)
+    {
         try {
             if (!is_numeric($id_persona)) {
                 throw new InvalidArgumentException("El ID de la persona no es válido.");
             }
-        
+
             $q = "SELECT antecedentes_patologicos_medicos,
                 antecedentes_patologicos_quirurgicos,
                 antecedentes_patologicos_toxicos,
                 antecedentes_patologicos_psiquiatricos,
                 antecedentes_patologicos_psicologicos,
                 antecedentes_patologicos_morbilidad FROM personas WHERE id_personas = ?";
-        
+
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
                 throw new Exception("Error al preparar la consulta de antecedentes: " . $this->_db->error);
             }
-        
+
             $stmt->bind_param("i", $id_persona);
             $stmt->execute();
             $result = $stmt->get_result();
             $a = $result->fetch_array(MYSQLI_ASSOC);
-            
+
             $stmt->close();
             return $a;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             error_log("Error en get_antecedentes: " . $e->getMessage());
             return null;
         }
@@ -599,20 +677,21 @@ public function deleteById($personId)
     /**
      * Actualiza el correo personal de una persona.
      */
-    public function actualizar_correo_persona() {
+    public function actualizar_correo_persona()
+    {
         $query = "UPDATE personas SET correo = ? WHERE id_personas = ?";
-	//echo $query;
+        //echo $query;
         $stmt = $this->_db->prepare($query);
 
         // Limpiar datos
         $this->correo = htmlspecialchars(strip_tags($this->correo));
-        
+
 
         // Vincular parámetros
         $stmt->bind_param("si", $this->correo, $this->id_persona);
 
         // Ejecutar consulta
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
         return false;
@@ -622,16 +701,17 @@ public function deleteById($personId)
     /**
      * Actualiza el correo personal de una persona.
      */
-    public function actualizar_direccion_residencia() {
+    public function actualizar_direccion_residencia()
+    {
         $query = "UPDATE personas SET direccion_residencia = ?, barrio = ?, estrato = ?  WHERE id_personas = ?";
-	//echo $query;
+        //echo $query;
         $stmt = $this->_db->prepare($query);
 
         // Vincular parámetros
-        $stmt->bind_param("ssii",  $this->direccion_residencia, $this->barrio, $this->estrato, $this->id_persona);
+        $stmt->bind_param("ssii", $this->direccion_residencia, $this->barrio, $this->estrato, $this->id_persona);
 
         // Ejecutar consulta
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
         return false;
@@ -640,15 +720,16 @@ public function deleteById($personId)
     /**
      * Actualiza el correo institucional de una persona.
      */
-    public function actualizar_i_correo_persona() {
+    public function actualizar_i_correo_persona()
+    {
         $query = "UPDATE personas SET i_correo = ? WHERE id_personas = ?";
         $stmt = $this->_db->prepare($query);
 
         $this->i_correo = htmlspecialchars(strip_tags($this->i_correo));
-       
+
         $stmt->bind_param("si", $this->i_correo, $this->id_persona);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
         return false;
@@ -657,16 +738,17 @@ public function deleteById($personId)
     /**
      * Actualiza el teléfono de una persona.
      */
-    public function actualizar_telefono_persona() {
+    public function actualizar_telefono_persona()
+    {
         $query = "UPDATE personas SET telefono = ? WHERE id_personas = ?";
         $stmt = $this->_db->prepare($query);
-        
+
         $this->telefono = htmlspecialchars(strip_tags($this->telefono));
-       
+
 
         $stmt->bind_param("si", $this->telefono, $this->id_persona);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
         return false;
@@ -675,16 +757,17 @@ public function deleteById($personId)
     /**
      * Actualiza el celular de una persona.
      */
-    public function actualizar_celular_persona() {
+    public function actualizar_celular_persona()
+    {
         $query = "UPDATE personas SET celular = ? WHERE id_personas = ?";
         $stmt = $this->_db->prepare($query);
-        
+
         $this->celular = htmlspecialchars(strip_tags($this->celular));
-        
+
 
         $stmt->bind_param("si", $this->celular, $this->id_persona);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
         return false;
@@ -693,16 +776,17 @@ public function deleteById($personId)
     /**
      * Actualiza la fecha de nacimiento de una persona.
      */
-    public function actualizar_nacimiento_persona() {
+    public function actualizar_nacimiento_persona()
+    {
         $query = "UPDATE personas SET nacimiento = ?  WHERE id_personas = ?";
         $stmt = $this->_db->prepare($query);
-        
+
         $this->nacimiento = htmlspecialchars(strip_tags($this->nacimiento));
 
 
-        $stmt->bind_param("si", $this->nacimiento , $this->id_persona);
+        $stmt->bind_param("si", $this->nacimiento, $this->id_persona);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
         return false;
@@ -711,17 +795,18 @@ public function deleteById($personId)
     /**
      * Actualiza los nombres y apellidos de una persona.
      */
-    public function actualizar_nombres_persona() {
+    public function actualizar_nombres_persona()
+    {
         $query = "UPDATE personas SET nombres = ?, apellidos = ? WHERE id_personas = ?";
         $stmt = $this->_db->prepare($query);
-        
+
         $this->nombres = htmlspecialchars(strip_tags($this->nombres));
         $this->apellidos = htmlspecialchars(strip_tags($this->apellidos));
 
 
         $stmt->bind_param("ssi", $this->nombres, $this->apellidos, $this->id_persona);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
         return false;
@@ -730,27 +815,29 @@ public function deleteById($personId)
     /**
      * Actualiza el tipo de identificación y el número de identificación de una persona.
      */
-    public function actualizar_identificacion_persona() {
+    public function actualizar_identificacion_persona()
+    {
         $query = "UPDATE personas SET tipo_identificacion = ?, identificacion = ? WHERE id_personas = ?";
         $stmt = $this->_db->prepare($query);
-        
+
         $this->tipo_identificacion = htmlspecialchars(strip_tags($this->tipo_identificacion));
         $this->identificacion = htmlspecialchars(strip_tags($this->identificacion));
-      
 
-        $stmt->bind_param("ssi", $this->tipo_identificacion , $this->identificacion, $this->id_persona);
 
-        if($stmt->execute()) {
+        $stmt->bind_param("ssi", $this->tipo_identificacion, $this->identificacion, $this->id_persona);
+
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
 
-     /**
+    /**
      * Actualiza los datos de antecedentes que tiene la persona.
      */
-    public function actualizar_antecedentes() {
+    public function actualizar_antecedentes()
+    {
         $query = "UPDATE personas SET antecedentes_patologicos_medicos = ?,
                                       antecedentes_patologicos_quirurgicos = ?,
                                       antecedentes_patologicos_toxicos = ?,
@@ -758,10 +845,10 @@ public function deleteById($personId)
                                       antecedentes_patologicos_psicologicos = ?,
                                       antecedentes_patologicos_morbilidad = ?
                                       WHERE id_personas = ?";
-        
+
         $stmt = $this->_db->prepare($query);
-        
-        $this->antecedentes_patologicos_medicos  = htmlspecialchars(strip_tags($this->antecedentes_patologicos_medicos));
+
+        $this->antecedentes_patologicos_medicos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_medicos));
         $this->antecedentes_patologicos_morbilidad = htmlspecialchars(strip_tags($this->antecedentes_patologicos_morbilidad));
         $this->antecedentes_patologicos_psicologicos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_psicologicos));
         $this->antecedentes_patologicos_psiquiatricos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_psiquiatricos));
@@ -769,25 +856,26 @@ public function deleteById($personId)
         $this->antecedentes_patologicos_toxicos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_toxicos));
 
         $stmt->bind_param("ssssssi",
-                          $this->antecedentes_patologicos_medicos,
-                          $this->antecedentes_patologicos_morbilidad,
-                          $this->antecedentes_patologicos_psicologicos,
-                          $this->antecedentes_patologicos_psiquiatricos,
-                          $this->antecedentes_patologicos_quirurgicos,
-                          $this->antecedentes_patologicos_toxicos,
-                          $this->id_persona);
+            $this->antecedentes_patologicos_medicos,
+            $this->antecedentes_patologicos_morbilidad,
+            $this->antecedentes_patologicos_psicologicos,
+            $this->antecedentes_patologicos_psiquiatricos,
+            $this->antecedentes_patologicos_quirurgicos,
+            $this->antecedentes_patologicos_toxicos,
+            $this->id_persona);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
 
-     /**
+    /**
      * Actualiza los datos de afiliaciones que tiene la persona.
      */
-    public function actualizar_afiliacion() {
+    public function actualizar_afiliacion()
+    {
         $query = "UPDATE personas SET sisben = ?,
                                       vive_con = ?,
                                       etnia = ?,
@@ -805,10 +893,10 @@ public function deleteById($personId)
                                       tipo_sangre = ?,
                                       rh = ?
                                       WHERE id_personas = ?";
-        
+
         $stmt = $this->_db->prepare($query);
-        
-        $this->vive_con  = htmlspecialchars(strip_tags($this->vive_con));
+
+        $this->vive_con = htmlspecialchars(strip_tags($this->vive_con));
         $this->municipio_expulsor = htmlspecialchars(strip_tags($this->municipio_expulsor));
         $this->tipo_etnia = htmlspecialchars(strip_tags($this->tipo_etnia));
         $this->resguardo_consejo = htmlspecialchars(strip_tags($this->resguardo_consejo));
@@ -819,25 +907,25 @@ public function deleteById($personId)
         $this->ips = htmlspecialchars(strip_tags($this->ips));
 
         $stmt->bind_param("ssbssbssbssissssi",
-                          $this->sisben,
-                          $this->vive_con,
-                          $this->etnia,
-                          $this->tipo_etnia,
-                          $this->resguardo_consejo,
-                          $this->familias_accion,
-                          $this->tipo_victima_conflicto,
-                          $this->municipio_expulsor,
-                          $this->discapacitado,
-                          $this->tipo_discapacidad,
-                          $this->capacidad_excepcional,
-                          $this->regimen_salud,
-                          $this->eps,
-                          $this->ips,
-                          $this->tipo_sangre,
-                          $this->rh,
-                          $this->id_persona);
+            $this->sisben,
+            $this->vive_con,
+            $this->etnia,
+            $this->tipo_etnia,
+            $this->resguardo_consejo,
+            $this->familias_accion,
+            $this->tipo_victima_conflicto,
+            $this->municipio_expulsor,
+            $this->discapacitado,
+            $this->tipo_discapacidad,
+            $this->capacidad_excepcional,
+            $this->regimen_salud,
+            $this->eps,
+            $this->ips,
+            $this->tipo_sangre,
+            $this->rh,
+            $this->id_persona);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
         return false;

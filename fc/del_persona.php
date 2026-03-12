@@ -11,27 +11,37 @@ $valido = true;
 $respuesta = array();
 
 // validacion de datos
-if($_POST["id_personas"] >0 ){
+if ($_POST["id_personas"] > 0) {
     $id_personas = $_POST["id_personas"];
-}else {
+}
+else {
     $valido = false;
     $respuesta['status'] = 21;
 
 }
 
-
-
 // si los datos son validos
 if ($valido) {
 
     $p = new personas();
-    if( $p->deleteById($id_personas)){
-    $respuesta['status'] = "1";    
-    }else{
-    $respuesta['status'] = "20";        
+
+    // Validar si es alumno o docente
+    $vinculo = $p->esAlumnoODocente($id_personas);
+
+    if ($vinculo) {
+        $respuesta['status'] = "22";
+        $respuesta['tipo_vinculo'] = $vinculo['tipo'];
+    }
+    else {
+        if ($p->deleteById($id_personas)) {
+            $respuesta['status'] = "1";
+        }
+        else {
+            $respuesta['status'] = "20";
+        }
     }
     $respuesta['html'] = "";
-    
+
 }
 else {
     $respuesta['html'] = "";
