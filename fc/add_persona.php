@@ -16,14 +16,16 @@ $datos = $_POST;
 // validacion de nombres
 if ($datos["nombres"] !== "" and isset($datos["nombres"])) {
     $nombres = $datos["nombres"];
-} else {
+}
+else {
     $valido = false;
     $respuesta['status'] = 21;
 }
 // validacion de los apellidos
 if ($datos["apellidos"] !== "" and isset($datos["apellidos"])) {
     $apellidos = $datos["apellidos"];
-} else {
+}
+else {
     $valido = false;
     $respuesta['status'] = 22;
 }
@@ -31,21 +33,24 @@ if ($datos["apellidos"] !== "" and isset($datos["apellidos"])) {
 // seleccion de tipo de identificacion
 if ($datos["tipo_identificacion"] !== "") {
     $tipo_identificacion = $datos["tipo_identificacion"];
-} else {
+}
+else {
     $valido = false;
     $respuesta['status'] = 23;
 }
 // valido si tiene identificacion
 if ($datos["identificacion"] !== "") {
     $identificacion = $datos["identificacion"];
-} else {
+}
+else {
     $valido = false;
     $respuesta['status'] = 24;
 }
 
 if ($datos["nacimiento"] !== "") {
     $nacimiento = $datos["nacimiento"];
-} else {
+}
+else {
     $valido = false;
     $respuesta['status'] = 25;
 }
@@ -80,12 +85,14 @@ if ($valido) {
         $respuesta['correo'] = $datos["correo"];
         $respuesta['i_correo'] = $datos["i_correo"];
 
-        
-    } else {
+
+    }
+    else {
         $respuesta['status'] = "20";
     }
     $respuesta['html'] = "";
-} else {
+}
+else {
     $respuesta['html'] = "";
 }
 

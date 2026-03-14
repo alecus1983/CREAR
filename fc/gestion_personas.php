@@ -14,7 +14,7 @@ $err = "";
 $respuesta = array();
 
 $html = "Formulario para la gestión de personas que pertenecen a a la institución: <br><br>";
-$html = $html. "<ol style = 'margin : 10px;'>";
+$html = $html . "<ol style = 'margin : 10px;'>";
 $html = $html . "<li><i>Buscar personas</i></li>";
 $html = $html . "<li><i>Agregar personas</i></li>";
 $html = $html . "<li><i>Borrar personas</i></li>";
@@ -41,7 +41,7 @@ $html = $html . "<div id='ayuda_i' class='form-text'>digite parte del documento 
 $html = $html . "</div>";
 $html = $html . "<div class='col mx-auto justify-content-md'>";
 $html = $html . "<br>";
-$html = $html . "<button type='button' id='agregar_persona' class='btn btn-outline-dark' style = 'margin: 5px' onclick='formulario_agregar_persona();'>Agregar persona</button>";
+$html = $html . "<button type='button' id='agregar_persona' class='btn btn-outline-dark' style = 'margin: 5px' onclick='formulario_agregar_persona();'>Formulario agregar persona</button>";
 $html = $html . "</div>";
 
 $html = $html . "</div>";
@@ -51,8 +51,8 @@ $html = $html . "";
 
 // si los datos son validos
 if ($valido) {
-    $respuesta['html']=$html;
-    $respuesta['status']=1;
+    $respuesta['html'] = $html;
+    $respuesta['status'] = 1;
 }
 else {
     $respuesta['html'] = "";

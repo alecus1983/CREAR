@@ -289,9 +289,14 @@ function formulario_agregar_persona() {
 
     // cambio el atributo visual del boton
     $("#agregar_persona").removeClass("btn btn-outline-dark").addClass("btn btn-dark");
+    $("#agregar_persona").html("Agregar persona");
+
+
 
     // asigno una funcion
     $("#agregar_persona").attr("onclick", "agregar_persona()");
+    // se coloca el enfoque el div tabla    
+    $("#tabla").focus();
 
 }
 
@@ -348,8 +353,9 @@ function agregar_persona(formulario, personax, ea) {
                 // si se agrego la persona correctamente
                 swal('Actualizacion', 'Se agrego a la persona correctamente', 'success');
                 // cambio el boton de agregar persona por el de actualizar persona
-                $("#agregar_persona").attr("onclick", "formulario_actualizar_persona();");
-                $("#agregar_persona").html("formulario actualizar persona");
+                $("#agregar_persona").attr("onclick", "formulario_agregar_persona();");
+                $("#agregar_persona").removeClass("btn btn-dark").addClass("btn btn-outline-dark");
+                $("#agregar_persona").html("formulario agregar persona");
                 // valido si esta definido la persona x
                 // esto es para el formulario de matricula
                 if (typeof personax === 'undefined') {
@@ -372,6 +378,9 @@ function agregar_persona(formulario, personax, ea) {
 
 
             } else {
+                if (respuesta['status'] == 20) {
+                    swal('Error', 'No se pudo insertar el valor en la base de datos', 'error');
+                }
                 if (respuesta['status'] == 21) {
                     swal('Error', 'Falata el nombre de la persona', 'error');
                 }
