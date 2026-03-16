@@ -178,6 +178,30 @@ function cambio_datos_p(repo) {
                     "</div>" +
                     "</div>" +
                     "</div>");
+
+                // 1. Comprobamos si el elemento existe buscando su longitud (length)
+                if ($('#agregar_persona').length > 0) {
+
+                    // 2. Obtenemos el valor del atributo onclick
+                    let atributoOnclick = $('#agregar_persona').attr('onclick');
+
+                    // 3. Verificamos que el atributo exista y contenga el nombre de la función
+                    if (atributoOnclick && atributoOnclick.includes('formulario_agregar_persona')) {
+
+                        console.log("El botón existe y tiene el onclick correcto.");
+                        // Aquí puedes poner el código que quieres que se ejecute si se cumple la condición
+
+                    } else {
+                        console.log("El botón existe, pero su onclick es diferente.");
+                        $('#agregar_persona').attr('onclick', 'formulario_agregar_persona();');
+                        $('#agregar_persona').html("Formulario agregar persona");
+                        $('#agregar_persona').removeClass("btn btn-dark").addClass("btn btn-outline-dark");
+                    }
+
+                } else {
+                    console.log("El botón #agregar_persona no está definido o no existe en el HTML.");
+                }
+
             } else {
 
                 if (respuesta['status'] == 22) {
@@ -196,12 +220,16 @@ function cambio_datos_p(repo) {
 
 
 
-// funcion que muestra listado de personas que  coinciden con los datos
-// los parametros de entrada:
-// repo:  es el div en que se colocara la respuesta en formato html
-// presonax : id de la  persona que se va a consultar 
-// form : codigo del formulario de donde se hace la cosulta
-// retorna un html con la tabla de personas
+/**
+ * Muestra un listado de personas que coinciden con los criterios de búsqueda introducidos en el formulario
+ * (nombres, apellidos, identificación) mediante una petición AJAX a `cambio_datos.php`.
+ * Los resultados devueltos reemplazan el contenido HTML del contenedor especificado, generando
+ * una tabla con opciones para actualizar o seleccionar a la persona.
+ * 
+ * @param {string|object} repo - El selector del elemento HTML (p. ej. un id de un div) donde se dibujará la tabla de resultados.
+ * @param {number|string} personax - El identificador/indicador de la persona relacionado al flujo actual del formulario.
+ * @param {number} form - El código o paso del formulario desde donde se realiza la consulta. Si su valor es menor a 30, se utilizará la función `seleccionar_persona()`, caso contrario se usará `seleccionar_persona_editar()`.
+ */
 
 function cambio_datos(repo, personax, form) {
 
@@ -251,6 +279,8 @@ function cambio_datos(repo, personax, form) {
                     "</div>" +
                     "</div>" +
                     "</div>");
+
+
             } else {
 
                 if (respuesta['status'] == 22) {
