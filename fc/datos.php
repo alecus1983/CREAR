@@ -92,26 +92,56 @@ error_reporting(E_ALL);
 
 
 
-// clase que determina la conexion con la base de datos
-class imcrea {
-    // atributo de la base de datos
-    protected $_db;
-    // constructor de la clase
-    public function __construct(){
+// // clase que determina la conexion con la base de datos
+// class imcrea {
+//     // atributo de la base de datos
+//     protected $_db;
+//     // constructor de la clase
+//     public function __construct(){
 
-        // se realiza la consulta usando el metodo mysqli
-        $this->_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-        if ($this->_db->connect_errno) {
-            echo "fallo al conectar bd".$this->_db->connect_errno;
-            return;
+//         // se realiza la consulta usando el metodo mysqli
+//         $this->_db=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+//         if ($this->_db->connect_errno) {
+//             echo "fallo al conectar bd".$this->_db->connect_errno;
+//             return;
+//         }
+
+//         $this->_db->set_charset(DB_CHARSET);
+//     } // fin del constructor de la clase
+
+// } // fin de la clase
+
+
+// nueva clase
+
+class imcrea {
+    // Definimos una propiedad estática para guardar la conexión única
+    protected static $_db_connection = null;
+    protected $_db;
+
+    public function __construct() {
+        // Si la conexión aún no existe, la creamos
+        if (self::$_db_connection === null) {
+            self::$_db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+            if (self::$_db_connection->connect_errno) {
+                die("Fallo al conectar a MySQL: " . self::$_db_connection->connect_error);
+            }
+
+            self::$_db_connection->set_charset(DB_CHARSET);
         }
 
-        $this->_db->set_charset(DB_CHARSET);
-    } // fin del constructor de la clase
+        // Asignamos la conexión única a la propiedad de la instancia actual
+        $this->_db = self::$_db_connection;
+    }
 
-} // fin de la clase
-
-
+    // Opcional: Evitar que se cierre la conexión prematuramente
+    public function __destruct() {
+        // En el patrón Singleton, normalmente dejamos que PHP 
+        // cierre la conexión al finalizar el script por completo.
+        // Si antes tenías $this->_db->close(), es mejor quitarlo de aquí.
+    }
+}
 
 
 // clase que indica las graficas a crear

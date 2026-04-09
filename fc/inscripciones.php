@@ -289,7 +289,7 @@ class inscripcion extends imcrea {
             // retorno  el array
             return $qx;
             $qx -> close();
-            $this -> _db -> close();
+            //$this -> _db -> close();
         }
     } // fin de la funcion
 
@@ -308,7 +308,7 @@ class inscripcion extends imcrea {
         } else {
             // retorno  el array
             return $dato;
-            $this -> _db -> close();
+            //$this -> _db -> close();
         }
     }
 
