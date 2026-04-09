@@ -281,7 +281,7 @@ else {
       <!-- barra de navegacion -->
       <nav id="barrabotones"  style="gap: 15px; padding: 10px; background:cadetblue" class="nav navbar">
 
-	    <div class="d-flex flex-column me-2">
+	    <div class="me-2">
 	      <label for="years" class="text-white small mb-1">Año</label>
 	      <input type="number" value="<?php echo date('Y'); ?>" id="years" name="years" min="2015"
 		     max="2100" step="1"
@@ -293,7 +293,7 @@ else {
 
 	    <input type="hidden" value="<?php echo $id; ?>" id="id_d">
 
-	    <div class="d-flex flex-column me-2">
+	    <div class="me-2">
 	      <label for="periodos" class="text-white small mb-1">Periodo</label>
 	      <select id="periodos"
 		      style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px;"
@@ -307,7 +307,7 @@ else {
 	      </select>
 	    </div>
 
-	    <div class="d-flex flex-column me-2">
+	    <div class="me-2">
 	      <label for="semana" class="text-white small mb-1">Semana</label>
 	      <select id="semana" class="form-control-sm"
 		      style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px;"
@@ -327,7 +327,7 @@ else {
       </nav>
       <nav id="botonoesacademicos"  style="gap: 15px; padding: 10px; background:darkcyan" class="nav navbar">
 
-	    <div class="d-flex flex-column me-2">
+	    <div class="me-2">
 	      <label for="jornada" class="text-white small mb-1">Jornada</label>
 	      <select id="jornada"
 		      style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px;"
@@ -337,7 +337,7 @@ else {
 	      </select>
 	    </div>
 
-	    <div class="d-flex flex-column me-2">
+	    <div class="me-2">
 	      <label for="escolaridad" class="text-white small mb-1">Escolaridad</label>
 	      <select id="escolaridad"
 		      style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px;"
@@ -352,7 +352,7 @@ else {
 	      </select>
 	    </div>
 
-	    <div class="d-flex flex-column me-2">
+	    <div class="me-2">
 	      <label class="text-white small mb-1">Grado</label>
 	      <select id="id_g" name="id_gs" class="form-control-sm"
 		      style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px;"
@@ -360,7 +360,7 @@ else {
 	      </select>
 	    </div>
 
-	    <div class="d-flex flex-column me-2">
+	    <div class="me-2">
 	      <label class="text-white small mb-1">Curso</label>
 	      <select id="id_c"
 		      style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px;"
@@ -372,17 +372,38 @@ else {
 	      </select>
 	    </div>
 
-	    <div class="d-flex flex-column me-2 flex-grow-1">
+	    <div class="me-2">
 	      <label for="id_ms" class="text-white small mb-1">Materia</label>
 	      <select id="id_ms"
-		      style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px; width: 100%;"
+		      style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px;"
 		      name="id_ms" onchange="$('#id_ms').css('background-color', 'transparent')"
 		      class="form-control-sm">
 	      </select>
 	    </div>
 
-	  </nav>
+      </nav>
+      
+<div id="layoutSidenav">
 
+	<div id="layoutSidenav_content">
+	  <main>
+	    <div class="container-fluid px-4">
+	      <h1 class="mt-4">FORMULARIO <span id="ano">
+		<?php echo date('Y'); ?>
+	      </span></h1>
+	      <ol class="breadcrumb mb-4">
+		<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
+	      </ol>
+
+	      <!--  contenedores dinamicos -->
+	      <div id="avance" class="row"></div>
+	      <div id="grafica" class="row"></div>
+	      <div id="tabla" class="row"></div>
+
+	    </div>
+	  </main>
+	</div>
+      </div>
 	<!-- fin de datos -->
 
 
@@ -455,27 +476,7 @@ else {
       </div>
       </nav>
 
-      <div id="layoutSidenav">
-
-	<div id="layoutSidenav_content">
-	  <main>
-	    <div class="container-fluid px-4">
-	      <h1 class="mt-4">FORMULARIO <span id="ano">
-		<?php echo date('Y'); ?>
-	      </span></h1>
-	      <ol class="breadcrumb mb-4">
-		<li class="breadcrumb-item active">Para la gestistión de la plataforma CREAR</li>
-	      </ol>
-
-	      <!--  contenedores dinamicos -->
-	      <div id="avance" class="row"></div>
-	      <div id="grafica" class="row"></div>
-	      <div id="tabla" class="row"></div>
-
-	    </div>
-	  </main>
-	</div>
-      </div>
+      
 
     </div><!-- fin del contenido -->
 
