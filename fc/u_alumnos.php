@@ -27,7 +27,7 @@ class u_alumnos extends personas
         $stmt->execute();
         if ($stmt->affected_rows > 0) {
             $stmt->close();
-            return  $this->_db->insert_id;
+            return $this->_db->insert_id;
         }
         $stmt->close();
         return "";
@@ -85,7 +85,8 @@ class u_alumnos extends personas
             $data = $result->fetch_assoc();
             $stmt->close();
             return $data ?: "No se encontró el registro.";
-        } else {
+        }
+        else {
             // Obtener todos los registros
             $sql = "SELECT * FROM u_alumnos";
             $result = $this->_db->query($sql);
@@ -114,16 +115,12 @@ class u_alumnos extends personas
             $result = $stmt->get_result();
             $data = $result->fetch_assoc();
             $stmt->close();
-            return $data ;
-        } else {
-            
+            return $data;
+        }
+        else {
+
             return "";
         }
     }
 
-    // Destructor: Cerrar conexión
-    public function __destruct()
-    {
-        $this->_db->close();
-    }
 }

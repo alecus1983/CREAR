@@ -1,7 +1,8 @@
 <?php
 // Clase que define la inscripcion la cual es un proceso
 // que recoge un proseso 
-class inscripcion extends imcrea {
+class inscripcion extends imcrea
+{
     // consecutivo inscripciones
     public $id;
     // estado de la inscripcion "i" para inscritos
@@ -100,14 +101,15 @@ class inscripcion extends imcrea {
     public $victima_conflicto;
 
     //constructor de la clase
-    public function __construct($codigo) {
+    public function __construct($codigo)
+    {
         // se construye a partir de la clase imcrea
         parent::__construct();
 
-        $resultado = $this->_db->query("SELECT * FROM  inscritos WHERE id  = ".$codigo );
+        $resultado = $this->_db->query("SELECT * FROM  inscritos WHERE id  = " . $codigo);
         $dato = $resultado->fetch_array(MYSQLI_ASSOC);
 
-        if ($dato){
+        if ($dato) {
             // retorno el dato como un array
             $this->id = $dato["id"];
             $this->antiguedad = $dato["antiguedad"];
@@ -164,14 +166,16 @@ class inscripcion extends imcrea {
     // "i" para inscritos
     // "m" para matriculados
 
-    public function update_estado(){
+    public function update_estado()
+    {
         // consulta para la actualizacion
         $texto = "UPDATE inscritos  SET estado ='$this->estado' WHERE id = $this->id";
         $consulta = $this->_db->query($texto);
 
     }
     // Registros
-    public function registro() {
+    public function registro()
+    {
         // crea un string con la fecha
         $now = date("Y-m-d g:i");
         // scrip sql
@@ -228,54 +232,54 @@ class inscripcion extends imcrea {
       estado
     )
 
-    VALUES ('".$this->nombre_estudiante.
-            "',  '".$this->apellido_estudiante.
-            "',  '".$this->correo_estudiante.
-            "', '".$this->nacimiento.
-            "', '".$this->ciudad_nacimiento.
-            "', '".$this->escolaridad.
-            "', '".$this->id_grado.
-            "', '".$this->id_jornada.
-            "', '".$this->antiguedad.
-            "', '".$this->tipo_institucion.
-            "', '".$this->nombre_institucion.
-            "', '".$this->motivo.
-            "', '".$this->modalidad.
-            "', '".$this->telefono.
-            "', '".$this->celular.
-            "', '".$this->tipo_identificacion.
-            "', '".$this->documento_estudiante.
-            "', '".$this->lugar_exp_estudiante.
-            "', '".$this->genero.
-            "', '".$this->gruporh.
-            "', '".$this->EPS.
-            "', '".$this->nivelsisben.
-            "', '".$this->direccion_estudiante.
-            "', '".$this->barrio.
-            "', '".$this->estrato.
-            "', '".$this->vivecon.
+    VALUES ('" . $this->nombre_estudiante .
+            "',  '" . $this->apellido_estudiante .
+            "',  '" . $this->correo_estudiante .
+            "', '" . $this->nacimiento .
+            "', '" . $this->ciudad_nacimiento .
+            "', '" . $this->escolaridad .
+            "', '" . $this->id_grado .
+            "', '" . $this->id_jornada .
+            "', '" . $this->antiguedad .
+            "', '" . $this->tipo_institucion .
+            "', '" . $this->nombre_institucion .
+            "', '" . $this->motivo .
+            "', '" . $this->modalidad .
+            "', '" . $this->telefono .
+            "', '" . $this->celular .
+            "', '" . $this->tipo_identificacion .
+            "', '" . $this->documento_estudiante .
+            "', '" . $this->lugar_exp_estudiante .
+            "', '" . $this->genero .
+            "', '" . $this->gruporh .
+            "', '" . $this->EPS .
+            "', '" . $this->nivelsisben .
+            "', '" . $this->direccion_estudiante .
+            "', '" . $this->barrio .
+            "', '" . $this->estrato .
+            "', '" . $this->vivecon .
 
-            "', '".$this->nombre_padre.
-            "', '".$this->apellido_padre.
-            "', '".$this->correo_padre.
-            "', '".$this->telefono_padre.
-            "', '".$this->tipo_identificacion_padre.
-            "', '".$this->documento_padre.
-            "', '".$this->lugar_exp_padre.
-            "', '".$this->direccion_padre.
-            "', '".$this->barrio_padre.
+            "', '" . $this->nombre_padre .
+            "', '" . $this->apellido_padre .
+            "', '" . $this->correo_padre .
+            "', '" . $this->telefono_padre .
+            "', '" . $this->tipo_identificacion_padre .
+            "', '" . $this->documento_padre .
+            "', '" . $this->lugar_exp_padre .
+            "', '" . $this->direccion_padre .
+            "', '" . $this->barrio_padre .
 
-            "', '".$this->nombre_madre.
-            "', '".$this->apellido_madre.
-            "', '".$this->correo_madre.
-            "', '".$this->telefono_madre.
-            "', '".$this->tipo_identificacion_madre.
-            "', '".$this->documento_madre.
-            "', '".$this->lugar_exp_madre.
-            "', '".$this->direccion_madre.
-            "', '".$this->barrio_madre.
-            "', '".$now.
-            "', 'i".
+            "', '" . $this->nombre_madre .
+            "', '" . $this->apellido_madre .
+            "', '" . $this->correo_madre .
+            "', '" . $this->telefono_madre .
+            "', '" . $this->tipo_identificacion_madre .
+            "', '" . $this->documento_madre .
+            "', '" . $this->lugar_exp_madre .
+            "', '" . $this->direccion_madre .
+            "', '" . $this->barrio_madre .
+            "', '" . $now .
+            "', 'i" .
             "' )";
 
         // se realiza la consulta
@@ -283,13 +287,13 @@ class inscripcion extends imcrea {
         //echo "<br><br>Consulata : <br>".$q2;
 
         // si se ejecuto la consulta
-        if (!$qx){
+        if (!$qx) {
             echo "Fallo en incertar fila";
-        } else {
+        }
+        else {
             // retorno  el array
             return $qx;
-            $qx -> close();
-            //$this -> _db -> close();
+            $qx->close();
         }
     } // fin de la funcion
 
@@ -297,32 +301,34 @@ class inscripcion extends imcrea {
     // calcula el valor maximo  //
     /////////////////////////////
 
-    function maximo(){
+    function maximo()
+    {
         // se realiza la consulta
         $qx = $this->_db->query("SELECT max(id) as cantidad FROM  inscritos");
         $dato = $qx->fetch_array();
 
         // si se ejecuto la consulta
-        if (!$dato){
-            //echo "Fallo en incertar fila";
-        } else {
+        if (!$dato) {
+        //echo "Fallo en incertar fila";
+        }
+        else {
             // retorno  el array
             return $dato;
-            //$this -> _db -> close();
         }
     }
 
     // metodo para obtener todos los datos de una inscripcion dado un codigo
     // de insgripcion
-    public function get_all($codigo){
+    public function get_all($codigo)
+    {
 
-        $resultado = $this->_db->query("SELECT * FROM  inscritos WHERE id  = ".$codigo );
+        $resultado = $this->_db->query("SELECT * FROM  inscritos WHERE id  = " . $codigo);
         $dato = $resultado->fetch_array(MYSQLI_ASSOC);
         // retorno el dato como un array
         return $dato;
     }
 
-    //
+//
 
 } // fin de la clase
 

@@ -27,14 +27,15 @@ class grados extends jornada
     }
 
     // Método actualizado para insertar un grado (incluye formato_boletin)
-    public function registro($grado, $nombre_g, $escolaridad, $promovido, $id_escolaridad, $formato_boletin) {
-        
+    public function registro($grado, $nombre_g, $escolaridad, $promovido, $id_escolaridad, $formato_boletin)
+    {
+
         // Sentencia preparada para mayor seguridad y manejo de tipos
         $q = "INSERT INTO grados (grado, nombre_g, escolaridad, promovido, id_escolaridad, formato_boletin) 
               VALUES (?, ?, ?, ?, ?, ?)";
-        
+
         $stmt = $this->_db->prepare($q);
-        
+
         if ($stmt === false) {
             // Manejo de error en la preparación
             return false;
@@ -42,7 +43,7 @@ class grados extends jornada
 
         // 'ssssii' corresponde a: string, string, string, string, int, int
         $stmt->bind_param("ssssii", $grado, $nombre_g, $escolaridad, $promovido, $id_escolaridad, $formato_boletin);
-        
+
         $resultado = $stmt->execute();
         $stmt->close();
 
@@ -60,8 +61,9 @@ class grados extends jornada
 
         // si se ejecuto la consulta
         if (!$dato) {
-            //echo "Fallo en incertar fila";
-        } else {
+        //echo "Fallo en incertar fila";
+        }
+        else {
             // retorno  el array
             return $dato;
         }
@@ -77,11 +79,11 @@ class grados extends jornada
 
         // si se ejecuto la consulta
         if (!$dato) {
-            //echo "Fallo en incertar fila";
-        } else {
+        //echo "Fallo en incertar fila";
+        }
+        else {
             // retorno  el array
             $this->nombre_g = $dato[0];
-            $this->_db->close();
         }
     } // fin de la funcion
 
@@ -94,13 +96,14 @@ class grados extends jornada
 
         // si se ejecuto la consulta
         if (!$dato) {
-            //echo "Fallo en incertar fila";
-        } else {
+        //echo "Fallo en incertar fila";
+        }
+        else {
             // retorno  el array
             $this->nombre_g = $dato["nombre_g"];
             $this->promovido = $dato["promovido"];
             $this->grado = $dato["grado"];
-	        $this->escolaridad =$dato["escolaridad"];
+            $this->escolaridad = $dato["escolaridad"];
             $this->formato_boletin = $dato["formato_boletin"];
             $this->id_grado = $dato["id_grado"];
             $this->id_escolaridad = $dato["id_escolaridad"];
@@ -110,32 +113,34 @@ class grados extends jornada
     // funcion para obtener  en un array
     // la lista de grados que pertenecen a una escolaridad
 
-    public function lista_escolaridad($id_escolaridad){
+    public function lista_escolaridad($id_escolaridad)
+    {
 
-	$q = "select id_grado from grados where id_escolaridad = ?";
+        $q = "select id_grado from grados where id_escolaridad = ?";
 
-	$stmt = $this->_db->prepare($q);
+        $stmt = $this->_db->prepare($q);
 
-	if ($stmt === false) {
-                throw new Exception("Error al preparar la consulta para buscar alumno: " . $this->_db->error);
+        if ($stmt === false) {
+            throw new Exception("Error al preparar la consulta para buscar alumno: " . $this->_db->error);
         }
 
-	$stmt->bind_param("i", $id_escolaridad);
+        $stmt->bind_param("i", $id_escolaridad);
         $stmt->execute();
         $result = $stmt->get_result();
-	$alumno_data = $result->fetch_all();
-	return $alumno_data;
+        $alumno_data = $result->fetch_all();
+        return $alumno_data;
     }
 
-    
+
     // recupera el listado de grados pertenecientes a una escolaridad
-    public function get_lista_grado_escolaridad($id_escolaridad) {
+    public function get_lista_grado_escolaridad($id_escolaridad)
+    {
         $q = "select * from  grados where id_escolaridad = $id_escolaridad";
         $c = $this->_db->query($q);
-	// defino un array vacio
+        // defino un array vacio
         $arr = array();
         // recorro el array
-        while($r = $c->fetch_array(MYSQLI_ASSOC)) {
+        while ($r = $c->fetch_array(MYSQLI_ASSOC)) {
             // añade elementos al array
             array_push($arr, $r['id_grado']);
         }
@@ -148,7 +153,7 @@ class grados extends jornada
     {
         // Preparamos la consulta para evitar inyecciones SQL
         $q = "UPDATE grados SET grado = ?, nombre_g = ?, promovido = ?, formato_boletin = ? WHERE id_grado = ?";
-        
+
         $stmt = $this->_db->prepare($q);
 
         if ($stmt === false) {
@@ -156,10 +161,10 @@ class grados extends jornada
         }
 
         // 'ssi' significa string, string, integer
-        $stmt->bind_param("sssii", $grado, $nombre_g, $promovido, $formato_boletin , $id_grado);
-        
+        $stmt->bind_param("sssii", $grado, $nombre_g, $promovido, $formato_boletin, $id_grado);
+
         $resultado = $stmt->execute();
-        
+
         $stmt->close();
 
         return $resultado;
@@ -168,34 +173,33 @@ class grados extends jornada
     // ... código existente ...
 
     // Método para eliminar un grado por su ID
-    public function eliminar_grado_id($id_grado) {
-        
+    public function eliminar_grado_id($id_grado)
+    {
+
         // Sentencia preparada DELETE
         $q = "DELETE FROM grados WHERE id_grado = ?";
-        
+
         $stmt = $this->_db->prepare($q);
-        
+
         if ($stmt === false) {
             return false;
         }
 
         // 'i' indica que el parámetro es un entero
         $stmt->bind_param("i", $id_grado);
-        
+
         $resultado = $stmt->execute();
-        
+
         $stmt->close();
 
         return $resultado;
     }
 
-    // ... cierre de la clase ...
+// ... cierre de la clase ...
 
-    
+
 }
 
 
 // fin de la clase
 ?>
-
-

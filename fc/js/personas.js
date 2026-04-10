@@ -395,17 +395,20 @@ function agregar_persona(formulario, personax, ea) {
                     personax["nombres"] = respuesta["nombres"];
                     personax["apellidos"] = respuesta["apellidos"];
                     personax["identificacion"] = respuesta["idetificacion"];
-                    // tomo como persona seleccionada la presona 
-                    // retornada
-                    seleccionar_persona(respuesta["id_persona"], personax, 4);
-                    // voy al formulario indicado
-                    if (ea == 1) {
-                        gestion_matriculas(formulario);
-                    } else if (ea == 2) {
-                        flujo_editar_matricula(alumno["id_matricula"], formulario);
-                    }
-                }
+                    personax["id_persona"] = respuesta["id_persona"];
 
+                    // obtengo the remaining data via get_persona and then navigate
+                    get_persona(respuesta["id_persona"], personax).then(function () {
+                        swal("seleccion", "Se selecciono la persona " + personax["id_persona"], 'success');
+
+                        // voy al formulario indicado
+                        if (ea == 1) {
+                            gestion_matriculas(formulario);
+                        } else if (ea == 2) {
+                            flujo_editar_matricula(alumno["id_matricula"], formulario);
+                        }
+                    });
+                }
 
             } else {
                 if (respuesta['status'] == 20) {
@@ -771,17 +774,17 @@ function datos_persona(id) {
  */
 
 function get_persona(id, personax) {
-    //  realizo la consulta en de los datos
-    $.ajax({
+    // Usamos $.ajax con callbacks tradicionales para evitar problemas de asincronía inesperada
+    // en los llamadores que no utilizan await.
+    $("#loader-overlay").show();
+
+    // Promosificamos el $.ajax pero mantenemos la opción de ejecutar callbacks
+    return $.ajax({
         type: "POST",
         url: "get_persona.php",
         dataType: "json",
-        data: {
-            id: id
-        },
-        // si los datos son correctos entonces ...
+        data: { id: id },
         success: function (respuesta) {
-            // si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 personax["nombres"] = respuesta["nombres"];
                 personax["apellidos"] = respuesta["apellidos"];
@@ -795,12 +798,17 @@ function get_persona(id, personax) {
                 }
             }
         },
-        error: function (xhr, status) {
+        error: function (xhr, status, error) {
             swal('Disculpe, existió un problema');
-            console.log(xhr);
+            console.log(error);
+        },
+        complete: function () {
+            $("#loader-overlay").hide();
         }
     });
 }
+
+
 
 /**
  * Solicita los datos básicos de una persona a partir de su ID de alumno y los asigna a un objeto.
@@ -898,19 +906,19 @@ function eliminar_persona(id_personas) {
 function seleccionar_persona(id, personax, form) {
     //  cargo el los datos de la persona
     personax["id_persona"] = id;
-    // obtengo los datos de la persona en el json persona
-    get_persona(id, personax);
-    // los muestro
-    swal("seleccion", "Se selecciono la persona " + personax["id_persona"], 'success');
-    // si es menor de 30 es del formulario de matriculas
-    // de lo contrario es de eliminar matriculas
-    if (form < 30) {
-        // voy al formulario 4 de matriculas
-        gestion_matriculas(form);
-    } else {
-        // en el caso de editar las matriculas
-        //gestion_flujo_editar_matricula(form);
-    }
+    // obtengo los datos de la persona en el json persona de manera "síncrona" sin bloquear
+    get_persona(id, personax).then(function () {
+        // los muestro
+        swal("seleccion", "Se selecciono la persona " + personax["id_persona"], 'success').then((value) => {
+            // Ahora entrará a gestion_matriculas SOLO DESPUÉS de que el usuario cierre la alerta.
+            if (form < 30) {
+                gestion_matriculas(form);
+            } else {
+                flujo_editar_matricula(alumno["id_matricula"], form);
+            }
+        });
+
+    });
 }
 
 /**
@@ -924,33 +932,32 @@ function seleccionar_persona(id, personax, form) {
 function seleccionar_persona_editar(id, personax, form) {
     // Cargo el id de la persona
     personax["id_persona"] = id;
-    // Obtengo los datos de la persona
-    get_persona(id, personax);
-
-    // Vinculo la persona al alumno en la base de datos
-    $.ajax({
-        type: "POST",
-        url: "vincular_padre.php",
-        dataType: "json",
-        data: {
-            id_persona: id,
-            id_hijo: alumno["id_persona"]
-        },
-        success: function (respuesta) {
-            if (respuesta['status'] == 1) {
-                swal("seleccion", "Se selecciono y vinculo la persona " + id + " con el alumno de código " + alumno["id_persona"], 'success');
-                // Salto al siguiente item del formulario de edición
-                flujo_editar_matricula(alumno["id_matricula"], form);
-            } else {
-                swal('Error', 'No se pudo vincular la persona al alumno: ' + (respuesta['mensaje'] || ''), 'error');
+    // Obtengo los datos de la persona de manera "síncrona" sin bloquear
+    get_persona(id, personax).then(function () {
+        // Vinculo la persona al alumno en la base de datos
+        $.ajax({
+            type: "POST",
+            url: "vincular_padre.php",
+            dataType: "json",
+            data: {
+                id_persona: id,
+                id_hijo: alumno["id_persona"]
+            },
+            success: function (respuesta) {
+                if (respuesta['status'] == 1) {
+                    swal("seleccion", "Se selecciono y vinculo la persona " + id + " con el alumno de código " + alumno["id_persona"], 'success');
+                    // Salto al siguiente item del formulario de edición
+                    flujo_editar_matricula(alumno["id_matricula"], form);
+                } else {
+                    swal('Error', 'No se pudo vincular la persona al alumno: ' + (respuesta['mensaje'] || ''), 'error');
+                }
+            },
+            error: function (xhr, status) {
+                swal('Disculpe, existió un problema en la vinculación');
+                console.log(xhr);
             }
-        },
-        error: function (xhr, status) {
-            swal('Disculpe, existió un problema en la vinculación');
-            console.log(xhr);
-        }
+        });
     });
-
 }
 
 

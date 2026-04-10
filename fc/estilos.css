@@ -10,13 +10,13 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.tag_formulario{
-background-color: transparent;
-color: gold;
-border: none;
-font-weight: bold;
-font-size: 0.9rem;
-padding-left: 0px;
+.tag_formulario {
+  background-color: transparent;
+  color: gold;
+  border: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding-left: 0px;
 }
 
 .window-notice {
@@ -49,118 +49,118 @@ padding-left: 0px;
 
 
 
-.input-group-text{
-    width:12rem;
+.input-group-text {
+  width: 12rem;
 }
 
-.actualizar_personas{
-    background-color: khaki;
-    padding: 2rem;
-    margin: 2px;
-    border-radius: 1rem;
+.actualizar_personas {
+  background-color: khaki;
+  padding: 2rem;
+
+  border-radius: 1rem;
 }
 
-.agregar_personas{
-    background-color: azure;
-    padding: 2rem;
-    margin: 2px;
-    margin-top:1rem;
-    border-radius: 0.2rem;
-    border-color: black;
-    border: 10px;
-    width: -moz-available;
+.agregar_personas {
+  background-color: azure;
+  padding: 2rem;
+
+  margin-top: 1rem;
+  border-radius: 0.2rem;
+  border-color: black;
+  border: 10px;
+
 }
 
 
 
 .A {
-    color: blue;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: blue;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .B {
-    color: blueviolet;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: blueviolet;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .C {
-    color: darkcyan;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: darkcyan;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .D {
-    color: red;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: red;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .E {
-    color: orange;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: orange;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .F {
-    color: forestgreen;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: forestgreen;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .G {
-    color: darkslategray;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: darkslategray;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .H {
-    color: darkblue;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: darkblue;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .I {
-    color: brown;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: brown;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .J {
-    color: fuchsia;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: fuchsia;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .L {
-    color: dodgerblue;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: dodgerblue;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 
 .R {
-    color: forestgreen;
-    max-width: 5rem;
-    text-align: center;
-    font-weight:900;
+  color: forestgreen;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
 }
 
 .border-red {
-            border: 2px solid red !important;
-        }
+  border: 2px solid red !important;
+}
 
 caption {
   caption-side: top;
@@ -170,99 +170,97 @@ caption {
 }
 
 
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px)  {
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
-    .input-group-text{
-    width:11rem;
-}
+  .input-group-text {
+    width: 11rem;
+  }
 
 
-.A {
+  .A {
     color: blue;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.B {
+  .B {
     color: blueviolet;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.C {
+  .C {
     color: darkcyan;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.D {
+  .D {
     color: red;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.E {
+  .E {
     color: orange;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.F {
+  .F {
     color: forestgreen;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.G {
+  .G {
     color: darkslategray;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.H {
+  .H {
     color: darkblue;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.I {
+  .I {
     color: brown;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.J {
+  .J {
     color: fuchsia;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
-.L {
+  .L {
     color: dodgerblue;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
 
-.R {
+  .R {
     color: forestgreen;
     max-width: 5rem;
     text-align: center;
-    font-weight:900;
-}
+    font-weight: 900;
+  }
 
 
 }
@@ -274,11 +272,11 @@ and (max-device-width : 480px)  {
 /*pantallas pequeñas*/
 @media screen and (max-width: 1500px) {
 
-  #encabezado.h1{
+  #encabezado.h1 {
     font-size: small;
   }
 
-  #encabezado{
+  #encabezado {
     width: 100%;
     background-color: lightseagreen;
     color: aliceblue;
@@ -290,32 +288,33 @@ and (max-device-width : 480px)  {
 
   .sidenav {
     height: 100%;
-    background-color:rgb(0, 33, 77);
+    background-color: rgb(0, 33, 77);
     overflow-x: hidden;
     padding-top: 20px;
 
   }
 
-  #login1{
-      max-width:100%;
+  #login1 {
+    max-width: 100%;
   }
 
-  #cedula{
-      max-width:80%;
-      font-size:2rem;
+  #cedula {
+    max-width: 80%;
+    font-size: 2rem;
   }
-  
-  #login{
-      max-width:80%;
-      font-size:2rem;
+
+  #login {
+    max-width: 80%;
+    font-size: 2rem;
   }
-  .label-login{
-      font-size:2rem;
+
+  .label-login {
+    font-size: 2rem;
   }
 
   .titulo-login {
 
-      font-size: 6rem;
+    font-size: 6rem;
   }
 
   .login-main-text {
@@ -333,7 +332,7 @@ and (max-device-width : 480px)  {
 
   }
 
-  .form-contol::placeholder{
+  .form-contol::placeholder {
     font-size: 0.7rem;
   }
 }
@@ -341,13 +340,13 @@ and (max-device-width : 480px)  {
 /*pantalla grande*/
 @media screen and (min-width: 1500px) {
 
-  #encabezado{
+  #encabezado {
     width: 100%;
     background-color: darkslategray;
-    color: rgba(200,200,200,20);
+    color: rgba(200, 200, 200, 20);
     padding: 60px;
     box-shadow: 5px 5px 5px lightgray;
-}
+  }
 
   .main {
     margin-left: 40%;
@@ -380,22 +379,42 @@ and (max-device-width : 480px)  {
 
 
 #loader-overlay {
-    position: fixed; /* Cubre toda la pantalla */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(254, 254, 254, 0.8); /* Fondo negro semitransparente */
-    z-index: 999; /* Asegura que esté por encima de todo */
-    display: none; /* Oculto por defecto */
+  position: fixed;
+  /* Cubre toda la pantalla */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  /* Fondo blanco transparente */
+  z-index: 999;
+  /* Asegura que esté por encima de todo */
+  display: none;
+  /* Oculto por defecto */
 }
 
 /* Ajusta tu loader para que esté centrado sobre el overlay */
 .loader {
-    position: fixed; /* Cambiado de absolute a fixed */
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%); /* Centrado perfecto */
-    z-index: 1000; /* Por encima del overlay */
+  position: fixed;
+  /* Cambiado de absolute a fixed */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* Centrado perfecto */
+  z-index: 1000;
+  /* Por encima del overlay */
+  width: 50vmin !important;
+  height: 50vmin !important;
+  border-width: 4vmin !important;
 }
 
+/* Limitar ancho del contenedor #avance de manera responsiva */
+#avance {
+  width: 100%;
+  max-width: 900px;
+  /* Ancho máximo que quieres permitir en pantallas grandes */
+  margin: 0 auto;
+  /* Centra el contenedor automáticamente */
+  padding: 1rem;
+  /* Espacio interior para que no toque los bordes laterales en móvil */
+}

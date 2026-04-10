@@ -85,7 +85,8 @@ class u_docentes extends personas
             $data = $result->fetch_assoc();
             $stmt->close();
             return $data ?: "No se encontró el registro.";
-        } else {
+        }
+        else {
             // Obtener todos los registros
             $sql = "SELECT * FROM u_docentes";
             $result = $this->_db->query($sql);
@@ -96,9 +97,4 @@ class u_docentes extends personas
         }
     }
 
-    // Destructor: Cerrar conexión
-    public function __destruct()
-    {
-        $this->_db->close();
-    }
 }
