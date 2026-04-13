@@ -909,14 +909,14 @@ function seleccionar_persona(id, personax, form) {
     // obtengo los datos de la persona en el json persona de manera "síncrona" sin bloquear
     get_persona(id, personax).then(function () {
         // los muestro
-        swal("seleccion", "Se selecciono la persona " + personax["id_persona"], 'success').then((value) => {
-            // Ahora entrará a gestion_matriculas SOLO DESPUÉS de que el usuario cierre la alerta.
-            if (form < 30) {
-                gestion_matriculas(form);
-            } else {
-                flujo_editar_matricula(alumno["id_matricula"], form);
-            }
-        });
+        //swal("seleccion", "Se selecciono la persona " + personax["id_persona"], 'success').then((value) => {
+        // Ahora entrará a gestion_matriculas SOLO DESPUÉS de que el usuario cierre la alerta.
+        if (form < 30) {
+            gestion_matriculas(form);
+        } else {
+            flujo_editar_matricula(alumno["id_matricula"], form);
+        }
+        //});
 
     });
 }

@@ -434,76 +434,7 @@ function gestion_matriculas(item) {
       //  cargo el formulario 20 de matricula en el campo avance
       $("#avance").load("formulario_matricula_20.html", function () {
 
-        // cargo el contenido dentro la seccion paginas dentro del formulario
-        $("#paginas").html("<p>Los datos de la matricula son :</p>");
-        // muestro los datos del alumnos
-        $("#paginas").append("<p> <i><h3>Datos del alumno</h3></i></p>");
-        $("#paginas").append("<p> nombre : <b>" + alumno["nombres"] + " " + alumno["apellidos"] + "</b></p>");
-          $("#paginas").append("<p> tipo de identificacion  : <b>" + alumno["tipo_identificacion"] + "</b></p>");
-
-	  
-	  $("#paginas").append("<table>");
-	  $("#paginas").append("<thead>");
-	  $("#paginas").append("<tr>");
-	  $("#paginas").append("<th>");
-	  $("#paginas").append("Campo");
-	  $("#paginas").append("</th>");
-	  $("#paginas").append("<th>");
-	  $("#paginas").append("Valor");
-	  $("#paginas").append("</th>");
-	  $("#paginas").append("</tr>");
-	  $("#paginas").append("</thead>");
-
-	  $("#paginas").append("<tbody>");
-	  $("#paginas").append("<tr><td>");
-	  $("#paginas").append("identificacion ");
-	  $("#paginas").append(alumno["identificacion"] );
-	  $("#paginas").append("</td></tr>");
-	  
-        $("#paginas").append("<p> grado : <b>" + alumno["id_grado"] + "</b></p>");
-        $("#paginas").append("<p> jornada : <b>" + alumno["id_jornada"] + "</b></p>");
-        $("#paginas").append("<p> curso : <b>" + alumno["id_curso"] + "</b></p>");
-        $("#paginas").append("<p> escolaridad : <b>" + alumno["id_escolaridad"] + "</b></p>");
-        $("#paginas").append("<p> año : <b>" + alumno["year"] + "</b></p>");
-        $("#paginas").append("<p> fecha : <b>" + alumno["fecha"] + "</b></p>");
-        $("#paginas").append("<p> nacimiento : <b>" + alumno["nacimiento"] + "</b></p>");
-        $("#paginas").append("<p> correo : <b>" + alumno["correo"] + "</b></p>");
-        $("#paginas").append("<p> correo institucional : <b>" + alumno["i_correo"] + "</b></p>");
-        $("#paginas").append("<p> celular : <b>" + alumno["celular"] + "</b></p>");
-        $("#paginas").append("<p> telefono : <b>" + alumno["telefono"] + "</b></p>");
-        $("#paginas").append("<p> dirección : <b>" + alumno["direccion_residencia"] + "</b></p>");
-        $("#paginas").append("<p> barrio : <b>" + alumno["barrio"] + "</b></p>");
-        $("#paginas").append("<p> curso : <b>" + alumno["id_curso"] + "</b></p>");
-        $("#paginas").append("<p> estrato : <b>" + alumno["estrato"] + "</b></p>");
-        $("#paginas").append("<p> sisben : <b>" + alumno["sisben"] + "</b></p>");
-        $("#paginas").append("<p> eps : <b>" + alumno["eps"] + "</b></p>");
-        $("#paginas").append("<p> vivie_con : <b>" + alumno["vivie_con"] + "</b></p>");
-
-        // muestro los datos del padre
-        $("#paginas").append("<p> <i><h3>Datos del padre :</h3></i></p>");
-        $("#paginas").append("<p> nombre : <b>" + padre["nombres"] + " " + padre["apellidos"] + "</b></p>");
-        $("#paginas").append("<p> tipo de identificacion  : <b>" + padre["tipo_identificacion"] + "</b></p>");
-        $("#paginas").append("<p> identificacion : <b>" + padre["identificacion"] + "</b></p>");
-        $("#paginas").append("<p> nacimiento : <b>" + padre["nacimiento"] + "</b></p>");
-        $("#paginas").append("<p> correo : <b>" + padre["correo"] + "</b></p>");
-        $("#paginas").append("<p> correo institucional : <b>" + padre["i_correo"] + "</b></p>");
-        $("#paginas").append("<p> celular : <b>" + padre["celular"] + "</b></p>");
-        $("#paginas").append("<p> telefono : <b>" + padre["telefono"] + "</b></p>");
-
-        // muestro los datos de la madre
-        $("#paginas").append("<p> <i><h3>Datos de la madre</h3></i></p>");
-        $("#paginas").append("<p> nombre : <b>" + madre["nombres"] + " " + madre["apellidos"] + "</b></p>");
-        $("#paginas").append("<p> tipo de identificacion  : <b>" + madre["tipo_identificacion"] + "</b></p>");
-        $("#paginas").append("<p> identificacion : <b>" + madre["identificacion"] + "</b></p>");
-        $("#paginas").append("<p> nacimiento : <b>" + madre["nacimiento"] + "</b></p>");
-        $("#paginas").append("<p> correo : <b>" + madre["correo"] + "</b></p>");
-        $("#paginas").append("<p> correo institucional : <b>" + madre["i_correo"] + "</b></p>");
-        $("#paginas").append("<p> celular : <b>" + madre["celular"] + "</b></p>");
-        $("#paginas").append("<p> telefono : <b>" + madre["telefono"] + "</b></p>");
-	  $("#paginas").append("</td>");
-	  $("#paginas").append("</tr>");
-	  $("#paginas").append("</tbody>");
-	  $("#paginas").append("</table>");
+          $("#paginas").append("Se agregara la matricula "
         // muestro los botones de aceptar
         $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(17)">atras</button>');
         $("#paginas").append('<button type="button" class="btn btn-outline-success" onclick="gestion_matriculas(21);">finalizar</button>');
