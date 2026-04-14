@@ -196,90 +196,94 @@ else {
 	<div id="content">
 
 		<?php $hoy = Date("Y-m-d hh:mm"); ?>
-		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+
+		<div class="bg-dark">
 			<!-- Navbar Brand-->
 			<a class="navbar-brand ps-3" href="board.php">INICIO</a>
-			<!-- Sidebar Toggle-->
-			<button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-					class="fas fa-bars"></i></button>
-			<a style="color:FFF" href="#"></a>
-			<!-- Navbar grados y cursos-->
 
-			<ul class="navbar-nav" id="nv_grupos">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#"
-						aria-expanded="false">Grupos</a>
-					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown">
-						<li><a class="dropdown-item" href="#" onclick="gestionar_grados();">Gestionar grado</a></li>
-						<li><a class="dropdown-item" onclick="gestionar_escolaridad();" href="#">Gestionar
-								escolaridad</a></li>
-						<li><a class="dropdown-item" onclick="gestionar_jornada();" href="#">Gestionar jornada</a></li>
-						<li><a class="dropdown-item" href="#" onclick="gestion_cursos();">Gestionar curso</a></li>
-					</ul>
-				</li>
-			</ul>
 
-			<!-- Nvar de calificaciones -->
+			<div class="nav nav-pills" id="navbarResponsive">
+				<!-- Navbar grados y cursos-->
+				<ul class="navbar-nav" id="nv_grupos">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#"
+							aria-expanded="false">Grupos</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown">
+							<li><a class="dropdown-item" href="#" onclick="gestionar_grados();">Gestionar grado</a></li>
+							<li><a class="dropdown-item" onclick="gestionar_escolaridad();" href="#">Gestionar
+									escolaridad</a></li>
+							<li><a class="dropdown-item" onclick="gestionar_jornada();" href="#">Gestionar jornada</a>
+							</li>
+							<li><a class="dropdown-item" href="#" onclick="gestion_cursos();">Gestionar curso</a></li>
+						</ul>
+					</li>
+				</ul>
 
-			<ul class="navbar-nav" id="nv_grupos">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#"
-						aria-expanded="false">Calificaciones</a>
-					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown">
-						<li><a class="dropdown-item" href="#" onclick="gestion_semanas()">Gestion semanas</a></li>
-						<li><a class="dropdown-item" href="#">Gestion periodos</a></li>
-					</ul>
-				</li>
-			</ul>
+				<!-- Nvar de calificaciones -->
 
-			<!-- estructura académica -->
+				<ul class="navbar-nav" id="nv_calificaciones">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="calificacionesDropdown" data-bs-toggle="dropdown"
+							href="#" aria-expanded="false">Calificaciones</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="calificacionesDropdown">
+							<li><a class="dropdown-item" href="#" onclick="gestion_semanas()">Gestion semanas</a></li>
+							<li><a class="dropdown-item" href="#">Gestion periodos</a></li>
+						</ul>
+					</li>
+				</ul>
 
-			<ul class="navbar-nav" id="nv_estructura_academica">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#"
-						aria-expanded="false">Estructura académica</a>
-					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown">
-						<li><a class="dropdown-item" href="#" onclick="gestion_materia_area();">Gestionar materia</a>
-						</li>
-						<li><a class="dropdown-item" href="#" onclick="gestion_areas();">Gestionar area</a></li>
+				<!-- estructura académica -->
 
-						<li><a class="dropdown-item" href="#" onclick="gestion_taller();">Gestionar taller</a></li>
-					</ul>
-				</li>
-			</ul>
+				<ul class="navbar-nav" id="nv_estructura_academica">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="estructuraDropdown" data-bs-toggle="dropdown" href="#"
+							aria-expanded="false">Estructura académica</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="estructuraDropdown">
+							<li><a class="dropdown-item" href="#" onclick="gestion_materia_area();">Gestionar
+									materia</a>
+							</li>
+							<li><a class="dropdown-item" href="#" onclick="gestion_areas();">Gestionar area</a></li>
 
-			<ul class="navbar-nav" id="nv_roles_personas">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="gradosDropdown" data-bs-toggle="dropdown" href="#"
-						aria-expanded="false">Personas y roles</a>
-					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gradosDropdown">
-						<li><a class="dropdown-item" href="#" onclick="gestion_personas();">Gestionar personas</a></li>
-						<li><a class="dropdown-item" href="#" onclick="matricula_docente();">Asignar Clases</a></li>
-						<li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1);">Matricular Alumno</a>
-						</li>
-						<li><a class="dropdown-item" href="#" onclick="listado_estudiantes_matriculados();">Editar
-								matricula alumno</a></li>
-					</ul>
-				</li>
-			</ul>
+							<li><a class="dropdown-item" href="#" onclick="gestion_taller();">Gestionar taller</a></li>
+						</ul>
+					</li>
+				</ul>
 
-			<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-						data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>
-						<?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?>
-					</a>
-					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="logout.php">Salir</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+				<ul class="navbar-nav" id="nv_roles_personas">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="personasDropdown" data-bs-toggle="dropdown" href="#"
+							aria-expanded="false">Personas y roles</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="personasDropdown">
+							<li><a class="dropdown-item" href="#" onclick="gestion_personas();">Gestionar personas</a>
+							</li>
+							<li><a class="dropdown-item" href="#" onclick="matricula_docente();">Asignar Clases</a></li>
+							<li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1);">Matricular Alumno</a>
+							</li>
+							<li><a class="dropdown-item" href="#" onclick="listado_estudiantes_matriculados();">Editar
+									matricula alumno</a></li>
+						</ul>
+					</li>
+				</ul>
+
+				<ul class="navbar-nav ms-auto me-3 me-lg-4">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>
+							<?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="logout.php">Salir</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+
 
 
 
 		<!-- barra de navegacion -->
-		<nav id="barrabotones" style="padding: 10px; background:cadetblue" class="nav navbar container-fluid">
+		<div id="barrabotones">
 			<div class="row w-100">
 				<div class="col-12 col-md-4 mb-2 d-flex align-items-center">
 					<label for="years" class="text-white small me-2 mb-0">Año</label>
@@ -292,6 +296,7 @@ else {
 				</div>
 
 				<input type="hidden" value="<?php echo $id; ?>" id="id_d">
+
 
 				<div class="col-12 col-md-4 mb-2 d-flex align-items-center">
 					<label for="periodos" class="text-white small me-2 mb-0">Periodo</label>
@@ -314,6 +319,7 @@ else {
 						onchange="$('#semana').css('background-color', 'transparent');">
 						<?php
 if ($admin) {
+	echo "<option style='color: black;' value='-1' selected>seleccione </option>";
 }
 else {
 	$s = new semana();
@@ -324,8 +330,11 @@ else {
 					</select>
 				</div>
 			</div>
-		</nav>
-		<nav id="botonoesacademicos" style="padding: 10px; background:darkcyan" class="nav navbar container-fluid">
+		</div>
+
+		<!-- barra de navegacion de botones academicos"-->
+
+		<div id="botonoesacademicos">
 			<div class="row w-100">
 				<div class="col-12 col-sm-6 col-md-4 col-lg mb-2 d-flex align-items-center">
 					<label for="jornada" class="text-white small me-2 mb-0">Jornada</label>
@@ -381,7 +390,7 @@ else {
 					</select>
 				</div>
 			</div>
-		</nav>
+		</div>
 
 		<div id="layoutSidenav">
 
@@ -407,7 +416,7 @@ else {
 		<!-- fin de datos -->
 
 
-		<div " id=" collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+		<div id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
 			<nav class="sb-sidenav-menu-nested nav d-flex flex-row flex-wrap justify-content-start"
 				style="gap: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
