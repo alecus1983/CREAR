@@ -182,7 +182,7 @@ if (isset($_SESSION["usuario"])) {
     </script>
 </head>
 
-<body class="sb-nav-fixed">
+<body >
     <div id="loader-overlay"></div>
     <div class="loader" style="display:none" id="loader"></div>
 
@@ -409,7 +409,7 @@ if (isset($_SESSION["usuario"])) {
             </div>
         </div>
 
-        <div id="layoutSidenav">
+        <div >
 
             <div id="contenido">
                 <main>

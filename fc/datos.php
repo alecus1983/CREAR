@@ -4,9 +4,9 @@
 require_once("conectar.php");
 require_once("escolaridad.php");
 require_once("areas.php");
-require_once("padres.php");
 require_once("acudientes.php");
 require_once("personas.php");
+require_once("padres.php");
 require_once("u_alumnos.php");
 require_once("u_docentes.php");
 require_once("docentes.php");
