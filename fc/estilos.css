@@ -411,10 +411,10 @@ caption {
 /* Limitar ancho del contenedor #avance de manera responsiva */
 #avance {
   width: 100%;
-  max-width: 900px;
+  max-width: 95%;
   /* Ancho máximo que quieres permitir en pantallas grandes */
-  margin: 0 auto;
+  margin: 10px auto;
   /* Centra el contenedor automáticamente */
-  padding: 1rem;
+  padding: 1.5rem;
   /* Espacio interior para que no toque los bordes laterales en móvil */
 }
