@@ -77,7 +77,7 @@
 
                 <!--------------------------- Left Box ----------------------------->
 
-                <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #103cbe;">
+              <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #96a3ca;">
                     <div class="featured-image mb-3">
                         <img src="../assets/img/login/1.png" class="img-fluid" style="width: 250px;">
                     </div>

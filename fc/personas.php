@@ -9,6 +9,7 @@ class personas extends imcrea
 
     // Atributos
     public $id_persona;
+    public $admin;
     public $nombres;
     public $apellidos;
     public $identificacion;
@@ -151,7 +152,7 @@ class personas extends imcrea
                 throw new InvalidArgumentException("El ID de la persona debe ser un valor numérico.");
             }
 
-            $q = "SELECT * FROM personas WHERE id_personas = ?";
+            $q = "SELECT * FROM personas WHERE id_personas = ? ";
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
@@ -929,6 +930,30 @@ class personas extends imcrea
             return true;
         }
         return false;
+    }
+
+    // funcion que confirma si es administrador
+
+    public  function is_admin($id_persona){
+        // descripcion de la consulata
+        $query = "select * from u_docentes where id_personas = ?";
+        //echo $query.$id_persona;
+        // preparo la consulta
+        $stmt = $this->_db->prepare($query);
+        // asigno los parametros de la consulta     
+        $stmt->bind_param("i",$id_persona);     
+        
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            $a = $result->fetch_array(MYSQLI_ASSOC);
+            //echo var_dump($a);
+            if($a["admin"] == 1){
+                return $a["admin"];
+            }
+        }
+        return false;
+
+
     }
 }
 

@@ -108,27 +108,32 @@ where id_docente in (   select distinct id_docente from matricula_docente where 
 
 	try {
     
-	    // determinar si el docente es administrativo
-	    $q = "SELECT admin from u_docentes u where id_docente = ? limit 1";
-	    // preparao la consulta en la variable $stmt
-	    $stmt = $this->_db->prepare($q);
+	    // // determinar si el docente es administrativo
+	    // $q = "SELECT admin from u_docentes u where id_docente = ? limit 1";
+	    // // preparao la consulta en la variable $stmt
+	    // $stmt = $this->_db->prepare($q);
 
-	    if ($stmt === false) {
-                throw new Exception("Error al preparar la consulta : " . $this->_db->error);
-            }
+	    // if ($stmt === false) {
+        //         throw new Exception("Error al preparar la consulta : " . $this->_db->error);
+        //     }
 
 	   
-	    // agrego los parametros a la consulta
-	    $stmt->bind_param("i", $id_docente);
-	    // ejecuto la consulta
-	    $stmt->execute();
-	    $result = $stmt->get_result();
-	    //obtengo el primer registro
-            $a = $result->fetch_array();
+	    // // agrego los parametros a la consulta
+	    // $stmt->bind_param("i", $id_docente);
+	    // // ejecuto la consulta
+	    // $stmt->execute();
+	    // $result = $stmt->get_result();
+	    // //obtengo el primer registro
+        //     $a = $result->fetch_array();
+
+        // echo $id_docente." -----";
 	   
+        $doc = new docentes();  
+        $aa =$doc->get_docente_id($id_docente);
+        //echo var_dump($aa);
 
 	    // si es un administrativo aplico estas politicas
-	    if($a[0] == 1){
+	    if($doc->is_admin($aa['id_personas'])){
 
 		// texto de la consulta
 		// selecciono todos los grados de una escolaridad

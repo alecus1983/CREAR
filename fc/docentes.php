@@ -60,7 +60,7 @@ class docentes extends personas {
                 throw new InvalidArgumentException("El ID del docente debe ser un valor numérico.");
             }
            
-            $q = "SELECT ud.id_docente, ud.admin, p.nombres, p.apellidos, p.identificacion, ud.login, ud.fecha, p.celular, p.correo, p.i_correo, ud.materias 
+            $q = "SELECT ud.id_docente, ud.admin, p.nombres, p.apellidos, p.identificacion, ud.login, ud.fecha, p.celular, p.correo, p.i_correo, ud.materias, p.id_personas 
                   FROM u_docentes ud
                   INNER JOIN personas p ON ud.id_personas = p.id_personas
                   WHERE ud.id_docente = ?";
@@ -89,6 +89,7 @@ class docentes extends personas {
                 $this->correo = $a['correo'];   // Usar propiedad de la clase padre
                 $this->i_correo = $a['i_correo']; // Usar propiedad de la clase padre
                 $this->materias = $a['materias'];
+                $this->id_persona = $a['id_personas'];
             }
             $stmt->close();
             return $a; // Retorna el array asociativo con los datos

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 /**
  * Controlador para manejar las peticiones de autenticación
@@ -7,45 +8,40 @@
 require_once("datos.php"); // Asegura que imcrea y otras clases estén cargadas
 require_once("login.php");
 
-session_start();
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $identificacion = isset($_POST['identificacion']) ? $_POST['identificacion'] : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
 
     if (empty($identificacion) || empty($password)) {
-        //header('Content-Type: application/json');
-        //echo json_encode(['status' => 'error', 'message' => 'Identificación y contraseña son obligatorias.']);
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'error', 'message' => 'Identificación y contraseña son obligatorias.']);
         exit;
     }
 
     $login_manager = new login();
     $usuario = $login_manager->verificar_login($identificacion, $password);
 
-    
+    header('Content-Type: application/json');
     if ($usuario) {
-
         // Establecer variables de sesión
         $_SESSION['id_personas'] = $usuario['id_personas'];
         $_SESSION['identificacion'] = $usuario['identificacion'];
         $_SESSION['autenticado'] = true;
 
-        header("Location:board.php");
-        
-        // echo json_encode([
-        //    'status' => 'success',
-        //    'message' => 'Login exitoso.',
-        //    'redirect' => 'fc_admin.php' // O la página que corresponda
-        //]);
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Login exitoso.',
+            'redirect' => 'fc_admin.php' // O la página que corresponda
+        ]);
     }
     else {
-        // echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas.']);
+        echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas.']);
     }
     exit;
 }
 else {
     // Si no es POST, redirigir o mostrar error
-    //header('Location: login_boletines_x.html'); // O donde esté el formulario
+    header('Location: login_page.html'); // O donde esté el formulario
     exit;
 }

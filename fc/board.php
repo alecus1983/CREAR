@@ -1,22 +1,25 @@
 <?php
 session_start();
 // si obtengo una seccion
-if (isset($_SESSION["usuario"])){
+if (isset($_SESSION["id_personas"])){
     // lo almacen en la variable local
-    $usuario =  $_SESSION["usuario"];
+    $usuario =  $_SESSION["id_personas"];
 } else {
     // de lo contrario lo redirecciono a la pagina de loggin
-    header("location:login_boletines_prueba.php");
+    header("location:login_boletines_x.php");
     exit;
 }
 
 require_once('datos.php');
 // creo un nuevo docente
-$d = new docentes();
-$d->get_docente_cc($usuario);
-$id = $d->id;
-$admin = $d->admin;
+$d = new personas();
+$d->get_persona_por_id($usuario);
+$id = $d->id_persona;
+$admin = $d->is_admin($usuario);
 $ano = date('Y');
+//echo var_dump($d);
+
+//echo $d->nombres." admin : ".$admin ;
 ?>
 <!DOCTYPE html>
 <html lang="es">

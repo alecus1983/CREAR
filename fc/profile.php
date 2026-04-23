@@ -7,7 +7,7 @@ require_once("datos.php");
 echo "Inicio <br>";
 // Check if the user is logged in, if not then redirect to login page
 if (!isset($_SESSION['google_loggedin'])) {
-    header('Location: login_boletines_prueba.php');
+    header('Location: login_boletines_x.php');
     exit;
 }
 // Retrieve session variables

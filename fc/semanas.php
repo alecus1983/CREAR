@@ -66,6 +66,7 @@ class semana extends imcrea{
         $q = "select semana from semanas where year = $ano and inicio < NOW() and fin > NOW() order by semana asc;";
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
+        echo var_dump($r);
         return $r["semana"];
 
     }

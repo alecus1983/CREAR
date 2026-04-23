@@ -2,13 +2,14 @@
 session_start();
 require_once('datos.php');
 
-if (isset($_SESSION["usuario"])) {
-    $usuario = $_SESSION["usuario"];
-    $d = new docentes();
-    $d->get_docente_cc($usuario);
-    $id = $d->id;
-    $admin = $d->admin;
-
+if (isset($_SESSION["id_personas"])) {
+    $usuario = $_SESSION["id_personas"];
+    $d = new personas();
+    $d->get_persona_por_id($usuario);
+    $id_persona = $d->id_persona;
+    $admin = $d->is_admin($id_persona);
+    //echo var_dump($d);
+    // ano actual
     $ano = date('Y');
     if ($admin == 0) {
         header("Location:board.php");
@@ -313,7 +314,7 @@ if (isset($_SESSION["usuario"])) {
                         } ?> class="form-control-sm flex-grow-1">
                 </div>
 
-                <input type="hidden" value="<?php echo $id; ?>" id="id_d">
+                <input type="hidden" value="<?php echo $id_persona; ?>" id="id_d">
 
 
                 <div class="col-12 col-md-4 mb-2 d-flex align-items-center">
