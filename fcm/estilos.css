@@ -335,7 +335,28 @@ caption {
   .form-contol::placeholder {
     font-size: 0.7rem;
   }
+
+  .table {
+    font-size: 0.7rem;
+  }
+
+  .btn {
+    font-size: 0.7rem;
+  }
+
+  .form-control {
+    font-size: 0.7rem;
+  }
+
+  .input-group-text {
+    font-size: 0.7rem;
+  }
+
+  .tag_formulario {
+    font-size: 0.7rem;
+  }
 }
+
 
 /*pantalla grande*/
 @media screen and (min-width: 1500px) {
@@ -417,4 +438,17 @@ caption {
   /* Centra el contenedor automáticamente */
   padding: 1.5rem;
   /* Espacio interior para que no toque los bordes laterales en móvil */
+}
+
+
+@media screen and (max-width: 576px) {
+  .d-table-cell {
+    font-size: 0.7rem;
+
+  }
+
+  .d-table-cell :first-child {
+    font-size: 0.7rem;
+
+  }
 }

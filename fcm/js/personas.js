@@ -155,29 +155,25 @@ function cambio_datos_p(repo) {
             if (respuesta['status'] == 1) {
 
                 // coloco la respuesta en el campo repo
-                $(repo).html("<table class='table' id='lista_e'>" +
-                    "<thead>" +
-                    // emcabezado de la tabla
-                    "<th scope='col'>Nombres</th>" +
-                    "<th scope='col'>Apellidos</th>" +
-                    "<th scope='col'>D. de identidad</th>" +
-                    "<th scope='col'>Actualizar</th>" +
-                    "<th scope='col'>Eliminar</th>" +
-                    "</thead>" +
-                    "<tbody>");
+                $(repo).html(
+                    "<div class='d-table' style='width: 100%;'> <div class='d-table-row' > <div class='d-table-cell'>Nombres</div><div   class='d-table-cell'>Apellidos</div><div class='d-table-cell'>D. de identidad</div><div class='d-table-cell'>Actualizar</div><div class='d-table-cell'>Eliminar</div>");
 
 
                 respuesta['json'].forEach(id => {
                     // se agrega fila a la tabla
-                    $('#lista_e').append("<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
-
+                    $(repo).append(
+                        "<div class='d-table-row'>" +
+                        " <div class='d-table-cell'>" + id[0]
+                        + "</div><div class='d-table-cell'>" + id[1]
+                        + "</div><div class='d-table-cell'>" + id[2]
+                        + "</div> <div class='d-table-cell'>" +
+                        "<button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button>" +
+                        "</div><div class='d-table-cell'><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button>" +
+                        "</div></div>");
                 });
 
                 // agrego el  final de la tabla
-                $(repo).append("</tbody>" +
-                    "</div>" +
-                    "</div>" +
-                    "</div>");
+                $(repo).append("</div>");
 
                 // 1. Comprobamos si el elemento existe buscando su longitud (length)
                 if ($('#agregar_persona').length > 0) {
@@ -253,7 +249,7 @@ function cambio_datos(repo, personax, form) {
             if (respuesta['status'] == 1) {
 
                 // coloco la respuesta en el campo repo
-                $(repo).html("<table class='table' id='lista_e'>" +
+                $(repo).html("<div class='table-responsive'><table class='table table-sm table-hover' id='lista_e'>" +
                     "<thead>" +
                     // emcabezado de la tabla
                     "<th scope='col'>Nombres</th>" +
@@ -276,8 +272,7 @@ function cambio_datos(repo, personax, form) {
 
                 // agrego el  final de la tabla
                 $(repo).append("</tbody>" +
-                    "</div>" +
-                    "</div>" +
+                    "</table>" +
                     "</div>");
 
 
