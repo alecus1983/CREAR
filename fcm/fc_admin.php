@@ -438,14 +438,8 @@ if (isset($_SESSION["id_personas"])) {
 
             <nav class="sb-sidenav-menu-nested nav d-flex flex-row flex-wrap justify-content-start"
                 style="gap: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
-                <button type="button" class="btn btn-sm btn-info text-white" onclick="gestion_semanas()">Gestión
-                    de Semanas</button>
-                <button type="button" class="btn btn-sm btn-info text-white" onclick="gestion_personas()">Gestión de
-                    Personas</button>
-                <button type="button" class="btn btn-sm btn-info text-white" onclick="requisitos_grado()">Requisitos de
-                    grado</button>
-                <button type="button" class="btn btn-sm btn-info text-white" onclick="matricula_docente()">Matricula
-                    Docente</button>
+                
+              
                 <button type="button" class="btn btn-sm btn-info text-white position-relative"
                     onclick="listado_estudiantes_matriculados();">
                     List. est. matriculados

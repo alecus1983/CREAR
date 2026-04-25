@@ -1,4 +1,5 @@
 <?php
+
 define("DB_HOST", "localhost");
 define("DB_USER", "imcreati_admin");
 define("DB_PASS", "conezioncrear21");

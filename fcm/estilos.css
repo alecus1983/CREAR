@@ -262,6 +262,10 @@ caption {
     font-weight: 900;
   }
 
+  #lista_e {
+      font-size: 0.7rem;
+  }
+
 
 }
 
@@ -335,7 +339,28 @@ caption {
   .form-contol::placeholder {
     font-size: 0.7rem;
   }
+
+  .table {
+    font-size: 0.7rem;
+  }
+
+  .btn {
+    font-size: 0.7rem;
+  }
+
+  .form-control {
+    font-size: 0.7rem;
+  }
+
+  .input-group-text {
+    font-size: 0.7rem;
+  }
+
+  .tag_formulario {
+    font-size: 0.7rem;
+  }
 }
+
 
 /*pantalla grande*/
 @media screen and (min-width: 1500px) {
@@ -412,9 +437,77 @@ caption {
 #avance {
   width: 100%;
   max-width: 95%;
-  /* Ancho máximo que quieres permitir en pantallas grandes */
-  margin: 10px auto;
-  /* Centra el contenedor automáticamente */
-  padding: 1.5rem;
-  /* Espacio interior para que no toque los bordes laterales en móvil */
+  
+}
+
+
+@media screen and (max-width: 576px) {
+  .d-table-cell {
+    font-size: 0.7rem;
+
+  }
+
+  .d-table-cell :first-child {
+    font-size: 0.7rem;
+
+  }
+}
+
+/* Estructura base estilo tabla */
+.responsive-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid #dee2e6;
+}
+
+.table-header {
+    display: flex;
+    background-color: #f8f9fa;
+    font-weight: bold;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-row {
+    display: flex;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.header-cell, .table-cell {
+    flex: 1;
+    padding: 12px;
+    text-align: left;
+}
+
+/* --- MODO RESPONSIVE (Móviles) --- */
+@media (max-width: 768px) {
+    .table-header {
+        display: none; /* Escondemos los títulos arriba */
+    }
+
+    .table-row {
+        display: block; /* Cada fila ahora es un bloque vertical */
+        padding: 10px 0;
+        border-bottom: 3px solid #ccc;
+    }
+
+    .table-cell {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 15px;
+        text-align: right;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Insertamos el nombre de la columna antes del dato */
+    .table-cell::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        color: #666;
+        flex: 1;
+        text-align: left;
+    }
 }

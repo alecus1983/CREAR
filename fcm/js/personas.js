@@ -154,31 +154,36 @@ function cambio_datos_p(repo) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
 
-                // coloco la respuesta en el campo repo
-                $(repo).html("<table class='table' id='lista_e'>" +
-                    "<thead>" +
-                    // emcabezado de la tabla
-                    "<th scope='col'>Nombres</th>" +
-                    "<th scope='col'>Apellidos</th>" +
-                    "<th scope='col'>D. de identidad</th>" +
-                    "<th scope='col'>Actualizar</th>" +
-                    "<th scope='col'>Eliminar</th>" +
-                    "</thead>" +
-                    "<tbody>");
+              // Limpiamos el contenedor y añadimos el encabezado con una clase CSS personalizada
+$(repo).html(`
+    <div class="responsive-table">
+        <div class="table-header">
+            <div class="header-cell">Nombres</div>
+            <div class="header-cell">Apellidos</div>
+            <div class="header-cell">D. de identidad</div>
+            <div class="header-cell">Actualizar</div>
+            <div class="header-cell">Eliminar</div>
+        </div>
+        <div class="table-body"></div>
+    </div>
+`);
 
-
-                respuesta['json'].forEach(id => {
-                    // se agrega fila a la tabla
-                    $('#lista_e').append("<tr><td>" + id[0] + "</td><td>" + id[1] + "</td><td>" + id[2] + "</td><td><button type='button' class='btn btn-info' onclick='datos_persona(\"" + id[3] + "\");'>actualizar</button></td><td><button type='button' class='btn btn-warning' onclick='eliminar_persona(\"" + id[3] + "\");'>eliminar</button></td></tr>");
-
-                });
-
-                // agrego el  final de la tabla
-                $(repo).append("</tbody>" +
-                    "</div>" +
-                    "</div>" +
-                    "</div>");
-
+respuesta['json'].forEach(id => {
+    // Usamos template literals para inyectar las variables directamente
+    $(".table-body").append(`
+        <div class="table-row">
+            <div class="table-cell" data-label="Nombres">${id[0]}</div>
+            <div class="table-cell" data-label="Apellidos">${id[1]}</div>
+            <div class="table-cell" data-label="D. Identidad">${id[2]}</div>
+            <div class="table-cell" data-label="Actualizar">
+                <button type="button" class="btn btn-info btn-sm" onclick="datos_persona('${id[3]}');">Actualizar</button>
+            </div>
+            <div class="table-cell" data-label="Eliminar">
+                <button type="button" class="btn btn-warning btn-sm" onclick="eliminar_persona('${id[3]}');">Eliminar</button>
+            </div>
+        </div>
+    `);
+});
                 // 1. Comprobamos si el elemento existe buscando su longitud (length)
                 if ($('#agregar_persona').length > 0) {
 
@@ -253,7 +258,7 @@ function cambio_datos(repo, personax, form) {
             if (respuesta['status'] == 1) {
 
                 // coloco la respuesta en el campo repo
-                $(repo).html("<table class='table' id='lista_e'>" +
+                $(repo).html("<div class='table-responsive'><table class='table table-sm table-hover' id='lista_e'>" +
                     "<thead>" +
                     // emcabezado de la tabla
                     "<th scope='col'>Nombres</th>" +
@@ -276,8 +281,7 @@ function cambio_datos(repo, personax, form) {
 
                 // agrego el  final de la tabla
                 $(repo).append("</tbody>" +
-                    "</div>" +
-                    "</div>" +
+                    "</table>" +
                     "</div>");
 
 
