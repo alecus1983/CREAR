@@ -103,6 +103,11 @@
                             <div class="input-group mb-1">
                                 <input name="password" id="password" type="password" name="password"  placeholder="clave"  class="form-control form-control-lg bg-light fs-6" required>
                             </div>
+                            <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+                            <div style="color: red; font-size: 14px; margin-top: 5px;">
+                                La contrase&ntilde;a o el usuario son incorrectos.
+                            </div>
+                            <?php endif; ?>
                             <div class="input-group mb-5 d-flex justify-content-between">
 
 

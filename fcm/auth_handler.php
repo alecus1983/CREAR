@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //]);
     }
     else {
+        header("Location: login_boletines_x.php?error=1");
         // echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas.']);
     }
     exit;

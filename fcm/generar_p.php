@@ -241,19 +241,25 @@ foreach($list->id_alumno  as $e) {
     $c_m = 0;
     // por cada alumno obtengo el vector
     // de materias
-    foreach($spot[$e] as $area){
-        // por cada area obtengo el vector de materias del area
-        foreach($area as $materia){
-            // el promedio sumatoria de la materia en
-            // los cuatro periodos
-            $p_a = $p_a + $materia[$id_periodo];
-            $c_m ++;
+    if (isset($spot[$e]) && is_array($spot[$e])) {
+        foreach($spot[$e] as $area){
+            if (is_array($area)) {
+                // por cada area obtengo el vector de materias del area
+                foreach($area as $materia){
+                    if (is_array($materia) && isset($materia[$id_periodo])) {
+                        // el promedio sumatoria de la materia en
+                        // los cuatro periodos
+                        $p_a = $p_a + $materia[$id_periodo];
+                        $c_m ++;
+                    }
+                }
+            }
         }
     }
     //calculo el promedio del estudiante
     //es la sumatoria de los periodos
     //sobre la cantidad de periodos
-    $promedio[$e] = $p_a/$c_m;
+    $promedio[$e] = $c_m > 0 ? $p_a/$c_m : 0;
 
 }
 
@@ -789,23 +795,25 @@ foreach($list->id_alumno  as $e) {
         // ciclo de repeticion para cada area
         // se ejecuta como tantas materias tenga el area
         // echo var_dump($spot_x[$id_area]);
-    
-        foreach ($spot_x[$id_area] as $id_m => $mat) {
-            // calculo una sumatoria
-            $avg_a = $mat + $avg_a;
-            // incremento las materias perdidas
-            // si es menor que tres y diferente
-            // de disciplina.
-            if($mat < 2.95 and $id_m !== 20){
-                //echo "<br>materia perdida  con $mat, en la materia $id_m  para el estudiante $e";
-                $materia_perdidas ++;
-            }
+        if (isset($spot_x[$id_area]) && is_array($spot_x[$id_area])) {
+            foreach ($spot_x[$id_area] as $id_m => $mat) {
+                // calculo una sumatoria
+                $avg_a = $mat + $avg_a;
+                // incremento las materias perdidas
+                // si es menor que tres y diferente
+                // de disciplina.
+                if($mat < 2.95 and $id_m !== 20){
+                    //echo "<br>materia perdida  con $mat, en la materia $id_m  para el estudiante $e";
+                    $materia_perdidas ++;
+                }
 
+            }
         }
 
         // echo "<br> Cantidad ".count($spot[$e][$id_area]);
         // promedio del area        
-        $avg_a = $avg_a/count($spot[$e][$id_area]);
+        $count_materias = (isset($spot[$e][$id_area]) && is_array($spot[$e][$id_area])) ? count($spot[$e][$id_area]) : 0;
+        $avg_a = $count_materias > 0 ? $avg_a / $count_materias : 0;
 
         // echo "<br><b>promedio </b> $avg_a";
         // si el promedio del área es menor que tres se incrementa el número de areas perdidas

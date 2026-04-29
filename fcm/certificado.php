@@ -74,37 +74,7 @@ class PDF extends FPDF
 // se crea un nuevo documento de PDF
 $pdf=new PDF();
 
-// se crea un nuevo documento de PDF
-$pdf=new PDF();
-$pdf->SetFont('helvetica','',10);
-//creo un nuevo elemento grado
-$gr = new grados();
-//obtengo las caracteristicas del grado
-$gr->get_grado_id($id_grado);
-// creamos un nuevo listado de estudiantes 
-$list = new lista_estudiantes($year, $id_grado, $id_jornada, $id_curso);
-// VARIABLES PARA GUARDAR LOS NOMBRES DE LOS ESTUDIANTES
-$nivel = $gr->grado; 
-// se almacena el grado al que es promovido
-// para el   grado actual los estudiantes
-// de este grado
-$promovido = $gr->promovido;//$datog['promovido'];
 
-// array multidimencional para almacenar
-// las notas en el siguiente orden:
-// codigo del estudiante
-// codigo de area  
-// codigo de materia
-// nota (calificacion)  del periodo
-$spot = array(array(array(array())));
-
-// array multidimencional para almacenar
-// recupraciones en el siguiente orden:
-// codigo del estudiante
-// codigo de area
-// codigo de la materia
-// nota (calificaciones) de la recuperacion
-$recover = array(array(array()));
 
 
 // consulta para obtener  los datos del grado a evaluar

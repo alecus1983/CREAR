@@ -282,6 +282,33 @@ if (isset($_SESSION["id_personas"])) {
                         </li>
                     </ul>
 
+            <!-- Gestion academica  -->
+                    <ul class="navbar-nav" id="nv_roles_personas">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="personasDropdown" data-bs-toggle="dropdown" href="#"
+                                aria-expanded="false">Gestion Académica</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="personasDropdown">
+                                <li><a class="dropdown-item" href="#" onclick="listado_notas_estudiantes();">Listado  notas por estudiantes</a> </li>
+                                <li><a class="dropdown-item" href="#" onclick="avance_semanal();">Avance de notas</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="boletin();">Boletin</a></li>
+                               <li><a class="dropdown-item" href="#" onclick="crear_pdf();">Certificado</a></li>
+                              <li><a class="dropdown-item" href="#" onclick="cuadro();">Cuadro de notas</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="notas_faltantes();">Notas faltantes</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+            <!-- Gestion docentes  -->
+                    <ul class="navbar-nav" id="nv_gestion_docentes">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="docentesDropdown" data-bs-toggle="dropdown" href="#"
+                                aria-expanded="false">Gestion  Docentes</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="personasDropdown">
+                                <li><a class="dropdown-item" href="#" onclick="listado_dcentes();">Listado  docentes</a> </li>                 
+                            </ul>
+                        </li>
+                    </ul>
+
                     <ul class="navbar-nav ms-auto me-3 me-lg-4">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
@@ -434,59 +461,18 @@ if (isset($_SESSION["id_personas"])) {
         <!-- fin de datos -->
 
 
-        <div id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-
-            <nav class="sb-sidenav-menu-nested nav d-flex flex-row flex-wrap justify-content-start"
-                style="gap: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
-                
-              
-                <button type="button" class="btn btn-sm btn-info text-white position-relative"
-                    onclick="listado_estudiantes_matriculados();">
-                    List. est. matriculados
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                        style="font-size: 0.6rem;">Nuevo</span>
-                </button>
-                <button type="button" class="btn btn-sm btn-info text-white position-relative"
-                    onclick="listado_notas_estudiantes();">
-                    Notas por estudiantes
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                        style="font-size: 0.6rem;">Nuevo</span>
-                </button>
-            </nav>
+        
         </div>
         <!-- fin de elementos -->
 
         <div id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 
-            <nav class="sb-sidenav-menu-nested nav d-flex flex-row flex-wrap justify-content-start"
-                style="gap: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
-                <a class="btn btn-sm btn-success" href="listado_docentes.php" target="_blank">Lista
-                    de docentes</a>
-                <button type="button" class="btn btn-sm btn-success" onclick="avance_semanal();">Avance
-                    notas</button>
-
-                <button type="button" class="btn btn-sm btn-success position-relative" onclick="boletin()">Boletin
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                        style="font-size: 0.5rem; line-height: 1;">Nuevo<br>prees.</span>
-                </button>
-
-                <button type="button" class="btn btn-sm btn-success position-relative" onclick="crear_pdf()">Certificado
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                        style="font-size: 0.6rem;">Nuevo</span>
-                </button>
-
-                <button type="button" class="btn btn-sm btn-success" onclick="cuadro();">Cuadro de
-                    notas</button>
-                <button type="button" class="btn btn-sm btn-success" onclick="notas_faltantes()">Notas
-                    faltantes</button>
-            </nav>
+            
         </div>
     </div><!-- fin del div del menu de botones -->
 
     <div class="sb-sidenav-footer">
-        <div class="small">Registrado como:</div>
-        <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?>
-    </div>
+        
     </nav>
 
 
@@ -496,7 +482,7 @@ if (isset($_SESSION["id_personas"])) {
     <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted">Copyright &copy; Mundo Creativo 2023</div>
+                <div class="text-muted">Copyright &copy; Mundo Creativo 2026</div>
                 <div>
                     <a href="#">Politica privacidad</a>
                     &middot;

@@ -124,10 +124,17 @@ class alumnos extends personas {
             $stmt->execute();
             $result = $stmt->get_result();
             $alumno_data = $result->fetch_assoc(); // Usar fetch_assoc es común
-            $this->id_persona = $alumno_data['id_personas'];
-            $this->id_alumno = $id_alumno;
-            parent::get_persona_por_id($this->id_persona);
+            //echo var_dump($alumno_data);
+            if ($alumno_data) {
+                $this->id_persona = $alumno_data['id_personas'];
+                $this->id_alumno = $id_alumno;
+                parent::get_persona_por_id($this->id_persona);
+            }else{
+                throw new Exception("No se encontró una persona con el ID proporcionado: " . $id_alumno);
+            }
             //$stmt->close();  
+        }else{
+            throw new Exception("El código del alumno no es válido.");
         }
 
         } catch (Exception $e) {
