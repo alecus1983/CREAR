@@ -4,6 +4,7 @@
 require_once("conectar.php");
 require_once("escolaridad.php");
 require_once("personas.php");
+require_once("clases.php");
 require_once("areas.php");
 require_once("acudientes.php");
 require_once("alumnos.php");

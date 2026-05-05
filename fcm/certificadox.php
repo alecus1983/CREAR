@@ -211,89 +211,96 @@ $num_areas = 0;
 foreach ($lista_areas as  $id_area => $datoArea) {
 
 
-    // PROMEDIO general  para el alumno
-    $p_a  = 0;
-    // contador que acumula la intensidad horaria de las materias
-    $ih = 0;
-    // cantidad de materias
-    $c_m = 0;
-
-    // obtiene un listado de materias a ver en  una area de un grado
-    $lista_materias = $materiaObj->get_materias_por_grado_area($obj_matricuala->id_grado, $id_area);
-
-    //LISTA DE MATERIAS DEL AREA
-    foreach ($lista_materias as $id_materia => $nombreMateria) {
-        // inicio el acumulador de nota 
-        $nota_p_ac = 0;
-        // nota del periodo
-        $nota_p = 0;
-        // obtengo los atributos de la materia
-        $materiaObj->get_materia($id_materia);
-
-
-        // ciclo de repeticion para los cuatro periodos
-        // de una materia
-        for ($p = 1; $p <= 4; $p++) {
-
-            // obtengo la nota del periodo
-            // compuesta por cuatro coordenadas
-            // $e       --> codigo del estudiante
-            // $id_area --> codigo del area
-            // $id_materia --> codigo materia
-            // codigo del periodo
-            //echo " los dastos de consulta son estudiante $e , masteria $id_materia, periodo $p y ano ".$obj_matricuala->year."<br>";
-            $notax->get_nota_periodo($e, $id_materia, $p, $obj_matricuala->year);
-            // guardo la nota en la para el periodo $p
-            $nota_p =  $notax->nota;
-
-            ////////////////////////////////////////////////////////
-            // para obtener la recuperacion del primer periodo
-            $notax->get_recuperacion_periodo($e, $id_materia, $obj_matricuala->year, $p);
-            // si se ha calificado alguna recuperacion
-            if ($notax->calificado and $notax->nota >= 3) {
-                // almaceno la recuperacion del primer periodo
-                $nota_p =  $notax->nota;
-                // guardo el valor para calculos estadisticos
-                //echo "<font color='red'>recuperacion de la materia, nota ".$notax->nota." </font><br>";
-            }
-            // nota acumulada de los cuatro periodos
-            $nota_p_ac = $nota_p + $nota_p_ac;
-
-            //echo "nota de materia ".$materiaObj->materia." ".$nota_p." en el periodo $p  <br>";
-        }
-
-        // nota  de la materia
-        $nota_m = $nota_p_ac / 4;
-
-        // acumulado  del area
-        $p_a = $p_a + $nota_m;
-        //incremento la cantidad de materias
-        $c_m++;
-        // aumento la intensidad horaria del area
-        $ih = $ih + $materiaObj->ih;
-
-        //echo "nota del area ".$datoArea[0]." [".$id_area."] acumulado del area ".$p_a."<br><br>";
-    } // fin de materia
-
-    // promedio de area  del estudiante
-    $promedio[$e][$id_area] = $p_a / $c_m;
-
-    //echo " el promedio del area ".$datoArea[0]." es ".$promedio[$e][$id_area]."<br><br>";
-
-    // defino  si la nota del area es menor que tres
-    // y es un area distinta de disciplina
-    if ($promedio[$e][$id_area] < 3 and $id_area != 20) {
-
-        $a_perdidas++; // incremento el contador de areas perdidas siempre y cuando no sea disciplina
-    }
-
-    // guardo la intensidad horaria para esta area
-    $arr_ih[$id_area] = $ih;
-
     // si la materia es diferente a  disciplina
     if ($id_area !== 12) {
+
+        // PROMEDIO general  para el alumno
+        $p_a  = 0;
+        // contador que acumula la intensidad horaria de las materias
+        $ih = 0;
+        // cantidad de materias
+        $c_m = 0;
+
+        // obtiene un listado de materias a ver en  una area de un grado
+        $lista_materias = $materiaObj->get_materias_por_grado_area($obj_matricuala->id_grado, $id_area);
+
+        //LISTA DE MATERIAS DEL AREA
+        foreach ($lista_materias as $id_materia => $nombreMateria) {
+            // inicio el acumulador de nota 
+            $nota_p_ac = 0;
+            // nota del periodo
+            $nota_p = 0;
+            // obtengo los atributos de la materia
+            $materiaObj->get_materia($id_materia);
+
+
+            // ciclo de repeticion para los cuatro periodos
+            // de una materia
+            for ($p = 1; $p <= 4; $p++) {
+
+                // obtengo la nota del periodo
+                // compuesta por cuatro coordenadas
+                // $e       --> codigo del estudiante
+                // $id_area --> codigo del area
+                // $id_materia --> codigo materia
+                // codigo del periodo
+                echo " los dastos de consulta son estudiante $e , masteria $id_materia, periodo $p y ano ".$obj_matricuala->year."<br>";
+                $notax->get_nota_periodo($e, $id_materia, $p, $obj_matricuala->year);
+                // guardo la nota en la para el periodo $p
+                $nota_p =  $notax->nota;
+
+                ////////////////////////////////////////////////////////
+                // para obtener la recuperacion del primer periodo
+                $notax->get_recuperacion_periodo($e, $id_materia, $obj_matricuala->year, $p);
+                // si se ha calificado alguna recuperacion
+                if ($notax->calificado and $notax->nota > 3) {
+                    // almaceno la recuperacion del primer periodo
+                    $nota_p =  $notax->nota;
+                    // guardo el valor para calculos estadisticos
+                    echo "<font color='red'>recuperacion de la materia, nota ".$notax->nota." </font><br>";
+                }
+                // nota acumulada de los cuatro periodos
+                $nota_p_ac = $nota_p + $nota_p_ac;
+
+                echo "nota de materia ".$materiaObj->materia." ".$nota_p." en el periodo $p  <br>";
+            }
+
+            // nota  de la materia
+            $nota_m = $nota_p_ac / 4;
+
+            
+            // acumulado  del area
+            $p_a = $p_a + $nota_m;
+            //incremento la cantidad de materias
+            $c_m++;
+            // aumento la intensidad horaria del area
+            $ih = $ih + $materiaObj->ih;
+
+            echo "nota del area ".$datoArea[0]." [".$id_area."] acumulado del area ".$p_a."<br><br>";
+        } // fin de materia
+
+        // promedio de area  del estudiante
+        $promedio[$e][$id_area] = $p_a / $c_m;
+
+        echo " el promedio del area ".$datoArea[0]." es ".$promedio[$e][$id_area]."<br><br>";
+
+
+        // defino  si la nota del area es menor que tres
+        // y es un area distinta de disciplina
+        if ($promedio[$e][$id_area] < 3 and $id_area != 20) {
+
+            $a_perdidas++; // incremento el contador de areas perdidas siempre y cuando no sea disciplina
+        }
+
+        // guardo la intensidad horaria para esta area
+        $arr_ih[$id_area] = $ih;
+
+
         // incremento en contador de areas
         $num_areas++;
+    } else {
+        // atributos de disciplina
+        
     }
 } // fin del area
 
@@ -331,39 +338,42 @@ $pdf->SetFont('Arial', 'B', 10, false);
 $pdf->Cell(180, 20, mb_convert_encoding("CERTIFICA QUE:", 'ISO-8859-1', 'UTF-8'), 0, 0, 'C', false);
 $pdf->Ln(20);
 
-if ($a_perdidas == 0) {
+if ($a_perdidas == 0){
     // Si el estudiante no perdio materias
     // entonces el estudiante es aprobado y
     // promovido al siguiente grado
-
+    
     $pdf->SetFont('Arial', 'B', 10, false);
     $pdf->Write(5, mb_convert_encoding(strtoupper($estudiante->nombres . " " . $estudiante->apellidos), 'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', '', 10, false);
     // coloco el resto del contenido
-    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante  curso y aprobó  en éste establecimiento educativo el grado $nivel de $escolaridad durante el periodo lectivo " . $obj_matricuala->year . " obteniendo las siguientes calificaciones: ",  'ISO-8859-1', 'UTF-8'));
-} elseif ($a_perdidas < 3) {
+    $pdf->Write(5,mb_convert_encoding(" en calidad de estudiante  curso y aprobó  en éste establecimiento educativo el grado $nivel de $escolaridad durante el periodo lectivo " . $obj_matricuala->year . " obteniendo las siguientes calificaciones: ",  'ISO-8859-1', 'UTF-8'));
+}
+
+elseif ($a_perdidas < 3) {
 
     $pdf->SetFont('Arial', 'B', 10, false);
     $pdf->Write(5, mb_convert_encoding(strtoupper($estudiante->nombres . " " . $estudiante->apellidos), 'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', '', 10, false);
-
+    
     // de lo contrario si ha perdido menos de tres ( 1 o 2)  su estado es aplazado
     $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante curso y ",  'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', 'B', 10, false);
     $pdf->Write(5, mb_convert_encoding("reprobó ",  'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', '', 10, false);
     $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante en este establecimiento educativo  el  grado $nivel  durante el año lectivo " . $obj_matricuala->year . ", siendo aplazado con las siguientes calificaciones: ",  'ISO-8859-1', 'UTF-8'));
-} else {
-
+}
+else{
+    
     $pdf->SetFont('Arial', 'B', 10, false);
     $pdf->Write(5, mb_convert_encoding(strtoupper($estudiante->nombres . " " . $estudiante->apellidos), 'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', '', 10, false);
     // si por el contrario el estudiante a perdido tres o m�s  entronces es reprobado
-    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante curso y ",  'ISO-8859-1', 'UTF-8'));
+    $pdf->Write(5,mb_convert_encoding(" en calidad de estudiante curso y ",  'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', 'B', 10, false);
-    $pdf->Write(5, mb_convert_encoding(" reprobó ",  'ISO-8859-1', 'UTF-8'));
-    $pdf->SetFont('Arial', '', 10, false);
-    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante en este establecimiento educativo  el  grado $nivel  durante el año lectivo " . $obj_matricuala->year . ", con las siguientes calificaciones:  ",  'ISO-8859-1', 'UTF-8'));
+    $pdf->Write(5,mb_convert_encoding(" reprobó ",  'ISO-8859-1', 'UTF-8'));
+     $pdf->SetFont('Arial', '', 10, false);
+    $pdf->Write(5,mb_convert_encoding(" en calidad de estudiante en este establecimiento educativo  el  grado $nivel  durante el año lectivo " . $obj_matricuala->year . ", con las siguientes calificaciones:  ",  'ISO-8859-1', 'UTF-8'));
 }
 
 $pdf->Ln(10); // salto de linea
@@ -391,41 +401,41 @@ $lista_a = $areaObj->get_areas_grado($obj_matricuala->id_grado);
 //por cada area que debe evaluar el grado muestro 
 foreach ($lista_a as  $id_area => $area_dato) {
 
-    if ($id_area !== 12) {
-        // coloco en una celda el nombre del area
-        $pdf->Cell(80, 5, mb_convert_encoding($area_dato[0], 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', false);
-        // coloco la intensidad horaria
-        $pdf->Cell(20, 5, mb_convert_encoding($arr_ih[$id_area], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', false);
-        // coloco en otra celda la calificacion del area
-        $pdf->Cell(40, 5, mb_convert_encoding(number_format($promedio[$e][$id_area], 1, '.', ''), 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', false);
+    if ($id_area !== 12){
+    // coloco en una celda el nombre del area
+    $pdf->Cell(80, 5, mb_convert_encoding($area_dato[0], 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', false);
+    // coloco la intensidad horaria
+    $pdf->Cell(20, 5, mb_convert_encoding($arr_ih[$id_area], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', false);
+    // coloco en otra celda la calificacion del area
+    $pdf->Cell(40, 5, mb_convert_encoding(number_format($promedio[$e][$id_area], 1, '.', ''), 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', false);
 
-        //--------------------------------------------------------------
-        // algoritmo para colocar el color y
-        // calcular el logro cualitativo de los estudiantes
-        //--------------------------------------------------------------
+    //--------------------------------------------------------------
+    // algoritmo para colocar el color y
+    // calcular el logro cualitativo de los estudiantes
+    //--------------------------------------------------------------
 
-        if ($promedio[$e][$id_area] >= 4.8) {
-            $valor = "Superior";
-            $pdf->SetFillColor(0, 200, 0);
+    if ($promedio[$e][$id_area] >= 4.8) {
+        $valor = "Superior";
+        $pdf->SetFillColor(0, 200, 0);
+    } else {
+        if ($promedio[$e][$id_area] >= 4.1) {
+            $valor = "Alto";
+            $pdf->SetFillColor(0, 204, 255);
         } else {
-            if ($promedio[$e][$id_area] >= 4.1) {
-                $valor = "Alto";
-                $pdf->SetFillColor(0, 204, 255);
+            if ($promedio[$e][$id_area] >= 3) {
+                $valor = "Básico";
+                $pdf->SetFillColor(255, 230, 0);
             } else {
-                if ($promedio[$e][$id_area] >= 3) {
-                    $valor = "Básico";
-                    $pdf->SetFillColor(255, 230, 0);
-                } else {
-                    $valor = "Bajo";
-                    $pdf->SetFillColor(255, 0, 0);
-                }
+                $valor = "Bajo";
+                $pdf->SetFillColor(255, 0, 0);
             }
         }
+    }
 
-        //---------------------------------------------
-        // agrego el criterio de desempeño
-        $pdf->Cell(40, 5, mb_convert_encoding($valor, 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
-        $pdf->Ln(5);
+    //---------------------------------------------
+    // agrego el criterio de desempeño
+    $pdf->Cell(40, 5, mb_convert_encoding($valor, 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+    $pdf->Ln(5);
     }
 } // fin de areas
 
@@ -464,7 +474,7 @@ $pdf->Cell(40, 5, mb_convert_encoding($valor, 'ISO-8859-1', 'UTF-8'), 1, 0, 'C',
 $pdf->Ln(5);
 
 $pdf->SetFillColor(255, 255, 255); // se restablece el color blanco
-$pdf->Cell(180, 5, mb_convert_encoding("Número de áreas :" . $num_areas, 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+$pdf->Cell(180, 5,mb_convert_encoding( "Número de áreas :" . $num_areas , 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
 
 setlocale(LC_TIME, 'es_ES.UTF-8', 'esp');
 $dia_nombre = strftime("%A");
@@ -474,7 +484,7 @@ $anio = date("Y");
 
 $pdf->SetFont('Arial', '', 10);
 $pdf->Ln(10);
-$pdf->Multicell(180, 5, mb_convert_encoding("Para constancia se expide a solicitud del interesado, en el Municipio de Santander de Quilichao, Cauca, " . "el día $dia_nombre $dia_num del mes de $mes de $anio.", 'ISO-8859-1', 'UTF-8'), 0, 'L', false);
+$pdf->Multicell(180, 5, mb_convert_encoding( "Para constancia se expide a solicitud del interesado, en el Municipio de Santander de Quilichao, Cauca, "."el día $dia_nombre $dia_num del mes de $mes de $anio.", 'ISO-8859-1', 'UTF-8'), 0, 'L', false);
 
 $pdf->Ln(30);
 $pdf->Cell(180, 5, "_______________________________________________", 0, 0, 'C', false);
@@ -488,5 +498,5 @@ $pdf->Cell(180, 5, "Rectora", 0, 0, 'C', false);
 
 // cierra dato 1 de los grados
 ob_end_clean();
-$pdf->Output('I', "certificado_" . $obj_grado->grado . "_" . strtolower($estudiante->nombres) . "_" . strtolower($estudiante->apellidos) . "_$e.pdf");
+$pdf->Output('I', "certificado_".$obj_grado->grado."_".strtolower($estudiante->nombres) . "_" .strtolower( $estudiante->apellidos)."_$e.pdf");
 unset($estudiante);

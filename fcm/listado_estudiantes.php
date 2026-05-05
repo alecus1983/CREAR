@@ -14,8 +14,6 @@ $id_curso = $_POST['curso'];
 $semana = $_POST["semana"];
 // periodos
 $periodo = $_POST["periodo"];
-// escolaridad
-$escolaridad =$_POST["escolaridad"];
 
 // variable booleana que almacena la semana final de cada periodo
 $semana_final = false;
@@ -66,12 +64,23 @@ if($_POST["semana"] > 0){
     if ($semana == 4 || $semana == 12 || $semana == 20 || $semana == 28){
         $semana_intermedia = true;
     }
+    
 }else {
     // si no hay semana los datos no son validos
     $valido = false;
     // comunico el error al usuario
     $err = $err."<p class='text-danger'>Porfavor seleccione una semana</p>";
 }
+
+// validacion de periodo
+    if($_POST['periodo'] > 0){
+        $periodo = $_POST['periodo'];
+    } else {
+        $valido = false;
+        // comunico el error al usuario
+        $err = $err."<p class='text-danger'>Porfavor seleccione un periodo</p>";
+        
+    }
 
 // si los datos son validos
 if ($valido) {
@@ -91,31 +100,82 @@ if ($valido) {
     
     echo "<div class='row'><div class='col-md-8'>";
 
+  
     //crea un nuevo objeto listado (año,grado,jornada,curso)
-    $listado  = new lista_estudiantes($ano,$grado,$id_jornada, $id_curso);
-    
+    $listado  = new clases($ano,$grado,$id_jornada, $id_curso);
+
+    // [OPTIMIZATION BLOCK START]
+    $opt_nombres = [];
+    $opt_notas = [];
+    $opt_logros = [];
+
+    if (!empty($listado->id_alumno)) {
+        if (!class_exists('DbHelper_Listado')) {
+            class DbHelper_Listado extends imcrea {
+                public function getDb() { return $this->_db; }
+            }
+        }
+        $dbHelper = new DbHelper_Listado();
+        $db = $dbHelper->getDb();
+        $in_alumnos = implode(',', $listado->id_alumno);
+
+        // Pre-cargar nombres y apellidos
+        $q_nombres = "SELECT a.id_alumnos, p.nombres, p.apellidos 
+                      FROM u_alumnos a
+                      INNER JOIN personas p ON a.id_personas = p.id_personas
+                      WHERE a.id_alumnos IN ($in_alumnos)";
+        $res_nombres = $db->query($q_nombres);
+        if ($res_nombres) {
+            while ($row = $res_nombres->fetch_assoc()) {
+                $opt_nombres[$row['id_alumnos']] = [
+                    'nombres' => $row['nombres'],
+                    'apellidos' => $row['apellidos']
+                ];
+            }
+        }
+
+        // Pre-cargar calificaciones
+        $q_notas = "SELECT id_alumno, id_ponderado, nota FROM calificaciones_{$ano}
+                    WHERE year = $ano AND id_materia = $id_m AND id_semana = $semana AND id_alumno IN ($in_alumnos)";
+        $res_notas = $db->query($q_notas);
+        if ($res_notas) {
+            while ($row = $res_notas->fetch_assoc()) {
+                $opt_notas[$row['id_alumno']][$row['id_ponderado']] = $row['nota'];
+            }
+        }
+
+        // Pre-cargar logros si es la semana final
+        if ($semana_final) {
+            $q_logros = "SELECT id_alumno, id_logro FROM calificaciones_{$ano}
+                         WHERE year = $ano AND id_materia = $id_m AND periodo = $periodo AND id_logro > 0 AND id_alumno IN ($in_alumnos)";
+            $res_logros = $db->query($q_logros);
+            if ($res_logros) {
+                while ($row = $res_logros->fetch_assoc()) {
+                    $opt_logros[$row['id_alumno']] = $row['id_logro'];
+                }
+            }
+        }
+    }
+    // [OPTIMIZATION BLOCK END]
+
     // si se trata de la materia de disciplina entonces
     if ($id_m == 20) {
 
         // para cada alumno
         foreach($listado->id_alumno as $e) {
-            $estudiante = new alumnos($e);
-	    //actualizo los datos del alumno
-	    // en funcion del codigo
-	    $estudiante->get_alumno_codigo($e);
-            // creo un nuevo objeto de calificaciones
-            $score = new calificaciones(); 
+            $e_nombre = isset($opt_nombres[$e]) ? $opt_nombres[$e]["nombres"] : "";
+            $e_apellido = isset($opt_nombres[$e]) ? $opt_nombres[$e]["apellidos"] : "";
+            // no instanciamos objetos en el bucle para mejorar rendimiento 
             echo "<div class='row'>";
             echo " <div class='col-md-6 '>";
             echo "<a href='#estadisicas' style='margin-right: 1em; onclick='est($e);'>";
             echo "$e</a>";
-            echo "<span class='text-muted'>".ucwords(strtolower($estudiante->nombres))." ".ucwords(strtolower($estudiante->apellidos));
-            echo "</span><input type='hidden' name='codigo[]' class='codigo' value=".$estudiante->id_alumno."> </div>" ;
+            echo "<span class='text-muted'>".ucwords(strtolower($e_nombre))." ".ucwords(strtolower($e_apellido));
+            echo "</span><input type='hidden' name='codigo[]' class='codigo' value=".$e."> </div>" ;
 
             // calificacion para disciplina
             // criterio 0 para disciplina
-            $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 0 );
-            $nota = $score->nota;
+            $nota = isset($opt_notas[$e][0]) ? $opt_notas[$e][0] : 0;
             if ($nota == 0){
                     $nota = "";
                 } else
@@ -129,8 +189,7 @@ if ($valido) {
             if ($semana_final) {
 
                 //LOGRO
-                $score->get_logro($e, $id_m, $ano, $periodo);
-                $logro = $score->logro;
+                $logro = isset($opt_logros[$e]) ? $opt_logros[$e] : "";
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">logro</span>';
@@ -148,25 +207,21 @@ if ($valido) {
     else {
         //por cada alumno del listado del curso    
         foreach($listado->id_alumno as $e) {
-	    // creo un alumno vacio
-            $estudiante = new alumnos();
-	    // obtengo los datos del estudiante
-	    $estudiante->get_alumno_codigo($e);
-            // creo un nuevo objeto de calificaciones
-            $score = new calificaciones(); 
+            $e_nombre = isset($opt_nombres[$e]) ? $opt_nombres[$e]["nombres"] : "";
+            $e_apellido = isset($opt_nombres[$e]) ? $opt_nombres[$e]["apellidos"] : "";
+            // no instanciamos objetos en el bucle para mejorar rendimiento 
             echo "<div class='row'>";
             echo " <div class='col-md-3 '>";
             echo "<a href='#estadisicas' style=' margin-right: 1em;' onclick='est($e);'>";
             echo "$e</a>";
-            echo "<span class='text-muted'>".ucwords(strtolower($estudiante->nombres))." ".ucwords(strtolower($estudiante->apellidos));
-            echo "</span><input type='hidden' name='codigo[]' class='codigo' value=".$estudiante->id_alumno."> </div>" ;
+            echo "<span class='text-muted'>".ucwords(strtolower($e_nombre))." ".ucwords(strtolower($e_apellido));
+            echo "</span><input type='hidden' name='codigo[]' class='codigo' value=".$e."> </div>" ;
 
             // semanas finales
             if ($semana_final) {
             
                 // presentacion personal (E)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 5 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][5]) ? $opt_notas[$e][5] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
@@ -181,8 +236,7 @@ if ($valido) {
 
 
                 // actitud (F)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 6 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][6]) ? $opt_notas[$e][6] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
@@ -197,8 +251,7 @@ if ($valido) {
                 //echo '</div>';
 		
                 //asistencia (G)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 7 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][7]) ? $opt_notas[$e][7] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
@@ -214,8 +267,7 @@ if ($valido) {
 
 
                 //evaluación final (I)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 9 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][9]) ? $opt_notas[$e][9] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
@@ -230,8 +282,7 @@ if ($valido) {
                 //echo '</div>';
 
                 //auto evaluacion (J)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 10 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][10]) ? $opt_notas[$e][10] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
@@ -246,8 +297,7 @@ if ($valido) {
                 //echo '</div>';
 
                 //LOGRO
-                $score->get_logro($e, $id_m, $ano, $periodo);
-                $logro = $score->logro;
+                $logro = isset($opt_logros[$e]) ? $opt_logros[$e] : "";
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">logro</span>';
@@ -262,8 +312,7 @@ if ($valido) {
             elseif ($semana_intermedia) {
                     
                 //evaluación de proceso (A)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 1 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][1]) ? $opt_notas[$e][1] : 0;
                                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0){
                     $nota = "";
@@ -278,8 +327,7 @@ if ($valido) {
                 //echo '</div>';
 
                 // actividad (B)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 2 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][2]) ? $opt_notas[$e][2] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -291,8 +339,7 @@ if ($valido) {
                 echo '</div>';
                 //echo '</div>';
                 //taller (C)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 3 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][3]) ? $opt_notas[$e][3] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -304,8 +351,7 @@ if ($valido) {
                 echo '</div>';
                 //echo '</div>';
                 //tarea (D)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 4);
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][4]) ? $opt_notas[$e][4] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -320,8 +366,7 @@ if ($valido) {
 
                 // presentacion personal (E)
 		
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 5 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][5]) ? $opt_notas[$e][5] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -335,8 +380,7 @@ if ($valido) {
 
 
                 // actitud(F)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 6 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][6]) ? $opt_notas[$e][6] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -349,8 +393,7 @@ if ($valido) {
                 //echo '</div>';
 		
                 //asistencia (G)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 7 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][7]) ? $opt_notas[$e][7] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -363,8 +406,7 @@ if ($valido) {
                 //echo '</div>';
 
                 //quiz (H)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 8 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][8]) ? $opt_notas[$e][8] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -381,8 +423,7 @@ if ($valido) {
 		
                 //evaluación de proceso (A)
 
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 1 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][1]) ? $opt_notas[$e][1] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -395,8 +436,7 @@ if ($valido) {
                 //echo '</div>';
 
                 // actividad (B)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 2 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][2]) ? $opt_notas[$e][2] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -408,8 +448,7 @@ if ($valido) {
                 echo '</div>';
                 //echo '</div>';
                 //taller (C)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 3 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][3]) ? $opt_notas[$e][3] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -421,8 +460,7 @@ if ($valido) {
                 echo '</div>';
                 //echo '</div>';
                 //tarea (D)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 4 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][4]) ? $opt_notas[$e][4] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -435,8 +473,7 @@ if ($valido) {
                 //echo '</div>';
 
                 // presentacion personal (E)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 5 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][5]) ? $opt_notas[$e][5] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -450,8 +487,7 @@ if ($valido) {
                 //echo '</div>';
 
                 // actitud (F)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 6 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][6]) ? $opt_notas[$e][6] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -464,8 +500,7 @@ if ($valido) {
                 //echo '</div>';
 		
                 //asistencia (G)
-                $score->get_calificacion_semanal($e, $id_m,$semana, $ano, 7 );
-                $nota = $score->nota;
+                $nota = isset($opt_notas[$e][7]) ? $opt_notas[$e][7] : 0;
                  if ($nota == 0){
                     $nota = "";
                 } else
@@ -482,7 +517,9 @@ if ($valido) {
             // cierre de div class row 
             echo  "</div>" ;
 
-        
+            // unset($estudiante);
+            // unset($score);
+                    
         } //fin de estructura por cada alumno
     
     } // fin de else 

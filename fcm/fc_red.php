@@ -501,9 +501,8 @@ $ano = date('Y');
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3" href="board.php">INICIO</a>
 		<!-- Sidebar Toggle-->
-		<button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-4 me-lg-0" id="sidebarToggle">
-    <i class="fas fa-bars"></i>
-</button>
+		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+			       id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 		<a style="color:FFF" href="#"></a>
 		<!-- Navbar-->
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -585,26 +584,17 @@ $ano = date('Y');
 
 
 					</select>
-
-					<label for="semana">Semana</label>
-					<select id="semana"
-						    class="sel form-control"
-						onchange="load_lista_estudiantes();">
-
-					    <option value="1">1</option>
-					    <option value="2">2</option>
-					    <option value="3">3</option>
-					    <option value="4">4</option>
-					    <option value="5">5</option>
-					    <option value="6">6</option>	 
-				
-				
-					    							    		
-
-
-					   
-					</select>
-
+         
+         <label for="semana">Semana</label>
+         <select id="semana"
+         class="sel form-control"
+         onchange="load_lista_estudiantes();">
+         <option value="1">1</option>
+         <option value="2">2</option>
+         <option value="3">3</option>
+         <option value="4">4</option>
+         </select>
+         
 
 					<label class="Control-label">Grado</label>
 					<select id="id_g" name="id_gs"
@@ -743,5 +733,4 @@ $ano = date('Y');
         <script src="./assets/demo/chart-bar-demo.js"></script>
         <script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="./js/datatables-simple-demo.js"></script>
-    </body>
-</html>
+    </bod
