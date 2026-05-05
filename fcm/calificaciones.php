@@ -8,61 +8,62 @@
  * recuperaciones y logros de los alumnos. Hereda de la clase `imcrea`,
  * asumiendo que esta clase maneja la conexión a la base de datos.
  */
-class calificaciones extends imcrea {
+class calificaciones extends imcrea
+{
     /**
      * @var bool $calificado
      * @brief Indica si una calificación existe (1) o no (0).
      */
     public $calificado;
-    
+
     /**
      * @var int $id_alumno
      * @brief Código del alumno.
      */
     public $id_alumno;
-    
+
     /**
      * @var int $id_materia
      * @brief Código de la materia.
      */
     public $id_materia;
-    
+
     /**
      * @var int $id_semana
      * @brief Código de la semana.
      */
     public $id_semana;
-    
+
     /**
      * @var int $year
      * @brief Año lectivo.
      */
     public $year;
-    
+
     /**
      * @var int $id_ponderado
      * @brief Código del ponderado (ej. Examen, Taller, Tarea).
      */
     public $id_ponderado;
-    
+
     /**
      * @var float $nota
      * @brief Nota asignada.
      */
     public $nota;
-    
+
     /**
      * @var int $id
      * @brief Clave primaria de la tabla de calificaciones.
      */
     public $id;
-    
+
     /**
      * @var string $logro
      * @brief Descripción del logro.
      */
     public $logro;
-    
+
     /**
      * @var int $id_logro
      * @brief Código de identificación del logro.
@@ -77,7 +78,8 @@ class calificaciones extends imcrea {
      * Crea una instancia de calificación vacía y hereda la conexión a la base de datos
      * de la clase padre `imcrea`.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -95,9 +97,10 @@ class calificaciones extends imcrea {
      * Este método consulta la base de datos para buscar una calificación específica
      * y, si la encuentra, la asigna a los atributos del objeto.
      */
-    public function get_calificacion_semanal($id_a, $id_m, $id_s, $y, $id_p) {
+    public function get_calificacion_semanal($id_a, $id_m, $id_s, $y, $id_p)
+    {
         $q = "SELECT id_alumno, id, nota, id_ponderado, id_materia, id_semana, year FROM calificaciones_" . $y . " WHERE year = $y AND id_alumno = $id_a AND id_materia = $id_m AND id_ponderado = $id_p AND id_semana = $id_s";
-        
+
         try {
             $c = $this->_db->query($q);
             $r = $c->fetch_array(MYSQLI_ASSOC);
@@ -133,10 +136,11 @@ class calificaciones extends imcrea {
      * Este método busca en la base de datos si un alumno tiene una nota de recuperación ('R')
      * en una materia y período específicos.
      */
-    public function get_recuperacion_periodo($id_a, $id_m, $y, $periodo) {
+    public function get_recuperacion_periodo($id_a, $id_m, $y, $periodo)
+    {
         $q = "SELECT id_alumno, id, nota, id_materia, year, corte FROM calificaciones_" . $y . "
               WHERE year = $y AND id_alumno = $id_a AND id_materia = $id_m AND corte = 'R' AND periodo = $periodo";
-        
+
         try {
             $c = $this->_db->query($q);
             $r = $c->fetch_array(MYSQLI_ASSOC);
@@ -170,7 +174,8 @@ class calificaciones extends imcrea {
      * Calcula la nota final del período. Si la materia es "Disciplina" (id_materia = 20),
      * calcula el promedio. Para otras materias, usa una fórmula ponderada.
      */
-    public function get_nota_periodo($id_a, $id_m, $periodo, $year) {
+    public function get_nota_periodo($id_a, $id_m, $periodo, $year)
+    {
         if ($id_m == 20) {
             $q = "SELECT AVG(nota) AS nota FROM calificaciones_" . $year . "
                   WHERE id_alumno = $id_a AND id_materia = $id_m AND periodo = $periodo AND year = $year AND id_semana > 0";
@@ -190,7 +195,7 @@ class calificaciones extends imcrea {
 
         $this->nota = $r['nota'];
     }
-    
+
     // ---
 
     /**
@@ -204,7 +209,8 @@ class calificaciones extends imcrea {
      *
      * Consulta el número de calificaciones por tipo de ponderado para un alumno, materia, año y período.
      */
-    public function get_rendimiento_alummno_periodo($id_a, $id_m, $ano, $id_periodo) {
+    public function get_rendimiento_alummno_periodo($id_a, $id_m, $ano, $id_periodo)
+    {
         $q = "SELECT p.id_ponderado, ponderado, por_periodo, cantidad FROM ponderado AS p INNER JOIN
               (SELECT id_ponderado, COUNT(*) AS cantidad FROM calificaciones_" . $ano . " WHERE id_alumno = $id_a AND id_materia = $id_m AND year = $ano AND periodo = $id_periodo
               GROUP BY id_ponderado ORDER BY id_ponderado) AS c ON p.id_ponderado = c.id_ponderado
@@ -212,11 +218,11 @@ class calificaciones extends imcrea {
 
         $c = $this->_db->query($q);
         $arr = array();
-        
+
         while ($r = $c->fetch_array(MYSQLI_ASSOC)) {
             array_push($arr, $r);
         }
-        
+
         return $arr;
     }
 
@@ -230,11 +236,12 @@ class calificaciones extends imcrea {
      * Consulta la tabla de `logros` y asigna la descripción del logro (`logro`)
      * y su ID a los atributos del objeto.
      */
-    public function get_logro_id($id_logro) {
+    public function get_logro_id($id_logro)
+    {
         $q = "SELECT * FROM logros WHERE id_logro = $id_logro";
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
-        
+
         $this->logro = $r['logro'];
         $this->id_logro = $r['id_logro'];
     }
@@ -251,11 +258,12 @@ class calificaciones extends imcrea {
      *
      * Busca el logro asignado a un alumno en una materia y período.
      */
-    public function get_logro($id_a, $id_m, $y, $id_periodo) {
+    public function get_logro($id_a, $id_m, $y, $id_periodo)
+    {
         $q = "SELECT * FROM calificaciones_" . $y . " WHERE year = $y AND id_alumno = $id_a AND id_materia = $id_m AND periodo = $id_periodo AND id_logro > 0";
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
-        
+
         if (is_null($r)) {
             $this->calificado = false;
             $this->logro = "";
@@ -269,7 +277,7 @@ class calificaciones extends imcrea {
             $this->logro = $r['id_logro'];
         }
     }
-    
+
     // ---
 
     /**
@@ -287,26 +295,55 @@ class calificaciones extends imcrea {
      * Inserta una nueva calificación semanal en la tabla del año correspondiente.
      * Nota: La lógica del `switch` tiene un error y sobrescribe `$p` en cada `case`.
      */
-    public function set_calificacion_semanal($id_a, $id_m, $nota, $id_d, $p, $y, $id_p, $id_s) {
+    public function set_calificacion_semanal($id_a, $id_m, $nota, $id_d, $p, $y, $id_p, $id_s)
+    {
         switch ($id_s) {
-            case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
                 $p = 1;
                 break;
-            case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 16:
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+            case 15:
+            case 16:
                 $p = 2;
                 break;
-            case 17: case 18: case 19: case 20: case 21: case 22: case 23: case 24:
+            case 17:
+            case 18:
+            case 19:
+            case 20:
+            case 21:
+            case 22:
+            case 23:
+            case 24:
                 $p = 3;
                 break;
-            case 25: case 26: case 27: case 28: case 29: case 30: case 31: case 32:
+            case 25:
+            case 26:
+            case 27:
+            case 28:
+            case 29:
+            case 30:
+            case 31:
+            case 32:
                 $p = 4;
                 break;
         }
-        
+
         $q = "INSERT INTO calificaciones_" . $y . "
               (id_alumno, id_materia, nota, id_docente, periodo, year, modificado, id_ponderado, id_semana)
               VALUES ($id_a, $id_m, $nota, $id_d, $p, $y, NOW(), $id_p, $id_s)";
-        
+
         if ($this->_db->query($q) === true) {
             $this->calificado = true;
         } else {
@@ -328,18 +365,19 @@ class calificaciones extends imcrea {
      *
      * Inserta un registro de recuperación ('R' en el campo `corte`) para un alumno en un período y materia.
      */
-    public function set_recuperacion($id_a, $id_m, $nota, $id_d, $p, $y) {
+    public function set_recuperacion($id_a, $id_m, $nota, $id_d, $p, $y)
+    {
         $q = "INSERT INTO calificaciones_" . $y . "
               (id_alumno, id_materia, nota, id_docente, periodo, year, modificado, corte)
               VALUES ($id_a, $id_m, $nota, $id_d, $p, $y, NOW(), 'R')";
-        
+
         if ($this->_db->query($q) === true) {
             $this->calificado = true;
         } else {
             $this->calificado = false;
         }
     }
-    
+
     // ---
 
     /**
@@ -354,11 +392,12 @@ class calificaciones extends imcrea {
      *
      * Inserta un registro con el ID del logro en la tabla de calificaciones, con la nota en 0.
      */
-    public function set_logro($id_a, $id_m, $logro, $id_d, $p, $y) {
+    public function set_logro($id_a, $id_m, $logro, $id_d, $p, $y)
+    {
         $q = "INSERT INTO calificaciones_" . $y . "
               (id_alumno, id_materia, id_logro, nota, id_docente, periodo, year, modificado)
               VALUES ($id_a, $id_m, $logro, 0, $id_d, $p, $y, NOW())";
-        
+
         if ($this->_db->query($q) === true) {
             $this->calificado = true;
         } else {
@@ -377,9 +416,10 @@ class calificaciones extends imcrea {
      *
      * Actualiza el campo `nota` de un registro de calificación específico.
      */
-    public function update_recuperacion($id, $nota, $year) {
+    public function update_recuperacion($id, $nota, $year)
+    {
         $q = "UPDATE calificaciones_" . $year . " SET nota = $nota WHERE id = $id";
-        
+
         if ($this->_db->query($q) === true) {
             $this->calificado = true;
         } else {
@@ -398,16 +438,17 @@ class calificaciones extends imcrea {
      *
      * Actualiza el campo `nota` de un registro de calificación semanal.
      */
-    public function update_calificacion_semanal($id, $nota, $year) {
+    public function update_calificacion_semanal($id, $nota, $year)
+    {
         $q = "UPDATE calificaciones_" . $year . " SET nota = $nota WHERE id = $id";
-        
+
         if ($this->_db->query($q) === true) {
             $this->calificado = true;
         } else {
             $this->calificado = false;
         }
     }
-    
+
     // ---
 
     /**
@@ -419,9 +460,10 @@ class calificaciones extends imcrea {
      *
      * Actualiza el campo `id_logro` de un registro de calificación.
      */
-    public function update_logro($id, $logro, $year) {
+    public function update_logro($id, $logro, $year)
+    {
         $q = "UPDATE calificaciones_" . $year . " SET id_logro = $logro WHERE id = $id";
-        
+
         if ($this->_db->query($q) === true) {
             $this->calificado = true;
         } else {
@@ -441,7 +483,8 @@ class calificaciones extends imcrea {
      * Calcula la suma de alumnos por grado, curso y jornada asignados a un docente.
      * La lógica del `JOIN` es bastante compleja y propensa a errores.
      */
-    public function max_calificaciones($id_docente, $year) {
+    public function max_calificaciones($id_docente, $year)
+    {
         $q = "SELECT SUM(cantidad) AS cantidad FROM
               (SELECT md.id_docente, md.id_grado, md.id_jornada, md.id_curso, id_materia, cantidad
               FROM matricula_docente AS md INNER JOIN
@@ -450,11 +493,13 @@ class calificaciones extends imcrea {
               ON ca.id_grado = md.id_grado AND ca.id_curso = md.id_curso AND ca.id_jornada = md.id_jornada
               WHERE md.year = " . $year . " AND md.id_docente = " . $id_docente . "
               ORDER BY md.id_docente, md.id_materia, md.id_grado) AS cd GROUP BY id_docente";
-        
+
         $c = $this->_db->query($q);
-        $r = $c->fetch_array(MYSQLI_ASSOC);
-        
-        return $r['cantidad'];
+        if ($c) {
+            $r = $c->fetch_array(MYSQLI_ASSOC);
+            return $r ? $r['cantidad'] : 0;
+        }
+        return 0;
     }
 
     // ---
@@ -469,12 +514,13 @@ class calificaciones extends imcrea {
      *
      * Cuenta los registros de calificación para un docente en una semana específica.
      */
-    public function get_docente_semana($id_docente, $ano, $semana) {
+    public function get_docente_semana($id_docente, $ano, $semana)
+    {
         $q = "SELECT COUNT(*) AS cantidad FROM calificaciones_" . $ano . " WHERE id_docente = $id_docente AND year = $ano AND id_semana = " . $semana;
-        
+
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
-        
+
         return $r['cantidad'];
     }
 
@@ -494,15 +540,16 @@ class calificaciones extends imcrea {
      * en una materia y período dados. La lógica de la consulta es compleja y podría
      * ser simplificada.
      */
-    public function get_criterio_faltantes($id_e, $id_m, $id_s, $p, $year) {
+    public function get_criterio_faltantes($id_e, $id_m, $id_s, $p, $year)
+    {
         $q = "SELECT v.criterio, tipo, id_semana FROM 
               (SELECT CONCAT(validar, $id_m) AS criterio, tipo, id_semana FROM validar WHERE id_semana < $id_s) AS v LEFT JOIN
               (SELECT CONCAT(tipo, id_semana, id_materia) AS criterio, c.id_ponderado FROM ponderado AS p INNER JOIN 
               (SELECT id_alumno, id_semana, id_ponderado, id_materia FROM calificaciones_" . $year . " WHERE year = $year AND periodo = $p AND id_materia = $id_m AND id_semana < $id_s AND id_alumno IN ($id_e)) AS c ON c.id_ponderado = p.id_ponderado) AS n ON n.criterio = v.criterio WHERE n.criterio IS NULL";
-        
+
         $c = $this->_db->query($q);
         $arr = array();
-        
+
         while ($a = $c->fetch_array(MYSQLI_ASSOC)) {
             $criterio = $a['criterio'];
             $tipo = $a['tipo'];
@@ -510,7 +557,7 @@ class calificaciones extends imcrea {
             $arr[$criterio][0] = $tipo;
             $arr[$criterio][1] = $semana;
         }
-        
+
         return $arr;
     }
 
@@ -525,16 +572,17 @@ class calificaciones extends imcrea {
      * Consulta la tabla `validar` para obtener los tipos de criterios de evaluación
      * que se aplican en una semana determinada.
      */
-    public function get_validar_periodo($semana) {
+    public function get_validar_periodo($semana)
+    {
         $q = "SELECT tipo FROM `validar` WHERE id_semana = $semana ORDER BY tipo";
         $c = $this->_db->query($q);
         $arr = array();
-        
+
         while ($a = $c->fetch_array(MYSQLI_ASSOC)) {
             $criterio = $a['tipo'];
             array_push($arr, $criterio);
         }
-        
+
         return $arr;
     }
 }

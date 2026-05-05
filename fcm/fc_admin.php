@@ -54,7 +54,8 @@ if (isset($_SESSION["id_personas"])) {
     <script src="../boostrap/css/bootstrap.css" type="text/css"></script>
     <!-- <script src="../boostrap/css/bootstrap.min.css" type="text/css"></script>-->
     <link rel="stylesheet" href="estilos.css" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
@@ -69,10 +70,11 @@ if (isset($_SESSION["id_personas"])) {
 
     <style>
         .loader {
-            position: absolute;
+            position: fixed;
             left: 50%;
             top: 50%;
-            z-index: 1;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
             border: 30px solid #f3f3f3;
             border-radius: 50%;
             border-top: 16px solid blue;
@@ -112,12 +114,12 @@ if (isset($_SESSION["id_personas"])) {
     <script>
         // CONFIGURACION AJAX
         jQuery.ajaxSetup({
-            beforeSend: function() {
+            beforeSend: function () {
                 $('#loader-overlay').show();
                 $('#loader').show();
                 $('#tabla').html("");
             },
-            complete: function() {
+            complete: function () {
                 $('#loader-overlay').hide();
                 $('#loader').hide();
             }
@@ -145,12 +147,12 @@ if (isset($_SESSION["id_personas"])) {
 
                 },
                 // si los datos son correctos entonces ...
-                success: function(respuesta) {
+                success: function (respuesta) {
 
                     $("#grafo").html(respuesta);
 
                 },
-                error: function(xhr, status) {
+                error: function (xhr, status) {
                     swal('Disculpe, existió un problema');
                     console.log(xhr);
                 }
@@ -171,11 +173,11 @@ if (isset($_SESSION["id_personas"])) {
                 url: b,
                 data: c,
                 dataType: "json",
-            }).done(function(dato) {
+            }).done(function (dato) {
                 $(a).empty();
 
                 $(a).append("<option value = -1> Seleccione </option>");
-                $.each(dato, function(index, materia) {
+                $.each(dato, function (index, materia) {
                     $(a).append("<option value =" + index + ">" + materia + "</option>");
                 });
             });
@@ -183,11 +185,11 @@ if (isset($_SESSION["id_personas"])) {
     </script>
 </head>
 
-<body >
+<body>
     <div id="loader-overlay"></div>
     <div class="loader" style="display:none" id="loader"></div>
 
-    
+
     <div id="content">
 
         <?php $hoy = Date("Y-m-d hh:mm"); ?>
@@ -196,23 +198,17 @@ if (isset($_SESSION["id_personas"])) {
         <nav class="navbar navbar-expand-lg  navbar-dark  bg-dark">
             <div class="container-fluid">
                 <!-- Navbar Brand-->
-                
-            
-            <img src="assets/logo.png"
-            alt="" width="30" height="30"
-            class="d-inline-block align-text-top">
 
-            
-            <a class="navbar-brand" href="board.php">INICIO</a>x
-            
-                <button class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarResponsive"
-                    aria-controls="navbarResponsive"
-                    aria-expanded="false"
+
+                <img src="assets/logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+
+
+                <a class="navbar-brand" href="board.php">INICIO</a>x
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                     aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
 
                 </button>
 
@@ -221,21 +217,26 @@ if (isset($_SESSION["id_personas"])) {
                     <!-- Navbar grados y cursos-->
                     <ul class="navbar-nav" id="nv_grupos">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"  id="gradosDropdown">Grupos</a>
-            
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="gradosDropdown">Grupos</a>
+
                             <div class="dropdown-menu" aria-labelledby="gradosDropdown">
-                            <div class="row">
-                                  <div class="col">
+                                <div class="row">
+                                    <div class="col">
                                         <a href="#" onclick="gestionar_grados();">
-                                        <div class="d-flex">
-                                          <div class="icon px-3 bg-warning rounded-3 fs-1"><i class="bi bi-award"></i></div>
-                                            <div class="text"> Gestionar grado</div>
-                                        </div>
-                                    </a></div>
-                                <div><a class="dropdown-item" onclick="gestionar_escolaridad();" href="#">Gestionar escolaridad</a></div>
-                                <div><a class="dropdown-item" onclick="gestionar_jornada();" href="#">Gestionar jornada</a></div>
-                                <div><a class="dropdown-item" href="#" onclick="gestion_cursos();">Gestionar curso</a></div>
-                               </div>
+                                            <div class="d-flex">
+                                                <div class="icon px-3 bg-warning rounded-3 fs-1"><i
+                                                        class="bi bi-award"></i></div>
+                                                <div class="text"> Gestionar grado</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div><a class="dropdown-item" onclick="gestionar_escolaridad();" href="#">Gestionar
+                                            escolaridad</a></div>
+                                    <div><a class="dropdown-item" onclick="gestionar_jornada();" href="#">Gestionar
+                                            jornada</a></div>
+                                    <div><a class="dropdown-item" href="#" onclick="gestion_cursos();">Gestionar
+                                            curso</a></div>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -247,7 +248,8 @@ if (isset($_SESSION["id_personas"])) {
                             <a class="nav-link dropdown-toggle" id="calificacionesDropdown" data-bs-toggle="dropdown"
                                 href="#" aria-expanded="false">Calificaciones</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="calificacionesDropdown">
-                                <li><a class="dropdown-item" href="#" onclick="gestion_semanas()">Gestion semanas</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="gestion_semanas()">Gestion semanas</a>
+                                </li>
                                 <li><a class="dropdown-item" href="#">Gestion periodos</a></li>
                             </ul>
                         </li>
@@ -256,11 +258,14 @@ if (isset($_SESSION["id_personas"])) {
                     <!-- estructura académica -->
 
                     <ul class="navbar-nav" id="nv_estructura_academica">
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="estructuraDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">Estructura académica</a>
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="estructuraDropdown"
+                                data-bs-toggle="dropdown" href="#" aria-expanded="false">Estructura académica</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="estructuraDropdown">
-                                <li><a class="dropdown-item" href="#" onclick="gestion_materia_area();">Gestionar materia</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="gestion_materia_area();">Gestionar
+                                        materia</a></li>
                                 <li><a class="dropdown-item" href="#" onclick="gestion_areas();">Gestionar area</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="gestion_taller();">Gestionar taller</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="gestion_taller();">Gestionar taller</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -271,40 +276,48 @@ if (isset($_SESSION["id_personas"])) {
                             <a class="nav-link dropdown-toggle" id="personasDropdown" data-bs-toggle="dropdown" href="#"
                                 aria-expanded="false">Personas y roles</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="personasDropdown">
-                                <li><a class="dropdown-item" href="#" onclick="gestion_personas();">Gestionar personas</a>
+                                <li><a class="dropdown-item" href="#" onclick="gestion_personas();">Gestionar
+                                        personas</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#" onclick="matricula_docente();">Asignar Clases</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1);">Matricular Alumno</a>
+                                <li><a class="dropdown-item" href="#" onclick="matricula_docente();">Asignar Clases</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#" onclick="listado_estudiantes_matriculados();">Editar
+                                <li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1);">Matricular
+                                        Alumno</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"
+                                        onclick="listado_estudiantes_matriculados();">Editar
                                         matricula alumno</a></li>
                             </ul>
                         </li>
                     </ul>
 
-            <!-- Gestion academica  -->
+                    <!-- Gestion academica  -->
                     <ul class="navbar-nav" id="nv_roles_personas">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="personasDropdown" data-bs-toggle="dropdown" href="#"
                                 aria-expanded="false">Gestion Académica</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="personasDropdown">
-                                <li><a class="dropdown-item" href="#" onclick="listado_notas_estudiantes();">Listado  notas por estudiantes</a> </li>
-                                <li><a class="dropdown-item" href="#" onclick="avance_semanal();">Avance de notas</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="listado_notas_estudiantes();">Listado
+                                        notas por estudiantes</a> </li>
+                                <li><a class="dropdown-item" href="#" onclick="avance_semanal();">Avance de notas</a>
+                                </li>
                                 <li><a class="dropdown-item" href="#" onclick="boletin();">Boletin</a></li>
-                               <li><a class="dropdown-item" href="#" onclick="crear_pdf();">Certificado</a></li>
-                              <li><a class="dropdown-item" href="#" onclick="cuadro();">Cuadro de notas</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="notas_faltantes();">Notas faltantes</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="crear_pdf();">Certificado</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="cuadro();">Cuadro de notas</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="notas_faltantes();">Notas faltantes</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
 
-            <!-- Gestion docentes  -->
+                    <!-- Gestion docentes  -->
                     <ul class="navbar-nav" id="nv_gestion_docentes">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="docentesDropdown" data-bs-toggle="dropdown" href="#"
-                                aria-expanded="false">Gestion  Docentes</a>
+                                aria-expanded="false">Gestion Docentes</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="personasDropdown">
-                                <li><a class="dropdown-item" href="#" onclick="listado_dcentes();">Listado  docentes</a> </li>                 
+                                <li><a class="dropdown-item" href="#" onclick="listado_dcentes();">Listado docentes</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -336,8 +349,7 @@ if (isset($_SESSION["id_personas"])) {
                     <input type="number" value="<?php echo date('Y'); ?>" id="years" name="years" min="2015" max="2100"
                         step="1"
                         style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px; width: 100%;"
-                        <?php if ($admin < 1) { ?> readonly="readonly"
-                        <?php
+                        <?php if ($admin < 1) { ?> readonly="readonly" <?php
                         } ?> class="form-control-sm flex-grow-1">
                 </div>
 
@@ -437,7 +449,7 @@ if (isset($_SESSION["id_personas"])) {
             </div>
         </div>
 
-        <div >
+        <div>
 
             <div id="contenido">
                 <main>
@@ -461,19 +473,19 @@ if (isset($_SESSION["id_personas"])) {
         <!-- fin de datos -->
 
 
-        
-        </div>
-        <!-- fin de elementos -->
 
-        <div id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+    </div>
+    <!-- fin de elementos -->
 
-            
-        </div>
+    <div id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+
+
+    </div>
     </div><!-- fin del div del menu de botones -->
 
     <div class="sb-sidenav-footer">
-        
-    </nav>
+
+        </nav>
 
 
 
@@ -499,9 +511,11 @@ if (isset($_SESSION["id_personas"])) {
     <script src="./js/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="./js/datatables-simple-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-	    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-	    crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"   integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"   integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script> - -->
 </body>
 </body>
