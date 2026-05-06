@@ -19,16 +19,21 @@ class jornada extends escolaridad
         parent::__construct();
     }
 
-
+    // obtiene una jornada por su id
     public function get_jornada_por_id($id_jornada)
     {
-        $q = "select * from  jornada where id_jornada =$id_jornada ";
-        // ejecuto la consulta
-        $c = $this->_db->query($q);
-        $a = $c->fetch_array(MYSQLI_ASSOC);
+        if ($id_jornada > 0) {
+            $q = "select * from  jornada where id_jornada =$id_jornada ";
+            // ejecuto la consulta
+            $c = $this->_db->query($q);
+            $a = $c->fetch_array(MYSQLI_ASSOC);
 
-        $this->id_jornada = $a['id_jornada'];
-        $this->jornada = $a['jornada'];
+            $this->id_jornada = $a['id_jornada'];
+            $this->jornada = $a['jornada'];
+        } else {
+            $this->id_jornada = 0;
+            $this->jornada = "";
+        }
     }
 
     // lista el total de las jornadas
@@ -61,7 +66,7 @@ class jornada extends escolaridad
     //     $id = intval($id); // Aseguramos que el ID sea un entero
 
     //     $q = "UPDATE jornada SET jornada = '$nombre' WHERE id_jornada = $id";
-        
+
     //     // Ejecutamos la consulta
     //     if ($this->_db->query($q)) {
     //         return true;
@@ -70,11 +75,12 @@ class jornada extends escolaridad
     //     }
     // }
 
-public function agregar($nombre) {
+    public function agregar($nombre)
+    {
         // Asegúrate de usar $this->mysqli o la variable de conexión que uses en tu clase
         // Se asume que $this->mysqli es la conexión activa
         $sql = "INSERT INTO jornada (jornada) VALUES ('$nombre')";
-        
+
         if ($this->_db->query($sql)) {
             return true;
         } else {
@@ -86,9 +92,10 @@ public function agregar($nombre) {
     /**
      * Actualiza una jornada existente
      */
-    public function actualizar($id, $nombre) {
+    public function actualizar($id, $nombre)
+    {
         $sql = "UPDATE jornada SET jornada = '$nombre' WHERE id_jornada = $id";
-        
+
         if ($this->_db->query($sql)) {
             return true;
         } else {
@@ -102,12 +109,13 @@ public function agregar($nombre) {
      * @param int $id Identificador de la jornada
      * @return boolean True si se eliminó, False si falló
      */
-    public function eliminar($id) {
+    public function eliminar($id)
+    {
         // Es importante escapar el ID o asegurarse que es entero
-        $id = (int)$id; 
-        
+        $id = (int) $id;
+
         $sql = "DELETE FROM jornada WHERE id_jornada = $id";
-        
+
         if ($this->_db->query($sql)) {
             // Verifica si realmente se borró alguna fila (por si el ID no existía)
             if ($this->_db->affected_rows > 0) {

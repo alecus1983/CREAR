@@ -1,35 +1,36 @@
 <?php
 
-// clase matricula docente
-// la cual describe las materias que dicta cada docente
-// en un año lectivo
-
-class matricula_docente extends imcrea
+// cada objeto de esta clase representa una clase impartida en el
+// instituto por un docente y se desarrolla en la siguiente jerarquia de objetos
+//
+// Escolaridad -> jornada -> grado -> curso -> MATRICULA DOCENTE
+#[\AllowDynamicProperties]
+class matricula_docente extends curso
 {
     protected $id;
-    public $id_grado;
-    public $id_curso;
+
+    public $id_alumno;
     public $id_materia;
     public $id_docente;
     public $year;
-    protected $id_jornada;
     protected $mes;
     protected $fecha;
-    public $listado;
-    public $listado_docentes;
+
     // constructor de la clase
     public function __construct()
     {
         //   constructor de la clase padre
         parent::__construct();
-
     }
 
+    // funcion para obtener un docente
     public function get_docente($id_materia, $id_grado, $id_jornada, $id_curso, $year)
     {
         $q = "select * from matricula_docente where year = $year and id_grado =$id_grado and id_curso =$id_curso and id_jornada = $id_jornada and id_materia = $id_materia;";
         $resultado = $this->_db->query($q);
         $r = $resultado->fetch_array(MYSQLI_ASSOC);
+
+        // si el docente existe retorna lo siguiente
         if (isset($r["id_docente"])) {
             return $r["id_docente"];
         } else {
@@ -37,18 +38,19 @@ class matricula_docente extends imcrea
         }
     }
 
-    // se obtiene un listado de los grados matriculados por un docente
-    // en $this year y $this id_docente
-
+    // funcion que obtiene el listado de grados de acuerdo a un formato
+    // de boletines
     public function get_matricula($formato)
     {
         // consulta que interroga si es un administrador
+        // el que consulta la clase
         $r = $this->_db->query("select admin from u_docentes where id_docente = " . $this->id_docente);
         // consulta que devuelve un array numérico
         $admin = $r->fetch_array(MYSQLI_NUM);
         // array para almacenar el listado de grados
         $data = array();
-        // si es  un administrativo
+        // si es  un administrativo        
+        // obtengo todos los grados
         if ($admin[0] == 1) {
             $q = "SELECT * FROM grados  where formato_boletin = $formato ORDER BY grado";
             // obtengo el query resultado
@@ -66,7 +68,7 @@ class matricula_docente extends imcrea
                 $data[$g["id_grado"]] = $g["grado"];
             }
         }
-        $this->listado = $data;
+        return $data;
     }
 
     //obtiene un listado de docentes matriculados en un año
@@ -83,7 +85,7 @@ where id_docente in (   select distinct id_docente from matricula_docente where 
             array_push($arr, $a['id_docente']);
         }
         // cargo el listado de docentes
-        $this->listado_docentes = $arr;
+        return $arr;
 
     }
 
@@ -107,10 +109,38 @@ where id_docente in (   select distinct id_docente from matricula_docente where 
 
     }
 
+    // funcion constructor de objeto requiere
+    //el año, el  grado y el curso
+    public function listado_estudiantes($y, $g, $j, $c)
+    {
+        // invoco al constructor de la clase padre (imcrea)
+        //parent::__construct();
+        // genero una consulta a la base de datos
+        $query = "select * from matricula where year = $y and id_grado= $g and id_jornada= $j and id_curso =$c ";
+        //echo $query;
+        $q2 = $this->_db->query($query);
+        // guardo el resoltado en un array inicialmente vacio
+        $a_grado = array();
+        $a_alumno = array();
+        $a_curso = array();
+
+        while ($resultado = $q2->fetch_array(MYSQLI_ASSOC)) {
+            // agrego elementos al array $aa
+            array_push($a_grado, $resultado['id_grado']);
+            array_push($a_alumno, $resultado['id_alumno']);
+        }
+
+        // asignacion de parametros
+        $this->year = $y;
+        $this->id_grado = $a_grado;
+        $this->id_alumno = $a_alumno;
+        $this->id_curso = $c;
+    }
+
     // funcion que lista  de los gradsos de acuerdo
     // a una escolaridad dada $id_escolaridad ,
     // para un docente $id_docente y un año $year
-    public function lista_escolaridad($id_escolaridad, $id_docente, $year)
+    public function lista_escolaridad($id_escolaridad, $id_docente = null, $year = null)
     {
 
 
@@ -199,7 +229,6 @@ where gr.id_escolaridad = ?";
 
         } catch (Exception $e) {
             error_log("Error en listado de escolaridades: " . $e->getMessage());
-
         }
 
 

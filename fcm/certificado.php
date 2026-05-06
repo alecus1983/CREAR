@@ -20,7 +20,10 @@ require_once 'datos.php';
 $id_matricula = $_GET["matricula"];
 
 // creo el objeto con una instancia de  matricuala
-$obj_matricuala = new matricula($id_matricula);
+$obj_matricuala = new matricula();
+// obtengo los datos de la matricula
+$obj_matricuala->get_matricula_id($id_matricula);
+
 
 // obtengo la fecha  de la matricula
 $fecha = $obj_matricuala->year;
@@ -58,17 +61,17 @@ $promedio = array();
 // un nuevo objeto tipo area
 $areaObj = new area();
 // creamo un nuevo objeto tipo materia
-$materiaObj = new  materia();
+$materiaObj = new materia();
 // creo el objeto de estudiante
-$estudiante = new alumnos($obj_matricuala->id_alumno);
+$estudiante = new alumnos();
+$estudiante->get_alumno_codigo($obj_matricuala->id_alumno);
 
-// define el tipo de codificaci�n para la letra
+// define el tipo de codificacin para la letra
 // header("Content-Type: text/html;charset=utf-8");
 // CONEXION CON LA BASE DE DATOS
 
 // Se establece el tipo de cabecera  que tendra el documento
 class PDF extends FPDF
-
 {
     //Cabecera de pagina
     function Header()
@@ -111,8 +114,6 @@ class PDF extends FPDF
 // se crea un nuevo documento de PDF
 $pdf = new PDF();
 
-// creamos un nuevo listado de estudiantes 
-$list = new listado_estudiantes($obj_matricuala->year, $obj_matricuala->id_grado, $obj_matricuala->id_jornada, $obj_matricuala->id_curso);
 // codigo del estudiante
 $e = $obj_matricuala->id_alumno;
 
@@ -208,11 +209,11 @@ $num_areas = 0;
 //****
 
 // POR CADA AREA QUE DEBE EVALUAR EL GRADO MUESTRO ..
-foreach ($lista_areas as  $id_area => $datoArea) {
+foreach ($lista_areas as $id_area => $datoArea) {
 
 
     // PROMEDIO general  para el alumno
-    $p_a  = 0;
+    $p_a = 0;
     // contador que acumula la intensidad horaria de las materias
     $ih = 0;
     // cantidad de materias
@@ -244,7 +245,7 @@ foreach ($lista_areas as  $id_area => $datoArea) {
             //echo " los dastos de consulta son estudiante $e , masteria $id_materia, periodo $p y ano ".$obj_matricuala->year."<br>";
             $notax->get_nota_periodo($e, $id_materia, $p, $obj_matricuala->year);
             // guardo la nota en la para el periodo $p
-            $nota_p =  $notax->nota;
+            $nota_p = $notax->nota;
 
             ////////////////////////////////////////////////////////
             // para obtener la recuperacion del primer periodo
@@ -252,7 +253,7 @@ foreach ($lista_areas as  $id_area => $datoArea) {
             // si se ha calificado alguna recuperacion
             if ($notax->calificado and $notax->nota >= 3) {
                 // almaceno la recuperacion del primer periodo
-                $nota_p =  $notax->nota;
+                $nota_p = $notax->nota;
                 // guardo el valor para calculos estadisticos
                 //echo "<font color='red'>recuperacion de la materia, nota ".$notax->nota." </font><br>";
             }
@@ -340,7 +341,7 @@ if ($a_perdidas == 0) {
     $pdf->Write(5, mb_convert_encoding(strtoupper($estudiante->nombres . " " . $estudiante->apellidos), 'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', '', 10, false);
     // coloco el resto del contenido
-    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante  curso y aprobó  en éste establecimiento educativo el grado $nivel de $escolaridad durante el periodo lectivo " . $obj_matricuala->year . " obteniendo las siguientes calificaciones: ",  'ISO-8859-1', 'UTF-8'));
+    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante  curso y aprobó  en éste establecimiento educativo el grado $nivel de $escolaridad durante el periodo lectivo " . $obj_matricuala->year . " obteniendo las siguientes calificaciones: ", 'ISO-8859-1', 'UTF-8'));
 } elseif ($a_perdidas < 3) {
 
     $pdf->SetFont('Arial', 'B', 10, false);
@@ -348,22 +349,22 @@ if ($a_perdidas == 0) {
     $pdf->SetFont('Arial', '', 10, false);
 
     // de lo contrario si ha perdido menos de tres ( 1 o 2)  su estado es aplazado
-    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante curso y ",  'ISO-8859-1', 'UTF-8'));
+    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante curso y ", 'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', 'B', 10, false);
-    $pdf->Write(5, mb_convert_encoding("reprobó ",  'ISO-8859-1', 'UTF-8'));
+    $pdf->Write(5, mb_convert_encoding("reprobó ", 'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', '', 10, false);
-    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante en este establecimiento educativo  el  grado $nivel  durante el año lectivo " . $obj_matricuala->year . ", siendo aplazado con las siguientes calificaciones: ",  'ISO-8859-1', 'UTF-8'));
+    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante en este establecimiento educativo  el  grado $nivel  durante el año lectivo " . $obj_matricuala->year . ", siendo aplazado con las siguientes calificaciones: ", 'ISO-8859-1', 'UTF-8'));
 } else {
 
     $pdf->SetFont('Arial', 'B', 10, false);
     $pdf->Write(5, mb_convert_encoding(strtoupper($estudiante->nombres . " " . $estudiante->apellidos), 'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', '', 10, false);
     // si por el contrario el estudiante a perdido tres o m�s  entronces es reprobado
-    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante curso y ",  'ISO-8859-1', 'UTF-8'));
+    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante curso y ", 'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', 'B', 10, false);
-    $pdf->Write(5, mb_convert_encoding(" reprobó ",  'ISO-8859-1', 'UTF-8'));
+    $pdf->Write(5, mb_convert_encoding(" reprobó ", 'ISO-8859-1', 'UTF-8'));
     $pdf->SetFont('Arial', '', 10, false);
-    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante en este establecimiento educativo  el  grado $nivel  durante el año lectivo " . $obj_matricuala->year . ", con las siguientes calificaciones:  ",  'ISO-8859-1', 'UTF-8'));
+    $pdf->Write(5, mb_convert_encoding(" en calidad de estudiante en este establecimiento educativo  el  grado $nivel  durante el año lectivo " . $obj_matricuala->year . ", con las siguientes calificaciones:  ", 'ISO-8859-1', 'UTF-8'));
 }
 
 $pdf->Ln(10); // salto de linea
@@ -389,7 +390,7 @@ $lista_a = $areaObj->get_areas_grado($obj_matricuala->id_grado);
 /////////////////////////////////////////////////////
 
 //por cada area que debe evaluar el grado muestro 
-foreach ($lista_a as  $id_area => $area_dato) {
+foreach ($lista_a as $id_area => $area_dato) {
 
     if ($id_area !== 12) {
         // coloco en una celda el nombre del area

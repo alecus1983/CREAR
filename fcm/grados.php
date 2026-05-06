@@ -61,9 +61,8 @@ class grados extends jornada
 
         // si se ejecuto la consulta
         if (!$dato) {
-        //echo "Fallo en incertar fila";
-        }
-        else {
+            //echo "Fallo en incertar fila";
+        } else {
             // retorno  el array
             return $dato;
         }
@@ -79,9 +78,8 @@ class grados extends jornada
 
         // si se ejecuto la consulta
         if (!$dato) {
-        //echo "Fallo en incertar fila";
-        }
-        else {
+            //echo "Fallo en incertar fila";
+        } else {
             // retorno  el array
             $this->nombre_g = $dato[0];
         }
@@ -96,9 +94,8 @@ class grados extends jornada
 
         // si se ejecuto la consulta
         if (!$dato) {
-        //echo "Fallo en incertar fila";
-        }
-        else {
+            //echo "Fallo en incertar fila";
+        } else {
             // retorno  el array
             $this->nombre_g = $dato["nombre_g"];
             $this->promovido = $dato["promovido"];
@@ -113,7 +110,7 @@ class grados extends jornada
     // funcion para obtener  en un array
     // la lista de grados que pertenecen a una escolaridad
 
-    public function lista_escolaridad($id_escolaridad)
+    public function lista_escolaridad_grados($id_escolaridad)
     {
 
         $q = "select id_grado from grados where id_escolaridad = ?";
@@ -195,7 +192,7 @@ class grados extends jornada
         return $resultado;
     }
 
-// ... cierre de la clase ...
+    // ... cierre de la clase ...
 
 
 }

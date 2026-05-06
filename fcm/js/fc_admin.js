@@ -968,5 +968,49 @@ function verificar_alumno(id_personax) {
   });
 }
 
+// funcion que muestra la lista de estudiantes  matriculados
+function listado_estudiantes_certificado() {
+
+  // se invoca al metodo ajax para solicitar
+  // el listado de estudiantes
+  $.ajax({
+    type: "POST",
+    url: "listado_estudiantes_certificado.php",
+    dataType: "json",
+    data: {
+      years: $("#years").val(),
+
+    },
+    // si los datos son correctos entonces ...
+    success: function (respuesta) {
+      // si la respuesta es positiva
+      if (respuesta['status'] == 1) {
+        //swal('Datos actualizados');
+        //$("#calificador").html(respuesta);
+        $("#avance").html(respuesta['html']);
+      } else {
+
+        if (respuesta['status'] == 22) { swal('Año', 'Porfavor seleccione un año', 'error'); }
+
+      }
+    },
+    error: function (xhr, status) {
+      swal('Disculpe, existió un problema');
+      console.log(xhr);
+    }
+  });
+
+}
+
+function crear_certificado(matricula) {
+
+  // por el método GET
+  var parametros = "matricula=" + matricula;
+  // muestro los parámetos por consola
+  console.log("los parametros del certificado son : %s", parametros);
+  // abro el certificado en una nueva ventana
+  // llamando para ello al archivo cetificado.php
+  window.open("certificado.php?" + parametros);
+}
 
 
