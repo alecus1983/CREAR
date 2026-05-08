@@ -102,8 +102,11 @@ class alumnos extends personas {
     }
     }
 
-    // obtengo los parametros de la persona
-    // a partir del codigo del alumno
+    /**
+     * Obtiene los parametros de la persona a partir del codigo del alumno
+     * 
+     * @param int $id_alumno El ID del alumno.
+     */
     public function get_alumno_codigo($id_alumno){
 
         try {

@@ -116,7 +116,7 @@ where id_docente in (   select distinct id_docente from matricula_docente where 
         // invoco al constructor de la clase padre (imcrea)
         //parent::__construct();
         // genero una consulta a la base de datos
-        $query = "select * from matricula where year = $y and id_grado= $g and id_jornada= $j and id_curso =$c ";
+        $query = "select * from matricula where year = $y and id_grado= $g and id_jornada= $j and id_curso =$c and id_alumno > 0";
         //echo $query;
         $q2 = $this->_db->query($query);
         // guardo el resoltado en un array inicialmente vacio
@@ -131,10 +131,11 @@ where id_docente in (   select distinct id_docente from matricula_docente where 
         }
 
         // asignacion de parametros
-        $this->year = $y;
-        $this->id_grado = $a_grado;
-        $this->id_alumno = $a_alumno;
-        $this->id_curso = $c;
+        // $this->year = $y;
+        // $this->id_grado = $a_grado;
+        // $this->id_alumno = $a_alumno;
+        // $this->id_curso = $c;
+        return $a_alumno;
     }
 
     // funcion que lista  de los gradsos de acuerdo

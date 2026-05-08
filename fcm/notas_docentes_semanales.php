@@ -8,9 +8,38 @@ require_once('datos.php');
 // Parametros de entrada
 $ano = $_POST['years'];
 $periodo = $_POST['periodo'];
-$semana = $_POST['semana'];
 
-if ($ano > 2015 and $ano < 2040) {
+
+$valido = true;
+$err = 0;
+// valido que la semana sea correcta
+if($_POST['semana']<1 or $_POST['semana']>32) {
+    $valido = false;
+    $err = 20;
+      
+    }else{
+    $valido = true;
+    $semana = $_POST['semana'];
+
+    // valido que el periodo sea correcto
+    if($_POST['periodo']<1 or $_POST['periodo']>3) {
+        $valido = false;
+        $err = 21;    
+        }else{
+            $valido = true;
+            $periodo = $_POST['periodo'];
+
+            if ($ano > 2015 and $ano < 2040){
+                $valido = true;
+            } else{
+                $valido = false;
+                $err = 22;
+            }
+        } 
+}
+
+
+if ($valido) {
 
     echo "<h2>Avance semana $semana del $ano</h2>";
 
@@ -74,7 +103,8 @@ if ($ano > 2015 and $ano < 2040) {
 
 } // fin de if año
 else {
-    echo "Por favor seleccione un año valido";
+// retorno el error en formato json 
+    echo $err;
 }
 
 

@@ -297,8 +297,7 @@ if (isset($_SESSION["id_personas"])) {
                             <a class="nav-link dropdown-toggle" id="personasDropdown" data-bs-toggle="dropdown" href="#"
                                 aria-expanded="false">Gestion Académica</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="personasDropdown">
-                                <li><a class="dropdown-item" href="#" onclick="listado_notas_estudiantes();">Listado
-                                        notas por estudiantes</a> </li>
+                                <li><a class="dropdown-item" href="#" onclick="listado_notas_estudiantes();">Notas de estudiantes - materia -periodo</a> </li>
                                 <li><a class="dropdown-item" href="#" onclick="avance_semanal();">Avance de notas</a>
                                 </li>
                                 <li><a class="dropdown-item" href="#" onclick="boletin();">Boletin</a></li>

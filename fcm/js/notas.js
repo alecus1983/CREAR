@@ -12,14 +12,27 @@ function avance_semanal() {
             semana: $("#semana").val()
         },
         // si los datos son correctos entonces ...
-        success: function(respuesta) {
+        success: function (respuesta) {
 
-            // si el reaultado es positivo retorna un
-            // documento con el avance
-            $("#avance").html(respuesta);
+
+            if (respuesta == 20) {
+                swal('Semana', 'Porfavor seleccione una semana', 'error');
+            }
+            else if (respuesta == 21) {
+                swal('Periodo', 'Porfavor seleccione un periodo', 'error');
+            }
+            else if (respuesta == 22) {
+                swal('Año', 'Porfavor seleccione un año', 'error');
+            }
+            else if (respuesta == 23) {
+                swal('Docente', 'Porfavor seleccione un docente', 'error');
+            }
+            else {
+                $("#avance").html(respuesta);
+            }
 
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
         }
@@ -45,13 +58,13 @@ function notas_faltantes() {
 
         },
         // si los datos son correctos entonces ...
-        success: function(respuesta) {
+        success: function (respuesta) {
 
             //$("#calificador").html(respuesta);
             $("#avance").html(respuesta);
 
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
         }
@@ -80,7 +93,7 @@ function listado_notas_estudiantes() {
 
         },
         // si los datos son correctos entonces ...
-        success: function(respuesta) {
+        success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 //swal('Datos actualizados');
@@ -102,7 +115,7 @@ function listado_notas_estudiantes() {
 
             }
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
         }
@@ -132,7 +145,7 @@ function find_nota_alumno() {
             id_alumno: $("#id_alumno").val()
         },
         // si los datos son correctos entonces ...
-        success: function(respuesta) {
+        success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
                 //swal('Datos actualizados');
@@ -162,7 +175,7 @@ function find_nota_alumno() {
                 }
             }
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             swal('Disculpe, existió un problema');
             console.log(xhr);
         }

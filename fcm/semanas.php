@@ -17,7 +17,7 @@ class semana extends imcrea{
 
     // obtengo los atributos de una semana particular dado 
     // el numero de la semana y el año y la semana
-    public function get_semana_ano($semana, $ano) {
+    public function get_semana_ano(int $semana,int $ano) {
 
         // obtengo las caracteristicas de una semana
         $q = "select * from  semanas where year = $ano and semana = $semana";

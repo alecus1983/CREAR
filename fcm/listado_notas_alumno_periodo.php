@@ -60,9 +60,10 @@ if ($valido) {
     $cr = new materia();
     //objeto matricula docnente
     $md = new matricula_docente();
+    // nuevo objeto matricula docente
     $ld = new matricula_docente();
     //crea un nuevo objeto listado (año,grado,jornada,curso)
-    $ld->listado_estudiantes($ano, $grado, $id_jornada, $id_curso); // new listado_estudiantes($ano,$grado,$id_jornada, $id_curso);
+    $listado_alumnos = $ld->listado_estudiantes($ano, $grado, $id_jornada, $id_curso); // new listado_estudiantes($ano,$grado,$id_jornada, $id_curso);
     // objeto tipo curso
     $cu = new curso();
     // obtengo las caracteristicas del curso 
@@ -90,9 +91,11 @@ if ($valido) {
     $html = $html . "<div class='form-floating'>";
     $html = $html . '<select id="id_alumno"  class="form-select">';
     $html = $html . '<option value""></option>';
-    foreach ($ld->id_alumno as $e) {
-        // creo nuevo estudiante
-        $estudiante = new alumnos();
+    // creo nuevo estudiante
+    $estudiante = new alumnos();
+    
+    foreach ($listado_alumnos as $e) {
+        
         $estudiante->get_alumno_codigo($e);
         $html = $html . '<option value="' . $estudiante->id_alumno . '">' . ucwords(strtolower($estudiante->nombres)) . " " . ucwords(strtolower($estudiante->apellidos)) . "</option> ";
     }
