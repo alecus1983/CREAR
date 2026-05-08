@@ -40,10 +40,10 @@ class PDF extends FPDF
         //Arial italic 8
         $this->SetFont('Arial', '', 8);
         //Número de página
-        $txt = iconv('UTF-8', 'ISO-8859-1', "Otros servicios: Programas Técnicos , Cursos cortos y Programas tecnológicos");
+        $txt = iconv('UTF-8', 'ISO-8859-1//IGNORE', "Otros servicios: Programas Técnicos , Cursos cortos y Programas tecnológicos");
         $this->Cell(0, 5, $txt, 0, 0, 'C');
         $this->Ln(3);
-        $txt = iconv('UTF-8', 'ISO-8859-1', "Info: Tel 829 602 8443640, Cel.3166288374, WhatsApp. 3164469532, Email:imcreativo@hotmail.com,  www.imcreativo.edu.co ");
+        $txt = iconv('UTF-8', 'ISO-8859-1//IGNORE', "Info: Tel 829 602 8443640, Cel.3166288374, WhatsApp. 3164469532, Email:imcreativo@hotmail.com,  www.imcreativo.edu.co ");
         $this->Cell(0, 5, $txt, 0, 0, 'C');
         //$this->Ln(1);
         //$this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
@@ -295,21 +295,21 @@ foreach ($list->id_alumno as $e) {
     $pdf->Ln(5);
     $pdf->SetFillColor(172, 172, 172);
     $pdf->SetFont('Arial', 'B', 10, true);
-    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1', 'No'), 1, 0, 'C', true);
-    $pdf->Cell(75, 5, iconv('UTF-8', 'ISO-8859-1', 'NOMBRE DEL ESTUDIANTE'), 1, 0, 'C', true);
-    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1', 'GRADO'), 1, 0, 'C', true);
-    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1', 'JORNADA'), 1, 0, 'C', true);
-    $pdf->Cell(25, 5, iconv('UTF-8', 'ISO-8859-1', 'AÑO LECTIVO'), 1, 0, 'C', true);
-    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1', 'PUESTO'), 1, 0, 'C', true);
+    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'No'), 1, 0, 'C', true);
+    $pdf->Cell(75, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'NOMBRE DEL ESTUDIANTE'), 1, 0, 'C', true);
+    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'GRADO'), 1, 0, 'C', true);
+    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'JORNADA'), 1, 0, 'C', true);
+    $pdf->Cell(25, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'AÑO LECTIVO'), 1, 0, 'C', true);
+    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'PUESTO'), 1, 0, 'C', true);
     $pdf->Ln();
-    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1', $e), 1, 0, 'C');
-    $pdf->Cell(75, 5, iconv('UTF-8', 'ISO-8859-1', $estudiante->nombres . " " . $estudiante->apellidos), 1, 0, 'C');
-    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1', $nivel), 1, 0, 'C');
-    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1', $jo->jornada), 1, 0, 'C');
-    $pdf->Cell(25, 5, iconv('UTF-8', 'ISO-8859-1', $year), 1, 0, 'C');
+    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', $e), 1, 0, 'C');
+    $pdf->Cell(75, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', $estudiante->nombres . " " . $estudiante->apellidos), 1, 0, 'C');
+    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', $nivel), 1, 0, 'C');
+    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', $jo->jornada), 1, 0, 'C');
+    $pdf->Cell(25, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', $year), 1, 0, 'C');
     $pdf->SetFillColor(0, 0, 0);
     $pdf->SetTextColor(255, 255, 255);
-    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1', $posicion[$e]), 1, 0, 'C', true);
+    $pdf->Cell(20, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', $posicion[$e]), 1, 0, 'C', true);
     $pdf->SetTextColor(0);
 
     $pdf->Ln(7);
@@ -322,13 +322,13 @@ foreach ($list->id_alumno as $e) {
     $pdf->Ln(3);
     $pdf->SetFillColor(200, 200, 200);
     $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1', 'Area'), 1, 0, 'C', true);
-    $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1', 'Materia'), 1, 0, 'C', true);
-    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', 'Periodo 1'), 1, 0, 'C', true);
-    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', 'Periodo 2'), 1, 0, 'C', true);
-    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', 'Periodo 3'), 1, 0, 'C', true);
-    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', 'Periodo 4'), 1, 0, 'C', true);
-    $pdf->Cell(20, 3, iconv('UTF-8', 'ISO-8859-1', 'Acumulado'), 1, 0, 'C', true);
+    $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'Area'), 1, 0, 'C', true);
+    $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'Materia'), 1, 0, 'C', true);
+    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'Periodo 1'), 1, 0, 'C', true);
+    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'Periodo 2'), 1, 0, 'C', true);
+    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'Periodo 3'), 1, 0, 'C', true);
+    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'Periodo 4'), 1, 0, 'C', true);
+    $pdf->Cell(20, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'Acumulado'), 1, 0, 'C', true);
     $pdf->Ln(3);
 
     // un nuevo objeto tipo area
@@ -377,7 +377,7 @@ foreach ($list->id_alumno as $e) {
         // defino el tipo de fuente
         $pdf->SetFont('Arial', 'B', 7);
         // 
-        $pdf->Cell(50, 3 * $cantidad, iconv('UTF-8', 'ISO-8859-1', $area), 1, 0, 'L');
+        $pdf->Cell(50, 3 * $cantidad, iconv('UTF-8', 'ISO-8859-1//IGNORE', $area), 1, 0, 'L');
         // obtengo la coordenada en X en la cual termino de imprimirse la caja
         // del area, par a partir de ahí comenzar a escribir las materias
         $x = $pdf->GetX();
@@ -395,7 +395,7 @@ foreach ($list->id_alumno as $e) {
             // la siguiente linea
             $pdf->SetX($x);
             // Se crea los campos para mostrar cada materia
-            $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1', $materia), 1, 0, 'L');
+            $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', $materia), 1, 0, 'L');
 
             // en las variables $p1 ... $p2
             // inicializamos los acumuladores
@@ -557,7 +557,7 @@ foreach ($list->id_alumno as $e) {
                 // coloca la nota del segundo periodo  a partir del mismo
                 if ($id_periodo > 1) {
                     // imprimo la nota y la recupracion del segundo periodo
-                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', $p2) . " [$r2]", 1, 0, 'C', true);
+                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', $p2) . " [$r2]", 1, 0, 'C', true);
                 } else {
                     // si es el primer periodo dejo la celda en blanco
                     $pdf->Cell(15, 3, '', 1, 0, 'C', true);
@@ -577,7 +577,7 @@ foreach ($list->id_alumno as $e) {
 
                 // coloca la nota del segundo periodo  a partir del mismo
                 if ($id_periodo > 1) {
-                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', $p2), 1, 0, 'C', true);
+                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', $p2), 1, 0, 'C', true);
                 } else {
                     $pdf->Cell(15, 3, '', 1, 0, 'C', true);
                 }
@@ -598,7 +598,7 @@ foreach ($list->id_alumno as $e) {
 
                 // coloca la nota del tercer periodo  a partir del mismo
                 if ($id_periodo > 2) {
-                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', $p3) . " [$r3]", 1, 0, 'C', true);
+                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', $p3) . " [$r3]", 1, 0, 'C', true);
                 } else {
                     $pdf->Cell(15, 3, '', 1, 0, 'C', true);
                 }
@@ -614,7 +614,7 @@ foreach ($list->id_alumno as $e) {
 
                 // coloca la nota del tercer periodo  a partir del mismo
                 if ($id_periodo > 2) {
-                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', $p3), 1, 0, 'C', true);
+                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', $p3), 1, 0, 'C', true);
                 } else {
                     $pdf->Cell(15, 3, '', 1, 0, 'C', true);
                 }
@@ -635,7 +635,7 @@ foreach ($list->id_alumno as $e) {
 
                 // coloca la nota del cuarto  periodo  a partir del mismo
                 if ($id_periodo > 3) {
-                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', $p4) . " [$r4]", 1, 0, 'C', true);
+                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', $p4) . " [$r4]", 1, 0, 'C', true);
                 } else {
                     $pdf->Cell(15, 3, '', 1, 0, 'C', true);
                 }
@@ -650,7 +650,7 @@ foreach ($list->id_alumno as $e) {
 
                 // coloca la nota del cuarto  periodo  a partir del mismo
                 if ($id_periodo > 3) {
-                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1', $p4), 1, 0, 'C', true);
+                    $pdf->Cell(15, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', $p4), 1, 0, 'C', true);
                 } else {
                     $pdf->Cell(15, 3, '', 1, 0, 'C', true);
                 }
@@ -868,7 +868,7 @@ foreach ($list->id_alumno as $e) {
 
         $pdf->SetFillColor(200, 200, 200); // se define el color de fondo
         // $pdf->SetFillColor(200, 200, 200); // se coloca el color gris
-        $pdf->Cell(160, 3, "Total " . iconv('UTF-8', 'ISO-8859-1', $area), 1, 0, 'L', true);
+        $pdf->Cell(160, 3, "Total " . iconv('UTF-8', 'ISO-8859-1//IGNORE', $area), 1, 0, 'L', true);
 
         $pdf->Cell(20, 3, $avg_a, 1, 0, 'C', true);
         $pdf->SetFillColor(255, 255, 255);// se restablece el color blanco
@@ -878,13 +878,13 @@ foreach ($list->id_alumno as $e) {
 
     //fin de areas
 
-    $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1', "Promedio: " . number_format($promedio[$e], 1, '.')), 1, 0, 'L');
+    $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', "Promedio: " . number_format($promedio[$e], 1, '.')), 1, 0, 'L');
     // si hay notas perdidas
     if ($materia_perdidas and $id_periodo == 4) {
-        $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1', "Materias: " . $num_m . ", perdidas : " . $materia_perdidas), 1, 0, 'L');
-        $pdf->Cell(80, 3, iconv('UTF-8', 'ISO-8859-1', "Areas Perdidas: " . $a_perdidas), 1, 0, 'L');
+        $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', "Materias: " . $num_m . ", perdidas : " . $materia_perdidas), 1, 0, 'L');
+        $pdf->Cell(80, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', "Areas Perdidas: " . $a_perdidas), 1, 0, 'L');
     } else {
-        $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1', "Materias: " . $num_m), 1, 0, 'L');
+        $pdf->Cell(50, 3, iconv('UTF-8', 'ISO-8859-1//IGNORE', "Materias: " . $num_m), 1, 0, 'L');
         $pdf->Cell(80, 3, "", 1, 0, 'L');
     }
 
@@ -894,23 +894,23 @@ foreach ($list->id_alumno as $e) {
 
     $pdf->Ln(5);
 
-    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', "ESCALA DE VALORACIÓN:"), 0, 0, 'L');
+    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "ESCALA DE VALORACIÓN:"), 0, 0, 'L');
     $pdf->Ln(6);
     $pdf->SetFillColor(0, 200, 0);
     $pdf->Cell(5, 5, "", 1, 0, 'L', true);
-    $pdf->Cell(40, 5, iconv('UTF-8', 'ISO-8859-1', "NIVEL SUPERIOR: 4.8 a 5.0"), 0, 0, 'L');
+    $pdf->Cell(40, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "NIVEL SUPERIOR: 4.8 a 5.0"), 0, 0, 'L');
     $pdf->SetFillColor(0, 204, 255);
     $pdf->Cell(5, 5, "", 1, 0, 'L', true);
-    $pdf->Cell(40, 5, iconv('UTF-8', 'ISO-8859-1', " NIVEL ALTO: 4.1 a 4.7"), 0, 0, 'L');
+    $pdf->Cell(40, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', " NIVEL ALTO: 4.1 a 4.7"), 0, 0, 'L');
 
 
     $pdf->SetFillColor(255, 230, 0);
     $pdf->Cell(5, 5, "", 1, 0, 'L', true);
-    $pdf->Cell(40, 5, iconv('UTF-8', 'ISO-8859-1', "NIVEL BÁSICO: 3.0 a 4.0"), 0, 0, 'L');
+    $pdf->Cell(40, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "NIVEL BÁSICO: 3.0 a 4.0"), 0, 0, 'L');
 
     $pdf->SetFillColor(255, 0, 0);
     $pdf->Cell(5, 5, "", 1, 0, 'L', true);
-    $pdf->Cell(40, 5, iconv('UTF-8', 'ISO-8859-1', " NIVEL BAJO: 1.0 a 2.9"), 0, 0, 'L');
+    $pdf->Cell(40, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', " NIVEL BAJO: 1.0 a 2.9"), 0, 0, 'L');
     $pdf->Ln(5);
 
     $pdf->Ln(2);
@@ -948,7 +948,7 @@ foreach ($list->id_alumno as $e) {
 
         $pdf->SetFillColor(230, 230, 230);
         $pdf->SetFont('Arial', 'B', 8);
-        $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', 'Aréa : ' . $area), 1, 0, 'L', true);
+        $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', 'Aréa : ' . $area), 1, 0, 'L', true);
         $pdf->Ln(5);
         $lista_m_a = $m->get_materias_por_grado_area($id_grado, $id_area);
         // recorro las materias del area
@@ -963,7 +963,7 @@ foreach ($list->id_alumno as $e) {
             $nota = number_format($nota, 1, '.', '');
             //$pdf->Ln(4);
             $pdf->SetFont('Arial', 'B', 9);
-            $pdf->Cell(50, 4, iconv('UTF-8', 'ISO-8859-1', $materia), 'L', 0, 'L');
+            $pdf->Cell(50, 4, iconv('UTF-8', 'ISO-8859-1//IGNORE', $materia), 'L', 0, 'L');
             $pdf->SetFont('Arial', '', 7);
 
 
@@ -977,7 +977,7 @@ foreach ($list->id_alumno as $e) {
                 $pdf->Cell(40, 4, "", 0, 0, 'L');
             }
 
-            //$pdf->Cell(20,4,iconv('UTF-8', 'ISO-8859-1', "Faltas: ".$faltas),0,0,'L');
+            //$pdf->Cell(20,4,iconv('UTF-8', 'ISO-8859-1//IGNORE', "Faltas: ".$faltas),0,0,'L');
             $pdf->Cell(20, 4, "", 0, 0, 'L');
 
             // calculo el criterio de desempeño
@@ -999,9 +999,9 @@ foreach ($list->id_alumno as $e) {
                 }
             }
 
-            $pdf->Cell(50, 4, iconv('UTF-8', 'ISO-8859-1', "Nivel de desempeño : ") . iconv('UTF-8', 'ISO-8859-1', $valor), 0, 0, 'L');
+            $pdf->Cell(50, 4, iconv('UTF-8', 'ISO-8859-1//IGNORE', "Nivel de desempeño : ") . iconv('UTF-8', 'ISO-8859-1//IGNORE', $valor), 0, 0, 'L');
             $pdf->SetFont('Arial', 'B', 9);
-            $pdf->Cell(20, 4, iconv('UTF-8', 'ISO-8859-1', "Nota : " . $nota), 1, 0, 'L', true);
+            $pdf->Cell(20, 4, iconv('UTF-8', 'ISO-8859-1//IGNORE', "Nota : " . $nota), 1, 0, 'L', true);
             $pdf->Ln(4);
             $pdf->SetFont('Arial', 'I', 8);
             $pdf->SetTextColor(30, 30, 30);
@@ -1014,7 +1014,7 @@ foreach ($list->id_alumno as $e) {
                 // sus atributos
                 $lo->get_logro_id(intval($notax->logro));
                 // imprimo el logro
-                $pdf->MultiCell(180, 4, iconv('UTF-8', 'ISO-8859-1', $lo->logro), 'BLR', 'L', false);
+                $pdf->MultiCell(180, 4, iconv('UTF-8', 'ISO-8859-1//IGNORE', $lo->logro ?? ''), 'BLR', 'L', false);
             } else {
                 // si no hay logro coloco el espacio
                 $pdf->MultiCell(180, 4, "", 'BLR', 'L', false);
@@ -1025,26 +1025,26 @@ foreach ($list->id_alumno as $e) {
     }
 
     $pdf->Ln(15);
-    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', "Observaciones : "), 0, 0, 'L');
+    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "Observaciones : "), 0, 0, 'L');
 
     $pdf->Ln(5);
-    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', "__________________________________________________________________________________________________"), 0, 0, 'L');
+    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "__________________________________________________________________________________________________"), 0, 0, 'L');
     $pdf->Ln(5);
-    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', "__________________________________________________________________________________________________"), 0, 0, 'L');
+    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "__________________________________________________________________________________________________"), 0, 0, 'L');
     $pdf->Ln(5);
-    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', "__________________________________________________________________________________________________"), 0, 0, 'L');
+    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "__________________________________________________________________________________________________"), 0, 0, 'L');
     $pdf->Ln(5);
-    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', "__________________________________________________________________________________________________"), 0, 0, 'L');
+    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "__________________________________________________________________________________________________"), 0, 0, 'L');
     $pdf->Ln(5);
-    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', "__________________________________________________________________________________________________"), 0, 0, 'L');
+    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "__________________________________________________________________________________________________"), 0, 0, 'L');
 
 
 
     $pdf->Cell(180, 20, '', 0, 0, 'L');
     $pdf->Ln(30);
-    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', "    ________________________          _________________________"), 0, 0, 'C');
+    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "    ________________________          _________________________"), 0, 0, 'C');
     $pdf->Ln(3);
-    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1', "           Rectora                                       Directora de Grupo"), 0, 0, 'C');
+    $pdf->Cell(180, 5, iconv('UTF-8', 'ISO-8859-1//IGNORE', "           Rectora                                       Directora de Grupo"), 0, 0, 'C');
 
 }
 
@@ -1057,6 +1057,6 @@ foreach ($list->id_alumno as $e) {
 
 
 
-$pdf->Output("boletin_" . $gr->grado . "_" . iconv('UTF-8', 'ISO-8859-1', $jo->jornada) . "_" . date('d-m-Y__H_i_s') . ".pdf", "D");
+$pdf->Output("boletin_" . $gr->grado . "_" . iconv('UTF-8', 'ISO-8859-1//IGNORE', $jo->jornada) . "_" . date('d-m-Y__H_i_s') . ".pdf", "D");
 
 ?>

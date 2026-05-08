@@ -17,7 +17,11 @@ require_once 'datos.php';
 // Estas son las variables que obtienen de el cliente
 // mediante el metodo GET
 // el codigo de la matricual
-$id_matricula = $_GET["matricula"];
+$id_matricula = isset($_GET["matricula"]) ? (int) $_GET["matricula"] : 0;
+
+if ($id_matricula === 0) {
+    die("Error: Se requiere de una matrícula para generar el certificado.");
+}
 
 // creo el objeto con una instancia de  matricuala
 $obj_matricuala = new matricula();
