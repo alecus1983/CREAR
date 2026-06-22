@@ -340,9 +340,6 @@ if (isset($_SESSION["id_personas"])) {
 
         </nav>
 
-
-
-
         <!-- barra de navegacion -->
         <div id="barrabotones">
             <div class="row w-100">

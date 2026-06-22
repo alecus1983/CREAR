@@ -24,15 +24,20 @@ $semana_intermedia = false;
 //echo "<div class='row'>Listado para la semana : ".$semana."</div>";
 // validacion de datos
 if ($_POST["id_g"] > 0) {
+    // cargo el grado
     $grado = $_POST["id_g"];
 } else {
+    // si no hay grado coloco falso
     $valido = false;
     $err = $err . "<p class='text-danger'>Porfavor seleccione un grado</p>";
 }
 
+// si el ano es valido
 if ($_POST["years"] !== "") {
+    // cargo el ano
     $ano = $_POST["years"];//date("Y");
 } else {
+    // coloco que el ano no es valido
     $valido = false;
     $err = $err . "<p class='text-danger'>Porfavor seleccione un año</p>";
 }
@@ -43,14 +48,20 @@ if ($_POST["id_jornada"] !== "") {
     // filtro la jornada
     $id_jornada = $_POST['id_jornada'];
 } else {
-
+    // si la jornada no es valida
     $valido = false;
+    //muestro el mensaje de error de jornada
     $err = $err . "<p class='text-danger'>Porfavor seleccione un año</p>";
 }
+
+// si el campo de materia es valido
 if ($_POST["id_ms"] > 0) {
+    // cargo  el cargo de materia
     $id_m = $_POST['id_ms'];
 } else {
+    // si no se carga  el codigo de la  materia
     $valido = false;
+    // mustro  el codigo de la materia 
     $err = $err . "<p class='text-danger'>Porfavor seleccione una materia</p>";
 }
 
@@ -82,6 +93,7 @@ if ($_POST["semana"] > 0) {
 if ($_POST['periodo'] > 0) {
     $periodo = $_POST['periodo'];
 } else {
+    // si el periodo no es valido
     $valido = false;
     // comunico el error al usuario
     $err = $err . "<p class='text-danger'>Porfavor seleccione un periodo</p>";
@@ -91,21 +103,41 @@ if ($_POST['periodo'] > 0) {
 // si los datos son validos
 if ($valido) {
 
+    // creo un objeto jornada
     $jo = new jornada();
+    // obtengo los dato a traves del id
     $jo->get_jornada_por_id($id_jornada);
+    // creo un curso
     $cu = new curso();
+    // obtener  es curso por por id
     $cu->get_curso_por_id($id_curso);
+    // creo un nueva instancia de grados
     $gr = new grados();
+    // obtengo el nombre del grado por 
     $gr->get_nombre($grado);
-
+    // creo nueva instacia de materia
     $cr = new materia();
+    // cargo los atributos de  materia basado en el id
     $cr->get_materia($id_m);
     //echo "<div class='row'><div class='col-md-12>";
     // saco este mensaje por consola
-    echo "<p>Listado de  estudiantes  del grado <b>" . $gr->nombre_g . "  " . $cu->curso . "</b>, en la jornada " . $jo->jornada . ", en la semana $semana  en la materia : <b>" . $cr->materia . "</b></p>";
 
+     // pondera las semanas iniciales    
+    $arr_ponderadores = array(1 => 'A', 2 => 'B', 3 => 'C', 4 => 'D', 5 => 'E', 6 => 'F',
+                              7 => 'G', 8 => 'H', 9 => 'I', 10 => 'J', 11 => 'K', 12 => 'L', 13 => 'M',
+                              14 => 'N', 15 => 'O', 16 => 'P', 17 => 'Q', 18 => 'R', 19 => 'S',
+                              20 => 'T', 21 => 'U', 22 => 'V', 23 => 'W', 24 => 'X', 25 => 'Y', 26 => 'Z');
+
+
+    // CREO EL TEXTO DE SALIDA
+    echo "<p>Listado de  estudiantes  del grado <b>" . $gr->nombre_g . "  " .
+        $cu->curso . "</b>, en la jornada " .
+        $jo->jornada . ", en la semana $semana  en la materia : <b>" .
+        $cr->materia . "</b></p>";
+
+    // creo una fila usando la grid de boostrap
     echo "<div class='row'><div class='col-md-8'>";
-
+ 
 
     //crea un nuevo objeto listado (año,grado,jornada,curso)
     // y retorna en los atributos del objeto los cursos, grados y alumnos
@@ -119,6 +151,8 @@ if ($valido) {
 
     // si hay alumnos
     if (!empty($listado->id_alumno)) {
+
+        
         // si no existe la clase DbHelper_Listado
         if (!class_exists('DbHelper_Listado')) {
             // creo la clase DbHelper_Listado que extiende de imcrea
@@ -146,8 +180,11 @@ if ($valido) {
 
         // ejecuto la consulta
         $res_nombres = $db->query($q_nombres);
+
+        
         // si la consulta es exitosa
         if ($res_nombres) {
+
             // recorro el resultado
             while ($row = $res_nombres->fetch_assoc()) {
                 // guardo el resultado en el array $opt_nombres
@@ -158,17 +195,31 @@ if ($valido) {
             }
         }
 
-        // Pre-cargar logros si es la semana final
+        // si la semana final se desarrolla
         if ($semana_final) {
-            $q_logros = "SELECT id_alumno, id_logro FROM c_{$ano}
+
+            // consulta para obtener los logros
+            $q_logros = "SELECT id_alumno, l1_p$periodo, l2_p$periodo, l3_p$periodo  FROM c_{$ano}
                          WHERE year = $ano AND id_materia = $id_m AND periodo = $periodo AND id_logro > 0 AND id_alumno IN ($in_alumnos)";
 
+            echo $q_logros;
+
+            // ejecuto la consulta
             $res_logros = $db->query($q_logros);
             if ($res_logros) {
+                // ciclo de repeticion  de los logros obtenidos
                 while ($row = $res_logros->fetch_assoc()) {
-                    $opt_logros[$row['id_alumno']] = $row['id_logro'];
+                    // preparo la consulta de logro 1 del periodo
+                    $opt_logros[$row['id_alumno']]["l1_p$periodo"] = $row["l1_p$periodo"];
+                    // preparo la consulta de logro 2 del periodo
+                    $opt_logros[$row['id_alumno']]["l2_p$periodo"] = $row["l2_p$periodo"];
+                    // preparo la consulta de logro 3 del periodo
+                    $opt_logros[$row['id_alumno']]["l3_p$periodo"] = $row["l3_p$periodo"];
                 }
             }
+
+            // consulta para obtener las notas de la semana final
+            $q_notas  = "select ".$semana." F from c_{$ano}";
         }
 
         // precarga para la semana intermedia
@@ -176,14 +227,13 @@ if ($valido) {
 
         } else {
 
-            // pondera las semanas iniciales    
-            $arr_ponderadores = array(1 => 'A', 2 => 'B', 3 => 'C', 4 => 'D', 5 => 'E', 6 => 'F', 7 => 'G', 8 => 'H', 9 => 'I', 10 => 'J', 11 => 'K', 12 => 'L', 13 => 'M', 14 => 'N', 15 => 'O', 16 => 'P', 17 => 'Q', 18 => 'R', 19 => 'S', 20 => 'T', 21 => 'U', 22 => 'V', 23 => 'W', 24 => 'X', 25 => 'Y', 26 => 'Z');
-
+           
             // Pre-cargar calificaciones
             // dependiendo la semana
-            //
             $q_notas = "SELECT id_alumno, $semana" . $arr_ponderadores[$semana] . " FROM c_{$ano}
                         WHERE year = $ano AND id_materia = $id_m AND id_alumno IN ($in_alumnos)";
+
+            //respuesta de la consulta notas
             $res_notas = $db->query($q_notas);
             if ($res_notas) {
                 while ($row = $res_notas->fetch_assoc()) {
@@ -244,7 +294,9 @@ if ($valido) {
     else {
         //por cada alumno del listado del curso    
         foreach ($listado->id_alumno as $e) {
+            // obtengo el nombre de un estudiante en particular
             $e_nombre = isset($opt_nombres[$e]) ? $opt_nombres[$e]["nombres"] : "";
+            // obtengo el apellido de un estudiante en particular
             $e_apellido = isset($opt_nombres[$e]) ? $opt_nombres[$e]["apellidos"] : "";
             // no instanciamos objetos en el bucle para mejorar rendimiento 
             echo "<div class='row'>";
