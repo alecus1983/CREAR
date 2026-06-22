@@ -122,11 +122,42 @@ if ($valido) {
     //echo "<div class='row'><div class='col-md-12>";
     // saco este mensaje por consola
 
-     // pondera las semanas iniciales    
-    $arr_ponderadores = array(1 => 'A', 2 => 'B', 3 => 'C', 4 => 'D', 5 => 'E', 6 => 'F',
-                              7 => 'G', 8 => 'H', 9 => 'I', 10 => 'J', 11 => 'K', 12 => 'L', 13 => 'M',
-                              14 => 'N', 15 => 'O', 16 => 'P', 17 => 'Q', 18 => 'R', 19 => 'S',
-                              20 => 'T', 21 => 'U', 22 => 'V', 23 => 'W', 24 => 'X', 25 => 'Y', 26 => 'Z');
+    // pondera las semanas iniciales    
+    $arr_ponderadores = array(
+        1 => 'A',
+        2 => 'B',
+        3 => 'C',
+        4 => 'D',
+        5 => 'E',
+        6 => 'F',
+        7 => 'G',
+        8 => 'H',
+        9 => 'I',
+        10 => 'J',
+        11 => 'K',
+        12 => 'L',
+        13 => 'M',
+        14 => 'N',
+        15 => 'O',
+        16 => 'P',
+        17 => 'Q',
+        18 => 'R',
+        19 => 'S',
+        20 => 'T',
+        21 => 'U',
+        22 => 'V',
+        23 => 'W',
+        24 => 'X',
+        25 => 'Y',
+        26 => 'Z'
+    );
+
+    // ponderados de las semanas normales
+    $arr_pond_normal = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F", 7 => "G");
+    // ponderados de la semana intermedia
+    $arr_pond_media = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F", 7 => "G", 8 => "H");
+    // ponderados de la semana final
+    $arr_pond_final = array(1 => "F", 2 => "G", 3 => "I", 4 => "J");
 
 
     // CREO EL TEXTO DE SALIDA
@@ -137,7 +168,7 @@ if ($valido) {
 
     // creo una fila usando la grid de boostrap
     echo "<div class='row'><div class='col-md-8'>";
- 
+
 
     //crea un nuevo objeto listado (año,grado,jornada,curso)
     // y retorna en los atributos del objeto los cursos, grados y alumnos
@@ -150,9 +181,10 @@ if ($valido) {
     $opt_logros = [];
 
     // si hay alumnos
+    // cargo un bloque con las consultas a la base de datos
     if (!empty($listado->id_alumno)) {
 
-        
+
         // si no existe la clase DbHelper_Listado
         if (!class_exists('DbHelper_Listado')) {
             // creo la clase DbHelper_Listado que extiende de imcrea
@@ -181,7 +213,7 @@ if ($valido) {
         // ejecuto la consulta
         $res_nombres = $db->query($q_nombres);
 
-        
+
         // si la consulta es exitosa
         if ($res_nombres) {
 
@@ -198,9 +230,21 @@ if ($valido) {
         // si la semana final se desarrolla
         if ($semana_final) {
 
+            // valor inicial del campo de notas
+            $campos_notas = "";
+            // ciclo de repeticion
+            // para obtener los campos de notas de la semana final
+            foreach ($arr_pond_final as $a => $v) {
+                // asigno el campo de notas
+                $campos_notas = $semana . $v . "," . $campos_notas;
+            }
+
+            // quito la ultima coma
+            $campos_notas = substr($campos_notas, 0, -1);
+
             // consulta para obtener los logros
-            $q_logros = "SELECT id_alumno, l1_p$periodo, l2_p$periodo, l3_p$periodo  FROM c_{$ano}
-                         WHERE year = $ano AND id_materia = $id_m AND periodo = $periodo AND id_logro > 0 AND id_alumno IN ($in_alumnos)";
+            $q_logros = "SELECT id_alumno, l1_p$periodo, l2_p$periodo, l3_p$periodo, $campos_notas  FROM c_{$ano}
+                         WHERE id_materia = $id_m AND periodo = $periodo AND id_logro > 0 AND id_alumno IN ($in_alumnos)";
 
             echo $q_logros;
 
@@ -219,30 +263,75 @@ if ($valido) {
             }
 
             // consulta para obtener las notas de la semana final
-            $q_notas  = "select ".$semana." F from c_{$ano}";
+            $q_notas = "select " . $semana . " F from c_{$ano}";
         }
 
         // precarga para la semana intermedia
         elseif ($semana_intermedia) {
 
+            // valor inicial del campo de notas
+            $campos_notas = "";
+            // ciclo de repeticion
+            // para obtener los campos de notas de la semana final
+            foreach ($arr_pond_media as $a => $v) {
+                // asigno el campo de notas
+                $campos_notas = $semana . $v . "," . $campos_notas;
+            }
+
+            // quito la ultima coma
+            $campos_notas = substr($campos_notas, 0, -1);
+
+            // consulta para obtener los logros
+            $q_notas = "SELECT id_alumno, $campos_notas  FROM c_{$ano}
+                         WHERE id_materia = $id_m AND periodo = $periodo 
+                         AND id_logro > 0 AND id_alumno IN ($in_alumnos)";
+
+            // ejecuto la consulta
+            $res_notas = $db->query($q_notas);
+            if ($res_notas) {
+                // ciclo de repeticion  de los logros obtenidos
+                $row = $res_notas->fetch_assoc();
+                // preparo la consulta de logro 1 del periodo
+                $opt_notas[$row['id_alumno']] = $row;
+            }
         } else {
 
-           
+
+            // valor inicial del campo de notas
+            $campos_notas = "";
+            // ciclo de repeticion
+            // para obtener los campos de notas de la semana final
+            foreach ($arr_pond_normal as $a => $v) {
+                // asigno el campo de notas
+                $campos_notas = $semana . $v . "," . $campos_notas;
+            }
+
+
+            // quito la ultima coma
+            $campos_notas = substr($campos_notas, 0, -1);
+
             // Pre-cargar calificaciones
             // dependiendo la semana
-            $q_notas = "SELECT id_alumno, $semana" . $arr_ponderadores[$semana] . " FROM c_{$ano}
-                        WHERE year = $ano AND id_materia = $id_m AND id_alumno IN ($in_alumnos)";
+            $q_notas = "SELECT id_alumno, $campos_notas  FROM c_{$ano}
+                        WHERE id_materia = $id_m AND id_alumno IN ($in_alumnos)";
 
             //respuesta de la consulta notas
             $res_notas = $db->query($q_notas);
+
             if ($res_notas) {
                 while ($row = $res_notas->fetch_assoc()) {
-                    $opt_notas[$row['id_alumno']] = $row[$semana . $arr_ponderadores[$semana]];
+                    // preparo la consulta de logro 1 del periodo
+                    $opt_notas[$row['id_alumno']] = $row;
                 }
             }
         }
     }
-    // [OPTIMIZATION BLOCK END]
+
+    // Se termina la precarga de datos
+
+
+    // SE MUESTRA EN PANATALLA LAS NOTAS CONSULTADAS
+
 
     // si se trata de la materia de disciplina entonces
     if ($id_m == 20) {
@@ -290,6 +379,8 @@ if ($valido) {
         }
 
     }
+
+
     // si es una materia distinta de disciplina
     else {
         //por cada alumno del listado del curso    
@@ -310,7 +401,7 @@ if ($valido) {
             if ($semana_final) {
 
                 // presentacion personal (E)
-                $nota = isset($opt_notas[$e][5]) ? $opt_notas[$e][5] : 0;
+                $nota = isset($opt_notas[$e][$semana . "E"]) ? $opt_notas[$e][$semana . "E"] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
@@ -326,7 +417,7 @@ if ($valido) {
 
 
                 // actitud (F)
-                $nota = isset($opt_notas[$e][6]) ? $opt_notas[$e][6] : 0;
+                $nota = isset($opt_notas[$e][$semana . "F"]) ? $opt_notas[$e][$semana . "F"] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
@@ -342,7 +433,7 @@ if ($valido) {
                 //echo '</div>';
 
                 //asistencia (G)
-                $nota = isset($opt_notas[$e][7]) ? $opt_notas[$e][7] : 0;
+                $nota = isset($opt_notas[$e][$semana . "G"]) ? $opt_notas[$e][$semana . "G"] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
@@ -359,7 +450,7 @@ if ($valido) {
 
 
                 //evaluación final (I)
-                $nota = isset($opt_notas[$e][9]) ? $opt_notas[$e][9] : 0;
+                $nota = isset($opt_notas[$e][$semana . "I"]) ? $opt_notas[$e][$semana . "I"] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
@@ -375,7 +466,7 @@ if ($valido) {
                 //echo '</div>';
 
                 //auto evaluacion (J)
-                $nota = isset($opt_notas[$e][10]) ? $opt_notas[$e][10] : 0;
+                $nota = isset($opt_notas[$e][$semana . "J"]) ? $opt_notas[$e][$semana . "J"] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
@@ -391,7 +482,7 @@ if ($valido) {
                 //echo '</div>';
 
                 //LOGRO
-                $logro = isset($opt_logros[$e]) ? $opt_logros[$e] : "";
+                $logro = isset($opt_logros[$e][0]) ? $opt_logros[$e][0] : "";
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">logro</span>';
@@ -406,7 +497,7 @@ if ($valido) {
             elseif ($semana_intermedia) {
 
                 //evaluación de proceso (A)
-                $nota = isset($opt_notas[$e][1]) ? $opt_notas[$e][1] : 0;
+                $nota = isset($opt_notas[$e][$semana . "A"]) ? $opt_notas[$e][$semana . "A"] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
@@ -422,7 +513,7 @@ if ($valido) {
                 //echo '</div>';
 
                 // actividad (B)
-                $nota = isset($opt_notas[$e][2]) ? $opt_notas[$e][2] : 0;
+                $nota = isset($opt_notas[$e][$semana . "B"]) ? $opt_notas[$e][$semana . "B"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -435,7 +526,7 @@ if ($valido) {
                 echo '</div>';
                 //echo '</div>';
                 //taller (C)
-                $nota = isset($opt_notas[$e][3]) ? $opt_notas[$e][3] : 0;
+                $nota = isset($opt_notas[$e][$semana . "C"]) ? $opt_notas[$e][$semana . "C"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -448,7 +539,7 @@ if ($valido) {
                 echo '</div>';
                 //echo '</div>';
                 //tarea (D)
-                $nota = isset($opt_notas[$e][4]) ? $opt_notas[$e][4] : 0;
+                $nota = isset($opt_notas[$e][$semana . "D"]) ? $opt_notas[$e][$semana . "D"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -464,7 +555,7 @@ if ($valido) {
 
                 // presentacion personal (E)
 
-                $nota = isset($opt_notas[$e][5]) ? $opt_notas[$e][5] : 0;
+                $nota = isset($opt_notas[$e][$semana . "E"]) ? $opt_notas[$e][$semana . "E"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -479,7 +570,7 @@ if ($valido) {
 
 
                 // actitud(F)
-                $nota = isset($opt_notas[$e][6]) ? $opt_notas[$e][6] : 0;
+                $nota = isset($opt_notas[$e][$semana . "F"]) ? $opt_notas[$e][$semana . "F"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -493,7 +584,7 @@ if ($valido) {
                 //echo '</div>';
 
                 //asistencia (G)
-                $nota = isset($opt_notas[$e][7]) ? $opt_notas[$e][7] : 0;
+                $nota = isset($opt_notas[$e][$semana . "G"]) ? $opt_notas[$e][$semana . "G"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -507,7 +598,7 @@ if ($valido) {
                 //echo '</div>';
 
                 //quiz (H)
-                $nota = isset($opt_notas[$e][8]) ? $opt_notas[$e][8] : 0;
+                $nota = isset($opt_notas[$e][$semana . "H"]) ? $opt_notas[$e][$semana . "H"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -523,7 +614,7 @@ if ($valido) {
 
                 //evaluación de proceso (A)
 
-                $nota = isset($opt_notas[$e][1]) ? $opt_notas[$e][1] : 0;
+                $nota = isset($opt_notas[$e][$semana . "A"]) ? $opt_notas[$e][$semana . "A"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -537,7 +628,7 @@ if ($valido) {
                 //echo '</div>';
 
                 // actividad (B)
-                $nota = isset($opt_notas[$e][2]) ? $opt_notas[$e][2] : 0;
+                $nota = isset($opt_notas[$e][$semana . "B"]) ? $opt_notas[$e][$semana . "B"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -550,7 +641,7 @@ if ($valido) {
                 echo '</div>';
                 //echo '</div>';
                 //taller (C)
-                $nota = isset($opt_notas[$e][3]) ? $opt_notas[$e][3] : 0;
+                $nota = isset($opt_notas[$e][$semana . "C"]) ? $opt_notas[$e][$semana . "C"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -563,7 +654,7 @@ if ($valido) {
                 echo '</div>';
                 //echo '</div>';
                 //tarea (D)
-                $nota = isset($opt_notas[$e][4]) ? $opt_notas[$e][4] : 0;
+                $nota = isset($opt_notas[$e][$semana . "D"]) ? $opt_notas[$e][$semana . "D"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -577,7 +668,7 @@ if ($valido) {
                 //echo '</div>';
 
                 // presentacion personal (E)
-                $nota = isset($opt_notas[$e][5]) ? $opt_notas[$e][5] : 0;
+                $nota = isset($opt_notas[$e][$semana . "E"]) ? $opt_notas[$e][$semana . "E"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -592,7 +683,7 @@ if ($valido) {
                 //echo '</div>';
 
                 // actitud (F)
-                $nota = isset($opt_notas[$e][6]) ? $opt_notas[$e][6] : 0;
+                $nota = isset($opt_notas[$e][$semana . "F"]) ? $opt_notas[$e][$semana . "F"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
@@ -606,7 +697,7 @@ if ($valido) {
                 //echo '</div>';
 
                 //asistencia (G)
-                $nota = isset($opt_notas[$e][7]) ? $opt_notas[$e][7] : 0;
+                $nota = isset($opt_notas[$e][$semana . "G"]) ? $opt_notas[$e][$semana . "G"] : 0;
                 if ($nota == 0) {
                     $nota = "";
                 } else {
