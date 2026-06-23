@@ -244,9 +244,9 @@ if ($valido) {
 
             // consulta para obtener los logros
             $q_logros = "SELECT id_alumno, l1_p$periodo, l2_p$periodo, l3_p$periodo, $campos_notas  FROM c_{$ano}
-                         WHERE id_materia = $id_m AND periodo = $periodo AND id_logro > 0 AND id_alumno IN ($in_alumnos)";
+                         WHERE id_materia = $id_m AND periodo = $periodo AND id_alumno IN ($in_alumnos)";
 
-            echo $q_logros;
+            //echo $q_logros;
 
             // ejecuto la consulta
             $res_logros = $db->query($q_logros);
@@ -254,11 +254,13 @@ if ($valido) {
                 // ciclo de repeticion  de los logros obtenidos
                 while ($row = $res_logros->fetch_assoc()) {
                     // preparo la consulta de logro 1 del periodo
-                    $opt_logros[$row['id_alumno']]["l1_p$periodo"] = $row["l1_p$periodo"];
+                    $opt_logros[$row['id_alumno']][0] = $row["l1_p$periodo"];
                     // preparo la consulta de logro 2 del periodo
-                    $opt_logros[$row['id_alumno']]["l2_p$periodo"] = $row["l2_p$periodo"];
+                    $opt_logros[$row['id_alumno']][1] = $row["l2_p$periodo"];
                     // preparo la consulta de logro 3 del periodo
-                    $opt_logros[$row['id_alumno']]["l3_p$periodo"] = $row["l3_p$periodo"];
+                    $opt_logros[$row['id_alumno']][2] = $row["l3_p$periodo"];
+                    // guardo las notas
+                    $opt_notas[$row['id_alumno']] = $row;
                 }
             }
 
@@ -284,15 +286,20 @@ if ($valido) {
             // consulta para obtener los logros
             $q_notas = "SELECT id_alumno, $campos_notas  FROM c_{$ano}
                          WHERE id_materia = $id_m AND periodo = $periodo 
-                         AND id_logro > 0 AND id_alumno IN ($in_alumnos)";
+                         AND id_alumno IN ($in_alumnos)";
 
             // ejecuto la consulta
             $res_notas = $db->query($q_notas);
             if ($res_notas) {
                 // ciclo de repeticion  de los logros obtenidos
-                $row = $res_notas->fetch_assoc();
+                //$row = $res_notas->fetch_assoc();
                 // preparo la consulta de logro 1 del periodo
-                $opt_notas[$row['id_alumno']] = $row;
+                //$opt_notas[$row['id_alumno']] = $row;
+
+                while ($row = $res_notas->fetch_assoc()) {
+                    // preparo la consulta de logro 1 del periodo
+                    $opt_notas[$row['id_alumno']] = $row;
+                }
             }
         } else {
 
