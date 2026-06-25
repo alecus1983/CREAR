@@ -48,7 +48,9 @@ $lista = $e->lista_escolaridad($id_escolaridad, $id_docente, $year);
 }
 else {
     $respuesta['html'] = "";
+    // codifico la respuesta
     $respuesta_json = json_encode($respuesta);
+    // pongo la respuesta en formato json
 echo $respuesta_json;}
 
 

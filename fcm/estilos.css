@@ -72,6 +72,31 @@ input[type=number] {
 }
 
 
+.boton-flotante {
+    position: fixed;
+    bottom: 20px; /* Separación desde abajo */
+    right: 20px; /* Separación desde la derecha */
+    background-color: darkcyan; /* Color de fondo (ej. verde WhatsApp) */
+    color: white; /* Color del texto o icono */
+    width: 60px;
+    height: 60px;
+    border-radius: 5px; /* Hace que el botón sea redondo */
+    text-align: center;
+    line-height: 60px; /* Centra el contenido verticalmente */
+    font-size: 30px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+/* Efecto al pasar el mouse por encima */
+.boton-flotante:hover {
+    transform: translateY(-5px); /* Eleva ligeramente el botón */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+
 
 .A {
   color: blue;
