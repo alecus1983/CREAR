@@ -100,7 +100,7 @@ $ano = date('Y');
        // almacenando el codigo del grado en la variable j
        var j = $("#id_g").val();
 
-
+       // mensaje de seleccion
        swal({
 	 title: 'INSERTAR NOTAS',
 	 text: "Esta seguro que quiere insertar las notas!",
@@ -214,12 +214,13 @@ $ano = date('Y');
 	     }
 	   } )
 
+	   // si los datos son validos
 	   if(valido){
 	     // llamo al metodo ajax para el envío de la  información
 	     // se emplea en envío por POST
 	     $.ajax({
 	       type: "POST",
-	       url: "notas_semanales.php",
+	       url: "notas_semanales_x.php",
 	       data: {
 		 year: $("#years").val(),
 		 semana: $("#semana").val(),
