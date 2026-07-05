@@ -257,27 +257,34 @@ function lista_grados(id_escolaridad, id, id_docente) {
         },
 
         success: function (respuesta) {
-
+	    // escribo el dato en formato json
             res = JSON.parse(respuesta);
 
             // si se realizo la respuesta
             // almaceno la respuesta en la variable res
             $(id).find('option').remove();
-
+	    // agrego la primer fila con valor -1
             $(id).append("<option value = '-1'>Seleccione</option>");
-
+	    // ejecuto el metodo por cada elemento del json
+	    // element  es un elemento de json
             res.forEach((element) => {
                 //console.log(element)
+		// clave
                 valor = element[0];
+		// texto
                 texto = element[1];
-                $(id).append("<option value = " + valor + ">" + texto + "</option>");
+		// agrego los elementos del select
+		$(id).append("<option value = " + valor + ">" + texto + "</option>");
             });
 
+	    // cambio de color del select
             $(id).css('background-color', 'lightblue');
 
         },
         error: function (xhr, status) {
+	    // reporto una falla
             swal('Disculpe, existió un problema' + status);
+	    // muesro el estado en consola
             console.log(xhr);
         }
     });

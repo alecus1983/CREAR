@@ -19,42 +19,43 @@ $periodo = $_POST["periodo"];
 $semana_final = false;
 // semana intermedia
 $semana_intermedia = false;
-                   
+
 
 //echo "<div class='row'>Listado para la semana : ".$semana."</div>";
 // validacion de datos
-if($_POST["grado"] >0 ){
+if ($_POST["grado"] > 0) {
     $grado = $_POST["grado"];
-}else {
+} else {
     $valido = false;
-    $err = $err."<p class='text-danger'>Porfavor seleccione un grado</p>";
+    $err = $err . "<p class='text-danger'>Porfavor seleccione un grado</p>";
 }
 
-if($_POST["years"]!== ""){
+if ($_POST["years"] !== "") {
     $ano = $_POST["years"];//date("Y");
-}else {
+} else {
     $valido = false;
-    $err = $err."<p class='text-danger'>Porfavor seleccione un año</p>";
+    $err = $err . "<p class='text-danger'>Porfavor seleccione un año</p>";
 }
 
 
-if($_POST["id_jornada"]!== ""){
+if ($_POST["id_jornada"] !== "") {
     $id_jornada = $_POST['id_jornada'];
-}else {
+} else {
     $valido = false;
-    $err = $err."<p class='text-danger'>Porfavor seleccione un año</p>";
+    $err = $err . "<p class='text-danger'>Porfavor seleccione un año</p>";
 }
 
 
 // si los datos son validos
 if ($valido) {
 
-    
+
     //crea un nuevo objeto listado (año,grado,jornada,curso)
-    $listado  = new lista_estudiantes($ano,$grado,$id_jornada, $id_curso);
-    echo $lista = json_encode($listado);
-    
-    
+    $listado = new matricula_docente();
+    $lista = $listado->listado_estudiantes($ano, $grado, $id_jornada, $id_curso);
+    echo json_encode($lista);
+
+
 }
 
 ?>

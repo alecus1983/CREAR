@@ -6,6 +6,7 @@ function avance_semanal() {
     $.ajax({
         type: "POST",
         url: "notas_docentes_semanales.php",
+        dataType: "json",
         data: {
             years: $("#years").val(),
             periodo: $("#periodos").val(),
@@ -14,21 +15,24 @@ function avance_semanal() {
         // si los datos son correctos entonces ...
         success: function (respuesta) {
 
+            // si la respusta es 1
+            if (respuesta['status'] == 1) {
+                //muestro los datos de respuesta
+                $("#avance").html(respuesta['html']);
+            }
 
-            if (respuesta == 20) {
+
+            else if (respuesta['status'] == 20) {
                 swal('Semana', 'Porfavor seleccione una semana', 'error');
             }
-            else if (respuesta == 21) {
+            else if (respuesta['status'] == 21) {
                 swal('Periodo', 'Porfavor seleccione un periodo', 'error');
             }
-            else if (respuesta == 22) {
+            else if (respuesta['status'] == 22) {
                 swal('Año', 'Porfavor seleccione un año', 'error');
             }
-            else if (respuesta == 23) {
+            else if (respuesta['status'] == 23) {
                 swal('Docente', 'Porfavor seleccione un docente', 'error');
-            }
-            else {
-                $("#avance").html(respuesta);
             }
 
         },

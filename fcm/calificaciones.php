@@ -585,4 +585,36 @@ class calificaciones extends imcrea
 
         return $arr;
     }
+
+    // --- 
+
+    /**
+     * @brief Verifica si un estudiante tiene calificaciones en una materia.
+     *
+     * @param int $id_a     Código del alumno.
+     * @param int $id_m     Código de la materia.
+     * @param int $year     Año lectivo.
+     * @return bool True si el estudiante tiene calificaciones, false en caso contrario.
+     *
+     * Consulta la tabla de calificaciones para determinar si un estudiante específico
+     * tiene alguna calificación registrada en una materia durante el año lectivo.
+     */
+    public function get_calificacion_alumno_materia($id_a, $id_m, $year)
+    {
+        $q = "SELECT id_alumno, id_materia FROM c_" . $year . "
+              WHERE year = $year AND id_alumno = $id_a AND id_materia = $id_m";
+
+        try {
+            $c = $this->_db->query($q);
+            $r = $c->fetch_array(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+        }
+
+        if (is_null($r)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

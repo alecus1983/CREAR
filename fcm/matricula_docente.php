@@ -4,7 +4,7 @@
 // instituto por un docente y se desarrolla en la siguiente jerarquia de objetos
 //
 // Escolaridad -> jornada -> grado -> curso -> MATRICULA DOCENTE
-#[\AllowDynamicProperties]
+
 class matricula_docente extends curso
 {
     protected $id;

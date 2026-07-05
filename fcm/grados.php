@@ -88,6 +88,7 @@ class grados extends jornada
     // Obtener nombre del grado
     public function get_grado_id($id_grado)
     {
+        $id_grado = (int) $id_grado;
         // se realiza la consulta
         $resultado = $this->_db->query("SELECT * FROM  grados where  id_grado = " . $id_grado);
         $dato = $resultado->fetch_array(MYSQLI_ASSOC);
