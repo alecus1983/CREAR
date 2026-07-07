@@ -16,6 +16,19 @@ $id_gs = intval($_POST['id_gs']);
 $id_jornada = intval($_POST['id_jornada']);
 //$corte = $_POST['corte'];
 
+// datos de entrada del formulario
+$A = json_decode($_POST['A'], True);
+$B = json_decode($_POST['B'], True);
+$C = json_decode($_POST['C'], True);
+$D = json_decode($_POST['D'], True);
+$E = json_decode($_POST['E'], True);
+$F = json_decode($_POST['F'], True);
+$G = json_decode($_POST['G'], True);
+$H = json_decode($_POST['H'], True);
+$I = json_decode($_POST['I'], True);
+$J = json_decode($_POST['J'], True);
+$L = json_decode($_POST['L'], True);
+
 // array para insertar notas
 $arr_insertar = [];
 // array para actualizar notas
@@ -24,6 +37,8 @@ $arr_actualizar = [];
 $arr_entrada = [];
 //array de notas de las bases de datos
 $arr_db = [];
+
+
 
 // capturo los codigos de los estudiantes
 $codigos = json_decode($_POST['codigo'], True);
@@ -49,7 +64,6 @@ if ($_POST["semana"] > 0) {
     if ($semana == 4 || $semana == 12 || $semana == 20 || $semana == 28) {
         $semana_intermedia = true;
     }
-
 }
 
 $obj_calificaciones = new Calificaciones();
@@ -60,8 +74,11 @@ $obj_calificaciones = new Calificaciones();
 // tabla c_2026 
 
 for ($i = 0; count($codigos) > $i; $i++) {
+
+    // si el estudiante tiene calificaciones
     if ($obj_calificaciones->get_calificacion_alumno_materia($codigos[$i]['value'], $id_materia, $ano)) {
 
+        // si es semana final
         if ($semana_final) {
             // si el estudiante tiene calificaciones
             // se agregan al array de entrada
@@ -69,9 +86,28 @@ for ($i = 0; count($codigos) > $i; $i++) {
                 'id_alumno' => $codigos[$i]['value'],
                 'id_materia' => $id_materia,
                 'id_docente' => $id_docente,
+                "'" . $semana . "E'" => $E[$i]['value'],
+                "'" . $semana . "F'" => $F[$i]['value'],
+                "'" . $semana . "G'" => $G[$i]['value'],
+                "'" . $semana . "I'" => $I[$i]['value'],
+                "'" . $semana . "J'" => $J[$i]['value']
             ];
         } elseif ($semana_intermedia) {
-
+            // si el estudiante tiene calificaciones
+            // se agregan al array de entrada
+            $arr_actualizar[] = [
+                'id_alumno' => $codigos[$i]['value'],
+                'id_materia' => $id_materia,
+                'id_docente' => $id_docente,
+                "'" . $semana . "A'" => $A[$i]['value'],
+                "'" . $semana . "B'" => $B[$i]['value'],
+                "'" . $semana . "C'" => $C[$i]['value'],
+                "'" . $semana . "D'" => $D[$i]['value'],
+                "'" . $semana . "E'" => $E[$i]['value'],
+                "'" . $semana . "F'" => $F[$i]['value'],
+                "'" . $semana . "G'" => $G[$i]['value'],
+                "'" . $semana . "H'" => $H[$i]['value']
+            ];
         } else {
             // si el estudiante tiene calificaciones
             // se agregan al array de entrada
@@ -84,10 +120,10 @@ for ($i = 0; count($codigos) > $i; $i++) {
                 "'" . $semana . "C'" => $C[$i]['value'],
                 "'" . $semana . "D'" => $D[$i]['value'],
                 "'" . $semana . "E'" => $E[$i]['value'],
+                "'" . $semana . "F'" => $F[$i]['value'],
+                "'" . $semana . "G'" => $G[$i]['value']
             ];
         }
-
-
     } else {
         // si el estudiante no tiene calificaciones
         // se agregan al array de entrada
@@ -95,296 +131,20 @@ for ($i = 0; count($codigos) > $i; $i++) {
             'id_alumno' => $codigos[$i]['value'],
             'id_materia' => $id_materia,
             'id_docente' => $id_docente,
-            'semana' => $semana,
-            'periodo' => $periodo,
-            'ano' => $ano,
-            'id_logro' => 'NULL',
-            'nota' => $A[$i]['value'],
-            'id_ponderado' => 20
+            "'" . $semana . "A'" => $A[$i]['value'],
+            "'" . $semana . "B'" => $B[$i]['value'],
+            "'" . $semana . "C'" => $C[$i]['value'],
+            "'" . $semana . "D'" => $D[$i]['value'],
+            "'" . $semana . "E'" => $E[$i]['value'],
+            "'" . $semana . "F'" => $F[$i]['value'],
+            "'" . $semana . "G'" => $G[$i]['value'],
+            "'" . $semana . "H'" => $H[$i]['value'],
+            "'" . $semana . "I'" => $I[$i]['value'],
+            "'" . $semana . "J'" => $J[$i]['value']
         ];
     }
 }
 
-
-
-
-
-// si la materia es  diferente del disciplina
-if ($id_materia !== 20) {
-
-    // si existen notas con el ponderado A
-    if ($_POST['A']) {
-        // capturo las notas del ponderado A
-        $A = json_decode($_POST['A'], True);
-        // agrego tantas filas  al array como entradas tenga $A
-        for ($i = 0; count($A) > $i; $i++) {
-            // si la nota es mayor a 0
-            if ($A[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $A[$i]['value'],
-                    'id_ponderado' => 20
-                ];
-            }
-        }
-    }
-
-    // si existe el ponderado B
-    if ($_POST['B']) {
-        // si existe el ponderado B
-        $B = json_decode($_POST['B'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($B) > $i; $i++) {
-            if ($B[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $B[$i]['value'],
-                    'id_ponderado' => 2
-                ];
-            }
-        }
-    }
-    // si existe el ponderado C
-    if ($_POST['C']) {
-        // si existe el ponderado C
-        $C = json_decode($_POST['C'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($C) > $i; $i++) {
-            if ($C[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $C[$i]['value'],
-                    'id_ponderado' => 3
-                ];
-            }
-        }
-    }
-    // si existe el ponderado D
-    if ($_POST['D']) {
-        // si existe el ponderado D
-        $D = json_decode($_POST['D'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($D) > $i; $i++) {
-            if ($D[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $D[$i]['value'],
-                    'id_ponderado' => 4
-                ];
-            }
-        }
-    }
-    // si existe el ponderado E
-    if ($_POST['E']) {
-        // si existe el ponderado E
-        $E = json_decode($_POST['E'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($E) > $i; $i++) {
-            if ($E[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $E[$i]['value'],
-                    'id_ponderado' => 5
-                ];
-            }
-        }
-    }
-
-    // si existe el ponderado F
-    if ($_POST['F']) {
-        // si existe el ponderado F
-        $F = json_decode($_POST['F'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($F) > $i; $i++) {
-            if ($F[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $F[$i]['value'],
-                    'id_ponderado' => 6
-                ];
-            }
-        }
-    }
-    // si existe el ponderado G
-    if ($_POST['G']) {
-        // si existe el ponderado G
-        $G = json_decode($_POST['G'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($G) > $i; $i++) {
-            if ($G[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $G[$i]['value'],
-                    'id_ponderado' => 7
-                ];
-            }
-        }
-    }
-
-    // si existe el ponderado G
-    if ($_POST['H']) {
-        // si existe el ponderado G
-        $H = json_decode($_POST['H'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($H) > $i; $i++) {
-            if ($H[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $H[$i]['value'],
-                    'id_ponderado' => 8
-                ];
-            }
-        }
-    }
-
-    // si existe el ponderado I
-    if ($_POST['I']) {
-        // si existe el ponderado G
-        $I = json_decode($_POST['I'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($I) > $i; $i++) {
-            if ($I[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $I[$i]['value'],
-                    'id_ponderado' => 9
-                ];
-            }
-        }
-    }
-
-    // si existe el ponderado j
-    if ($_POST['J']) {
-        // si existe el ponderado J
-        $J = json_decode($_POST['J'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($J) > $i; $i++) {
-            if ($J[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => 'NULL',
-                    'nota' => $J[$i]['value'],
-                    'id_ponderado' => 10
-                ];
-            }
-        }
-    }
-
-
-    // si existe el ponderado L
-    if ($_POST['L']) {
-        // si existe el ponderado L
-        $L = json_decode($_POST['L'], True);
-        // agrego tantas filas  al array entrada
-        for ($i = 0; count($L) > $i; $i++) {
-            if ($L[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'nota' => 0,
-                    'id_logro' => $L[$i]['value'],
-                    'id_ponderado' => 99
-                ];
-            }
-        }
-    }
-} else {
-
-    // si es la materia de disciplina
-
-    if (isset($_POST['A'])) {
-        // capturo las notas del ponderado A
-        $A = json_decode($_POST['A'], True);
-        $L = isset($_POST['L']) ? json_decode($_POST['L'], True) : [];
-
-        // agrego tantas filas  al array como entradas tenga $A
-        for ($i = 0; count($A) > $i; $i++) {
-            // si la nota es mayor a 0
-            if ($A[$i]['value'] > 0) {
-                $arr_entrada[] = [
-                    'id_alumno' => $codigos[$i]['value'],
-                    'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
-                    'semana' => $semana,
-                    'periodo' => $periodo,
-                    'ano' => $ano,
-                    'id_logro' => isset($L[$i]['value']) ? $L[$i]['value'] : 'NULL',
-                    'nota' => $A[$i]['value'],
-                    'id_ponderado' => 20
-                ];
-            }
-        }
-    }
-}
-// // coloco un arreglo con los poibles logos
-// $logros = [
-//     1 => json_decode($_POST['logro1'], True),
-//     2 => json_decode($_POST['logro2'], True),
-//     3 => json_decode($_POST['logro3'], True)
-// ];
 
 // 1. Iniciamos la conexión una sola vez
 $cal = new calificaciones();
@@ -397,9 +157,7 @@ if ($ano > 2015 && $semana > 0 && $id_materia > 0) {
     // valores 
     $valores = [];
     // calificaciones obtenidas
-    $arr_db = $cal->get_calificaciones_semanales_bulk($ano, $periodo, $id_materia, $id_gs);
-
-    //echo var_dump($arr_db);
+    $arr_db = $cal->get_calificacion_semanal_bulk($id_a, $id_m, $id_s, $y, $id_p);
 
     // por cada elemento en el array de entrada 
     foreach ($arr_entrada as $e => $entrada) {
@@ -615,6 +373,4 @@ if ($ano > 2015 && $semana > 0 && $id_materia > 0) {
         'actualizadas' => count($arr_actualizar),
         'insertadas' => count($arr_insertar)
     ]);
-
 }
-?>

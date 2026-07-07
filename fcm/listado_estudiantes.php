@@ -184,153 +184,60 @@ if ($valido) {
     // cargo un bloque con las consultas a la base de datos
     if (!empty($listado->id_alumno)) {
 
+        // objeto calificaciones para consultas bulk sobre c_{$ano}
+        $cal = new calificaciones();
 
-        // si no existe la clase DbHelper_Listado
-        if (!class_exists('DbHelper_Listado')) {
-            // creo la clase DbHelper_Listado que extiende de imcrea
-            class DbHelper_Listado extends imcrea
-            {
-                public function getDb()
-                {
-                    return $this->_db;
-                }
-            }
-        }
-
-        // creo un nuevo objeto DbHelper_Listado
-        $dbHelper = new DbHelper_Listado();
-        // obtengo la base de datos
-        $db = $dbHelper->getDb();
         // convierto el array de alumnos en una cadena de texto
         $in_alumnos = implode(',', $listado->id_alumno);
 
-        // Pre-cargar nombres y apellidos
+        // Pre-cargar nombres y apellidos (se mantiene consulta directa a u_alumnos/personas)
+        if (!class_exists('DbHelper_Listado')) {
+            class DbHelper_Listado extends imcrea
+            {
+                public function getDb() { return $this->_db; }
+            }
+        }
+        $dbHelper = new DbHelper_Listado();
+        $db = $dbHelper->getDb();
+
         $q_nombres = "SELECT a.id_alumnos, p.nombres, p.apellidos 
                       FROM u_alumnos a
                       INNER JOIN personas p ON a.id_personas = p.id_personas
                       WHERE a.id_alumnos IN ($in_alumnos)";
 
-        // ejecuto la consulta
         $res_nombres = $db->query($q_nombres);
 
-
-        // si la consulta es exitosa
         if ($res_nombres) {
-
-            // recorro el resultado
             while ($row = $res_nombres->fetch_assoc()) {
-                // guardo el resultado en el array $opt_nombres
                 $opt_nombres[$row['id_alumnos']] = [
-                    'nombres' => $row['nombres'],
+                    'nombres'   => $row['nombres'],
                     'apellidos' => $row['apellidos']
                 ];
             }
         }
 
-        // si la semana final se desarrolla
+        // precarga de notas según el tipo de semana
+        // usando los métodos de la clase calificaciones que encapsulan las consultas a c_{$ano}
         if ($semana_final) {
 
-            // valor inicial del campo de notas
-            $campos_notas = "";
-            // ciclo de repeticion
-            // para obtener los campos de notas de la semana final
-            foreach ($arr_pond_final as $a => $v) {
-                // asigno el campo de notas
-                $campos_notas = $semana . $v . "," . $campos_notas;
-            }
+            // obtener logros y notas de semana final desde c_{$ano}
+            // via calificaciones::get_notas_semana_final()
+            $res_final   = $cal->get_notas_semana_final($ano, $id_m, $periodo, $semana, $arr_pond_final, $in_alumnos);
+            $opt_logros  = $res_final['logros'];
+            $opt_notas   = $res_final['notas'];
 
-            // quito la ultima coma
-            $campos_notas = substr($campos_notas, 0, -1);
+        } elseif ($semana_intermedia) {
 
-            // consulta para obtener los logros
-            $q_logros = "SELECT id_alumno, l1_p$periodo, l2_p$periodo, l3_p$periodo, $campos_notas  FROM c_{$ano}
-                         WHERE id_materia = $id_m AND periodo = $periodo AND id_alumno IN ($in_alumnos)";
+            // obtener notas de semana intermedia desde c_{$ano}
+            // via calificaciones::get_notas_semana_intermedia()
+            $opt_notas = $cal->get_notas_semana_intermedia($ano, $id_m, $periodo, $semana, $arr_pond_media, $in_alumnos);
 
-            //echo $q_logros;
-
-            // ejecuto la consulta
-            $res_logros = $db->query($q_logros);
-            if ($res_logros) {
-                // ciclo de repeticion  de los logros obtenidos
-                while ($row = $res_logros->fetch_assoc()) {
-                    // preparo la consulta de logro 1 del periodo
-                    $opt_logros[$row['id_alumno']][0] = $row["l1_p$periodo"];
-                    // preparo la consulta de logro 2 del periodo
-                    $opt_logros[$row['id_alumno']][1] = $row["l2_p$periodo"];
-                    // preparo la consulta de logro 3 del periodo
-                    $opt_logros[$row['id_alumno']][2] = $row["l3_p$periodo"];
-                    // guardo las notas
-                    $opt_notas[$row['id_alumno']] = $row;
-                }
-            }
-
-            // consulta para obtener las notas de la semana final
-            $q_notas = "select " . $semana . " F from c_{$ano}";
-        }
-
-        // precarga para la semana intermedia
-        elseif ($semana_intermedia) {
-
-            // valor inicial del campo de notas
-            $campos_notas = "";
-            // ciclo de repeticion
-            // para obtener los campos de notas de la semana final
-            foreach ($arr_pond_media as $a => $v) {
-                // asigno el campo de notas
-                $campos_notas = $semana . $v . "," . $campos_notas;
-            }
-
-            // quito la ultima coma
-            $campos_notas = substr($campos_notas, 0, -1);
-
-            // consulta para obtener los logros
-            $q_notas = "SELECT id_alumno, $campos_notas  FROM c_{$ano}
-                         WHERE id_materia = $id_m AND periodo = $periodo 
-                         AND id_alumno IN ($in_alumnos)";
-
-            // ejecuto la consulta
-            $res_notas = $db->query($q_notas);
-            if ($res_notas) {
-                // ciclo de repeticion  de los logros obtenidos
-                //$row = $res_notas->fetch_assoc();
-                // preparo la consulta de logro 1 del periodo
-                //$opt_notas[$row['id_alumno']] = $row;
-
-                while ($row = $res_notas->fetch_assoc()) {
-                    // preparo la consulta de logro 1 del periodo
-                    $opt_notas[$row['id_alumno']] = $row;
-                }
-            }
         } else {
 
+            // obtener notas de semana normal desde c_{$ano}
+            // via calificaciones::get_notas_semana_normal()
+            $opt_notas = $cal->get_notas_semana_normal($ano, $id_m, $semana, $arr_pond_normal, $in_alumnos);
 
-            // valor inicial del campo de notas
-            $campos_notas = "";
-            // ciclo de repeticion
-            // para obtener los campos de notas de la semana final
-            foreach ($arr_pond_normal as $a => $v) {
-                // asigno el campo de notas
-                $campos_notas = $semana . $v . "," . $campos_notas;
-            }
-
-
-            // quito la ultima coma
-            $campos_notas = substr($campos_notas, 0, -1);
-
-            // Pre-cargar calificaciones
-            // dependiendo la semana
-            $q_notas = "SELECT id_alumno, $campos_notas  FROM c_{$ano}
-                        WHERE id_materia = $id_m AND id_alumno IN ($in_alumnos)";
-
-            //respuesta de la consulta notas
-            $res_notas = $db->query($q_notas);
-
-            if ($res_notas) {
-                while ($row = $res_notas->fetch_assoc()) {
-                    // preparo la consulta de logro 1 del periodo
-                    $opt_notas[$row['id_alumno']] = $row;
-                }
-            }
         }
     }
 

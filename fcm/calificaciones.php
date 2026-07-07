@@ -8,6 +8,41 @@
  * recuperaciones y logros de los alumnos. Hereda de la clase `imcrea`,
  * asumiendo que esta clase maneja la conexión a la base de datos.
  */
+
+
+/*
+METODOS GET
+
+Método	Parámetros	Descripción
+get_calificacion_semanal_bulk()	$id_a, $id_m, $id_s, $y, $id_p	Busca la nota semanal de un alumno por materia, semana y ponderado. Asigna los datos al objeto o marca $calificado = false.
+get_recuperacion_periodo()	$id_a, $id_m, $y, $periodo	Busca si el alumno tiene nota de recuperación (corte = 'R') en un período.
+get_nota_periodo()	$id_a, $id_m, $periodo, $year	Calcula la nota final de un período. Usa AVG() para "Disciplina" (id=20) y fórmula ponderada para el resto.
+get_rendimiento_alummno_periodo()	$id_a, $id_m, $ano, $id_periodo	Retorna un array con la cantidad de calificaciones por tipo de ponderado.
+get_logro_id()	$id_logro	Busca en la tabla logros y asigna la descripción del logro al objeto.
+get_logro()	$id_a, $id_m, $y, $id_periodo	Obtiene el logro asignado a un alumno en una materia y período.
+get_docente_semana()	$id_docente, $ano, $semana	Cuenta cuántas calificaciones ha ingresado un docente en una semana. Retorna int.
+get_criterio_faltantes()	$id_e, $id_m, $id_s, $p, $year	Retorna un array con los criterios de evaluación que faltan para el alumno en semanas anteriores a $id_s.
+
+
+METODOS SET
+
+set_calificacion_semanal()	$id_a, $id_m, $nota, $id_d, $p, $y, $id_p, $id_s	Inserta una nota semanal. Recalcula el período $p automáticamente según el número de semana (1–8 → P1, 9–16 → P2, etc.) usando un switch.
+set_recuperacion()	$id_a, $id_m, $nota, $id_d, $p, $y	Inserta un registro de recuperación con corte = 'R'.
+set_logro()	$id_a, $id_m, $logro, $id_d, $p, $y	Inserta un logro con nota = 0.
+
+
+METODOS UPDATE
+
+update_calificacion_semanal()	$id, $nota, $year	Actualiza la nota de una calificación semanal por su id.
+update_recuperacion()	$id, $nota, $year	Actualiza la nota de una recuperación por su id.
+update_logro()	$id, $logro, $year	Actualiza el id_logro de un registro de calificación.
+
+
+max_calificaciones()	$id_docente, $year	Calcula el total máximo de calificaciones esperadas de un docente, cruzando matricula_docente con matricula. Retorna int.
+
+*/
+
+
 class calificaciones extends imcrea
 {
     /**
@@ -97,9 +132,9 @@ class calificaciones extends imcrea
      * Este método consulta la base de datos para buscar una calificación específica
      * y, si la encuentra, la asigna a los atributos del objeto.
      */
-    public function get_calificacion_semanal($id_a, $id_m, $id_s, $y, $id_p)
+    public function get_calificacion_semanal_bulk($id_a, $id_m, $y)
     {
-        $q = "SELECT id_alumno, id, nota, id_ponderado, id_materia, id_semana, year FROM calificaciones_" . $y . " WHERE year = $y AND id_alumno = $id_a AND id_materia = $id_m AND id_ponderado = $id_p AND id_semana = $id_s";
+        $q = "SELECT id_alumno, id, id_materia FROM c_" . $y . " WHERE id_alumno = $id_a AND id_materia = $id_m";
 
         try {
             $c = $this->_db->query($q);
@@ -602,7 +637,7 @@ class calificaciones extends imcrea
     public function get_calificacion_alumno_materia($id_a, $id_m, $year)
     {
         $q = "SELECT id_alumno, id_materia FROM c_" . $year . "
-              WHERE year = $year AND id_alumno = $id_a AND id_materia = $id_m";
+              WHERE id_alumno = $id_a AND id_materia = $id_m";
 
         try {
             $c = $this->_db->query($q);
@@ -616,5 +651,158 @@ class calificaciones extends imcrea
         } else {
             return true;
         }
+    }
+
+    // ---
+
+    /**
+     * @brief Obtiene las notas y logros de la semana final de un período (bulk).
+     *
+     * @param int    $ano         Año lectivo (sufijo de la tabla c_{$ano}).
+     * @param int    $id_m        Código de la materia.
+     * @param int    $periodo     Período (1-4).
+     * @param int    $semana      Número de semana final (8, 16, 24 o 32).
+     * @param array  $arr_pond    Array de ponderados de semana final, ej. [1=>'F', 2=>'G', ...].
+     * @param string $in_alumnos  Cadena con los IDs de alumnos para cláusula IN, ej. "1,2,3".
+     * @return array Array asociativo indexado por id_alumno con logros (l1, l2, l3) y notas.
+     *
+     * Consulta la tabla c_{$ano} para obtener de una sola vez los logros del período
+     * y las notas de la semana final para todos los alumnos indicados.
+     */
+    public function get_notas_semana_final($ano, $id_m, $periodo, $semana, $arr_pond, $in_alumnos)
+    {
+        // construir campos de notas dinámicos: 8F, 8G, 8I, 8J, ...
+        $campos_notas = "";
+
+        // para obtener los campos de notas de la semana final
+        foreach ($arr_pond as $v) {
+            $campos_notas = $semana . $v . "," . $campos_notas;
+        }
+
+        // quito la ultima coma
+        $campos_notas = substr($campos_notas, 0, -1);
+
+        // consulta para obtener los logros y las notas de la semana final de periodo
+        $q = "SELECT id_alumno, l1_p{$periodo}, l2_p{$periodo}, l3_p{$periodo}, {$campos_notas}
+              FROM c_{$ano}
+              WHERE id_materia = {$id_m} AND periodo = {$periodo} AND id_alumno IN ({$in_alumnos})";
+
+        // objeto para almacenar los logros
+        $resultado_logros  = [];
+        // objeto para almacenar las notas
+        $resultado_notas   = [];
+
+        try {
+            // ejecuto la consulta
+            $c = $this->_db->query($q);
+            if ($c) {
+
+                // recorro el resultado
+                while ($row = $c->fetch_assoc()) {
+                    // preparo la consulta de logro 1 del periodo
+                    $resultado_logros[$row['id_alumno']][0] = $row["l1_p{$periodo}"];
+                    // preparo la consulta de logro 2 del periodo
+                    $resultado_logros[$row['id_alumno']][1] = $row["l2_p{$periodo}"];
+                    // preparo la consulta de logro 3 del periodo
+                    $resultado_logros[$row['id_alumno']][2] = $row["l3_p{$periodo}"];
+                    // guardo las notas
+                    $resultado_notas[$row['id_alumno']]     = $row;
+                }
+            }
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+        }
+
+        return ['logros' => $resultado_logros, 'notas' => $resultado_notas];
+    }
+
+    // ---
+
+    /**
+     * @brief Obtiene las notas de la semana intermedia de un período (bulk).
+     *
+     * @param int    $ano         Año lectivo (sufijo de la tabla c_{$ano}).
+     * @param int    $id_m        Código de la materia.
+     * @param int    $periodo     Período (1-4).
+     * @param int    $semana      Número de semana intermedia (4, 12, 20 o 28).
+     * @param array  $arr_pond    Array de ponderados de semana intermedia, ej. [1=>'A', ..., 8=>'H'].
+     * @param string $in_alumnos  Cadena con los IDs de alumnos para cláusula IN, ej. "1,2,3".
+     * @return array Array asociativo indexado por id_alumno con las notas de la semana.
+     *
+     * Consulta la tabla c_{$ano} para obtener de una sola vez las notas de la semana
+     * intermedia para todos los alumnos indicados en un período específico.
+     */
+    public function get_notas_semana_intermedia($ano, $id_m, $periodo, $semana, $arr_pond, $in_alumnos)
+    {
+        // construir campos de notas dinámicos: 4A, 4B, 4C, ...
+        $campos_notas = "";
+        foreach ($arr_pond as $v) {
+            $campos_notas = $semana . $v . "," . $campos_notas;
+        }
+        $campos_notas = substr($campos_notas, 0, -1);
+
+        $q = "SELECT id_alumno, {$campos_notas}
+              FROM c_{$ano}
+              WHERE id_materia = {$id_m} AND periodo = {$periodo}
+              AND id_alumno IN ({$in_alumnos})";
+
+        $resultado = [];
+
+        try {
+            $c = $this->_db->query($q);
+            if ($c) {
+                while ($row = $c->fetch_assoc()) {
+                    $resultado[$row['id_alumno']] = $row;
+                }
+            }
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+        }
+
+        return $resultado;
+    }
+
+    // ---
+
+    /**
+     * @brief Obtiene las notas de una semana normal (bulk).
+     *
+     * @param int    $ano         Año lectivo (sufijo de la tabla c_{$ano}).
+     * @param int    $id_m        Código de la materia.
+     * @param int    $semana      Número de semana.
+     * @param array  $arr_pond    Array de ponderados de semana normal, ej. [1=>'A', ..., 7=>'G'].
+     * @param string $in_alumnos  Cadena con los IDs de alumnos para cláusula IN, ej. "1,2,3".
+     * @return array Array asociativo indexado por id_alumno con las notas de la semana.
+     *
+     * Consulta la tabla c_{$ano} para obtener de una sola vez las notas de una semana
+     * ordinaria para todos los alumnos indicados (sin filtro de período).
+     */
+    public function get_notas_semana_normal($ano, $id_m, $semana, $arr_pond, $in_alumnos)
+    {
+        // construir campos de notas dinámicos: 1A, 1B, 1C, ...
+        $campos_notas = "";
+        foreach ($arr_pond as $v) {
+            $campos_notas = $semana . $v . "," . $campos_notas;
+        }
+        $campos_notas = substr($campos_notas, 0, -1);
+
+        $q = "SELECT id_alumno, {$campos_notas}
+              FROM c_{$ano}
+              WHERE id_materia = {$id_m} AND id_alumno IN ({$in_alumnos})";
+
+        $resultado = [];
+
+        try {
+            $c = $this->_db->query($q);
+            if ($c) {
+                while ($row = $c->fetch_assoc()) {
+                    $resultado[$row['id_alumno']] = $row;
+                }
+            }
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+        }
+
+        return $resultado;
     }
 }
