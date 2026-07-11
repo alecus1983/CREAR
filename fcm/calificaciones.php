@@ -26,16 +26,16 @@ get_criterio_faltantes()	$id_e, $id_m, $id_s, $p, $year	Retorna un array con los
 
 METODOS SET
 
-set_calificacion_semanal()	$id_a, $id_m, $nota, $id_d, $p, $y, $id_p, $id_s	Inserta una nota semanal. Recalcula el período $p automáticamente según el número de semana (1–8 → P1, 9–16 → P2, etc.) usando un switch.
-set_recuperacion()	$id_a, $id_m, $nota, $id_d, $p, $y	Inserta un registro de recuperación con corte = 'R'.
-set_logro()	$id_a, $id_m, $logro, $id_d, $p, $y	Inserta un logro con nota = 0.
+(obsoleto) set_calificacion_semanal()	$id_a, $id_m, $nota, $id_d, $p, $y, $id_p, $id_s	Inserta una nota semanal. Recalcula el período $p automáticamente según el número de semana (1–8 → P1, 9–16 → P2, etc.) usando un switch.
+(obsoleto) set_recuperacion()	$id_a, $id_m, $nota, $id_d, $p, $y	Inserta un registro de recuperación con corte = 'R'.
+(obsoleto) set_logro()	$id_a, $id_m, $logro, $id_d, $p, $y	Inserta un logro con nota = 0.
 
 
 METODOS UPDATE
 
-update_calificacion_semanal()	$id, $nota, $year	Actualiza la nota de una calificación semanal por su id.
-update_recuperacion()	$id, $nota, $year	Actualiza la nota de una recuperación por su id.
-update_logro()	$id, $logro, $year	Actualiza el id_logro de un registro de calificación.
+(obsoleto) update_calificacion_semanal()	$id, $nota, $year	Actualiza la nota de una calificación semanal por su id.
+(obsoleto) update_recuperacion()	$id, $nota, $year	Actualiza la nota de una recuperación por su id.
+(obsoleto) update_logro()	$id, $logro, $year	Actualiza el id_logro de un registro de calificación.
 
 
 max_calificaciones()	$id_docente, $year	Calcula el total máximo de calificaciones esperadas de un docente, cruzando matricula_docente con matricula. Retorna int.
@@ -804,5 +804,42 @@ class calificaciones extends imcrea
         }
 
         return $resultado;
+    }
+
+    // metodo para actualizar las notas semanales
+    // en la tabla c_year
+    public function actualizar_notas_semanales($valoresArray, $year){
+
+        // si el valor ingresado es falso
+         if (empty($valoresArray))
+            return false;
+         //valores iniciales de las 
+        $ids = [];
+        $casesNota = [];
+        $casesLogro = [];
+
+        // por cada alumno preparo los array de entrada
+        foreach ($valoresArray as $val) {
+
+           
+        }
+        // convierto en un string
+        $idsString = implode(',', $ids);
+        $casesNotaString = implode(' ', $casesNota);
+        $casesLogroString = implode(' ', $casesLogro);
+
+         $sql = "UPDATE calificaciones_{$year} 
+                SET nota = CASE id 
+                    {$casesNotaString} 
+                    ELSE nota 
+                END,
+                id_logro = CASE id 
+                    {$casesLogroString} 
+                    ELSE id_logro 
+                END,
+            
+                modificado = NOW()
+                WHERE id IN ({$idsString})";
+        
     }
 }

@@ -3,7 +3,6 @@
 
 require_once('datos.php');
 
-
 // Parametros de entrada — se castean a int para evitar valores corruptos
 // (p.ej. "20264" en lugar de "2026") que rompen el nombre de la tabla.
 $ano = intval($_POST['year']);
@@ -14,7 +13,6 @@ $id_materia = intval($_POST['id_ms']);
 $id_docente = intval($_POST['id_docente']);
 $id_gs = intval($_POST['id_gs']);
 $id_jornada = intval($_POST['id_jornada']);
-//$corte = $_POST['corte'];
 
 // datos de entrada del formulario
 $A = json_decode($_POST['A'], True);
@@ -37,8 +35,6 @@ $arr_actualizar = [];
 $arr_entrada = [];
 //array de notas de las bases de datos
 $arr_db = [];
-
-
 
 // capturo los codigos de los estudiantes
 $codigos = json_decode($_POST['codigo'], True);
@@ -71,10 +67,9 @@ $obj_calificaciones = new Calificaciones();
 // CICLO DE REPETICION POR ESTUDIANTES
 
 // determinar  si un estudiante con una materia tiene algun registro en la 
-// tabla c_2026 
-
+// tabla c_$ano  a partir  de los codigos de los estudiantes almacenados
+// en el array $codigos
 for ($i = 0; count($codigos) > $i; $i++) {
-
     // si el estudiante tiene calificaciones
     if ($obj_calificaciones->get_calificacion_alumno_materia($codigos[$i]['value'], $id_materia, $ano)) {
 
@@ -126,7 +121,8 @@ for ($i = 0; count($codigos) > $i; $i++) {
         }
     } else {
         // si el estudiante no tiene calificaciones
-        // se agregan al array de entrada
+        // se agregan al array de insertar $arr_insertar
+        
         $arr_insertar[] = [
             'id_alumno' => $codigos[$i]['value'],
             'id_materia' => $id_materia,
