@@ -857,7 +857,15 @@ class calificaciones extends imcrea
 
         // por cada alumno preparo los array de entrada
         foreach ($arr_actualizar as $val) {
+             $id = (int) $val['id'];
+            $nota = $val['nota'] > 0 ? (float) $val['nota'] : 0;
+            // Usar NULL cuando no hay logro para evitar que MySQL convierta '' en 0
+            // y colisione con la clave única
+            $logro = $val['id_logro'] > 0 ? (int) $val['id_logro'] : 'NULL';
 
+            $ids[] = $id;
+            $casesNota[] = "WHEN {$id} THEN {$nota}";
+            $casesLogro[] = "WHEN {$id} THEN {$logro}";
            
         }
         // convierto en un string
