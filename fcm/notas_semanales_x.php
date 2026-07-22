@@ -357,6 +357,8 @@ if ($ano > 2015 && $semana > 0 && $id_materia > 0) {
     }
 
     if (count($arr_actualizar) > 0) {
+        // metodo para actualiza notas masivas
+        //tomando en cuenta el array de notas masivas
         $cal->actualizarNotasMasivas($arr_actualizar, $ano);
     }
 
