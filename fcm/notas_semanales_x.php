@@ -9,7 +9,7 @@ $ano = intval($_POST['year']);
 $periodo = intval($_POST['periodo']);
 $semana = intval($_POST['semana']);
 $id_materia = intval($_POST['id_ms']);
-
+$id_curso = intval($_POST['id_curso']);
 $id_docente = intval($_POST['id_docente']);
 $id_gs = intval($_POST['id_gs']);
 $id_jornada = intval($_POST['id_jornada']);
@@ -28,13 +28,21 @@ $J = json_decode($_POST['J'], True);
 $L = json_decode($_POST['L'], True);
 
 // array para insertar notas
+// estas se actualizan cuando no
+// existe un registro para el  alumno en esa
+// materia
 $arr_insertar = [];
 // array para actualizar notas
+// se actualiza si existe un registro para ese alumno
+// en esa materia
 $arr_actualizar = [];
 // array entrada de los datos que viene del formulario
 $arr_entrada = [];
 //array de notas de las bases de datos
 $arr_db = [];
+
+//codigos a agregar
+$codigos_agregar = [];
 
 // capturo los codigos de los estudiantes
 $codigos = json_decode($_POST['codigo'], True);
@@ -54,15 +62,127 @@ if ($_POST["semana"] > 0) {
     if ($semana == 8 || $semana == 16 || $semana == 24 || $semana == 32) {
         // semana final es valida
         $semana_final = true;
+        // ponderados de la semana final
+        $arr_pond_final = array(1 => "F", 2 => "G", 3 => "I", 4 => "J");
     }
 
     // semanas para semana intermedia
-    if ($semana == 4 || $semana == 12 || $semana == 20 || $semana == 28) {
+    elseif ($semana == 4 || $semana == 12 || $semana == 20 || $semana == 28) {
         $semana_intermedia = true;
+        // ponderados de la semana intermedia
+        $arr_pond_media = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F", 7 => "G", 8 => "H");
+
+    }
+
+    else {
+        // ponderados de las semanas normales
+        $arr_pond_normal = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F", 7 => "G");
+       
     }
 }
 
+  
+// creo un objeto  calificacionesx
 $obj_calificaciones = new Calificaciones();
+
+// se debe establecer si el alumno tiene
+// una nota para esta semana
+
+
+$codigos_actualizar = $obj_calificaciones->validacion_masiva($codigos, $id_materia, $ano);
+
+
+
+// determino todos los estudiantes
+// que hay que agregar, los cuales
+// no se encuentran encuentan en
+// arr_actualizar pero si en codigos
+
+foreach ($codigos as $c){
+    // estado predeterminado d agregar
+    $agregar = true;
+    // por cada fila pendiede a actualizar
+    // se excluye de la lista a agregar
+    foreach($codigos_actualizar as $ac){
+        //comparo
+        if ($c["value"] == $ac["id_alumno"] ){
+            // coloca el codigo de agregar
+            $agregar = false;
+            break;
+        }
+    }
+    // agregar
+    if ($agregar){
+            // lo coloco en el array de agregar
+            $codigos_agregar[] = $c["value"]; 
+        }
+}
+
+// si es semana final
+if ($semana_final) {
+    // si el estudiante tiene calificaciones
+    // se agregan al array de entrada
+    $arr_actualizar[] = [
+        'id_alumno' => $codigos[$i]['value'],
+        'id_materia' => $id_materia,
+        'id_docente' => $id_docente,
+            "'" . $semana . "E'" => $E[$i]['value'],
+        "'" . $semana . "F'" => $F[$i]['value'],
+        "'" . $semana . "G'" => $G[$i]['value'],
+        "'" . $semana . "I'" => $I[$i]['value'],
+        "'" . $semana . "J'" => $J[$i]['value']
+    ];
+    } elseif ($semana_intermedia) {
+    // si el estudiante tiene calificaciones
+    // se agregan al array de entrada
+    $arr_actualizar[] = [
+        'id_alumno' => $codigos[$i]['value'],
+        'id_materia' => $id_materia,
+        'id_docente' => $id_docente,
+        "'" . $semana . "A'" => $A[$i]['value'],
+        "'" . $semana . "B'" => $B[$i]['value'],
+        "'" . $semana . "C'" => $C[$i]['value'],
+        "'" . $semana . "D'" => $D[$i]['value'],
+        "'" . $semana . "E'" => $E[$i]['value'],
+        "'" . $semana . "F'" => $F[$i]['value'],
+        "'" . $semana . "G'" => $G[$i]['value'],
+        "'" . $semana . "H'" => $H[$i]['value']
+    ];
+} 
+    // si el estudiante tiene calificaciones
+        // se agregan al array de entrada
+    $arr_actualizar[] = [
+        'id_alumno' => $codigos[$i]['value'],
+        'id_materia' => $id_materia,
+        'id_docente' => $id_docente,
+        "'" . $semana . "A'" => $A[$i]['value'],
+        "'" . $semana . "B'" => $B[$i]['value'],
+        "'" . $semana . "C'" => $C[$i]['value'],
+        "'" . $semana . "D'" => $D[$i]['value'],
+        "'" . $semana . "E'" => $E[$i]['value'],
+        "'" . $semana . "F'" => $F[$i]['value'],
+        "'" . $semana . "G'" => $G[$i]['value']
+    ];
+
+
+        // si el estudiante no tiene calificaciones
+    // se agregan al array de insertar $arr_insertar    
+    $arr_insertar[] = [
+        'id_alumno' => $codigos[$i]['value'],
+        'id_materia' => $id_materia,
+        'id_docente' => $id_docente,
+        "'" . $semana . "A'" => $A[$i]['value'],
+        "'" . $semana . "B'" => $B[$i]['value'],
+        "'" . $semana . "C'" => $C[$i]['value'],
+        "'" . $semana . "D'" => $D[$i]['value'],
+        "'" . $semana . "E'" => $E[$i]['value'],
+        "'" . $semana . "F'" => $F[$i]['value'],
+        "'" . $semana . "G'" => $G[$i]['value'],
+        "'" . $semana . "H'" => $H[$i]['value'],
+        "'" . $semana . "I'" => $I[$i]['value'],
+        "'" . $semana . "J'" => $J[$i]['value']
+    ];
+
 
 // CICLO DE REPETICION POR ESTUDIANTES
 
@@ -70,75 +190,7 @@ $obj_calificaciones = new Calificaciones();
 // tabla c_$ano  a partir  de los codigos de los estudiantes almacenados
 // en el array $codigos
 for ($i = 0; count($codigos) > $i; $i++) {
-    // si el estudiante tiene calificaciones
-    if ($obj_calificaciones->get_calificacion_alumno_materia($codigos[$i]['value'], $id_materia, $ano)) {
 
-        // si es semana final
-        if ($semana_final) {
-            // si el estudiante tiene calificaciones
-            // se agregan al array de entrada
-            $arr_actualizar[] = [
-                'id_alumno' => $codigos[$i]['value'],
-                'id_materia' => $id_materia,
-                'id_docente' => $id_docente,
-                "'" . $semana . "E'" => $E[$i]['value'],
-                "'" . $semana . "F'" => $F[$i]['value'],
-                "'" . $semana . "G'" => $G[$i]['value'],
-                "'" . $semana . "I'" => $I[$i]['value'],
-                "'" . $semana . "J'" => $J[$i]['value']
-            ];
-        } elseif ($semana_intermedia) {
-            // si el estudiante tiene calificaciones
-            // se agregan al array de entrada
-            $arr_actualizar[] = [
-                'id_alumno' => $codigos[$i]['value'],
-                'id_materia' => $id_materia,
-                'id_docente' => $id_docente,
-                "'" . $semana . "A'" => $A[$i]['value'],
-                "'" . $semana . "B'" => $B[$i]['value'],
-                "'" . $semana . "C'" => $C[$i]['value'],
-                "'" . $semana . "D'" => $D[$i]['value'],
-                "'" . $semana . "E'" => $E[$i]['value'],
-                "'" . $semana . "F'" => $F[$i]['value'],
-                "'" . $semana . "G'" => $G[$i]['value'],
-                "'" . $semana . "H'" => $H[$i]['value']
-            ];
-        } else {
-            // si el estudiante tiene calificaciones
-            // se agregan al array de entrada
-            $arr_actualizar[] = [
-                'id_alumno' => $codigos[$i]['value'],
-                'id_materia' => $id_materia,
-                'id_docente' => $id_docente,
-                "'" . $semana . "A'" => $A[$i]['value'],
-                "'" . $semana . "B'" => $B[$i]['value'],
-                "'" . $semana . "C'" => $C[$i]['value'],
-                "'" . $semana . "D'" => $D[$i]['value'],
-                "'" . $semana . "E'" => $E[$i]['value'],
-                "'" . $semana . "F'" => $F[$i]['value'],
-                "'" . $semana . "G'" => $G[$i]['value']
-            ];
-        }
-    } else {
-        // si el estudiante no tiene calificaciones
-        // se agregan al array de insertar $arr_insertar
-        
-        $arr_insertar[] = [
-            'id_alumno' => $codigos[$i]['value'],
-            'id_materia' => $id_materia,
-            'id_docente' => $id_docente,
-            "'" . $semana . "A'" => $A[$i]['value'],
-            "'" . $semana . "B'" => $B[$i]['value'],
-            "'" . $semana . "C'" => $C[$i]['value'],
-            "'" . $semana . "D'" => $D[$i]['value'],
-            "'" . $semana . "E'" => $E[$i]['value'],
-            "'" . $semana . "F'" => $F[$i]['value'],
-            "'" . $semana . "G'" => $G[$i]['value'],
-            "'" . $semana . "H'" => $H[$i]['value'],
-            "'" . $semana . "I'" => $I[$i]['value'],
-            "'" . $semana . "J'" => $J[$i]['value']
-        ];
-    }
 }
 
 

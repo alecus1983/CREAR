@@ -223,7 +223,8 @@ $ano = date('Y');
                  data: {
                      year: $("#years").val(),
                      semana: $("#semana").val(),
-                     id_gs: $("#id_g").val(),
+                   id_gs: $("#id_g").val(),
+		   id_curso:$("#id_c").val(),
                      id_ms: $("#id_ms").val(),
                      id_jornada: $("#jornada").val(),
                      id_docente: $("#id_d").val(),

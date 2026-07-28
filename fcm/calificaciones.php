@@ -119,7 +119,24 @@ class calificaciones extends imcrea
     }
 
     // ---
+    /**
+     * @brief Funcion que retorna un array con los id de los alumnos que tienen
+     * o no una nota consignada en la tabla c_{año}
+     * @param string $codigos Codigos del alumno
+     * @param int $id_materia Código de la materia
+     * 
+     */
+    
+    public function if_alumno_materia($codigos, $id_materia, $year){
 
+        // consulta para verificar si existe
+        $q = "select * from c_{$year} where id_materia = $id_materia and id_alumno in $codigos ";
+
+
+        
+    }
+
+    
     /**
      * @brief Obtiene la calificación semanal de un alumno.
      *
@@ -132,29 +149,27 @@ class calificaciones extends imcrea
      * Este método consulta la base de datos para buscar una calificación específica
      * y, si la encuentra, la asigna a los atributos del objeto.
      */
-    public function get_calificacion_semanal_bulk($id_a, $id_m, $y)
+    public function get_calificacion_semanal_bulk($id_grado, $id_curso, $id_jornada,  $id_materia, $y)
     {
-        $q = "SELECT id_alumno, id, id_materia FROM c_" . $y . " WHERE id_alumno = $id_a AND id_materia = $id_m";
 
+        $q= "select id_alumno , id_materia ,  9A,9B
+                from c_$y where id_alumno in 
+                ( select id_alumno from matricula
+                  where id_grado = $id_grado and id_curso = $id_curso and
+                  id_jornada = $id_jornada and year = $y) and id_materia = $id_materia";
+
+        
         try {
             $c = $this->_db->query($q);
-            $r = $c->fetch_array(MYSQLI_ASSOC);
+            $r = $c->fetch_all(MYSQLI_ASSOC);
         } catch (Exception $e) {
             echo 'Excepción capturada: ', $e->getMessage(), "\n";
         }
-
-        if (is_null($r)) {
-            $this->calificado = false;
-            $this->nota = 0;
+         if (is_null($r)) {
+            $this->calificado = false;            
         } else {
             $this->calificado = true;
-            $this->id_alumno = $r['id_alumno'];
-            $this->id_materia = $r['id_materia'];
-            $this->id_semana = $r['id_semana'];
-            $this->year = $r['year'];
-            $this->id_ponderado = $r['id_ponderado'];
-            $this->id = $r['id'];
-            $this->nota = $r['nota'];
+            return $r;
         }
     }
 
@@ -886,4 +901,52 @@ class calificaciones extends imcrea
                 modificado = NOW()
                 WHERE id IN ({$idsString})";
     }
+
+
+// Funcion que valida masivamente cuales estudiantes tienen
+// y cuales no tienen registros
+
+function validacion_masiva($codigos, $id_materia, $year){
+
+    // si el valor ingresado es falso
+    if (empty($codigos))
+        return false;
+    //valores iniciales de las 
+    $ids = [];
+    // variable donde se acumulan
+    // el string de busqueda
+    $c_string = [];
+
+    //array de retorno
+    $arr =[];
+    
+    // por cada valor en los codigos
+    foreach($codigos as $c){
+        // recupero el valor del id
+        $id = (int) $c['value'];
+        // lo almaceno en ids
+        $ids[] = $id;
+    }
+    // acumulo el string en una cadena separado
+    // por comas
+    $c_string = implode(',', $ids);
+    $c_string = substr($c_string,0,-1);
+
+
+    // cadena de busqueda 
+    $q = "select id_alumno  from c_$year where id_materia = $id_materia and id_alumno in ($c_string)";
+
+    //echo $q;
+    try {
+            $c = $this->_db->query($q);
+            $r = $c->fetch_all(MYSQLI_ASSOC);
+            // retorno el array de salida
+            return $r;
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+        }
+
+         
+}
+
 }
