@@ -47,6 +47,26 @@ $codigos_agregar = [];
 // capturo los codigos de los estudiantes
 $codigos = json_decode($_POST['codigo'], True);
 
+// Agrupar las variables en un solo array donde cada variable es una columna
+$datos_agrupados = [];
+if (is_array($codigos)) {
+    foreach ($codigos as $index => $c) {
+        $datos_agrupados[] = [
+            'codigo' => $c['value'] ?? null,
+            'A' => $A[$index]['value'] ?? null,
+            'B' => $B[$index]['value'] ?? null,
+            'C' => $C[$index]['value'] ?? null,
+            'D' => $D[$index]['value'] ?? null,
+            'E' => $E[$index]['value'] ?? null,
+            'F' => $F[$index]['value'] ?? null,
+            'G' => $G[$index]['value'] ?? null,
+            'H' => $H[$index]['value'] ?? null,
+            'I' => $I[$index]['value'] ?? null,
+            'J' => $J[$index]['value'] ?? null,
+            'L' => $L[$index]['value'] ?? null,
+        ];
+    }
+}
 // variable booleana que almacena la semana final de cada periodo
 $semana_final = false;
 // semana intermedia
@@ -72,16 +92,14 @@ if ($_POST["semana"] > 0) {
         // ponderados de la semana intermedia
         $arr_pond_media = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F", 7 => "G", 8 => "H");
 
-    }
-
-    else {
+    } else {
         // ponderados de las semanas normales
         $arr_pond_normal = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F", 7 => "G");
-       
+
     }
 }
 
-  
+
 // creo un objeto  calificacionesx
 $obj_calificaciones = new Calificaciones();
 
@@ -90,6 +108,8 @@ $obj_calificaciones = new Calificaciones();
 
 
 $codigos_actualizar = $obj_calificaciones->validacion_masiva($codigos, $id_materia, $ano);
+// Extraemos solo el campo 'id_alumno' del resultado de la base de datos
+$codigos_actualizar = array_column((array)$codigos_actualizar, 'id_alumno');
 
 
 
@@ -98,90 +118,104 @@ $codigos_actualizar = $obj_calificaciones->validacion_masiva($codigos, $id_mater
 // no se encuentran encuentan en
 // arr_actualizar pero si en codigos
 
-foreach ($codigos as $c){
-    // estado predeterminado d agregar
-    $agregar = true;
-    // por cada fila pendiede a actualizar
-    // se excluye de la lista a agregar
-    foreach($codigos_actualizar as $ac){
-        //comparo
-        if ($c["value"] == $ac["id_alumno"] ){
-            // coloca el codigo de agregar
-            $agregar = false;
-            break;
-        }
-    }
-    // agregar
-    if ($agregar){
-            // lo coloco en el array de agregar
-            $codigos_agregar[] = $c["value"]; 
-        }
-}
+// Extraemos solo los IDs de los estudiantes enviados
+$todos_los_codigos = array_column($codigos, 'value');
+
+// Los códigos a agregar son la diferencia entre todos los códigos y los que ya existen
+$codigos_agregar = array_values(array_diff($todos_los_codigos, $codigos_actualizar));
 
 // si es semana final
 if ($semana_final) {
-    // si el estudiante tiene calificaciones
-    // se agregan al array de entrada
-    $arr_actualizar[] = [
-        'id_alumno' => $codigos[$i]['value'],
-        'id_materia' => $id_materia,
-        'id_docente' => $id_docente,
-            "'" . $semana . "E'" => $E[$i]['value'],
-        "'" . $semana . "F'" => $F[$i]['value'],
-        "'" . $semana . "G'" => $G[$i]['value'],
-        "'" . $semana . "I'" => $I[$i]['value'],
-        "'" . $semana . "J'" => $J[$i]['value']
-    ];
-    } elseif ($semana_intermedia) {
-    // si el estudiante tiene calificaciones
-    // se agregan al array de entrada
-    $arr_actualizar[] = [
-        'id_alumno' => $codigos[$i]['value'],
-        'id_materia' => $id_materia,
-        'id_docente' => $id_docente,
-        "'" . $semana . "A'" => $A[$i]['value'],
-        "'" . $semana . "B'" => $B[$i]['value'],
-        "'" . $semana . "C'" => $C[$i]['value'],
-        "'" . $semana . "D'" => $D[$i]['value'],
-        "'" . $semana . "E'" => $E[$i]['value'],
-        "'" . $semana . "F'" => $F[$i]['value'],
-        "'" . $semana . "G'" => $G[$i]['value'],
-        "'" . $semana . "H'" => $H[$i]['value']
-    ];
-} 
-    // si el estudiante tiene calificaciones
-        // se agregan al array de entrada
-    $arr_actualizar[] = [
-        'id_alumno' => $codigos[$i]['value'],
-        'id_materia' => $id_materia,
-        'id_docente' => $id_docente,
-        "'" . $semana . "A'" => $A[$i]['value'],
-        "'" . $semana . "B'" => $B[$i]['value'],
-        "'" . $semana . "C'" => $C[$i]['value'],
-        "'" . $semana . "D'" => $D[$i]['value'],
-        "'" . $semana . "E'" => $E[$i]['value'],
-        "'" . $semana . "F'" => $F[$i]['value'],
-        "'" . $semana . "G'" => $G[$i]['value']
-    ];
+    foreach ($datos_agrupados as $dato) {
+        // Verificar si el alumno ya tiene registro y debe ser actualizado
+        if (in_array($dato['codigo'], $codigos_actualizar)) {
+            $arr_actualizar[] = [
+                'id_alumno' => $dato['codigo'],
+                'id_materia' => $id_materia,
+                'id_docente' => $id_docente,
+                "'" . $semana . "E'" => $dato['E'],
+                "'" . $semana . "F'" => $dato['F'],
+                "'" . $semana . "G'" => $dato['G'],
+                "'" . $semana . "I'" => $dato['I'],
+                "'" . $semana . "J'" => $dato['J']
+            ];
+        } elseif (in_array($dato['codigo'], $codigos_agregar)) {
+            $arr_insertar[] = [
+                'id_alumno' => $dato['codigo'],
+                'id_materia' => $id_materia,
+                'id_docente' => $id_docente,
+                "'" . $semana . "E'" => $dato['E'],
+                "'" . $semana . "F'" => $dato['F'],
+                "'" . $semana . "G'" => $dato['G'],
+                "'" . $semana . "I'" => $dato['I'],
+                "'" . $semana . "J'" => $dato['J']
+            ];
+        }
+    }
+} elseif ($semana_intermedia) {
+    foreach ($datos_agrupados as $dato) {
+        if (in_array($dato['codigo'], $codigos_actualizar)) {
+            $arr_actualizar[] = [
+                'id_alumno' => $dato['codigo'],
+                'id_materia' => $id_materia,
+                'id_docente' => $id_docente,
+                "'" . $semana . "A'" => $dato['A'],
+                "'" . $semana . "B'" => $dato['B'],
+                "'" . $semana . "C'" => $dato['C'],
+                "'" . $semana . "D'" => $dato['D'],
+                "'" . $semana . "E'" => $dato['E'],
+                "'" . $semana . "F'" => $dato['F'],
+                "'" . $semana . "G'" => $dato['G'],
+                "'" . $semana . "H'" => $dato['H']
+            ];
+        } elseif (in_array($dato['codigo'], $codigos_agregar)) {
+            $arr_insertar[] = [
+                'id_alumno' => $dato['codigo'],
+                'id_materia' => $id_materia,
+                'id_docente' => $id_docente,
+                "'" . $semana . "A'" => $dato['A'],
+                "'" . $semana . "B'" => $dato['B'],
+                "'" . $semana . "C'" => $dato['C'],
+                "'" . $semana . "D'" => $dato['D'],
+                "'" . $semana . "E'" => $dato['E'],
+                "'" . $semana . "F'" => $dato['F'],
+                "'" . $semana . "G'" => $dato['G'],
+                "'" . $semana . "H'" => $dato['H']
+            ];
+        }
+    }
+} else {
+    foreach ($datos_agrupados as $dato) {
+        if (in_array($dato['codigo'], $codigos_actualizar)) {
+            $arr_actualizar[] = [
+                'id_alumno' => $dato['codigo'],
+                'id_materia' => $id_materia,
+                'id_docente' => $id_docente,
+                "'" . $semana . "A'" => $dato['A'],
+                "'" . $semana . "B'" => $dato['B'],
+                "'" . $semana . "C'" => $dato['C'],
+                "'" . $semana . "D'" => $dato['D'],
+                "'" . $semana . "E'" => $dato['E'],
+                "'" . $semana . "F'" => $dato['F'],
+                "'" . $semana . "G'" => $dato['G']
+            ];
+        } elseif (in_array($dato['codigo'], $codigos_agregar)) {
+            $arr_insertar[] = [
+                'id_alumno' => $dato['codigo'],
+                'id_materia' => $id_materia,
+                'id_docente' => $id_docente,
+                "'" . $semana . "A'" => $dato['A'],
+                "'" . $semana . "B'" => $dato['B'],
+                "'" . $semana . "C'" => $dato['C'],
+                "'" . $semana . "D'" => $dato['D'],
+                "'" . $semana . "E'" => $dato['E'],
+                "'" . $semana . "F'" => $dato['F'],
+                "'" . $semana . "G'" => $dato['G']
+            ];
+        }
+    }
+}
 
-
-        // si el estudiante no tiene calificaciones
-    // se agregan al array de insertar $arr_insertar    
-    $arr_insertar[] = [
-        'id_alumno' => $codigos[$i]['value'],
-        'id_materia' => $id_materia,
-        'id_docente' => $id_docente,
-        "'" . $semana . "A'" => $A[$i]['value'],
-        "'" . $semana . "B'" => $B[$i]['value'],
-        "'" . $semana . "C'" => $C[$i]['value'],
-        "'" . $semana . "D'" => $D[$i]['value'],
-        "'" . $semana . "E'" => $E[$i]['value'],
-        "'" . $semana . "F'" => $F[$i]['value'],
-        "'" . $semana . "G'" => $G[$i]['value'],
-        "'" . $semana . "H'" => $H[$i]['value'],
-        "'" . $semana . "I'" => $I[$i]['value'],
-        "'" . $semana . "J'" => $J[$i]['value']
-    ];
 
 
 // CICLO DE REPETICION POR ESTUDIANTES
@@ -189,238 +223,24 @@ if ($semana_final) {
 // determinar  si un estudiante con una materia tiene algun registro en la 
 // tabla c_$ano  a partir  de los codigos de los estudiantes almacenados
 // en el array $codigos
-for ($i = 0; count($codigos) > $i; $i++) {
 
+if (count($arr_actualizar) > 0) {
+    // metodo para actualiza notas masivas
+    //tomando en cuenta el array de notas masivas
+    $obj_calificaciones->actualizarNotasMasivas($arr_actualizar, $ano);
 }
 
-
-// 1. Iniciamos la conexión una sola vez
-$cal = new calificaciones();
-
-//$faltas = json_decode($_POST['faltas'], True);
-
-// Validaciones iniciales
-if ($ano > 2015 && $semana > 0 && $id_materia > 0) {
-
-    // valores 
-    $valores = [];
-    // calificaciones obtenidas
-    $arr_db = $cal->get_calificacion_semanal_bulk($id_a, $id_m, $id_s, $y, $id_p);
-
-    // por cada elemento en el array de entrada 
-    foreach ($arr_entrada as $e => $entrada) {
-
-
-        // realizao la comparacion de notas
-        $encontrado = false;
-
-        // por cada elemento en la base de datos
-        // de una materia
-        foreach ($arr_db as $d => $db) {
-            // si se cumplen estos criteros
-            // alumno, materia, ponderado, semana, periodo
-            if (
-                $db['id_alumno'] == $entrada['id_alumno']
-                && $db['id_materia'] == $entrada['id_materia']
-                && $db['id_ponderado'] == $entrada['id_ponderado']
-                && $db['id_semana'] == $entrada['semana']
-                && $db['periodo'] == $entrada['periodo']
-            ) {
-
-                // si encuento el dato 
-                $encontrado = true;
-
-
-                // si la nota es diferente a la de la base de datos
-                if ((float) $db['nota'] != (float) $entrada['nota'] or (int) $db['id_logro'] != (int) $entrada['id_logro']) {
-                    // actualizo la nota
-                    $arr_actualizar[] = [
-                        'id' => $db['id'],
-                        'id_alumno' => $entrada['id_alumno'],
-                        'id_materia' => $entrada['id_materia'],
-                        'id_docente' => $entrada['id_docente'],
-                        'semana' => $entrada['semana'],
-                        'periodo' => $entrada['periodo'],
-                        'ano' => $entrada['ano'],
-                        'nota' => $entrada['nota'],
-                        'id_ponderado' => $entrada['id_ponderado'],
-                        'id_logro' => $entrada['id_logro']
-                    ];
-                }
-                break;
-            }
-        }
-
-        if (!$encontrado) {
-            // inserto la nota preparando el array notas
-            $arr_insertar[] = [
-                'id_alumno' => $entrada['id_alumno'],
-                'id_materia' => $entrada['id_materia'],
-                'id_docente' => $entrada['id_docente'],
-                'semana' => $entrada['semana'],
-                'periodo' => $entrada['periodo'],
-                'ano' => $entrada['ano'],
-                'nota' => $entrada['nota'],
-                'id_ponderado' => $entrada['id_ponderado'],
-                'id_logro' => $entrada['id_logro']
-            ];
-        }
-
-
-        // if ($id_materia == 20) {
-
-        //     // condiciones iniciales del valor encontrado
-        //     $encontrado = false;
-
-        //     foreach ($arr_db as $d => $db) {
-        //         if ($db['id_alumno'] == $entrada['id_alumno'] && $db['id_materia'] == $entrada['id_materia'] && $db['id_semana'] == $entrada['semana'] && $db['periodo'] == $entrada['periodo']) {
-        //             $encontrado = true;
-        //             if ($db['nota'] != $entrada['nota'] || $db['id_logro'] != $entrada['id_logro']) {
-        //                 $arr_actualizar[] = [
-        //                     'id' => $db['id'],
-        //                     'id_alumno' => $entrada['id_alumno'],
-        //                     'id_materia' => $entrada['id_materia'],
-        //                     'id_docente' => $entrada['id_docente'],
-        //                     'semana' => $entrada['semana'],
-        //                     'periodo' => $entrada['periodo'],
-        //                     'ano' => $entrada['ano'],
-        //                     'nota' => $entrada['nota'],
-        //                     'id_ponderado' => 20,
-        //                     'id_logro' => $entrada['id_logro'],
-        //                 ];
-        //             }
-        //             break;
-        //         }
-        //     }
-
-        //     if (!$encontrado) {
-        //         $arr_insertar[] = [
-        //             'id_alumno' => $entrada['id_alumno'],
-        //             'id_materia' => $entrada['id_materia'],
-        //             'id_docente' => $entrada['id_docente'],
-        //             'semana' => $entrada['semana'],
-        //             'periodo' => $entrada['periodo'],
-        //             'ano' => $entrada['ano'],
-        //             'nota' => $entrada['nota'],
-        //             'id_ponderado' => 20,
-        //             'id_logro' => $entrada['id_logro'],
-        //         ];
-        //     }
-        // } 
-        // // si se cumplen estos criteros
-        //         // alumno, materia, ponderado, semana, periodo
-        // elseif ($db['id_alumno'] == $entrada['id_alumno'] && $db['id_materia'] == $entrada['id_materia'] && $db['id_ponderado'] == $entrada['id_ponderado'] && $db['id_semana'] == $entrada['semana'] && $db['periodo'] == $entrada['periodo']) {
-
-        //             // si encuento el dato 
-        //             $encontrado = true;
-
-
-
-        //             // si la nota es diferente a la de la base de datos
-        //             if ($db['nota'] != $entrada['nota']) {
-        //                 // actualizo la nota
-        //                 $arr_actualizar[] = [
-        //                     'id' => $db['id'],
-        //                     'id_alumno' => $entrada['id_alumno'],
-        //                     'id_materia' => $entrada['id_materia'],
-        //                     'id_docente' => $entrada['id_docente'],
-        //                     'semana' => $entrada['semana'],
-        //                     'periodo' => $entrada['periodo'],
-        //                     'ano' => $entrada['ano'],
-        //                     'nota' => $entrada['nota'],
-        //                     'id_ponderado' => $entrada['id_ponderado'],
-        //                     'id_logro' => 'NULL',
-        //                 ];
-        //             }
-        //             break;
-        //         }
-        //     }
-
-        //     if (!$encontrado) {
-        //         // inserto la nota preparando el array notas
-        //         $arr_insertar[] = [
-        //             'id_alumno' => $entrada['id_alumno'],
-        //             'id_materia' => $entrada['id_materia'],
-        //             'id_docente' => $entrada['id_docente'],
-        //             'semana' => $entrada['semana'],
-        //             'periodo' => $entrada['periodo'],
-        //             'ano' => $entrada['ano'],
-        //             'nota' => $entrada['nota'],
-        //             'id_ponderado' => $entrada['id_ponderado'],
-        //             'id_logro' => 'NULL',
-        //         ];
-        //     }
-        // }
-
-        // else {
-
-        //     //en caso de que se trate del logro de la materia
-        //     // realizao la comparacion de notas
-        //     $encontrado = false;
-
-        //     // por cada elemento en la base de datos
-        //     foreach ($arr_db as $d => $db) {
-        //         // si se cumplen estos criteros
-        //         // alumno, materia, ponderado, semana, periodo
-        //         if ($db['id_alumno'] == $entrada['id_alumno'] && $db['id_materia'] == $entrada['id_materia'] && $db['periodo'] == $entrada['periodo'] && is_null($db['id_ponderado'])) {
-
-        //             // si encuento el dato 
-        //             $encontrado = true;
-
-
-
-        //             // si la nota es diferente a la de la base de datos
-        //             if ($db['id_logro'] != $entrada['id_logro']) {
-        //                 // actualizo la nota
-        //                 $arr_actualizar[] = [
-        //                     'id' => $db['id'],
-        //                     'id_alumno' => $entrada['id_alumno'],
-        //                     'id_materia' => $entrada['id_materia'],
-        //                     'id_docente' => $entrada['id_docente'],
-        //                     'semana' => '',
-        //                     'periodo' => $entrada['periodo'],
-        //                     'ano' => $entrada['ano'],
-        //                     'nota' => '',
-        //                     'id_ponderado' => '',
-        //                     'id_logro' => $entrada['id_logro'],
-        //                 ];
-        //             }
-        //             break;
-        //         }
-        //     }
-
-        //     if (!$encontrado) {
-        //         // inserto la nota preparando el array notas
-        //         $arr_insertar[] = [
-        //             'id_alumno' => $entrada['id_alumno'],
-        //             'id_materia' => $entrada['id_materia'],
-        //             'id_docente' => $entrada['id_docente'],
-        //             'semana' => $entrada['semana'],
-        //             'periodo' => $entrada['periodo'],
-        //             'ano' => $entrada['ano'],
-        //             'nota' => $entrada['nota'],
-        //             'id_ponderado' => '',
-        //             'id_logro' => $entrada['id_logro'],
-        //         ];
-        //     }
-        // }
-
-
-    }
-
-    if (count($arr_actualizar) > 0) {
-        // metodo para actualiza notas masivas
-        //tomando en cuenta el array de notas masivas
-        $cal->actualizarNotasMasivas($arr_actualizar, $ano);
-    }
-
-    if (count($arr_insertar) > 0) {
-        $cal->insertarNotasMasivas($arr_insertar, $ano);
-    }
-
-    // retorno los conteos para mostrar en el mensaje del cliente
-    echo json_encode([
-        'actualizadas' => count($arr_actualizar),
-        'insertadas' => count($arr_insertar)
-    ]);
+if (count($arr_insertar) > 0) {
+    $obj_calificaciones->insertarNotasMasivas($arr_insertar, $ano);
 }
+
+// retorno los conteos para mostrar en el mensaje del cliente
+echo json_encode([
+    'actualizadas' => count($arr_actualizar),
+    'insertadas' => count($arr_insertar)
+]);
+
+
+
+
+?>

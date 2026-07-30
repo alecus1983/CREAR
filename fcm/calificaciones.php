@@ -126,17 +126,18 @@ class calificaciones extends imcrea
      * @param int $id_materia Código de la materia
      * 
      */
-    
-    public function if_alumno_materia($codigos, $id_materia, $year){
+
+    public function if_alumno_materia($codigos, $id_materia, $year)
+    {
 
         // consulta para verificar si existe
         $q = "select * from c_{$year} where id_materia = $id_materia and id_alumno in $codigos ";
 
 
-        
+
     }
 
-    
+
     /**
      * @brief Obtiene la calificación semanal de un alumno.
      *
@@ -149,24 +150,24 @@ class calificaciones extends imcrea
      * Este método consulta la base de datos para buscar una calificación específica
      * y, si la encuentra, la asigna a los atributos del objeto.
      */
-    public function get_calificacion_semanal_bulk($id_grado, $id_curso, $id_jornada,  $id_materia, $y)
+    public function get_calificacion_semanal_bulk($id_grado, $id_curso, $id_jornada, $id_materia, $y)
     {
 
-        $q= "select id_alumno , id_materia ,  9A,9B
+        $q = "select id_alumno , id_materia ,  9A,9B
                 from c_$y where id_alumno in 
                 ( select id_alumno from matricula
                   where id_grado = $id_grado and id_curso = $id_curso and
                   id_jornada = $id_jornada and year = $y) and id_materia = $id_materia";
 
-        
+
         try {
             $c = $this->_db->query($q);
             $r = $c->fetch_all(MYSQLI_ASSOC);
         } catch (Exception $e) {
             echo 'Excepción capturada: ', $e->getMessage(), "\n";
         }
-         if (is_null($r)) {
-            $this->calificado = false;            
+        if (is_null($r)) {
+            $this->calificado = false;
         } else {
             $this->calificado = true;
             return $r;
@@ -703,9 +704,9 @@ class calificaciones extends imcrea
               WHERE id_materia = {$id_m} AND periodo = {$periodo} AND id_alumno IN ({$in_alumnos})";
 
         // objeto para almacenar los logros
-        $resultado_logros  = [];
+        $resultado_logros = [];
         // objeto para almacenar las notas
-        $resultado_notas   = [];
+        $resultado_notas = [];
 
         try {
             // ejecuto la consulta
@@ -721,7 +722,7 @@ class calificaciones extends imcrea
                     // preparo la consulta de logro 3 del periodo
                     $resultado_logros[$row['id_alumno']][2] = $row["l3_p{$periodo}"];
                     // guardo las notas
-                    $resultado_notas[$row['id_alumno']]     = $row;
+                    $resultado_notas[$row['id_alumno']] = $row;
                 }
             }
         } catch (Exception $e) {
@@ -823,12 +824,13 @@ class calificaciones extends imcrea
 
     // metodo para actualizar las notas semanales
     // en la tabla c_year
-    public function actualizar_notas_semanales($valoresArray, $year){
+    public function actualizar_notas_semanales($valoresArray, $year)
+    {
 
         // si el valor ingresado es falso
-         if (empty($valoresArray))
+        if (empty($valoresArray))
             return false;
-         //valores iniciales de las 
+        //valores iniciales de las 
         $ids = [];
         $casesNota = [];
         $casesLogro = [];
@@ -836,14 +838,14 @@ class calificaciones extends imcrea
         // por cada alumno preparo los array de entrada
         foreach ($valoresArray as $val) {
 
-           
+
         }
         // convierto en un string
         $idsString = implode(',', $ids);
         $casesNotaString = implode(' ', $casesNota);
         $casesLogroString = implode(' ', $casesLogro);
 
-         $sql = "UPDATE calificaciones_{$year} 
+        $sql = "UPDATE calificaciones_{$year} 
                 SET nota = CASE id 
                     {$casesNotaString} 
                     ELSE nota 
@@ -855,98 +857,191 @@ class calificaciones extends imcrea
             
                 modificado = NOW()
                 WHERE id IN ({$idsString})";
-        
+
+    }
+
+    function actualizarNotasMasivas($arr_actualizar, $ano)
+    {
+        // si el valor ingresado es falso
+        if (empty($arr_actualizar)) {
+            return false;
+        }
+        $ids = [];
+        $cases = [];
+        $id_materia = (int) $arr_actualizar[0]['id_materia'];
+        // Identificar las columnas a actualizar dinámicamente
+        $columnas = [];
+        foreach ($arr_actualizar[0] as $key => $val) {
+            // Ignoramos las llaves predefinidas
+            if (!in_array($key, ['id_alumno', 'id_materia', 'id_docente'])) {
+                // Removemos las comillas simples que vienen en la llave desde notas_semanales_x.php
+                $clean_key = str_replace("'", "", $key);
+                $columnas[$key] = $clean_key;
+                $cases[$clean_key] = [];
+            }
+        }
+        // por cada alumno preparo los array de entrada
+        foreach ($arr_actualizar as $val) {
+            $id = (int) $val['id_alumno'];
+            $ids[] = $id;
+            // preparamos los cases para cada columna
+            foreach ($columnas as $orig_key => $clean_col) {
+                // Validar si es numérico, de lo contrario dejar NULL
+                $nota = (isset($val[$orig_key]) && is_numeric($val[$orig_key])) ? (float) $val[$orig_key] : 'NULL';
+                $cases[$clean_col][] = "WHEN {$id} THEN {$nota}";
+            }
+        }
+        // convierto en un string
+        $idsString = implode(',', $ids);
+        // construimos la parte SET del UPDATE
+        $setStatements = [];
+        foreach ($cases as $col => $caseList) {
+            $casesString = implode(' ', $caseList);
+            // Usamos backticks (`) porque los nombres de las columnas pueden empezar por números (ej. 24E)
+            $setStatements[] = "`{$col}` = CASE id_alumno {$casesString} ELSE `{$col}` END";
+        }
+        $setString = implode(', ', $setStatements);
+        $sql = "UPDATE c_{$ano} 
+                SET {$setString}
+                WHERE id_materia = {$id_materia} AND id_alumno IN ({$idsString})";
+        return $this->_db->query($sql);
+    }
+
+    function insertarNotasMasivas($arr_insertar, $ano)
+    {
+        if (empty($arr_insertar)) {
+            return false;
+        }
+
+        // Obtener las columnas desde el primer elemento del array
+        $columnas = [];
+        $original_keys = [];
+
+        foreach ($arr_insertar[0] as $key => $val) {
+            // Removemos comillas simples si existen en la llave (ej. '24E')
+            $clean_key = str_replace("'", "", $key);
+            $columnas[] = "`{$clean_key}`";
+            $original_keys[] = $key;
+        }
+        $colString = implode(', ', $columnas);
+
+        $valuesList = [];
+        foreach ($arr_insertar as $val) {
+            $rowValues = [];
+            foreach ($original_keys as $key) {
+                $v = isset($val[$key]) ? $val[$key] : null;
+
+                if (is_null($v) || $v === '') {
+                    $rowValues[] = 'NULL';
+                } elseif (is_numeric($v)) {
+                    // Mantenemos int o float
+                    $rowValues[] = $v;
+                } else {
+                    // Escapamos strings por seguridad
+                    $rowValues[] = "'" . $this->_db->real_escape_string($v) . "'";
+                }
+            }
+            $valuesList[] = "(" . implode(', ', $rowValues) . ")";
+        }
+
+        $valString = implode(', ', $valuesList);
+
+        $sql = "INSERT INTO c_{$ano} ({$colString}) VALUES {$valString}";
+
+        return $this->_db->query($sql);
     }
 
     // Funcion de actualizar notas masivas
-    
-    function actualizarNotasMasivas ($arr_actualizar, $ano){
 
-        // si el valor ingresado es falso
-         if (empty($arr_actualizar))
-            return false;
-         //valores iniciales de las 
-        $ids = [];
-        $casesNota = [];
-        $casesLogro = [];
+    // function actualizarNotasMasivas($arr_actualizar, $ano)
+    // {
 
-        // por cada alumno preparo los array de entrada
-        foreach ($arr_actualizar as $val) {
-             $id = (int) $val['id'];
-            $nota = $val['nota'] > 0 ? (float) $val['nota'] : 0;
-            // Usar NULL cuando no hay logro para evitar que MySQL convierta '' en 0
-            // y colisione con la clave única
-            $logro = $val['id_logro'] > 0 ? (int) $val['id_logro'] : 'NULL';
+    //     // si el valor ingresado es falso
+    //     if (empty($arr_actualizar))
+    //         return false;
+    //     //valores iniciales de las 
+    //     $ids = [];
+    //     $casesNota = [];
+    //     $casesLogro = [];
 
-            $ids[] = $id;
-            $casesNota[] = "WHEN {$id} THEN {$nota}";
-            $casesLogro[] = "WHEN {$id} THEN {$logro}";
-           
-        }
-        // convierto en un string
-        $idsString = implode(',', $ids);
-        $casesNotaString = implode(' ', $casesNota);
-        $casesLogroString = implode(' ', $casesLogro);
+    //     // por cada alumno preparo los array de entrada
+    //     foreach ($arr_actualizar as $val) {
+    //         $id = (int) $val['id'];
+    //         $nota = $val['nota'] > 0 ? (float) $val['nota'] : 0;
+    //         // Usar NULL cuando no hay logro para evitar que MySQL convierta '' en 0
+    //         // y colisione con la clave única
+    //         $logro = $val['id_logro'] > 0 ? (int) $val['id_logro'] : 'NULL';
 
-         $sql = "UPDATE calificaciones_{$ano} 
-                SET nota = CASE id 
-                    {$casesNotaString} 
-                    ELSE nota 
-                END,
-                id_logro = CASE id 
-                    {$casesLogroString} 
-                    ELSE id_logro 
-                END,
-            
-                modificado = NOW()
-                WHERE id IN ({$idsString})";
-    }
+    //         $ids[] = $id;
+    //         $casesNota[] = "WHEN {$id} THEN {$nota}";
+    //         $casesLogro[] = "WHEN {$id} THEN {$logro}";
+
+    //     }
+    //     // convierto en un string
+    //     $idsString = implode(',', $ids);
+    //     $casesNotaString = implode(' ', $casesNota);
+    //     $casesLogroString = implode(' ', $casesLogro);
+
+    //     $sql = "UPDATE calificaciones_{$ano} 
+    //             SET nota = CASE id 
+    //                 {$casesNotaString} 
+    //                 ELSE nota 
+    //             END,
+    //             id_logro = CASE id 
+    //                 {$casesLogroString} 
+    //                 ELSE id_logro 
+    //             END,
+
+    //             modificado = NOW()
+    //             WHERE id IN ({$idsString})";
+    // }
 
 
-// Funcion que valida masivamente cuales estudiantes tienen
+    // Funcion que valida masivamente cuales estudiantes tienen
 // y cuales no tienen registros
 
-function validacion_masiva($codigos, $id_materia, $year){
+    function validacion_masiva($codigos, $id_materia, $year)
+    {
 
-    // si el valor ingresado es falso
-    if (empty($codigos))
-        return false;
-    //valores iniciales de las 
-    $ids = [];
-    // variable donde se acumulan
-    // el string de busqueda
-    $c_string = [];
+        // si el valor ingresado es falso
+        if (empty($codigos))
+            return false;
+        //valores iniciales de las 
+        $ids = [];
+        // variable donde se acumulan
+        // el string de busqueda
+        $c_string = [];
 
-    //array de retorno
-    $arr =[];
-    
-    // por cada valor en los codigos
-    foreach($codigos as $c){
-        // recupero el valor del id
-        $id = (int) $c['value'];
-        // lo almaceno en ids
-        $ids[] = $id;
-    }
-    // acumulo el string en una cadena separado
-    // por comas
-    $c_string = implode(',', $ids);
-    $c_string = substr($c_string,0,-1);
+        //array de retorno
+        $arr = [];
+
+        // por cada valor en los codigos
+        foreach ($codigos as $c) {
+            // recupero el valor del id
+            $id = (int) $c['value'];
+            // lo almaceno en ids
+            $ids[] = $id;
+        }
+        // acumulo el string en una cadena separado
+        // por comas
+        $c_string = implode(',', $ids);
+        $c_string = substr($c_string, 0, -1);
 
 
-    // cadena de busqueda 
-    $q = "select id_alumno  from c_$year where id_materia = $id_materia and id_alumno in ($c_string)";
+        // cadena de busqueda 
+        $q = "select id_alumno  from c_$year where id_materia = $id_materia and id_alumno in ($c_string)";
 
-    //echo $q;
-    try {
+        try {
             $c = $this->_db->query($q);
-            $r = $c->fetch_all(MYSQLI_ASSOC);
+            $r = (array) $c->fetch_all(MYSQLI_ASSOC);
             // retorno el array de salida
+
             return $r;
         } catch (Exception $e) {
             echo 'Excepción capturada: ', $e->getMessage(), "\n";
         }
 
-         
-}
+
+    }
 
 }
