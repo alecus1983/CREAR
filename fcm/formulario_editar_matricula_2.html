@@ -1,7 +1,8 @@
 <div class="container">
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item "><a class="page-link" onclick="flujo_editar_matricula(alumno['id_matricula'],31);">1</a>
+            <li class="page-item "><a class="page-link"
+                    onclick="flujo_editar_matricula(alumno['id_matricula'],31);">1</a>
             </li>
             <li class="page-item active"><a class="page-link"
                     onclick="flujo_editar_matricula(alumno['id_matricula'],32);">2</a></li>
@@ -62,7 +63,7 @@
                         <label class="Control-label">Escolaridad</label>
                         <select id="ac_escolaridad" class="form-control"
                             style="background: transparent;color: darkgreen;border:  0px"
-                            onchange="lista_grados($('#ac_escolaridad').val(),'#ac_grado',$('#id_d').val());">
+                            onchange="lista_grados($('#ac_escolaridad').val(),'#ac_grado',$('#id_docente').val());">
                         </select>
                     </div>
                 </div>

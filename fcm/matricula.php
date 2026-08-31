@@ -35,6 +35,12 @@ class matricula extends curso
     public $retiro;
 
     public $year;
+
+    /**
+     * @var string $fecha
+     * @brief Fecha en que se realizó/imprimió la matrícula (YYYY-MM-DD).
+     */
+    public $fecha;
     /**
      * @brief Constructor de la clase `matricula`.
      *
@@ -67,9 +73,10 @@ class matricula extends curso
             $this->id_grado = $dato["id_grado"];
             $this->id_jornada = $dato["id_jornada"];
             $this->year = $dato["year"];
-            $this->mes = $dato["mes"];
+            $this->mes    = $dato["mes"];
             $this->retiro = $dato["retiro"];
             $this->id_curso = $dato["id_curso"];
+            $this->fecha  = $dato["fecha"] ?? null;
 
             // Obtengo los datos adicionales del grado (escolaridad, etc.)
             $this->get_grado_id($this->id_grado);
@@ -87,11 +94,63 @@ class matricula extends curso
      */
     public function set_matricula()
     {
-        $texto = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, id_curso, mes, retiro, year)
-                  VALUES ($this->id_alumno, $this->id_grado, $this->id_jornada, $this->id_curso, $this->mes, $this->retiro, $this->year)";
+        $sql = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, id_curso, mes, retiro, year)
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        $consulta = $this->_db->query($texto);
-        return $consulta;
+        $stmt = $this->_db->prepare($sql);
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param(
+            'iiiiiii',
+            $this->id_alumno,
+            $this->id_grado,
+            $this->id_jornada,
+            $this->id_curso,
+            $this->mes,
+            $this->retiro,
+            $this->year
+        );
+
+        $resultado = $stmt->execute();
+        if ($resultado) {
+            // Guardar el ID generado en la propiedad pública $id
+            $this->id = $this->_db->insert_id;
+        }
+        $stmt->close();
+        return $resultado;
+    }
+
+    // ---
+
+    /**
+     * @brief Graba la fecha actual en la columna `fecha` de la tabla `matricula`.
+     *
+     * Se invoca al momento de imprimir el comprobante, para registrar la fecha
+     * exacta en que se generó/imprimió la matrícula.
+     *
+     * @return bool `true` si la actualización fue exitosa, `false` en caso contrario.
+     */
+    public function set_fecha(): bool
+    {
+        if (!$this->id) {
+            return false;
+        }
+
+        $sql  = "UPDATE matricula SET fecha = CURDATE() WHERE id = ?";
+        $stmt = $this->_db->prepare($sql);
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param('i', $this->id);
+        $resultado = $stmt->execute();
+        if ($resultado) {
+            $this->fecha = date('Y-m-d');
+        }
+        $stmt->close();
+        return $resultado;
     }
 
     // ---
@@ -205,9 +264,7 @@ class matricula extends curso
             $stmt->execute();
             $result = $stmt->get_result();
             return $result->fetch_all(MYSQLI_ASSOC);
-
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en obtener los alumnos matriculados: " . $e->getMessage());
             // Dependiendo del contexto, puedes decidir cómo manejar el error.
             return [];
@@ -247,6 +304,9 @@ class matricula extends curso
 
         // Ejecuta la consulta.
         $stmt->execute();
+
+        // obtengo el id de la matrícula recién insertada (guardado en $mt->id por set_matricula)
+        $id_matricula = $mt->id;
 
         // Obtiene el resultado de la consulta.
         $result = $stmt->get_result();

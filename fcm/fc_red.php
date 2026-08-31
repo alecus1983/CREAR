@@ -31,8 +31,10 @@ $ano = date('Y');
 	<script src="js/all.js"></script>
 	<link href="../imagenes/escudo.gif" rel="shortcut icon" />
 	<script src="./js/sweetalert.min.js"></script>
-	<script src="./js/jquery-3.5.1.min.js"></scrip >
-			<script src="./js/ajax.js"></script>
+	<script src="./js/jquery-3.5.1.min.js">
+		< /scrip > <
+		script src = "./js/ajax.js" >
+	</script>
 	<link rel="stylesheet" href="estilos.css" type="text/css">
 
 	<style>
@@ -95,412 +97,411 @@ $ano = date('Y');
 
 
 	<script type="text/javascript">
+		// Funcion en java scrip para ingresar valores en la base de datos
+		// para todas las opciones del menu adiccionar
+		// permite agregar estudiantes, docentes, notas etc ...
 
-	 // Funcion en java scrip para ingresar valores en la base de datos
-												// para todas las opciones del menu adiccionar
-												// permite agregar estudiantes, docentes, notas etc ...
+		function deposit() {
 
-												function deposit() {
-
-			 // para ello comienza
-			 // almacenando el codigo del grado en la variable j
-			 var j = $("#id_g").val();
+			// para ello comienza
+			// almacenando el codigo del grado en la variable j
+			var j = $("#id_g").val();
 
 
-												swal({
-													title: 'INSERTAR NOTAS',
-												text: "Esta seguro que quiere insertar las notas!",
-												icon: 'warning',
-												buttons: true,
-												buttons: ["cancelar", "insertar"],
-			 }).then((value) => {
-				 if (value) {
+			swal({
+				title: 'INSERTAR NOTAS',
+				text: "Esta seguro que quiere insertar las notas!",
+				icon: 'warning',
+				buttons: true,
+				buttons: ["cancelar", "insertar"],
+			}).then((value) => {
+				if (value) {
 
-					 // creo un array a partir de los
-					 // elementos pertenecientes a  una misma clase
+					// creo un array a partir de los
+					// elementos pertenecientes a  una misma clase
 
-					 // serializo los campos clase  logro 1
-					 var logros1 = $('.logros1').serializeArray();
-												// serializo los campos clase logro 2
-												var logros2 = $('.logros2').serializeArray();
-												// serializo los campos clase logro 3
-												var logros3 = $('.logros3').serializeArray();
-												// serializo los codigos
-												var codigos = $('.codigo').serializeArray();
-												// serializo las  faltas
-												var faltas = $('.faltas').serializeArray();
+					// serializo los campos clase  logro 1
+					var logros1 = $('.logros1').serializeArray();
+					// serializo los campos clase logro 2
+					var logros2 = $('.logros2').serializeArray();
+					// serializo los campos clase logro 3
+					var logros3 = $('.logros3').serializeArray();
+					// serializo los codigos
+					var codigos = $('.codigo').serializeArray();
+					// serializo las  faltas
+					var faltas = $('.faltas').serializeArray();
 
-												// categorias para el seguimiento semanal
+					// categorias para el seguimiento semanal
 
-												// serializo los  campos del criterio A
-												var A = $('.A').serializeArray();
-												// serializo los  campos del criterio B
-												var B = $('.B').serializeArray();
-												// serializo los  campos del criterio C
-												var C = $('.C').serializeArray();
-												// serializo los  campos del criterio D
-												var D = $('.D').serializeArray();
-												// serializo los  campos del criterio E
-												var E = $('.E').serializeArray();
-												// serializo los  campos del criterio F
-												var F = $('.F').serializeArray();
-												// serializo los  campos del criterio G
-												var G = $('.G').serializeArray();
-												// serializo los  campos del criterio H
-												var H = $('.H').serializeArray();
-												// serializo los  campos del criterio I
-												var I = $('.I').serializeArray();
-												// serializo los  campos del criterio J
-												var J = $('.J').serializeArray();
-												// serializo los  campos del criterio L
-												var L = $('.L').serializeArray();
+					// serializo los  campos del criterio A
+					var A = $('.A').serializeArray();
+					// serializo los  campos del criterio B
+					var B = $('.B').serializeArray();
+					// serializo los  campos del criterio C
+					var C = $('.C').serializeArray();
+					// serializo los  campos del criterio D
+					var D = $('.D').serializeArray();
+					// serializo los  campos del criterio E
+					var E = $('.E').serializeArray();
+					// serializo los  campos del criterio F
+					var F = $('.F').serializeArray();
+					// serializo los  campos del criterio G
+					var G = $('.G').serializeArray();
+					// serializo los  campos del criterio H
+					var H = $('.H').serializeArray();
+					// serializo los  campos del criterio I
+					var I = $('.I').serializeArray();
+					// serializo los  campos del criterio J
+					var J = $('.J').serializeArray();
+					// serializo los  campos del criterio L
+					var L = $('.L').serializeArray();
 
-												var valido = true;
-												// valido los datos antes de enviarlos
+					var valido = true;
+					// valido los datos antes de enviarlos
 
-												$('.A').each( function (a){
+					$('.A').each(function(a) {
 
-			 if($(this)[0].value > 5){
-													valido = false;
-			 }
-			 } )
+						if ($(this)[0].value > 5) {
+							valido = false;
+						}
+					})
 
-												$(' .B').each( function (a){
+					$(' .B').each(function(a) {
 
-			 if($(this)[0].value > 5){
-													valido = false;
-			 }
-			 } )
+						if ($(this)[0].value > 5) {
+							valido = false;
+						}
+					})
 
-												$(' .C').each( function (a){
+					$(' .C').each(function(a) {
 
-			 if($(this)[0].value > 5){
-													valido = false;
-			 }
-			 } )
+						if ($(this)[0].value > 5) {
+							valido = false;
+						}
+					})
 
-												$(' .D').each( function (a){
+					$(' .D').each(function(a) {
 
-			 if($(this)[0].value > 5){
-													valido = false;
-			 }
-			 } )
+						if ($(this)[0].value > 5) {
+							valido = false;
+						}
+					})
 
-												$('.E').each( function (a){
+					$('.E').each(function(a) {
 
-			 if($(this)[0].value > 5){
-													valido = false;
-			 }
-			 } )
+						if ($(this)[0].value > 5) {
+							valido = false;
+						}
+					})
 
-												$( '.F').each( function (a){
+					$('.F').each(function(a) {
 
-			 if($(this)[0].value > 5){
-													valido = false;
-			 }
-			 } )
+						if ($(this)[0].value > 5) {
+							valido = false;
+						}
+					})
 
-												$(' .G').each( function (a){
+					$(' .G').each(function(a) {
 
-			 if($(this)[0].value > 5){
-													valido = false;
-			 }
-			 } )
+						if ($(this)[0].value > 5) {
+							valido = false;
+						}
+					})
 
-												$('.H').each( function (a){
+					$('.H').each(function(a) {
 
-			 if($(this)[0].value > 5){
-													valido = false;
-			 }
-			 } )
+						if ($(this)[0].value > 5) {
+							valido = false;
+						}
+					})
 
-												$(' .I').each( function (a){
+					$(' .I').each(function(a) {
 
-			 if($(this)[0].value > 5){
-													valido = false;
-			 }
-			 } )
+						if ($(this)[0].value > 5) {
+							valido = false;
+						}
+					})
 
-												if(valido){
+					if (valido) {
 
-													// llamo al metodo ajax para el envío de la  información
-													// se emplea en envío por POST
-													$.ajax({
-														type: "POST",
-														url: "notas_semanales.php",
-														data: {
-															year: $("#years").val(),
-															semana: $("#semana").val(),
-															id_gs: $("#id_g").val(),
-															id_ms: $("#id_ms").val(),
-															id_jornada: $("#jornada").val(),
-															id_docente: $("#id_d").val(),
-															corte: $("#corte").val(),
-															periodo: $("#periodos").val(),
-															logro1: JSON.stringify(logros1),
-															logro2: JSON.stringify(logros2),
-															logro3: JSON.stringify(logros3),
-															codigo: JSON.stringify(codigos),
-															faltas: JSON.stringify(faltas),
-															A: JSON.stringify(A),
-															B: JSON.stringify(B),
-															C: JSON.stringify(C),
-															D: JSON.stringify(D),
-															E: JSON.stringify(E),
-															F: JSON.stringify(F),
-															G: JSON.stringify(G),
-															H: JSON.stringify(H),
-															I: JSON.stringify(I),
-															J: JSON.stringify(J),
-															L: JSON.stringify(L)
-														},
+						// llamo al metodo ajax para el envío de la  información
+						// se emplea en envío por POST
+						$.ajax({
+							type: "POST",
+							url: "notas_semanales.php",
+							data: {
+								year: $("#years").val(),
+								semana: $("#semana").val(),
+								id_gs: $("#id_g").val(),
+								id_ms: $("#id_ms").val(),
+								id_jornada: $("#jornada").val(),
+								id_docente: $("#id_docente").val(),
+								corte: $("#corte").val(),
+								periodo: $("#periodos").val(),
+								logro1: JSON.stringify(logros1),
+								logro2: JSON.stringify(logros2),
+								logro3: JSON.stringify(logros3),
+								codigo: JSON.stringify(codigos),
+								faltas: JSON.stringify(faltas),
+								A: JSON.stringify(A),
+								B: JSON.stringify(B),
+								C: JSON.stringify(C),
+								D: JSON.stringify(D),
+								E: JSON.stringify(E),
+								F: JSON.stringify(F),
+								G: JSON.stringify(G),
+								H: JSON.stringify(H),
+								I: JSON.stringify(I),
+								J: JSON.stringify(J),
+								L: JSON.stringify(L)
+							},
 
-														success: function (data) {
-															// respuesta a la carga de notas
-															//$("#resultado").html("Se ingresaron las notas con exito");
-															//$("#resultado").html(data);
-															console.log(data);
+							success: function(data) {
+								// respuesta a la carga de notas
+								//$("#resultado").html("Se ingresaron las notas con exito");
+								//$("#resultado").html(data);
+								console.log(data);
 
-														},
-														error: function (xhr, status) {
-															swal('Disculpe, existió un problema');
-															console.log(xhr);
-														}
-													});
-			 }
-				 }
+							},
+							error: function(xhr, status) {
+								swal('Disculpe, existió un problema');
+								console.log(xhr);
+							}
+						});
+					}
+				}
 
-			 });
-	 } // fin de la funsion deposit
-
+			});
+		} // fin de la funsion deposit
 	</script>
 
 
 	<script>
-
-												// funcion para la carga de los alumnos
-												function est(id_a) {
-													//swal("Has ingresado el alumno"+id_a);
-
-
-													$.ajax({
-														type: "POST",
-														url: "rendiminento_alumno_periodo.php",
-														data: {
-															id_alumno: id_a,
-															materia: $("#id_ms").val(),
-															year: $("#years").val(),
-															periodo: $("#periodos").val()
-
-														},
-														// si los datos son correctos entonces ...
-														success: function (respuesta) {
-
-															$("#estadisicas").html(respuesta);
-															//$("#resultado").html("");
-
-														},
-														error: function (xhr, status) {
-															swal('Disculpe, existió un problema al cargar los logros');
-															console.log(xhr);
-														}
-													});
-
-												$("#estadisticas").focus();
-			 //event.preventDefault();
+		// funcion para la carga de los alumnos
+		function est(id_a) {
+			//swal("Has ingresado el alumno"+id_a);
 
 
-	 }// funcion para la carga de los alumnos
-												function est(id_a){
-													swal("Has ingresado el alumno" + id_a);
+			$.ajax({
+				type: "POST",
+				url: "rendiminento_alumno_periodo.php",
+				data: {
+					id_alumno: id_a,
+					materia: $("#id_ms").val(),
+					year: $("#years").val(),
+					periodo: $("#periodos").val()
+
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+
+					$("#estadisicas").html(respuesta);
+					//$("#resultado").html("");
+
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema al cargar los logros');
+					console.log(xhr);
+				}
+			});
+
+			$("#estadisticas").focus();
+			//event.preventDefault();
 
 
-	 }
-
-												// funsion que carga las semanas correctas cuando cambia
-												// el Periodo de calificaciones
-												// funcion para cargar las materias en el cuadro de dialogo
-												// de acurdo al grado seleccionado
-
-												function load_materias(){
-			 var id_docente = $("#id_d").val();
-												var id_grado = $("#id_g").val();
-												var year = $("#years").val();
-												carga("#id_ms", "materias_grado.php",{grados:id_grado,id: id_docente, year:year});
-	 }
-
-												// funcion para cargar la lista de  estudiantes en el
-												// div calificador
-												function load_lista_estudiantes(){
-
-													// se invoca al metodo ajax para solicitar
-													// el listado de estudiantes
-													$.ajax({
-														type: "POST",
-														url: "listado_estudiantes.php",
-														data: {
-															years: $("#years").val(),
-															id_g: $("#id_g").val(),
-															id_ms: $("#id_ms").val(),
-															id_jornada: $("#jornada").val(),
-															periodo: $("#periodos").val(),
-															curso: $("#id_c").val(),
-															semana: $("#semana").val()
-														},
-														// si los datos son correctos entonces ...
-														success: function (respuesta) {
-
-															$("#calificador").html(respuesta);
-															$("#resultado").html("");
-
-														},
-														error: function (xhr, status) {
-															swal('Disculpe, existió un problema');
-															console.log(xhr);
-														}
-													});
-
-	 }
-
-												// funcion para la carga de logros
-												function load_logros () {
-
-													$.ajax({
-														type: "POST",
-														url: "logros.php",
-														data: {
-															grado: $("#id_g").val(),
-															materia: $("#id_ms").val(),
-														},
-														// si los datos son correctos entonces ...
-														success: function (respuesta) {
-
-															$("#logros_materia").html(respuesta);
-															//$("#resultado").html("");
-
-														},
-														error: function (xhr, status) {
-															swal('Disculpe, existió un problema al cargar los logros');
-															console.log(xhr);
-														}
-													});
-	 }
-
-												// avance semanal de notas de docentes
-												function avance_semanal() {
+		} // funcion para la carga de los alumnos
+		function est(id_a) {
+			swal("Has ingresado el alumno" + id_a);
 
 
-													// se invoca al metodo ajax para solicitar
-													// el listado de estudiantes
-													$.ajax({
-														type: "POST",
-														url: "notas_docentes_semanales.php",
-														data: {
-															years: $("#years").val(),
-															periodo: $("#periodos").val(),
-															semana: $("#semana").val()
-														},
-														// si los datos son correctos entonces ...
-														success: function (respuesta) {
+		}
 
-															//$("#calificador").html(respuesta);
-															$("#resultado").html(respuesta);
+		// funsion que carga las semanas correctas cuando cambia
+		// el Periodo de calificaciones
+		// funcion para cargar las materias en el cuadro de dialogo
+		// de acurdo al grado seleccionado
 
-														},
-														error: function (xhr, status) {
-															swal('Disculpe, existió un problema');
-															console.log(xhr);
-														}
-													});
+		function load_materias() {
+			var id_docente = $("#id_docente").val();
+			var id_grado = $("#id_g").val();
+			var year = $("#years").val();
+			carga("#id_ms", "materias_grado.php", {
+				grados: id_grado,
+				id: id_docente,
+				year: year
+			});
+		}
+
+		// funcion para cargar la lista de  estudiantes en el
+		// div calificador
+		function load_lista_estudiantes() {
+
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "listado_estudiantes.php",
+				data: {
+					years: $("#years").val(),
+					id_g: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					periodo: $("#periodos").val(),
+					curso: $("#id_c").val(),
+					semana: $("#semana").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+
+					$("#calificador").html(respuesta);
+					$("#resultado").html("");
+
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+		}
+
+		// funcion para la carga de logros
+		function load_logros() {
+
+			$.ajax({
+				type: "POST",
+				url: "logros.php",
+				data: {
+					grado: $("#id_g").val(),
+					materia: $("#id_ms").val(),
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+
+					$("#logros_materia").html(respuesta);
+					//$("#resultado").html("");
+
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema al cargar los logros');
+					console.log(xhr);
+				}
+			});
+		}
+
+		// avance semanal de notas de docentes
+		function avance_semanal() {
 
 
-	 }
+			// se invoca al metodo ajax para solicitar
+			// el listado de estudiantes
+			$.ajax({
+				type: "POST",
+				url: "notas_docentes_semanales.php",
+				data: {
+					years: $("#years").val(),
+					periodo: $("#periodos").val(),
+					semana: $("#semana").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
 
-												// actualiza el formulario
-												function actualizar(){
-													load_materias();
-												load_lista_estudiantes();
-	 }
+					//$("#calificador").html(respuesta);
+					$("#resultado").html(respuesta);
 
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
+
+
+		}
+
+		// actualiza el formulario
+		function actualizar() {
+			load_materias();
+			load_lista_estudiantes();
+		}
 	</script>
 
 	<!-- scrip -->
 	<script>
-				//////////////////////////////////////////////////////////////////////////////////////////
-				// Este script contiene la funcion para generar las graficas                            //
-				// Esta foncion no recive parametros                                                    //
-				//////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////
+		// Este script contiene la funcion para generar las graficas                            //
+		// Esta foncion no recive parametros                                                    //
+		//////////////////////////////////////////////////////////////////////////////////////////
 
 
-				function grafica() {
+		function grafica() {
 
-					// se invoca al metodo ajax para solicitar el los datos del grafico
-					$.ajax({
-						type: "POST",
-						url: "grafica_boletin.php",
-						data: {
-							year: $("#years").val(),
-							id_gs: $("#id_g").val(),
-							id_ms: $("#id_ms").val(),
-							id_jornada: $("#jornada").val(),
-							id_docente: $("#id_docentes").val(),
-							corte: $("#corte").val(),
-							periodo: $("#periodos").val(),
-							opcion: $("#opcion").val()
+			// se invoca al metodo ajax para solicitar el los datos del grafico
+			$.ajax({
+				type: "POST",
+				url: "grafica_boletin.php",
+				data: {
+					year: $("#years").val(),
+					id_gs: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					id_docente: $("#id_docentes").val(),
+					corte: $("#corte").val(),
+					periodo: $("#periodos").val(),
+					opcion: $("#opcion").val()
 
-						},
-						// si los datos son correctos entonces ...
-						success: function (respuesta) {
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
 
-							$("#grafo").html(respuesta);
+					$("#grafo").html(respuesta);
 
-						},
-						error: function (xhr, status) {
-							swal('Disculpe, existió un problema');
-							console.log(xhr);
-						}
-					});
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
 
-	 }
+		}
 
-				// funcion para cargar datos en un selector
-				function carga ( a ,b,c ) {
+		// funcion para cargar datos en un selector
+		function carga(a, b, c) {
 
-					console.log("Valor a: %s", a); 	// variable que almacena el codigo del campo
-				console.log("Valor b: %s",b);	// variable que almacena el nombre del archivo PHP
-				console.log(JSON.stringify(c));	// atributos del archivo en PHP
+			console.log("Valor a: %s", a); // variable que almacena el codigo del campo
+			console.log("Valor b: %s", b); // variable que almacena el nombre del archivo PHP
+			console.log(JSON.stringify(c)); // atributos del archivo en PHP
 
-				// metodo ajax para el envío de datos
-				// al servidor 
-				$.ajax({
-					async: true,
+			// metodo ajax para el envío de datos
+			// al servidor 
+			$.ajax({
+				async: true,
 				method: "POST",
-				url : b,
+				url: b,
 				data: c,
-				dataType:"json",
+				dataType: "json",
 
-		 }).done(  function (dato) {
-					$(a).empty();
+			}).done(function(dato) {
+				$(a).empty();
 
 				$(a).append("<option value= -1> Seleccione </option>");
-		$.each(dato, function (index, materia) {
-			$(a).append("<option value =" + index + ">" + materia + "</option>");
+				$.each(dato, function(index, materia) {
+					$(a).append("<option value =" + index + ">" + materia + "</option>");
 
-		});
-		 });
+				});
+			});
 
-	 }
+		}
 
 
 		jQuery.ajaxSetup({
-			beforeSend: function () {
+			beforeSend: function() {
 				$('#loader').show();
 			},
-			complete: function () {
+			complete: function() {
 				$('#loader').hide();
 			}
 		});
-
 	</script>
 </head>
 
@@ -561,9 +562,9 @@ $ano = date('Y');
 									<label for="years">Año</label>
 									<input type="number" value="<?php echo date('Y'); ?>" id="years" class="sel"
 										name="years" min="2015" max="2100" step="1" <?php if ($admin == 0) { ?>
-											readonly="readonly" <?php } ?> class="form-control ">
+										readonly="readonly" <?php } ?> class="form-control ">
 
-									<input type="hidden" value="<?php echo $id; ?>" id="id_d">
+									<input type="hidden" value="<?php echo $id; ?>" id="id_docente">
 
 									<label for="jornada">Jornada</label>
 									<select id="jornada" class="sel form-control" onchange="actualizar();">
@@ -603,7 +604,7 @@ $ano = date('Y');
 										//actuliza el listado de cursos disponibles
 										$lista = $mt->get_matricula(2);
 										// conviere el dato en un json
-										
+
 										echo '<option value="-1">seleccione</option>';
 										foreach ($lista as $key => $value) {
 											echo '<option value="' . $key . '">' . $value . '</option>';

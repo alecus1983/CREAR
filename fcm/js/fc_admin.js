@@ -264,7 +264,7 @@ function validarFormulario(fields) {
 
 
 function load_materias() {
-  var id_docente = $("#id_d").val();
+  var id_docente = $("#id_docente").val();
   var id_grado = $("#id_g").val();
   var year = $("#years").val();
   // carga las materias dentro del selector de materias
@@ -343,7 +343,7 @@ function editar_matriculas(item, dato) {
 // el codigo del curso
 // y  el año, se asume el mes de ingreso y de retiro
 
-function matricular() {
+function matricular(onSuccess) {
 
   $.ajax({
     type: "POST",
@@ -354,8 +354,14 @@ function matricular() {
     success: function (respuesta) {
       // si la respuesta es positiva
       if (respuesta['status'] == 1) {
-        swal('Se matriculo el alumno con exito');
-        //$("#calificador").html(respuesta);
+        swal('Se matriculó el alumno con éxito');
+        // Invocar el callback si fue proporcionado,
+        // pasando el id de la matrícula y la fecha
+        if (typeof onSuccess === 'function') {
+          onSuccess(respuesta['id_matricula'], respuesta['fecha']);
+        }
+      } else {
+        swal('Error', respuesta['message'] || 'No se pudo realizar la matrícula', 'error');
       }
     },
     error: function (xhr, status) {
@@ -1013,4 +1019,9 @@ function crear_certificado(matricula) {
   window.open("certificado.php?" + parametros);
 }
 
-
+// funcion para actualizar el año
+// en el documento HTML
+function funcion_actualizar_ano() {
+  var ano = $("#years").val();
+  $("#ano").html(ano);
+}

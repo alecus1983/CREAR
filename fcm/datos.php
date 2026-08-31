@@ -9,6 +9,7 @@ require_once("areas.php");
 require_once("acudientes.php");
 require_once("alumnos.php");
 require_once("padres.php");
+require_once("madres.php");
 require_once("u_alumnos.php");
 require_once("u_docentes.php");
 require_once("docentes.php");

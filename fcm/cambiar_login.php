@@ -23,6 +23,7 @@ foreach($docentes as $id_docente){
         // elementos
         echo '<tr><td>'.$id_docente
             .'</td><td>'.$docente->nombres
+             .'</td><td>'.$docente->apellidos
             .'</td><td>'.$docente->login
             .'</td><td>'.password_hash($docente->login, PASSWORD_DEFAULT)
             .'</td></tr>';

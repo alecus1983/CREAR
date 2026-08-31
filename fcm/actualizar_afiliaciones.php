@@ -30,22 +30,25 @@ if ($valido) {
     // Asignar valores del formulario a las propiedades del objeto
     // Se utilizan valores vacíos por defecto si el campo no está presente
     $persona->id_persona = $id_persona;
-    $persona->sisben = $_POST["sisben"] ?? ''; // Afiliación al SISBEN
-    $persona->vive_con = $_POST["vive_con"] ?? ''; // Situación de convivencia
-    $persona->etnia = $_POST["etnia"] ?? ''; // Etnia de la persona
-    $persona->tipo_etnia = $_POST["tipo_etnia"] ?? ''; // Tipo de etnia
-    $persona->resguardo_consejo = $_POST["resguardo_consejo"] ?? ''; // Resguardo por consejo
-    $persona->familias_accion = $_POST["familias_accion"] ?? ''; // Programas de familias en acción
-    $persona->tipo_victima_conflicto = $_POST["tipo_victima_conflicto"] ?? ''; // Tipo de víctima del conflicto
-    $persona->municipio_expulsor = $_POST["municipio_expulsor"] ?? ''; // Municipio de expulsión
-    $persona->discapacitado = $_POST["discapacitado"] ?? ''; // Indica si es discapacitado
-    $persona->tipo_discapacidad = $_POST["tipo_discapacidad"] ?? ''; // Tipo de discapacidad
-    $persona->capacidad_excepcional = $_POST["capacidad_excepcional"] ?? ''; // Indica capacidad excepcional
-    $persona->regimen_salud = $_POST["regimen_salud"] ?? ''; // Régimen de salud al que pertenece
-    $persona->eps = $_POST["eps"] ?? ''; // Entidad Promotora de Salud
-    $persona->ips = $_POST["ips"] ?? ''; // Institución Prestadora de Salud
-    $persona->tipo_sangre = $_POST["tipo_sangre"] ?? ''; // Tipo de sangre
-    $persona->rh = $_POST["rh"] ?? ''; // Factor RH
+    // Campos de texto (VARCHAR) — cadena vacía admitida
+    $persona->vive_con               = $_POST["vive_con"]               ?? '';
+    $persona->tipo_etnia             = $_POST["tipo_etnia"]             ?? '';
+    $persona->resguardo_consejo      = $_POST["resguardo_consejo"]      ?? '';
+    $persona->tipo_victima_conflicto = $_POST["tipo_victima_conflicto"] ?? '';  // VARCHAR(100)
+    $persona->municipio_expulsor     = $_POST["municipio_expulsor"]     ?? '';
+    $persona->tipo_discapacidad      = $_POST["tipo_discapacidad"]      ?? '';
+    $persona->eps                    = $_POST["eps"]                    ?? '';
+    $persona->ips                    = $_POST["ips"]                    ?? '';
+    $persona->tipo_sangre            = $_POST["tipo_sangre"]            ?? '';
+    $persona->rh                     = $_POST["rh"]                     ?? '';
+    $persona->capacidad_excepcional  = $_POST["capacidad_excepcional"]  ?? '';
+    $persona->sisben                 = $_POST["sisben"]                 ?? '';  // VARCHAR(3): 'S','N','A',etc.
+
+    // Campos enteros (TINYINT / BIT / INT) — convertir a int; null si el campo llega vacío
+    $persona->etnia           = ($_POST["etnia"]           ?? '') !== '' ? (int)$_POST["etnia"]           : null;
+    $persona->familias_accion = ($_POST["familias_accion"] ?? '') !== '' ? (int)$_POST["familias_accion"] : null;  // BIT(1)
+    $persona->discapacitado   = ($_POST["discapacitado"]   ?? '') !== '' ? (int)$_POST["discapacitado"]   : null;
+    $persona->regimen_salud   = ($_POST["regimen_salud"]   ?? '') !== '' ? (int)$_POST["regimen_salud"]   : null;
 
     // Actualizar los datos de la persona en la base de datos
     if ($persona->actualizar_afiliacion()) {
