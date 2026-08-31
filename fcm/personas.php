@@ -1008,6 +1008,7 @@ class personas extends imcrea
         return $resultados;
     }
 
+
     // funcion que confirma si es administrador
 
     public  function is_admin($id_persona)
@@ -1030,4 +1031,63 @@ class personas extends imcrea
         }
         return false;
     }
+
+    // ---
+
+    /**
+     * Obtiene el id_personas del padre a partir del id_alumno.
+     *
+     * La cadena de relaciones es:
+     *   u_alumnos.id_alumnos  → personas.u_alumno  (el alumno como persona)
+     *   personas.id_personas  → padres.id_hijo     (el padre del alumno)
+     *   padres.id_personas    → resultado           (el padre como persona)
+     *
+     * @param  int       $id_alumno  El ID del registro en u_alumnos (id_alumnos).
+     * @return int|null              El id_personas del padre, o null si no se encuentra.
+     */
+    public function get_id_padre_por_id_alumno(int $id_alumno): ?int
+    {
+        try {
+            if ($id_alumno <= 0) {
+                throw new InvalidArgumentException("El id_alumno debe ser un entero positivo.");
+            }
+
+            /*
+             * Paso 1: obtener el id_personas del alumno a partir de su id_alumno
+             *         (personas.u_alumnos = id_alumno  ó  u_alumnos.id_alumnos = id_alumno)
+             *
+             * Paso 2: buscar en la tabla padres la fila donde id_hijo = id_personas_alumno
+             *         y devolver el id_personas del padre.
+             *
+             * Se usa un único JOIN para hacerlo en una sola consulta.
+             */
+            $sql = "SELECT pa.id_personas
+                    FROM   u_alumnos   ua
+                    JOIN   personas    p   ON p.id_personas = ua.id_personas
+                    JOIN   padres      pa  ON pa.id_hijo    = p.id_personas
+                    WHERE  ua.id_alumnos = ?
+                    LIMIT  1";
+
+            $stmt = $this->_db->prepare($sql);
+
+            if ($stmt === false) {
+                throw new \RuntimeException(
+                    "Error al preparar get_id_padre_por_id_alumno: " . $this->_db->error
+                );
+            }
+
+            $stmt->bind_param("i", $id_alumno);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $fila   = $result->fetch_assoc();
+            $stmt->close();
+
+            return $fila ? (int) $fila['id_personas'] : null;
+
+        } catch (\Exception $e) {
+            error_log("Error en get_id_padre_por_id_alumno: " . $e->getMessage());
+            return null;
+        }
+    }
 }
+

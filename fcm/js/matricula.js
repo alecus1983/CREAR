@@ -118,45 +118,30 @@ function gestion_matriculas(item) {
         // obtengo la direccion de la persona
         get_direccion(alumno, 2);
 
-
-        // se carga  el formulario
+        // cargo el formulario y populo los campos de forma SINCRONA
         $("#paginas").load("formulario_actualizar_direccion.html", function () {
-          // obtengo el valor de la direccion
-          $("#ac_direccion").val(alumno["direccion_residencia"]);
-          // obtengo el valor del barrio
-          $("#ac_barrio").val(alumno["barrio"]);
 
-          switch (alumno["estrato"]) {
-            case "1":
-              $("#ac_estrato").val("1");
-              break;
-
-            case "2":
-              $("#ac_estrato").val("2");
-              break;
-
-            case "3":
-              $("#ac_estrato").val("3");
-              break;
-
-            case "4":
-              $("#ac_estrato").val("4");
-              break;
-
-            case "5":
-              $("#ac_estrato").val("5");
-              break;
+          // Una sola llamada síncrona: asigna dirección, barrio y estrato
+          // sin ningún setTimeout que pueda llegar tarde.
+          if (typeof poblarFormularioDireccion === 'function') {
+            poblarFormularioDireccion(
+              alumno["direccion_residencia"],
+              alumno["barrio"],
+              alumno["estrato"]
+            );
+          } else {
+            // Fallback seguro si el script del formulario aún no cargó
+            $("#ac_direccion").val(alumno["direccion_residencia"] || "");
+            $("#ac_barrio").val(alumno["barrio"] || "");
+            $("#ac_estrato").val(String(alumno["estrato"] || "3"));
           }
 
-          // agrego el encabezado del estudiante
-          $("#paginas").prepend("<p>Se ha selecionado la persona <b>"
+          // encabezado del estudiante
+          $("#paginas").prepend("<p>Se ha seleccionado la persona <b>"
             + alumno["nombres"] + " "
-            + alumno["apellidos"] + "</b>, con codigo "
-            + alumno["id_persona"] + ", con identificacion "
+            + alumno["apellidos"] + "</b>, código: "
+            + alumno["id_persona"] + " — identificación: "
             + alumno["identificacion"] + "</p>");
-          // agrego los botones 
-          //$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
-          //$("#paginas").append('<button id="agregar_persona" class="btn btn btn-dark" onclick="update_direccion(2,alumno,1);">agregar/actualizar</button>');
 
           $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(1)">atras</button><button type="button" class="btn btn-dark" onclick="update_direccion(2,alumno,1);">siguiente</button></div>');
         });

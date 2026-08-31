@@ -32,6 +32,13 @@ $id_madre     = intval($_GET['id_madre']     ?? 0);
 $id_matricula = intval($_GET['id_matricula'] ?? 0);
 $fecha_raw    = $_GET['fecha'] ?? date('Y-m-d');
 
+
+$mt = new matricula();
+$mt->get_matricula_id($id_matricula);
+
+$id_alumno = $mt->id_alumno;
+$fecha_raw = $mt->fecha;
+
 // Formateamos la fecha al estilo dd/mm/YYYY
 $fecha_obj = DateTime::createFromFormat('Y-m-d', $fecha_raw);
 $fecha     = $fecha_obj ? $fecha_obj->format('d/m/Y') : $fecha_raw;

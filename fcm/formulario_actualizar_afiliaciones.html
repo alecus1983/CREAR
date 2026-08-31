@@ -1,191 +1,550 @@
-<div class='container mt-5 agregar_personas'>
+<div id="formulario_actualizar_afiliaciones" class="container container-sm">
 
-    <form>
+    <style>
+        /* === Animación de entrada === */
+        @keyframes afilFadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0);    }
+        }
 
-        <div class='row mb-5'>
-            <div class='col col-12'>
-                <h1 class='display-6'>Datos de afiliaciones</h1>
+        /* === Pulso al recibir valor precargado === */
+        @keyframes afilPulse {
+            0%   { background-color: #d0e8ff; border-color: #7fb3f5; }
+            100% { background-color: #f8f9fa; border-color: #dee2e6; }
+        }
+        @keyframes afilPulseCheck {
+            0%   { box-shadow: 0 0 0 5px rgba(44,123,229,0.35); }
+            100% { box-shadow: 0 0 0 0   rgba(44,123,229,0);    }
+        }
+
+        /* === Card principal === */
+        #afil-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+            padding: 2rem 2.2rem 1.8rem;
+            animation: afilFadeIn 0.4s ease both;
+            border-top: 4px solid #17a589;
+        }
+
+        /* === Encabezado === */
+        #afil-card .afil-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.6rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        #afil-card .afil-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #17a589 0%, #0e7a66 100%);
+            color: #fff;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        #afil-card .afil-header h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+            color: #1a2b4a;
+        }
+
+        #afil-card .afil-header p {
+            font-size: 0.8rem;
+            color: #6b7a8d;
+            margin: 0;
+        }
+
+        /* === Separador de sección === */
+        .afil-section-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #17a589;
+            margin: 1.4rem 0 0.8rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1.5px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* === Grupos de campo con animación escalonada === */
+        #afil-card .field-group {
+            margin-bottom: 1.1rem;
+            opacity: 0;
+            animation: afilFadeIn 0.4s ease forwards;
+        }
+        #afil-card .field-group:nth-child(1)  { animation-delay: 0.04s; }
+        #afil-card .field-group:nth-child(2)  { animation-delay: 0.09s; }
+        #afil-card .field-group:nth-child(3)  { animation-delay: 0.14s; }
+        #afil-card .field-group:nth-child(4)  { animation-delay: 0.19s; }
+        #afil-card .field-group:nth-child(5)  { animation-delay: 0.24s; }
+        #afil-card .field-group:nth-child(6)  { animation-delay: 0.29s; }
+        #afil-card .field-group:nth-child(7)  { animation-delay: 0.34s; }
+        #afil-card .field-group:nth-child(8)  { animation-delay: 0.39s; }
+
+        /* === Etiquetas === */
+        #afil-card .field-label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        #afil-card .field-label .lbl-icon { color: #17a589; }
+
+        /* === Selects e inputs — siempre visibles === */
+        #afil-card .form-control {
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            padding: 0.55rem 0.85rem;
+            font-size: 0.92rem;
+            color: #212529;
+            background-color: #f8f9fa;
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.4s;
+        }
+        #afil-card .form-control:focus {
+            border-color: #17a589;
+            box-shadow: 0 0 0 3px rgba(23, 165, 137, 0.15);
+            background-color: #fff;
+            outline: none;
+        }
+        #afil-card .form-control.field-populated {
+            animation: afilPulse 0.8s ease forwards;
+        }
+
+        /* === Texto de ayuda === */
+        #afil-card .field-hint {
+            font-size: 0.73rem;
+            color: #8a9ab0;
+            margin-top: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* === Toggle switch para checkboxes === */
+        .afil-toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.65rem 0.9rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1.5px solid #dee2e6;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            user-select: none;
+            margin-bottom: 1rem;
+        }
+        .afil-toggle-row:hover {
+            border-color: #17a589;
+            background: #f0faf8;
+        }
+        .afil-toggle-row.checked {
+            border-color: #17a589;
+            background: #eafaf7;
+        }
+        .afil-toggle-row.pulse-check {
+            animation: afilPulseCheck 0.6s ease;
+        }
+
+        /* Switch visual */
+        .afil-switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+        .afil-switch input { opacity: 0; width: 0; height: 0; }
+        .afil-switch .slider {
+            position: absolute;
+            inset: 0;
+            background: #ced4da;
+            border-radius: 22px;
+            transition: background 0.25s;
+        }
+        .afil-switch .slider::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.25s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .afil-switch input:checked + .slider { background: #17a589; }
+        .afil-switch input:checked + .slider::before { transform: translateX(18px); }
+
+        .afil-toggle-label {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #495057;
+            flex: 1;
+        }
+        .afil-toggle-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.15rem 0.55rem;
+            border-radius: 20px;
+            background: #ced4da;
+            color: #6c757d;
+            transition: background 0.2s, color 0.2s;
+        }
+        .afil-toggle-row.checked .afil-toggle-badge {
+            background: #17a589;
+            color: #fff;
+        }
+
+        /* === Subsección condicional (aparece al activar toggle) === */
+        .afil-sub {
+            margin-left: 0.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid #e9ecef;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.35s ease, opacity 0.3s ease, margin-bottom 0.3s ease;
+            margin-bottom: 0;
+        }
+        .afil-sub.open {
+            max-height: 200px;
+            opacity: 1;
+            margin-bottom: 1rem;
+        }
+    </style>
+
+    <div id="afil-card">
+
+        <!-- Encabezado -->
+        <div class="afil-header">
+            <div class="afil-icon">🏥</div>
+            <div>
+                <h2>Datos de Afiliaciones</h2>
+                <p>Complete o actualice la información de afiliación y salud del estudiante</p>
             </div>
         </div>
 
-        <div class='row mb-3'>
+        <!-- ══ SECCIÓN 1: Social ══ -->
+        <div class="afil-section-title">📋 Información social</div>
 
-            <div class='col-md-6 col-sm-10'>
-                <label for='ac_sisben' class='form-label'>Sisben</label>
-                <select class='form-control' id='ac_sisben'>
-                    <option value='N' selected>ninguno</option>
-                    <option value='A'>Grupo A</option>
-                    <option value='B'>Grupo B</option>
-                    <option value='C'>Grupo C</option>
-                    <option value='D'>Grupo D</option>
-
-                </select>
-                <div id='ayuda_sisben' class='form-text'>agrege o actulize la afilici&oacute;n del sisben por favor.
+        <div class="row g-3">
+            <!-- Sisben -->
+            <div class="col-md-6">
+                <div class="field-group">
+                    <label class="field-label" for="ac_sisben">
+                        <span class="lbl-icon">🪪</span> SISBEN
+                    </label>
+                    <select class="form-control" id="ac_sisben" aria-label="SISBEN">
+                        <option value="N" selected>Ninguno</option>
+                        <option value="A">Grupo A</option>
+                        <option value="B">Grupo B</option>
+                        <option value="C">Grupo C</option>
+                        <option value="D">Grupo D</option>
+                    </select>
+                    <div class="field-hint"><span>ℹ️</span> Seleccione el grupo SISBEN.</div>
                 </div>
             </div>
 
-            <div class='col-md-6 col-sm-10'>
-                <label for='ac_vive_con' class='form-label'>Vive con:</label>
-                <select class='form-control' id='ac_vive_con'>
-                    <option value='N' selected>ninguno</option>
-                    <option value='A'>Ambos padres</option>
-                    <option value='B'>Solo madre</option>
-                    <option value='C'>Solo padre</option>
-                    <option value='D'>otro familiar</option>
-
-                </select>
-                <div id='ayuda_ac_estrato' class='form-text'>por favor serleccone la persona con la que vive.</div>
-            </div>
-
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-md-3 col-lg-3">
-                <label>Etnia</label>
-            </div>
-
-            <div class="col-md-1 col-lg-1">
-                <input type="checkbox" class="form-check-input" id="ac_etnia">
-            </div>
-
-            <div class="col-md-4 col-sm-10">
-                <select class='form-control' id='ac_tipo_etnia'>
-
-                    <option value='indigena'>indigena</option>
-                    <option value='negritudes'>negritudes</option>
-                    <option value='gitano'>gitano</option>
-                    <option value='otro' selected>otro</option>
-
-                </select>
-                <div id="ayuda_etnia" class="form-text>">ingrese o actualize el grupo etnico</div>
-            </div>
-            <div class="col-md-4 col-sm-10">
-                <input class="form-control" id="ac_resguardo_consejo">
-                <div id="ayuda_resguardo_consejo" class="form-text>">ingrese o actualize el resguardo o consejo</div>
-            </div>
-
-        </div>
-
-        <div class="row mb-3">
-
-            <div class="col col-md-3 col-lg-3">
-                <label for='ac_familias_accion' class='form-label'>Familias en acci&oacute;n</label>
-
-            </div>
-            <div class="col col-md-1 col-lg-1">
-                <input value='' class='form-check-input' id='ac_familias_accion' aria-describedby='ac_familias_accion'
-                    type="checkbox">
-            </div>
-            <div class="col">
-
-            </div>
-        </div>
-
-
-        <div class="row mb-3">
-            <div class="col col-md-3 col-lg-3">
-
-                <label for='ac_victima_conflicto' class='form-label'>Victima del conflicto</label>
-            </div>
-
-            <div class="col col-md-1 col-lg-1">
-                <input value='' class='form-check-input' id='ac_tipo_victima_conflicto'
-                    aria-describedby='ac_tipo_victima_conflicto' type="checkbox">
-
-            </div>
-
-            <div class="col l-8 sm-8 md-8">
-                <input class='form-control' id='ac_municipio_expulsor' aria-describedby='ac_municipio_expulsor'>
-                <div id='ayuda_municipio_expulsor' class='form-text'>agrege o actulize el municipio expulsor favor.
+            <!-- Vive con -->
+            <div class="col-md-6">
+                <div class="field-group">
+                    <label class="field-label" for="ac_vive_con">
+                        <span class="lbl-icon">🏠</span> Vive con
+                    </label>
+                    <select class="form-control" id="ac_vive_con" aria-label="Vive con">
+                        <option value="N" selected>Ninguno</option>
+                        <option value="A">Ambos padres</option>
+                        <option value="B">Solo madre</option>
+                        <option value="C">Solo padre</option>
+                        <option value="D">Otro familiar</option>
+                    </select>
+                    <div class="field-hint"><span>👨‍👩‍👧</span> Seleccione con quién reside el estudiante.</div>
                 </div>
             </div>
-
-
         </div>
 
-        <div class="row mb-3">
-            <div class="col-sm-10 col-md-3 col-lg-3">
+        <!-- Familias en Acción -->
+        <label class="afil-toggle-row" id="row-familias-accion" for="ac_familias_accion">
+            <span class="afil-switch">
+                <input type="checkbox" id="ac_familias_accion">
+                <span class="slider"></span>
+            </span>
+            <span class="afil-toggle-label">Familias en Acción</span>
+            <span class="afil-toggle-badge" id="badge-familias">No</span>
+        </label>
 
-                <span for='ac_discapacitado' class='form-label'>Discapacitado</span>
-            </div>
+        <!-- ══ SECCIÓN 2: Salud ══ -->
+        <div class="afil-section-title">💉 Salud</div>
 
-            <div class="col-sm-2 col-md-1 col-lg-1">
-                <input value='true' class='form-check-input' id='ac_discapacitado' aria-describedby='ac_discapacitado'
-                    type="checkbox">
+        <!-- EPS / IPS -->
+        <label class="afil-toggle-row" id="row-regimen" for="ac_regimen_salud">
+            <span class="afil-switch">
+                <input type="checkbox" id="ac_regimen_salud">
+                <span class="slider"></span>
+            </span>
+            <span class="afil-toggle-label">Afiliado a régimen de salud (EPS/IPS)</span>
+            <span class="afil-toggle-badge" id="badge-regimen">No</span>
+        </label>
 
-            </div>
-
-            <div class="col-md-4 col-sm-10 col-lg-4">
-                <input class='form-control' id='ac_tipo_discapacidad' aria-describedby='ac_tipo_discapacidad'>
-                <div id='ayuda_tipo_discapacidad' class='form-text'>agrege o actulize el tipo de discapacidad
+        <div class="afil-sub" id="sub-regimen">
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label class="field-label" for="ac_eps">EPS</label>
+                    <input class="form-control" id="ac_eps" placeholder="Nombre de la EPS" autocomplete="off">
+                </div>
+                <div class="col-md-6">
+                    <label class="field-label" for="ac_ips">IPS</label>
+                    <input class="form-control" id="ac_ips" placeholder="Nombre de la IPS" autocomplete="off">
                 </div>
             </div>
-            <div class="col-md-4 col-sm-10 col-lg-4">
-                <input class='form-control' id='ac_capacidad_excepcional' aria-describedby='ac_capacidad_excepcional'>
-                <div id='ayuda_capacidad_excepcional' class='form-text'>agrege o actulize para una capacidad
-                    excepcional
+        </div>
+
+        <!-- Tipo de sangre -->
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="field-group">
+                    <label class="field-label">
+                        <span class="lbl-icon">🩸</span> Tipo de sangre
+                    </label>
+                    <div class="d-flex gap-2">
+                        <select class="form-control" id="ac_tipo_sangre" aria-label="Tipo de sangre" style="flex:2">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                            <option value="O" selected>O</option>
+                        </select>
+                        <select class="form-control" id="ac_rh" aria-label="RH" style="flex:1">
+                            <option value="+" selected>+</option>
+                            <option value="-">−</option>
+                        </select>
+                    </div>
+                    <div class="field-hint"><span>🔬</span> Tipo + factor RH.</div>
                 </div>
             </div>
-
         </div>
 
-        <div class="row mb-3">
-            <div class="col-sm-10 col-md-3 col-lg-3">
-                <label>EPS/IPS</label>
-            </div>
+        <!-- ══ SECCIÓN 3: Etnia ══ -->
+        <div class="afil-section-title">🌿 Etnia</div>
 
-            <div class="col-md-1 col-lg-1 col-sm-2">
-                <input type="checkbox" class="form-check-input" id="ac_regimen_salud">
-            </div>
+        <label class="afil-toggle-row" id="row-etnia" for="ac_etnia">
+            <span class="afil-switch">
+                <input type="checkbox" id="ac_etnia">
+                <span class="slider"></span>
+            </span>
+            <span class="afil-toggle-label">Pertenece a un grupo étnico</span>
+            <span class="afil-toggle-badge" id="badge-etnia">No</span>
+        </label>
 
-            <div class="col-sm-10 col-md-4 col-lg-4">
-                <input class="form-control" id="ac_eps" aria-describedby="ac_eps">
-                <div id="ayuda_eps" class="form-text>">ingrese o actualize la EPS</div>
-            </div>
-
-            <div class="col-sm-10 col-md-4 col-lg-4">
-                <input class="form-control" id="ac_ips" aria-describedby="ac_eips">
-                <div id="ayuda_ips" class="form-text>">ingrese o actualize la IPS</div>
-            </div>
-
-        </div>
-
-
-        <div class="row mb-3">
-            <div class="col-sm-10 col-md-4 col-lg-4">
-                <label>Tipo de sangre</label>
-            </div>
-
-            <div class="col-sm-10 col-md-4 col-lg-4">
-                <select class='form-control' id='ac_tipo_sangre'>
-
-                    <option value='A'>A</option>
-                    <option value='B'>B</option>
-                    <option value='AB'>AB</option>
-                    <option value='O' selected>O</option>
-
-                </select>
-            </div>
-
-            <div class="col-sm-10 col-md-4 col-lg-4">
-                <select class='form-control' id='ac_rh'>
-                    <option value='+' selected>+</option>
-                    <option value='-'>-</option>
-
-                </select>
+        <div class="afil-sub" id="sub-etnia">
+            <div class="row g-2">
+                <div class="col-md-5">
+                    <label class="field-label" for="ac_tipo_etnia">Tipo de etnia</label>
+                    <select class="form-control" id="ac_tipo_etnia" aria-label="Tipo de etnia">
+                        <option value="indigena">Indígena</option>
+                        <option value="negritudes">Negritudes</option>
+                        <option value="gitano">Gitano</option>
+                        <option value="otro" selected>Otro</option>
+                    </select>
+                </div>
+                <div class="col-md-7">
+                    <label class="field-label" for="ac_resguardo_consejo">Resguardo / Consejo comunitario</label>
+                    <input class="form-control" id="ac_resguardo_consejo" placeholder="Nombre del resguardo o consejo">
+                </div>
             </div>
         </div>
 
-        <div class="row mb-3">
-            <div class='col-md-4'>
-            </div>
-            <div class='col-md-4'>
+        <!-- ══ SECCIÓN 4: Condiciones especiales ══ -->
+        <div class="afil-section-title">♿ Condiciones especiales</div>
 
-            </div>
-            <div class='col-md-4'>
-                <br>
+        <!-- Víctima del conflicto -->
+        <label class="afil-toggle-row" id="row-victima" for="ac_tipo_victima_conflicto">
+            <span class="afil-switch">
+                <input type="checkbox" id="ac_tipo_victima_conflicto">
+                <span class="slider"></span>
+            </span>
+            <span class="afil-toggle-label">Víctima del conflicto armado</span>
+            <span class="afil-toggle-badge" id="badge-victima">No</span>
+        </label>
 
+        <div class="afil-sub" id="sub-victima">
+            <div class="row g-2">
+                <div class="col-12">
+                    <label class="field-label" for="ac_municipio_expulsor">Municipio expulsor</label>
+                    <input class="form-control" id="ac_municipio_expulsor" placeholder="Nombre del municipio expulsor">
+                </div>
             </div>
         </div>
-    </form>
-</div>
+
+        <!-- Discapacidad -->
+        <label class="afil-toggle-row" id="row-discapacidad" for="ac_discapacitado">
+            <span class="afil-switch">
+                <input type="checkbox" id="ac_discapacitado">
+                <span class="slider"></span>
+            </span>
+            <span class="afil-toggle-label">Presenta alguna discapacidad</span>
+            <span class="afil-toggle-badge" id="badge-discapacidad">No</span>
+        </label>
+
+        <div class="afil-sub" id="sub-discapacidad">
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label class="field-label" for="ac_tipo_discapacidad">Tipo de discapacidad</label>
+                    <input class="form-control" id="ac_tipo_discapacidad" placeholder="Ej: Visual, Auditiva...">
+                </div>
+                <div class="col-md-6">
+                    <label class="field-label" for="ac_capacidad_excepcional">Capacidad excepcional</label>
+                    <input class="form-control" id="ac_capacidad_excepcional" placeholder="Descripción si aplica">
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /#afil-card -->
+
+    <script>
+    (function () {
+
+        // ── Helpers ─────────────────────────────────────────────────────────────
+
+        /** Pulso de color en selects/inputs al recibir valor precargado */
+        function pulseField(id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove('field-populated');
+            void el.offsetWidth; // forzar reflow
+            el.classList.add('field-populated');
+            el.addEventListener('animationend', function () {
+                el.classList.remove('field-populated');
+            }, { once: true });
+        }
+
+        /** Actualiza el estado visual de una fila toggle (badge + clase CSS) */
+        function syncToggleRow(rowId, badgeId, checked) {
+            var row   = document.getElementById(rowId);
+            var badge = document.getElementById(badgeId);
+            if (!row || !badge) return;
+            if (checked) {
+                row.classList.add('checked');
+                badge.textContent = 'Sí';
+            } else {
+                row.classList.remove('checked');
+                badge.textContent = 'No';
+            }
+        }
+
+        /** Pulso en la fila toggle al recibir valor precargado */
+        function pulseToggleRow(rowId) {
+            var row = document.getElementById(rowId);
+            if (!row) return;
+            row.classList.remove('pulse-check');
+            void row.offsetWidth;
+            row.classList.add('pulse-check');
+            row.addEventListener('animationend', function () {
+                row.classList.remove('pulse-check');
+            }, { once: true });
+        }
+
+        /** Abre o cierra una sub-sección condicional */
+        function toggleSub(subId, open) {
+            var sub = document.getElementById(subId);
+            if (!sub) return;
+            if (open) { sub.classList.add('open'); }
+            else      { sub.classList.remove('open'); }
+        }
+
+        // ── Inicialización de toggles ────────────────────────────────────────────
+
+        var toggles = [
+            { checkId: 'ac_familias_accion',        rowId: 'row-familias-accion', badgeId: 'badge-familias',    subId: null                },
+            { checkId: 'ac_regimen_salud',           rowId: 'row-regimen',         badgeId: 'badge-regimen',     subId: 'sub-regimen'       },
+            { checkId: 'ac_etnia',                   rowId: 'row-etnia',           badgeId: 'badge-etnia',       subId: 'sub-etnia'         },
+            { checkId: 'ac_tipo_victima_conflicto',  rowId: 'row-victima',         badgeId: 'badge-victima',     subId: 'sub-victima'       },
+            { checkId: 'ac_discapacitado',           rowId: 'row-discapacidad',    badgeId: 'badge-discapacidad',subId: 'sub-discapacidad'  }
+        ];
+
+        toggles.forEach(function (t) {
+            var cb = document.getElementById(t.checkId);
+            if (!cb) return;
+
+            // Sincronizar visual con estado inicial del checkbox
+            syncToggleRow(t.rowId, t.badgeId, cb.checked);
+            if (t.subId) toggleSub(t.subId, cb.checked);
+
+            // Listener de cambio
+            cb.addEventListener('change', function () {
+                syncToggleRow(t.rowId, t.badgeId, cb.checked);
+                if (t.subId) toggleSub(t.subId, cb.checked);
+            });
+        });
+
+        // ── API pública: poblar desde get_afiliacion() de forma síncrona ────────
+        window.poblarFormularioAfiliaciones = function (datos) {
+            if (!datos) return;
+
+            // Selects con pulso
+            var selectores = ['ac_sisben', 'ac_vive_con', 'ac_tipo_sangre', 'ac_rh', 'ac_tipo_etnia'];
+            selectores.forEach(function (id) {
+                if (datos[id] !== undefined && datos[id] !== null) {
+                    var el = document.getElementById(id);
+                    if (el) { el.value = datos[id]; pulseField(id); }
+                }
+            });
+
+            // Inputs texto con pulso
+            var inputs = ['ac_eps', 'ac_ips', 'ac_resguardo_consejo', 'ac_municipio_expulsor',
+                          'ac_tipo_discapacidad', 'ac_capacidad_excepcional'];
+            inputs.forEach(function (id) {
+                if (datos[id] !== undefined && datos[id] !== null) {
+                    var el = document.getElementById(id);
+                    if (el) { el.value = datos[id] || ''; if (datos[id]) pulseField(id); }
+                }
+            });
+
+            // Checkboxes con sincronización visual y apertura de sub-secciones
+            toggles.forEach(function (t) {
+                // get_afiliacion usa las mismas claves que el checkId (sin 'ac_')
+                // pero los datos vienen con el mismo nombre
+                var key = t.checkId.replace('ac_', '');
+                // Mapa especial de claves de la respuesta AJAX
+                var keyMap = {
+                    'familias_accion':       'familias_accion',
+                    'regimen_salud':         'regimen_salud',
+                    'etnia':                 'etnia',
+                    'tipo_victima_conflicto':'tipo_victima_conflicto',
+                    'discapacitado':         'discapacitado'
+                };
+                var respKey = keyMap[key];
+                if (respKey === undefined || datos[respKey] === undefined) return;
+
+                var cb      = document.getElementById(t.checkId);
+                var checked = datos[respKey] === 1 || datos[respKey] === true;
+                if (cb) {
+                    cb.checked = checked;
+                    syncToggleRow(t.rowId, t.badgeId, checked);
+                    if (t.subId) toggleSub(t.subId, checked);
+                    pulseToggleRow(t.rowId);
+                }
+            });
+        };
+
+    })();
+    </script>
+
+</div><!-- /#formulario_actualizar_afiliaciones -->

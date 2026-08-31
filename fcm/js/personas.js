@@ -1038,61 +1038,47 @@ function get_afiliacion(id_persona, form) {
                 // Validamos según el formulario agregar persona
                 if (form === 2) {
 
-                    // Asignar SISBEN
-                    let sisben = respuesta["sisben"] || "N";
-                    $("#ac_sisben").val(sisben);
-
-                    // Asignar con quién vive
-                    let viveCon = respuesta["vive_con"] || "N";
-                    $("#ac_vive_con").val(viveCon);
-
-                    // Propiedad `checked` para etnia
-                    respuesta["etnia"] === 1 ? $("#ac_etnia").prop("checked", true) : $("#ac_etnia").prop("checked", false);
-
-                    // Asignar el tipo de etnia
-                    let tipoetnia = respuesta["tipo_etnia"] || "otro";
-                    $("#ac_tipo_etnia").val(tipoetnia);
-                    // asignar resguardo o consejo comunitario
-                    $("#ac_resguardo_consejo").val(respuesta["resguardo_consejo"]);
-
-                    // Propiedad `checked` para familias en accion
-                    respuesta["familias_accion"] === 1 ? $("#ac_familias_accion").prop("checked", true) : $("#ac_familias_accion").prop("checked", false);
-
-                    // Propiedad `checked` para victima del conflicto
-                    if (respuesta["tipo_victima_conflicto"] == 1) { $("#ac_tipo_victima_conflicto").prop("checked", true) }
-
-                    else { $("#ac_tipo_victima_conflicto").prop("checked", false) };
-
-                    // asignar municipio_expulsor	
-                    $("#ac_municipio_expulsor").val(respuesta["municipio_expulsor"]);
-
-                    // Propiedad `checked` para discapacitado
-                    respuesta["discapacitado"] === 1 ? $("#ac_discapacitado").prop("checked", true) : $("#ac_discapacitado").prop("checked", false);
-
-                    // asignar tipo_discapacidad		
-                    $("#ac_tipo_discapacidad").val(respuesta["tipo_discapacidad"]);
-
-                    // asignar tipo_discapacidad		
-                    $("#ac_capacidad_excepcional").val(respuesta["capacidad_excepcional"]);
-
-                    // Propiedad `checked` para regimen_salud
-                    respuesta["regimen_salud"] === 1 ? $("#ac_regimen_salud").prop("checked", true) : $("#ac_regimen_salud").prop("checked", false);
-
-                    // asignar eps		
-                    $("#ac_eps").val(respuesta["eps"]);
-
-                    // asignar ips		
-                    $("#ac_ips").val(respuesta["ips"]);
-
-                    // Asignar con el tipo de sangre
-                    let tiposangre = respuesta["tipo_sangre"] || "O";
-                    $("#ac_tipo_sangre").val(tiposangre);
-
-                    // Asignar con el tipo de sangre
-                    let rh = respuesta["rh"] || "+";
-                    $("#ac_rh").val(rh);
-
-                }
+                    // Poblar el formulario de forma SÍNCRONA usando la función
+                    // expuesta por formulario_actualizar_afiliaciones.html.
+                    // Mapear claves de respuesta a las esperadas por poblarFormularioAfiliaciones.
+                    if (typeof poblarFormularioAfiliaciones === 'function') {
+                        poblarFormularioAfiliaciones({
+                            ac_sisben:                respuesta["sisben"]                  || "N",
+                            ac_vive_con:              respuesta["vive_con"]                || "N",
+                            ac_tipo_sangre:           respuesta["tipo_sangre"]             || "O",
+                            ac_rh:                    respuesta["rh"]                      || "+",
+                            ac_tipo_etnia:            respuesta["tipo_etnia"]              || "otro",
+                            ac_eps:                   respuesta["eps"],
+                            ac_ips:                   respuesta["ips"],
+                            ac_resguardo_consejo:     respuesta["resguardo_consejo"],
+                            ac_municipio_expulsor:    respuesta["municipio_expulsor"],
+                            ac_tipo_discapacidad:     respuesta["tipo_discapacidad"],
+                            ac_capacidad_excepcional: respuesta["capacidad_excepcional"],
+                            // Checkboxes (el formulario espera 1 o true)
+                            familias_accion:          respuesta["familias_accion"],
+                            regimen_salud:            respuesta["regimen_salud"],
+                            etnia:                    respuesta["etnia"],
+                            tipo_victima_conflicto:   respuesta["tipo_victima_conflicto"],
+                            discapacitado:            respuesta["discapacitado"]
+                        });
+                    } else {
+                        // Fallback seguro si el script del formulario aún no cargó
+                        $("#ac_sisben").val(respuesta["sisben"] || "N");
+                        $("#ac_vive_con").val(respuesta["vive_con"] || "N");
+                        $("#ac_tipo_etnia").val(respuesta["tipo_etnia"] || "otro");
+                        $("#ac_resguardo_consejo").val(respuesta["resguardo_consejo"]);
+                        $("#ac_familias_accion").prop("checked", respuesta["familias_accion"] === 1);
+                        $("#ac_tipo_victima_conflicto").prop("checked", respuesta["tipo_victima_conflicto"] == 1);
+                        $("#ac_municipio_expulsor").val(respuesta["municipio_expulsor"]);
+                        $("#ac_discapacitado").prop("checked", respuesta["discapacitado"] === 1);
+                        $("#ac_tipo_discapacidad").val(respuesta["tipo_discapacidad"]);
+                        $("#ac_capacidad_excepcional").val(respuesta["capacidad_excepcional"]);
+                        $("#ac_regimen_salud").prop("checked", respuesta["regimen_salud"] === 1);
+                        $("#ac_eps").val(respuesta["eps"]);
+                        $("#ac_ips").val(respuesta["ips"]);
+                        $("#ac_tipo_sangre").val(respuesta["tipo_sangre"] || "O");
+                        $("#ac_rh").val(respuesta["rh"] || "+");
+                    }
 
             } else {
                 // Manejo de errores según el código de estado
