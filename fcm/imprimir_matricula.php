@@ -26,9 +26,9 @@ require_once('datos.php');
 // ──────────────────────────────────────────────────────────────────────────────
 // Parámetros
 // ──────────────────────────────────────────────────────────────────────────────
-$id_alumno    = intval($_GET['id_alumno']    ?? 0);
-$id_padre     = intval($_GET['id_padre']     ?? 0);
-$id_madre     = intval($_GET['id_madre']     ?? 0);
+//$id_alumno    = intval($_GET['id_alumno']    ?? 0);
+//$id_padre     = intval($_GET['id_padre']     ?? 0);
+//$id_madre     = intval($_GET['id_madre']     ?? 0);
 $id_matricula = intval($_GET['id_matricula'] ?? 0);
 $fecha_raw    = $_GET['fecha'] ?? date('Y-m-d');
 
@@ -43,6 +43,17 @@ $fecha_raw = $mt->fecha;
 $fecha_obj = DateTime::createFromFormat('Y-m-d', $fecha_raw);
 $fecha     = $fecha_obj ? $fecha_obj->format('d/m/Y') : $fecha_raw;
 
+//obtengo los atributos de la clase padre
+$alumno = new alumnos();
+// obtego 
+$id_padre = $alumno->get_padre_alumno($id_alumno);
+$id_madre = $alumno->get_madre_alumno($id_alumno);
+
+$padre_per = new personas();
+$padre_per->get_persona_por_id($id_padre);
+
+$madre_per = new personas();
+$madre_per->get_persona_por_id($id_madre);
 // ──────────────────────────────────────────────────────────────────────────────
 // Helper: UTF-8 → ISO-8859-1  (necesario para FPDF/tFPDF en modo no-unicode)
 // ──────────────────────────────────────────────────────────────────────────────
@@ -97,18 +108,11 @@ $cu_obj->get_curso_por_id($mt_obj->id_curso ?? 0);
 // ──────────────────────────────────────────────────────────────────────────────
 // Obtener datos del padre
 // ──────────────────────────────────────────────────────────────────────────────
-$padre_per = new personas();
-if ($id_padre > 0) {
-    $padre_per->get_persona_por_id($id_padre);
-}
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Obtener datos de la madre
 // ──────────────────────────────────────────────────────────────────────────────
-$madre_per = new personas();
-if ($id_madre > 0) {
-    $madre_per->get_persona_por_id($id_madre);
-}
+
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Clase PDF personalizada
@@ -336,14 +340,25 @@ $pdf->Cell(10, 6, enc($al_obj->sisben ?? ''), 1, 0, 'L', true);
 
 $pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(30, 6, enc('Renta ciudadana' !== '' ? 'Renta ciudadana' . ':' : ''), 1, 0, 'L', true);
-$pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(10, 6, enc($al_obj->familias_accion ?? ''), 1, 0, 'L', true);
+
+if ($al_obj->familias_accion == 1) {
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->Cell(10, 6, enc('Si'), 1, 0, 'L', true);
+} else {
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->Cell(10, 6, enc('No'), 1, 0, 'L', true);
+}
 
 
 $pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(30, 6, enc('Regimen de salud' !== '' ? 'Regimen de salud' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(9, 6, enc($al_obj->regimen_salud ?? ''), 1, 0, 'L', true);
+
+if ($al_obj->regimen_salud == 1) {
+    $pdf->Cell(9, 6, enc('Si'), 1, 0, 'L', true);
+} else {
+    $pdf->Cell(9, 6, enc('No'), 1, 0, 'L', true);
+}
 
 $pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(10, 6, enc('EPS' !== '' ? 'EPS' . ':' : ''), 1, 0, 'L', true);
@@ -374,12 +389,16 @@ $pdf->Cell(10, 6, enc($al_obj->rh ?? ''), 1, 0, 'L', true);
 //$pdf->Cell(10, 6, enc($al_obj->victima_conflicto ?? ''), 1, 0, 'L', true);
 
 $pdf->SetFillColor(220, 220, 220);
-$pdf->Cell(24, 6, enc('Victima del conflicto armado' !== '' ? 'Victima del conflicto armado' . ':' : ''), 1, 0, 'L', true);
+$pdf->Cell(30, 6, enc('Victima del conflicto armado' !== '' ? 'Victima del conflicto armado' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(20, 6, enc($al_obj->tipo_victima_conflicto ?? ''), 1, 0, 'L', true);
+if ($al_obj->victima_conflicto) {
+    $pdf->Cell(20, 6, enc('Si'), 1, 0, 'L', true);
+} else {
+    $pdf->Cell(20, 6, enc('No'), 1, 0, 'L', true);
+}
 
 $pdf->SetFillColor(220, 220, 220);
-$pdf->Cell(28, 6, enc('Municipio expulsor' !== '' ? 'Municipio expulsor' . ':' : ''), 1, 0, 'L', true);
+$pdf->Cell(30, 6, enc('Municipio expulsor' !== '' ? 'Municipio expulsor' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
 $pdf->Cell(30, 6, enc($al_obj->municipio_expulsor ?? ''), 1, 0, 'L', true);
 
@@ -389,7 +408,12 @@ $pdf->Ln();
 $pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(25, 6, enc('Discapacitado' !== '' ? 'Discapacitado' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(10, 6, enc($al_obj->discapacitado ?? ''), 1, 0, 'L', true);
+
+if ($al_obj->discapacitado) {
+    $pdf->Cell(10, 6, enc('Si'), 1, 0, 'L', true);
+} else {
+    $pdf->Cell(10, 6, enc('No'), 1, 0, 'L', true);
+}
 
 $pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(35, 6, enc('Tipo de discapacidad' !== '' ? 'Tipo de discapacidad' . ':' : ''), 1, 0, 'L', true);
@@ -405,14 +429,19 @@ $pdf->Cell(40, 6, enc($al_obj->capacidad_excepcional ?? ''), 1, 0, 'L', true);
 $pdf->Ln();
 
 $pdf->SetFillColor(220, 220, 220);
-$pdf->Cell(30, 6, enc('Etnia' !== '' ? 'Etnia' . ':' : ''), 1, 0, 'L', true);
+$pdf->Cell(32, 6, enc('Etnia' !== '' ? 'Etnia' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(10, 6, enc($al_obj->etnia ?? ''), 1, 0, 'L', true);
+
+if ($al_obj->etnia) {
+    $pdf->Cell(10, 6, enc('Si'), 1, 0, 'L', true);
+} else {
+    $pdf->Cell(10, 6, enc('No'), 1, 0, 'L', true);
+}
 
 $pdf->SetFillColor(220, 220, 220);
-$pdf->Cell(20, 6, enc('Tipo de etnia' !== '' ? 'Tipo de etnia' . ':' : ''), 1, 0, 'L', true);
+$pdf->Cell(23, 6, enc('Tipo de etnia' !== '' ? 'Tipo de etnia' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(41, 6, enc($al_obj->tipo_etnia ?? ''), 1, 0, 'L', true);
+$pdf->Cell(30, 6, enc($al_obj->tipo_etnia ?? ''), 1, 0, 'L', true);
 
 $pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(20, 6, enc('Resguardo' !== '' ? 'Resguardo' . ':' : ''), 1, 0, 'L', true);

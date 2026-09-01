@@ -94,31 +94,42 @@ class matricula extends curso
      */
     public function set_matricula()
     {
-        $sql = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, id_curso, mes, retiro, year)
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
+        //Graba la fecha y hora actual en la columna `fecha` de la tabla `matricula`.
+        $fecha_actual = new DateTime();
+        //formato 2026-08-31 21:15:28
+        $this->fecha = $fecha_actual->format('Y-m-d H:i:s');
+        // consulta SQL con prepared statement
+        $sql = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, id_curso, mes, retiro, year, fecha)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
+        // Prepara el statement 
         $stmt = $this->_db->prepare($sql);
+        // Si no se puede preparar el statement, devuelve false
         if (!$stmt) {
             return false;
         }
-
+        // Vincula los parámetros a la consulta preparada
         $stmt->bind_param(
-            'iiiiiii',
+            'iiiiiiis',
             $this->id_alumno,
             $this->id_grado,
             $this->id_jornada,
             $this->id_curso,
             $this->mes,
             $this->retiro,
-            $this->year
+            $this->year,
+            $this->fecha
         );
 
+        // Ejecuta el statement
         $resultado = $stmt->execute();
         if ($resultado) {
             // Guardar el ID generado en la propiedad pública $id
             $this->id = $this->_db->insert_id;
         }
+        // Cierra el statement
         $stmt->close();
+        // Devuelve el resultado de la ejecución
         return $resultado;
     }
 

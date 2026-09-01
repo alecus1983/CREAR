@@ -601,10 +601,9 @@ function gestion_matriculas(item) {
           // establece el codigo de alumno
           verificar_alumno(alumno["id_persona"]);
 
-          matricular(function (id_matricula, fecha) {
+          matricular(function (id_matricula) {
             alumno['ultima_matricula_id'] = id_matricula;
-            alumno['ultima_matricula_fecha'] = fecha;
-            imprimir_matricula(id_matricula, fecha);
+            imprimir_matricula(id_matricula);
           });
 
           $("#paginas").html("<p>Se ha completado la matrícula del alumno ");
@@ -614,7 +613,7 @@ function gestion_matriculas(item) {
             '<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2">' +
             '<button type="button" class="btn btn-dark" onclick="gestion_matriculas(1)">Nueva Matrícula</button>' +
             '<button type="button" class="btn btn-outline-success" ' +
-            'onclick="imprimir_matricula(alumno[\'ultima_matricula_id\'], alumno[\'ultima_matricula_fecha\'])">' +
+            'onclick="imprimir_matricula(alumno[\'ultima_matricula_id\'])">' +
             'Ver PDF Matrícula' +
             '</button>' +
             '</div>'
@@ -1323,16 +1322,11 @@ function update_afiliaciones(ea) {
  * `alumno`, `padre` y `madre` definidos en fc_admin.js.
  *
  * @param {number} [id_matricula] - ID de la matrícula en la tabla matricula.
- * @param {string} [fecha]        - Fecha de matrícula (formato YYYY-MM-DD).
  */
-function imprimir_matricula(id_matricula, fecha) {
+function imprimir_matricula(id_matricula) {
   // Construir los parámetros de la URL para el generador de PDF
   const params = new URLSearchParams({
-    id_alumno: alumno['id_alumno'] || 0,
-    id_padre: padre['id_persona'] || 0,
-    id_madre: madre['id_persona'] || 0,
-    id_matricula: id_matricula || 0,
-    fecha: fecha || new Date().toISOString().slice(0, 10)
+    id_matricula: id_matricula || 0
   });
 
   // Abre el PDF en una nueva pestaña del navegador

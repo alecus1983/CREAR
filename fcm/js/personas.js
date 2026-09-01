@@ -1043,23 +1043,23 @@ function get_afiliacion(id_persona, form) {
                     // Mapear claves de respuesta a las esperadas por poblarFormularioAfiliaciones.
                     if (typeof poblarFormularioAfiliaciones === 'function') {
                         poblarFormularioAfiliaciones({
-                            ac_sisben:                respuesta["sisben"]                  || "N",
-                            ac_vive_con:              respuesta["vive_con"]                || "N",
-                            ac_tipo_sangre:           respuesta["tipo_sangre"]             || "O",
-                            ac_rh:                    respuesta["rh"]                      || "+",
-                            ac_tipo_etnia:            respuesta["tipo_etnia"]              || "otro",
-                            ac_eps:                   respuesta["eps"],
-                            ac_ips:                   respuesta["ips"],
-                            ac_resguardo_consejo:     respuesta["resguardo_consejo"],
-                            ac_municipio_expulsor:    respuesta["municipio_expulsor"],
-                            ac_tipo_discapacidad:     respuesta["tipo_discapacidad"],
+                            ac_sisben: respuesta["sisben"] || "N",
+                            ac_vive_con: respuesta["vive_con"] || "N",
+                            ac_tipo_sangre: respuesta["tipo_sangre"] || "O",
+                            ac_rh: respuesta["rh"] || "+",
+                            ac_tipo_etnia: respuesta["tipo_etnia"] || "otro",
+                            ac_eps: respuesta["eps"],
+                            ac_ips: respuesta["ips"],
+                            ac_resguardo_consejo: respuesta["resguardo_consejo"],
+                            ac_municipio_expulsor: respuesta["municipio_expulsor"],
+                            ac_tipo_discapacidad: respuesta["tipo_discapacidad"],
                             ac_capacidad_excepcional: respuesta["capacidad_excepcional"],
                             // Checkboxes (el formulario espera 1 o true)
-                            familias_accion:          respuesta["familias_accion"],
-                            regimen_salud:            respuesta["regimen_salud"],
-                            etnia:                    respuesta["etnia"],
-                            tipo_victima_conflicto:   respuesta["tipo_victima_conflicto"],
-                            discapacitado:            respuesta["discapacitado"]
+                            familias_accion: respuesta["familias_accion"],
+                            regimen_salud: respuesta["regimen_salud"],
+                            etnia: respuesta["etnia"],
+                            tipo_victima_conflicto: respuesta["tipo_victima_conflicto"],
+                            discapacitado: respuesta["discapacitado"]
                         });
                     } else {
                         // Fallback seguro si el script del formulario aún no cargó
@@ -1080,15 +1080,16 @@ function get_afiliacion(id_persona, form) {
                         $("#ac_rh").val(respuesta["rh"] || "+");
                     }
 
-            } else {
-                // Manejo de errores según el código de estado
-                let mensaje = "Hubo un error desconocido.";
-                if (respuesta['status'] == 20) {
-                    mensaje = respuesta["mensaje"];
-                } else if (respuesta['status'] == 21) {
-                    mensaje = respuesta["mensaje"];
+                } else {
+                    // Manejo de errores según el código de estado
+                    let mensaje = "Hubo un error desconocido.";
+                    if (respuesta['status'] == 20) {
+                        mensaje = respuesta["mensaje"];
+                    } else if (respuesta['status'] == 21) {
+                        mensaje = respuesta["mensaje"];
+                    }
+                    swal('Error', mensaje, 'error');
                 }
-                swal('Error', mensaje, 'error');
             }
         },
         error: function (xhr, status) {
