@@ -11,26 +11,63 @@ class u_alumnos extends personas
         parent::__construct();
     }
 
-    // Método para agregar un registro
+    /**
+     * Obtiene el siguiente id_alumnos disponible (MAX + 1).
+     * Necesario porque la columna no tiene AUTO_INCREMENT.
+     *
+     * @return int
+     */
+    private function get_next_id(): int
+    {
+        $res = $this->_db->query("SELECT COALESCE(MAX(id_alumnos), 0) + 1 AS next_id FROM u_alumnos");
+        $row = $res->fetch_assoc();
+        return (int) ($row['next_id'] ?? 1);
+    }
+
+    /**
+     * Agrega un alumno a la tabla u_alumnos con un id_alumnos calculado
+     * (MAX + 1) y actualiza la columna u_alumnos en personas.
+     *
+     * @param  int        $id_personas  ID de la persona a registrar como alumno.
+     * @return int|string               ID del nuevo alumno o mensaje de error.
+     */
     public function add_alumno($id_personas)
     {
+        // 1. Verificar si ya existe un registro para esta persona
+        $existe = $this->get_alumno_persona($id_personas);
+        if ($existe && isset($existe['id_alumnos'])) {
+            // Ya existe — devolvemos el id_alumnos existente
+            return (int) $existe['id_alumnos'];
+        }
 
-        // actualizo la fecha actual
-        $fecha = date("Y-m-d");
+        // 2. Calcular el siguiente id_alumnos disponible
+        $nuevo_id = $this->get_next_id();
+        $fecha    = date('Y-m-d');
 
-        $sql = "INSERT INTO u_alumnos (id_personas, fecha) VALUES (?, ?)";
+        // 3. Insertar en u_alumnos con id_alumnos explícito
+        $sql  = "INSERT INTO u_alumnos (id_alumnos, id_personas, fecha) VALUES (?, ?, ?)";
         $stmt = $this->_db->prepare($sql);
         if (!$stmt) {
-            return "Error en la preparación de la consulta: " . $this->_db->error;
+            return 'Error preparando INSERT en u_alumnos: ' . $this->_db->error;
         }
-        $stmt->bind_param("is", $id_personas, $fecha);
-        $stmt->execute();
-        if ($stmt->affected_rows > 0) {
+        $stmt->bind_param('iis', $nuevo_id, $id_personas, $fecha);
+        if (!$stmt->execute()) {
+            $err = $stmt->error;
             $stmt->close();
-            return $this->_db->insert_id;
+            return 'Error ejecutando INSERT en u_alumnos: ' . $err;
         }
         $stmt->close();
-        return "";
+
+        // 4. Actualizar la columna u_alumnos en la tabla personas
+        $sql2  = "UPDATE personas SET u_alumnos = ? WHERE id_personas = ?";
+        $stmt2 = $this->_db->prepare($sql2);
+        if ($stmt2) {
+            $stmt2->bind_param('ii', $nuevo_id, $id_personas);
+            $stmt2->execute();
+            $stmt2->close();
+        }
+
+        return $nuevo_id;
     }
 
     // Método para eliminar un registro

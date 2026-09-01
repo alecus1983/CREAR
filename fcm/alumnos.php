@@ -1,16 +1,17 @@
-<?php 
+<?php
 
 // Clase que define a los alumnos
 // Deriva de la clase personas
 // Implementa mejoras de seguridad, manejo de errores y refactorización.
 
-class alumnos extends personas {
+class alumnos extends personas
+{
 
-    public $id_alumno;// codigo del alumno
+    public $id_alumno; // codigo del alumno
     public $login; // login del alumno
     public $fecha; // fecha de caducidad de la matricula
-    
-        /**
+
+    /**
      * Resumen de los métodos de la clase alumnos:
      *
      * - __construct(int $codigo): Constructor de la clase. Inicializa los atributos del alumno a partir de su ID.
@@ -32,74 +33,73 @@ class alumnos extends personas {
     //  constructor de la clase
 
 
-    public function __construct() {
-    // Heredar del constructor padre
-    parent::__construct();
-
+    public function __construct()
+    {
+        // Heredar del constructor padre
+        parent::__construct();
     }
 
     // funcion que obtiene los parametros de un
     // alumno nuevo o existente a partir del codigo
     // de la persona $id_persona
-    
-    public function get_alumno_persona($id_persona){
 
-    try {
-        // 1. Validar que el ID sea numérico
-        if (!is_numeric($id_persona)) {
-            throw new InvalidArgumentException("El código de la persona debe ser un valor numérico.");
-        }
+    public function get_alumno_persona($id_persona)
+    {
 
-        // 2. Cargar los datos de la persona desde la clase padre
-        parent::get_persona_por_id($id_persona);
-
-        //echo $this->id_persona;
-
-        // 3. Verificar si la persona fue encontrada
-        if (!empty($this->id_persona)) {
-            
-            // 4. Buscar el ID del alumno asociado a la persona
-            $q = "SELECT id_alumnos FROM u_alumnos WHERE id_personas = ? LIMIT 1";
-            //echo $q;
-            $stmt = $this->_db->prepare($q);
-
-            if ($stmt === false) {
-                throw new Exception("Error al preparar la consulta para buscar alumno: " . $this->_db->error);
+        try {
+            // 1. Validar que el ID sea numérico
+            if (!is_numeric($id_persona)) {
+                throw new InvalidArgumentException("El código de la persona debe ser un valor numérico.");
             }
 
-           
-            $stmt->bind_param("i", $this->id_persona);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $alumno_data = $result->fetch_assoc(); // Usar fetch_assoc es común
+            // 2. Cargar los datos de la persona desde la clase padre
+            parent::get_persona_por_id($id_persona);
 
-            // 5. Asignar ID si el alumno existe, o crearlo si no
-            if ($alumno_data) {
-                $this->id_alumno = $alumno_data['id_alumnos'];
-                
-            } else {
-                // Lógica para insertar un nuevo alumno (ejemplo)
-                // echo "Lógica para insertar un nuevo alumno aquí.";
-                
-                $insert_q = "INSERT INTO u_alumnos
+            //echo $this->id_persona;
+
+            // 3. Verificar si la persona fue encontrada
+            if (!empty($this->id_persona)) {
+
+                // 4. Buscar el ID del alumno asociado a la persona
+                $q = "SELECT id_alumnos FROM u_alumnos WHERE id_personas = ? LIMIT 1";
+                //echo $q;
+                $stmt = $this->_db->prepare($q);
+
+                if ($stmt === false) {
+                    throw new Exception("Error al preparar la consulta para buscar alumno: " . $this->_db->error);
+                }
+
+
+                $stmt->bind_param("i", $this->id_persona);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $alumno_data = $result->fetch_assoc(); // Usar fetch_assoc es común
+
+                // 5. Asignar ID si el alumno existe, o crearlo si no
+                if ($alumno_data) {
+                    $this->id_alumno = $alumno_data['id_alumnos'];
+                } else {
+                    // Lógica para insertar un nuevo alumno (ejemplo)
+                    // echo "Lógica para insertar un nuevo alumno aquí.";
+
+                    $insert_q = "INSERT INTO u_alumnos
                             (id_personas, fecha) VALUES (?, NOW())";
 
-                // echo $insert_q;
-                $insert_stmt = $this->_db->prepare($insert_q);
-                $insert_stmt->bind_param("i", $this->id_persona);
-                $insert_stmt->execute();
-                $this->id_alumno = $this->_db->insert_id; // Obtener el ID del nuevo alumno insertado
-                
-            }
-        } else {
-            throw new Exception("No se encontró una persona con el ID proporcionado: " . $id_persona);
-        }
+                    // echo $insert_q;
+                    $insert_stmt = $this->_db->prepare($insert_q);
+                    $insert_stmt->bind_param("i", $this->id_persona);
+                    $insert_stmt->execute();
+                    $this->id_alumno = $this->_db->insert_id; // Obtener el ID del nuevo alumno insertado
 
-    } catch (Exception $e) {
-        error_log("Error en el constructor de Alumnos: " . $e->getMessage());
-        // Dependiendo de la aplicación, podrías querer relanzar la excepción
-        // throw $e;
-    }
+                }
+            } else {
+                throw new Exception("No se encontró una persona con el ID proporcionado: " . $id_persona);
+            }
+        } catch (Exception $e) {
+            error_log("Error en el constructor de Alumnos: " . $e->getMessage());
+            // Dependiendo de la aplicación, podrías querer relanzar la excepción
+            // throw $e;
+        }
     }
 
     /**
@@ -107,48 +107,141 @@ class alumnos extends personas {
      * 
      * @param int $id_alumno El ID del alumno.
      */
-    public function get_alumno_codigo($id_alumno){
+    public function get_alumno_codigo($id_alumno)
+    {
 
         try {
-            
-        if (!empty($id_alumno)) {
-            
-            // 1. Buscar el ID de la persona  asociado al alumno
-            $q = "SELECT id_personas FROM u_alumnos WHERE id_alumnos = ? LIMIT 1";
-            // prepara la consulta
-            $stmt = $this->_db->prepare($q);
 
-            if ($stmt === false) {
-                throw new Exception("Error al preparar la consulta para buscar persona: " . $this->_db->error);
+            if (!empty($id_alumno)) {
+
+                // 1. Buscar el ID de la persona  asociado al alumno
+                $q = "SELECT id_personas FROM u_alumnos WHERE id_alumnos = ? LIMIT 1";
+                // prepara la consulta
+                $stmt = $this->_db->prepare($q);
+
+                if ($stmt === false) {
+                    throw new Exception("Error al preparar la consulta para buscar persona: " . $this->_db->error);
+                }
+
+
+                $stmt->bind_param("i", $id_alumno);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $alumno_data = $result->fetch_assoc(); // Usar fetch_assoc es común
+                //echo var_dump($alumno_data);
+                if ($alumno_data) {
+                    $this->id_persona = $alumno_data['id_personas'];
+                    $this->id_alumno = $id_alumno;
+                    parent::get_persona_por_id($this->id_persona);
+                } else {
+                    throw new Exception("No se encontró una persona con el ID proporcionado: " . $id_alumno);
+                }
+                //$stmt->close();  
+            } else {
+                throw new Exception("El código del alumno no es válido.");
             }
-
-           
-            $stmt->bind_param("i", $id_alumno);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $alumno_data = $result->fetch_assoc(); // Usar fetch_assoc es común
-            //echo var_dump($alumno_data);
-            if ($alumno_data) {
-                $this->id_persona = $alumno_data['id_personas'];
-                $this->id_alumno = $id_alumno;
-                parent::get_persona_por_id($this->id_persona);
-            }else{
-                throw new Exception("No se encontró una persona con el ID proporcionado: " . $id_alumno);
-            }
-            //$stmt->close();  
-        }else{
-            throw new Exception("El código del alumno no es válido.");
-        }
-
         } catch (Exception $e) {
-        error_log("Error en optener los datos de la persona a partir del codigo del alumno: " . $e->getMessage());
-        // Dependiendo de la aplicación, podrías querer relanzar la excepción
-        // throw $e;
+            error_log("Error en optener los datos de la persona a partir del codigo del alumno: " . $e->getMessage());
+            // Dependiendo de la aplicación, podrías querer relanzar la excepción
+            // throw $e;
 
         }
-        
     }
-    
+
+    public function get_padre_alumno(int $id_alumno)
+    {
+
+
+        try {
+
+            if (!empty($id_alumno)) {
+
+                // 1. Buscar el ID de la persona del padre asociado al alumno
+                // consulta
+                $q = "SELECT p.id_personas FROM padres p
+                      INNER JOIN u_alumnos ua ON p.id_hijo = ua.id_personas
+                      WHERE ua.id_alumnos = ?";
+
+                // prepara la consulta
+                $stmt = $this->_db->prepare($q);
+
+                //si hay un error al preparar la consulta
+                if ($stmt === false) {
+                    throw new Exception("Error al preparar la consulta para buscar padre: " . $this->_db->error);
+                }
+
+
+                $stmt->bind_param("i", $id_alumno);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $alumno_data = $result->fetch_assoc(); // Usar fetch_assoc es común
+                //echo var_dump($alumno_data);
+                if ($alumno_data) {
+                    return $alumno_data['id_personas'];
+                    //$this->id_alumno = $id_alumno;
+                    //parent::get_persona_por_id($this->id_persona);
+                } else {
+                    throw new Exception("No se encontró una persona con el ID proporcionado: " . $id_alumno);
+                }
+                //$stmt->close();  
+            } else {
+                throw new Exception("El código del alumno no es válido.");
+            }
+        } catch (Exception $e) {
+            error_log("Error en optener los datos de la persona a partir del codigo del alumno: " . $e->getMessage());
+            // Dependiendo de la aplicación, podrías querer relanzar la excepción
+            // throw $e;
+
+        }
+    }
+
+    // obtengo la madre del alumno
+    public function get_madre_alumno(int $id_alumno)
+    {
+
+
+        try {
+
+            if (!empty($id_alumno)) {
+
+                // 1. Buscar el ID de la persona de la madre asociada al alumno
+                // consulta
+                $q = "SELECT m.id_personas FROM madres m
+                      INNER JOIN u_alumnos ua ON m.id_hijo = ua.id_personas
+                      WHERE ua.id_alumnos = ?";
+
+                // prepara la consulta
+                $stmt = $this->_db->prepare($q);
+
+                //si hay un error al preparar la consulta
+                if ($stmt === false) {
+                    throw new Exception("Error al preparar la consulta para buscar madre: " . $this->_db->error);
+                }
+
+
+                $stmt->bind_param("i", $id_alumno);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $alumno_data = $result->fetch_assoc(); // Usar fetch_assoc es común
+                //echo var_dump($alumno_data);
+                if ($alumno_data) {
+                    return $alumno_data['id_personas'];
+                    //$this->id_alumno = $id_alumno;
+                    //parent::get_persona_por_id($this->id_persona);
+                } else {
+                    throw new Exception("No se encontró una persona con el ID proporcionado: " . $id_alumno);
+                }
+                //$stmt->close();  
+            } else {
+                throw new Exception("El código del alumno no es válido.");
+            }
+        } catch (Exception $e) {
+            error_log("Error en optener los datos de la persona a partir del codigo del alumno: " . $e->getMessage());
+            // Dependiendo de la aplicación, podrías querer relanzar la excepción
+            // throw $e;
+
+        }
+    }
     /**
      * Crea un nuevo registro de alumno en la base de datos.
      * Requiere que los atributos públicos nombres, apellidos, identificacion,
@@ -156,7 +249,8 @@ class alumnos extends personas {
      *
      * @return bool True si la inserción fue exitosa, false en caso contrario.
      */
-    public function set_alumno(){
+    public function set_alumno()
+    {
         try {
             // Validación básica de entrada
             if (empty($this->nombres) || empty($this->apellidos) || empty($this->identificacion) || empty($this->correo)) {
@@ -170,14 +264,14 @@ class alumnos extends personas {
             }
             // Asumiendo que 'inscripcion' es un valor numérico o booleano
             if (!is_numeric($this->inscripcion)) {
-                 throw new InvalidArgumentException("El valor de inscripción no es válido.");
+                throw new InvalidArgumentException("El valor de inscripción no es válido.");
             }
 
             // Primero, insertar en la tabla 'personas' (heredado de la clase padre)
             // Asegúrate de que la clase personas tenga un método 'add' adecuado
             // o que los atributos necesarios para 'personas' estén mapeados correctamente.
             // Para este ejemplo, asumimos que los atributos de 'personas' ya están en $this.
-            
+
             // Si la tabla 'alumnos' es una tabla separada de 'personas'
             // y duplica información, se recomienda revisar el diseño de la base de datos.
             // Si 'alumnos' solo tiene id_alumno y id_personas, entonces solo se inserta en u_alumnos.
@@ -185,11 +279,11 @@ class alumnos extends personas {
             // Ejemplo asumiendo que 'set_alumno' inserta en 'u_alumnos' y 'personas' ya fue manejado
             // o que 'alumnos' es una tabla con datos duplicados de personas.
             // Si 'alumnos' es una tabla con información de personas, deberías usar el método add de la clase padre.
-            
+
             // Si la tabla 'alumnos' es una tabla de unión o tiene datos específicos del alumno:
             $q = "INSERT INTO alumnos (nombres, apellidos, cedula, fecha, correo, telefono, login, inscripcion)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            
+
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
@@ -197,17 +291,19 @@ class alumnos extends personas {
             }
 
             // Nota: 'creativo' como valor fijo para login puede no ser lo ideal.
-            $login_value = "creativo"; 
+            $login_value = "creativo";
 
-            $stmt->bind_param("sssssssi", 
-                               $this->nombres, 
-                               $this->apellidos, 
-                               $this->cedula, // Usar identificacion de la clase padre
-                               $this->fecha, 
-                               $this->correo, // Usar correo de la clase padre
-                               $this->telefono, // Usar telefono de la clase padre
-                               $login_value, 
-                               $this->inscripcion);
+            $stmt->bind_param(
+                "sssssssi",
+                $this->nombres,
+                $this->apellidos,
+                $this->cedula, // Usar identificacion de la clase padre
+                $this->fecha,
+                $this->correo, // Usar correo de la clase padre
+                $this->telefono, // Usar telefono de la clase padre
+                $login_value,
+                $this->inscripcion
+            );
 
             $dato = $stmt->execute();
 
@@ -227,7 +323,8 @@ class alumnos extends personas {
      *
      * @return bool True si la actualización fue exitosa, false en caso contrario.
      */
-    public function update_alumno() {
+    public function update_alumno()
+    {
         try {
             if (!$this->id_alumno) {
                 throw new InvalidArgumentException("ID de alumno no establecido para la actualización.");
@@ -260,14 +357,16 @@ class alumnos extends personas {
                 throw new Exception("Error al preparar la consulta update_alumno: " . $this->_db->error);
             }
 
-            $stmt->bind_param("ssssssi", 
-                               $this->nombres, 
-                               $this->apellidos, 
-                               $this->identificacion, // Usar identificacion de la clase padre
-                               $this->celular, // Usar celular de la clase padre para telefono
-                               $this->fecha, 
-                               $this->correo, // Usar correo de la clase padre
-                               $this->id_alumno);
+            $stmt->bind_param(
+                "ssssssi",
+                $this->nombres,
+                $this->apellidos,
+                $this->identificacion, // Usar identificacion de la clase padre
+                $this->celular, // Usar celular de la clase padre para telefono
+                $this->fecha,
+                $this->correo, // Usar correo de la clase padre
+                $this->id_alumno
+            );
 
             $dato = $stmt->execute();
 
@@ -291,7 +390,8 @@ class alumnos extends personas {
      * @param string $apellido Apellido del estudiante.
      * @return array Un array de arrays con los datos de los estudiantes encontrados.
      */
-    public function buscar_estudiante ($nombre, $apellido){
+    public function buscar_estudiante($nombre, $apellido)
+    {
         $resultados = [];
         try {
             // Filtro anti-XSS (aunque las sentencias preparadas ya lo manejan para la DB)
@@ -320,8 +420,8 @@ class alumnos extends personas {
             $stmt->bind_param("ss", $nombre_like, $apellido_like);
             $stmt->execute();
             $result = $stmt->get_result();
-            
-            while($dato = $result->fetch_array(MYSQLI_ASSOC)){
+
+            while ($dato = $result->fetch_array(MYSQLI_ASSOC)) {
                 $resultados[] = [
                     'id_alumno' => $dato["id_alumnos"],
                     'nombres' => ucwords(strtolower($dato["nombres"])),
@@ -342,7 +442,8 @@ class alumnos extends personas {
      * @param int $id_alumno El ID del alumno.
      * @return string|null El nombre del alumno o null si no se encuentra.
      */
-    public function get_id_nombre($id_alumno){
+    public function get_id_nombre($id_alumno)
+    {
         try {
             if (!is_numeric($id_alumno)) {
                 throw new InvalidArgumentException("El ID del alumno debe ser un valor numérico.");
@@ -351,7 +452,7 @@ class alumnos extends personas {
             $q = "SELECT p.nombres FROM personas AS p 
                   INNER JOIN u_alumnos AS a ON p.id_personas = a.id_personas 
                   WHERE a.id_alumnos = ?";
-            
+
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
@@ -377,7 +478,8 @@ class alumnos extends personas {
      * @param int $id_alumno El ID del alumno.
      * @return string|null El apellido del alumno o null si no se encuentra.
      */
-    public function get_id_apellido($id_alumno) {
+    public function get_id_apellido($id_alumno)
+    {
         try {
             if (!is_numeric($id_alumno)) {
                 throw new InvalidArgumentException("El ID del alumno debe ser un valor numérico.");
@@ -386,7 +488,7 @@ class alumnos extends personas {
             $q = "SELECT p.apellidos FROM personas AS p 
                   INNER JOIN u_alumnos AS a ON p.id_personas = a.id_personas 
                   WHERE a.id_alumnos = ?";
-            
+
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
@@ -411,14 +513,15 @@ class alumnos extends personas {
      *
      * @return int|null El ID máximo de alumno o null si no hay alumnos.
      */
-    public function maximo() {
+    public function maximo()
+    {
         try {
             $q = "SELECT MAX(id_alumnos) AS cantidad FROM u_alumnos"; // Corregido a id_alumnos
             $result = $this->_db->query($q);
             if ($result === false) {
                 throw new Exception("Error al ejecutar la consulta maximo: " . $this->_db->error);
             }
-            
+
             $dato = $result->fetch_array(MYSQLI_NUM);
             $result->close(); // Cerrar el resultado de la consulta
             return $dato ? $dato[0] : null;
@@ -431,7 +534,8 @@ class alumnos extends personas {
 
     // funcion constructor de objeto requiere
     //el año, el  grado y el curso
-    public function listado_estudiantes($y, $g,$j , $c) {
+    public function listado_estudiantes($y, $g, $j, $c)
+    {
         // invoco al constructor de la clase padre (imcrea)
         parent::__construct();
         // genero una consulta a la base de datos
@@ -443,14 +547,13 @@ class alumnos extends personas {
         $a_alumno = array();
         $a_curso = array();
 
-        while($resultado = $q2->fetch_array(MYSQLI_ASSOC)){
+        while ($resultado = $q2->fetch_array(MYSQLI_ASSOC)) {
             // agrego elementos al array $aa
-            array_push($a_grado,$resultado['id_grado']);
-            array_push($a_alumno,$resultado['id_alumno']);
+            array_push($a_grado, $resultado['id_grado']);
+            array_push($a_alumno, $resultado['id_alumno']);
         }
 
         // retorno el siguiente array
         return [$a_alumno, $a_grado, $a_curso];
     }
 }
-?>

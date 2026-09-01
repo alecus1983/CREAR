@@ -132,8 +132,7 @@ class personas extends imcrea
 
             $stmt->close();
             return $aa;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en buscar_persona: " . $e->getMessage());
             return []; // Retorna un array vacío en caso de error
         }
@@ -210,8 +209,7 @@ class personas extends imcrea
 
             $stmt->close();
             return $a; // Retorna el array asociativo con los datos
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en get_persona_por_id: " . $e->getMessage());
             return null;
         }
@@ -250,13 +248,12 @@ class personas extends imcrea
                 $this->nombres = $a['nombres'];
                 $this->apellidos = $a['apellidos'];
                 $this->identificacion = $a['identificacion'];
-            // ... se podrían asignar más si fuera necesario, pero para la respuesta AJAX el array es suficiente
+                // ... se podrían asignar más si fuera necesario, pero para la respuesta AJAX el array es suficiente
             }
 
             $stmt->close();
             return $a;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en get_persona_por_id_alumno: " . $e->getMessage());
             return null;
         }
@@ -270,7 +267,7 @@ class personas extends imcrea
         try {
             // 1. Validar ID de persona
             if (empty($this->id_persona)) {
-            // throw new InvalidArgumentException("ID de persona no establecido para la actualización.");
+                // throw new InvalidArgumentException("ID de persona no establecido para la actualización.");
             }
 
             // 2. Validar que haya datos para actualizar
@@ -297,14 +294,11 @@ class personas extends imcrea
                     // Determinar tipo de dato para bind_param
                     if (is_null($value)) {
                         $types .= 's'; // mysqli_stmt_bind_param accepts NULL for string types
-                    }
-                    elseif (is_int($value)) {
+                    } elseif (is_int($value)) {
                         $types .= 'i';
-                    }
-                    elseif (is_float($value)) {
+                    } elseif (is_float($value)) {
                         $types .= 'd';
-                    }
-                    else {
+                    } else {
                         $types .= 's';
                     }
                 }
@@ -343,8 +337,7 @@ class personas extends imcrea
             //echo "validado 9";
             $stmt->close();
             return true;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en update_persona: " . $e->getMessage());
             return false;
         }
@@ -359,11 +352,40 @@ class personas extends imcrea
         // A partir de PHP 5.3, se necesita pasar referencias
         $refs = [];
         foreach ($arr as $key => &$value) {
-            $refs[$key] = & $value;
+            $refs[$key] = &$value;
         }
         return $refs;
     }
 
+
+    /**
+     * Verifica si una identificación ya existe en la tabla personas.
+     *
+     * @param string $identificacion El número de identificación a comprobar.
+     * @return bool True si ya existe, false si no.
+     */
+    public function existe_identificacion(string $identificacion): bool
+    {
+        try {
+            $q = "SELECT COUNT(*) FROM personas WHERE identificacion = ?";
+            $stmt = $this->_db->prepare($q);
+
+            if ($stmt === false) {
+                throw new Exception("Error al preparar la consulta existe_identificacion: " . $this->_db->error);
+            }
+
+            $stmt->bind_param("s", $identificacion);
+            $stmt->execute();
+            $stmt->bind_result($count);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $count > 0;
+        } catch (Exception $e) {
+            error_log("Error en existe_identificacion: " . $e->getMessage());
+            return false;
+        }
+    }
 
 
     /**
@@ -397,10 +419,18 @@ class personas extends imcrea
                 throw new Exception("Error al preparar la consulta de adición de persona: " . $this->_db->error);
             }
 
-            $stmt->bind_param("ssissssss", $this->nombres, $this->apellidos,
-                $this->identificacion, $this->tipo_identificacion,
-                $this->nacimiento, $this->correo, $this->i_correo,
-                $this->celular, $this->telefono);
+            $stmt->bind_param(
+                "ssissssss",
+                $this->nombres,
+                $this->apellidos,
+                $this->identificacion,
+                $this->tipo_identificacion,
+                $this->nacimiento,
+                $this->correo,
+                $this->i_correo,
+                $this->celular,
+                $this->telefono
+            );
 
             $c = $stmt->execute();
 
@@ -408,13 +438,11 @@ class personas extends imcrea
                 $this->id_persona = $this->_db->insert_id;
                 $stmt->close();
                 return true;
-            }
-            else {
+            } else {
                 // Esto podría ocurrir si execute() falla por alguna razón no capturada por prepare()
                 throw new Exception("Error al insertar nueva persona: " . $stmt->error);
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log('Error en add: ' . $e->getMessage());
             return false;
         }
@@ -434,8 +462,6 @@ class personas extends imcrea
                 throw new InvalidArgumentException("El ID de la persona debe ser un valor numérico.");
             }
 
-
-
             $q = "DELETE FROM personas WHERE id_personas = ?";
             $stmt = $this->_db->prepare($q);
 
@@ -452,13 +478,11 @@ class personas extends imcrea
                 $stmt->close();
                 echo "eliminada";
                 return true;
-            }
-            else {
+            } else {
                 echo "no eliminada";
                 throw new Exception("Error al eliminar la persona con ID " . $id_personas . ": " . $stmt->error);
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en del: " . $e->getMessage());
             return false;
         }
@@ -503,8 +527,7 @@ class personas extends imcrea
             return [
                 'tipo' => count($vinculos) > 1 ? 'ambos' : $vinculos[0]
             ];
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en esAlumnoODocente: " . $e->getMessage());
             return null;
         }
@@ -550,14 +573,12 @@ class personas extends imcrea
 
             return true; // Éxito
 
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             // Registrar el error detallado para el desarrollador
             error_log("Error en deleteById: " . $e->getMessage());
             // Devolver un simple false a quien llamó la función
             return false;
-        }
-        finally {
+        } finally {
             // 5. Garantizar que el statement se cierre siempre
             if ($stmt) {
                 $stmt->close();
@@ -592,8 +613,7 @@ class personas extends imcrea
 
             $stmt->close();
             return $a;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en get_direccion: " . $e->getMessage());
             return null;
         }
@@ -626,8 +646,7 @@ class personas extends imcrea
 
             $stmt->close();
             return $a;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en get_afiliacion: " . $e->getMessage());
             return null;
         }
@@ -667,8 +686,7 @@ class personas extends imcrea
 
             $stmt->close();
             return $a;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             error_log("Error en get_antecedentes: " . $e->getMessage());
             return null;
         }
@@ -856,14 +874,16 @@ class personas extends imcrea
         $this->antecedentes_patologicos_quirurgicos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_quirurgicos));
         $this->antecedentes_patologicos_toxicos = htmlspecialchars(strip_tags($this->antecedentes_patologicos_toxicos));
 
-        $stmt->bind_param("ssssssi",
+        $stmt->bind_param(
+            "ssssssi",
             $this->antecedentes_patologicos_medicos,
             $this->antecedentes_patologicos_morbilidad,
             $this->antecedentes_patologicos_psicologicos,
             $this->antecedentes_patologicos_psiquiatricos,
             $this->antecedentes_patologicos_quirurgicos,
             $this->antecedentes_patologicos_toxicos,
-            $this->id_persona);
+            $this->id_persona
+        );
 
         if ($stmt->execute()) {
             return true;
@@ -897,17 +917,26 @@ class personas extends imcrea
 
         $stmt = $this->_db->prepare($query);
 
-        $this->vive_con = htmlspecialchars(strip_tags($this->vive_con));
-        $this->municipio_expulsor = htmlspecialchars(strip_tags($this->municipio_expulsor));
-        $this->tipo_etnia = htmlspecialchars(strip_tags($this->tipo_etnia));
-        $this->resguardo_consejo = htmlspecialchars(strip_tags($this->resguardo_consejo));
-        $this->familias_accion = htmlspecialchars(strip_tags($this->familias_accion));
-        $this->tipo_discapacidad = htmlspecialchars(strip_tags($this->tipo_discapacidad));
-        $this->capacidad_excepcional = htmlspecialchars(strip_tags($this->capacidad_excepcional));
-        $this->eps = htmlspecialchars(strip_tags($this->eps));
-        $this->ips = htmlspecialchars(strip_tags($this->ips));
+        // Sanitize only text (VARCHAR) fields
+        $this->vive_con              = htmlspecialchars(strip_tags((string)($this->vive_con ?? '')));
+        $this->tipo_etnia            = htmlspecialchars(strip_tags((string)($this->tipo_etnia ?? '')));
+        $this->resguardo_consejo     = htmlspecialchars(strip_tags((string)($this->resguardo_consejo ?? '')));
+        $this->tipo_victima_conflicto = htmlspecialchars(strip_tags((string)($this->tipo_victima_conflicto ?? '')));
+        $this->municipio_expulsor    = htmlspecialchars(strip_tags((string)($this->municipio_expulsor ?? '')));
+        $this->tipo_discapacidad     = htmlspecialchars(strip_tags((string)($this->tipo_discapacidad ?? '')));
+        $this->capacidad_excepcional = htmlspecialchars(strip_tags((string)($this->capacidad_excepcional ?? '')));
+        $this->eps                   = htmlspecialchars(strip_tags((string)($this->eps ?? '')));
+        $this->ips                   = htmlspecialchars(strip_tags((string)($this->ips ?? '')));
+        // sisben, tipo_sangre, rh are also varchars — no sanitization needed beyond what PHP sends
 
-        $stmt->bind_param("ssbssbssbssissssi",
+        // Type string matches actual DB column types:
+        //   s = VARCHAR: sisben(3), vive_con(30), tipo_etnia(50), resguardo_consejo(100),
+        //                tipo_victima_conflicto(100), municipio_expulsor(100), tipo_discapacidad(50),
+        //                capacidad_excepcional(100), eps(100), ips(100), tipo_sangre(2), rh(3)
+        //   i = INT/TINYINT/BIT: etnia(tinyint1), familias_accion(bit1), discapacitado(tinyint4),
+        //                        regimen_salud(int1), id_persona(int13)
+        $stmt->bind_param(
+            "ssississississssi",
             $this->sisben,
             $this->vive_con,
             $this->etnia,
@@ -924,7 +953,8 @@ class personas extends imcrea
             $this->ips,
             $this->tipo_sangre,
             $this->rh,
-            $this->id_persona);
+            $this->id_persona
+        );
 
         if ($stmt->execute()) {
             return true;
@@ -932,29 +962,132 @@ class personas extends imcrea
         return false;
     }
 
+    /**
+     * Busca personas con nombre o apellido similar al ingresado.
+     * Útil para detectar posibles duplicados antes de insertar.
+     *
+     * @param string $nombres   Nombre a buscar (búsqueda parcial).
+     * @param string $apellidos Apellido a buscar (búsqueda parcial).
+     * @return array  Array de coincidencias con id_persona, nombres, apellidos e identificacion.
+     */
+    public function buscar_nombre_similar(string $nombres, string $apellidos): array
+    {
+        $resultados = [];
+        try {
+            $nombre_like   = '%' . strtolower(trim($nombres))   . '%';
+            $apellido_like = '%' . strtolower(trim($apellidos)) . '%';
+
+            $q = "SELECT id_personas, nombres, apellidos, identificacion
+                  FROM personas
+                  WHERE LOWER(nombres) LIKE ? OR LOWER(apellidos) LIKE ?
+                  ORDER BY nombres, apellidos
+                  LIMIT 10";
+
+            $stmt = $this->_db->prepare($q);
+
+            if ($stmt === false) {
+                throw new Exception("Error al preparar buscar_nombre_similar: " . $this->_db->error);
+            }
+
+            $stmt->bind_param("ss", $nombre_like, $apellido_like);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while ($fila = $result->fetch_assoc()) {
+                $resultados[] = [
+                    'id_persona'     => $fila['id_personas'],
+                    'nombres'        => ucwords(strtolower($fila['nombres'])),
+                    'apellidos'      => ucwords(strtolower($fila['apellidos'])),
+                    'identificacion' => $fila['identificacion']
+                ];
+            }
+            $stmt->close();
+        } catch (Exception $e) {
+            error_log("Error en buscar_nombre_similar: " . $e->getMessage());
+        }
+        return $resultados;
+    }
+
+
     // funcion que confirma si es administrador
 
-    public  function is_admin($id_persona){
+    public  function is_admin($id_persona)
+    {
         // descripcion de la consulata
         $query = "select * from u_docentes where id_personas = ?";
-        //echo $query.$id_persona;
+        // echo $query.$id_persona;
         // preparo la consulta
         $stmt = $this->_db->prepare($query);
         // asigno los parametros de la consulta     
-        $stmt->bind_param("i",$id_persona);     
-        
+        $stmt->bind_param("i", $id_persona);
+
         if ($stmt->execute()) {
             $result = $stmt->get_result();
             $a = $result->fetch_array(MYSQLI_ASSOC);
-            //echo var_dump($a);
-            if($a["admin"] == 1){
+            // echo var_dump($a);
+            if ($a["admin"] == 1) {
                 return $a["admin"];
             }
         }
         return false;
+    }
 
+    // ---
 
+    /**
+     * Obtiene el id_personas del padre a partir del id_alumno.
+     *
+     * La cadena de relaciones es:
+     *   u_alumnos.id_alumnos  → personas.u_alumno  (el alumno como persona)
+     *   personas.id_personas  → padres.id_hijo     (el padre del alumno)
+     *   padres.id_personas    → resultado           (el padre como persona)
+     *
+     * @param  int       $id_alumno  El ID del registro en u_alumnos (id_alumnos).
+     * @return int|null              El id_personas del padre, o null si no se encuentra.
+     */
+    public function get_id_padre_por_id_alumno(int $id_alumno): ?int
+    {
+        try {
+            if ($id_alumno <= 0) {
+                throw new InvalidArgumentException("El id_alumno debe ser un entero positivo.");
+            }
+
+            /*
+             * Paso 1: obtener el id_personas del alumno a partir de su id_alumno
+             *         (personas.u_alumnos = id_alumno  ó  u_alumnos.id_alumnos = id_alumno)
+             *
+             * Paso 2: buscar en la tabla padres la fila donde id_hijo = id_personas_alumno
+             *         y devolver el id_personas del padre.
+             *
+             * Se usa un único JOIN para hacerlo en una sola consulta.
+             */
+            $sql = "SELECT pa.id_personas
+                    FROM   u_alumnos   ua
+                    JOIN   personas    p   ON p.id_personas = ua.id_personas
+                    JOIN   padres      pa  ON pa.id_hijo    = p.id_personas
+                    WHERE  ua.id_alumnos = ?
+                    LIMIT  1";
+
+            $stmt = $this->_db->prepare($sql);
+
+            if ($stmt === false) {
+                throw new \RuntimeException(
+                    "Error al preparar get_id_padre_por_id_alumno: " . $this->_db->error
+                );
+            }
+
+            $stmt->bind_param("i", $id_alumno);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $fila   = $result->fetch_assoc();
+            $stmt->close();
+
+            return $fila ? (int) $fila['id_personas'] : null;
+
+        } catch (\Exception $e) {
+            error_log("Error en get_id_padre_por_id_alumno: " . $e->getMessage());
+            return null;
+        }
     }
 }
 
-?>

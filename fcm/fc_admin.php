@@ -11,6 +11,11 @@ if (isset($_SESSION["id_personas"])) {
     //echo var_dump($d);
     // ano actual
     $ano = date('Y');
+
+    $c = new docentes();
+    $c->get_docente_cc($d->identificacion);
+    $id_docente = $c->id;
+
     if ($admin == 0) {
         header("Location:board.php");
     }
@@ -114,12 +119,12 @@ if (isset($_SESSION["id_personas"])) {
     <script>
         // CONFIGURACION AJAX
         jQuery.ajaxSetup({
-            beforeSend: function () {
+            beforeSend: function() {
                 $('#loader-overlay').show();
                 $('#loader').show();
                 $('#tabla').html("");
             },
-            complete: function () {
+            complete: function() {
                 $('#loader-overlay').hide();
                 $('#loader').hide();
             }
@@ -140,19 +145,19 @@ if (isset($_SESSION["id_personas"])) {
                     id_gs: $("#id_g").val(),
                     id_ms: $("#id_ms").val(),
                     id_jornada: $("#jornada").val(),
-                    id_docente: $("#id_docentes").val(),
+                    id_docente: $("#id_docente").val(),
                     corte: $("#corte").val(),
                     periodo: $("#periodos").val(),
                     opcion: $("#opcion").val()
 
                 },
                 // si los datos son correctos entonces ...
-                success: function (respuesta) {
+                success: function(respuesta) {
 
                     $("#grafo").html(respuesta);
 
                 },
-                error: function (xhr, status) {
+                error: function(xhr, status) {
                     swal('Disculpe, existió un problema');
                     console.log(xhr);
                 }
@@ -173,11 +178,11 @@ if (isset($_SESSION["id_personas"])) {
                 url: b,
                 data: c,
                 dataType: "json",
-            }).done(function (dato) {
+            }).done(function(dato) {
                 $(a).empty();
 
                 $(a).append("<option value = -1> Seleccione </option>");
-                $.each(dato, function (index, materia) {
+                $.each(dato, function(index, materia) {
                     $(a).append("<option value =" + index + ">" + materia + "</option>");
                 });
             });
@@ -346,14 +351,13 @@ if (isset($_SESSION["id_personas"])) {
                 <div class="col-12 col-md-4 mb-2 d-flex align-items-center">
                     <label for="years" class="text-white small me-2 mb-0">Año</label>
                     <input type="number" value="<?php echo date('Y'); ?>" id="years" name="years" min="2015" max="2100"
-                        step="1"
+                        step="1" onchange="funcion_actualizar_ano()"
                         style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px; width: 100%;"
-                        <?php if ($admin < 1) { ?> readonly="readonly" <?php
-                        } ?> class="form-control-sm flex-grow-1">
+                        <?php if ($admin < 1) { ?> readonly="readonly" <?php } ?> class="form-control-sm flex-grow-1">
                 </div>
 
-                <input type="hidden" value="<?php echo $id_persona; ?>" id="id_d">
-
+                <input type="hidden" value="<?php echo $id_persona; ?>" id="id_persona">
+                <input type="hidden" value="<?php echo $id_docente; ?>" id="id_docente">
 
                 <div class="col-12 col-md-4 mb-2 d-flex align-items-center">
                     <label for="periodos" class="text-white small me-2 mb-0">Periodo</label>
@@ -407,7 +411,7 @@ if (isset($_SESSION["id_personas"])) {
                     <select id="escolaridad"
                         style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 5px; width: 100%;"
                         class="form-control-sm flex-grow-1"
-                        onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_d').val());">
+                        onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_docente').val());">
                         <option value="-1" style="color: black;">Seleccione</option>
                         <option value="1" style="color: black;">Preescolar</option>
                         <option value="2" style="color: black;">Básica Primaria</option>

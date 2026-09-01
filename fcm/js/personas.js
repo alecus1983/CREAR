@@ -154,8 +154,8 @@ function cambio_datos_p(repo) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
 
-              // Limpiamos el contenedor y añadimos el encabezado con una clase CSS personalizada
-$(repo).html(`
+                // Limpiamos el contenedor y añadimos el encabezado con una clase CSS personalizada
+                $(repo).html(`
     <div class="responsive-table">
         <div class="table-header">
             <div class="header-cell">Nombres</div>
@@ -168,9 +168,9 @@ $(repo).html(`
     </div>
 `);
 
-respuesta['json'].forEach(id => {
-    // Usamos template literals para inyectar las variables directamente
-    $(".table-body").append(`
+                respuesta['json'].forEach(id => {
+                    // Usamos template literals para inyectar las variables directamente
+                    $(".table-body").append(`
         <div class="table-row">
             <div class="table-cell" data-label="Nombres">${id[0]}</div>
             <div class="table-cell" data-label="Apellidos">${id[1]}</div>
@@ -183,7 +183,7 @@ respuesta['json'].forEach(id => {
             </div>
         </div>
     `);
-});
+                });
                 // 1. Comprobamos si el elemento existe buscando su longitud (length)
                 if ($('#agregar_persona').length > 0) {
 
@@ -350,7 +350,6 @@ function formulario_agregar_persona() {
  */
 function agregar_persona(formulario, personax, ea) {
 
-
     // Si el formulario no es válido, detenemos la ejecución con 'return'.
     if (!validarFormularioPersona()) {
         // Opcional: Mostrar una alerta general
@@ -374,77 +373,129 @@ function agregar_persona(formulario, personax, ea) {
     persona.telefono = ($("#ad_telefono").val() || "");
     persona.nacimiento = ($("#ad_nacimiento").val() || "");
 
-    // envio datos 
+    /**
+     * Función interna que realiza el AJAX de inserción (add_persona.php).
+     * Se llama tras confirmar (o cuando no hay similares).
+     */
+    function ejecutar_insercion() {
+        $.ajax({
+            type: "POST",
+            url: "add_persona.php",
+            dataType: "json",
+            data: persona,
+            success: function (respuesta) {
+                if (respuesta['status'] == 1) {
+                    swal('Actualización', 'Se agregó a la persona correctamente', 'success');
+                    $("#agregar_persona").attr("onclick", "formulario_agregar_persona();");
+                    $("#agregar_persona").removeClass("btn btn-dark").addClass("btn btn-outline-dark");
+                    $("#agregar_persona").html("formulario agregar persona");
+
+                    if (typeof personax === 'undefined') {
+                        console.log("personax no está definido");
+                    } else {
+                        personax["nombres"] = respuesta["nombres"];
+                        personax["apellidos"] = respuesta["apellidos"];
+                        personax["identificacion"] = respuesta["identificacion"];
+                        personax["id_persona"] = respuesta["id_persona"];
+
+                        get_persona(respuesta["id_persona"], personax).then(function () {
+                            swal("Selección", "Se seleccionó la persona " + personax["id_persona"], 'success');
+                            if (ea == 1) {
+                                gestion_matriculas(formulario);
+                            } else if (ea == 2) {
+                                flujo_editar_matricula(alumno["id_matricula"], formulario);
+                            }
+                        });
+                    }
+
+                } else {
+                    if (respuesta['status'] == 20) {
+                        swal('Error', 'No se pudo insertar el valor en la base de datos', 'error');
+                    }
+                    if (respuesta['status'] == 21) {
+                        swal('Error', 'Falta el nombre de la persona', 'error');
+                    }
+                    if (respuesta['status'] == 22) {
+                        swal('Error', 'Falta los apellidos', 'error');
+                    }
+                    if (respuesta['status'] == 23) {
+                        swal('Error', 'Falta el tipo de identificación', 'error');
+                    }
+                    if (respuesta['status'] == 24) {
+                        swal('Error', 'Falta el número de identificación', 'error');
+                    }
+                    if (respuesta['status'] == 25) {
+                        swal('Error', 'Falta la fecha de nacimiento', 'error');
+                    }
+                    if (respuesta['status'] == 26) {
+                        swal('Identificación duplicada', 'La identificación ingresada ya se encuentra registrada en el sistema.', 'warning');
+                    }
+                }
+            },
+            error: function (xhr, status) {
+                swal('Disculpe, existió un problema');
+                console.log(xhr);
+            }
+        });
+    }
+
+    // ── PASO 1: Verificar si ya existe una persona con nombre/apellido similar ──
     $.ajax({
         type: "POST",
-        url: "add_persona.php",
+        url: "verificar_nombre_persona.php",
         dataType: "json",
-        data: persona,
-        // si los datos son correctos entonces ...
-        success: function (respuesta) {
-            // si la respuesta es positiva
-            if (respuesta['status'] == 1) {
-                // si se agrego la persona correctamente
-                swal('Actualizacion', 'Se agrego a la persona correctamente', 'success');
-                // cambio el boton de agregar persona por el de actualizar persona
-                $("#agregar_persona").attr("onclick", "formulario_agregar_persona();");
-                $("#agregar_persona").removeClass("btn btn-dark").addClass("btn btn-outline-dark");
-                $("#agregar_persona").html("formulario agregar persona");
-                // valido si esta definido la persona x
-                // esto es para el formulario de matricula
-                if (typeof personax === 'undefined') {
-                    console.log("EmpName no está definido");
-                } else {
-                    // almaceno en la variable seleccionada
-                    personax["nombres"] = respuesta["nombres"];
-                    personax["apellidos"] = respuesta["apellidos"];
-                    personax["identificacion"] = respuesta["idetificacion"];
-                    personax["id_persona"] = respuesta["id_persona"];
+        data: {
+            nombres: persona.nombres,
+            apellidos: persona.apellidos
+        },
+        success: function (verificacion) {
 
-                    // obtengo the remaining data via get_persona and then navigate
-                    get_persona(respuesta["id_persona"], personax).then(function () {
-                        swal("seleccion", "Se selecciono la persona " + personax["id_persona"], 'success');
+            if (verificacion['status'] == 1 && verificacion['encontrados'].length > 0) {
 
-                        // voy al formulario indicado
-                        if (ea == 1) {
-                            gestion_matriculas(formulario);
-                        } else if (ea == 2) {
-                            flujo_editar_matricula(alumno["id_matricula"], formulario);
+                // Construir lista HTML de similares para mostrar en el swal
+                let lista = verificacion['encontrados'].map(function (p) {
+                    return '• ' + p.nombres + ' ' + p.apellidos + ' (ID: ' + p.identificacion + ')';
+                }).join('\n');
+
+                // Mostrar swal de confirmación con la lista de similares
+                swal({
+                    title: '⚠️ Posible estudiante duplicado',
+                    text: 'Ya existe(n) persona(s) con nombre o apellido similar:\n\n' + lista + '\n\n¿Desea continuar y registrar de todas formas?',
+                    icon: 'warning',
+                    buttons: {
+                        cancelar: {
+                            text: 'Cancelar',
+                            value: false,
+                            className: 'btn btn-secondary'
+                        },
+                        confirmar: {
+                            text: 'Sí, continuar',
+                            value: true,
+                            className: 'btn btn-warning'
                         }
-                    });
-                }
+                    },
+                    dangerMode: true
+                }).then(function (confirmado) {
+                    if (confirmado) {
+                        ejecutar_insercion();
+                    }
+                    // Si cancela, simplemente no hace nada
+                });
 
             } else {
-                if (respuesta['status'] == 20) {
-                    swal('Error', 'No se pudo insertar el valor en la base de datos', 'error');
-                }
-                if (respuesta['status'] == 21) {
-                    swal('Error', 'Falata el nombre de la persona', 'error');
-                }
-                if (respuesta['status'] == 22) {
-                    swal('Error', 'Falta a los apellidos', 'error');
-                }
-
-                if (respuesta['status'] == 23) {
-                    swal('Error', 'Falta el tipo de identificacion', 'error');
-                }
-                if (respuesta['status'] == 24) {
-                    swal('Error', 'Falta el numro de identificacion', 'error');
-                }
-
-                if (respuesta['status'] == 25) {
-                    swal('Error', 'Falta de nacimiento', 'error');
-                }
-
+                // No hay similares → insertar directamente
+                ejecutar_insercion();
             }
         },
-        error: function (xhr, status) {
-            swal('Disculpe, existió un problema');
-            console.log(xhr);
+        error: function () {
+            // Si falla la verificación, se continúa con la inserción por seguridad
+            console.warn("No se pudo verificar similares. Se continúa con la inserción.");
+            ejecutar_insercion();
         }
     });
 
 }
+
 
 // funcion que toma los datos ingresados
 // en el formaulario de actualizacion de
@@ -607,17 +658,17 @@ function actualizar_afiliaciones(personax, ea) {
     // Se precargan los atributos del formulario
     personax.sisben = $("#ac_sisben").val();
     personax.vive_con = $("#ac_vive_con").val();
-    personax.etnia = $("#ac_etnia")[0].checked ? true : false;
+    personax.etnia = $("#ac_etnia")[0].checked ? 1 : 0;
     personax.tipo_etnia = $("#ac_tipo_etnia").val();
     personax.resguardo_consejo = $("#ac_resguardo_consejo").val();
-    personax.familias_accion = $("#ac_familias_accion")[0].checked ? true : false;
-    personax.tipo_victima_conflicto = $("#ac_tipo_victima_conflicto")[0].checked ? true : false;
+    personax.familias_accion = $("#ac_familias_accion")[0].checked ? 1 : 0;
+    personax.tipo_victima_conflicto = $("#ac_tipo_victima_conflicto")[0].checked ? 1 : 0;
     personax.municipio_expulsor = $("#ac_municipio_expulsor").val();
     // si esta chequeado la opcion de discapacitad
-    personax.discapacitado = $("#ac_discapacitado")[0].checked ? true : false;
+    personax.discapacitado = $("#ac_discapacitado")[0].checked ? 1 : 0;
     personax.tipo_discapacidad = $("#ac_tipo_discapacidad").val();
     personax.capacidad_excepcional = $("#ac_capacidad_excepcional").val();
-    personax.regimen_salud = $("#ac_regimen_salud")[0].checked ? true : false;
+    personax.regimen_salud = $("#ac_regimen_salud")[0].checked ? 1 : 0;
     personax.eps = $("#ac_eps").val();
     personax.ips = $("#ac_ips").val();
     personax.tipo_sangre = $("#ac_tipo_sangre").val();
@@ -916,9 +967,16 @@ function seleccionar_persona(id, personax, form) {
         //swal("seleccion", "Se selecciono la persona " + personax["id_persona"], 'success').then((value) => {
         // Ahora entrará a gestion_matriculas SOLO DESPUÉS de que el usuario cierre la alerta.
         if (form < 30) {
+            // ahora entra al flujo de matricula
             gestion_matriculas(form);
+            // oculto el overlay
+            $("#loader-overlay").hide();
+            $("#loader").hide();
         } else {
             flujo_editar_matricula(alumno["id_matricula"], form);
+            // oculto el overlay
+            $("#loader-overlay").hide();
+            $("#loader").hide();
         }
         //});
 
@@ -980,71 +1038,58 @@ function get_afiliacion(id_persona, form) {
                 // Validamos según el formulario agregar persona
                 if (form === 2) {
 
-                    // Asignar SISBEN
-                    let sisben = respuesta["sisben"] || "N";
-                    $("#ac_sisben").val(sisben);
+                    // Poblar el formulario de forma SÍNCRONA usando la función
+                    // expuesta por formulario_actualizar_afiliaciones.html.
+                    // Mapear claves de respuesta a las esperadas por poblarFormularioAfiliaciones.
+                    if (typeof poblarFormularioAfiliaciones === 'function') {
+                        poblarFormularioAfiliaciones({
+                            ac_sisben: respuesta["sisben"] || "N",
+                            ac_vive_con: respuesta["vive_con"] || "N",
+                            ac_tipo_sangre: respuesta["tipo_sangre"] || "O",
+                            ac_rh: respuesta["rh"] || "+",
+                            ac_tipo_etnia: respuesta["tipo_etnia"] || "otro",
+                            ac_eps: respuesta["eps"],
+                            ac_ips: respuesta["ips"],
+                            ac_resguardo_consejo: respuesta["resguardo_consejo"],
+                            ac_municipio_expulsor: respuesta["municipio_expulsor"],
+                            ac_tipo_discapacidad: respuesta["tipo_discapacidad"],
+                            ac_capacidad_excepcional: respuesta["capacidad_excepcional"],
+                            // Checkboxes (el formulario espera 1 o true)
+                            familias_accion: respuesta["familias_accion"],
+                            regimen_salud: respuesta["regimen_salud"],
+                            etnia: respuesta["etnia"],
+                            tipo_victima_conflicto: respuesta["tipo_victima_conflicto"],
+                            discapacitado: respuesta["discapacitado"]
+                        });
+                    } else {
+                        // Fallback seguro si el script del formulario aún no cargó
+                        $("#ac_sisben").val(respuesta["sisben"] || "N");
+                        $("#ac_vive_con").val(respuesta["vive_con"] || "N");
+                        $("#ac_tipo_etnia").val(respuesta["tipo_etnia"] || "otro");
+                        $("#ac_resguardo_consejo").val(respuesta["resguardo_consejo"]);
+                        $("#ac_familias_accion").prop("checked", respuesta["familias_accion"] === 1);
+                        $("#ac_tipo_victima_conflicto").prop("checked", respuesta["tipo_victima_conflicto"] == 1);
+                        $("#ac_municipio_expulsor").val(respuesta["municipio_expulsor"]);
+                        $("#ac_discapacitado").prop("checked", respuesta["discapacitado"] === 1);
+                        $("#ac_tipo_discapacidad").val(respuesta["tipo_discapacidad"]);
+                        $("#ac_capacidad_excepcional").val(respuesta["capacidad_excepcional"]);
+                        $("#ac_regimen_salud").prop("checked", respuesta["regimen_salud"] === 1);
+                        $("#ac_eps").val(respuesta["eps"]);
+                        $("#ac_ips").val(respuesta["ips"]);
+                        $("#ac_tipo_sangre").val(respuesta["tipo_sangre"] || "O");
+                        $("#ac_rh").val(respuesta["rh"] || "+");
+                    }
 
-                    // Asignar con quién vive
-                    let viveCon = respuesta["vive_con"] || "N";
-                    $("#ac_vive_con").val(viveCon);
-
-                    // Propiedad `checked` para etnia
-                    respuesta["etnia"] === 1 ? $("#ac_etnia").prop("checked", true) : $("#ac_etnia").prop("checked", false);
-
-                    // Asignar el tipo de etnia
-                    let tipoetnia = respuesta["tipo_etnia"] || "otro";
-                    $("#ac_tipo_etnia").val(tipoetnia);
-                    // asignar resguardo o consejo comunitario
-                    $("#ac_resguardo_consejo").val(respuesta["resguardo_consejo"]);
-
-                    // Propiedad `checked` para familias en accion
-                    respuesta["familias_accion"] === 1 ? $("#ac_familias_accion").prop("checked", true) : $("#ac_familias_accion").prop("checked", false);
-
-                    // Propiedad `checked` para victima del conflicto
-                    if (respuesta["tipo_victima_conflicto"] == 1) { $("#ac_tipo_victima_conflicto").prop("checked", true) }
-
-                    else { $("#ac_tipo_victima_conflicto").prop("checked", false) };
-
-                    // asignar municipio_expulsor	
-                    $("#ac_municipio_expulsor").val(respuesta["municipio_expulsor"]);
-
-                    // Propiedad `checked` para discapacitado
-                    respuesta["discapacitado"] === 1 ? $("#ac_discapacitado").prop("checked", true) : $("#ac_discapacitado").prop("checked", false);
-
-                    // asignar tipo_discapacidad		
-                    $("#ac_tipo_discapacidad").val(respuesta["tipo_discapacidad"]);
-
-                    // asignar tipo_discapacidad		
-                    $("#ac_capacidad_excepcional").val(respuesta["capacidad_excepcional"]);
-
-                    // Propiedad `checked` para regimen_salud
-                    respuesta["regimen_salud"] === 1 ? $("#ac_regimen_salud").prop("checked", true) : $("#ac_regimen_salud").prop("checked", false);
-
-                    // asignar eps		
-                    $("#ac_eps").val(respuesta["eps"]);
-
-                    // asignar ips		
-                    $("#ac_ips").val(respuesta["ips"]);
-
-                    // Asignar con el tipo de sangre
-                    let tiposangre = respuesta["tipo_sangre"] || "O";
-                    $("#ac_tipo_sangre").val(tiposangre);
-
-                    // Asignar con el tipo de sangre
-                    let rh = respuesta["rh"] || "+";
-                    $("#ac_rh").val(rh);
-
+                } else {
+                    // Manejo de errores según el código de estado
+                    let mensaje = "Hubo un error desconocido.";
+                    if (respuesta['status'] == 20) {
+                        mensaje = respuesta["mensaje"];
+                    } else if (respuesta['status'] == 21) {
+                        mensaje = respuesta["mensaje"];
+                    }
+                    swal('Error', mensaje, 'error');
                 }
-
-            } else {
-                // Manejo de errores según el código de estado
-                let mensaje = "Hubo un error desconocido.";
-                if (respuesta['status'] == 20) {
-                    mensaje = respuesta["mensaje"];
-                } else if (respuesta['status'] == 21) {
-                    mensaje = respuesta["mensaje"];
-                }
-                swal('Error', mensaje, 'error');
             }
         },
         error: function (xhr, status) {
@@ -1411,7 +1456,7 @@ function cp_acudiente(personax, ea) {
     // Redirección condicionada por el parámetro ea
     if (ea == 1) {
         // va la pagina 19 de gestion matriculas
-        gestion_matriculas(19);
+        gestion_matriculas(20);
     } else if (ea == 2) {
         // va la pagina 44 de editar matricula
         flujo_editar_matricula(alumno["id_matricula"], 46);

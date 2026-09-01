@@ -11,15 +11,15 @@ function load_semanas() {
         year: year
     });
 
-  // coloco el fondo al selector de semanas
-  $('#semana').css('background-color', 'lightblue');
+    // coloco el fondo al selector de semanas
+    $('#semana').css('background-color', 'lightblue');
 }
 
 
 // funcion para eliminar  semanas de las vijentes para
 // el presente año
 
-function eliminar_semana() {
+function eliminar_semana(id_semana) {
     // se invoca al metodo ajax para solicitar
     // el listado de las semanas
     $.ajax({
@@ -27,7 +27,7 @@ function eliminar_semana() {
         url: "eliminar_semana.php",
         dataType: "json",
         data: {
-            semana: $("#lista_semanas").val()
+            id_semana: id_semana
         },
         // si los datos son correctos entonces ...
         success: function (respuesta) {
@@ -139,12 +139,12 @@ function gestion_semanas() {
         success: function (respuesta) {
             // si la respuesta es positiva
             if (respuesta['status'] == 1) {
-		// coloco el contenido en el div avance
+                // coloco el contenido en el div avance
                 $("#avance").html(respuesta['html']);
-		// limpio los segmentos restantes del
-		// formulario dinamico
-		$("#grafica").html("");
-		$("#tabla").html("");
+                // limpio los segmentos restantes del
+                // formulario dinamico
+                $("#grafica").html("");
+                $("#tabla").html("");
             } else {
                 if (respuesta['status'] == 21) {
                     swal('Grado', 'Porfavor seleccione un grado', 'error');

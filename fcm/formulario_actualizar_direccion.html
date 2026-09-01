@@ -1,41 +1,332 @@
-<div class='container container-sm agregar_personas'>
+<div id="formulario_actualizar_direccion" class="container container-sm">
 
-    <div class='row'>
-        <div class='col'>
-            <h1 class='display-6'>Datos de direcci&oacute;n</h1>
-        </div>
-    </div>
+    <style>
+        /* === Animación de entrada del formulario === */
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
 
-    <div class='row'>
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        <div class='col'>
-            <label for='ac_direccion' class='form-label'>Direcci&oacute;n de residencia</label>
-            <input value='' class='form-control' id='ac_direccion' aria-describedby='ac_direccion'>
-            <div id='ayuda_direccion' class='form-text'>agrege o actulize la direcci&oacute;n por favor.</div>
+        /* === Pulso al recibir un valor precargado === */
+        @keyframes highlightPulse {
+            0% {
+                background-color: #d0e8ff;
+                border-color: #7fb3f5;
+            }
+
+            100% {
+                background-color: #f8f9fa;
+                border-color: #dee2e6;
+            }
+        }
+
+        /* === Card principal === */
+        #dir-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+            padding: 2rem 2.2rem 1.8rem;
+            animation: fadeSlideIn 0.4s ease both;
+            border-top: 4px solid #2c7be5;
+        }
+
+        /* === Encabezado === */
+        #dir-card .dir-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.6rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        #dir-card .dir-header .dir-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2c7be5 0%, #1a5bb5 100%);
+            color: #fff;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        #dir-card .dir-header h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+            color: #1a2b4a;
+        }
+
+        #dir-card .dir-header p {
+            font-size: 0.8rem;
+            color: #6b7a8d;
+            margin: 0;
+        }
+
+        /* === Grupos de campo con animación escalonada === */
+        #dir-card .field-group {
+            margin-bottom: 1.3rem;
+            opacity: 0;
+            animation: fadeSlideIn 0.4s ease forwards;
+        }
+
+        #dir-card .field-group:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        #dir-card .field-group:nth-child(2) {
+            animation-delay: 0.12s;
+        }
+
+        #dir-card .row:nth-child(2) .field-group {
+            animation-delay: 0.05s;
+        }
+
+        #dir-card .row:nth-child(3) .field-group {
+            animation-delay: 0.18s;
+        }
+
+        /* === Etiquetas === */
+        #dir-card .field-label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        #dir-card .field-label .lbl-icon {
+            font-size: 0.95rem;
+            color: #2c7be5;
+        }
+
+        /* === Inputs mejorados — siempre visibles === */
+        #dir-card .form-control {
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            padding: 0.6rem 0.9rem;
+            font-size: 0.95rem;
+            color: #212529;
+            background-color: #f8f9fa;
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.4s;
+        }
+
+        #dir-card .form-control:focus {
+            border-color: #2c7be5;
+            box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.15);
+            background-color: #fff;
+            outline: none;
+        }
+
+        /* Clase añadida por JS cuando se popula el campo */
+        #dir-card .form-control.field-populated {
+            animation: highlightPulse 0.8s ease forwards;
+        }
+
+        /* === Texto de ayuda === */
+        #dir-card .field-hint {
+            font-size: 0.75rem;
+            color: #8a9ab0;
+            margin-top: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* === Estrato: selector visual tipo chip === */
+        .estrato-grid {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .estrato-btn {
+            flex: 1;
+            min-width: 44px;
+            padding: 0.55rem 0;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            background: #f8f9fa;
+            color: #495057;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.18s ease;
+            user-select: none;
+        }
+
+        .estrato-btn:hover {
+            border-color: #2c7be5;
+            color: #2c7be5;
+            background: #f0f6ff;
+        }
+
+        .estrato-btn.active {
+            border-color: #2c7be5;
+            background: linear-gradient(135deg, #2c7be5, #1a5bb5);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(44, 123, 229, 0.3);
+        }
+
+        /* Select oculto: mantiene compatibilidad con el código JS existente */
+        #ac_estrato {
+            display: none;
+        }
+    </style>
+
+    <div id="dir-card">
+
+        <!-- Encabezado -->
+        <div class="dir-header">
+            <div class="dir-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                </svg>
+            </div>
+            <div>
+                <h2>Datos de Residencia</h2>
+                <p>Complete o actualice la información de dirección del estudiante</p>
+            </div>
         </div>
 
-        <div class='col'>
-            <label for='ac_estrato' class='form-label'>Estrato</label>
-            <select class='form-control' id='ac_estrato'>
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3' selected>3</option>
-                <option value='4'>4</option>
-                <option value='5'>5</option>
-            </select>
-            <div id='ayuda_ac_estrato' class='form-text'>por favor serleccone el estrato del mismo por favor.</div>
+        <!-- Fila 1: Dirección + Barrio -->
+        <div class="row g-3">
+            <div class="col-md-7">
+                <div class="field-group">
+                    <label class="field-label" for="ac_direccion">
+                        <span class="lbl-icon">🏠</span> Dirección de Residencia
+                    </label>
+                    <input type="text" class="form-control" id="ac_direccion" placeholder="Ej: Cra 5 # 12 - 34"
+                        autocomplete="street-address" aria-describedby="ayuda_direccion">
+                    <div id="ayuda_direccion" class="field-hint">
+                        <span>📍</span> Ingrese la dirección completa de residencia.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="field-group">
+                    <label class="field-label" for="ac_barrio">
+                        <span class="lbl-icon">🏘️</span> Barrio
+                    </label>
+                    <input type="text" class="form-control" id="ac_barrio" placeholder="Ej: La Esperanza"
+                        aria-describedby="ayuda_barrio">
+                    <div id="ayuda_barrio" class="field-hint">
+                        <span>🗺️</span> Ingrese el nombre del barrio.
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class='row'>
-        <div class='col'>
-            <label for='ac_barrio' class='form-label'>barrio</label>
-            <input class='form-control' id='ac_barrio' aria-describedby='ac_barrio'>
-            <div id='ayuda_correo' class='form-text'>agrege o actualice el barrio por favor.</div>
+
+        <!-- Fila 2: Estrato -->
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="field-group">
+                    <label class="field-label">
+                        <span class="lbl-icon">📊</span> Estrato Socioeconómico
+                    </label>
+
+                    <!-- Select oculto: leído/escrito por el JS externo -->
+                    <select class="form-control" id="ac_estrato" aria-label="Estrato">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+
+                    <!-- Selector visual -->
+                    <div id="estrato-visual" class="estrato-grid">
+                        <button type="button" class="estrato-btn" data-valor="1">1</button>
+                        <button type="button" class="estrato-btn" data-valor="2">2</button>
+                        <button type="button" class="estrato-btn active" data-valor="3">3</button>
+                        <button type="button" class="estrato-btn" data-valor="4">4</button>
+                        <button type="button" class="estrato-btn" data-valor="5">5</button>
+                        <button type="button" class="estrato-btn" data-valor="6">6</button>
+                    </div>
+
+                    <div class="field-hint">
+                        <span>ℹ️</span> Seleccione el estrato socioeconómico del lugar de residencia.
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class='col mx-auto justify-content-md'>
-            <!-- <button id='agregar_persona' class='btn btn btn-dark' onclick="update_direccion(2,alumno);">
-                agregar/actualizar
-            </button> -->
-        </div>
-    </div>
-</div>
+
+    </div><!-- /#dir-card -->
+
+    <script>
+        (function () {
+            var btns = document.querySelectorAll('#estrato-visual .estrato-btn');
+
+            // Sincroniza el visual con el valor del <select> oculto
+            function syncVisual(val) {
+                val = String(val || '3');
+                btns.forEach(function (btn) {
+                    btn.classList.toggle('active', btn.getAttribute('data-valor') === val);
+                });
+            }
+
+            // Click en botón visual → actualiza <select>
+            btns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    btns.forEach(function (b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    document.getElementById('ac_estrato').value = btn.getAttribute('data-valor');
+                });
+            });
+
+            // Añade pulso visual a un campo cuando recibe un valor precargado
+            function pulseField(id) {
+                var el = document.getElementById(id);
+                if (!el) return;
+                el.classList.remove('field-populated');
+                // forzar reflow para reiniciar animación si ya estaba aplicada
+                void el.offsetWidth;
+                el.classList.add('field-populated');
+                el.addEventListener('animationend', function () {
+                    el.classList.remove('field-populated');
+                }, { once: true });
+            }
+
+            // ── API pública: llamada desde matricula.js ───────────────────────────
+            // Popula los tres campos de manera SÍNCRONA (sin setTimeout) y aplica
+            // feedback visual inmediato.
+            window.poblarFormularioDireccion = function (direccion, barrio, estrato) {
+                var dEl = document.getElementById('ac_direccion');
+                var bEl = document.getElementById('ac_barrio');
+
+                if (dEl) { dEl.value = direccion || ''; pulseField('ac_direccion'); }
+                if (bEl) { bEl.value = barrio || ''; pulseField('ac_barrio'); }
+
+                var stratoVal = String(estrato || '3');
+                document.getElementById('ac_estrato').value = stratoVal;
+                syncVisual(stratoVal);
+            };
+
+            // Sincronización puntual del visual (aún expuesta para compatibilidad)
+            window.sincronizarEstratoVisual = function () {
+                syncVisual(document.getElementById('ac_estrato').value);
+            };
+
+            // Sincronizar estrato visual con el valor por defecto al cargar
+            syncVisual(document.getElementById('ac_estrato').value);
+        })();
+    </script>
+
+</div><!-- /#formulario_actualizar_direccion -->

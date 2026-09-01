@@ -22,16 +22,20 @@ $persona = new personas();
 if ($valido) {
 
     // obtengo los datos de la persona
-    $respuesta = $persona->get_direccion( $id);
+    $resp = $persona->get_direccion($id);
+
+
+    // desglose de la respuesta de la consulta
+    $respuesta['direccion_residencia'] = $resp['direccion_residencia'];
+    $respuesta['estrato'] = $resp['estrato'];
+    $respuesta['barrio'] = $resp['barrio'];
+
     // agrego el estado de la peticion
-    $respuesta['status']=1;
-}
-else {
+    $respuesta['status'] = 1;
+} else {
     $respuesta['status'] = 20;
-    $respuesta['mensaje']="Error al obtener los datos de la persona";
+    $respuesta['mensaje'] = "Error al obtener los datos de la persona";
 }
 
 $respuesta_json = json_encode($respuesta);
 echo $respuesta_json;
-
-?>

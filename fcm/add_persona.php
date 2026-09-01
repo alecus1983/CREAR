@@ -14,7 +14,7 @@ $datos = $_POST;
 
 
 // validacion de nombres
-if ($datos["nombres"] !== "" and isset($datos["nombres"])) {
+if (isset($datos["nombres"]) and $datos["nombres"] !== "") {
     $nombres = $datos["nombres"];
 }
 else {
@@ -22,7 +22,7 @@ else {
     $respuesta['status'] = 21;
 }
 // validacion de los apellidos
-if ($datos["apellidos"] !== "" and isset($datos["apellidos"])) {
+if (isset($datos["apellidos"]) and $datos["apellidos"] !== "") {
     $apellidos = $datos["apellidos"];
 }
 else {
@@ -31,7 +31,7 @@ else {
 }
 
 // seleccion de tipo de identificacion
-if ($datos["tipo_identificacion"] !== "") {
+if (isset($datos["tipo_identificacion"]) and $datos["tipo_identificacion"] !== "") {
     $tipo_identificacion = $datos["tipo_identificacion"];
 }
 else {
@@ -39,7 +39,7 @@ else {
     $respuesta['status'] = 23;
 }
 // valido si tiene identificacion
-if ($datos["identificacion"] !== "") {
+if (isset($datos["identificacion"]) and $datos["identificacion"] !== "") {
     $identificacion = $datos["identificacion"];
 }
 else {
@@ -47,7 +47,7 @@ else {
     $respuesta['status'] = 24;
 }
 
-if ($datos["nacimiento"] !== "") {
+if (isset($datos["nacimiento"]) and $datos["nacimiento"] !== "") {
     $nacimiento = $datos["nacimiento"];
 }
 else {
@@ -62,35 +62,43 @@ if ($valido) {
 
     $p = new personas();
 
-    // se agrega las caracteristicas
-    $p->nombres = $nombres;
-    $p->apellidos = $apellidos;
-    $p->tipo_identificacion = $tipo_identificacion;
-    $p->identificacion = $identificacion;
-    $p->correo = $datos["correo"];
-    $p->i_correo = $datos["i_correo"];
-    $p->celular = $datos["celular"];
-    $p->telefono = $datos["telefono"];
-    $p->nacimiento = $datos["nacimiento"];
-
-    // agrego la persona
-    if ($p->add()) {
-        $respuesta['status'] = "1";
-        // los valores insertados
-        $respuesta['id_persona'] = $p->id_persona;
-        $respuesta['nombres'] = $nombres;
-        $respuesta['apellidos'] = $apellidos;
-        $respuesta['identificacion'] = $identificacion;
-        $respuesta['tipo_identificacion'] = $tipo_identificacion;
-        $respuesta['correo'] = $datos["correo"];
-        $respuesta['i_correo'] = $datos["i_correo"];
-
-
+    // verifico si la identificacion ya existe en la base de datos
+    if ($p->existe_identificacion($identificacion)) {
+        $respuesta['status'] = "26";
+        $respuesta['html'] = "";
     }
     else {
-        $respuesta['status'] = "20";
+        // se agrega las caracteristicas
+        $p->nombres = $nombres;
+        $p->apellidos = $apellidos;
+        $p->tipo_identificacion = $tipo_identificacion;
+        $p->identificacion = $identificacion;
+        $p->correo = $datos["correo"];
+        $p->i_correo = $datos["i_correo"];
+        $p->celular = $datos["celular"];
+        $p->telefono = $datos["telefono"];
+        $p->nacimiento = $nacimiento;
+
+        // agrego la persona
+        if ($p->add()) {
+            $respuesta['status'] = "1";
+            // los valores insertados
+            $respuesta['id_persona'] = $p->id_persona;
+            $respuesta['nombres'] = $nombres;
+            $respuesta['apellidos'] = $apellidos;
+            $respuesta['identificacion'] = $identificacion;
+            $respuesta['tipo_identificacion'] = $tipo_identificacion;
+            $respuesta['correo'] = $datos["correo"];
+            $respuesta['i_correo'] = $datos["i_correo"];
+            $respuesta['celular'] = $datos["celular"];
+            $respuesta['telefono'] = $datos["telefono"];
+            $respuesta['nacimiento'] = $nacimiento;
+        }
+        else {
+            $respuesta['status'] = "20";
+        }
+        $respuesta['html'] = "";
     }
-    $respuesta['html'] = "";
 }
 else {
     $respuesta['html'] = "";
