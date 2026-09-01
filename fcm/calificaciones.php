@@ -1008,40 +1008,34 @@ class calificaciones extends imcrea
             return false;
         //valores iniciales de las 
         $ids = [];
-        // variable donde se acumulan
-        // el string de busqueda
-        $c_string = [];
-
-        //array de retorno
-        $arr = [];
 
         // por cada valor en los codigos
         foreach ($codigos as $c) {
             // recupero el valor del id
             $id = (int) $c['value'];
-            // lo almaceno en ids
-            $ids[] = $id;
+            if ($id > 0) {
+                // lo almaceno en ids
+                $ids[] = $id;
+            }
         }
-        // acumulo el string en una cadena separado
-        // por comas
-        $c_string = implode(',', $ids);
-        $c_string = substr($c_string, 0, -1);
+        
+        if (empty($ids)) return [];
 
+        // acumulo el string en una cadena separado por comas
+        $c_string = implode(',', $ids);
 
         // cadena de busqueda 
-        $q = "select id_alumno  from c_$year where id_materia = $id_materia and id_alumno in ($c_string)";
+        $q = "select * from c_$year where id_materia = $id_materia and id_alumno in ($c_string)";
 
         try {
             $c = $this->_db->query($q);
             $r = (array) $c->fetch_all(MYSQLI_ASSOC);
             // retorno el array de salida
-
             return $r;
         } catch (Exception $e) {
             echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            return [];
         }
-
-
     }
 
 }
