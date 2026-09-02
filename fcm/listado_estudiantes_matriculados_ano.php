@@ -13,8 +13,7 @@ $respuesta = array();
 // valida si recibe la informacion del año
 if ($_POST["years"] !== "") {
     $ano = $_POST["years"];
-}
-else {
+} else {
     $valido = false;
     $respuesta['status'] = 22;
 }
@@ -46,7 +45,7 @@ if ($valido) {
     $html = $html . "<th scope='col'>D. de identidad</th>";
     $html = $html . "<th scope='col'>Correo</th>";
     $html = $html . "<th scope='col'>Editar</th>";
-    $html = $html . "<th scope='col'>Actualizar</th>";
+    $html = $html . "<th scope='col'>Ver</th>";
     $html = $html . "<th scope='col'>Eliminar</th>";
     $html = $html . "</thead>";
     $html = $html . "<tbody>";
@@ -75,9 +74,10 @@ if ($valido) {
         $html = $html . $alumno->correo;
         $html = $html . "</td>";
         $html = $html . "<td>";
-        $html = $html . '<button type="button" class="btn btn-warning" onclick="flujo_editar_matricula(' . $id["id"] . ', 31);">Editar matricula</button>';
+        $html = $html . '<button type="button" class="btn btn-warning" onclick="flujo_editar_matricula(' . $id["id"] . ', 31);">Editar</button>';
         $html = $html . "</td>";
         $html = $html . "<td>";
+        $html = $html . '<button type="button" class="btn btn-outline-secondary" onclick="imprimir_matricula(' . $id["id"] . ');">Ver</button>';
         $html = $html . "</td>";
         $html = $html . "<td>";
         $html = $html . "</td>";
@@ -92,8 +92,7 @@ if ($valido) {
     // parte de la respuesta HTML
     $respuesta['html'] = $html;
     $respuesta['status'] = 1;
-}
-else {
+} else {
     // no se emite respuesta
     $respuesta['html'] = "";
 }
@@ -101,4 +100,3 @@ else {
 $respuesta_json = json_encode($respuesta);
 // emito la respuesta
 echo $respuesta_json;
-?>

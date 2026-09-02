@@ -39,9 +39,16 @@ $mt->get_matricula_id($id_matricula);
 $id_alumno = $mt->id_alumno;
 $fecha_raw = $mt->fecha;
 
+// Si la matrícula no tiene fecha registrada (NULL), grabamos hoy en la BD
+// y usamos la fecha actual como valor para el PDF.
+if (empty($fecha_raw)) {
+    $mt->set_fecha();                  // persiste CURDATE() en la columna fecha
+    $fecha_raw = date('Y-m-d');        // valor local para seguir generando el PDF
+}
+
 // Formateamos la fecha al estilo dd/mm/YYYY
-$fecha_obj = DateTime::createFromFormat('Y-m-d', $fecha_raw);
-$fecha     = $fecha_obj ? $fecha_obj->format('d/m/Y') : $fecha_raw;
+$fecha_obj = DateTime::createFromFormat('Y-m-d', substr($fecha_raw, 0, 10));
+$fecha     = $fecha_obj ? $fecha_obj->format('d/m/Y') : date('d/m/Y');
 
 //obtengo los atributos de la clase padre
 $alumno = new alumnos();

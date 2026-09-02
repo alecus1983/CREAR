@@ -118,15 +118,12 @@ if (isset($_SESSION["id_personas"])) {
     <!-- scrip -->
     <script>
         // CONFIGURACION AJAX
+        // NOTA: el loader-overlay de los formularios de matrícula es controlado
+        // exclusivamente por loaderShow() / loaderHide() en matricula.js.
+        // Aquí solo limpiamos la tabla de resultados antes de cada petición.
         jQuery.ajaxSetup({
             beforeSend: function() {
-                $('#loader-overlay').show();
-                $('#loader').show();
                 $('#tabla').html("");
-            },
-            complete: function() {
-                $('#loader-overlay').hide();
-                $('#loader').hide();
             }
         });
         //////////////////////////////////////////////////////////////////////////////////////////

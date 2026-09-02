@@ -349,7 +349,8 @@ function matricular(onSuccess) {
     type: "POST",
     url: "matricular_alumno.php",
     dataType: "json",
-    data: alumno,
+    // fusionamos el objeto alumno con el año seleccionado en #years
+    data: Object.assign({}, alumno, { year: $("#years").val() }),
     // si los datos son correctos entonces ...
     success: function (respuesta) {
       // si la respuesta es positiva
@@ -1024,4 +1025,9 @@ function crear_certificado(matricula) {
 function funcion_actualizar_ano() {
   var ano = $("#years").val();
   $("#ano").html(ano);
+  $("#tabla").html("");
+  $("#avance").html("");
+  $("#grafica").html("");
+
+
 }

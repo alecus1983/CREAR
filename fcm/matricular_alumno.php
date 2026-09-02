@@ -10,6 +10,9 @@ $id_alumno  = intval($_POST['id_alumno']  ?? 0);
 $id_grado   = intval($_POST['id_grado']   ?? 0);
 $id_curso   = intval($_POST['id_curso']   ?? 0);
 $id_jornada = intval($_POST['id_jornada'] ?? 0);
+$year_post  = intval($_POST['year']       ?? 0);
+// El año lectivo viene del selector #years; si es inválido usamos el año actual
+$year       = ($year_post >= 2000 && $year_post <= 2100) ? $year_post : intval(date('Y'));
 
 // Validar que los valores requeridos sean positivos
 if ($id_alumno <= 0 || $id_grado <= 0 || $id_curso < 0 || $id_jornada <= 0) {
@@ -24,7 +27,6 @@ if ($id_alumno <= 0 || $id_grado <= 0 || $id_curso < 0 || $id_jornada <= 0) {
 
 // fecha actual
 $mes             = date('m');
-$year            = date('Y');
 $fecha_matricula = date('Y-m-d');
 
 // creo objeto matricula
@@ -37,7 +39,7 @@ $mt->id_jornada = $id_jornada;
 $mt->mes        = $mes;
 $mt->retiro     = 11;
 $mt->id_curso   = $id_curso;
-$mt->year       = $year;
+$mt->year       = $year;  // año lectivo seleccionado por el usuario
 
 // ejecuto la matricula
 if ($mt->set_matricula()) {
