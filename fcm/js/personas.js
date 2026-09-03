@@ -1410,7 +1410,7 @@ function get_antecedentes(id, form) {
 
                     case 2:
                         // obtengo el valor de los antecedentes medicos
-                        $("#ac_medicos").val(respuesta["antecedents_patologicos_medicos"]);
+                        $("#ac_medicos").val(respuesta["antecedentes_patologicos_medicos"]);
                         // obtengo el valor de los antecedentes quirurgicos
                         $("#ac_quirurgicos").val(respuesta["antecedentes_patologicos_quirurgicos"]);
                         // obtengo el valor de los antecedentes quirurgicos
@@ -1420,7 +1420,7 @@ function get_antecedentes(id, form) {
                         // obtengo el valor de los antecedentes quirurgicos
                         $("#ac_psicologicos").val(respuesta["antecedentes_patologicos_psicologicos"]);
                         // obtengo el valor de los antecedentes quirurgicos
-                        $("#ac_morbilidad").val(respuesta["antecendentes_patologicos_morbilidad"]);
+                        $("#ac_morbilidad").val(respuesta["antecedentes_patologicos_morbilidad"]);
 
 
                         break;

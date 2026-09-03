@@ -1,3 +1,24 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Loader overlay con contador de referencia.
+// Permite que cargas anidadas (avance → paginas) no cierren el overlay
+// prematuramente: solo se oculta cuando TODAS las peticiones terminaron.
+// ─────────────────────────────────────────────────────────────────────────────
+var _loaderCount = 0;
+
+function loaderShow() {
+  _loaderCount++;
+  $('#loader-overlay').show();
+  $('#loader').show();
+}
+
+function loaderHide() {
+  _loaderCount = Math.max(0, _loaderCount - 1);
+  if (_loaderCount === 0) {
+    $('#loader-overlay').hide();
+    $('#loader').hide();
+  }
+}
+
 // funcion que consulta una matricula realizada
 
 function consultar_matricula(id_matricula) {
@@ -48,28 +69,31 @@ function gestion_matriculas(item) {
     case 1: // cargo el primer formulario de matricula
       $("#avance").html("");
       $("#tabla").html("");
-      $("#avance").load("formulario_matricula_1.html");
+      loaderShow();
+      $("#avance").load("formulario_matricula_1.html", function () { loaderHide(); });
       break;
 
     case 2: // para personas nuevas coloco este formulario
       $("#avance").html("");
       $("#tabla").html("");
+      loaderShow();
       $("#avance").load("formulario_matricula_2.html", function () {
-        //	agrega el formulario de personas
+        loaderHide();
+        loaderShow();
         $("#paginas").load("formulario_agregar_persona.html", function () {
+          loaderHide();
           $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(1)">atras</button><button type="button" class="btn btn-dark" onclick="agregar_persona(4,alumno,1)">agregar</button></div>');
         });
-
       });
       break;
 
     case 3: // para personas antiguas coloco este formulario
       $("#avance").html("");
       $("#tabla").html("");
-      // Cargar formulario_matricula_3.html
+      loaderShow();
       $("#avance").load("formulario_matricula_3.html", function () {
+        loaderHide();
         $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(1)">atras</button></div>');
-        //$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(1)">atras</button>');
       });
       break;
 
@@ -92,10 +116,9 @@ function gestion_matriculas(item) {
       $("#avance").html("");
       $("#tabla").html("");
 
-      // Aseguramos que se mantenga el loader encendido mientras carga el HTML para evitar destellos
-      $("#loader-overlay").show();
+      loaderShow();
       $("#avance").load("formulario_matricula_4.html", function (response, status) {
-        $("#loader-overlay").hide();
+        loaderHide();
         if (status === "error") {
           swal('Error', 'Hubo un problema cargando el módulo', 'error');
           return;
@@ -113,13 +136,16 @@ function gestion_matriculas(item) {
     case 5:
       $("#avance").html("");
       $("#tabla").html("");
+      loaderShow();
       $("#avance").load("formulario_matricula_5.html", function () {
-
+        loaderHide();
         // obtengo la direccion de la persona
         get_direccion(alumno, 2);
 
         // cargo el formulario y populo los campos de forma SINCRONA
+        loaderShow();
         $("#paginas").load("formulario_actualizar_direccion.html", function () {
+          loaderHide();
 
           // Una sola llamada síncrona: asigna dirección, barrio y estrato
           // sin ningún setTimeout que pueda llegar tarde.
@@ -158,8 +184,9 @@ function gestion_matriculas(item) {
       // borro el contenido del div
       $("#tabla").html("");
 
-      // cargo el formulario 6 de matricula entonces realizo la funcion ...
+      loaderShow();
       $("#avance").load("formulario_matricula_6.html", function () {
+        loaderHide();
         // llamo a la funcion de listar jornadas
         lista_jornadas("#ac_jornada");
         // llamo a la funcion lista escolaridad
@@ -193,10 +220,12 @@ function gestion_matriculas(item) {
       $("#avance").html("");
       $("#tabla").html("");
 
-      // cargo en el div acance el formulario 7
+      loaderShow();
       $("#avance").load("formulario_matricula_7.html", function () {
-
+        loaderHide();
+        loaderShow();
         $("#paginas").load("formulario_actualizar_afiliaciones.html", function () {
+          loaderHide();
           $("#paginas").prepend("<p>Datos de afiliacion del alumno <b>" + alumno["nombres"]
             + " " + alumno["apellidos"] + "</b>, con codigo " + alumno["id_persona"]
             + ", con identificacion " + alumno["identificacion"] + "</p>");
@@ -232,11 +261,12 @@ function gestion_matriculas(item) {
       $("#avance").html("");
       $("#tabla").html("");
 
-      // se carga el formulario 8
+      loaderShow();
       $("#avance").load("formulario_matricula_8.html", function () {
-
-        // se carga formulario de antecedentes patologicos
+        loaderHide();
+        loaderShow();
         $("#paginas").load("formulario_actualizar_antecedentes_patologicos.html", function () {
+          loaderHide();
 
           // se carga los datos del encabezado del estudiante
           $("#paginas").prepend("<p>Se ha selecionado la persona <b>"
@@ -842,12 +872,12 @@ function flujo_editar_matricula(id_matricula, item) {
       // borro el contenido de los divs
       $("#avance").html("");
       $("#tabla").html("");
-      // cargo el formulario inicial de edicion de la matricula
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_1.html", function () {
-
-
-        // se carga  el formulario
+        loaderHide();
+        loaderShow();
         $("#paginas").load("formulario_actualizar_direccion.html", function () {
+          loaderHide();
           // obtengo el valor de la direccion
           $("#ac_direccion").val(alumno["direccion_residencia"]);
           // obtengo el valor del barrio
@@ -916,8 +946,9 @@ function flujo_editar_matricula(id_matricula, item) {
       // borro el contenido del div
       $("#tabla").html("");
 
-      // cargo el formulario 6 de matricula entonces realizo la funcion ...
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_2.html", function () {
+        loaderHide();
         // llamo a la funcion de listar jornadas
         lista_jornadas("#ac_jornada");
         // llamo a la funcion lista escolaridad
@@ -962,9 +993,12 @@ function flujo_editar_matricula(id_matricula, item) {
       $("#avance").html("");
       $("#tabla").html("");
 
-      // cargo en el div acance el formulario 7
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_3.html", function () {
+        loaderHide();
+        loaderShow();
         $("#paginas").load("formulario_actualizar_afiliaciones.html", function () {
+          loaderHide();
           $("#paginas").prepend("<p>Se ha selecionado la persona <b>" + alumno["nombres"]
             + " " + alumno["apellidos"] + "</b>, con codigo " + alumno["id_persona"]
             + ", con identificacion " + alumno["identificacion"] + "</p>");
@@ -1004,10 +1038,12 @@ function flujo_editar_matricula(id_matricula, item) {
       $("#avance").html("");
       $("#tabla").html("");
 
-      // cargo en el div acance el formulario 7
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_4.html", function () {
-
+        loaderHide();
+        loaderShow();
         $("#paginas").load("formulario_actualizar_antecedentes_patologicos.html", function () {
+          loaderHide();
           $("#paginas").append("<button id='actualizar_antecedentes_patologicos' class='btn btn btn-dark' onclick='actualizar_antecedentes_patologicos(alumno, 2);'>agregar/actualizar</button>");
           $("#paginas").append("<button type='button' class='btn btn-secondary' onclick='flujo_editar_matricula(alumno['id_matricula'], 33)'>atras</button>");
           // cargo los valores en un nuevo formulario
@@ -1026,8 +1062,8 @@ function flujo_editar_matricula(id_matricula, item) {
     case 35:
       $("#avance").html("");
       $("#tabla").html("");
-      $("#avance").load("formulario_editar_matricula_5.html");
-
+      loaderShow();
+      $("#avance").load("formulario_editar_matricula_5.html", function () { loaderHide(); });
       break;
 
     // AGREGAR  PADRE
@@ -1035,9 +1071,12 @@ function flujo_editar_matricula(id_matricula, item) {
     case 36:
       $("#avance").html("");
       $("#tabla").html("");
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_6.html", function () {
-        //	agrega el formulario de personas
+        loaderHide();
+        loaderShow();
         $("#paginas").load("formulario_agregar_persona.html", function () {
+          loaderHide();
           $("#paginas").prepend('<div class="d-flex justify-content-end mb-3 gap-2"><button type="button" class="btn btn-secondary" onclick="flujo_editar_matricula(alumno[\'id_matricula\'],35)">atras</button><button type="button" class="btn btn-secondary" onclick="agregar_persona(38,padre,2)">agregar</button></div>');
         });
       });
@@ -1048,8 +1087,9 @@ function flujo_editar_matricula(id_matricula, item) {
     case 37:
       $("#avance").html("");
       $("#tabla").html("");
-      // Cargar formulario_matricula_11.html
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_7.html", function () {
+        loaderHide();
         $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="flujo_editar_matricula(alumno[\'id_matricula\'],35)">atras</button>');
       });
       break;
@@ -1058,8 +1098,9 @@ function flujo_editar_matricula(id_matricula, item) {
     case 38:
       $("#avance").html("");
       $("#tabla").html("");
-      //  cargo el formulario 11 de matricula en el campo avance
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_8.html", function () {
+        loaderHide();
         // cargo el contenido dentro la seccion paginas dentro del formulario
         $("#paginas").html("<p>Se ha selecionado la persona <b>"
           + padre["nombres"] + " " + padre["apellidos"]
@@ -1075,7 +1116,8 @@ function flujo_editar_matricula(id_matricula, item) {
     case 39:
       $("#avance").html("");
       $("#tabla").html("");
-      $("#avance").load("formulario_editar_matricula_9.html");
+      loaderShow();
+      $("#avance").load("formulario_editar_matricula_9.html", function () { loaderHide(); });
       break;
 
     // MADRE NUEVA
@@ -1084,9 +1126,12 @@ function flujo_editar_matricula(id_matricula, item) {
       $("#avance").html("");
       $("#tabla").html("");
 
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_10.html", function () {
-        //	agrega el formulario de personas
+        loaderHide();
+        loaderShow();
         $("#paginas").load("formulario_agregar_persona.html", function () {
+          loaderHide();
           $("#paginas").prepend('<div class="d-flex justify-content-end mb-3 gap-2"><button type="button" class="btn btn-secondary" onclick="flujo_editar_matricula(alumno[id_matricula],39)">atras</button><button type="button" class="btn btn-secondary" onclick="agregar_persona(42,madre,2)">agregar</button></div>');
         });
 
@@ -1097,9 +1142,9 @@ function flujo_editar_matricula(id_matricula, item) {
     case 41:
       $("#avance").html("");
       $("#tabla").html("");
-      // Cargar formulario_matricula_15.html
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_11.html", function () {
-
+        loaderHide();
         $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="flujo_editar_matricula(alumno[id_matricula],39)  ">atras</button>');
       });
       break;
@@ -1108,8 +1153,9 @@ function flujo_editar_matricula(id_matricula, item) {
     case 42:
       $("#avance").html("");
       $("#tabla").html("");
-      //  cargo el formulario 16 de matricula en el campo avance
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_12.html", function () {
+        loaderHide();
         // cargo el contenido dentro la seccion paginas dentro del formulario
         $("#paginas").html("<p>Se ha selecionado la persona <b>"
           + madre["nombres"] + " " + madre["apellidos"]
@@ -1126,16 +1172,20 @@ function flujo_editar_matricula(id_matricula, item) {
     case 43:
       $("#avance").html("");
       $("#tabla").html("");
-      $("#avance").load("formulario_editar_matricula_13.html");
+      loaderShow();
+      $("#avance").load("formulario_editar_matricula_13.html", function () { loaderHide(); });
       break;
 
     // AGREGAR ACUDIENTE
     case 44:
       $("#avance").html("");
       $("#tabla").html("");
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_14.html", function () {
-        //	agrega el formulario de personas
+        loaderHide();
+        loaderShow();
         $("#paginas").load("formulario_agregar_persona.html", function () {
+          loaderHide();
           $("#paginas").prepend('<div class="d-flex justify-content-end mb-3 gap-2"><button type="button" class="btn btn-secondary" onclick="flujo_editar_matricula(alumno[\'id_matricula\'],42)">atras</button><button type="button" class="btn btn-secondary" onclick="agregar_persona(45,acudinte,2)">agregar</button></div>');
         });
       });
@@ -1145,8 +1195,9 @@ function flujo_editar_matricula(id_matricula, item) {
     case 45:
       $("#avance").html("");
       $("#tabla").html("");
-      // Cargar formulario_editar_matricula_15.html
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_15.html", function () {
+        loaderHide();
         //  se cargan los botones
         $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="flujo_editar_matricula(alumno[\'id_matricula\'],42)">atras</button>');
         $("#paginas").append('<button type="button" class="btn btn-dark" onclick="flujo_editar_matricula(alumno[\'id_matricula\'],45);">siguiente</button>');
@@ -1159,8 +1210,9 @@ function flujo_editar_matricula(id_matricula, item) {
     case 46:
       $("#avance").html("");
       $("#tabla").html("");
-      // Cargar formulario_matricula_3.html
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_16.html", function () {
+        loaderHide();
 
         // cargo el contenido dentro la seccion paginas dentro del formulario
         $("#paginas").html("<p>Se ha selecionado la persona <b>"
@@ -1174,13 +1226,14 @@ function flujo_editar_matricula(id_matricula, item) {
       break;
     // resumen de la matricual
 
-    // resumen de la matricual
+    // resumen de la matricula
     case 47:
       // limpio el formulario
       $("#avance").html("");
       $("#tabla").html("");
-      //  cargo el formulario 20 de matricula en el campo avance
+      loaderShow();
       $("#avance").load("formulario_editar_matricula_17.html", function () {
+        loaderHide();
 
         // cargo el contenido dentro la seccion paginas dentro del formulario
         $("#paginas").html("<p>Los datos de la matricula son :</p>");
@@ -1241,7 +1294,8 @@ function flujo_editar_matricula(id_matricula, item) {
     case 48:
       $("#avance").html("");
       $("#tabla").html("");
-      $("#avance").load("formulario_editar_matricula_18.html");
+      loaderShow();
+      $("#avance").load("formulario_editar_matricula_18.html", function () { loaderHide(); });
 
       // Muestra la alerta de confirmación usando SweetAlert2
 
