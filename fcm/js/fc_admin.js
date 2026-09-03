@@ -34,7 +34,8 @@ let padre = {
   correo: "",
   i_correo: "",
   celular: "",
-  telefono: ""
+  telefono: "",
+  omitir: 0
 };
 
 // objeto tipo padre
@@ -51,7 +52,8 @@ let madre = {
   correo: "",
   i_correo: "",
   celular: "",
-  telefono: ""
+  telefono: "",
+  omitir: 0
 };
 
 // objeto docente

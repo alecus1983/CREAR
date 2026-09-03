@@ -1450,6 +1450,12 @@ function get_antecedentes(id, form) {
  * @param {number} ea - El estado de acción (1 para flujo normal, 2 para flujo de edición).
  */
 function cp_acudiente(personax, ea) {
+
+    if (personax.omitir == 1) {
+        swal('Omitir', 'Persona no valida', 'info');
+        return;
+    }
+
     // tomo los datos del padre
     acudiente = personax;
 
