@@ -34,11 +34,10 @@ let padre = {
   correo: "",
   i_correo: "",
   celular: "",
-  telefono: "",
-  omitir: 0
+  telefono: ""
 };
 
-// objeto tipo padre
+// objeto tipo madre
 let madre = {
   id_padre: 0,
   id_persona: 0,
@@ -52,9 +51,123 @@ let madre = {
   correo: "",
   i_correo: "",
   celular: "",
-  telefono: "",
-  omitir: 0
+  telefono: ""
 };
+
+/**
+ * Limpia todos los atributos del objeto persona (padre o madre),
+ * restableciendo sus valores por defecto, excepto el atributo 'omitir'
+ * que conserva el valor que lo disparó.
+ *
+ * @param {Object} obj - El objeto a limpiar (padre o madre).
+ */
+function limpiarPersona(obj) {
+  obj.id_padre          = 0;
+  obj.id_persona        = 0;
+  obj.id_hijo           = 0;
+  obj.fecha             = "";
+  obj.nombres           = "";
+  obj.apellidos         = "";
+  obj.identificacion    = "";
+  obj.tipo_identificacion = "";
+  obj.nacimiento        = "";
+  obj.correo            = "";
+  obj.i_correo          = "";
+  obj.celular           = "";
+  obj.telefono          = "";
+}
+
+// ─── Setter reactivo para padre.omitir ───────────────────────────────────────
+// Al asignar padre.omitir = 1:
+//   1. Se limpian automáticamente los demás atributos del objeto.
+//   2. Se elimina el vínculo padre-hijo en la tabla `padres` mediante AJAX.
+(function () {
+  let _omitirPadre = 0;
+  Object.defineProperty(padre, 'omitir', {
+    get: function () { return _omitirPadre; },
+    set: function (valor) {
+      _omitirPadre = valor;
+      if (valor == 1) {
+        // 1. Limpiar atributos del objeto padre
+        limpiarPersona(padre);
+        console.log('padre.omitir = 1 → atributos del padre limpiados.');
+
+        // 2. Eliminar el vínculo en la base de datos (si existe)
+        var idHijo = alumno['id_persona'] || 0;
+        if (idHijo > 0) {
+          $.ajax({
+            type:     'POST',
+            url:      'desvincular_padre_hijo.php',
+            dataType: 'json',
+            data:     { id_hijo: idHijo },
+            success: function (resp) {
+              if (resp['status'] == 1) {
+                console.log('Vínculo padre-hijo eliminado (filas: ' + resp['filas_afect'] + ').');
+              } else if (resp['status'] == 2) {
+                console.log('No había vínculo padre-hijo registrado para este alumno.');
+              } else {
+                console.warn('desvincular_padre_hijo: ' + (resp['mensaje'] || 'error desconocido'));
+              }
+            },
+            error: function (xhr) {
+              console.error('Error AJAX desvincular_padre_hijo:', xhr);
+            }
+          });
+        } else {
+          console.log('padre.omitir = 1 → alumno.id_persona no disponible, no se ejecutó la desvinculación.');
+        }
+      }
+    },
+    enumerable:   true,
+    configurable: true
+  });
+})();
+
+// ─── Setter reactivo para madre.omitir ───────────────────────────────────────
+// Al asignar madre.omitir = 1:
+//   1. Se limpian automáticamente los demás atributos del objeto.
+//   2. Se elimina el vínculo madre-hijo en la tabla `madres` mediante AJAX.
+(function () {
+  let _omitirMadre = 0;
+  Object.defineProperty(madre, 'omitir', {
+    get: function () { return _omitirMadre; },
+    set: function (valor) {
+      _omitirMadre = valor;
+      if (valor == 1) {
+        // 1. Limpiar atributos del objeto madre
+        limpiarPersona(madre);
+        console.log('madre.omitir = 1 → atributos de la madre limpiados.');
+
+        // 2. Eliminar el vínculo en la base de datos (si existe)
+        var idHijo = alumno['id_persona'] || 0;
+        if (idHijo > 0) {
+          $.ajax({
+            type:     'POST',
+            url:      'desvincular_madre_hijo.php',
+            dataType: 'json',
+            data:     { id_hijo: idHijo },
+            success: function (resp) {
+              if (resp['status'] == 1) {
+                console.log('Vínculo madre-hijo eliminado (filas: ' + resp['filas_afect'] + ').');
+              } else if (resp['status'] == 2) {
+                console.log('No había vínculo madre-hijo registrado para este alumno.');
+              } else {
+                console.warn('desvincular_madre_hijo: ' + (resp['mensaje'] || 'error desconocido'));
+              }
+            },
+            error: function (xhr) {
+              console.error('Error AJAX desvincular_madre_hijo:', xhr);
+            }
+          });
+        } else {
+          console.log('madre.omitir = 1 → alumno.id_persona no disponible, no se ejecutó la desvinculación.');
+        }
+      }
+    },
+    enumerable:   true,
+    configurable: true
+  });
+})();
 
 // objeto docente
 let docente = {

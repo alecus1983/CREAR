@@ -334,6 +334,7 @@ function gestion_matriculas(item) {
     case 12:
       $("#avance").html("");
       $("#tabla").html("");
+      padre.omitir = 0;
 
 
 
@@ -357,35 +358,41 @@ function gestion_matriculas(item) {
       $("#avance").html("");
       $("#tabla").html("");
 
-      // Verificar si ya existe el vínculo padre-hijo en la tabla padres.
-      // Si no existe, lo inserta antes de avanzar al formulario de la madre.
-      $.ajax({
-        type: "POST",
-        url: "vincular_padre_hijo.php",
-        dataType: "json",
-        data: {
-          id_padre: padre["id_persona"],
-          id_hijo: alumno["id_persona"]
-        },
-        success: function (respuesta) {
-          if (respuesta["status"] == 1) {
-            // Vínculo creado exitosamente → avanzar al formulario de la madre
-            console.log("Vínculo padre-hijo creado (id_padres: " + respuesta["id_padres"] + ")");
-            $("#avance").load("formulario_matricula_13.html");
-          } else if (respuesta["status"] == 2) {
-            // El vínculo ya existía → avanzar normalmente
-            console.log("Vínculo padre-hijo ya existía.");
-            $("#avance").load("formulario_matricula_13.html");
-          } else {
-            // Error al crear el vínculo
-            swal("Error", "No se pudo registrar el vínculo padre-hijo: " + (respuesta["mensaje"] || ""), "error");
+      if (padre.omitir == 0) {
+
+        // Verificar si ya existe el vínculo padre-hijo en la tabla padres.
+        // Si no existe, lo inserta antes de avanzar al formulario de la madre.
+        $.ajax({
+          type: "POST",
+          url: "vincular_padre_hijo.php",
+          dataType: "json",
+          data: {
+            id_padre: padre["id_persona"],
+            id_hijo: alumno["id_persona"]
+          },
+          success: function (respuesta) {
+            if (respuesta["status"] == 1) {
+              // Vínculo creado exitosamente → avanzar al formulario de la madre
+              console.log("Vínculo padre-hijo creado (id_padres: " + respuesta["id_padres"] + ")");
+              $("#avance").load("formulario_matricula_13.html");
+            } else if (respuesta["status"] == 2) {
+              // El vínculo ya existía → avanzar normalmente
+              console.log("Vínculo padre-hijo ya existía.");
+              $("#avance").load("formulario_matricula_13.html");
+            } else {
+              // Error al crear el vínculo
+              swal("Error", "No se pudo registrar el vínculo padre-hijo: " + (respuesta["mensaje"] || ""), "error");
+            }
+          },
+          error: function (xhr) {
+            console.error("Error AJAX vincular_padre_hijo:", xhr);
+            swal("Error", "Ocurrió un problema al registrar el vínculo padre-hijo.", "error");
           }
-        },
-        error: function (xhr) {
-          console.error("Error AJAX vincular_padre_hijo:", xhr);
-          swal("Error", "Ocurrió un problema al registrar el vínculo padre-hijo.", "error");
-        }
-      });
+        });
+
+      } else {
+        $("#avance").load("formulario_matricula_13.html");
+      }
       break;
 
 
@@ -422,6 +429,7 @@ function gestion_matriculas(item) {
     case 16:
       $("#avance").html("");
       $("#tabla").html("");
+      madre.omitir = 0;
       //  cargo el formulario 16 de matricula en el campo avance
       $("#avance").load("formulario_matricula_16.html", function () {
         // cargo el contenido dentro la seccion paginas dentro del formulario
@@ -443,32 +451,38 @@ function gestion_matriculas(item) {
       $("#avance").html("");
       $("#tabla").html("");
 
-      // Verificar/insertar vínculo madre-hijo en tabla madres.
-      $.ajax({
-        type: "POST",
-        url: "vincular_madre_hijo.php",
-        dataType: "json",
-        data: {
-          id_madre: madre["id_persona"],
-          id_hijo: alumno["id_persona"]
-        },
-        success: function (respMadre) {
-          if (respMadre["status"] == 1) {
-            console.log("Vínculo madre-hijo creado (id_madres: " + respMadre["id_madres"] + ")");
-          } else if (respMadre["status"] == 2) {
-            console.log("Vínculo madre-hijo ya existía.");
-          } else {
-            swal("Error", "No se pudo registrar el vínculo madre-hijo: " + (respMadre["mensaje"] || ""), "error");
-            return;
+      if (madre.omitir == 0) {
+
+        // Verificar/insertar vínculo madre-hijo en tabla madres.
+        $.ajax({
+          type: "POST",
+          url: "vincular_madre_hijo.php",
+          dataType: "json",
+          data: {
+            id_madre: madre["id_persona"],
+            id_hijo: alumno["id_persona"]
+          },
+          success: function (respMadre) {
+            if (respMadre["status"] == 1) {
+              console.log("Vínculo madre-hijo creado (id_madres: " + respMadre["id_madres"] + ")");
+            } else if (respMadre["status"] == 2) {
+              console.log("Vínculo madre-hijo ya existía.");
+            } else {
+              swal("Error", "No se pudo registrar el vínculo madre-hijo: " + (respMadre["mensaje"] || ""), "error");
+              return;
+            }
+            // Avanzar al formulario del acudiente
+            $("#avance").load("formulario_matricula_17.html");
+          },
+          error: function (xhr) {
+            console.error("Error AJAX vincular_madre_hijo:", xhr);
+            swal("Error", "Ocurrió un problema al registrar el vínculo madre-hijo.", "error");
           }
-          // Avanzar al formulario del acudiente
-          $("#avance").load("formulario_matricula_17.html");
-        },
-        error: function (xhr) {
-          console.error("Error AJAX vincular_madre_hijo:", xhr);
-          swal("Error", "Ocurrió un problema al registrar el vínculo madre-hijo.", "error");
-        }
-      });
+        });
+
+      } else {
+        $("#avance").load("formulario_matricula_17.html");
+      }
       break;
 
     // AGREGAR ACUDIENTE

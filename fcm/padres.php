@@ -66,14 +66,46 @@ class padres extends imcrea {
         }
     }
 
-    // Método para eliminar un registro
+    // Método para eliminar un registro por su PK
     public function del($id_padres) {
         try {
-            $sql = "DELETE FROM padres WHERE id_padres = $id_padres";
-            $stmt = $this->_db->query($sql);
-            return $this->_db->affected_rows; // Retorna el número de filas eliminadas
+            $sql  = "DELETE FROM padres WHERE id_padres = ?";
+            $stmt = $this->_db->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception("Error al preparar del padres: " . $this->_db->error);
+            }
+            $stmt->bind_param("i", $id_padres);
+            $stmt->execute();
+            $rows = $this->_db->affected_rows;
+            $stmt->close();
+            return $rows;
         } catch (Exception $e) {
-            die("Error al eliminar: " . $e->getMessage());
+            error_log("Error al eliminar en padres: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Elimina el vínculo padre-hijo filtrando por id_hijo (id_persona del alumno).
+     *
+     * @param int $id_hijo  El id_persona del alumno.
+     * @return int|false    Número de filas afectadas o false en caso de error.
+     */
+    public function del_por_hijo(int $id_hijo) {
+        try {
+            $sql  = "DELETE FROM padres WHERE id_hijo = ?";
+            $stmt = $this->_db->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception("Error al preparar del_por_hijo (padres): " . $this->_db->error);
+            }
+            $stmt->bind_param("i", $id_hijo);
+            $stmt->execute();
+            $rows = $this->_db->affected_rows;
+            $stmt->close();
+            return $rows;
+        } catch (Exception $e) {
+            error_log("Error en del_por_hijo (padres): " . $e->getMessage());
+            return false;
         }
     }
 

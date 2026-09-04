@@ -89,6 +89,30 @@ class madres extends imcrea {
         }
     }
 
+    /**
+     * Elimina el vínculo madre-hijo filtrando por id_hijo (id_persona del alumno).
+     *
+     * @param int $id_hijo  El id_persona del alumno.
+     * @return int|false    Número de filas afectadas o false en caso de error.
+     */
+    public function del_por_hijo(int $id_hijo) {
+        try {
+            $sql  = "DELETE FROM madres WHERE id_hijo = ?";
+            $stmt = $this->_db->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception("Error al preparar del_por_hijo (madres): " . $this->_db->error);
+            }
+            $stmt->bind_param("i", $id_hijo);
+            $stmt->execute();
+            $rows = $this->_db->affected_rows;
+            $stmt->close();
+            return $rows;
+        } catch (Exception $e) {
+            error_log("Error en del_por_hijo (madres): " . $e->getMessage());
+            return false;
+        }
+    }
+
     // Método para obtener todos los registros
     public function get_all() {
         try {
