@@ -552,8 +552,43 @@ class alumnos extends personas
             array_push($a_grado, $resultado['id_grado']);
             array_push($a_alumno, $resultado['id_alumno']);
         }
-
         // retorno el siguiente array
         return [$a_alumno, $a_grado, $a_curso];
+    }
+
+    // function para obtener los alumnos
+    public static function get_alumnos_bulk($ids_alumnos)
+    {
+        // variable para guardar 
+        $lista_alumnos = "";
+
+
+        // por cada  elemento en $ids_alumnos
+        foreach ($ids_alumnos as $id_a) {
+            // variable de lista de circuitos
+            $lista_alumnos = $id_a . "," . $lista_alumnos;
+
+        }
+
+        try {
+            $lista_alumnos = substr($lista_alumnos, 0, -1);
+
+            $q = "select * from personas where u_alumnos in ( $lista_alumnos)";
+
+            $result = personas::$_db_connection->query($q);
+            if ($result === false) {
+                throw new Exception("Error al ejecutar la consulta maximo: " . personas::$_db_connection->error);
+            }
+
+            $dato = $result->fetch_array(MYSQLI_ASSOC);
+
+            echo var_dump($dato);
+            $result->close(); // Cerrar el resultado de la consulta
+            return $dato ? $dato[0] : null;
+
+        } catch (Exception $e) {
+            error_log("Error en maximo: " . $e->getMessage());
+            return null;
+        }
     }
 }

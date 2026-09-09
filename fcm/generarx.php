@@ -36,7 +36,6 @@
 			// Se crea una etiqueta con el logo de la institución
 			$this->MultiCell(90,15,utf8_decode("BOLETIN DE CALIFICACIONES \n PERIODO ".$_GET["periodos"]),1,'C');
 
-   	}
 
 
 

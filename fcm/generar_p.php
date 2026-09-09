@@ -20,7 +20,6 @@ header("Content-Type: text/html;charset=utf-8");
 //mysqli_query("SET NAMES 'utf8'");
 // Se establece el tipo de cabecera  que tendra el documento
 class PDF extends tFPDF
-
 {
     //Cabecera de página
     function Header()
@@ -41,10 +40,10 @@ class PDF extends tFPDF
         //Arial italic 8
         $this->SetFont('Arial', '', 8);
         //Número de página
-        $txt =  ("Otros servicios: Programas Técnicos , Cursos cortos y Programas tecnológicos");
+        $txt = ("Otros servicios: Programas Técnicos , Cursos cortos y Programas tecnológicos");
         $this->Cell(0, 5, $txt, 0, 0, 'C');
         $this->Ln(3);
-        $txt =  ("Info: Tel 829 602 8443640, Cel.3166288374, WhatsApp. 3164469532, Email:imcreativo@hotmail.com,  www.imcreativo.edu.co ");
+        $txt = ("Info: Tel 829 602 8443640, Cel.3166288374, WhatsApp. 3164469532, Email:imcreativo@hotmail.com,  www.imcreativo.edu.co ");
         $this->Cell(0, 5, $txt, 0, 0, 'C');
         //$this->Ln(1);
         //$this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
@@ -82,6 +81,13 @@ $mt->id_grado = $id_grado;
 
 // creamos un nuevo listado de estudiantes 
 $list = $mt->get_matriculas_grado_jornada();
+
+// Extraer solo la columna 'id_alumno'
+$ids_alumnos = array_column($list, 'id_alumno');
+// quito la primera coma
+
+
+
 // VARIABLES PARA GUARDAR LOS NOMBRES DE LOS ESTUDIANTES
 $nivel = $gr->grado;
 // se almacena el grado al que es promovido
@@ -109,7 +115,7 @@ $lo = new logro();
 // 1. Cargar áreas y materias del grado UNA SOLA VEZ (fuera del bucle)
 // -------------------------------------------------------------------
 $area_obj = new area();
-$lista_a   = $area_obj->get_areas_grado($id_grado);  // [ id_area => [nombre, cantidad] ]
+$lista_a = $area_obj->get_areas_grado($id_grado);  // [ id_area => [nombre, cantidad] ]
 
 // Construir mapa materia → area y lista plana de ids de materias
 // $materias_con_area[$id_materia] = $id_area
@@ -128,7 +134,9 @@ foreach ($lista_a as $id_area => $area_data) {
 // -------------------------------------------------------------------
 // 2. Cargar datos de alumnos en una sola query
 // -------------------------------------------------------------------
-$alumnos_cache = alumnos::get_alumnos_bulk($list->id_alumno);
+$alumnos_cache = alumnos::get_alumnos_bulk($ids_alumnos);
+
+echo var_dump($alumnos_cache);
 
 // -------------------------------------------------------------------
 // 3. Cargar docentes del grado en una sola query
@@ -143,7 +151,7 @@ $docentes_cache = $md->get_docentes_grado(
 // -------------------------------------------------------------------
 // 4. Cargar TODAS las notas y recuperaciones en 2 queries
 // -------------------------------------------------------------------
-$spot    = $notax->get_notas_bulk($list->id_alumno, $materias_con_area, intval($year));
+$spot = $notax->get_notas_bulk($list->id_alumno, $materias_con_area, intval($year));
 $recover = $notax->get_recuperaciones_bulk($list->id_alumno, $materias_con_area, intval($year));
 
 // -------------------------------------------------------------------
@@ -184,7 +192,7 @@ $con_p = 1;
 // array que guarda las posiciones
 $posicion = array();
 
-foreach ($promedio as  $pr => $prom) {
+foreach ($promedio as $pr => $prom) {
     //echo $pr. " -->".$prom."<br>----<br>";
     $posicion[$pr] = $con_p;
     $con_p++;
@@ -194,7 +202,7 @@ foreach ($promedio as  $pr => $prom) {
 // Esta estructura se repite por cada estudiante
 // con el fin de mostrar el boletin impreso
 
-foreach ($list->id_alumno  as $e) {
+foreach ($list->id_alumno as $e) {
 
     // uso el cache de alumnos pre-cargado
     $estudiante = $alumnos_cache[$e] ?? ['nombres' => '', 'apellidos' => ''];
@@ -259,7 +267,7 @@ foreach ($list->id_alumno  as $e) {
 
 
     //por cada area que debe evaluar el grado muestro ..
-    foreach ($lista_a as  $id_area => $a) {
+    foreach ($lista_a as $id_area => $a) {
 
         // variables de repeticion de area
         $avg = 0;
@@ -491,7 +499,7 @@ foreach ($list->id_alumno  as $e) {
             // si hay recuperacion del tercer periodo            
             if ($r3) {
                 // si la recuperacion es menor que 3 y mayor que cero 
-                if ($r3 < 3 and $r3 > 0.1  and $id_periodo > 2) {
+                if ($r3 < 3 and $r3 > 0.1 and $id_periodo > 2) {
                     $pdf->SetFillColor(255, 0, 0);
                 } // pintar de rojo
                 else {
@@ -506,7 +514,7 @@ foreach ($list->id_alumno  as $e) {
                 }
             } else {
                 // pinta de rojo  la celda del tercer periodo si la nota es baja
-                if ($p3 < 3 and $p3 > 0.1  and $id_periodo > 2) {
+                if ($p3 < 3 and $p3 > 0.1 and $id_periodo > 2) {
                     $pdf->SetFillColor(255, 0, 0);
                 } // pintar de rojo
                 else {
@@ -758,7 +766,7 @@ foreach ($list->id_alumno  as $e) {
         //echo " = ".$avg_a."<br>";
 
         // se da formato al numero de areas perdidas
-        $avg_a =  number_format($avg_a ?? 0, 1, '.', ''); // se calcula el promedio del area
+        $avg_a = number_format($avg_a ?? 0, 1, '.', ''); // se calcula el promedio del area
 
         //$avg_at = number_format($avg_at, 1, '.', '');
 
@@ -835,7 +843,7 @@ foreach ($list->id_alumno  as $e) {
     //    	FICHA DE DESCRIPCION DE LOGROS
 
     // por cada area que debe evaluar el grado muestro ..
-    foreach ($lista_a as  $id_area => $a) {
+    foreach ($lista_a as $id_area => $a) {
 
         // obtengo el area
         $area = $a[0];
