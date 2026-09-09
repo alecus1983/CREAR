@@ -26,9 +26,7 @@ require_once('datos.php');
 // ──────────────────────────────────────────────────────────────────────────────
 // Parámetros
 // ──────────────────────────────────────────────────────────────────────────────
-//$id_alumno    = intval($_GET['id_alumno']    ?? 0);
-//$id_padre     = intval($_GET['id_padre']     ?? 0);
-//$id_madre     = intval($_GET['id_madre']     ?? 0);
+
 $id_matricula = intval($_GET['id_matricula'] ?? 0);
 $fecha_raw    = $_GET['fecha'] ?? date('Y-m-d');
 
@@ -111,6 +109,23 @@ $jo_obj->get_jornada_por_id($mt_obj->id_jornada ?? 0);
 // Curso
 $cu_obj = new curso();
 $cu_obj->get_curso_por_id($mt_obj->id_curso ?? 0);
+
+// agregar acudientes
+$acudiente_obj = new acudientes();
+
+// si existe el acudiente
+if ($acudiente_obj->existe_hijo($al_obj->id_persona)) {
+
+    // obtengo todos los objetos de  la tabla acudientes
+    $tab_acudinte = $acudiente_obj->get_all();
+
+    // por cada elemento en la tabla acudinte   
+    foreach ($tab_acudinte as $ac) {
+        if ($ac["id_personas"] == $padre_per->id_persona) {
+            $acudiente = "padre";
+        }
+    }
+}
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Obtener datos del padre
@@ -482,6 +497,17 @@ if ($id_padre > 0) {
     $pdf->fila('Tipo identificacion', tipo_id_nombre($padre_per->tipo_identificacion ?? ''), 'Identificacion', $padre_per->identificacion ?? '');
     $pdf->fila('Fecha de nacimiento', $padre_per->nacimiento          ?? '', 'Correo',         $padre_per->correo         ?? '');
     $pdf->fila('Celular',             $padre_per->celular             ?? '', 'Telefono',        $padre_per->telefono       ?? '');
+} else {
+
+    $pdf->titulo_seccion('Datos del Padre');
+    $pdf->SetFillColor(220, 220, 220);
+    $pdf->cell(32, 6, 'Nombre completo', 1, 0, 'L', true);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->cell(158, 6, "", 1, 0, 'L', true);
+    $pdf->Ln();
+    $pdf->fila('Tipo identificacion', "", 'Identificacion', "");
+    $pdf->fila('Fecha de nacimiento', "", 'Correo', "");
+    $pdf->fila('Celular',  "", 'Telefono',  "");
 }
 
 // ── Datos de la madre ────────────────────────────────────────────────────────
@@ -495,6 +521,17 @@ if ($id_madre > 0) {
     $pdf->fila('Tipo identificacion', tipo_id_nombre($madre_per->tipo_identificacion ?? ''), 'Identificacion', $madre_per->identificacion ?? '');
     $pdf->fila('Fecha de nacimiento', $madre_per->nacimiento          ?? '', 'Correo',         $madre_per->correo         ?? '');
     $pdf->fila('Celular',             $madre_per->celular             ?? '', 'Telefono',        $madre_per->telefono       ?? '');
+    $pdf->Ln();
+} else {
+    $pdf->titulo_seccion('Datos de la Madre');
+    $pdf->SetFillColor(220, 220, 220);
+    $pdf->cell(32, 6, 'Nombre completo', 1, 0, 'L', true);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->cell(158, 6, "No aplica", 1, 0, 'L', true);
+    $pdf->Ln();
+    $pdf->fila('Tipo identificacion', "No aplica", 'Identificacion', "");
+    $pdf->fila('Fecha de nacimiento', "No aplica", 'Correo',   "");
+    $pdf->fila('Celular', "No aplica", 'Telefono',   "");
     $pdf->Ln();
 }
 

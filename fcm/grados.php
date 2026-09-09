@@ -193,6 +193,8 @@ class grados extends jornada
         return $resultado;
     }
 
+
+
     // ... cierre de la clase ...
 
 
@@ -200,4 +202,3 @@ class grados extends jornada
 
 
 // fin de la clase
-?>

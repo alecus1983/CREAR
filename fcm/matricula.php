@@ -41,6 +41,9 @@ class matricula extends curso
      * @brief Fecha en que se realizó/imprimió la matrícula (YYYY-MM-DD).
      */
     public $fecha;
+
+
+
     /**
      * @brief Constructor de la clase `matricula`.
      *
@@ -198,9 +201,9 @@ class matricula extends curso
      * Realiza una consulta para obtener todas las matrículas que coincidan con los
      * parámetros de año, grado y jornada.
      */
-    public function get_matriculas_grado_jornada($year, $id_grado, $id_jornada)
+    public function get_matriculas_grado_jornada()
     {
-        $q = "SELECT * FROM matricula m WHERE year = $year AND m.id_jornada = $id_jornada AND id_grado = $id_grado";
+        $q = "SELECT * FROM matricula m WHERE year = $this->year AND m.id_jornada = $this->id_jornada AND id_grado = $this->id_grado";
         $c = $this->_db->query($q);
 
         $arr = array();
