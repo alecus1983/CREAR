@@ -556,4 +556,32 @@ class alumnos extends personas
         // retorno el siguiente array
         return [$a_alumno, $a_grado, $a_curso];
     }
+
+    /**
+     * Carga los datos de un conjunto de alumnos en una sola consulta.
+     * Retorna: $cache[$id_alumno] = ['nombres' => ..., 'apellidos' => ...]
+     */
+    public static function get_alumnos_bulk(array $ids): array
+    {
+        $cache = [];
+        if (empty($ids))
+            return $cache;
+
+        // Reutilizamos la conexión singleton de imcrea
+        $db = imcrea::$_db_connection ?? (new imcrea())->_db;
+        $ids_str = implode(',', array_map('intval', $ids));
+        $q = "SELECT id_alumno, nombres, apellidos
+              FROM alumnos
+              WHERE id_alumno IN ({$ids_str})";
+        $res = $db->query($q);
+        if ($res) {
+            while ($r = $res->fetch_assoc()) {
+                $cache[intval($r['id_alumno'])] = [
+                    'nombres' => $r['nombres'],
+                    'apellidos' => $r['apellidos'],
+                ];
+            }
+        }
+        return $cache;
+    }
 }
