@@ -11,238 +11,17 @@ $id_jornada = $_GET["jornada"]; // guarda el dato de la jornada
 $id_curso = $_GET["curso"]; // codigo del curso
 
 // array de los ponderados
-$arr_ponderados_p1 = array(
-    "1A" => 2.5,
-    "1B" => 1.7,
-    "1C" => 1.7,
-    "1D" => 1.7,
-    "1E" => 1,
-    "1F" => 1,
-    "1G" => 1,
-    "2A" => 2.5,
-    "2B" => 1.7,
-    "2C" => 1.7,
-    "2D" => 1.7,
-    "2E" => 1,
-    "2F" => 1,
-    "2G" => 1,
-    "3A" => 2.5,
-    "3B" => 1.7,
-    "3C" => 1.7,
-    "3D" => 1.7,
-    "3E" => 1,
-    "3F" => 1,
-    "3G" => 1,
-    "4A" => 2.5,
-    "4B" => 1.7,
-    "4C" => 1.7,
-    "4D" => 1.7,
-    "4E" => 1,
-    "4F" => 1,
-    "4G" => 1,
-    "4H" => 8,
-    "5A" => 2.5,
-    "5B" => 1.7,
-    "5C" => 1.7,
-    "5D" => 1.7,
-    "5E" => 1,
-    "5F" => 1,
-    "5G" => 1,
-    "6A" => 2.5,
-    "6B" => 1.7,
-    "6C" => 1.7,
-    "6D" => 1.7,
-    "6E" => 1,
-    "6F" => 1,
-    "6G" => 1,
-    "7A" => 2.5,
-    "7B" => 1.7,
-    "7C" => 1.7,
-    "7D" => 1.7,
-    "7E" => 1,
-    "7F" => 1,
-    "7G" => 1,
-    "8E" => 1,
-    "8F" => 1,
-    "8G" => 1,
-    "8I" => 9.5,
-    "8J" => 5.3,
-    "9A" => 2.5
-);
-
-$arr_ponderados_p2 = array(
-    "9B" => 1.7,
-    "9C" => 1.7,
-    "9D" => 1.7,
-    "9E" => 1,
-    "9F" => 1,
-    "9G" => 1,
-    "10A" => 2.5,
-    "10B" => 1.7,
-    "10C" => 1.7,
-    "10D" => 1.7,
-    "10E" => 1,
-    "10F" => 1,
-    "10G" => 1,
-    "11A" => 2.5,
-    "11B" => 1.7,
-    "11C" => 1.7,
-    "11D" => 1.7,
-    "11E" => 1,
-    "11F" => 1,
-    "11G" => 1,
-    "12A" => 2.5,
-    "12B" => 1.7,
-    "12C" => 1.7,
-    "12D" => 1.7,
-    "12E" => 1,
-    "12F" => 1,
-    "12G" => 1,
-    "12H" => 8,
-    "13A" => 2.5,
-    "13B" => 1.7,
-    "13C" => 1.7,
-    "13D" => 1.7,
-    "13E" => 1,
-    "13F" => 1,
-    "13G" => 1,
-    "14A" => 2.5,
-    "14B" => 1.7,
-    "14C" => 1.7,
-    "14D" => 1.7,
-    "14E" => 1,
-    "14F" => 1,
-    "14G" => 1,
-    "15A" => 2.5,
-    "15B" => 1.7,
-    "15C" => 1.7,
-    "15D" => 1.7,
-    "15E" => 1,
-    "15F" => 1,
-    "15G" => 1,
-    "16E" => 1,
-    "16F" => 1,
-    "16G" => 1,
-    "16I" => 9.5,
-    "16J" => 5.3,
-    "17A" => 2.5
-);
-
-
-$arr_ponderados_p3 = array(
-    "17B" => 1.7,
-    "17C" => 1.7,
-    "17D" => 1.7,
-    "17E" => 1,
-    "17F" => 1,
-    "17G" => 1,
-    "18A" => 2.5,
-    "18B" => 1.7,
-    "18C" => 1.7,
-    "18D" => 1.7,
-    "18E" => 1,
-    "18F" => 1,
-    "18G" => 1,
-    "19A" => 2.5,
-    "19B" => 1.7,
-    "19C" => 1.7,
-    "19D" => 1.7,
-    "19E" => 1,
-    "19F" => 1,
-    "19G" => 1,
-    "20A" => 2.5,
-    "20B" => 1.7,
-    "20C" => 1.7,
-    "20D" => 1.7,
-    "20E" => 1,
-    "20F" => 1,
-    "20G" => 1,
-    "20H" => 8,
-    "21A" => 2.5,
-    "21B" => 1.7,
-    "21C" => 1.7,
-    "21D" => 1.7,
-    "21E" => 1,
-    "21F" => 1,
-    "21G" => 1,
-    "22A" => 2.5,
-    "22B" => 1.7,
-    "22C" => 1.7,
-    "22D" => 1.7,
-    "22E" => 1,
-    "22F" => 1,
-    "22G" => 1,
-    "23A" => 2.5,
-    "23B" => 1.7,
-    "23C" => 1.7,
-    "23D" => 1.7,
-    "23E" => 1,
-    "23F" => 1,
-    "23G" => 1,
-    "24E" => 1,
-    "24F" => 1,
-    "24G" => 1,
-    "24I" => 9.5,
-    "24J" => 5.3
-);
-
-// array ponderado del cuarto periodo
-$arr_ponderados_p4 = array(
-    "25A" => 2.5,
-    "25B" => 1.7,
-    "25C" => 1.7,
-    "25D" => 1.7,
-    "25E" => 1,
-    "25F" => 1,
-    "25G" => 1,
-    "26A" => 2.5,
-    "26B" => 1.7,
-    "26C" => 1.7,
-    "26D" => 1.7,
-    "26E" => 1,
-    "26F" => 1,
-    "26G" => 1,
-    "27A" => 2.5,
-    "27B" => 1.7,
-    "27C" => 1.7,
-    "27D" => 1.7,
-    "27E" => 1,
-    "27F" => 1,
-    "27G" => 1,
-    "28A" => 2.5,
-    "28B" => 1.7,
-    "28C" => 1.7,
-    "28D" => 1.7,
-    "28E" => 1,
-    "28F" => 1,
-    "28G" => 1,
-    "28H" => 8,
-    "29A" => 2.5,
-    "29B" => 1.7,
-    "29C" => 1.7,
-    "29D" => 1.7,
-    "29E" => 1,
-    "29F" => 1,
-    "29G" => 1,
-    "30A" => 2.5,
-    "30B" => 1.7,
-    "30C" => 1.7,
-    "30D" => 1.7,
-    "30E" => 1,
-    "30F" => 1,
-    "30G" => 1,
-    "31A" => 2.5,
-    "31B" => 1.7,
-    "31C" => 1.7,
-    "31D" => 1.7,
-    "31E" => 1,
-    "31F" => 1,
-    "31G" => 1,
-    "32E" => 1,
-    "32F" => 1,
-    "32G" => 1,
-    "32I" => 9.5,
-    "32J" => 5.3
+$arr_ponderados = array(
+    "A" => 2.5,
+    "B" => 1.7,
+    "C" => 1.7,
+    "D" => 1.7,
+    "E" => 1,
+    "F" => 1,
+    "G" => 1,
+    "H" => 8,
+    "I" => 9.5,
+    "J" => 5.3
 );
 
 // se inserta este fichero para generar el documento en pdf
@@ -382,36 +161,158 @@ $docentes_cache = $md->get_docentes_grado(
 // -------------------------------------------------------------------
 // 4. Cargar TODAS las notas y recuperaciones en 2 queries
 // -------------------------------------------------------------------
-$spot = $notax->get_notas_bulk($list, $materias_con_area, intval($year));
-$recover = $notax->get_recuperaciones_bulk($list->id_alumno, $materias_con_area, intval($year));
+$tab_calificaciones = $notax->get_notas_bulk($list, $materias_con_area, intval($year));
+// matriz de tres dimensiones que almacena la calificacion de un 
+// alumno  en una materia en durante el periodo academico
+$spot = [[]];
 
-// -------------------------------------------------------------------
-// 5. Cargar todos los logros del periodo en 1 query
-// -------------------------------------------------------------------
-$logros_cache = $notax->get_logros_bulk(
-    $list->id_alumno,
-    array_keys($materias_con_area),
-    intval($year),
-    intval($id_periodo)
-);
+// calculo la nota de cada estudiante por materia en un periodo dado
+foreach ($tab_calificaciones as $em) {
 
-// -------------------------------------------------------------------
-// 6. Calcular promedios y posiciones con los arrays ya llenos
-// -------------------------------------------------------------------
-$promedio = [];
+    // ciclo de repeticion for
+    // por cada fila de materias - estudiantes 
+    for ($p = 1; $p < 5; $p++) {
 
-foreach ($list as $e) {
-    $p_a = 0;
-    $c_m = 0;
-    if (isset($spot[$e])) {
-        foreach ($spot[$e] as $area_notas) {
-            foreach ($area_notas as $mat_notas) {
-                $p_a += $mat_notas[$id_periodo] ?? 0;
-                $c_m++;
+        // se calcula  la cantidad base a sumar
+        // a la semana del periodo  1 para desplazarla 
+        // a los otros perdiodos restantes
+        $base = 8 * ($p - 1);
+        //  acumulado  de calificaciones
+        $spot[$em["id_alumno"]][$materias_con_area[$em["id_materia"]]][$em["id_materia"]][$p] = ($em[strval($base + 1) . "A"] * $arr_ponderados["A"] +
+            $em[strval($base + 1) . "B"] * $arr_ponderados["B"] +
+            $em[strval($base + 1) . "C"] * $arr_ponderados["C"] +
+            $em[strval($base + 1) . "D"] * $arr_ponderados["D"] +
+            $em[strval($base + 1) . "E"] * $arr_ponderados["E"] +
+            $em[strval($base + 1) . "F"] * $arr_ponderados["F"] +
+            $em[strval($base + 1) . "G"] * $arr_ponderados["G"] +
+
+            $em[strval($base + 2) . "A"] * $arr_ponderados["A"] +
+            $em[strval($base + 2) . "B"] * $arr_ponderados["B"] +
+            $em[strval($base + 2) . "C"] * $arr_ponderados["C"] +
+            $em[strval($base + 2) . "D"] * $arr_ponderados["D"] +
+            $em[strval($base + 2) . "E"] * $arr_ponderados["E"] +
+            $em[strval($base + 2) . "F"] * $arr_ponderados["F"] +
+            $em[strval($base + 2) . "G"] * $arr_ponderados["G"] +
+
+            $em[strval($base + 3) . "A"] * $arr_ponderados["A"] +
+            $em[strval($base + 3) . "B"] * $arr_ponderados["B"] +
+            $em[strval($base + 3) . "C"] * $arr_ponderados["C"] +
+            $em[strval($base + 3) . "D"] * $arr_ponderados["D"] +
+            $em[strval($base + 3) . "E"] * $arr_ponderados["E"] +
+            $em[strval($base + 3) . "F"] * $arr_ponderados["F"] +
+            $em[strval($base + 3) . "G"] * $arr_ponderados["G"] +
+
+            $em[strval($base + 4) . "A"] * $arr_ponderados["A"] +
+            $em[strval($base + 4) . "B"] * $arr_ponderados["B"] +
+            $em[strval($base + 4) . "C"] * $arr_ponderados["C"] +
+            $em[strval($base + 4) . "D"] * $arr_ponderados["D"] +
+            $em[strval($base + 4) . "E"] * $arr_ponderados["E"] +
+            $em[strval($base + 4) . "F"] * $arr_ponderados["F"] +
+            $em[strval($base + 4) . "G"] * $arr_ponderados["G"] +
+            $em[strval($base + 4) . "H"] * $arr_ponderados["H"] +
+
+            $em[strval($base + 5) . "B"] * $arr_ponderados["B"] +
+            $em[strval($base + 5) . "C"] * $arr_ponderados["C"] +
+            $em[strval($base + 5) . "D"] * $arr_ponderados["D"] +
+            $em[strval($base + 5) . "E"] * $arr_ponderados["E"] +
+            $em[strval($base + 5) . "F"] * $arr_ponderados["F"] +
+            $em[strval($base + 5) . "G"] * $arr_ponderados["G"] +
+
+            $em[strval($base + 6) . "A"] * $arr_ponderados["A"] +
+            $em[strval($base + 6) . "B"] * $arr_ponderados["B"] +
+            $em[strval($base + 6) . "C"] * $arr_ponderados["C"] +
+            $em[strval($base + 6) . "D"] * $arr_ponderados["D"] +
+            $em[strval($base + 6) . "E"] * $arr_ponderados["E"] +
+            $em[strval($base + 6) . "F"] * $arr_ponderados["F"] +
+            $em[strval($base + 6) . "G"] * $arr_ponderados["G"] +
+
+            $em[strval($base + 7) . "A"] * $arr_ponderados["A"] +
+            $em[strval($base + 7) . "B"] * $arr_ponderados["B"] +
+            $em[strval($base + 7) . "C"] * $arr_ponderados["C"] +
+            $em[strval($base + 7) . "D"] * $arr_ponderados["D"] +
+            $em[strval($base + 7) . "E"] * $arr_ponderados["E"] +
+            $em[strval($base + 7) . "F"] * $arr_ponderados["F"] +
+            $em[strval($base + 7) . "G"] * $arr_ponderados["G"] +
+
+            $em[strval($base + 8) . "E"] * $arr_ponderados["E"] +
+            $em[strval($base + 8) . "F"] * $arr_ponderados["F"] +
+            $em[strval($base + 8) . "G"] * $arr_ponderados["G"] +
+            $em[strval($base + 8) . "I"] * $arr_ponderados["I"] +
+            $em[strval($base + 8) . "J"] * $arr_ponderados["J"]) / 100
+
+        ;
+    }
+}
+
+
+// Establezco el array de  recuperaciones
+foreach ($tab_calificaciones as $er) {
+    // ciclo para recorrer los periodos
+    for ($p = 1; $p < 5; $p++) {
+        // asigno la nota de recuperacion
+        $recuperacion[$er["id_alumno"]][$materias_con_area[$er["id_materia"]]][$er["id_materia"]][$p] = $er["R" . strval($p)];
+    }
+
+}
+
+
+//------------------------------------------------------------------------
+// 6. Comparo la nota acumulada vs la recuperacion y obtengo la mayor de las dos
+//------------------------------------------------------------------------
+
+// construto el array de notas tomando la mayor  de las notas 
+// entre el spot y recuperacion
+$notas = [];
+
+// por cada estudiante
+foreach ($spot as $ks => $s) {
+    // por cada area
+    foreach ($s as $ka => $a) {
+        // por cada materia
+        foreach ($a as $km => $m) {
+            // por cada periodo
+            foreach ($m as $p => $k) {
+
+                // si la recuperacion es mayor que el spot
+                if ($recuperacion[$ks][$ka][$km][$p] > $spot[$ks][$ka][$km][$p]) {
+                    // guardo en la nota definitiva la de recuperacion
+                    $notas[$ks][$ka][$km][$p] = $recuperacion[$ks][$ka][$km][$p];
+                } else {
+                    // la nota es la del spot
+                    $notas[$ks][$ka][$km][$p] = $k;
+                }
             }
         }
     }
-    $promedio[$e] = ($c_m > 0) ? ($p_a / $c_m) : 0;
+}
+
+
+
+
+// -------------------------------------------------------------------
+// 7. Calcular promedios y posiciones con los arrays ya llenos
+// -------------------------------------------------------------------
+
+$promedio = [];
+
+// por cada estudiante
+
+foreach ($notas as $ke => $notas_areas) {
+
+    // coloco en cero el acumulado para un estudiante
+    $acc = 0;
+    // recorre las mateias
+    foreach ($notas_areas as $nota_materia) {
+        // acumulo el acumulado de notas
+        foreach ($nota_materia as $nota_periodo) {
+            $acc = $nota_periodo[$id_periodo] + $acc;
+        }
+
+    }
+
+    // asigno el promedio
+    $promedio[$ke] = $acc / count($nota_materia);
+
 }
 
 //echo var_dump($promeedio);
@@ -460,7 +361,10 @@ foreach ($list as $e) {
     $pdf->Cell(25, 5, $year, 1, 0, 'C');
     $pdf->SetFillColor(0, 0, 0);
     $pdf->SetTextColor(255, 255, 255);
-    $pdf->Cell(20, 5, $posicion[$e], 1, 0, 'C', true);
+    // si esta en el grupo de posiciones
+    if (array_key_exists($e, $posicion)) {
+        $pdf->Cell(20, 5, $posicion[$e], 1, 0, 'C', true);
+    }
     $pdf->SetTextColor(0);
 
     $pdf->Ln(7);
@@ -557,7 +461,7 @@ foreach ($list as $e) {
 
 
             // OBTENGO LA NOTA DE LOS PERIODOS ALMACENADA EN EL ARRAY
-            // spot para las notas y recover para la recuperacion
+            // spot para las notas y recuperacion para la recuperacion
 
             // PRIMER PERIODO
 
@@ -565,8 +469,8 @@ foreach ($list as $e) {
             $p1 = number_format($spot[$e][$id_area][$id_materia][1] ?? 0, 1, '.', '');
 
             // si hay cargada una recuperacion para el primer periodo
-            if (isset($recover[$e][$id_area][$id_materia][1])) {
-                $r1 = number_format($recover[$e][$id_area][$id_materia][1] ?? 0, 1, '.', '');
+            if (isset($recuperacion[$e][$id_area][$id_materia][1])) {
+                $r1 = number_format($recuperacion[$e][$id_area][$id_materia][1] ?? 0, 1, '.', '');
             }
 
             // validación de los valores máximos coloco cinco 
@@ -580,8 +484,8 @@ foreach ($list as $e) {
             $p2 = number_format($spot[$e][$id_area][$id_materia][2] ?? 0, 1, '.', '');
 
             // si hay cargada una recuperacion para el segundo periodo
-            if (isset($recover[$e][$id_area][$id_materia][2])) {
-                $r2 = number_format($recover[$e][$id_area][$id_materia][2] ?? 0, 1, '.', '');
+            if (isset($recuperacion[$e][$id_area][$id_materia][2])) {
+                $r2 = number_format($recuperacion[$e][$id_area][$id_materia][2] ?? 0, 1, '.', '');
             }
 
             // validación de valores máximos
@@ -594,8 +498,8 @@ foreach ($list as $e) {
             // obtengo la nota del tercer periodo
             $p3 = number_format($spot[$e][$id_area][$id_materia][3] ?? 0, 1, '.', '');
             // si hay una recuperacion cargada para el periodo 3
-            if (isset($recover[$e][$id_area][$id_materia][3])) {
-                $r3 = number_format($recover[$e][$id_area][$id_materia][3] ?? 0, 1, '.', '');
+            if (isset($recuperacion[$e][$id_area][$id_materia][3])) {
+                $r3 = number_format($recuperacion[$e][$id_area][$id_materia][3] ?? 0, 1, '.', '');
             }
             // validación de valores máximos
             if ($p3 > 5.0) {
@@ -607,8 +511,8 @@ foreach ($list as $e) {
             // obtengo la nota del cuarto periodo
             $p4 = number_format($spot[$e][$id_area][$id_materia][4] ?? 0, 1, '.', '');
             // si hay cargada  una recuperacion para el periodo 4
-            if (isset($recover[$e][$id_area][$id_materia][4])) {
-                $r4 = number_format($recover[$e][$id_area][$id_materia][4] ?? 0, 1, '.', '');
+            if (isset($recuperacion[$e][$id_area][$id_materia][4])) {
+                $r4 = number_format($recuperacion[$e][$id_area][$id_materia][4] ?? 0, 1, '.', '');
             }
             // validación de valores máximos
             if ($p4 > 5.0) {
@@ -810,11 +714,11 @@ foreach ($list as $e) {
                 $p1 = $spot[$e][$id_area][$id_materia][1] ?? 0.0;
 
                 // si tiene una nota de recuperacion cargada del periodo 1
-                if (isset($recover[$e][$id_area][$id_materia][1])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][1])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][1] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][1] > 0) {
                         // se remplaza la nota
-                        $p1 = $recover[$e][$id_area][$id_materia][1];
+                        $p1 = $recuperacion[$e][$id_area][$id_materia][1];
                     }
                 }
 
@@ -832,20 +736,20 @@ foreach ($list as $e) {
                 $p2 = $spot[$e][$id_area][$id_materia][2] ?? 0.0;
 
                 // si tiene una nota cargada del periodo 1
-                if (isset($recover[$e][$id_area][$id_materia][1])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][1])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][1] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][1] > 0) {
                         // se remplaza la nota
-                        $p1 = $recover[$e][$id_area][$id_materia][1];
+                        $p1 = $recuperacion[$e][$id_area][$id_materia][1];
                     }
                 }
 
                 // si tiene una nota cargada del periodo 2
-                if (isset($recover[$e][$id_area][$id_materia][2])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][2])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][2] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][2] > 0) {
                         // se remplaza la nota
-                        $p2 = $recover[$e][$id_area][$id_materia][2];
+                        $p2 = $recuperacion[$e][$id_area][$id_materia][2];
                     }
                 }
 
@@ -865,29 +769,29 @@ foreach ($list as $e) {
 
 
                 // si tiene una nota cargada del periodo 1
-                if (isset($recover[$e][$id_area][$id_materia][1])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][1])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][1] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][1] > 0) {
                         // se remplaza la nota
-                        $p1 = $recover[$e][$id_area][$id_materia][1];
+                        $p1 = $recuperacion[$e][$id_area][$id_materia][1];
                     }
                 }
 
                 // si tiene una nota cargada del periodo 2
-                if (isset($recover[$e][$id_area][$id_materia][2])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][2])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][2] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][2] > 0) {
                         // se remplaza la nota
-                        $p2 = $recover[$e][$id_area][$id_materia][2];
+                        $p2 = $recuperacion[$e][$id_area][$id_materia][2];
                     }
                 }
 
                 // si tiene una nota cargada del periodo 3
-                if (isset($recover[$e][$id_area][$id_materia][3])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][3])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][3] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][3] > 0) {
                         // se remplaza la nota
-                        $p3 = $recover[$e][$id_area][$id_materia][3];
+                        $p3 = $recuperacion[$e][$id_area][$id_materia][3];
                     }
                 }
 
@@ -908,38 +812,38 @@ foreach ($list as $e) {
                 $p4 = $spot[$e][$id_area][$id_materia][4] ?? 0.0;
 
                 // si tiene una nota cargada del periodo 1
-                if (isset($recover[$e][$id_area][$id_materia][1])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][1])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][1] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][1] > 0) {
                         // se remplaza la nota
-                        $p1 = $recover[$e][$id_area][$id_materia][1];
+                        $p1 = $recuperacion[$e][$id_area][$id_materia][1];
                     }
                 }
 
                 // si tiene una nota cargada del periodo 2
-                if (isset($recover[$e][$id_area][$id_materia][2])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][2])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][2] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][2] > 0) {
                         // se remplaza la nota
-                        $p2 = $recover[$e][$id_area][$id_materia][2];
+                        $p2 = $recuperacion[$e][$id_area][$id_materia][2];
                     }
                 }
 
                 // si tiene una nota cargada del periodo 3
-                if (isset($recover[$e][$id_area][$id_materia][3])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][3])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][3] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][3] > 0) {
                         // se remplaza la nota
-                        $p3 = $recover[$e][$id_area][$id_materia][3];
+                        $p3 = $recuperacion[$e][$id_area][$id_materia][3];
                     }
                 }
 
                 // si tiene una nota cargada del periodo 4
-                if (isset($recover[$e][$id_area][$id_materia][4])) {
+                if (isset($recuperacion[$e][$id_area][$id_materia][4])) {
                     // si la recuperacion es mayor que 0
-                    if ($recover[$e][$id_area][$id_materia][4] > 0) {
+                    if ($recuperacion[$e][$id_area][$id_materia][4] > 0) {
                         // se remplaza la nota
-                        $p4 = $recover[$e][$id_area][$id_materia][4];
+                        $p4 = $recuperacion[$e][$id_area][$id_materia][4];
                     }
                 }
 
