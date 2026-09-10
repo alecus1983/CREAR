@@ -82,6 +82,8 @@ $mt->id_grado = $id_grado;
 
 // creamos un nuevo listado de estudiantes 
 $list = $mt->get_matriculas_grado_jornada();
+// extraigo la columna de nombres
+$list = array_column($list, "id_alumno");
 // VARIABLES PARA GUARDAR LOS NOMBRES DE LOS ESTUDIANTES
 $nivel = $gr->grado;
 // se almacena el grado al que es promovido
@@ -128,7 +130,7 @@ foreach ($lista_a as $id_area => $area_data) {
 // -------------------------------------------------------------------
 // 2. Cargar datos de alumnos en una sola query
 // -------------------------------------------------------------------
-$alumnos_cache = alumnos::get_alumnos_bulk($list->id_alumno);
+$alumnos_cache = alumnos::get_alumnos_bulk($list);
 
 // -------------------------------------------------------------------
 // 3. Cargar docentes del grado en una sola query
@@ -161,7 +163,7 @@ $logros_cache = $notax->get_logros_bulk(
 // -------------------------------------------------------------------
 $promedio = [];
 
-foreach ($list->id_alumno as $e) {
+foreach ($list as $e) {
     $p_a = 0;
     $c_m = 0;
     if (isset($spot[$e])) {
@@ -194,7 +196,7 @@ foreach ($promedio as  $pr => $prom) {
 // Esta estructura se repite por cada estudiante
 // con el fin de mostrar el boletin impreso
 
-foreach ($list->id_alumno  as $e) {
+foreach ($list  as $e) {
 
     // uso el cache de alumnos pre-cargado
     $estudiante = $alumnos_cache[$e] ?? ['nombres' => '', 'apellidos' => ''];

@@ -86,7 +86,6 @@ where id_docente in (   select distinct id_docente from matricula_docente where 
         }
         // cargo el listado de docentes
         return $arr;
-
     }
 
     // listado de matriculas (id) docentes por grado
@@ -102,11 +101,9 @@ where id_docente in (   select distinct id_docente from matricula_docente where 
         while ($a = $c->fetch_array(MYSQLI_ASSOC)) {
             // agregar elementos al array
             array_push($arr, $a['id']);
-
         }
         // listado de matriculas
         return $arr;
-
     }
 
     // funcion constructor de objeto requiere
@@ -192,14 +189,11 @@ where id_docente in (   select distinct id_docente from matricula_docente where 
                     while ($a = $c->fetch_array(MYSQLI_ASSOC)) {
 
                         array_push($aa, array($a["id_grado"], $a["grado"]));
-
                     }
-
                 }
                 // retorno un array con la cantidad
                 // de filas 
                 return $aa;
-
             }
             // si es otro docente aplico estas
             else {
@@ -225,14 +219,10 @@ where gr.id_escolaridad = ?";
 
                 // retorno los datos
                 return $result->fetch_all();
-
             }
-
         } catch (Exception $e) {
             error_log("Error en listado de escolaridades: " . $e->getMessage());
         }
-
-
     }
 
 
@@ -265,7 +255,6 @@ where gr.id_escolaridad = ?";
         } else {
             return false;
         }
-
     }
 
     public function del($id)
@@ -278,5 +267,31 @@ where gr.id_escolaridad = ?";
         } else
             return false;
     }
+
+    /**
+     * Carga el mapa materia→docente+nombre para un curso completo de una sola vez.
+     * Retorna: $cache[$id_materia] = ['nombres' => ..., 'apellidos' => ...]
+     *           o null si esa materia no tiene docente asignado.
+     */
+    public function get_docentes_grado(int $id_grado, int $id_jornada, int $id_curso, int $year): array
+    {
+        $cache = [];
+        $q = "SELECT md.id_materia, d.u_docentes, d.nombres, d.apellidos
+              FROM matricula_docente md
+              INNER JOIN personas d ON d.u_docentes = md.id_docente
+              WHERE md.year = {$year}
+                AND md.id_grado = {$id_grado}
+                AND md.id_jornada = {$id_jornada}
+                AND md.id_curso = {$id_curso}";
+        $res = $this->_db->query($q);
+        if ($res) {
+            while ($r = $res->fetch_assoc()) {
+                $cache[intval($r['id_materia'])] = [
+                    'nombres' => $r['nombres'],
+                    'apellidos' => $r['apellidos'],
+                ];
+            }
+        }
+        return $cache;
+    }
 }
-?>

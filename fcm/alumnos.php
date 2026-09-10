@@ -570,16 +570,13 @@ class alumnos extends personas
         // Reutilizamos la conexión singleton de imcrea
         $db = imcrea::$_db_connection ?? (new imcrea())->_db;
         $ids_str = implode(',', array_map('intval', $ids));
-        $q = "SELECT id_alumno, nombres, apellidos
-              FROM alumnos
-              WHERE id_alumno IN ({$ids_str})";
+        $q = "SELECT u_alumnos, nombres, apellidos
+              FROM personas
+              WHERE u_alumnos IN ({$ids_str})";
         $res = $db->query($q);
         if ($res) {
             while ($r = $res->fetch_assoc()) {
-                $cache[intval($r['id_alumno'])] = [
-                    'nombres' => $r['nombres'],
-                    'apellidos' => $r['apellidos'],
-                ];
+                $cache[$r['u_alumnos']] = ['nombres' => $r['nombres'], 'apellidos' => $r['apellidos']];
             }
         }
         return $cache;
