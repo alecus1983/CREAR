@@ -10,6 +10,230 @@ $id_grado = $_GET["grado"]; // guarda el codigo del grado  en la variable $grado
 $id_jornada = $_GET["jornada"]; // guarda el dato de la jornada
 $id_curso = $_GET["curso"]; // codigo del curso
 
+// array de los ponderados
+$arr_ponderados = array(
+    "1A" => 2.5,
+    "1B" => 1.7,
+    "1C" => 1.7,
+    "1D" => 1.7,
+    "1E" => 1,
+    "1F" => 1,
+    "1G" => 1,
+    "2A" => 2.5,
+    "2B" => 1.7,
+    "2C" => 1.7,
+    "2D" => 1.7,
+    "2E" => 1,
+    "2F" => 1,
+    "2G" => 1,
+    "3A" => 2.5,
+    "3B" => 1.7,
+    "3C" => 1.7,
+    "3D" => 1.7,
+    "3E" => 1,
+    "3F" => 1,
+    "3G" => 1,
+    "4A" => 2.5,
+    "4B" => 1.7,
+    "4C" => 1.7,
+    "4D" => 1.7,
+    "4E" => 1,
+    "4F" => 1,
+    "4G" => 1,
+    "4H" => 8,
+    "5A" => 2.5,
+    "5B" => 1.7,
+    "5C" => 1.7,
+    "5D" => 1.7,
+    "5E" => 1,
+    "5F" => 1,
+    "5G" => 1,
+    "6A" => 2.5,
+    "6B" => 1.7,
+    "6C" => 1.7,
+    "6D" => 1.7,
+    "6E" => 1,
+    "6F" => 1,
+    "6G" => 1,
+    "7A" => 2.5,
+    "7B" => 1.7,
+    "7C" => 1.7,
+    "7D" => 1.7,
+    "7E" => 1,
+    "7F" => 1,
+    "7G" => 1,
+    "8E" => 1,
+    "8F" => 1,
+    "8G" => 1,
+    "8I" => 9.5,
+    "8J" => 5.3,
+    "9" => 2.5,
+    "9B" => 1.7,
+    "9C" => 1.7,
+    "9D" => 1.7,
+    "9E" => 1,
+    "9F" => 1,
+    "9G" => 1,
+    "10A" => 2.5,
+    "10B" => 1.7,
+    "10C" => 1.7,
+    "10D" => 1.7,
+    "10E" => 1,
+    "10F" => 1,
+    "10G" => 1,
+    "11A" => 2.5,
+    "11B" => 1.7,
+    "11C" => 1.7,
+    "11D" => 1.7,
+    "11E" => 1,
+    "11F" => 1,
+    "11G" => 1,
+    "12A" => 2.5,
+    "12B" => 1.7,
+    "12C" => 1.7,
+    "12D" => 1.7,
+    "12E" => 1,
+    "12F" => 1,
+    "12G" => 1,
+    "12H" => 8,
+    "13A" => 2.5,
+    "13B" => 1.7,
+    "13C" => 1.7,
+    "13D" => 1.7,
+    "13E" => 1,
+    "13F" => 1,
+    "13G" => 1,
+    "14A" => 2.5,
+    "14B" => 1.7,
+    "14C" => 1.7,
+    "14D" => 1.7,
+    "14E" => 1,
+    "14F" => 1,
+    "14G" => 1,
+    "15A" => 2.5,
+    "15B" => 1.7,
+    "15C" => 1.7,
+    "15D" => 1.7,
+    "15E" => 1,
+    "15F" => 1,
+    "15G" => 1,
+    "16E" => 1,
+    "16F" => 1,
+    "16G" => 1,
+    "16I" => 9.5,
+    "16J" => 5.3,
+    "17A" => 2.5,
+    "17B" => 1.7,
+    "17C" => 1.7,
+    "17D" => 1.7,
+    "17E" => 1,
+    "17F" => 1,
+    "17G" => 1,
+    "18A" => 2.5,
+    "18B" => 1.7,
+    "18C" => 1.7,
+    "18D" => 1.7,
+    "18E" => 1,
+    "18F" => 1,
+    "18G" => 1,
+    "19A" => 2.5,
+    "19B" => 1.7,
+    "19C" => 1.7,
+    "19D" => 1.7,
+    "19E" => 1,
+    "19F" => 1,
+    "19G" => 1,
+    "20A" => 2.5,
+    "20B" => 1.7,
+    "20C" => 1.7,
+    "20D" => 1.7,
+    "20E" => 1,
+    "20F" => 1,
+    "20G" => 1,
+    "20H" => 8,
+    "21A" => 2.5,
+    "21B" => 1.7,
+    "21C" => 1.7,
+    "21D" => 1.7,
+    "21E" => 1,
+    "21F" => 1,
+    "21G" => 1,
+    "22A" => 2.5,
+    "22B" => 1.7,
+    "22C" => 1.7,
+    "22D" => 1.7,
+    "22E" => 1,
+    "22F" => 1,
+    "22G" => 1,
+    "23A" => 2.5,
+    "23B" => 1.7,
+    "23C" => 1.7,
+    "23D" => 1.7,
+    "23E" => 1,
+    "23F" => 1,
+    "23G" => 1,
+    "24E" => 1,
+    "24F" => 1,
+    "24G" => 1,
+    "24I" => 9.5,
+    "24J" => 5.3,
+    "25A" => 2.5,
+    "25B" => 1.7,
+    "25C" => 1.7,
+    "25D" => 1.7,
+    "25E" => 1,
+    "25F" => 1,
+    "25G" => 1,
+    "26A" => 2.5,
+    "26B" => 1.7,
+    "26C" => 1.7,
+    "26D" => 1.7,
+    "26E" => 1,
+    "26F" => 1,
+    "26G" => 1,
+    "27A" => 2.5,
+    "27B" => 1.7,
+    "27C" => 1.7,
+    "27D" => 1.7,
+    "27E" => 1,
+    "27F" => 1,
+    "27G" => 1,
+    "28A" => 2.5,
+    "28B" => 1.7,
+    "28C" => 1.7,
+    "28D" => 1.7,
+    "28E" => 1,
+    "28F" => 1,
+    "28G" => 1,
+    "28H" => 8,
+    "29A" => 2.5,
+    "29B" => 1.7,
+    "29C" => 1.7,
+    "29D" => 1.7,
+    "29E" => 1,
+    "29F" => 1,
+    "29G" => 1,
+    "30A" => 2.5,
+    "30B" => 1.7,
+    "30C" => 1.7,
+    "30D" => 1.7,
+    "30E" => 1,
+    "30F" => 1,
+    "30G" => 1,
+    "31A" => 2.5,
+    "31B" => 1.7,
+    "31C" => 1.7,
+    "31D" => 1.7,
+    "31E" => 1,
+    "31F" => 1,
+    "31G" => 1,
+    "32E" => 1,
+    "32F" => 1,
+    "32G" => 1,
+    "32I" => 9.5,
+    "32J" => 5.3
+);
+
 // se inserta este fichero para generar el documento en pdf
 
 // define el tipo de codificación para la letra
@@ -82,11 +306,8 @@ $mt->id_grado = $id_grado;
 // creamos un nuevo listado de estudiantes 
 $list = $mt->get_matriculas_grado_jornada();
 
-// Extraer solo la columna 'id_alumno'
-$ids_alumnos = array_column($list, 'id_alumno');
-// quito la primera coma
-
-
+// extraigo la columna de nombres
+$list = array_column($list, "id_alumno");
 
 // VARIABLES PARA GUARDAR LOS NOMBRES DE LOS ESTUDIANTES
 $nivel = $gr->grado;
@@ -134,9 +355,8 @@ foreach ($lista_a as $id_area => $area_data) {
 // -------------------------------------------------------------------
 // 2. Cargar datos de alumnos en una sola query
 // -------------------------------------------------------------------
-$alumnos_cache = alumnos::get_alumnos_bulk($ids_alumnos);
+$alumnos_cache = alumnos::get_alumnos_bulk($list);
 
-echo var_dump($alumnos_cache);
 
 // -------------------------------------------------------------------
 // 3. Cargar docentes del grado en una sola query
@@ -151,7 +371,7 @@ $docentes_cache = $md->get_docentes_grado(
 // -------------------------------------------------------------------
 // 4. Cargar TODAS las notas y recuperaciones en 2 queries
 // -------------------------------------------------------------------
-$spot = $notax->get_notas_bulk($list->id_alumno, $materias_con_area, intval($year));
+$spot = $notax->get_notas_bulk($list, $materias_con_area, intval($year));
 $recover = $notax->get_recuperaciones_bulk($list->id_alumno, $materias_con_area, intval($year));
 
 // -------------------------------------------------------------------
@@ -169,7 +389,7 @@ $logros_cache = $notax->get_logros_bulk(
 // -------------------------------------------------------------------
 $promedio = [];
 
-foreach ($list->id_alumno as $e) {
+foreach ($list as $e) {
     $p_a = 0;
     $c_m = 0;
     if (isset($spot[$e])) {
@@ -202,7 +422,9 @@ foreach ($promedio as $pr => $prom) {
 // Esta estructura se repite por cada estudiante
 // con el fin de mostrar el boletin impreso
 
-foreach ($list->id_alumno as $e) {
+
+foreach ($list as $e) {
+
 
     // uso el cache de alumnos pre-cargado
     $estudiante = $alumnos_cache[$e] ?? ['nombres' => '', 'apellidos' => ''];

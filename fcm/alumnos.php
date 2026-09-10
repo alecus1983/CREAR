@@ -556,39 +556,29 @@ class alumnos extends personas
         return [$a_alumno, $a_grado, $a_curso];
     }
 
-    // function para obtener los alumnos
-    public static function get_alumnos_bulk($ids_alumnos)
+    /**
+     * Carga los datos de un conjunto de alumnos en una sola consulta.
+     * Retorna: $cache[$id_alumno] = ['nombres' => ..., 'apellidos' => ...]
+     */
+    public static function get_alumnos_bulk(array $ids): array
     {
-        // variable para guardar 
-        $lista_alumnos = "";
+        $cache = [];
+        if (empty($ids))
+            return $cache;
 
-
-        // por cada  elemento en $ids_alumnos
-        foreach ($ids_alumnos as $id_a) {
-            // variable de lista de circuitos
-            $lista_alumnos = $id_a . "," . $lista_alumnos;
-
-        }
-
-        try {
-            $lista_alumnos = substr($lista_alumnos, 0, -1);
-
-            $q = "select * from personas where u_alumnos in ( $lista_alumnos)";
-
-            $result = personas::$_db_connection->query($q);
-            if ($result === false) {
-                throw new Exception("Error al ejecutar la consulta maximo: " . personas::$_db_connection->error);
+        // Reutilizamos la conexión singleton de imcrea
+        $db = imcrea::$_db_connection ?? (new imcrea())->_db;
+        $ids_str = implode(',', array_map('intval', $ids));
+        $q = "SELECT u_alumnos, nombres, apellidos
+              FROM personas
+              WHERE u_alumnos IN ({$ids_str})";
+        $res = $db->query($q);
+        if ($res) {
+            while ($r = $res->fetch_assoc()) {
+                $cache[$r['u_alumnos']] = ['nombres' => $r['nombres'], 'apellidos' => $r['apellidos']];
             }
-
-            $dato = $result->fetch_array(MYSQLI_ASSOC);
-
-            echo var_dump($dato);
-            $result->close(); // Cerrar el resultado de la consulta
-            return $dato ? $dato[0] : null;
-
-        } catch (Exception $e) {
-            error_log("Error en maximo: " . $e->getMessage());
-            return null;
         }
+        return $cache;
+
     }
 }
