@@ -1018,8 +1018,9 @@ class calificaciones extends imcrea
                 $ids[] = $id;
             }
         }
-        
-        if (empty($ids)) return [];
+
+        if (empty($ids))
+            return [];
 
         // acumulo el string en una cadena separado por comas
         $c_string = implode(',', $ids);
@@ -1036,6 +1037,58 @@ class calificaciones extends imcrea
             echo 'Excepción capturada: ', $e->getMessage(), "\n";
             return [];
         }
+    }
+
+
+    // 
+    public function get_notas_bulk(array $ids_alumno, array $materias_con_area, int $year): array
+    {
+
+        $spot = [];
+        if (empty($ids_alumno) || empty($materias_con_area))
+            return $spot;
+
+        $ids_str = implode(',', array_map('intval', $ids_alumno));
+        $materias_ids = array_keys($materias_con_area);
+        $mat_str = implode(',', array_map('intval', $materias_ids));
+
+        $q = "select * from c_$year WHERE id_alumno IN ({$ids_str})
+                AND id_materia IN ({$mat_str})";
+
+        $res = $this->_db->query($q);
+        if ($res) {
+
+            return $res->fetch_all(MYSQLI_ASSOC);
+            /*while ($r = $res->fetch_array(MYSQLI_ASSOC)) {
+                $al = intval($r['id_alumno']);
+                $mat = intval($r['id_materia']);
+                $id_area = $materias_con_area[$mat] ?? 0;
+                $spot[$al][$id_area][$mat] = floatval($r['nota'] ?? 0);
+            }*/
+        }
+
+        // Disciplina (id=20): promedio simple
+        if (in_array(20, $materias_ids)) {
+
+            $id_area_disc = $materias_con_area[20] ?? 0;
+            /*$q2 = "SELECT id_alumno, periodo, AVG(nota) AS nota
+                   FROM c_{$year}
+                   WHERE year = {$year}
+                     AND id_alumno IN ({$ids_str})
+                     AND id_materia = 20
+                   GROUP BY id_alumno, periodo";
+            $res2 = $this->_db->query($q2);
+            if ($res2) {
+                while ($r = $res2->fetch_array(MYSQLI_ASSOC)) {
+                    $al = intval($r['id_alumno']);
+                    $per = intval($r['periodo']);
+                    $spot[$al][$id_area_disc][20][$per] = floatval($r['nota'] ?? 0);
+                }
+            }*/
+
+            return $spot;
+        }
+
     }
 
 }

@@ -11,7 +11,7 @@ $id_jornada = $_GET["jornada"]; // guarda el dato de la jornada
 $id_curso = $_GET["curso"]; // codigo del curso
 
 // array de los ponderados
-$arr_ponderados = array(
+$arr_ponderados_p1 = array(
     "1A" => 2.5,
     "1B" => 1.7,
     "1C" => 1.7,
@@ -67,7 +67,10 @@ $arr_ponderados = array(
     "8G" => 1,
     "8I" => 9.5,
     "8J" => 5.3,
-    "9" => 2.5,
+    "9A" => 2.5
+);
+
+$arr_ponderados_p2 = array(
     "9B" => 1.7,
     "9C" => 1.7,
     "9D" => 1.7,
@@ -122,7 +125,11 @@ $arr_ponderados = array(
     "16G" => 1,
     "16I" => 9.5,
     "16J" => 5.3,
-    "17A" => 2.5,
+    "17A" => 2.5
+);
+
+
+$arr_ponderados_p3 = array(
     "17B" => 1.7,
     "17C" => 1.7,
     "17D" => 1.7,
@@ -176,7 +183,11 @@ $arr_ponderados = array(
     "24F" => 1,
     "24G" => 1,
     "24I" => 9.5,
-    "24J" => 5.3,
+    "24J" => 5.3
+);
+
+// array ponderado del cuarto periodo
+$arr_ponderados_p4 = array(
     "25A" => 2.5,
     "25B" => 1.7,
     "25C" => 1.7,
