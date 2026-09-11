@@ -238,9 +238,7 @@ foreach ($tab_calificaciones as $em) {
             $em[strval($base + 8) . "F"] * $arr_ponderados["F"] +
             $em[strval($base + 8) . "G"] * $arr_ponderados["G"] +
             $em[strval($base + 8) . "I"] * $arr_ponderados["I"] +
-            $em[strval($base + 8) . "J"] * $arr_ponderados["J"]) / 100
-
-        ;
+            $em[strval($base + 8) . "J"] * $arr_ponderados["J"]) / 100;
     }
 }
 
@@ -252,7 +250,6 @@ foreach ($tab_calificaciones as $er) {
         // asigno la nota de recuperacion
         $recuperacion[$er["id_alumno"]][$materias_con_area[$er["id_materia"]]][$er["id_materia"]][$p] = $er["R" . strval($p)];
     }
-
 }
 
 
@@ -287,10 +284,18 @@ foreach ($spot as $ks => $s) {
 }
 
 
-
+// -------------------------------------------------------------------
+// 7. Cargar todos los logros del periodo en 1 query
+// -------------------------------------------------------------------
+$logros_cache = $notax->get_logros_bulk(
+    $list,
+    array_keys($materias_con_area),
+    intval($year),
+    intval($id_periodo)
+);
 
 // -------------------------------------------------------------------
-// 7. Calcular promedios y posiciones con los arrays ya llenos
+// 8. Calcular promedios y posiciones con los arrays ya llenos
 // -------------------------------------------------------------------
 
 $promedio = [];
@@ -307,12 +312,10 @@ foreach ($notas as $ke => $notas_areas) {
         foreach ($nota_materia as $nota_periodo) {
             $acc = $nota_periodo[$id_periodo] + $acc;
         }
-
     }
 
     // asigno el promedio
     $promedio[$ke] = $acc / count($nota_materia);
-
 }
 
 //echo var_dump($promeedio);

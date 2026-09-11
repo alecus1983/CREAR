@@ -684,7 +684,7 @@ where id_materia = 20
 
 
 -- borra el contenido de los datos
-DROP TABLE  imcreati_datam.c_2026
+DROP TABLE  imcreati_datam.c_2026;
 /*
  * Consulta para agrupar las notas en  una nueva estructura
  * Cada fila representa un periodo de un estudiante
@@ -773,8 +773,9 @@ SELECT id_alumno, id_materia,
     MAX(CASE WHEN id_semana = 8 AND id_ponderado = 7 THEN nota END) AS `8G`,
     MAX(CASE WHEN id_semana = 8 AND id_ponderado = 9 THEN nota END) AS `8I`,
     MAX(CASE WHEN id_semana = 8 AND id_ponderado = 10 THEN nota END) AS `8J`,
+    null as 'R1',
     MAX(CASE WHEN id_semana = 8 AND id_ponderado = 20 THEN nota END) AS `D8`,
-    MAX(CASE WHEN id_logro > 0  THEN id_logro END) AS `l1_p1`,
+    MAX(CASE WHEN id_logro > 0 THEN id_logro END) AS `l1_p1`,
     null  AS `l2_p1`,
     null AS `l3_p1`,
 	
@@ -859,8 +860,9 @@ SELECT id_alumno, id_materia,
     MAX(CASE WHEN id_semana = 16 AND id_ponderado = 7 THEN nota END) AS `16G`,
     MAX(CASE WHEN id_semana = 16 AND id_ponderado = 9 THEN nota END) AS `16I`,
     MAX(CASE WHEN id_semana = 16 AND id_ponderado = 10 THEN nota END) AS `16J`,
+    null as 'R2',
     MAX(CASE WHEN id_semana = 16 AND id_ponderado = 20 THEN nota END) AS `D16`,
-    null as `l1_p2`,
+    MAX(CASE WHEN id_logro > 0 THEN id_logro END) AS `l1_p2`,
     null AS `l2_p2`,
     null AS `l3_p2`,
 
@@ -944,8 +946,9 @@ SELECT id_alumno, id_materia,
     MAX(CASE WHEN id_semana = 24 AND id_ponderado = 7 THEN nota END) AS `24G`,
     MAX(CASE WHEN id_semana = 24 AND id_ponderado = 9 THEN nota END) AS `24I`,
     MAX(CASE WHEN id_semana = 24 AND id_ponderado = 10 THEN nota END) AS `24J`,
+    null as 'R3',
     MAX(CASE WHEN id_semana = 24 AND id_ponderado = 20 THEN nota END) AS `D24`,
-    null AS `l1_p3`,
+    MAX(CASE WHEN id_logro > 0 THEN id_logro END) AS `l1_p3`,
     null AS `l2_p3`,
     null AS `l3_p3`,
 
@@ -1028,6 +1031,7 @@ SELECT id_alumno, id_materia,
     null AS `32G`,
     null AS `32I`,
     null AS `32J`,
+    null as 'R4',
     null AS `D32`,
     null AS `l1_p4`,
     null AS `l2_p4`,
@@ -1165,8 +1169,12 @@ SELECT u_alumnos, nombres, apellidos
               WHERE u_alumnos IN (1295,1003,1291,1470,1300,1302,1513,1514,1515,1516,1329,1517,1567,1599,1601,1605,1599,1599,1599,1599)
 
 
-
-
+SELECT c.id_alumno, c.id_materia, l.logro
+              FROM c_2026 c
+              INNER JOIN logros l ON l.id_logro = c.l1_p3
+              WHERE c.id_alumno IN (1194,1364,1365,1366,851,1167,1368,852,1369,853,854,855,857,1058,1050,1051,1188,671,1501,1502,1053,1184,1503,1600,1599,1599,1599)
+                AND c.id_materia IN (7,8,9,10,11,12,20,18,16,19,17,4,6,1,2,3,14)
+                AND c.l1_p3
 
 
 

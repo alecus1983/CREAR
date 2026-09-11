@@ -132,9 +132,6 @@ class calificaciones extends imcrea
 
         // consulta para verificar si existe
         $q = "select * from c_{$year} where id_materia = $id_materia and id_alumno in $codigos ";
-
-
-
     }
 
 
@@ -837,8 +834,6 @@ class calificaciones extends imcrea
 
         // por cada alumno preparo los array de entrada
         foreach ($valoresArray as $val) {
-
-
         }
         // convierto en un string
         $idsString = implode(',', $ids);
@@ -857,7 +852,6 @@ class calificaciones extends imcrea
             
                 modificado = NOW()
                 WHERE id IN ({$idsString})";
-
     }
 
     function actualizarNotasMasivas($arr_actualizar, $ano)
@@ -998,7 +992,7 @@ class calificaciones extends imcrea
 
 
     // Funcion que valida masivamente cuales estudiantes tienen
-// y cuales no tienen registros
+    // y cuales no tienen registros
 
     function validacion_masiva($codigos, $id_materia, $year)
     {
@@ -1088,7 +1082,34 @@ class calificaciones extends imcrea
 
             return $spot;
         }
-
     }
 
+    /**
+     * Carga todos los logros de un periodo para un conjunto de alumnos.
+     * Retorna: $logros_cache[$id_alumno][$id_materia] = texto_logro (string)
+     */
+    public function get_logros_bulk(array $ids_alumno, array $materias_ids, int $year, int $periodo): array
+    {
+        $cache = [];
+        if (empty($ids_alumno) || empty($materias_ids))
+            return $cache;
+
+        $ids_str = implode(',', array_map('intval', $ids_alumno));
+        $mat_str = implode(',', array_map('intval', $materias_ids));
+
+        $q = "SELECT c.id_alumno, c.id_materia, l.logro
+              FROM c_{$year} c
+              INNER JOIN logros l ON l.id_logro = c.l1_p" . $periodo . "
+              WHERE c.id_alumno IN ({$ids_str})
+                AND c.id_materia IN ({$mat_str})
+                AND c.l1_p" . $periodo;
+
+        $res = $this->_db->query($q);
+        if ($res) {
+            while ($r = $res->fetch_array(MYSQLI_ASSOC)) {
+                $cache[intval($r['id_alumno'])][intval($r['id_materia'])] = $r['logro'];
+            }
+        }
+        return $cache;
+    }
 }
