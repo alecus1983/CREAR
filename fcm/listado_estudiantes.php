@@ -157,7 +157,7 @@ if ($valido) {
     // ponderados de la semana intermedia
     $arr_pond_media = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F", 7 => "G", 8 => "H");
     // ponderados de la semana final
-    $arr_pond_final = array(1 => "F", 2 => "G", 3 => "I", 4 => "J");
+    $arr_pond_final = array(1 => "E", 2 => "F", 3 => "G", 4 => "I", 5 => "J");
 
 
     // CREO EL TEXTO DE SALIDA
@@ -194,7 +194,10 @@ if ($valido) {
         if (!class_exists('DbHelper_Listado')) {
             class DbHelper_Listado extends imcrea
             {
-                public function getDb() { return $this->_db; }
+                public function getDb()
+                {
+                    return $this->_db;
+                }
             }
         }
         $dbHelper = new DbHelper_Listado();
@@ -210,7 +213,7 @@ if ($valido) {
         if ($res_nombres) {
             while ($row = $res_nombres->fetch_assoc()) {
                 $opt_nombres[$row['id_alumnos']] = [
-                    'nombres'   => $row['nombres'],
+                    'nombres' => $row['nombres'],
                     'apellidos' => $row['apellidos']
                 ];
             }
@@ -220,11 +223,19 @@ if ($valido) {
         // usando los métodos de la clase calificaciones que encapsulan las consultas a c_{$ano}
         if ($semana_final) {
 
-            // obtener logros y notas de semana final desde c_{$ano}
-            // via calificaciones::get_notas_semana_final()
-            $res_final   = $cal->get_notas_semana_final($ano, $id_m, $periodo, $semana, $arr_pond_final, $in_alumnos);
-            $opt_logros  = $res_final['logros'];
-            $opt_notas   = $res_final['notas'];
+            if ($id_m !== "20") {
+                // obtener logros y notas de semana final desde c_{$ano}
+                // via calificaciones::get_notas_semana_final()
+                $res_final = $cal->get_notas_semana_final($ano, $id_m, $periodo, $semana, $arr_pond_final, $in_alumnos);
+                $opt_logros = $res_final['logros'];
+                $opt_notas = $res_final['notas'];
+            } else {
+                // en caso de que se trate de disciplina
+                $res_final = $cal->get_notas_semana_final($ano, $id_m, $periodo, array(1 => "D_p"), array(1 => strval($id_periodo)), $in_alumnos);
+                $opt_logros = $res_final['logros'];
+                $opt_notas = $res_final['notas'];
+
+            }
 
         } elseif ($semana_intermedia) {
 
@@ -325,7 +336,7 @@ if ($valido) {
                 echo "<div class='col-md-6' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="E[]"  value="' . $nota . '"  class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';
+                echo '<input type="number" step="0.1" max="5" min="0" name="E[]"  value="' . $nota . '"  class="form-control E" placeholder="presentacion personal" aria-label="presentacion personal" aria-describedby="basic-addon1">';
                 echo '</div>';
                 //echo '</div>';
 
@@ -478,7 +489,7 @@ if ($valido) {
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">presentacion personal</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="' . $nota . '" class="form-control E" placeholder="quiz" aria-label="presentacion personal" aria-describedby="basic-addon1">';
+                echo '<input type="number" step="0.1" max="5" min="0" name="E[]" value="' . $nota . '" class="form-control E" placeholder="presentacion personal" aria-label="presentacion personal" aria-describedby="basic-addon1">';
                 echo '</div>';
                 //echo '</div>';
 

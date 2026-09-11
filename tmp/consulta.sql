@@ -683,6 +683,24 @@ where id_materia = 20
 -- Seleccionar los datos de la tabla 
 
 
+------------------------------------------------------------------------
+-- consulta para evaluar los logros
+
+SELECT id_alumno, id_materia,
+    max(id_docente) as docente,
+    max(modificado) as modificado,
+    max(id_logro) AS id_logro
+FROM imcreati_data.calificaciones_2026
+where id_alumno > 0
+GROUP BY id_alumno, id_materia
+order by id_alumno, id_materia ;
+
+
+
+
+----------------------------------------------------------------------
+
+
 -- borra el contenido de los datos
 DROP TABLE  imcreati_datam.c_2026;
 /*
@@ -775,7 +793,8 @@ SELECT id_alumno, id_materia,
     MAX(CASE WHEN id_semana = 8 AND id_ponderado = 10 THEN nota END) AS `8J`,
     null as 'R1',
     MAX(CASE WHEN id_semana = 8 AND id_ponderado = 20 THEN nota END) AS `D8`,
-    MAX(CASE WHEN id_logro > 0 THEN id_logro END) AS `l1_p1`,
+    MAX(CASE WHEN id_materia = 20 AND periodo = 1 THEN nota END) AS 'D_p1',
+    max(id_logro) AS `l1_p1`,
     null  AS `l2_p1`,
     null AS `l3_p1`,
 	
@@ -862,6 +881,7 @@ SELECT id_alumno, id_materia,
     MAX(CASE WHEN id_semana = 16 AND id_ponderado = 10 THEN nota END) AS `16J`,
     null as 'R2',
     MAX(CASE WHEN id_semana = 16 AND id_ponderado = 20 THEN nota END) AS `D16`,
+    MAX(CASE WHEN id_materia = 20 AND periodo = 2 THEN nota END) AS 'D_p2',
     MAX(CASE WHEN id_logro > 0 THEN id_logro END) AS `l1_p2`,
     null AS `l2_p2`,
     null AS `l3_p2`,
@@ -948,6 +968,7 @@ SELECT id_alumno, id_materia,
     MAX(CASE WHEN id_semana = 24 AND id_ponderado = 10 THEN nota END) AS `24J`,
     null as 'R3',
     MAX(CASE WHEN id_semana = 24 AND id_ponderado = 20 THEN nota END) AS `D24`,
+    MAX(CASE WHEN id_materia = 20 AND periodo = 3 THEN nota END) AS 'D_p3',
     MAX(CASE WHEN id_logro > 0 THEN id_logro END) AS `l1_p3`,
     null AS `l2_p3`,
     null AS `l3_p3`,
@@ -1037,7 +1058,7 @@ SELECT id_alumno, id_materia,
     null AS `l2_p4`,
     null AS `l3_p4`
     
-FROM imcreati_data.calificaciones_2026
+FROM imcreati_datao.calificaciones_2026
 where id_alumno > 0
 GROUP BY id_alumno, id_materia
 order by  id_materia, id_alumno;

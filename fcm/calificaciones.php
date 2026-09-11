@@ -161,7 +161,7 @@ class calificaciones extends imcrea
             $c = $this->_db->query($q);
             $r = $c->fetch_all(MYSQLI_ASSOC);
         } catch (Exception $e) {
-            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            echo 'Excepción capturada en get_calificacion_semanal_bulk: ', $e->getMessage(), "\n";
         }
         if (is_null($r)) {
             $this->calificado = false;
@@ -193,7 +193,7 @@ class calificaciones extends imcrea
             $c = $this->_db->query($q);
             $r = $c->fetch_array(MYSQLI_ASSOC);
         } catch (Exception $e) {
-            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            echo 'Excepción capturada en get_recuperacion_periodo: ', $e->getMessage(), "\n";
         }
 
         if (is_null($r)) {
@@ -238,7 +238,7 @@ class calificaciones extends imcrea
             $c = $this->_db->query($q);
             $r = $c->fetch_array(MYSQLI_ASSOC);
         } catch (Exception $e) {
-            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            echo 'Excepción capturada en get_nota_periodo: ', $e->getMessage(), "\n";
         }
 
         $this->nota = $r['nota'];
@@ -656,7 +656,7 @@ class calificaciones extends imcrea
             $c = $this->_db->query($q);
             $r = $c->fetch_array(MYSQLI_ASSOC);
         } catch (Exception $e) {
-            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            echo 'Excepción capturada get_calificacion_alumno_materia: ', $e->getMessage(), "\n";
         }
 
         if (is_null($r)) {
@@ -698,7 +698,7 @@ class calificaciones extends imcrea
         // consulta para obtener los logros y las notas de la semana final de periodo
         $q = "SELECT id_alumno, l1_p{$periodo}, l2_p{$periodo}, l3_p{$periodo}, {$campos_notas}
               FROM c_{$ano}
-              WHERE id_materia = {$id_m} AND periodo = {$periodo} AND id_alumno IN ({$in_alumnos})";
+              WHERE id_materia = {$id_m} AND id_alumno IN ({$in_alumnos})";
 
         // objeto para almacenar los logros
         $resultado_logros = [];
@@ -723,7 +723,7 @@ class calificaciones extends imcrea
                 }
             }
         } catch (Exception $e) {
-            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            echo 'Excepción capturada en el metodo get_notas_semana_final: ', $e->getMessage(), "\n";
         }
 
         return ['logros' => $resultado_logros, 'notas' => $resultado_notas];
@@ -756,7 +756,7 @@ class calificaciones extends imcrea
 
         $q = "SELECT id_alumno, {$campos_notas}
               FROM c_{$ano}
-              WHERE id_materia = {$id_m} AND periodo = {$periodo}
+              WHERE id_materia = {$id_m} 
               AND id_alumno IN ({$in_alumnos})";
 
         $resultado = [];
@@ -769,7 +769,7 @@ class calificaciones extends imcrea
                 }
             }
         } catch (Exception $e) {
-            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            echo 'Excepción capturada en get_notas_semana_intermedia: ', $e->getMessage(), "\n";
         }
 
         return $resultado;
@@ -813,7 +813,7 @@ class calificaciones extends imcrea
                 }
             }
         } catch (Exception $e) {
-            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            echo 'Excepción capturada en get_notas_semana_normal: ', $e->getMessage(), "\n";
         }
 
         return $resultado;
@@ -867,7 +867,7 @@ class calificaciones extends imcrea
         $columnas = [];
         foreach ($arr_actualizar[0] as $key => $val) {
             // Ignoramos las llaves predefinidas
-            if (!in_array($key, ['id_alumno', 'id_materia', 'id_docente'])) {
+            if (!in_array($key, ['id_alumno', 'id_materia', 'docente'])) {
                 // Removemos las comillas simples que vienen en la llave desde notas_semanales_x.php
                 $clean_key = str_replace("'", "", $key);
                 $columnas[$key] = $clean_key;
@@ -1028,7 +1028,7 @@ class calificaciones extends imcrea
             // retorno el array de salida
             return $r;
         } catch (Exception $e) {
-            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            echo 'Excepción capturada en validacion_masiva: ', $e->getMessage(), "\n";
             return [];
         }
     }

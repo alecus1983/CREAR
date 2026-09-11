@@ -69,14 +69,14 @@ $(document).ready(function () {
     //             data: {
     //                 // ... (Data payload remains the same)
     //             },
-    //             beforeSend: function() {
+    //             beforeSend: function () {
     //                 $('#loader').show();
     //             },
-    //             success: function(data) {
+    //             success: function (data) {
     //                 $('#loader').hide();
     //                 swal('Éxito', 'Se ingresaron las notas correctamente.', 'success');
     //             },
-    //             error: function(xhr, status) {
+    //             error: function (xhr, status) {
     //                 $('#loader').hide();
     //                 swal('Error', 'Disculpe, existió un problema al guardar las notas.', 'error');
     //                 console.log(xhr);

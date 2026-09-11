@@ -143,8 +143,8 @@ if ($semana_final) {
             $campos_revisar = ['E', 'F', 'G', 'I', 'J'];
             foreach ($campos_revisar as $letra) {
                 $columna = $semana . $letra;
-                $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float)$dato[$letra] : null;
-                $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float)$fila_db[$columna] : null;
+                $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
+                $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
                 if ($nota_enviada !== $nota_db) {
                     $ha_cambiado = true;
                     break;
@@ -155,7 +155,7 @@ if ($semana_final) {
                 $arr_actualizar[] = [
                     'id_alumno' => $dato['codigo'],
                     'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
+                    'docente' => $id_docente,
                     "'" . $semana . "E'" => $dato['E'],
                     "'" . $semana . "F'" => $dato['F'],
                     "'" . $semana . "G'" => $dato['G'],
@@ -167,7 +167,7 @@ if ($semana_final) {
             $arr_insertar[] = [
                 'id_alumno' => $dato['codigo'],
                 'id_materia' => $id_materia,
-                'id_docente' => $id_docente,
+                'docente' => $id_docente,
                 "'" . $semana . "E'" => $dato['E'],
                 "'" . $semana . "F'" => $dato['F'],
                 "'" . $semana . "G'" => $dato['G'],
@@ -184,8 +184,8 @@ if ($semana_final) {
             $campos_revisar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
             foreach ($campos_revisar as $letra) {
                 $columna = $semana . $letra;
-                $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float)$dato[$letra] : null;
-                $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float)$fila_db[$columna] : null;
+                $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
+                $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
                 if ($nota_enviada !== $nota_db) {
                     $ha_cambiado = true;
                     break;
@@ -196,7 +196,7 @@ if ($semana_final) {
                 $arr_actualizar[] = [
                     'id_alumno' => $dato['codigo'],
                     'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
+                    'docente' => $id_docente,
                     "'" . $semana . "A'" => $dato['A'],
                     "'" . $semana . "B'" => $dato['B'],
                     "'" . $semana . "C'" => $dato['C'],
@@ -211,7 +211,7 @@ if ($semana_final) {
             $arr_insertar[] = [
                 'id_alumno' => $dato['codigo'],
                 'id_materia' => $id_materia,
-                'id_docente' => $id_docente,
+                'docente' => $id_docente,
                 "'" . $semana . "A'" => $dato['A'],
                 "'" . $semana . "B'" => $dato['B'],
                 "'" . $semana . "C'" => $dato['C'],
@@ -231,8 +231,8 @@ if ($semana_final) {
             $campos_revisar = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
             foreach ($campos_revisar as $letra) {
                 $columna = $semana . $letra;
-                $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float)$dato[$letra] : null;
-                $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float)$fila_db[$columna] : null;
+                $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
+                $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
                 if ($nota_enviada !== $nota_db) {
                     $ha_cambiado = true;
                     break;
@@ -243,7 +243,7 @@ if ($semana_final) {
                 $arr_actualizar[] = [
                     'id_alumno' => $dato['codigo'],
                     'id_materia' => $id_materia,
-                    'id_docente' => $id_docente,
+                    'docente' => $id_docente,
                     "'" . $semana . "A'" => $dato['A'],
                     "'" . $semana . "B'" => $dato['B'],
                     "'" . $semana . "C'" => $dato['C'],
@@ -257,7 +257,7 @@ if ($semana_final) {
             $arr_insertar[] = [
                 'id_alumno' => $dato['codigo'],
                 'id_materia' => $id_materia,
-                'id_docente' => $id_docente,
+                'docente' => $id_docente,
                 "'" . $semana . "A'" => $dato['A'],
                 "'" . $semana . "B'" => $dato['B'],
                 "'" . $semana . "C'" => $dato['C'],
