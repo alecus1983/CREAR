@@ -202,7 +202,7 @@ if (isset($_SESSION["id_personas"])) {
                 <!-- Navbar Brand-->
 
 
-                <img src="assets/logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+                <img src="../images/escudo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
 
 
                 <a class="navbar-brand" href="board.php">INICIO</a>x

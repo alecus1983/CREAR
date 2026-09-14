@@ -35,7 +35,7 @@ if ($_POST["id_g"] > 0) {
 // si el ano es valido
 if ($_POST["years"] !== "") {
     // cargo el ano
-    $ano = $_POST["years"];//date("Y");
+    $ano = $_POST["years"]; //date("Y");
 } else {
     // coloco que el ano no es valido
     $valido = false;
@@ -81,7 +81,6 @@ if ($_POST["semana"] > 0) {
     if ($semana == 4 || $semana == 12 || $semana == 20 || $semana == 28) {
         $semana_intermedia = true;
     }
-
 } else {
     // si no hay semana los datos no son validos
     $valido = false;
@@ -97,7 +96,6 @@ if ($_POST['periodo'] > 0) {
     $valido = false;
     // comunico el error al usuario
     $err = $err . "<p class='text-danger'>Porfavor seleccione un periodo</p>";
-
 }
 
 // si los datos son validos
@@ -231,24 +229,34 @@ if ($valido) {
                 $opt_notas = $res_final['notas'];
             } else {
                 // en caso de que se trate de disciplina
-                $res_final = $cal->get_notas_semana_final($ano, $id_m, $periodo, array(1 => "D_p"), array(1 => strval($id_periodo)), $in_alumnos);
+                $res_final = $cal->get_disciplina_semana_final($ano, $id_m, $periodo, $in_alumnos);
                 $opt_logros = $res_final['logros'];
                 $opt_notas = $res_final['notas'];
-
             }
-
         } elseif ($semana_intermedia) {
 
-            // obtener notas de semana intermedia desde c_{$ano}
-            // via calificaciones::get_notas_semana_intermedia()
-            $opt_notas = $cal->get_notas_semana_intermedia($ano, $id_m, $periodo, $semana, $arr_pond_media, $in_alumnos);
-
+            if ($id_m !== "20") {
+                // obtener notas de semana intermedia desde c_{$ano}
+                // via calificaciones::get_notas_semana_intermedia()
+                $opt_notas = $cal->get_notas_semana_intermedia($ano, $id_m, $periodo, $semana, $arr_pond_media, $in_alumnos);
+            } else {
+                // en caso de que se trate de disciplina
+                $res_final = $cal->get_disciplina_semana($ano, $id_m, $semana, $in_alumnos);
+                //$opt_logros = $res_final['logros'];
+                $opt_notas = $res_final['notas'];
+            }
         } else {
 
-            // obtener notas de semana normal desde c_{$ano}
-            // via calificaciones::get_notas_semana_normal()
-            $opt_notas = $cal->get_notas_semana_normal($ano, $id_m, $semana, $arr_pond_normal, $in_alumnos);
-
+            if ($id_m !== "20") {
+                // obtener notas de semana intermedia desde c_{$ano}
+                // via calificaciones::get_notas_semana_intermedia()
+                $opt_notas = $cal->get_notas_semana_normal($ano, $id_m, $semana, $arr_pond_normal, $in_alumnos);
+            } else {
+                // en caso de que se trate de disciplina
+                $res_final = $cal->get_disciplina_semana($ano, $id_m, $semana, $in_alumnos);
+                //$opt_logros = $res_final['logros'];
+                $opt_notas = $res_final['notas'];
+            }
         }
     }
 
@@ -291,18 +299,20 @@ if ($valido) {
 
                 //LOGRO
                 $logro = isset($opt_logros[$e]) ? $opt_logros[$e] : "";
-                //echo "<div class='col-md-1' name=''>";
-                echo '<div class="input-group mb-1">';
-                echo '<span class="input-group-text" id="addon-wrapping">logro</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="L[]" value="' . $logro . '" class="form-control L" placeholder="logro" aria-label="auto evaluacion" aria-describedby="basic-addon1">';
-                echo '</div>';
+
+                if (isset($logro[0])) {
+                    //echo "<div class='col-md-1' name=''>";
+                    echo '<div class="input-group mb-1">';
+                    echo '<span class="input-group-text" id="addon-wrapping">logro</span>';
+                    echo '<input type="number" step="0.1" max="5" min="0" name="L[]" value="' . $logro[0] . '" class="form-control L" placeholder="logro" aria-label="auto evaluacion" aria-describedby="basic-addon1">';
+                    echo '</div>';
+                }
             }
-            echo '</div>';// fin de la columna
-            echo '</div>';// fin de la fila
+            echo '</div>'; // fin de la columna
+            echo '</div>'; // fin de la fila
 
 
         }
-
     }
 
 
@@ -414,8 +424,6 @@ if ($valido) {
                 echo '<input type="number" step="0.1" max="5" min="0" name="L[]" value="' . $logro . '" class="form-control L" placeholder="logro" aria-label="auto evaluacion" aria-describedby="basic-addon1">';
                 echo '</div>';
                 echo '</div>';
-
-
             }
             // si la semana es la del corte intermedio ...
             // la semana donde se realiza la evaluacion intermedia
@@ -634,7 +642,6 @@ if ($valido) {
                 echo '<input type="number" step="0.1" max="5" min="0" name="G[]" value="' . $nota . '" class="form-control G" placeholder="asistencia" aria-label="asistencia" aria-describedby="basic-addon1">';
                 echo '</div>';
                 echo '</div>';
-
             }
 
             // cierre de div class row 
@@ -678,7 +685,6 @@ if ($valido) {
         }
 
         echo "</tbody></table>";
-
     }
 
     echo "</div>";
@@ -688,4 +694,3 @@ if ($valido) {
     echo $err;
 }
 //$lista = new $matriculas();
-?>

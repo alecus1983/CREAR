@@ -729,7 +729,82 @@ class calificaciones extends imcrea
         return ['logros' => $resultado_logros, 'notas' => $resultado_notas];
     }
 
+
+    // funcion para obtener la disciplina de la semana final
+    public function get_disciplina_semana_final($ano, $id_m, $periodo, $in_alumnos)
+    {
+
+
+
+        // consulta para obtener los logros y las notas de la semana final de periodo
+        $q = "SELECT id_alumno, l1_p{$periodo}, D_p" . strval($periodo) . " nota
+              FROM c_{$ano}
+              WHERE id_materia = {$id_m} AND id_alumno IN ({$in_alumnos})";
+
+        // objeto para almacenar los logros
+        $resultado_logros = [];
+        // objeto para almacenar las notas
+        $resultado_notas = [];
+
+        try {
+            // ejecuto la consulta
+            $c = $this->_db->query($q);
+            if ($c) {
+
+                // recorro el resultado
+                while ($row = $c->fetch_assoc()) {
+                    // preparo la consulta de logro 1 del periodo
+                    $resultado_logros[$row['id_alumno']][0] = $row["l1_p{$periodo}"];
+                    // preparo la consulta de logro 3 del periodo
+                    $resultado_notas[$row['id_alumno']][0] = $row["nota"];
+                }
+            }
+        } catch (Exception $e) {
+            echo 'Excepción capturada en el metodo get_disciplina_semana_final: ', $e->getMessage(), "\n";
+        }
+
+        return ['logros' => $resultado_logros, 'notas' => $resultado_notas];
+    }
     // ---
+
+    // funcion para obtener la disciplina de la semana final
+    public function get_disciplina_semana($ano, $id_m, $semana, $in_alumnos)
+    {
+
+
+
+        // consulta para obtener los logros y las notas de la semana final de periodo
+        $q = "SELECT id_alumno,  D" . strval($semana) . " nota
+              FROM c_{$ano}
+              WHERE id_materia = {$id_m} AND id_alumno IN ({$in_alumnos})";
+
+        // objeto para almacenar los logros
+        $resultado_logros = [];
+        // objeto para almacenar las notas
+        $resultado_notas = [];
+
+        try {
+            // ejecuto la consulta
+            $c = $this->_db->query($q);
+            if ($c) {
+
+                // recorro el resultado
+                while ($row = $c->fetch_assoc()) {
+                    // preparo la consulta de logro 1 del periodo
+                    //$resultado_logros[$row['id_alumno']][0] = $row["l1_p{$periodo}"];
+                    // preparo la consulta de logro 3 del periodo
+                    $resultado_notas[$row['id_alumno']][0] = $row["nota"];
+                }
+            }
+        } catch (Exception $e) {
+            echo 'Excepción capturada en el metodo get_disciplina_semana_final: ', $e->getMessage(), "\n";
+        }
+
+        return ['notas' => $resultado_notas];
+    }
+    // ---
+
+
 
     /**
      * @brief Obtiene las notas de la semana intermedia de un período (bulk).
@@ -903,46 +978,51 @@ class calificaciones extends imcrea
 
     function insertarNotasMasivas($arr_insertar, $ano)
     {
-        if (empty($arr_insertar)) {
-            return false;
-        }
 
-        // Obtener las columnas desde el primer elemento del array
-        $columnas = [];
-        $original_keys = [];
-
-        foreach ($arr_insertar[0] as $key => $val) {
-            // Removemos comillas simples si existen en la llave (ej. '24E')
-            $clean_key = str_replace("'", "", $key);
-            $columnas[] = "`{$clean_key}`";
-            $original_keys[] = $key;
-        }
-        $colString = implode(', ', $columnas);
-
-        $valuesList = [];
-        foreach ($arr_insertar as $val) {
-            $rowValues = [];
-            foreach ($original_keys as $key) {
-                $v = isset($val[$key]) ? $val[$key] : null;
-
-                if (is_null($v) || $v === '') {
-                    $rowValues[] = 'NULL';
-                } elseif (is_numeric($v)) {
-                    // Mantenemos int o float
-                    $rowValues[] = $v;
-                } else {
-                    // Escapamos strings por seguridad
-                    $rowValues[] = "'" . $this->_db->real_escape_string($v) . "'";
-                }
+        try {
+            if (empty($arr_insertar)) {
+                return false;
             }
-            $valuesList[] = "(" . implode(', ', $rowValues) . ")";
+
+            // Obtener las columnas desde el primer elemento del array
+            $columnas = [];
+            $original_keys = [];
+
+            foreach ($arr_insertar[0] as $key => $val) {
+                // Removemos comillas simples si existen en la llave (ej. '24E')
+                $clean_key = str_replace("'", "", $key);
+                $columnas[] = "`{$clean_key}`";
+                $original_keys[] = $key;
+            }
+            $colString = implode(', ', $columnas);
+
+            $valuesList = [];
+            foreach ($arr_insertar as $val) {
+                $rowValues = [];
+                foreach ($original_keys as $key) {
+                    $v = isset($val[$key]) ? $val[$key] : null;
+
+                    if (is_null($v) || $v === '') {
+                        $rowValues[] = 'NULL';
+                    } elseif (is_numeric($v)) {
+                        // Mantenemos int o float
+                        $rowValues[] = $v;
+                    } else {
+                        // Escapamos strings por seguridad
+                        $rowValues[] = "'" . $this->_db->real_escape_string($v) . "'";
+                    }
+                }
+                $valuesList[] = "(" . implode(', ', $rowValues) . ")";
+            }
+
+            $valString = implode(', ', $valuesList);
+
+            $sql = "INSERT INTO c_{$ano} ({$colString}) VALUES {$valString}";
+
+            return $this->_db->query($sql);
+        } catch (Exception $e) {
+            echo 'Excepción capturada en insertarNotasMasivas: ', $e->getMessage(), "\n";
         }
-
-        $valString = implode(', ', $valuesList);
-
-        $sql = "INSERT INTO c_{$ano} ({$colString}) VALUES {$valString}";
-
-        return $this->_db->query($sql);
     }
 
     // Funcion de actualizar notas masivas
