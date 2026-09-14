@@ -1115,7 +1115,7 @@ class calificaciones extends imcrea
 
 
     // 
-    public function get_notas_bulk(array $ids_alumno, array $materias_con_area, int $year): array
+    public function get_notas_bulk(array $ids_alumno, array $materias_con_area, int $year)
     {
 
         $spot = [];

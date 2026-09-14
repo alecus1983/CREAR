@@ -177,23 +177,73 @@ if ($semana_final) {
         }
     }
 } elseif ($semana_intermedia) {
+
+
     foreach ($datos_agrupados as $dato) {
+
+
         if (in_array($dato['codigo'], $codigos_actualizar)) {
-            $fila_db = $db_notas[$dato['codigo']];
-            $ha_cambiado = false;
-            $campos_revisar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-            foreach ($campos_revisar as $letra) {
-                $columna = $semana . $letra;
-                $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
-                $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
-                if ($nota_enviada !== $nota_db) {
-                    $ha_cambiado = true;
-                    break;
+
+            if ($id_materia !== 20) {
+                $fila_db = $db_notas[$dato['codigo']];
+                $ha_cambiado = false;
+                $campos_revisar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+                foreach ($campos_revisar as $letra) {
+                    $columna = $semana . $letra;
+                    $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
+                    $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
+                    if ($nota_enviada !== $nota_db) {
+                        $ha_cambiado = true;
+                        break;
+                    }
+                }
+
+                if ($ha_cambiado) {
+                    $arr_actualizar[] = [
+                        'id_alumno' => $dato['codigo'],
+                        'id_materia' => $id_materia,
+                        'docente' => $id_docente,
+                        "'" . $semana . "A'" => $dato['A'],
+                        "'" . $semana . "B'" => $dato['B'],
+                        "'" . $semana . "C'" => $dato['C'],
+                        "'" . $semana . "D'" => $dato['D'],
+                        "'" . $semana . "E'" => $dato['E'],
+                        "'" . $semana . "F'" => $dato['F'],
+                        "'" . $semana . "G'" => $dato['G'],
+                        "'" . $semana . "H'" => $dato['H']
+                    ];
                 }
             }
+            // en cso de disciplina
+            else {
+                // en caso de actualiza la disciplina
+                $fila_db = $db_notas[$dato['codigo']];
+                $ha_cambiado = false;
+                $campos_revisar = ['A'];
 
-            if ($ha_cambiado) {
-                $arr_actualizar[] = [
+                foreach ($campos_revisar as $letra) {
+                    $columna = "D" . $semana;
+                    $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
+                    $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
+                    if ($nota_enviada !== $nota_db) {
+                        $ha_cambiado = true;
+                        break;
+                    }
+                }
+
+                if ($ha_cambiado) {
+                    $arr_actualizar[] = [
+                        'id_alumno' => $dato['codigo'],
+                        'id_materia' => $id_materia,
+                        'docente' => $id_docente,
+                        "'D" . $semana . "'" => $dato['A']
+                    ];
+                }
+            }
+        } elseif (in_array($dato['codigo'], $codigos_agregar)) {
+
+            if ($id_materia !== 20) {
+                $arr_insertar[] = [
                     'id_alumno' => $dato['codigo'],
                     'id_materia' => $id_materia,
                     'docente' => $id_docente,
@@ -206,21 +256,17 @@ if ($semana_final) {
                     "'" . $semana . "G'" => $dato['G'],
                     "'" . $semana . "H'" => $dato['H']
                 ];
+            } else {
+
+                // si la materia es disciplina agrego este
+                // registro
+                $arr_insertar[] = [
+                    'id_alumno' => $dato['codigo'],
+                    'id_materia' => $id_materia,
+                    'docente' => $id_docente,
+                    "'" . $semana . "A'" => $dato['A']
+                ];
             }
-        } elseif (in_array($dato['codigo'], $codigos_agregar)) {
-            $arr_insertar[] = [
-                'id_alumno' => $dato['codigo'],
-                'id_materia' => $id_materia,
-                'docente' => $id_docente,
-                "'" . $semana . "A'" => $dato['A'],
-                "'" . $semana . "B'" => $dato['B'],
-                "'" . $semana . "C'" => $dato['C'],
-                "'" . $semana . "D'" => $dato['D'],
-                "'" . $semana . "E'" => $dato['E'],
-                "'" . $semana . "F'" => $dato['F'],
-                "'" . $semana . "G'" => $dato['G'],
-                "'" . $semana . "H'" => $dato['H']
-            ];
         }
     }
 } else {
@@ -285,13 +331,36 @@ if ($semana_final) {
                     ];
                 }
             }
-        } elseif (in_array($dato['codigo'], $codigos_agregar)) {
-            $arr_insertar[] = [
-                'id_alumno' => $dato['codigo'],
-                'id_materia' => $id_materia,
-                'docente' => $id_docente,
-                "'" . $semana . "A'" => $dato['A']
-            ];
+        }
+
+        // si hay registros nuevos que requieren ser agregados
+        elseif (in_array($dato['codigo'], $codigos_agregar)) {
+            if ($id_materia !== 20) {
+                // si la materia no es disciplina agrego 
+                // este registro
+                $arr_insertar[] = [
+                    'id_alumno' => $dato['codigo'],
+                    'id_materia' => $id_materia,
+                    'docente' => $id_docente,
+                    "'" . $semana . "A'" => $dato['A'],
+                    "'" . $semana . "B'" => $dato['B'],
+                    "'" . $semana . "C'" => $dato['C'],
+                    "'" . $semana . "D'" => $dato['D'],
+                    "'" . $semana . "E'" => $dato['E'],
+                    "'" . $semana . "F'" => $dato['F'],
+                    "'" . $semana . "G'" => $dato['G']
+
+                ];
+            } else {
+                // si la materia es disciplina agrego este
+                // registro
+                $arr_insertar[] = [
+                    'id_alumno' => $dato['codigo'],
+                    'id_materia' => $id_materia,
+                    'docente' => $id_docente,
+                    "'" . $semana . "A'" => $dato['A']
+                ];
+            }
         }
     }
 }
