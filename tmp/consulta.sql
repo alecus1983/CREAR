@@ -852,6 +852,24 @@ select * delete from imcreati_datam.matricula  where id_alumno =1599
 
 select * from c_2026 where id_materia = 95
 
+-- borrado de matriculas
+delete  from imcreati_datam.matricula where id in (3564)
+
+
+--  revisar las matriculas
+select * from imcreati_datam.matricula where id_alumno = 1604
+
+select * from imcreati_data.calificaciones_2026 where id in (select id  from imcreati_datao.calificaciones_2026) 
+
+describe imcreati_data.calificaciones_2026;
+
+
+create table imcreati_datam.calificaciones 
+select * from 
+
+
+
+
 
 
 

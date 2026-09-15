@@ -142,7 +142,7 @@ if ($semana_final) {
             $campos_revisar = ($id_materia !== 20) ? ['E', 'F', 'G', 'I', 'J'] : [strval($periodo)];
 
             foreach ($campos_revisar as $letra) {
-                $columna =  ($id_materia !== 20) ? $semana . $letra : "D_p";
+                $columna = ($id_materia !== 20) ? $semana . $letra : "D_p";
                 $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
                 $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
                 if ($nota_enviada !== $nota_db) {
@@ -176,14 +176,19 @@ if ($semana_final) {
             ];
         }
     }
-} elseif ($semana_intermedia) {
+}
 
+// si se trata de la semana intermedia
+elseif ($semana_intermedia) {
 
+    // por cada dato proveniente de la pagina
     foreach ($datos_agrupados as $dato) {
 
-
+        // si los  codigos   a actualizar estan entre los que provienen
+        // de la base de datos.
         if (in_array($dato['codigo'], $codigos_actualizar)) {
-
+            // si la materia no es disciplina  entonces ejecuta 
+            // el siguiente flujo de instrucciones
             if ($id_materia !== 20) {
                 $fila_db = $db_notas[$dato['codigo']];
                 $ha_cambiado = false;
@@ -197,7 +202,7 @@ if ($semana_final) {
                         break;
                     }
                 }
-
+                // si ha cambiado la nota de la materia se agrega al array de actualizar
                 if ($ha_cambiado) {
                     $arr_actualizar[] = [
                         'id_alumno' => $dato['codigo'],
@@ -214,13 +219,14 @@ if ($semana_final) {
                     ];
                 }
             }
-            // en cso de disciplina
+            // en cso de disciplina en la semana intermedia
             else {
                 // en caso de actualiza la disciplina
                 $fila_db = $db_notas[$dato['codigo']];
                 $ha_cambiado = false;
                 $campos_revisar = ['A'];
-
+                // construyo los campos de la disciplina de la semana
+                // los cuales comienzan con la letra D, seguido por el numero de la semana
                 foreach ($campos_revisar as $letra) {
                     $columna = "D" . $semana;
                     $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
@@ -231,6 +237,7 @@ if ($semana_final) {
                     }
                 }
 
+                // si la nota de disciplina en la semana intermedia ha cambiado 
                 if ($ha_cambiado) {
                     $arr_actualizar[] = [
                         'id_alumno' => $dato['codigo'],
@@ -240,8 +247,13 @@ if ($semana_final) {
                     ];
                 }
             }
-        } elseif (in_array($dato['codigo'], $codigos_agregar)) {
 
+        }
+
+        // si no se encuentra registro para este alumno y hay que agregar la nota para
+        // la semana intermedia.
+        elseif (in_array($dato['codigo'], $codigos_agregar)) {
+            // si la materia  es cualquiera diferente a disciplina
             if ($id_materia !== 20) {
                 $arr_insertar[] = [
                     'id_alumno' => $dato['codigo'],
@@ -264,7 +276,7 @@ if ($semana_final) {
                     'id_alumno' => $dato['codigo'],
                     'id_materia' => $id_materia,
                     'docente' => $id_docente,
-                    "'" . $semana . "A'" => $dato['A']
+                    "'D" . $semana . "'" => $dato['A']
                 ];
             }
         }

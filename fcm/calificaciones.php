@@ -929,6 +929,7 @@ class calificaciones extends imcrea
                 WHERE id IN ({$idsString})";
     }
 
+    // se actualizan masivamente las notas
     function actualizarNotasMasivas($arr_actualizar, $ano)
     {
         // si el valor ingresado es falso
@@ -971,7 +972,7 @@ class calificaciones extends imcrea
         }
         $setString = implode(', ', $setStatements);
         $sql = "UPDATE c_{$ano} 
-                SET {$setString}
+                SET {$setString} , modificado ='" . date('Y-m-d H:i:s') . "'
                 WHERE id_materia = {$id_materia} AND id_alumno IN ({$idsString})";
         return $this->_db->query($sql);
     }
