@@ -136,23 +136,68 @@ if ($semana_final) {
     foreach ($datos_agrupados as $dato) {
         // Verificar si el alumno ya tiene registro y debe ser actualizado
         if (in_array($dato['codigo'], $codigos_actualizar)) {
-            $fila_db = $db_notas[$dato['codigo']];
-            $ha_cambiado = false;
 
-            $campos_revisar = ($id_materia !== 20) ? ['E', 'F', 'G', 'I', 'J'] : [strval($periodo)];
+            if ($id_materia !== 20) {
+                $fila_db = $db_notas[$dato['codigo']];
+                $ha_cambiado = false;
 
-            foreach ($campos_revisar as $letra) {
-                $columna = ($id_materia !== 20) ? $semana . $letra : "D_p";
-                $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
-                $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
-                if ($nota_enviada !== $nota_db) {
-                    $ha_cambiado = true;
-                    break;
+                $campos_revisar = ($id_materia !== 20) ? ['E', 'F', 'G', 'I', 'J'] : [strval($periodo)];
+
+                foreach ($campos_revisar as $letra) {
+                    $columna = ($id_materia !== 20) ? $semana . $letra : "D_p";
+                    $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
+                    $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
+                    if ($nota_enviada !== $nota_db) {
+                        $ha_cambiado = true;
+                        break;
+                    }
                 }
-            }
 
-            if ($ha_cambiado) {
-                $arr_actualizar[] = [
+                if ($ha_cambiado) {
+                    $arr_actualizar[] = [
+                        'id_alumno' => $dato['codigo'],
+                        'id_materia' => $id_materia,
+                        'docente' => $id_docente,
+                        "'" . $semana . "E'" => $dato['E'],
+                        "'" . $semana . "F'" => $dato['F'],
+                        "'" . $semana . "G'" => $dato['G'],
+                        "'" . $semana . "I'" => $dato['I'],
+                        "'" . $semana . "J'" => $dato['J']
+                    ];
+                }
+            } else {
+                // para actualizar disciplina en la semana final
+                // en caso de actualiza la disciplina
+                $fila_db = $db_notas[$dato['codigo']];
+                $ha_cambiado = false;
+                $campos_revisar = ['A'];
+                // construyo los campos de la disciplina de la semana
+                // los cuales comienzan con la letra D, seguido por el numero de la semana
+                foreach ($campos_revisar as $letra) {
+                    $columna = "D_p" . $periodo;
+                    $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
+                    $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
+                    if ($nota_enviada !== $nota_db) {
+                        $ha_cambiado = true;
+                        break;
+                    }
+                }
+
+                // si la nota de disciplina en la semana intermedia ha cambiado 
+                if ($ha_cambiado) {
+                    $arr_actualizar[] = [
+                        'id_alumno' => $dato['codigo'],
+                        'id_materia' => $id_materia,
+                        'docente' => $id_docente,
+                        "'D_p" . $periodo . "'" => $dato['A']
+                    ];
+                }
+
+            }
+        } elseif (in_array($dato['codigo'], $codigos_agregar)) {
+
+            if ($id_materia !== 20) {
+                $arr_insertar[] = [
                     'id_alumno' => $dato['codigo'],
                     'id_materia' => $id_materia,
                     'docente' => $id_docente,
@@ -162,18 +207,11 @@ if ($semana_final) {
                     "'" . $semana . "I'" => $dato['I'],
                     "'" . $semana . "J'" => $dato['J']
                 ];
+            } else {
+                // si agrego disciplina en la semana final
+
+
             }
-        } elseif (in_array($dato['codigo'], $codigos_agregar)) {
-            $arr_insertar[] = [
-                'id_alumno' => $dato['codigo'],
-                'id_materia' => $id_materia,
-                'docente' => $id_docente,
-                "'" . $semana . "E'" => $dato['E'],
-                "'" . $semana . "F'" => $dato['F'],
-                "'" . $semana . "G'" => $dato['G'],
-                "'" . $semana . "I'" => $dato['I'],
-                "'" . $semana . "J'" => $dato['J']
-            ];
         }
     }
 }
