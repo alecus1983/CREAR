@@ -853,20 +853,42 @@ select * delete from imcreati_datam.matricula  where id_alumno =1599
 select * from c_2026 where id_materia = 95
 
 -- borrado de matriculas
-delete  from imcreati_datam.matricula where id in (3564)
+delete  from imcreati_datam.matricula where id_alumno = 1602 -- id in (3563)
+
+
+
 
 
 --  revisar las matriculas
-select * from imcreati_datam.matricula where id_alumno = 1604
+select * from imcreati_datam.matricula where id_alumno = 1480
+
+select * from imcreati_datam.personas p where p.u_alumnos = 1491
+
+select * from imcreati_datao.alumnos a where a.id_alumno = 1364
 
 select * from imcreati_data.calificaciones_2026 where id in (select id  from imcreati_datao.calificaciones_2026) 
 
 describe imcreati_data.calificaciones_2026;
 
+--- crear una persona a partir de su codigo de alumno
+insert into imcreati_datam.personas ( nombres, apellidos, u_alumnos )
+select nombres, apellidos, id_alumno from imcreati_datao.alumnos a where a.id_alumno = 1493
 
-create table imcreati_datam.calificaciones 
-select * from 
 
+	insert into imcreati_datam.u_alumnos (id_alumnos, id_personas, fecha)
+	select u_alumnos, id_personas, now() from imcreati_datam.personas p where  u_alumnos = 1493
+
+select * from imcreati_datam.u_alumnos ua where ua.id_alumnos = 1491
+
+
+
+
+
+-- codigo para unir datos de tablas calificaciones en data y datao
+Insert into imcreati_datam.calificaciones_2026 (id_alumno,id_materia, id_logro,nota ,id_docente, faltas , periodo , corte, year , limite , modificado, own , serie , id_ponderado, id_semana)
+SELECT id_alumno,id_materia, id_logro,nota ,id_docente, faltas , periodo , corte, year , limite , modificado, own , serie , id_ponderado, id_semana from imcreati_data.calificaciones_2026 c 
+union all 
+SELECT id_alumno,id_materia, id_logro,nota ,id_docente, faltas , periodo , corte, year , limite , modificado, own , serie , id_ponderado, id_semana from imcreati_datao.calificaciones_2026 c
 
 
 

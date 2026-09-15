@@ -355,7 +355,7 @@ SELECT id_alumno, id_materia,
     null AS `l2_p4`,
     null AS `l3_p4`
     
-FROM imcreati_datao.calificaciones_2026
+FROM imcreati_datam.calificaciones_2026
 where id_alumno > 0
 GROUP BY id_alumno, id_materia
 order by  id_materia, id_alumno;
