@@ -173,15 +173,26 @@ if ($semana_final) {
                 $campos_revisar = ['A'];
                 // construyo los campos de la disciplina de la semana
                 // los cuales comienzan con la letra D, seguido por el numero de la semana
-                foreach ($campos_revisar as $letra) {
-                    $columna = "D_p" . $periodo;
-                    $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
-                    $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
-                    if ($nota_enviada !== $nota_db) {
-                        $ha_cambiado = true;
-                        break;
-                    }
+
+                // columna de nota en la base de datos
+                $columna_nota = "D_p" . $periodo;
+                // columna de  logros en la base de datos
+                $columna_logro = "l1_p" . strval($periodo);
+
+                // nota enviada desde el formulario
+                $nota_enviada = (isset($dato['A']) && trim($dato['A']) !== '') ? (float) $dato['A'] : null;
+                // logro enviado desde el formulario
+                $logro_enviado = (isset($dato['L']) && trim($dato['L']) !== '') ? (float) $dato['L'] : null;
+                // nota desde la base de datos
+                $nota_db = (isset($fila_db[$columna_nota]) && !is_null($fila_db[$columna_nota])) ? (float) $fila_db[$columna_nota] : null;
+                // logro consignado en la base de datos
+                $logro_db = (isset($fila_db[$columna_logro]) && !is_null($fila_db[$columna_logro])) ? (float) $fila_db[$columna_logro] : null;
+
+                // validando las notas
+                if ($nota_enviada !== $nota_db || $logro_enviado !== $logro_db) {
+                    $ha_cambiado = true;
                 }
+
 
                 // si la nota de disciplina en la semana intermedia ha cambiado 
                 if ($ha_cambiado) {
@@ -189,13 +200,13 @@ if ($semana_final) {
                         'id_alumno' => $dato['codigo'],
                         'id_materia' => $id_materia,
                         'docente' => $id_docente,
-                        "'D_p" . $periodo . "'" => $dato['A']
+                        "'D_p" . strval($periodo) . "'" => $dato['A'],
+                        "l1_p" . strval($periodo) => $dato['L']
                     ];
                 }
-
             }
         } elseif (in_array($dato['codigo'], $codigos_agregar)) {
-
+            // si es de cualquier materia distinta de disciplina
             if ($id_materia !== 20) {
                 $arr_insertar[] = [
                     'id_alumno' => $dato['codigo'],
@@ -210,7 +221,13 @@ if ($semana_final) {
             } else {
                 // si agrego disciplina en la semana final
 
-
+                $arr_insertar[] = [
+                    'id_alumno' => $dato['codigo'],
+                    'id_materia' => $id_materia,
+                    'docente' => $id_docente,
+                    "D_p" . strval($periodo) => $dato['A'],
+                    "l1_p" . strval($periodo) => $dato['L']
+                ];
             }
         }
     }
@@ -285,7 +302,6 @@ elseif ($semana_intermedia) {
                     ];
                 }
             }
-
         }
 
         // si no se encuentra registro para este alumno y hay que agregar la nota para
