@@ -94,8 +94,8 @@
                                         <!-- <li><a href="./cursoscortos.html">Cursos y Seminarios</a></li> -->
                                     </ul>
                                 </li>
-				<!-- <li><a href="./docentes.php">Docentes</a></li> -->
-                                <li><a href="./fcm/p_gina_en_mantenimiento.html">Docentes</a></li>
+				<li><a href="./docentes.php">Docentes</a></li> 
+                                <!-- <li><a href="./fcm/p_gina_en_mantenimiento.html">Docentes</a></li>-->
                                 <li><a href="./blog/blog.php">Blog</a></li>
                                 <li><a href="#Contactos">Contactos</a></li>
                             </ul>

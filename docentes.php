@@ -14,10 +14,9 @@ include_once "./assets/templates/header.php";
                             <p style="font-family: sans-serif;">Inicia seccion para acceder</p>
                             <a href="./paginas/login_boletines.php" class="theme-btn">Preescolar<i
                                     class="fas fa-arrow-right"></i></a>
-                            <a href="./fc/login_boletines_prueba.php" class="theme-btn">Primaria y Bachillerato<i
-                                    class="fas fa-arrow-right"></i></a>
-                            <a href="./fcm/login_boletines_x.php" class="theme-btn">Test<i
-                                    class="fas fa-arrow-right"></i></a>
+                            <!-- <a href="./fc/login_boletines_prueba.php" class="theme-btn">Primaria y Bachillerato<i
+                                    class="fas fa-arrow-right"></i></a>-->
+                            <a href="./fcm/login_boletines_x.php" class="theme-btn">Primaria y Bachillerato<i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

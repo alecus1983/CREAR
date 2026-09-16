@@ -58,6 +58,13 @@ $(document).ready(function () {
         });
     }
 
+    // funcion que cambia el color del texto de un campo  en funcion de su
+    // id
+    function color_celda(id) {
+
+        document.getElementById(id).style.color = 'red';
+    }
+
     // // Function to save grades (similar to the original deposit function, but with better feedback)
     // function deposit() {
     //     // ... (The validation and AJAX logic from the original deposit() function remains here)

@@ -26,11 +26,11 @@ class semana extends imcrea
         $q = "select * from  semanas where year = $ano and semana = $semana";
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
-        $this->notas_por_alumno =  $r['notas_por_alumno'];
-        $this->semana =  $r['semana'];
-        $this->year =  $r['year'];
-        $this->inicio =  $r['inicio'];
-        $this->fin =  $r['fin'];
+        $this->notas_por_alumno = $r['notas_por_alumno'];
+        $this->semana = $r['semana'];
+        $this->year = $r['year'];
+        $this->inicio = $r['inicio'];
+        $this->fin = $r['fin'];
     }
 
     // recupera el listado de semanas para un año
@@ -93,6 +93,7 @@ class semana extends imcrea
         if (is_null($r["id_periodo"])) {
             // en caso de que ninguno retorna 0
             return 0;
+
         }
         // de lo contrado retorna  el periodo
         else {

@@ -862,7 +862,7 @@ delete  from imcreati_datam.matricula where id_alumno = 1602 -- id in (3563)
 --  revisar las matriculas
 select * from imcreati_datam.matricula where id_alumno = 1480
 
-select * from imcreati_datam.personas p where p.u_alumnos = 1491
+select * from imcreati_datam.personas p where p.u_alumnos = 1588
 
 select * from imcreati_datao.alumnos a where a.id_alumno = 1364
 
@@ -872,14 +872,23 @@ describe imcreati_data.calificaciones_2026;
 
 --- crear una persona a partir de su codigo de alumno
 insert into imcreati_datam.personas ( nombres, apellidos, u_alumnos )
-select nombres, apellidos, id_alumno from imcreati_datao.alumnos a where a.id_alumno = 1493
+select nombres, apellidos, id_alumno from imcreati_datao.alumnos a where a.id_alumno = 1590
 
 
 	insert into imcreati_datam.u_alumnos (id_alumnos, id_personas, fecha)
-	select u_alumnos, id_personas, now() from imcreati_datam.personas p where  u_alumnos = 1493
+	select u_alumnos, id_personas, now() from imcreati_datam.personas p where  u_alumnos = 1589
 
-select * from imcreati_datam.u_alumnos ua where ua.id_alumnos = 1491
+select * from imcreati_datam.u_alumnos ua where ua.id_alumnos = 1520
 
+select id_periodo from semanas
+                  where year = 2026 and inicio < NOW() and fin > NOW()
+                  order by semana asc;
+
+
+SELECT a.id_alumnos, p.nombres, p.apellidos 
+                      FROM u_alumnos a
+                      INNER JOIN personas p ON a.id_personas = p.id_personas
+                      WHERE a.id_alumnos IN (1588,1589,1590)
 
 
 
