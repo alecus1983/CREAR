@@ -21,7 +21,9 @@ $semana_final = false;
 // semana intermedia
 $semana_intermedia = false;
 
-
+// -----------------------------------------
+//   Verificacion de variables iniciales
+// -------------------------------------
 
 // validacion de  datos de escolaridad
 if ($_POST["escolaridad"] > 0) {
@@ -110,7 +112,8 @@ if ($_POST['periodo'] > 0) {
     $err = $err . "<p class='text-danger'>Porfavor seleccione un periodo</p>";
 }
 
-// si los datos son validos
+// si los datos  de entrada son validos
+// ingreso a crear las instancias de los objetos
 if ($valido) {
 
     // creo un objeto jornada
@@ -132,11 +135,18 @@ if ($valido) {
     //echo "<div class='row'><div class='col-md-12>";
     // saco este mensaje por consola
 
+    // objeto de calificaciones
+    $cl = new calificaciones();
+    
     // si se trata de preescolar
     if ($id_escolaridad == 1) {
         //
 
-        // CREO EL TEXTO DE SALIDA
+        // -----------------------
+        // PRE ESCOLAR
+        // ----------------------
+        
+        // creo el texto para la salida
         echo "<p>Listado de  estudiantes  del grado <b>" . $gr->nombre_g . "  " .
             $cu->curso . "</b>, en la jornada " .
             $jo->jornada . ", en la materia : <b>" .
@@ -156,12 +166,14 @@ if ($valido) {
         $opt_notas = [];
         $opt_logros = [];
 
+
+       
+
         // si hay alumnos
         // cargo un bloque con las consultas a la base de datos
         if (!empty($listado->id_alumno)) {
 
-            // objeto calificaciones para consultas bulk sobre c_{$ano}
-            $cal = new calificaciones();
+           
 
             // convierto el array de alumnos en una cadena de texto
             $in_alumnos = implode(',', $listado->id_alumno);
@@ -186,6 +198,7 @@ if ($valido) {
 
             $res_nombres = $db->query($q_nombres);
 
+            // si se obtiene un resultado de la consulta
             if ($res_nombres) {
                 while ($row = $res_nombres->fetch_assoc()) {
                     $opt_nombres[$row['id_alumnos']] = [
@@ -194,6 +207,11 @@ if ($valido) {
                     ];
                 }
             }
+
+            $arr_pond_preescolar = array(1 => "R", 2 => "l1_p", 3 => "l2_p", 4 => "l3_p");
+            
+             // cargar el array de notas
+            $opt_notas = $cl->get_notas_preescolar($ano, $id_m, $periodo , $arr_pond_preescolar, $in_alumnos);
 
             //por cada alumno del listado del curso    
             foreach ($listado->id_alumno as $e) {
@@ -210,7 +228,8 @@ if ($valido) {
                 echo "</span><input type='hidden' name='codigo[]' class='codigo' value=" . $e . "> </div>";
 
                 // nota del periodo
-                $nota = isset($opt_notas[$e][$semana . "E"]) ? $opt_notas[$e][$semana . "E"] : 0;
+                
+                $nota = isset($opt_notas[$e]["R".$periodo]) ? $opt_notas[$e]["R".$periodo] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
@@ -220,79 +239,76 @@ if ($valido) {
                 echo "<div class='col-md-6' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">nota</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="N[]"  value="' . $nota . '"  class="form-control E" placeholder="nota" aria-label="nota" aria-describedby="basic-addon1">';
+                echo '<input type="number" step="0.1" max="5" min="0" name="N[]"  value="' . $nota . '"  class="form-control N" placeholder="nota" aria-label="nota" aria-describedby="basic-addon1">';
                 echo '</div>';
-               
+                
 
 
                 // logro 1
-                $nota = isset($opt_notas[$e][$semana . "F"]) ? $opt_notas[$e][$semana . "F"] : 0;
+                $nota = isset($opt_notas[$e]["l1_p".strval($periodo)]) ? $opt_notas[$e]["l1_p".strval($periodo)] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
                 } else {
-                    $nota = number_format($nota, 1);
+                    $nota = number_format($nota, 0);
                 }
 
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">logro 1</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="L1[]" value="' . $nota . '"  class="form-control F" placeholder="L1" aria-label="actitud" aria-describedby="basic-addon1">';
+                echo '<input type="number" step="0.1" max="5" min="0" name="L1[]" value="' . $nota . '"  class="form-control L1" placeholder="L1" aria-label="actitud" aria-describedby="basic-addon1">';
                 echo '</div>';
                 //echo '</div>';
 
                 // logro 2
-                $nota = isset($opt_notas[$e][$semana . "G"]) ? $opt_notas[$e][$semana . "G"] : 0;
+                $nota = isset($opt_notas[$e]["l2_p".strval($periodo)]) ? $opt_notas[$e]["l2_p".strval($periodo)] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
                 } else {
-                    $nota = number_format($nota, 1);
+                    $nota = number_format($nota, 0);
                 }
 
                 //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">logro 2</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="L2[]" value="' . $nota . '" class="form-control G" placeholder="L2" aria-label="asistencia" aria-describedby="basic-addon1">';
+                echo '<input type="number" step="0.1" max="5" min="0" name="L2[]" value="' . $nota . '" class="form-control L2" placeholder="L2" aria-label="asistencia" aria-describedby="basic-addon1">';
                 echo '</div>';
                 //echo '</div>';
 
 
                 //logro 3
-                $nota = isset($opt_notas[$e][$semana . "I"]) ? $opt_notas[$e][$semana . "I"] : 0;
+                $nota = isset($opt_notas[$e]["l3_p".strval($periodo)]) ? $opt_notas[$e]["l3_p".strval($periodo)] : 0;
                 // coloco un numero vacio  si la nota es igual a cero
                 if ($nota == 0) {
                     $nota = "";
                 } else {
-                    $nota = number_format($nota, 1);
+                    $nota = number_format($nota, 0);
                 }
 
-                //echo "<div class='col-md-1' name=''>";
                 echo '<div class="input-group mb-1">';
                 echo '<span class="input-group-text" id="addon-wrapping">logro 3</span>';
-                echo '<input type="number" step="0.1" max="5" min="0" name="L3[]" value="' . $nota . '" class="form-control I" placeholder="L3" aria-label="evaluacion final" aria-describedby="basic-addon1">';
+                echo '<input type="number" step="0.1" max="5" min="0" name="L3[]" value="' . $nota . '" class="form-control L3" placeholder="L3" aria-label="evaluacion final" aria-describedby="basic-addon1">';
                 echo '</div>';
                 //echo '</div>';
 
-
-
                 // cierre de div class row 
                 echo "</div>";
+                echo "</div>";
 
-                // unset($estudiante);
-                // unset($score);
-
-            }
-
-
-            
-
-        } //  fin de id_alumno
+            } //  fin de id_alumno
 
         
-
+        }
         
-    } else {
+    }
+
+    else {
+        
+        // -------------------------------------------
+        // PRIMARIA BACHILLERATO
+        // -------------------------------------------
+        
         // pondera las semanas iniciales    
         $arr_ponderadores = array(
             1 => 'A',
@@ -322,7 +338,7 @@ if ($valido) {
             25 => 'Y',
             26 => 'Z'
         );
-
+        
         // ponderados de las semanas normales
         $arr_pond_normal = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F", 7 => "G");
         // ponderados de la semana intermedia

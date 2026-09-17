@@ -894,6 +894,50 @@ class calificaciones extends imcrea
         return $resultado;
     }
 
+
+    
+    /**
+     * @brief Obtiene las notas de una semana normal (bulk).
+     *
+     * @param int    $ano         Año lectivo (sufijo de la tabla c_{$ano}).
+     * @param int    $id_m        Código de la materia.
+     * @param int    $periodo      Número de periodo.
+     * @param array  $arr_pond    Array de ponderados de semana normal, ej. [1=>'A', ..., 7=>'G'].
+     * @param string $in_alumnos  Cadena con los IDs de alumnos para cláusula IN, ej. "1,2,3".
+     * @return array Array asociativo indexado por id_alumno con las notas de la semana.
+     *
+     * Consulta la tabla c_{$ano} para obtener de una sola vez las notas de una semana
+     * ordinaria para todos los alumnos indicados (sin filtro de período).
+     */
+    public function get_notas_preescolar($ano, $id_m, $periodo, $arr_pond, $in_alumnos)
+    {
+        // construir campos de notas dinámicos: 1A, 1B, 1C, ...
+        $campos_notas = "";
+        foreach ($arr_pond as $v) {
+            $campos_notas =  $v. $periodo. " ," . $campos_notas;
+        }
+        $campos_notas = substr($campos_notas, 0, -1);
+
+        $q = "SELECT id_alumno, {$campos_notas}
+              FROM c_{$ano}
+              WHERE id_materia = {$id_m} AND id_alumno IN ({$in_alumnos})";
+
+        $resultado = [];
+
+        try {
+            $c = $this->_db->query($q);
+            if ($c) {
+                while ($row = $c->fetch_assoc()) {
+                    $resultado[$row['id_alumno']] = $row;
+                }
+            }
+        } catch (Exception $e) {
+            echo 'Excepción capturada en get_notas_semana_normal: ', $e->getMessage(), "\n";
+        }
+
+        return $resultado;
+    }
+
     // metodo para actualizar las notas semanales
     // en la tabla c_year
     public function actualizar_notas_semanales($valoresArray, $year)
@@ -1102,6 +1146,8 @@ class calificaciones extends imcrea
 
         // cadena de busqueda 
         $q = "select * from c_$year where id_materia = $id_materia and id_alumno in ($c_string)";
+
+        
 
         try {
             $c = $this->_db->query($q);

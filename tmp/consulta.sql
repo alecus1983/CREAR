@@ -901,6 +901,7 @@ SELECT id_alumno,id_materia, id_logro,nota ,id_docente, faltas , periodo , corte
 
 
 
+select * from c_2026 where id_materia = 27 and id_alumno in (1582,1584,1583,1585,1586,1587,1419)
 
 
 

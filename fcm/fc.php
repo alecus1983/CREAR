@@ -45,7 +45,7 @@ $periodo = 0;
         }
 
         input[type=number] {
-            -moz-appearance: textfield;
+            appearance: textfield;
         }
     </style>
 
@@ -97,29 +97,97 @@ $periodo = 0;
 
             function deposit() {
 
-            // para ello comienza
-            // almacenando el codigo del grado en la variable j
-            var j = $("#id_g").val();
-            var esc = $("#escolaridad").val();
+                // para ello comienza
+                // almacenando el codigo del grado en la variable j
+                var j = $("#id_g").val();
+                var esc = $("#escolaridad").val();
 
-            // decide   el tipo de datos a enviar
-            // de acuerdo al formulario mostrado 
-            // 1 -> para Preescolar    
-            // 2 -> para primaria
-            // 3 -> para bachillerato
-            if (esc == 1) {
+		// decide   el tipo de datos a enviar
+		// de acuerdo al formulario mostrado 
+		// 1  para Preescolar    
+		// 2  para primaria
+		// 3 x para bachillerato
+		if (esc == 1) {
 
 
-            } else
-            {
-                // mensaje de seleccion
-                swal({
-                    title: 'INSERTAR NOTAS',
-                    text: "Esta seguro que quiere insertar las notas!",
-                    icon: 'warning',
-                    buttons: true,
-                    buttons: ["cancelar", "insertar"],
+		    swal({
+			title: 'INSERTAR NOTAS PRE ESCOLAR',
+			text: "Esta seguro que quiere insertar las notas!",
+			icon: 'warning',
+			buttons: true,
+			buttons: ["cancelar", "insertar"],
+			
+                }).then((value) => {
+                    if (value) {
 
+                        // creo un array a partir de los
+                        // elementos pertenecientes a  una misma clase
+
+                        // serializo los campos clase  logro 1
+                        var logros1 = $('.L1').serializeArray();
+                        // serializo los campos clase logro 2
+                        var logros2 = $('.L2').serializeArray();
+                        // serializo los campos clase logro 3
+                        var logros3 = $('.L3').serializeArray();
+                        // serializo los codigos
+                        var codigos = $('.codigo').serializeArray();
+                        // serializo las  faltas
+                        var N = $('.N').serializeArray();
+
+
+                        // si los datos son validos
+                        if (1) {
+                            // llamo al metodo ajax para el envío de la  información
+                            // se emplea en envío por POST
+                            $.ajax({
+                                type: "POST",
+                                url: "notas_preescolar.php",
+                                data: {
+                                    year: $("#years").val(),
+                                    semana: $("#semana").val(),
+                                    id_gs: $("#id_g").val(),
+                                    id_curso: $("#id_c").val(),
+                                    id_ms: $("#id_ms").val(),
+                                    id_jornada: $("#jornada").val(),
+				    periodo:$("#periodo").val(),
+                                    id_docente: $("#id_docente").val(),
+                                    corte: $("#corte").val(),
+                                    periodo: $("#periodos").val(),
+                                    logro1: JSON.stringify(logros1),
+                                    logro2: JSON.stringify(logros2),
+                                    logro3: JSON.stringify(logros3),
+                                    codigo: JSON.stringify(codigos),
+                                    N: JSON.stringify(N)
+                                },
+
+                                success: function (data) {
+                                    // respuesta a la carga de notas
+                                    console.log(data);
+
+                                },
+                                error: function (xhr, status) {
+                                    swal('Disculpe, existió un problema');
+                                    console.log(xhr);
+                                }
+                            });
+                        } // fin de valido
+                        else {
+                            swal("Revise los datos", "No se ingresaron los datos \t porque tiene notas mayores que 5", "error");
+                        }
+                    }
+
+                });
+
+		} else
+		{
+                    // mensaje de seleccion
+                    swal({
+			title: 'INSERTAR NOTAS',
+			text: "Esta seguro que quiere insertar las notas!",
+			icon: 'warning',
+			buttons: true,
+			buttons: ["cancelar", "insertar"],
+			
                 }).then((value) => {
                     if (value) {
 
