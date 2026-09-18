@@ -33,7 +33,7 @@ $periodo = 0;
     <link href="../imagenes/escudo.gif" rel="shortcut icon" />
     <script src="./js/sweetalert.min.js"></script>
     <script src="./js/jquery-3.5.1.min.js">
-        < script src="./js/ajax.js" >
+        < script src = "./js/ajax.js" >
     </script>
     <link rel="stylesheet" href="estilos.css" type="text/css">
 
@@ -50,32 +50,28 @@ $periodo = 0;
     </style>
 
     <style>
-        .loader {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            z-index: 1;
-            border: 30px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid blue;
-            border-right: 16px solid green;
-            border-bottom: 16px solid red;
-            border-left: 16px solid orange;
-            width: 10rem;
-            height: 10rem;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
+        #loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
+        .modern-loader {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #0d6efd;
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
@@ -87,36 +83,236 @@ $periodo = 0;
                 transform: rotate(360deg);
             }
         }
+
+        .sidenav-select {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            color: #fff !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 0.4rem;
+            padding: 0.4rem 0.75rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            appearance: auto !important;
+            -moz-appearance: auto !important;
+            -webkit-appearance: auto !important;
+        }
+
+        .sidenav-select:focus {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border-color: #4DB6AC !important;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(77, 182, 172, 0.25);
+        }
+
+        .sidenav-select option {
+            color: #000;
+        }
+
+        .sidenav-label {
+            color: #adb5bd;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        .modern-floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(5, 59, 14, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .modern-floating-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6);
+        }
+    </style>
+
+    <style>
+        /* ===================================================================
+           Responsive del sidenav (#sidenavAccordion)
+           Repone las reglas base de la plantilla SB Admin que faltan en
+           css/styles.css y adapta el ancho por punto de quiebre.
+           =================================================================== */
+        :root {
+            --sidenav-ancho: 250px;
+            --topnav-alto: 56px;
+        }
+
+        #layoutSidenav {
+            display: flex;
+        }
+
+        #layoutSidenav #layoutSidenav_nav {
+            flex-basis: var(--sidenav-ancho);
+            flex-shrink: 0;
+            transform: translateX(calc(-1 * var(--sidenav-ancho)));
+        }
+
+        #layoutSidenav #layoutSidenav_content {
+            position: relative;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+            flex-grow: 1;
+            min-height: calc(100vh - var(--topnav-alto));
+        }
+
+        .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
+            width: var(--sidenav-ancho);
+            /* dvh evita que la barra del navegador móvil corte el panel */
+            height: 100dvh;
+        }
+
+        /* El sidenav es un formulario largo: siempre debe poder desplazarse */
+        .sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav {
+            padding: var(--topnav-alto) 1rem 1.5rem;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* --- Móvil / tablet: el sidenav se superpone, no empuja al contenido --- */
+        @media (max-width: 991.98px) {
+            .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
+                padding-left: 0;
+            }
+
+            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
+                transform: translateX(0);
+            }
+
+            /* El velo tapa el contenido y sirve para cerrar tocando fuera */
+            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
+                cursor: pointer;
+            }
+
+            /* Controles más cómodos al tacto y sin zoom en iOS */
+            #sidenavAccordion .sidenav-select {
+                min-height: 44px;
+                font-size: 16px;
+            }
+
+            /* El brand de 225px fijos ahogaba la barra superior en móvil */
+            .sb-topnav .navbar-brand {
+                width: auto;
+                padding-left: 0.5rem !important;
+                font-size: 1rem;
+            }
+
+            #sidebarToggle {
+                margin-right: 0.5rem !important;
+            }
+
+            /* El nombre del docente desbordaba la barra en pantallas chicas */
+            #navbarDropdown {
+                display: inline-block;
+                max-width: 45vw;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                vertical-align: middle;
+            }
+        }
+
+        /* En pantallas muy estrechas el panel ocupa casi todo el ancho */
+        @media (max-width: 575.98px) {
+            :root {
+                --sidenav-ancho: 85vw;
+            }
+        }
+
+        /* --- Escritorio: el sidenav queda fijo y desplaza el contenido --- */
+        @media (min-width: 992px) {
+            #layoutSidenav #layoutSidenav_nav {
+                transform: translateX(0);
+            }
+
+            .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
+                padding-left: var(--sidenav-ancho);
+                transition: padding-left 0.15s ease-in-out;
+            }
+
+            /* Plegado manual con el botón de la barra superior */
+            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
+                transform: translateX(calc(-1 * var(--sidenav-ancho)));
+            }
+
+            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
+                padding-left: 0;
+            }
+        }
+
+        /* Etiquetas y campos del sidenav (las clases no tenían estilos) */
+        #sidenavAccordion .sidenav-label {
+            display: block;
+            margin: 0.75rem 0 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        #sidenavAccordion .sidenav-select {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* Pantallas bajas (móvil en horizontal): compacta el formulario */
+        @media (max-height: 520px) {
+            #sidenavAccordion .sidenav-label {
+                margin: 0.4rem 0 0.15rem;
+                font-size: 0.72rem;
+            }
+
+            #sidenavAccordion .sidenav-select {
+                min-height: 36px;
+                padding-top: 0.15rem;
+                padding-bottom: 0.15rem;
+            }
+        }
     </style>
 
 
     <script type="text/javascript">
         // Funcion en java scrip para ingresar valores en la base de datos
-            // para todas las opciones del menu adiccionar
-            // permite agregar estudiantes, docentes, notas etc ...
+        // para todas las opciones del menu adiccionar
+        // permite agregar estudiantes, docentes, notas etc ...
 
-            function deposit() {
+        function deposit() {
 
-                // para ello comienza
-                // almacenando el codigo del grado en la variable j
-                var j = $("#id_g").val();
-                var esc = $("#escolaridad").val();
+            // para ello comienza
+            // almacenando el codigo del grado en la variable j
+            var j = $("#id_g").val();
+            var esc = $("#escolaridad").val();
 
-		// decide   el tipo de datos a enviar
-		// de acuerdo al formulario mostrado 
-		// 1  para Preescolar    
-		// 2  para primaria
-		// 3 x para bachillerato
-		if (esc == 1) {
+            // decide   el tipo de datos a enviar
+            // de acuerdo al formulario mostrado 
+            // 1  para Preescolar    
+            // 2  para primaria
+            // 3 x para bachillerato
+            if (esc == 1) {
 
 
-		    swal({
-			title: 'INSERTAR NOTAS PRE ESCOLAR',
-			text: "Esta seguro que quiere insertar las notas!",
-			icon: 'warning',
-			buttons: true,
-			buttons: ["cancelar", "insertar"],
-			
+                swal({
+                    title: 'INSERTAR NOTAS PRE ESCOLAR',
+                    text: "Esta seguro que quiere insertar las notas!",
+                    icon: 'warning',
+                    buttons: true,
+                    buttons: ["cancelar", "insertar"],
+
                 }).then((value) => {
                     if (value) {
 
@@ -149,7 +345,7 @@ $periodo = 0;
                                     id_curso: $("#id_c").val(),
                                     id_ms: $("#id_ms").val(),
                                     id_jornada: $("#jornada").val(),
-				    periodo:$("#periodo").val(),
+                                    periodo: $("#periodo").val(),
                                     id_docente: $("#id_docente").val(),
                                     corte: $("#corte").val(),
                                     periodo: $("#periodos").val(),
@@ -160,12 +356,12 @@ $periodo = 0;
                                     N: JSON.stringify(N)
                                 },
 
-                                success: function (data) {
+                                success: function(data) {
                                     // respuesta a la carga de notas
                                     console.log(data);
 
                                 },
-                                error: function (xhr, status) {
+                                error: function(xhr, status) {
                                     swal('Disculpe, existió un problema');
                                     console.log(xhr);
                                 }
@@ -178,16 +374,15 @@ $periodo = 0;
 
                 });
 
-		} else
-		{
-                    // mensaje de seleccion
-                    swal({
-			title: 'INSERTAR NOTAS',
-			text: "Esta seguro que quiere insertar las notas!",
-			icon: 'warning',
-			buttons: true,
-			buttons: ["cancelar", "insertar"],
-			
+            } else {
+                // mensaje de seleccion
+                swal({
+                    title: 'INSERTAR NOTAS',
+                    text: "Esta seguro que quiere insertar las notas!",
+                    icon: 'warning',
+                    buttons: true,
+                    buttons: ["cancelar", "insertar"],
+
                 }).then((value) => {
                     if (value) {
 
@@ -232,63 +427,63 @@ $periodo = 0;
                         var valido = true;
                         // valido los datos antes de enviarlos
 
-                        $('.A').each(function (a) {
+                        $('.A').each(function(a) {
 
                             if ($(this)[0].value > 5) {
                                 valido = false;
                             }
                         })
 
-                        $(' .B').each(function (a) {
+                        $(' .B').each(function(a) {
 
                             if ($(this)[0].value > 5) {
                                 valido = false;
                             }
                         })
 
-                        $(' .C').each(function (a) {
+                        $(' .C').each(function(a) {
 
                             if ($(this)[0].value > 5) {
                                 valido = false;
                             }
                         })
 
-                        $(' .D').each(function (a) {
+                        $(' .D').each(function(a) {
 
                             if ($(this)[0].value > 5) {
                                 valido = false;
                             }
                         })
 
-                        $('.E').each(function (a) {
+                        $('.E').each(function(a) {
 
                             if ($(this)[0].value > 5) {
                                 valido = false;
                             }
                         })
 
-                        $('.F').each(function (a) {
+                        $('.F').each(function(a) {
 
                             if ($(this)[0].value > 5) {
                                 valido = false;
                             }
                         })
 
-                        $(' .G').each(function (a) {
+                        $(' .G').each(function(a) {
 
                             if ($(this)[0].value > 5) {
                                 valido = false;
                             }
                         })
 
-                        $('.H').each(function (a) {
+                        $('.H').each(function(a) {
 
                             if ($(this)[0].value > 5) {
                                 valido = false;
                             }
                         })
 
-                        $(' .I').each(function (a) {
+                        $(' .I').each(function(a) {
 
                             if ($(this)[0].value > 5) {
                                 valido = false;
@@ -330,14 +525,14 @@ $periodo = 0;
                                     L: JSON.stringify(L)
                                 },
 
-                                success: function (data) {
+                                success: function(data) {
                                     // respuesta a la carga de notas
                                     //$("#resultado").html("Se ingresaron las notas con exito");
                                     //$("#resultado").html(data);
                                     console.log(data);
 
                                 },
-                                error: function (xhr, status) {
+                                error: function(xhr, status) {
                                     swal('Disculpe, existió un problema');
                                     console.log(xhr);
                                 }
@@ -350,45 +545,45 @@ $periodo = 0;
 
                 });
 
-        }
+            }
         } // fin de la funsion deposit
     </script>
 
 
     <script>
-            // funcion para la carga de los alumnos
-            function est(id_a) {
-                //swal("Has ingresado el alumno"+id_a);
+        // funcion para la carga de los alumnos
+        function est(id_a) {
+            //swal("Has ingresado el alumno"+id_a);
 
 
-                $.ajax({
-                    type: "POST",
-                    url: "rendiminento_alumno_periodo.php",
-                    data: {
-                        id_alumno: id_a,
-                        materia: $("#id_ms").val(),
-                        year: $("#years").val(),
-                        periodo: $("#periodos").val()
-                    },
-                    // si los datos son correctos entonces ...
-                    success: function (respuesta) {
+            $.ajax({
+                type: "POST",
+                url: "rendiminento_alumno_periodo.php",
+                data: {
+                    id_alumno: id_a,
+                    materia: $("#id_ms").val(),
+                    year: $("#years").val(),
+                    periodo: $("#periodos").val()
+                },
+                // si los datos son correctos entonces ...
+                success: function(respuesta) {
 
-                        $("#estadisicas").html(respuesta);
-                        //$("#resultado").html("");
+                    $("#estadisicas").html(respuesta);
+                    //$("#resultado").html("");
 
-                    },
-                    error: function (xhr, status) {
-                        swal('Disculpe, existió un problema al cargar los logros');
-                        console.log(xhr);
-                    }
-                });
+                },
+                error: function(xhr, status) {
+                    swal('Disculpe, existió un problema al cargar los logros');
+                    console.log(xhr);
+                }
+            });
 
 
             $("#estadisticas").focus();
         }
 
-            //fucion de carga incial
-            function load_semanas() {
+        //fucion de carga incial
+        function load_semanas() {
 
             //  variable periodo
             var periodo = $("#periodos").val();
@@ -398,200 +593,199 @@ $periodo = 0;
             // carga en un selector  de semanas
             carga("#semana", "load_semanas.php", {
                 periodo: periodo,
-            year: year
+                year: year
             });
         }
 
-            // funsion que carga las semanas correctas cuando cambia
-            // el Periodo de calificaciones
-            // funcion para cargar las materias en el cuadro de dialogo
-            // de acurdo al grado seleccionado
+        // funsion que carga las semanas correctas cuando cambia
+        // el Periodo de calificaciones
+        // funcion para cargar las materias en el cuadro de dialogo
+        // de acurdo al grado seleccionado
 
-            function load_materias() {
+        function load_materias() {
             var id_docente = $("#id_docente").val();
             var id_grado = $("#id_g").val();
             var year = $("#years").val();
             carga("#id_ms", "materias_grado.php", {
                 grados: id_grado,
-            id: id_docente,
-            year: year
+                id: id_docente,
+                year: year
             });
         }
 
-            // funcion para cargar la lista de  estudiantes en el
-            // div calificador
-            function load_lista_estudiantes() {
+        // funcion para cargar la lista de  estudiantes en el
+        // div calificador
+        function load_lista_estudiantes() {
 
-                // se invoca al metodo ajax para solicitar
-                // el listado de estudiantes
-                $.ajax({
-                    type: "POST",
-                    url: "listado_estudiantes.php",
-                    data: {
-                        years: $("#years").val(),
-                        id_g: $("#id_g").val(),
-                        id_ms: $("#id_ms").val(),
-                        id_jornada: $("#jornada").val(),
-                        periodo: $("#periodos").val(),
-                        curso: $("#id_c").val(),
-                      semana: $("#semana").val(),
-		      escolaridad: $("#escolaridad").val()
-                    },
-                    // si los datos son correctos entonces ...
-                    success: function (respuesta) {
+            // se invoca al metodo ajax para solicitar
+            // el listado de estudiantes
+            $.ajax({
+                type: "POST",
+                url: "listado_estudiantes.php",
+                data: {
+                    years: $("#years").val(),
+                    id_g: $("#id_g").val(),
+                    id_ms: $("#id_ms").val(),
+                    id_jornada: $("#jornada").val(),
+                    periodo: $("#periodos").val(),
+                    curso: $("#id_c").val(),
+                    semana: $("#semana").val(),
+                    escolaridad: $("#escolaridad").val()
+                },
+                // si los datos son correctos entonces ...
+                success: function(respuesta) {
 
-                        $("#calificador").html(respuesta);
-                        $("#resultado").html("");
+                    $("#calificador").html(respuesta);
+                    $("#resultado").html("");
 
-                    },
-                    error: function (xhr, status) {
-                        swal('Disculpe, existió un problema');
-                        console.log(xhr);
-                    }
-                });
-
-        }
-
-            // funcion para la carga de logros
-            function load_logros() {
-
-                $.ajax({
-                    type: "POST",
-                    url: "logros.php",
-                    data: {
-                        grado: $("#id_g").val(),
-                        materia: $("#id_ms").val(),
-                    },
-                    // si los datos son correctos entonces ...
-                    success: function (respuesta) {
-
-                        $("#logros_materia").html(respuesta);
-                        //$("#resultado").html("");
-
-                    },
-                    error: function (xhr, status) {
-                        swal('Disculpe, existió un problema al cargar los logros');
-                        console.log(xhr);
-                    }
-                });
-        }
-
-            // avance semanal de notas de docentes
-            function avance_semanal() {
-
-
-                // se invoca al metodo ajax para solicitar
-                // el listado de estudiantes
-                $.ajax({
-                    type: "POST",
-                    url: "notas_docentes_semanales.php",
-                    data: {
-                        years: $("#years").val(),
-                        periodo: $("#periodos").val(),
-                        semana: $("#semana").val()
-                    },
-                    // si los datos son correctos entonces ...
-                    success: function (respuesta) {
-
-                        //$("#calificador").html(respuesta);
-                        $("#resultado").html(respuesta);
-
-                    },
-                    error: function (xhr, status) {
-                        swal('Disculpe, existió un problema');
-                        console.log(xhr);
-                    }
-                });
-
+                },
+                error: function(xhr, status) {
+                    swal('Disculpe, existió un problema');
+                    console.log(xhr);
+                }
+            });
 
         }
 
-            // actualiza el formulario
-            function actualizar() {
-                load_materias();
+        // funcion para la carga de logros
+        function load_logros() {
+
+            $.ajax({
+                type: "POST",
+                url: "logros.php",
+                data: {
+                    grado: $("#id_g").val(),
+                    materia: $("#id_ms").val(),
+                },
+                // si los datos son correctos entonces ...
+                success: function(respuesta) {
+
+                    $("#logros_materia").html(respuesta);
+                    //$("#resultado").html("");
+
+                },
+                error: function(xhr, status) {
+                    swal('Disculpe, existió un problema al cargar los logros');
+                    console.log(xhr);
+                }
+            });
+        }
+
+        // avance semanal de notas de docentes
+        function avance_semanal() {
+
+
+            // se invoca al metodo ajax para solicitar
+            // el listado de estudiantes
+            $.ajax({
+                type: "POST",
+                url: "notas_docentes_semanales.php",
+                data: {
+                    years: $("#years").val(),
+                    periodo: $("#periodos").val(),
+                    semana: $("#semana").val()
+                },
+                // si los datos son correctos entonces ...
+                success: function(respuesta) {
+
+                    //$("#calificador").html(respuesta);
+                    $("#resultado").html(respuesta);
+
+                },
+                error: function(xhr, status) {
+                    swal('Disculpe, existió un problema');
+                    console.log(xhr);
+                }
+            });
+
+
+        }
+
+        // actualiza el formulario
+        function actualizar() {
+            load_materias();
             load_lista_estudiantes();
         }
     </script>
 
     <!-- scrip -->
     <script>
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Este script contiene la funcion para generar las graficas   //
-            // Esta foncion no recive parametros                                    //
-            ////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // Este script contiene la funcion para generar las graficas   //
+        // Esta foncion no recive parametros                                    //
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
-            function grafica() {
+        function grafica() {
 
-                // se invoca al metodo ajax para solicitar el los datos del grafico
-                $.ajax({
-                    type: "POST",
-                    url: "grafica_boletin.php",
-                    data: {
-                        year: $("#years").val(),
-                        id_gs: $("#id_g").val(),
-                        id_ms: $("#id_ms").val(),
-                        id_jornada: $("#jornada").val(),
-                        id_docente: $("#id_docentes").val(),
-                        corte: $("#corte").val(),
-                        periodo: $("#periodos").val(),
-                        opcion: $("#opcion").val()
-                    },
-                    // si los datos son correctos entonces ...
-                    success: function (respuesta) {
-                        $("#grafo").html(respuesta);
-                    },
-                    error: function (xhr, status) {
-                        swal('Disculpe, existió un problema');
-                        console.log(xhr);
-                    }
-                });
+            // se invoca al metodo ajax para solicitar el los datos del grafico
+            $.ajax({
+                type: "POST",
+                url: "grafica_boletin.php",
+                data: {
+                    year: $("#years").val(),
+                    id_gs: $("#id_g").val(),
+                    id_ms: $("#id_ms").val(),
+                    id_jornada: $("#jornada").val(),
+                    id_docente: $("#id_docentes").val(),
+                    corte: $("#corte").val(),
+                    periodo: $("#periodos").val(),
+                    opcion: $("#opcion").val()
+                },
+                // si los datos son correctos entonces ...
+                success: function(respuesta) {
+                    $("#grafo").html(respuesta);
+                },
+                error: function(xhr, status) {
+                    swal('Disculpe, existió un problema');
+                    console.log(xhr);
+                }
+            });
 
         }
 
-            // funcion para cargar datos en un selector
-            function carga(a, b, c) {
+        // funcion para cargar datos en un selector
+        function carga(a, b, c) {
 
-                console.log("Valor a: %s", a); // variable que almacena el codigo del campo
+            console.log("Valor a: %s", a); // variable que almacena el codigo del campo
             console.log("Valor b: %s", b); // variable que almacena el nombre del archivo PHP
             console.log(JSON.stringify(c)); // parametro que se transmite  mediante ajax
 
             // $.post(b, c,
             $.ajax({
                 async: true,
-            method: "POST",
-            url: b,
-            data: c,
-            dataType: "json",
+                method: "POST",
+                url: b,
+                data: c,
+                dataType: "json",
 
             }).done(function(dato) {
                 $(a).empty();
 
-            $(a).append("<option value= -1> Seleccione </option>");
-        $.each(dato, function (index, materia) {
-            $(a).append("<option value =" + index + ">" + materia + "</option>");
+                $(a).append("<option value= -1> Seleccione </option>");
+                $.each(dato, function(index, materia) {
+                    $(a).append("<option value =" + index + ">" + materia + "</option>");
 
-        });
+                });
             });
 
         }
 
 
         jQuery.ajaxSetup({
-            beforeSend: function () {
-                $('#loader').show();
+            beforeSend: function() {
+                $('#loader-overlay').css('display', 'flex');
             },
-            complete: function () {
-                $('#loader').hide();
+            complete: function() {
+                $('#loader-overlay').hide();
             }
         });
     </script>
 </head>
 
 <body class="sb-nav-fixed">
-    <div>
-        <p> El usuario es <?php $usuario ?>
+    <div id="loader-overlay" style="display:none">
+        <div class="modern-loader"></div>
     </div>
-    <div class="loader" style="display:none" id="loader"></div>
     <div id="content">
         <?php $hoy = Date("Y-m-d hh:mm"); ?>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -600,7 +794,8 @@ $periodo = 0;
             <a class="navbar-brand ps-3" href="board.php">INICIO</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 icono_calificacion" id="sidebarToggle"
-                href="#!"><i class="fas fa-bars"></i></button>
+                type="button" aria-controls="sidenavAccordion" aria-expanded="false"
+                aria-label="Mostrar u ocultar el panel de filtros"><i class="fas fa-bars"></i></button>
             <a style="color:FFF" href="#"></a>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -617,25 +812,26 @@ $periodo = 0;
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion"
+                    aria-label="Filtros de calificaciones">
 
 
-                    <label for="years">Año</label>
+                    <label for="years" class="sidenav-label">Año</label>
                     <input type="number" value="<?php echo date('Y'); ?>" id="years" name="years" min="2015" max="2100"
-                        step="1" style="background: transparent;color: #4DB6AC;border: 0px;" <?php if ($admin == 0) { ?>
-                            readonly="readonly" <?php } ?> class="form-control ">
+                        step="1" class="form-control sidenav-select" <?php if ($admin == 0) { ?>
+                        readonly="readonly" <?php } ?>>
                     <input type="hidden" value="<?php echo $id; ?>" id="id_docente">
 
 
-                    <label for="periodos"> Periodo</label>
-                    <select id="periodos" style="background: transparent;color: #4DB6AC;border: 0px" name="periodos"
-                        class="form-control" required=""
-                        onchange="load_semanas();$('#semana').css('background-color', 'black')">
+                    <label for="periodos" class="sidenav-label"> Periodo</label>
+                    <select id="periodos" name="periodos"
+                        class="form-control sidenav-select" required=""
+                        onchange="load_semanas();">
                         <?php
 
                         if ($admin) {
                             // si es administrador puede seleccionar cualquier periodo
-                        
+
                             echo '<option value="-1" selected>seleccione</option>
                                           <option value="1">1</option>
 			        				<option value="2">2</option>
@@ -664,9 +860,9 @@ $periodo = 0;
                     }
                     ?>
 
-                    <label for="semana">Semana</label>
-                    <select id="semana" class="form-control" style="background: transparent;color: #4DB6AC;border: 0px"
-                        onchange="load_lista_estudiantes();$('#semana').css('background-color', 'transparent');">
+                    <label for="semana" class="sidenav-label">Semana</label>
+                    <select id="semana" class="form-control sidenav-select"
+                        onchange="load_lista_estudiantes();">
 
                         <?php
                         if ($admin) {
@@ -678,30 +874,28 @@ $periodo = 0;
                         ?>
                     </select>
 
-                    <label for="jornada">Jornada</label>
-                    <select id="jornada" style="background: transparent;color: #4DB6AC;border: 0px" class="form-control"
-                        onchange="actualizar();$('#id_ms').css('background-color', 'black')">
+                    <label for="jornada" class="sidenav-label">Jornada</label>
+                    <select id="jornada" class="form-control sidenav-select"
+                        onchange="actualizar();">
                         <option value="1">Mañana</option>
                         <option value="2">Tarde</option>
                     </select>
 
 
-                    <label for="escolaridad" class="small me-2 mb-0">Escolaridad</label>
-                    <select id="escolaridad" style="background: transparent;color: #4DB6AC;border:  0px"
-                        class="form-control"
-                        onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_docente').val());$('#id_g').css('background-color', 'black')">
-                        <option value="-1" style="color: black;">Seleccione</option>
-                        <option value="1" style="color: black;">Preescolar</option>
-                        <option value="2" style="color: black;">Básica Primaria</option>
-                        <option value="3" style="color: black;">Básica Secundaria</option>
-                        <option value="4" style="color: black;">Tecnico</option>
-                        <option value="5" style="color: black;">Cursos</option>
+                    <label for="escolaridad" class="sidenav-label small me-2 mb-0">Escolaridad</label>
+                    <select id="escolaridad" class="form-control sidenav-select"
+                        onchange="lista_grados($('#escolaridad').val(),'#id_g', $('#id_docente').val());">
+                        <option value="-1">Seleccione</option>
+                        <option value="1">Preescolar</option>
+                        <option value="2">Básica Primaria</option>
+                        <option value="3">Básica Secundaria</option>
+                        <option value="4">Tecnico</option>
+                        <option value="5">Cursos</option>
                     </select>
 
-                    <label class="Control-label">Grado</label>
-                    <select id="id_g" name="id_gs" class="form-control"
-                        style="background: transparent;color: #4DB6AC;border:  0px"
-                        onchange="actualizar(); $('#id_ms').css('background-color', 'black');$('#id_g').css('background-color', 'transparent');">
+                    <label class="sidenav-label Control-label">Grado</label>
+                    <select id="id_g" name="id_gs" class="form-control sidenav-select"
+                        onchange="actualizar();">
 
                         <?php
                         // creo un nuevo objeto  matricula docente
@@ -713,7 +907,7 @@ $periodo = 0;
                         //actuliza el listado de grados disponibles
                         $lista = $mt->get_matricula(2);
                         // conviere el dato en un json
-                        
+
                         echo '<option value="-1">seleccione</option>';
 
                         foreach ($lista as $key => $value) {
@@ -723,125 +917,191 @@ $periodo = 0;
                         ?>
                     </select>
 
-                    <label class="Control-label">Curso</label>
-                    <select id="id_c" style="background: transparent;color: #4DB6AC;border:0px;"
-                        onchange="load_lista_estudiantes();" class="form-control">
-                        <option value="0">A</opcion>
-                        <option value="1">B</opcion>
+                    <label class="sidenav-label Control-label">Curso</label>
+                    <select id="id_c" class="form-control sidenav-select"
+                        onchange="load_lista_estudiantes();">
+                        <option value="0">A</option>
+                        <option value="1">B</option>
                     </select>
 
-                    <label for="id_ms">Materia</label>
-                    <select id="id_ms" style="background: transparent;color: #4DB6AC;border: 0px" name="id_ms"
-                        onchange="load_lista_estudiantes();$('#id_ms').css('background-color', 'transparent');"
-                        class="form-control">
+                    <label for="id_ms" class="sidenav-label">Materia</label>
+                    <select id="id_ms" name="id_ms" class="form-control sidenav-select"
+                        onchange="load_lista_estudiantes();">
                     </select>
+
+                    <div>
+                        <?php
+                        if ($admin) {
+                            //echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" href="listado_docentes.php" target="_blank">lista de docentes</a>';
+                            //echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" target="#" onclick="avance_semanal();">Avance notas semanales</a>';
+                            //echo '<a style="margin: 2rem;" class="nav-link collapsed" aria-expanded="false" aria-controls="collapsePages" href="fs.php" target="_self">Gestión de semanas</a>';
+
+                        }
+                        ?>
+                    </div>
 
                 </nav>
             </div>
-        </div>
-    </div>
-    <div>
-        <?php
-        if ($admin) {
-            //echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" href="listado_docentes.php" target="_blank">lista de docentes</a>';
-            //echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" target="#" onclick="avance_semanal();">Avance notas semanales</a>';
-            //echo '<a style="margin: 2rem;" class="nav-link collapsed" aria-expanded="false" aria-controls="collapsePages" href="fs.php" target="_self">Gestión de semanas</a>';
-        
-        }
-        ?>
-    </div>
 
-    </nav>
-    </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">FORMULARIO <?php echo date('Y'); ?></h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Para la gestión de calificaciones</li>
+                        </ol>
 
 
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">FORMULARIO <?php echo date('Y'); ?></h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Para la gestión de calificaciones</li>
-                </ol>
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card ">
-                            <div class="card-header">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-bar-chart" viewBox="0 0 16 16">
-                                    <path
-                                        d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
-                                </svg>
-                                estadísticas
-                            </div>
-                            <div id="estadisicas" class="card-body">
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card ">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                notas
-                            </div>
-                            <div class="card-body">
-
-                                <div class="row">
-                                    <div class="col-md-12" id="resultado">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card ">
+                                    <div class="card-header">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-bar-chart" viewBox="0 0 16 16">
+                                            <path
+                                                d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
+                                        </svg>
+                                        estadísticas
+                                    </div>
+                                    <div id="estadisicas" class="card-body">
 
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="row">
+                            </div>
 
-                                        <div id="calificador" class="col-md-12">
-                                            <!-- formulario de notas> -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card ">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        notas
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-md-12" id="resultado">
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+
+                                                <div id="calificador" class="col-md-12">
+                                                    <!-- formulario de notas> -->
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <button type="button" class="btn" value="INGRESAR" id="ingresar" onclick="deposit();">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        fill="currentColor" class="bi bi-floppy2" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v3.5A1.5 1.5 0 0 1 11.5 6h-7A1.5 1.5 0 0 1 3 4.5V1H1.5a.5.5 0 0 0-.5.5m9.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
+                                                    </svg> Guardar Notas
+                                                </button>
+
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <button type="button" style="margin: 20px auto auto; display: block;"
-                                            class="boton-flotante" value="INGRESAR" id="ingresar" onclick="deposit();">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                fill="currentColor" class="bi bi-floppy2" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v3.5A1.5 1.5 0 0 1 11.5 6h-7A1.5 1.5 0 0 1 3 4.5V1H1.5a.5.5 0 0 0-.5.5m9.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
-                                            </svg>
-                                        </button>
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </main>
-    </div>
-    </div>
-    </div>
+                </main>
 
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Mundo Creativo 2026, Registrado como
+                                <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?>
+                            </div>
+                            <div>
+                                <a href="#">Politica de privacidad</a>
+                                &middot;
+                                <a href="#">Terminos &amp; Condiciones</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div><!-- /#layoutSidenav_content -->
+        </div><!-- /#layoutSidenav -->
+    </div><!-- /#content -->
 
-    <footer class="py-4 bg-light mt-auto">
-        <div class="container-fluid px-4">
-            <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted">Copyright &copy; Mundo Creativo 2026, Registrado como
-                    <?php echo ucwords(strtolower($d->nombres)) . " " . ucwords(strtolower($d->apellidos)); ?>
-                </div>
-                <div>
-                    <a href="#">Politica de privacidad</a>
-                    &middot;
-                    <a href="#">Terminos &amp; Condiciones</a>
-                </div>
-            </div>
-        </div>
-    </footer>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/scripts.js"></script>
+    <script>
+        // Comportamiento responsive del sidenav (#sidenavAccordion).
+        // scripts.js solo conmuta la clase sb-sidenav-toggled; aquí se agrega
+        // el cierre al tocar fuera y el reinicio al cambiar de punto de quiebre.
+        (function() {
+            var escritorio = window.matchMedia('(min-width: 992px)');
+            var cuerpo = document.body;
+            var boton = document.getElementById('sidebarToggle');
+            var contenido = document.getElementById('layoutSidenav_content');
+            var sidenav = document.getElementById('sidenavAccordion');
+
+            function abierto() {
+                // En escritorio el sidenav se ve por defecto; la clase lo oculta.
+                // En móvil es al contrario.
+                return escritorio.matches ?
+                    !cuerpo.classList.contains('sb-sidenav-toggled') :
+                    cuerpo.classList.contains('sb-sidenav-toggled');
+            }
+
+            function sincronizarAria() {
+                if (boton) {
+                    boton.setAttribute('aria-expanded', abierto() ? 'true' : 'false');
+                }
+            }
+
+            function cerrarEnMovil() {
+                if (!escritorio.matches && cuerpo.classList.contains('sb-sidenav-toggled')) {
+                    cuerpo.classList.remove('sb-sidenav-toggled');
+                    localStorage.setItem('sb|sidebar-toggle', 'false');
+                    sincronizarAria();
+                }
+            }
+
+            if (boton) {
+                boton.addEventListener('click', sincronizarAria);
+            }
+
+            // Tocar el velo oscuro (o el contenido) cierra el panel en móvil.
+            if (contenido) {
+                contenido.addEventListener('click', cerrarEnMovil);
+            }
+
+            // Escape cierra el panel en móvil.
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    cerrarEnMovil();
+                }
+            });
+
+            // Al elegir un filtro en móvil, se cierra para dejar ver el resultado.
+            if (sidenav) {
+                sidenav.addEventListener('change', function(e) {
+                    if (e.target.tagName === 'SELECT') {
+                        cerrarEnMovil();
+                    }
+                });
+            }
+
+            // Evita que el estado plegado de escritorio se herede en móvil.
+            var cambio = function() {
+                cuerpo.classList.remove('sb-sidenav-toggled');
+                localStorage.setItem('sb|sidebar-toggle', 'false');
+                sincronizarAria();
+            };
+            if (escritorio.addEventListener) {
+                escritorio.addEventListener('change', cambio);
+            } else {
+                escritorio.addListener(cambio);
+            }
+
+            sincronizarAria();
+        })();
+    </script>
     <script src="./js/Chart.min.js"></script>
     <script src="./assets/demo/chart-area-demo.js"></script>
     <script src="./assets/demo/chart-bar-demo.js"></script>
