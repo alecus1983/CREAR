@@ -67,6 +67,36 @@ class semana extends imcrea
         return $arr;
     }
 
+    // recupera las fechas de inicio y fin de un rango de semanas de un año.
+    // retorna un array  semana => [inicio, fin]  con una entrada por cada
+    // semana del rango; las semanas que no esten definidas en la tabla
+    // retornan null en sus fechas
+    public function get_fechas_semanas($ano, $desde, $hasta)
+    {
+        $ano = (int) $ano;
+        $desde = (int) $desde;
+        $hasta = (int) $hasta;
+
+        // inicializo todas las semanas del rango sin fechas
+        $arr = array();
+        for ($s = $desde; $s <= $hasta; $s++) {
+            $arr[$s] = array('inicio' => null, 'fin' => null);
+        }
+
+        $q = "select semana, inicio, fin from semanas
+              where year = $ano and semana between $desde and $hasta";
+        $c = $this->_db->query($q);
+
+        // completo las fechas de las semanas que si estan definidas
+        if ($c) {
+            while ($r = $c->fetch_array(MYSQLI_ASSOC)) {
+                $arr[(int) $r['semana']] = array('inicio' => $r['inicio'], 'fin' => $r['fin']);
+            }
+        }
+
+        return $arr;
+    }
+
     public function get_semana_activa($ano)
     {
         $q = "select semana from semanas where year = $ano and inicio < NOW() and fin > NOW() order by semana asc;";

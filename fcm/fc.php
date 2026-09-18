@@ -671,41 +671,41 @@ $periodo = 0;
                 });
         }
 
-            // avance semanal de notas de docentes
-            function avance_semanal() {
+        //     // avance semanal de notas de docentes
+        //     function avance_semanal() {
 
 
-                // se invoca al metodo ajax para solicitar
-                // el listado de estudiantes
-                $.ajax({
-                    type: "POST",
-                    url: "notas_docentes_semanales.php",
-                    data: {
-                        years: $("#years").val(),
-                        periodo: $("#periodos").val(),
-                        semana: $("#semana").val()
-                    },
-                    // si los datos son correctos entonces ...
-                    success: function (respuesta) {
+                //         // se invoca al metodo ajax para solicitar
+                //         // el listado de estudiantes
+                //         $.ajax({
+                //             type: "POST",
+                //             url: "notas_docentes_semanales.php",
+                //             data: {
+                //                 years: $("#years").val(),
+                //                 periodo: $("#periodos").val(),
+                //                 semana: $("#semana").val()
+                //             },
+                //             // si los datos son correctos entonces ...
+                //             success: function (respuesta) {
 
-                        //$("#calificador").html(respuesta);
-                        $("#resultado").html(respuesta);
+                //                 //$("#calificador").html(respuesta);
+                //                 $("#resultado").html(respuesta);
 
-                    },
-                    error: function (xhr, status) {
-                        swal('Disculpe, existió un problema');
-                        console.log(xhr);
-                    }
-                });
+                //             },
+                //             error: function (xhr, status) {
+                //                 swal('Disculpe, existió un problema');
+                //                 console.log(xhr);
+                //             }
+                //         });
 
 
-        }
+                // }
 
-            // actualiza el formulario
-            function actualizar() {
-                load_materias();
-            load_lista_estudiantes();
-        }
+                // actualiza el formulario
+                function actualizar() {
+                    load_materias();
+                    load_lista_estudiantes();
+                }
     </script>
 
     <!-- scrip -->

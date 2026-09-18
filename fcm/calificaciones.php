@@ -1213,6 +1213,330 @@ class calificaciones extends imcrea
         }
     }
 
+    // ---
+    //  AVANCE DE CALIFICACIONES POR PERIODO  (modelo c_{year})
+    // ---
+
+    /**
+     * @brief Columnas existentes en la tabla c_{year}.
+     *
+     * @param int $ano Año lectivo (sufijo de la tabla).
+     * @return array Array con los nombres de columna como llaves (nombre => true).
+     *               Vacío si la tabla del año no existe.
+     *
+     * El modelo c_{year} tiene una columna por nota, por eso antes de armar una
+     * consulta hay que saber cuales columnas existen realmente en el año
+     * consultado (ej. D_p4 no existe, mientras D_p1 si).
+     */
+    public function get_columnas_c($ano)
+    {
+        // cache por año para no repetir el SHOW COLUMNS
+        static $cache = array();
+
+        $ano = (int) $ano;
+
+        if (isset($cache[$ano])) {
+            return $cache[$ano];
+        }
+
+        $arr = array();
+
+        // si la tabla del año no existe se retorna vacio. mysqli lanza una
+        // excepcion en ese caso, por eso la consulta va dentro del try
+        try {
+            $c = $this->_db->query("SHOW COLUMNS FROM c_" . $ano);
+            if ($c) {
+                while ($r = $c->fetch_array(MYSQLI_ASSOC)) {
+                    $arr[$r['Field']] = true;
+                }
+            }
+        } catch (Throwable $e) {
+            error_log("No se pudo leer la estructura de c_$ano: " . $e->getMessage());
+        }
+
+        $cache[$ano] = $arr;
+        return $arr;
+    }
+
+    // ---
+
+    /**
+     * @brief Letras de los ponderados que se califican en una semana.
+     *
+     * @param int $semana Numero de la semana (1 a 32).
+     * @return array Letras del ponderado. Unidas al numero de semana forman el
+     *               nombre de la columna en c_{year} (ej. 1A, 4H, 8I).
+     *
+     * Las semanas finales de periodo (8, 16, 24, 32) solo evaluan presentacion,
+     * actitud, asistencia, evaluacion final y auto evaluacion. Las semanas
+     * intermedias (4, 12, 20, 28) agregan el quiz (H).
+     */
+    public function get_ponderados_semana($semana)
+    {
+        $semana = (int) $semana;
+
+        if (in_array($semana, array(8, 16, 24, 32))) {
+            return array('E', 'F', 'G', 'I', 'J');
+        }
+
+        if (in_array($semana, array(4, 12, 20, 28))) {
+            return array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H');
+        }
+
+        return array('A', 'B', 'C', 'D', 'E', 'F', 'G');
+    }
+
+    // ---
+
+    /**
+     * @brief Columnas de c_{year} donde se consignan las notas de una clase
+     *        en una semana determinada.
+     *
+     * @param int $ano      Año lectivo.
+     * @param int $semana   Numero de la semana (1 a 32).
+     * @param int $periodo  Periodo academico (1 a 4).
+     * @param string $tipo  Tipo de clase: 'notas', 'disciplina' o 'preescolar'.
+     * @return array Nombres de columna existentes en la tabla del año.
+     *
+     * - notas:      una columna por ponderado de la semana (5, 7 u 8 notas).
+     * - disciplina: una sola nota semanal en D{semana}, que en la semana final
+     *               del periodo se consigna en D_p{periodo}.
+     * - preescolar: se valora por periodo (l1_p{periodo} / R{periodo}), por eso
+     *               solo retorna columnas en la semana final del periodo.
+     */
+    public function get_columnas_clase_semana($ano, $semana, $periodo, $tipo)
+    {
+        $semana = (int) $semana;
+        $periodo = (int) $periodo;
+
+        // columnas existentes en la tabla del año
+        $existentes = $this->get_columnas_c($ano);
+
+        // candidatas segun el tipo de clase
+        switch ($tipo) {
+
+            case 'disciplina':
+                // en la semana final del periodo la nota queda en D_p{periodo}
+                if (in_array($semana, array(8, 16, 24, 32))) {
+                    $candidatas = array('D_p' . $periodo, 'D' . $semana);
+                } else {
+                    $candidatas = array('D' . $semana);
+                }
+                break;
+
+            case 'preescolar':
+                // solo se evalua en la semana final del periodo
+                if ($semana === ($periodo * 8)) {
+                    $candidatas = array('l1_p' . $periodo, 'R' . $periodo);
+                } else {
+                    $candidatas = array();
+                }
+                break;
+
+            default:
+                $candidatas = array();
+                foreach ($this->get_ponderados_semana($semana) as $letra) {
+                    $candidatas[] = $semana . $letra;
+                }
+                break;
+        }
+
+        // dejo unicamente las columnas que existen en la tabla
+        $arr = array();
+        foreach ($candidatas as $col) {
+            if (isset($existentes[$col])) {
+                $arr[] = $col;
+            }
+        }
+
+        // disciplina es una sola nota semanal: basta la primera disponible
+        if ($tipo === 'disciplina' && count($arr) > 1) {
+            $arr = array($arr[0]);
+        }
+
+        return $arr;
+    }
+
+    // ---
+
+    /**
+     * @brief Avance de las calificaciones de un periodo, semana a semana,
+     *        para cada clase asignada en matricula_docente.
+     *
+     * @param int $ano          Año lectivo (sufijo de la tabla c_{year}).
+     * @param int $periodo      Periodo academico (1 a 4).
+     * @param int $id_docente   Docente a filtrar; 0 retorna todos los docentes.
+     * @return array Un elemento por clase con las llaves:
+     *               id_clase, id_docente, docente, id_grado, grado, curso,
+     *               jornada, id_materia, materia, tipo, alumnos,
+     *               semanas[$semana]          => notas consignadas,
+     *               esperado_alumno[$semana]  => notas esperadas por alumno.
+     *
+     * El primer periodo va de la semana 1 a la 8, el segundo de la 9 a la 16,
+     * el tercero de la 17 a la 24 y el cuarto de la 25 a la 32.
+     *
+     * Las clases se clasifican en tres grupos disjuntos, porque cada uno se
+     * califica en columnas distintas de c_{year}: preescolar (grados con
+     * formato de boletin 1), disciplina (materia 20) y materias ordinarias.
+     */
+    public function get_avance_periodo($ano, $periodo, $id_docente = 0)
+    {
+        $ano = (int) $ano;
+        $periodo = (int) $periodo;
+        $id_docente = (int) $id_docente;
+
+        // semanas que componen el periodo
+        $semana_inicial = (($periodo - 1) * 8) + 1;
+        $semanas = range($semana_inicial, $semana_inicial + 7);
+
+        // condicion que identifica cada grupo de clases
+        $filtros = array(
+            'preescolar' => "g.formato_boletin = 1",
+            'disciplina' => "g.formato_boletin <> 1 AND md.id_materia = 20",
+            'notas' => "g.formato_boletin <> 1 AND md.id_materia <> 20",
+        );
+
+        $clases = array();
+
+        foreach ($filtros as $tipo => $filtro) {
+
+            // columnas y notas esperadas por alumno en cada semana
+            $cols = array();
+            $esperado_alumno = array();
+
+            foreach ($semanas as $s) {
+                $cols[$s] = $this->get_columnas_clase_semana($ano, $s, $periodo, $tipo);
+                // en preescolar la valoracion del periodo cuenta como una sola
+                // nota, aunque se pueda consignar en mas de una columna
+                $esperado_alumno[$s] = ($tipo === 'preescolar')
+                    ? (empty($cols[$s]) ? 0 : 1)
+                    : count($cols[$s]);
+            }
+
+            // campos_ag -> expresiones que cuentan, dentro de la subconsulta
+            // agrupada, las notas consignadas en cada semana
+            // campos    -> lectura de esos conteos en la consulta externa
+            $campos_ag = array();
+            $campos = array();
+            foreach ($semanas as $s) {
+                $campos_ag[] = $this->_expresion_avance($cols[$s], $tipo) . " AS s" . $s;
+                $campos[] = "IFNULL(ag.s" . $s . ", 0) AS s" . $s;
+            }
+
+            // filtro opcional por docente
+            $filtro_docente = $id_docente > 0 ? " AND md.id_docente = " . $id_docente : "";
+
+            // la tabla c_{year} no tiene indices, por eso los conteos se
+            // resuelven en una sola pasada agrupando por materia y grupo
+            // (grado, curso, jornada) en lugar de cruzarla contra cada clase.
+            // ag -> notas consignadas por materia y grupo
+            // al -> cantidad de alumnos matriculados en cada grupo
+            // los nombres se resuelven con IFNULL porque las clases pueden
+            // apuntar a materias, cursos, jornadas o docentes ya eliminados
+            $q = "SELECT md.id AS id_clase, md.id_docente, md.id_materia, md.id_grado,
+                         IFNULL(g.grado, md.id_grado) AS grado,
+                         IFNULL(cu.curso, md.id_curso) AS curso,
+                         IFNULL(j.jornada, md.id_jornada) AS jornada,
+                         IFNULL(ms.materia, CONCAT('materia ', md.id_materia)) AS materia,
+                         IFNULL(CONCAT(p.nombres, ' ', p.apellidos), CONCAT('docente ', md.id_docente)) AS docente,
+                         IFNULL(al.alumnos, 0) AS alumnos,
+                         " . implode(", ", $campos) . "
+                  FROM matricula_docente AS md
+                  INNER JOIN grados AS g ON g.id_grado = md.id_grado
+                  LEFT JOIN materia AS ms ON ms.id_materia = md.id_materia
+                  LEFT JOIN curso AS cu ON cu.id_curso = md.id_curso
+                  LEFT JOIN jornada AS j ON j.id_jornada = md.id_jornada
+                  LEFT JOIN u_docentes AS ud ON ud.id_docente = md.id_docente
+                  LEFT JOIN personas AS p ON p.id_personas = ud.id_personas
+                  LEFT JOIN (SELECT id_grado, id_curso, id_jornada,
+                                    COUNT(DISTINCT id_alumno) AS alumnos
+                             FROM matricula WHERE year = '" . $ano . "'
+                             GROUP BY id_grado, id_curso, id_jornada) AS al
+                         ON al.id_grado = md.id_grado
+                        AND al.id_curso = md.id_curso
+                        AND al.id_jornada = md.id_jornada
+                  LEFT JOIN (SELECT c.id_materia, m.id_grado, m.id_curso, m.id_jornada,
+                                    " . implode(", ", $campos_ag) . "
+                             FROM c_" . $ano . " AS c
+                             INNER JOIN (SELECT DISTINCT id_alumno, id_grado, id_curso, id_jornada
+                                         FROM matricula WHERE year = '" . $ano . "') AS m
+                                     ON m.id_alumno = c.id_alumno
+                             GROUP BY c.id_materia, m.id_grado, m.id_curso, m.id_jornada) AS ag
+                         ON ag.id_materia = md.id_materia
+                        AND ag.id_grado = md.id_grado
+                        AND ag.id_curso = md.id_curso
+                        AND ag.id_jornada = md.id_jornada
+                  WHERE md.year = " . $ano . " AND " . $filtro . $filtro_docente;
+
+            try {
+                $c = $this->_db->query($q);
+                if ($c) {
+                    while ($r = $c->fetch_array(MYSQLI_ASSOC)) {
+
+                        // notas consignadas en cada semana del periodo
+                        $r['semanas'] = array();
+                        foreach ($semanas as $s) {
+                            $r['semanas'][$s] = (int) $r['s' . $s];
+                            unset($r['s' . $s]);
+                        }
+
+                        $r['tipo'] = $tipo;
+                        $r['esperado_alumno'] = $esperado_alumno;
+                        $r['alumnos'] = (int) $r['alumnos'];
+
+                        $clases[] = $r;
+                    }
+                }
+            } catch (Throwable $e) {
+                // el error se registra en el log y no se imprime, porque la
+                // salida de este metodo se consume como json
+                error_log("Error en get_avance_periodo ($tipo): " . $e->getMessage());
+            }
+        }
+
+        return $clases;
+    }
+
+    // ---
+
+    /**
+     * @brief Expresion agregada que cuenta las notas consignadas de una semana.
+     *
+     * @param array  $cols Columnas de c_{year} de la semana.
+     * @param string $tipo Tipo de clase ('notas', 'disciplina' o 'preescolar').
+     * @return string Expresion SQL.
+     *
+     * En preescolar la valoracion del periodo se cuenta una sola vez, asi este
+     * diligenciada en varias columnas. En los demas casos se cuenta cada nota.
+     */
+    private function _expresion_avance($cols, $tipo)
+    {
+        // sin columnas no hay nada que contar en esa semana
+        if (empty($cols)) {
+            return "0";
+        }
+
+        $condiciones = array();
+        foreach ($cols as $col) {
+            $condiciones[] = "c.`" . $col . "` IS NOT NULL";
+        }
+
+        // el registro del periodo cuenta como una sola nota
+        if ($tipo === 'preescolar') {
+            return "SUM(CASE WHEN " . implode(" OR ", $condiciones) . " THEN 1 ELSE 0 END)";
+        }
+
+        // cada columna diligenciada es una nota
+        $sumas = array();
+        foreach ($condiciones as $cond) {
+            $sumas[] = "SUM(CASE WHEN " . $cond . " THEN 1 ELSE 0 END)";
+        }
+
+        return "(" . implode(" + ", $sumas) . ")";
+    }
+
+    // ---
+
     /**
      * Carga todos los logros de un periodo para un conjunto de alumnos.
      * Retorna: $logros_cache[$id_alumno][$id_materia] = texto_logro (string)

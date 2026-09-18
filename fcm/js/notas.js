@@ -44,6 +44,54 @@ function avance_semanal() {
 
 }
 
+// matriz semana a semana de las calificaciones de un periodo academico.
+// el primer periodo va de la semana 1 a la 8, el segundo de la 9 a la 16
+// y asi hasta el cuarto periodo.
+function avance_periodo() {
+
+    // se invoca al metodo ajax para solicitar la matriz
+    // del avance de notas del periodo
+    $.ajax({
+        type: "POST",
+        url: "notas_docentes_periodo.php",
+        dataType: "json",
+        data: {
+            years: $("#years").val(),
+            periodo: $("#periodos").val(),
+            // opcional: si la pagina tiene selector de docente se filtra por el,
+            // de lo contrario se muestran todos los docentes
+            id_docente: $("#id_docente").val() || 0
+        },
+        // si los datos son correctos entonces ...
+        success: function (respuesta) {
+
+            // si la respuesta es 1 muestro la matriz
+            if (respuesta['status'] == 1) {
+                $("#avance").html(respuesta['html']);
+            }
+
+            else if (respuesta['status'] == 21) {
+                swal('Periodo', 'Porfavor seleccione un periodo', 'error');
+            }
+            else if (respuesta['status'] == 22) {
+                swal('Año', 'Porfavor seleccione un año', 'error');
+            }
+            else if (respuesta['status'] == 23) {
+                swal('Docente', 'El docente no tiene clases asignadas en el año', 'error');
+            }
+            else if (respuesta['status'] == 24) {
+                swal('Calificaciones', 'No existe la tabla de calificaciones del año', 'error');
+            }
+
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema');
+            console.log(xhr);
+        }
+    });
+
+}
+
 // avance semanal de notas de docentes
 function notas_faltantes() {
     // se invoca al metodo ajax para solicitar
