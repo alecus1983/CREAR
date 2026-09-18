@@ -1018,6 +1018,8 @@ class calificaciones extends imcrea
         $sql = "UPDATE c_{$ano} 
                 SET {$setString} , modificado ='" . date('Y-m-d H:i:s') . "'
                 WHERE id_materia = {$id_materia} AND id_alumno IN ({$idsString})";
+
+        //echo $sql;
         return $this->_db->query($sql);
     }
 

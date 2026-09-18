@@ -203,6 +203,35 @@ svg path {
   font-weight: 900;
 }
 
+
+.N {
+  color: blue;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
+}
+
+.L1 {
+  color: blueviolet;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
+}
+
+.L2 {
+  color: darkcyan;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
+}
+
+.L3 {
+  color: red;
+  max-width: 5rem;
+  text-align: center;
+  font-weight: 900;
+}
+
 .border-red {
   border: 2px solid red !important;
 }

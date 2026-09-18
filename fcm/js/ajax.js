@@ -523,19 +523,19 @@ function crear_pdf() {
 
 
 
-function obtener_pdf() {
-	// esta funcion crea un pdf para preescolar
-	// se almacena el año en la variable year 
-	var year = $("#years").val();
-	// se almacena el periodo
-	var periodos = $("#periodos").val();
-	// y se almacenan las variables grados
-	var gradosx = $("#id_gs").val();
-	var grados = $("#id_gs").val();
+// function obtener_pdf() {
+// 	// esta funcion crea un pdf para preescolar
+// 	// se almacena el año en la variable year 
+// 	var year = $("#years").val();
+// 	// se almacena el periodo
+// 	var periodos = $("#periodos").val();
+// 	// y se almacenan las variables grados
+// 	var gradosx = $("#id_gs").val();
+// 	var grados = $("#id_gs").val();
 
-	// se almacenan todas las variables dentro de la variable parametros
-	var parametros = "year=" + year + "&periodos=" + periodos + "&grados=" + gradosx + "&id_gs=" + gradosx + "";
-	console.log("los parametros son : %s", parametros);
-	window.open("generarx.php?" + parametros);
-}
+// 	// se almacenan todas las variables dentro de la variable parametros
+// 	var parametros = "year=" + year + "&periodos=" + periodos + "&grados=" + gradosx + "&id_gs=" + gradosx + "";
+// 	console.log("los parametros son : %s", parametros);
+// 	window.open("generarx.php?" + parametros);
+// }
 

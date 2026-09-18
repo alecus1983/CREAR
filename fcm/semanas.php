@@ -73,6 +73,10 @@ class semana extends imcrea
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
         //echo var_dump($r);
+        // si no hay semana activa retorna null en lugar de fallar
+        if (is_null($r)) {
+            return null;
+        }
         return $r["semana"];
     }
 
@@ -90,7 +94,7 @@ class semana extends imcrea
         $r = $c->fetch_array(MYSQLI_ASSOC);
 
         // si obtiene  algun periodo
-        if (is_null($r["id_periodo"])) {
+        if (is_null($r) || is_null($r["id_periodo"])) {
             // en caso de que ninguno retorna 0
             return 0;
 

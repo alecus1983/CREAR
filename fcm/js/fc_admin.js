@@ -62,19 +62,19 @@ let madre = {
  * @param {Object} obj - El objeto a limpiar (padre o madre).
  */
 function limpiarPersona(obj) {
-  obj.id_padre          = 0;
-  obj.id_persona        = 0;
-  obj.id_hijo           = 0;
-  obj.fecha             = "";
-  obj.nombres           = "";
-  obj.apellidos         = "";
-  obj.identificacion    = "";
+  obj.id_padre = 0;
+  obj.id_persona = 0;
+  obj.id_hijo = 0;
+  obj.fecha = "";
+  obj.nombres = "";
+  obj.apellidos = "";
+  obj.identificacion = "";
   obj.tipo_identificacion = "";
-  obj.nacimiento        = "";
-  obj.correo            = "";
-  obj.i_correo          = "";
-  obj.celular           = "";
-  obj.telefono          = "";
+  obj.nacimiento = "";
+  obj.correo = "";
+  obj.i_correo = "";
+  obj.celular = "";
+  obj.telefono = "";
 }
 
 // ─── Setter reactivo para padre.omitir ───────────────────────────────────────
@@ -96,10 +96,10 @@ function limpiarPersona(obj) {
         var idHijo = alumno['id_persona'] || 0;
         if (idHijo > 0) {
           $.ajax({
-            type:     'POST',
-            url:      'desvincular_padre_hijo.php',
+            type: 'POST',
+            url: 'desvincular_padre_hijo.php',
             dataType: 'json',
-            data:     { id_hijo: idHijo },
+            data: { id_hijo: idHijo },
             success: function (resp) {
               if (resp['status'] == 1) {
                 console.log('Vínculo padre-hijo eliminado (filas: ' + resp['filas_afect'] + ').');
@@ -118,7 +118,7 @@ function limpiarPersona(obj) {
         }
       }
     },
-    enumerable:   true,
+    enumerable: true,
     configurable: true
   });
 })();
@@ -142,10 +142,10 @@ function limpiarPersona(obj) {
         var idHijo = alumno['id_persona'] || 0;
         if (idHijo > 0) {
           $.ajax({
-            type:     'POST',
-            url:      'desvincular_madre_hijo.php',
+            type: 'POST',
+            url: 'desvincular_madre_hijo.php',
             dataType: 'json',
-            data:     { id_hijo: idHijo },
+            data: { id_hijo: idHijo },
             success: function (resp) {
               if (resp['status'] == 1) {
                 console.log('Vínculo madre-hijo eliminado (filas: ' + resp['filas_afect'] + ').');
@@ -164,7 +164,7 @@ function limpiarPersona(obj) {
         }
       }
     },
-    enumerable:   true,
+    enumerable: true,
     configurable: true
   });
 })();
@@ -1027,7 +1027,7 @@ function obtener_pdf() {
   // se almacenan todas las variables dentro de la variable parametros
   var parametros = "year=" + year + "&periodos=" + periodos + "&grados=" + gradosx + "&id_gs=" + gradosx + "";
   console.log("los parametros son : %s", parametros);
-  window.open("generarx.php?" + parametros);
+  window.open("generar_preescolar.php?" + parametros);
 }
 
 // agrega las jornadas disponibles

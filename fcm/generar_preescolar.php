@@ -20,9 +20,9 @@ require_once 'datos.php';
 
 // parametros que envia js/ajax.js -> obtener_pdf()
 // se castean a entero para no corromper el nombre de la tabla c_{year}
-$year       = intval($_GET["year"]);
+$year = intval($_GET["year"]);
 $id_periodo = intval($_GET["periodos"]);
-$id_grado   = intval($_GET["id_gs"]);
+$id_grado = intval($_GET["id_gs"]);
 
 // define el tipo de codificación para la letra
 header("Content-Type: text/html;charset=utf-8");
@@ -124,7 +124,7 @@ $alumnos_cache = alumnos::get_alumnos_bulk($list);
 
 // areas a las que pertenecen las materias del grado
 $area_obj = new area();
-$lista_a  = $area_obj->get_areas_grado($id_grado);
+$lista_a = $area_obj->get_areas_grado($id_grado);
 
 // objeto materia para recuperar nombre y logo de cada dimension
 $m_obj = new materia();
@@ -138,7 +138,7 @@ foreach ($lista_a as $id_area => $a) {
         $m_obj->get_materia($id_m);
         $materias[$id_m] = array(
             'materia' => $m_obj->materia,
-            'logo'    => $m_obj->logo
+            'logo' => $m_obj->logo
         );
     }
 }
@@ -165,8 +165,8 @@ $jo = new jornada();
 foreach ($matriculas as $m) {
 
     $id_jornada = intval($m['id_jornada']);
-    $id_curso   = intval($m['id_curso']);
-    $clave      = $id_jornada . "-" . $id_curso;
+    $id_curso = intval($m['id_curso']);
+    $clave = $id_jornada . "-" . $id_curso;
 
     // docentes del grupo
     if (!array_key_exists($clave, $docentes_cache)) {
@@ -193,7 +193,7 @@ $arr_pond_preescolar = array(1 => "R", 2 => "l1_p", 3 => "l2_p", 4 => "l3_p");
 // la valoracion del comportamiento (materia 20 - Disciplina) se guarda en
 // la columna D_p{periodo}; la tabla no tiene columna D_p4, de modo que en
 // el cuarto periodo se toma la nota consignada en R4.
-$col_disciplina      = ($id_periodo < 4) ? "D_p" . $id_periodo : "R" . $id_periodo;
+$col_disciplina = ($id_periodo < 4) ? "D_p" . $id_periodo : "R" . $id_periodo;
 $arr_pond_disciplina = ($id_periodo < 4)
     ? array(1 => "R", 2 => "l1_p", 3 => "l2_p", 4 => "l3_p", 5 => "D_p")
     : $arr_pond_preescolar;
@@ -208,7 +208,7 @@ foreach ($materias as $id_m => $info_m) {
     // la disciplina requiere ademas la columna D_p{periodo}
     $pond = ($id_m == 20) ? $arr_pond_disciplina : $arr_pond_preescolar;
 
-    $notas_cache[$id_m]  = $cl->get_notas_preescolar($year, $id_m, $id_periodo, $pond, $in_alumnos);
+    $notas_cache[$id_m] = $cl->get_notas_preescolar($year, $id_m, $id_periodo, $pond, $in_alumnos);
     // texto de todos los logros definidos para la materia
     $logros_cache[$id_m] = $lo->get_logros($id_m);
 }
