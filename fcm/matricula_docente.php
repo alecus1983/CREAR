@@ -88,6 +88,70 @@ where id_docente in (   select distinct id_docente from matricula_docente where 
         return $arr;
     }
 
+    /**
+     * Obtiene en un array todos los docentes matriculados en un año lectivo,
+     * con sus datos basicos (sin repetir docentes).
+     *
+     * @param int|string $year año lectivo a consultar
+     * @return array arreglo de docentes, cada uno con las llaves
+     *               id_docente, identificacion, login, nombres, apellidos,
+     *               admin y clases (numero de clases asignadas en el año),
+     *               indexado por id_docente
+     */
+    public function get_docentes_year($year)
+    {
+        // array que almacena el listado de salida
+        $arr = array();
+
+        try {
+            // consulta los docentes que tienen al menos una
+            // matricula docente en el año solicitado, agrupando
+            // para contar las clases asignadas a cada uno
+            $q = "SELECT ud.id_docente, ud.admin, ud.login, p.identificacion, p.nombres, p.apellidos,
+                         COUNT(md.id) AS clases
+                  FROM matricula_docente md
+                  INNER JOIN u_docentes ud ON ud.id_docente = md.id_docente
+                  INNER JOIN personas p ON p.id_personas = ud.id_personas
+                  WHERE md.`year` = ?
+                  GROUP BY ud.id_docente, ud.admin, ud.login, p.identificacion, p.nombres, p.apellidos
+                  ORDER BY p.apellidos, p.nombres";
+
+            // preparo la consulta
+            $stmt = $this->_db->prepare($q);
+
+            // valido la consulta
+            if ($stmt === false) {
+                throw new Exception("Error al preparar la consulta get_docentes_year: " . $this->_db->error);
+            }
+
+            // agrego el parametro del año
+            $stmt->bind_param("s", $year);
+
+            // ejecuto la consulta
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // recorro los registros obtenidos
+            while ($a = $result->fetch_array(MYSQLI_ASSOC)) {
+                // indexo por el codigo del docente
+                $arr[intval($a['id_docente'])] = array(
+                    'id_docente'     => intval($a['id_docente']),
+                    'identificacion' => $a['identificacion'],
+                    'login'          => $a['login'],
+                    'nombres'        => $a['nombres'],
+                    'apellidos'      => $a['apellidos'],
+                    'admin'          => $a['admin'],
+                    'clases'         => intval($a['clases'])
+                );
+            }
+        } catch (Exception $e) {
+            error_log("Error en get_docentes_year: " . $e->getMessage());
+        }
+
+        // retorno el listado de docentes matriculados
+        return $arr;
+    }
+
     // listado de matriculas (id) docentes por grado
     public function get_lista_por_grado($id_grado, $id_jornada, $id_curso, $year)
     {

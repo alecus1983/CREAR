@@ -44,10 +44,60 @@ function avance_semanal() {
 
 }
 
+// funcion que despliega el listado de profesores a ser evaluados
+function avance_notas() {
+    $.ajax({
+        type: "POST",
+        url: "listado_avance_docente.php",
+        dataType: "json",
+        data: {
+            years: $("#years").val()
+        },
+        // si los datos son correctos entonces ...
+        success: function (respuesta) {
+
+            // si la respuesta es 1 muestro el listado de docentes
+            if (respuesta['status'] == 1) {
+                $("#avance").html(respuesta['html']);
+                // limpio la matriz del docente consultado anteriormente
+                $("#tabla").html("");
+            }
+            else if (respuesta['status'] == 22) {
+                swal('Año', 'Porfavor seleccione un año', 'error');
+            }
+            else if (respuesta['status'] == 23) {
+                swal('Docentes', 'Ningún docente tiene clases asignadas en el año', 'error');
+            }
+
+        },
+        error: function (xhr, status) {
+            swal('Disculpe, existió un problema');
+            console.log(xhr);
+        }
+    });
+
+}
+
+// consulta el avance de notas de un docente del listado que
+// genera avance_notas()
+function ver_avance_docente(id_docente) {
+    // dejo seleccionado el docente en el selector del listado
+    $("#id_docente_av").val(id_docente);
+    // dibujo la matriz de avance del periodo
+    avance_periodo();
+}
+
 // matriz semana a semana de las calificaciones de un periodo academico.
 // el primer periodo va de la semana 1 a la 8, el segundo de la 9 a la 16
 // y asi hasta el cuarto periodo.
 function avance_periodo() {
+
+    // docente a consultar: si esta cargado el listado de avance se toma
+    // el docente seleccionado ahi (0 = todos), de lo contrario el docente
+    // de la sesion
+    var id_docente = $("#id_docente_av").length
+        ? $("#id_docente_av").val()
+        : ($("#id_docente").val() || 0);
 
     // se invoca al metodo ajax para solicitar la matriz
     // del avance de notas del periodo
@@ -58,16 +108,14 @@ function avance_periodo() {
         data: {
             years: $("#years").val(),
             periodo: $("#periodos").val(),
-            // opcional: si la pagina tiene selector de docente se filtra por el,
-            // de lo contrario se muestran todos los docentes
-            id_docente: $("#id_docente").val() || 0
+            id_docente: id_docente
         },
         // si los datos son correctos entonces ...
         success: function (respuesta) {
 
             // si la respuesta es 1 muestro la matriz
             if (respuesta['status'] == 1) {
-                $("#avance").html(respuesta['html']);
+                $("#tabla").html(respuesta['html']);
             }
 
             else if (respuesta['status'] == 21) {
