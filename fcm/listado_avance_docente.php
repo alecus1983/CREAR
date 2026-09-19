@@ -112,7 +112,7 @@ $html .= "<tr>";
 $html .= "<th scope='col'>#</th>";
 $html .= "<th scope='col'>Identificación</th>";
 $html .= "<th scope='col'>Docente</th>";
-$html .= "<th scope='col'>Usuario</th>";
+//$html .= "<th scope='col'>Usuario</th>";
 $html .= "<th scope='col'>Clases</th>";
 $html .= "<th scope='col'>Avance</th>";
 $html .= "</tr>";
@@ -131,7 +131,7 @@ foreach ($docentes as $id => $d) {
     $html .= "<td>" . $fila . "</td>";
     $html .= "<td>" . htmlspecialchars($d['identificacion']) . "</td>";
     $html .= "<td>" . htmlspecialchars(nombre_docente($d)) . "</td>";
-    $html .= "<td>" . htmlspecialchars($d['login']) . "</td>";
+    //$html .= "<td>" . htmlspecialchars($d['login']) . "</td>";
     $html .= "<td>" . $d['clases'] . "</td>";
     $html .= "<td>";
     // consulta el avance de un solo docente
