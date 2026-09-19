@@ -564,7 +564,7 @@ class calificaciones extends imcrea
      */
     public function get_docente_semana($id_docente, $ano, $semana)
     {
-        $q = "SELECT COUNT(*) AS cantidad FROM calificaciones_" . $ano . " WHERE id_docente = $id_docente AND year = $ano AND id_semana = " . $semana;
+        $q = "SELECT COUNT(*) AS cantidad FROM c_" . $ano . " WHERE id_docente = $id_docente AND year = $ano AND id_semana = " . $semana;
 
         $c = $this->_db->query($q);
         $r = $c->fetch_array(MYSQLI_ASSOC);
@@ -895,7 +895,7 @@ class calificaciones extends imcrea
     }
 
 
-    
+
     /**
      * @brief Obtiene las notas de una semana normal (bulk).
      *
@@ -914,7 +914,7 @@ class calificaciones extends imcrea
         // construir campos de notas dinámicos: 1A, 1B, 1C, ...
         $campos_notas = "";
         foreach ($arr_pond as $v) {
-            $campos_notas =  $v. $periodo. " ," . $campos_notas;
+            $campos_notas =  $v . $periodo . " ," . $campos_notas;
         }
         $campos_notas = substr($campos_notas, 0, -1);
 
@@ -1149,7 +1149,7 @@ class calificaciones extends imcrea
         // cadena de busqueda 
         $q = "select * from c_$year where id_materia = $id_materia and id_alumno in ($c_string)";
 
-        
+
 
         try {
             $c = $this->_db->query($q);

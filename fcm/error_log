@@ -1,0 +1,19 @@
+[18-Sep-2026 15:24:22 America/Bogota] PHP Parse error:  syntax error, unexpected variable "$pdf", expecting "function" in /home/imcreati/public_html/fcm/generarx.php on line 66
+[18-Sep-2026 15:27:21 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'imcreati_datam.calificaciones_2026' doesn't exist in /home/imcreati/public_html/fcm/calificaciones.php:569
+Stack trace:
+#0 /home/imcreati/public_html/fcm/calificaciones.php(569): mysqli->query()
+#1 /home/imcreati/public_html/fcm/notas_docentes_semanales.php(79): calificaciones->get_docente_semana()
+#2 {main}
+  thrown in /home/imcreati/public_html/fcm/calificaciones.php on line 569
+[18-Sep-2026 15:27:47 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'imcreati_datam.calificaciones_2026' doesn't exist in /home/imcreati/public_html/fcm/calificaciones.php:569
+Stack trace:
+#0 /home/imcreati/public_html/fcm/calificaciones.php(569): mysqli->query()
+#1 /home/imcreati/public_html/fcm/notas_docentes_semanales.php(79): calificaciones->get_docente_semana()
+#2 {main}
+  thrown in /home/imcreati/public_html/fcm/calificaciones.php on line 569
+[18-Sep-2026 15:28:02 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'imcreati_datam.calificaciones_2026' doesn't exist in /home/imcreati/public_html/fcm/calificaciones.php:569
+Stack trace:
+#0 /home/imcreati/public_html/fcm/calificaciones.php(569): mysqli->query()
+#1 /home/imcreati/public_html/fcm/notas_docentes_semanales.php(79): calificaciones->get_docente_semana()
+#2 {main}
+  thrown in /home/imcreati/public_html/fcm/calificaciones.php on line 569
