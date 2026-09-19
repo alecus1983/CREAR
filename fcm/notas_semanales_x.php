@@ -141,12 +141,15 @@ if ($semana_final) {
                 $fila_db = $db_notas[$dato['codigo']];
                 $ha_cambiado = false;
 
-                $campos_revisar = ($id_materia !== 20) ? ['E', 'F', 'G', 'I', 'J'] : [strval($periodo)];
+                $campos_revisar = ($id_materia !== 20) ? ['E', 'F', 'G', 'I', 'J', 'L'] : [strval($periodo)];
 
                 foreach ($campos_revisar as $letra) {
-                    $columna = ($id_materia !== 20) ? $semana . $letra : "D_p";
+
+                    
+                    $columna = ($letra == 'L') ? 'l1_p'.$periodo : $semana.$letra;
                     $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
                     $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
+                    
                     if ($nota_enviada !== $nota_db) {
                         $ha_cambiado = true;
                         break;
@@ -162,7 +165,8 @@ if ($semana_final) {
                         "'" . $semana . "F'" => $dato['F'],
                         "'" . $semana . "G'" => $dato['G'],
                         "'" . $semana . "I'" => $dato['I'],
-                        "'" . $semana . "J'" => $dato['J']
+                        "'" . $semana . "J'" => $dato['J'],
+                        "'l1_p" . $periodo . "'" => $dato['L']
                     ];
                 }
             } else {
@@ -216,7 +220,8 @@ if ($semana_final) {
                     "'" . $semana . "F'" => $dato['F'],
                     "'" . $semana . "G'" => $dato['G'],
                     "'" . $semana . "I'" => $dato['I'],
-                    "'" . $semana . "J'" => $dato['J']
+                    "'" . $semana . "J'" => $dato['J'],
+                    "'l1_p" . $periodo . "'" => $dato['L']
                 ];
             } else {
                 // si agrego disciplina en la semana final

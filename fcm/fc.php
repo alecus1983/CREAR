@@ -831,7 +831,7 @@ $periodo = 0;
                             // si es administrador puede seleccionar cualquier periodo
                         
                             echo '<option value="-1" selected>seleccione</option>
-                                          <option value="1">1</option>
+                                    <option value="1">1</option>
 			        				<option value="2">2</option>
 				       				<option value="3">3</option>
 				       				<option value="4">4</option>
@@ -863,6 +863,7 @@ $periodo = 0;
 
                         <?php
                         if ($admin) {
+
                         } else {
                             $s = new semana();
                             $sem = $s->get_semana_activa($ano);
