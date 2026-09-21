@@ -912,7 +912,7 @@ $periodo = 0;
 					<div class="container-fluid px-4">
 						<h1 class="mt-4">FORMULARIO <?php echo date('Y'); ?></h1>
 						<ol class="breadcrumb mb-4">
-							<li class="breadcrumb-item active">Para la gestión de calificaciones</li>
+							<li class="breadcrumb-item active">Para la gestión de recuperaciones</li>
 						</ol>
 
 
