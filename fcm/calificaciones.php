@@ -184,28 +184,103 @@ class calificaciones extends imcrea
      * Este método busca en la base de datos si un alumno tiene una nota de recuperación ('R')
      * en una materia y período específicos.
      */
-    public function get_recuperacion_periodo($id_a, $id_m, $y, $periodo)
+    public function get_recuperacion_periodo($codigos, $id_m, $y, $periodo)
+
     {
-        $q = "SELECT id_alumno, id, nota, id_materia, year, corte FROM calificaciones_" . $y . "
-              WHERE year = $y AND id_alumno = $id_a AND id_materia = $id_m AND corte = 'R' AND periodo = $periodo";
+        // si el valor ingresado es falso
+        if (empty($codigos))
+            return false;
+        //valores iniciales de las 
+        $ids = [];
+
+        // por cada valor en los codigos
+        foreach ($codigos as $c) {
+            // recupero el valor del id
+            $id = strval($c);
+            if ($id > 0) {
+                // lo almaceno en ids
+                $ids[] = $id;
+            }
+        }
+
+        if (empty($ids))
+            return [];
+
+        // acumulo el string en una cadena separado por comas
+        $c_string = implode(',', $ids);
+
+        // consulta
+        $q = "SELECT id_alumno, R$periodo, id_materia FROM c_" . $y . "
+              WHERE id_alumno in($c_string) AND id_materia = $id_m";
 
         try {
             $c = $this->_db->query($q);
-            $r = $c->fetch_array(MYSQLI_ASSOC);
+            $r = (array) $c->fetch_all(MYSQLI_ASSOC);
+            // retorno el array de salida
+            return $r;
         } catch (Exception $e) {
-            echo 'Excepción capturada en get_recuperacion_periodo: ', $e->getMessage(), "\n";
+            echo 'Excepción capturada en recuperacion: ', $e->getMessage(), "\n";
+            return [];
+        }
+    }
+
+    // ---
+
+    /**
+     * @brief Obtiene el logro de la recuperación de un período.
+     *
+     * @param array $codigos  Códigos de los alumnos.
+     * @param int $id_m       Código de la materia.
+     * @param int $y          Año de la consulta.
+     * @param int $periodo    Identificación del período.
+     *
+     * Lee la columna l1_p{periodo} de la tabla c_{year} y retorna un arreglo
+     * indexado por el código del alumno: $logros[$id_alumno] = id_logro.
+     */
+    public function get_logro_recuperacion_periodo($codigos, $id_m, $y, $periodo)
+    {
+        // si el valor ingresado es falso
+        if (empty($codigos))
+            return [];
+
+        //valores iniciales de las
+        $ids = [];
+
+        // por cada valor en los codigos
+        foreach ($codigos as $c) {
+            // recupero el valor del id
+            $id = intval($c);
+            if ($id > 0) {
+                // lo almaceno en ids
+                $ids[] = $id;
+            }
         }
 
-        if (is_null($r)) {
-            $this->calificado = false;
-            $this->nota = 0;
-        } else {
-            $this->calificado = true;
-            $this->id_alumno = $r['id_alumno'];
-            $this->id_materia = $r['id_materia'];
-            $this->year = $r['year'];
-            $this->id = $r['id'];
-            $this->nota = $r['nota'];
+        if (empty($ids))
+            return [];
+
+        // acumulo el string en una cadena separado por comas
+        $c_string = implode(',', $ids);
+        $id_m = intval($id_m);
+        $y = intval($y);
+        $periodo = intval($periodo);
+
+        // consulta
+        $q = "SELECT id_alumno, l1_p$periodo AS id_logro FROM c_" . $y . "
+              WHERE id_alumno in($c_string) AND id_materia = $id_m";
+
+        try {
+            $c = $this->_db->query($q);
+            $logros = [];
+            // indexo el resultado por el codigo del alumno
+            while ($r = $c->fetch_array(MYSQLI_ASSOC)) {
+                $logros[intval($r['id_alumno'])] = $r['id_logro'];
+            }
+            // retorno el array de salida
+            return $logros;
+        } catch (Exception $e) {
+            echo 'Excepción capturada en logro de recuperacion: ', $e->getMessage(), "\n";
+            return [];
         }
     }
 
@@ -914,7 +989,7 @@ class calificaciones extends imcrea
         // construir campos de notas dinámicos: 1A, 1B, 1C, ...
         $campos_notas = "";
         foreach ($arr_pond as $v) {
-            $campos_notas =  $v . $periodo . " ," . $campos_notas;
+            $campos_notas = $v . $periodo . " ," . $campos_notas;
         }
         $campos_notas = substr($campos_notas, 0, -1);
 
@@ -1072,56 +1147,50 @@ class calificaciones extends imcrea
         }
     }
 
-    // Funcion de actualizar notas masivas
-
-    // function actualizarNotasMasivas($arr_actualizar, $ano)
-    // {
-
-    //     // si el valor ingresado es falso
-    //     if (empty($arr_actualizar))
-    //         return false;
-    //     //valores iniciales de las 
-    //     $ids = [];
-    //     $casesNota = [];
-    //     $casesLogro = [];
-
-    //     // por cada alumno preparo los array de entrada
-    //     foreach ($arr_actualizar as $val) {
-    //         $id = (int) $val['id'];
-    //         $nota = $val['nota'] > 0 ? (float) $val['nota'] : 0;
-    //         // Usar NULL cuando no hay logro para evitar que MySQL convierta '' en 0
-    //         // y colisione con la clave única
-    //         $logro = $val['id_logro'] > 0 ? (int) $val['id_logro'] : 'NULL';
-
-    //         $ids[] = $id;
-    //         $casesNota[] = "WHEN {$id} THEN {$nota}";
-    //         $casesLogro[] = "WHEN {$id} THEN {$logro}";
-
-    //     }
-    //     // convierto en un string
-    //     $idsString = implode(',', $ids);
-    //     $casesNotaString = implode(' ', $casesNota);
-    //     $casesLogroString = implode(' ', $casesLogro);
-
-    //     $sql = "UPDATE calificaciones_{$ano} 
-    //             SET nota = CASE id 
-    //                 {$casesNotaString} 
-    //                 ELSE nota 
-    //             END,
-    //             id_logro = CASE id 
-    //                 {$casesLogroString} 
-    //                 ELSE id_logro 
-    //             END,
-
-    //             modificado = NOW()
-    //             WHERE id IN ({$idsString})";
-    // }
-
-
-    // Funcion que valida masivamente cuales estudiantes tienen
-    // y cuales no tienen registros
 
     function validacion_masiva($codigos, $id_materia, $year)
+    {
+
+        // si el valor ingresado es falso
+        if (empty($codigos))
+            return false;
+        //valores iniciales de las 
+        $ids = [];
+
+        // por cada valor en los codigos
+        foreach ($codigos as $c) {
+            // recupero el valor del id
+            $id = (int) $c['value'];
+            if ($id > 0) {
+                // lo almaceno en ids
+                $ids[] = $id;
+            }
+        }
+
+        if (empty($ids))
+            return [];
+
+        // acumulo el string en una cadena separado por comas
+        $c_string = implode(',', $ids);
+
+        // cadena de busqueda 
+        $q = "select * from c_$year where id_materia = $id_materia and id_alumno in ($c_string)";
+
+
+
+        try {
+            $c = $this->_db->query($q);
+            $r = (array) $c->fetch_all(MYSQLI_ASSOC);
+            // retorno el array de salida
+            return $r;
+        } catch (Exception $e) {
+            echo 'Excepción capturada en validacion_masiva: ', $e->getMessage(), "\n";
+            return [];
+        }
+    }
+
+
+    function validacion_masiva_recuperaciones($codigos, $id_materia, $year)
     {
 
         // si el valor ingresado es falso

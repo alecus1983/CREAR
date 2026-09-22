@@ -288,31 +288,27 @@ $periodo = 0;
 
 
 	<script type="text/javascript">
-		// Funcion en java scrip para ingresar valores en la base de datos
-			// para todas las opciones del menu adiccionar
+			// Funcion en java scrip para ingresar valores en la base de datos
+			// para el formulario de recuperaciones
 			// permite agregar estudiantes, docentes, notas etc ...
 
-			function deposit() {
+			function set_recuperacion() {
 
 			// para ello comienza
 			// almacenando el codigo del grado en la variable j
 			var j = $("#id_g").val();
 			var esc = $("#escolaridad").val();
-
-			// decide   el tipo de datos a enviar
-			// de acuerdo al formulario mostrado 
-			// 1  para Preescolar    
-			// 2  para primaria
-			// 3 x para bachillerato
-			if (esc == 1) {
+			var periodo = $('#periodos').val();
 
 
-				swal({
-					title: 'INSERTAR NOTAS PRE ESCOLAR',
-					text: "Esta seguro que quiere insertar las notas!",
-					icon: 'warning',
-					buttons: true,
-					buttons: ["cancelar", "insertar"],
+
+
+			swal({
+				title: 'INSERTAR NOTAS RECUPERACION',
+			text: "Esta seguro que quiere insertar las notas!",
+			icon: 'warning',
+			buttons: true,
+			buttons: ["cancelar", "insertar"],
 
 				}).then((value) => {
 					if (value) {
@@ -320,234 +316,57 @@ $periodo = 0;
 						// creo un array a partir de los
 						// elementos pertenecientes a  una misma clase
 
-						// serializo los campos clase  logro 1
-						var logros1 = $('.L1').serializeArray();
-						// serializo los campos clase logro 2
-						var logros2 = $('.L2').serializeArray();
-						// serializo los campos clase logro 3
-						var logros3 = $('.L3').serializeArray();
-						// serializo los codigos
-						var codigos = $('.codigo').serializeArray();
-						// serializo las  faltas
-						var N = $('.N').serializeArray();
+						// serializo los campos del logro, que se generan
+						// con el atributo name="l1_p{periodo}[]"
+						var logros = $('[name="l1_p' + periodo + '[]"]').serializeArray();
+			// se colocan las notas, generadas con name="R{periodo}[]"
+			var notas = $('[name="R' + periodo + '[]"]').serializeArray();
+			// serializo los codigos de los alumnos, en el mismo orden
+			// en que se generaron las notas y los logros
+			var codigos = $('.codigo').serializeArray();
 
 
-						// si los datos son validos
-						if (1) {
-							// llamo al metodo ajax para el envío de la  información
-							// se emplea en envío por POST
-							$.ajax({
-								type: "POST",
-								url: "notas_preescolar.php",
-								data: {
-									year: $("#years").val(),
-									semana: $("#semana").val(),
-									id_gs: $("#id_g").val(),
-									id_curso: $("#id_c").val(),
-									id_ms: $("#id_ms").val(),
-									id_jornada: $("#jornada").val(),
-									periodo: $("#periodo").val(),
-									id_docente: $("#id_docente").val(),
-									corte: $("#corte").val(),
-									periodo: $("#periodos").val(),
-									logro1: JSON.stringify(logros1),
-									logro2: JSON.stringify(logros2),
-									logro3: JSON.stringify(logros3),
-									codigo: JSON.stringify(codigos),
-									N: JSON.stringify(N)
-								},
+			// si los datos son validos
+			if (1) {
+				// llamo al metodo ajax para el envío de la  información
+				// se emplea en envío por POST
+				$.ajax({
+					type: "POST",
+					url: "notas_mensuales_recuperacion.php",
+					data: {
+						year: $("#years").val(),
+						semana: $("#semana").val(),
+						id_gs: $("#id_g").val(),
+						id_curso: $("#id_c").val(),
+						id_ms: $("#id_ms").val(),
+						id_jornada: $("#jornada").val(),
+						id_docente: $("#id_docente").val(),
+						corte: $("#corte").val(),
+						periodo: periodo,
+						codigo: JSON.stringify(codigos),
+						L: JSON.stringify(logros),
+						R: JSON.stringify(notas)
+					},
 
-								success: function (data) {
-									// respuesta a la carga de notas
-									console.log(data);
+					success: function (data) {
+						// respuesta a la carga de notas
+						console.log(data);
 
-								},
-								error: function (xhr, status) {
-									swal('Disculpe, existió un problema');
-									console.log(xhr);
-								}
-							});
+					},
+					error: function (xhr, status) {
+						swal('Disculpe, existió un problema');
+						console.log(xhr);
+					}
+				});
 						} // fin de valido
-						else {
-							swal("Revise los datos", "No se ingresaron los datos \t porque tiene notas mayores que 5", "error");
+			else {
+				swal("Revise los datos", "No se ingresaron los datos \t porque tiene notas mayores que 5", "error");
 						}
 					}
 
 				});
 
-			} else {
-				// mensaje de seleccion
-				swal({
-					title: 'INSERTAR NOTAS',
-					text: "Esta seguro que quiere insertar las notas!",
-					icon: 'warning',
-					buttons: true,
-					buttons: ["cancelar", "insertar"],
-
-				}).then((value) => {
-					if (value) {
-
-						// creo un array a partir de los
-						// elementos pertenecientes a  una misma clase
-
-						// serializo los campos clase  logro 1
-						var logros1 = $('.logros1').serializeArray();
-						// serializo los campos clase logro 2
-						var logros2 = $('.logros2').serializeArray();
-						// serializo los campos clase logro 3
-						var logros3 = $('.logros3').serializeArray();
-						// serializo los codigos
-						var codigos = $('.codigo').serializeArray();
-						// serializo las  faltas
-						var faltas = $('.faltas').serializeArray();
-
-						// categorias para el seguimiento semanal
-
-						// serializo los  campos del criterio A
-						var A = $('.A').serializeArray();
-						// serializo los  campos del criterio B
-						var B = $('.B').serializeArray();
-						// serializo los  campos del criterio C
-						var C = $('.C').serializeArray();
-						// serializo los  campos del criterio D
-						var D = $('.D').serializeArray();
-						// serializo los  campos del criterio E
-						var E = $('.E').serializeArray();
-						// serializo los  campos del criterio F
-						var F = $('.F').serializeArray();
-						// serializo los  campos del criterio G
-						var G = $('.G').serializeArray();
-						// serializo los  campos del criterio H
-						var H = $('.H').serializeArray();
-						// serializo los  campos del criterio I
-						var I = $('.I').serializeArray();
-						// serializo los  campos del criterio J
-						var J = $('.J').serializeArray();
-						// serializo los  campos del criterio L
-						var L = $('.L').serializeArray();
-						var valido = true;
-						// valido los datos antes de enviarlos
-
-						$('.A').each(function (a) {
-
-							if ($(this)[0].value > 5) {
-								valido = false;
-							}
-						})
-
-						$(' .B').each(function (a) {
-
-							if ($(this)[0].value > 5) {
-								valido = false;
-							}
-						})
-
-						$(' .C').each(function (a) {
-
-							if ($(this)[0].value > 5) {
-								valido = false;
-							}
-						})
-
-						$(' .D').each(function (a) {
-
-							if ($(this)[0].value > 5) {
-								valido = false;
-							}
-						})
-
-						$('.E').each(function (a) {
-
-							if ($(this)[0].value > 5) {
-								valido = false;
-							}
-						})
-
-						$('.F').each(function (a) {
-
-							if ($(this)[0].value > 5) {
-								valido = false;
-							}
-						})
-
-						$(' .G').each(function (a) {
-
-							if ($(this)[0].value > 5) {
-								valido = false;
-							}
-						})
-
-						$('.H').each(function (a) {
-
-							if ($(this)[0].value > 5) {
-								valido = false;
-							}
-						})
-
-						$(' .I').each(function (a) {
-
-							if ($(this)[0].value > 5) {
-								valido = false;
-							}
-						})
-
-						// si los datos son validos
-						if (valido) {
-							// llamo al metodo ajax para el envío de la  información
-							// se emplea en envío por POST
-							$.ajax({
-								type: "POST",
-								url: "notas_semanales_x.php",
-								data: {
-									year: $("#years").val(),
-									semana: $("#semana").val(),
-									id_gs: $("#id_g").val(),
-									id_curso: $("#id_c").val(),
-									id_ms: $("#id_ms").val(),
-									id_jornada: $("#jornada").val(),
-									id_docente: $("#id_docente").val(),
-									corte: $("#corte").val(),
-									periodo: $("#periodos").val(),
-									logro1: JSON.stringify(logros1),
-									logro2: JSON.stringify(logros2),
-									logro3: JSON.stringify(logros3),
-									codigo: JSON.stringify(codigos),
-									faltas: JSON.stringify(faltas),
-									A: JSON.stringify(A),
-									B: JSON.stringify(B),
-									C: JSON.stringify(C),
-									D: JSON.stringify(D),
-									E: JSON.stringify(E),
-									F: JSON.stringify(F),
-									G: JSON.stringify(G),
-									H: JSON.stringify(H),
-									I: JSON.stringify(I),
-									J: JSON.stringify(J),
-									L: JSON.stringify(L)
-								},
-
-								success: function (data) {
-									// respuesta a la carga de notas
-									//$("#resultado").html("Se ingresaron las notas con exito");
-									//$("#resultado").html(data);
-									console.log(data);
-
-								},
-								error: function (xhr, status) {
-									swal('Disculpe, existió un problema');
-									console.log(xhr);
-								}
-							});
-						} // fin de valido
-						else {
-							swal("Revise los datos", "No se ingresaron los datos \t porque tiene notas mayores que 5", "error");
-						}
-					}
-
-				});
-
-			}
-		} // fin de la funsion deposit
+					} // fin de la funsion set_recuperacion
 	</script>
 
 
@@ -957,7 +776,7 @@ $periodo = 0;
 											</div>
 											<div class="row">
 												<button type="button" class="btn" value="INGRESAR" id="ingresar"
-													onclick="deposit();">
+													onclick="set_recuperacion();">
 													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 														fill="currentColor" class="bi bi-floppy2" viewBox="0 0 16 16">
 														<path
@@ -967,7 +786,7 @@ $periodo = 0;
 
 												<button type="button" style="margin: 20px auto auto; display: block;"
 													class="boton-flotante" value="INGRESAR" id="ingresar"
-													onclick="deposit();">
+													onclick="set_recuperacion();">
 													<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 														fill="currentColor" class="bi bi-floppy2" viewBox="0 0 16 16">
 														<path
