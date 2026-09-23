@@ -34,7 +34,7 @@ $periodo = 0;
 	<link href="../imagenes/escudo.gif" rel="shortcut icon" />
 	<script src="./js/sweetalert.min.js"></script>
 	<script src="./js/jquery-3.5.1.min.js">
-		< script src="./js/ajax.js" >
+		< script src = "./js/ajax.js" >
 	</script>
 	<link rel="stylesheet" href="estilos.css" type="text/css">
 
@@ -288,11 +288,11 @@ $periodo = 0;
 
 
 	<script type="text/javascript">
-			// Funcion en java scrip para ingresar valores en la base de datos
-			// para el formulario de recuperaciones
-			// permite agregar estudiantes, docentes, notas etc ...
+		// Funcion en java scrip para ingresar valores en la base de datos
+		// para el formulario de recuperaciones
+		// permite agregar estudiantes, docentes, notas etc ...
 
-			function set_recuperacion() {
+		function set_recuperacion() {
 
 			// para ello comienza
 			// almacenando el codigo del grado en la variable j
@@ -305,105 +305,111 @@ $periodo = 0;
 
 			swal({
 				title: 'INSERTAR NOTAS RECUPERACION',
-			text: "Esta seguro que quiere insertar las notas!",
-			icon: 'warning',
-			buttons: true,
-			buttons: ["cancelar", "insertar"],
+				text: "Esta seguro que quiere insertar las notas!",
+				icon: 'warning',
+				buttons: true,
+				buttons: ["cancelar", "insertar"],
 
-				}).then((value) => {
-					if (value) {
+			}).then((value) => {
+				if (value) {
 
-						// creo un array a partir de los
-						// elementos pertenecientes a  una misma clase
+					// creo un array a partir de los
+					// elementos pertenecientes a  una misma clase
 
-						// serializo los campos del logro, que se generan
-						// con el atributo name="l1_p{periodo}[]"
-						var logros = $('[name="l1_p' + periodo + '[]"]').serializeArray();
-			// se colocan las notas, generadas con name="R{periodo}[]"
-			var notas = $('[name="R' + periodo + '[]"]').serializeArray();
-			// serializo los codigos de los alumnos, en el mismo orden
-			// en que se generaron las notas y los logros
-			var codigos = $('.codigo').serializeArray();
+					// serializo los campos del logro, que se generan
+					// con el atributo name="l1_p{periodo}[]"
+					var logros = $('[name="l1_p' + periodo + '[]"]').serializeArray();
+					// se colocan las notas, generadas con name="R{periodo}[]"
+					var notas = $('[name="R' + periodo + '[]"]').serializeArray();
+					// serializo los codigos de los alumnos, en el mismo orden
+					// en que se generaron las notas y los logros
+					var codigos = $('.codigo').serializeArray();
 
 
-			// si los datos son validos
-			if (1) {
-				// llamo al metodo ajax para el envío de la  información
-				// se emplea en envío por POST
-				$.ajax({
-					type: "POST",
-					url: "notas_mensuales_recuperacion.php",
-					data: {
-						year: $("#years").val(),
-						semana: $("#semana").val(),
-						id_gs: $("#id_g").val(),
-						id_curso: $("#id_c").val(),
-						id_ms: $("#id_ms").val(),
-						id_jornada: $("#jornada").val(),
-						id_docente: $("#id_docente").val(),
-						corte: $("#corte").val(),
-						periodo: periodo,
-						codigo: JSON.stringify(codigos),
-						L: JSON.stringify(logros),
-						R: JSON.stringify(notas)
-					},
+					// si los datos son validos
+					if (1) {
+						// llamo al metodo ajax para el envío de la  información
+						// se emplea en envío por POST
+						$.ajax({
+							type: "POST",
+							url: "notas_mensuales_recuperacion.php",
+							data: {
+								year: $("#years").val(),
+								semana: $("#semana").val(),
+								id_gs: $("#id_g").val(),
+								id_curso: $("#id_c").val(),
+								id_ms: $("#id_ms").val(),
+								id_jornada: $("#jornada").val(),
+								id_docente: $("#id_docente").val(),
+								corte: $("#corte").val(),
+								periodo: periodo,
+								codigo: JSON.stringify(codigos),
+								L: JSON.stringify(logros),
+								R: JSON.stringify(notas)
+							},
 
-					success: function (data) {
-						// respuesta a la carga de notas
-						console.log(data);
+							success: function(data) {
+								// respuesta a la carga de notas
 
-					},
-					error: function (xhr, status) {
-						swal('Disculpe, existió un problema');
-						console.log(xhr);
+								// si hay notas actualizadas
+								if (data.actualizadas > 0) {
+									swal("Succes", "cantidad de actualizadas " + data["actualizadas"]);
+								}
+								console.log(data);
+
+
+							},
+							error: function(xhr, status) {
+								swal('Disculpe, existió un problema');
+								console.log(xhr);
+							}
+						});
+					} // fin de valido
+					else {
+						swal("Revise los datos", "No se ingresaron los datos \t porque tiene notas mayores que 5", "error");
 					}
-				});
-						} // fin de valido
-			else {
-				swal("Revise los datos", "No se ingresaron los datos \t porque tiene notas mayores que 5", "error");
-						}
-					}
+				}
 
-				});
+			});
 
-					} // fin de la funsion set_recuperacion
+		} // fin de la funsion set_recuperacion
 	</script>
 
 
 	<script>
-			// funcion para la carga de los alumnos
-			function est(id_a) {
-				//swal("Has ingresado el alumno"+id_a);
+		// funcion para la carga de los alumnos
+		function est(id_a) {
+			//swal("Has ingresado el alumno"+id_a);
 
 
-				$.ajax({
-					type: "POST",
-					url: "rendiminento_alumno_periodo.php",
-					data: {
-						id_alumno: id_a,
-						materia: $("#id_ms").val(),
-						year: $("#years").val(),
-						periodo: $("#periodos").val()
-					},
-					// si los datos son correctos entonces ...
-					success: function (respuesta) {
+			$.ajax({
+				type: "POST",
+				url: "rendiminento_alumno_periodo.php",
+				data: {
+					id_alumno: id_a,
+					materia: $("#id_ms").val(),
+					year: $("#years").val(),
+					periodo: $("#periodos").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
 
-						$("#estadisicas").html(respuesta);
-						//$("#resultado").html("");
+					$("#estadisicas").html(respuesta);
+					//$("#resultado").html("");
 
-					},
-					error: function (xhr, status) {
-						swal('Disculpe, existió un problema al cargar los logros');
-						console.log(xhr);
-					}
-				});
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema al cargar los logros');
+					console.log(xhr);
+				}
+			});
 
 
 			$("#estadisticas").focus();
 		}
 
-			//fucion de carga incial
-			function load_semanas() {
+		//fucion de carga incial
+		function load_semanas() {
 
 			//  variable periodo
 			var periodo = $("#periodos").val();
@@ -413,157 +419,157 @@ $periodo = 0;
 			// carga en un selector  de semanas
 			carga("#semana", "load_semanas.php", {
 				periodo: periodo,
-			year: year
+				year: year
 			});
 		}
 
-			// funsion que carga las semanas correctas cuando cambia
-			// el Periodo de calificaciones
-			// funcion para cargar las materias en el cuadro de dialogo
-			// de acurdo al grado seleccionado
+		// funsion que carga las semanas correctas cuando cambia
+		// el Periodo de calificaciones
+		// funcion para cargar las materias en el cuadro de dialogo
+		// de acurdo al grado seleccionado
 
-			function load_materias() {
+		function load_materias() {
 			var id_docente = $("#id_docente").val();
 			var id_grado = $("#id_g").val();
 			var year = $("#years").val();
 			carga("#id_ms", "materias_grado.php", {
 				grados: id_grado,
-			id: id_docente,
-			year: year
+				id: id_docente,
+				year: year
 			});
 		}
 
-			l
+		l
 
-			// funcion para la carga de logros
-			function load_logros() {
+		// funcion para la carga de logros
+		function load_logros() {
 
-				$.ajax({
-					type: "POST",
-					url: "logros.php",
-					data: {
-						grado: $("#id_g").val(),
-						materia: $("#id_ms").val(),
-					},
-					// si los datos son correctos entonces ...
-					success: function (respuesta) {
+			$.ajax({
+				type: "POST",
+				url: "logros.php",
+				data: {
+					grado: $("#id_g").val(),
+					materia: $("#id_ms").val(),
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
 
-						$("#logros_materia").html(respuesta);
-						//$("#resultado").html("");
+					$("#logros_materia").html(respuesta);
+					//$("#resultado").html("");
 
-					},
-					error: function (xhr, status) {
-						swal('Disculpe, existió un problema al cargar los logros');
-						console.log(xhr);
-					}
-				});
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema al cargar los logros');
+					console.log(xhr);
+				}
+			});
 		}
 
 		//     // avance semanal de notas de docentes
 		//     function avance_semanal() {
 
 
-				//         // se invoca al metodo ajax para solicitar
-				//         // el listado de estudiantes
-				//         $.ajax({
-				//             type: "POST",
-				//             url: "notas_docentes_semanales.php",
-				//             data: {
-				//                 years: $("#years").val(),
-				//                 periodo: $("#periodos").val(),
-				//                 semana: $("#semana").val()
-				//             },
-				//             // si los datos son correctos entonces ...
-				//             success: function (respuesta) {
+		//         // se invoca al metodo ajax para solicitar
+		//         // el listado de estudiantes
+		//         $.ajax({
+		//             type: "POST",
+		//             url: "notas_docentes_semanales.php",
+		//             data: {
+		//                 years: $("#years").val(),
+		//                 periodo: $("#periodos").val(),
+		//                 semana: $("#semana").val()
+		//             },
+		//             // si los datos son correctos entonces ...
+		//             success: function (respuesta) {
 
-				//                 //$("#calificador").html(respuesta);
-				//                 $("#resultado").html(respuesta);
+		//                 //$("#calificador").html(respuesta);
+		//                 $("#resultado").html(respuesta);
 
-				//             },
-				//             error: function (xhr, status) {
-				//                 swal('Disculpe, existió un problema');
-				//                 console.log(xhr);
-				//             }
-				//         });
+		//             },
+		//             error: function (xhr, status) {
+		//                 swal('Disculpe, existió un problema');
+		//                 console.log(xhr);
+		//             }
+		//         });
 
 
-				// }
+		// }
 
-				// actualiza el formulario
-				function actualizar() {
-					load_materias();
-					load_lista_recuperacion();
-				}
+		// actualiza el formulario
+		function actualizar() {
+			load_materias();
+			load_lista_recuperacion();
+		}
 	</script>
 
 	<!-- scrip -->
 	<script>
-			/////////////////////////////////////////////////////////////////////////////////////////////
-			// Este script contiene la funcion para generar las graficas   //
-			// Esta foncion no recive parametros                                    //
-			////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		// Este script contiene la funcion para generar las graficas   //
+		// Esta foncion no recive parametros                                    //
+		////////////////////////////////////////////////////////////////////////////////////////////
 
-			function grafica() {
+		function grafica() {
 
-				// se invoca al metodo ajax para solicitar el los datos del grafico
-				$.ajax({
-					type: "POST",
-					url: "grafica_boletin.php",
-					data: {
-						year: $("#years").val(),
-						id_gs: $("#id_g").val(),
-						id_ms: $("#id_ms").val(),
-						id_jornada: $("#jornada").val(),
-						id_docente: $("#id_docentes").val(),
-						corte: $("#corte").val(),
-						periodo: $("#periodos").val(),
-						opcion: $("#opcion").val()
-					},
-					// si los datos son correctos entonces ...
-					success: function (respuesta) {
-						$("#grafo").html(respuesta);
-					},
-					error: function (xhr, status) {
-						swal('Disculpe, existió un problema');
-						console.log(xhr);
-					}
-				});
+			// se invoca al metodo ajax para solicitar el los datos del grafico
+			$.ajax({
+				type: "POST",
+				url: "grafica_boletin.php",
+				data: {
+					year: $("#years").val(),
+					id_gs: $("#id_g").val(),
+					id_ms: $("#id_ms").val(),
+					id_jornada: $("#jornada").val(),
+					id_docente: $("#id_docentes").val(),
+					corte: $("#corte").val(),
+					periodo: $("#periodos").val(),
+					opcion: $("#opcion").val()
+				},
+				// si los datos son correctos entonces ...
+				success: function(respuesta) {
+					$("#grafo").html(respuesta);
+				},
+				error: function(xhr, status) {
+					swal('Disculpe, existió un problema');
+					console.log(xhr);
+				}
+			});
 
 		}
 
-			// funcion para cargar datos en un selector
-			function carga(a, b, c) {
+		// funcion para cargar datos en un selector
+		function carga(a, b, c) {
 
-				console.log("Valor a: %s", a); // variable que almacena el codigo del campo
+			console.log("Valor a: %s", a); // variable que almacena el codigo del campo
 			console.log("Valor b: %s", b); // variable que almacena el nombre del archivo PHP
 			console.log(JSON.stringify(c)); // parametro que se transmite  mediante ajax
 
 			// $.post(b, c,
 			$.ajax({
 				async: true,
-			method: "POST",
-			url: b,
-			data: c,
-			dataType: "json",
+				method: "POST",
+				url: b,
+				data: c,
+				dataType: "json",
 
 			}).done(function(dato) {
 				$(a).empty();
 
-			$(a).append("<option value= -1> Seleccione </option>");
-		$.each(dato, function (index, materia) {
-			$(a).append("<option value =" + index + ">" + materia + "</option>");
+				$(a).append("<option value= -1> Seleccione </option>");
+				$.each(dato, function(index, materia) {
+					$(a).append("<option value =" + index + ">" + materia + "</option>");
 
-		});
+				});
 			});
 
 		}
 
 
 		jQuery.ajaxSetup({
-			beforeSend: function () {
+			beforeSend: function() {
 				$('#loader-overlay').css('display', 'flex');
 			},
-			complete: function () {
+			complete: function() {
 				$('#loader-overlay').hide();
 			}
 		});
@@ -617,7 +623,7 @@ $periodo = 0;
 
 						if ($admin) {
 							// si es administrador puede seleccionar cualquier periodo
-						
+
 							echo '<option value="-1" selected>seleccione</option>
                                     <option value="1">1</option>
 			        				<option value="2">2</option>
@@ -639,7 +645,7 @@ $periodo = 0;
 					</select>
 
 					<?php
-					if ($periodo == 0) {
+					if ($periodo == 0 and $admin == 0) {
 						echo "<script type='text/javascript'>";
 						echo "swal({ title: '¡Error!',   text: 'No hay periodo cargado',   icon: 'error'});";
 						echo "</script>";
@@ -651,7 +657,6 @@ $periodo = 0;
 
 						<?php
 						if ($admin) {
-
 						} else {
 							$s = new semana();
 							$sem = $s->get_semana_activa($ano);
@@ -691,7 +696,7 @@ $periodo = 0;
 						//actuliza el listado de grados disponibles
 						$lista = $mt->get_matricula(2);
 						// conviere el dato en un json
-						
+
 						echo '<option value="-1">seleccione</option>';
 
 						foreach ($lista as $key => $value) {
@@ -718,7 +723,7 @@ $periodo = 0;
 							//echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" href="listado_docentes.php" target="_blank">lista de docentes</a>';
 							//echo '<a style="margin: 2rem;" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" target="#" onclick="avance_semanal();">Avance notas semanales</a>';
 							//echo '<a style="margin: 2rem;" class="nav-link collapsed" aria-expanded="false" aria-controls="collapsePages" href="fs.php" target="_self">Gestión de semanas</a>';
-						
+
 						}
 						?>
 					</div>
@@ -827,7 +832,7 @@ $periodo = 0;
 		// Comportamiento responsive del sidenav (#sidenavAccordion).
 		// scripts.js solo conmuta la clase sb-sidenav-toggled; aquí se agrega
 		// el cierre al tocar fuera y el reinicio al cambiar de punto de quiebre.
-		(function () {
+		(function() {
 			var escritorio = window.matchMedia('(min-width: 992px)');
 			var cuerpo = document.body;
 			var boton = document.getElementById('sidebarToggle');
@@ -866,7 +871,7 @@ $periodo = 0;
 			}
 
 			// Escape cierra el panel en móvil.
-			document.addEventListener('keydown', function (e) {
+			document.addEventListener('keydown', function(e) {
 				if (e.key === 'Escape') {
 					cerrarEnMovil();
 				}
@@ -874,7 +879,7 @@ $periodo = 0;
 
 			// Al elegir un filtro en móvil, se cierra para dejar ver el resultado.
 			if (sidenav) {
-				sidenav.addEventListener('change', function (e) {
+				sidenav.addEventListener('change', function(e) {
 					if (e.target.tagName === 'SELECT') {
 						cerrarEnMovil();
 					}
@@ -882,7 +887,7 @@ $periodo = 0;
 			}
 
 			// Evita que el estado plegado de escritorio se herede en móvil.
-			var cambio = function () {
+			var cambio = function() {
 				cuerpo.classList.remove('sb-sidenav-toggled');
 				localStorage.setItem('sb|sidebar-toggle', 'false');
 				sincronizarAria();

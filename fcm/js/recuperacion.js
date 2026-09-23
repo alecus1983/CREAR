@@ -21,7 +21,7 @@ function load_lista_recuperacion() {
         success: function (respuesta) {
             $('#calificador').html(respuesta);
             $('#loader').hide();
-            swal('Éxito', 'Lista de estudiantes cargada correctamente.', 'success');
+            //swal('Éxito', 'Lista de estudiantes cargada correctamente.', 'success');
         },
         error: function (xhr, status) {
             $('#loader').hide();

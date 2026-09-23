@@ -30,7 +30,7 @@ $jornada = $_POST["id_jornada"];
 // curso
 $curso = $_POST['curso'];
 // periodos
-$periodo = $_POST["periodo"];
+//$periodo = $_POST["periodo"];
 
 
 
@@ -47,7 +47,7 @@ if ($_POST["id_g"] > 0) {
 
 // validando si tiene un año asignado
 if ($_POST["years"] !== "") {
-  $ano = $_POST["years"];//date("Y");
+  $ano = $_POST["years"]; //date("Y");
 } else {
   $valido = false;
   $err = $err . "<p class='text-danger'>Porfavor seleccione un año</p>";
@@ -69,7 +69,13 @@ if ($_POST["id_ms"] > 0) {
   $err = $err . "<p class='text-danger'>Porfavor seleccione una materia</p>";
 }
 
-
+// validando si tiene un periodo
+if ($_POST["periodo"] > 0) {
+  $periodo = $_POST['periodo'];
+} else {
+  $valido = false;
+  $err = $err . "<p class='text-danger'>Porfavor seleccione un perdiodo</p>";
+}
 
 // SI LOS DATOS SON VALIDOS
 if ($valido) {
@@ -95,8 +101,8 @@ if ($valido) {
   //  
   echo "<div class='row'><div class='col-md-8'>";
   //nuevo objeto alumno
-    $estudiante = new alumnos();
-  
+  $estudiante = new alumnos();
+
   //crea un nuevo objeto listado (año,grado,jornada,curso)
   $listado = new lista_estudiantes($ano, $grado, $jornada, $curso);
 
@@ -118,7 +124,7 @@ if ($valido) {
   foreach ($listado->id_alumno as $e) {
 
     // creo un nuevo estudiante
-      $estudiante->get_alumno_codigo($e);
+    $estudiante->get_alumno_codigo($e);
 
     echo "<div class='row'>";
     echo " <div class='col-md-3 '>";
@@ -151,12 +157,12 @@ if ($valido) {
     echo '<div class="input-group mb-1">';
     echo '<span class="input-group-text" id="addon-wrapping">logro</span>';
     echo '<input type="number" step="1" min="0" name="l1_p' . $periodo . '[]" value="' . $logro1 . '" class="form-control L" placeholder="logro" aria-label="logro" aria-describedby="basic-addon1">';
-    echo '</div>';// fin del grupo del logro
-    echo '</div>';// fin de la columna
-    echo '</div>';// fin de la fila del alumno
+    echo '</div>'; // fin del grupo del logro
+    echo '</div>'; // fin de la columna
+    echo '</div>'; // fin de la fila del alumno
   }
 
-  echo "</div>";// fin de la columna col-md-8
+  echo "</div>"; // fin de la columna col-md-8
 
   // espacio para logros y  comentarios
   echo "<div id='logros_materia' class='col-md-4'>";
@@ -187,7 +193,6 @@ if ($valido) {
     }
 
     echo "</tbody></table>";
-
   }
 
   echo "</div>";
@@ -197,4 +202,3 @@ if ($valido) {
   echo $err;
 }
 //$lista = new $matriculas();
-?>
