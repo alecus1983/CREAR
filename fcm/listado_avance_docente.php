@@ -129,7 +129,7 @@ foreach ($docentes as $id => $d) {
 
     $html .= "<tr>";
     $html .= "<td>" . $fila . "</td>";
-    $html .= "<td>" . htmlspecialchars($d['identificacion']) . "</td>";
+    $html .= "<td>" . htmlspecialchars($d['id_docente']) . "</td>";
     $html .= "<td>" . htmlspecialchars(nombre_docente($d)) . "</td>";
     //$html .= "<td>" . htmlspecialchars($d['login']) . "</td>";
     $html .= "<td>" . $d['clases'] . "</td>";
