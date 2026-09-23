@@ -40,7 +40,8 @@ $(document).ready(function () {
                 id_jornada: $('#jornada').val(),
                 periodo: $('#periodos').val(),
                 curso: $('#id_c').val(),
-                semana: $('#semana').val()
+                semana: $('#semana').val(),
+                escolaridad: $('#escolaridad').val()
             },
             beforeSend: function () {
                 $('#loader').show();
@@ -48,7 +49,7 @@ $(document).ready(function () {
             success: function (respuesta) {
                 $('#calificador').html(respuesta);
                 $('#loader').hide();
-                swal('Éxito', 'Lista de estudiantes cargada correctamente.', 'success');
+                //swal('Éxito', 'Lista de estudiantes cargada correctamente.', 'success');
             },
             error: function (xhr, status) {
                 $('#loader').hide();
