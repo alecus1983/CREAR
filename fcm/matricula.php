@@ -97,10 +97,9 @@ class matricula extends curso
      */
     public function set_matricula()
     {
-        //Graba la fecha y hora actual en la columna `fecha` de la tabla `matricula`.
-        $fecha_actual = new DateTime();
-        //formato 2026-08-31 21:15:28
-        $this->fecha = $fecha_actual->format('Y-m-d H:i:s');
+        // Graba la fecha actual en la columna `fecha` de la tabla `matricula`.
+        // La columna es DATE, por eso no se guarda la hora (formato 2026-08-31).
+        $this->fecha = date('Y-m-d');
         // consulta SQL con prepared statement
         $sql = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, id_curso, mes, retiro, year, fecha)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
