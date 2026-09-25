@@ -360,6 +360,28 @@ $periodo = 0;
                                     // respuesta a la carga de notas
                                     console.log(data);
 
+                                    // notas_preescolar.php devuelve un JSON con
+                                    // el conteo de notas insertadas y actualizadas
+                                    var resultado;
+                                    try {
+                                        resultado = (typeof data === 'string') ? JSON.parse(data) : data;
+                                    } catch (e) {
+                                        swal('Disculpe, existió un problema al leer la respuesta');
+                                        console.log(e);
+                                        return;
+                                    }
+
+                                    var insertadas = parseInt(resultado.insertadas, 10) || 0;
+                                    var actualizadas = parseInt(resultado.actualizadas, 10) || 0;
+
+                                    if (insertadas === 0 && actualizadas === 0) {
+                                        swal("Sin cambios", "No se agregaron ni actualizaron notas", "info");
+                                    } else {
+                                        swal("Notas registradas",
+                                            "Notas agregadas: " + insertadas + "\nNotas actualizadas: " + actualizadas,
+                                            "success");
+                                    }
+
                                 },
                                 error: function(xhr, status) {
                                     swal('Disculpe, existió un problema');
@@ -530,6 +552,28 @@ $periodo = 0;
                                     //$("#resultado").html("Se ingresaron las notas con exito");
                                     //$("#resultado").html(data);
                                     console.log(data);
+
+                                    // notas_semanales_x.php devuelve un JSON con
+                                    // el conteo de notas insertadas y actualizadas
+                                    var resultado;
+                                    try {
+                                        resultado = (typeof data === 'string') ? JSON.parse(data) : data;
+                                    } catch (e) {
+                                        swal('Disculpe, existió un problema al leer la respuesta');
+                                        console.log(e);
+                                        return;
+                                    }
+
+                                    var insertadas = parseInt(resultado.insertadas, 10) || 0;
+                                    var actualizadas = parseInt(resultado.actualizadas, 10) || 0;
+
+                                    if (insertadas === 0 && actualizadas === 0) {
+                                        swal("Sin cambios", "No se agregaron ni actualizaron notas", "info");
+                                    } else {
+                                        swal("Notas registradas",
+                                            "Notas agregadas: " + insertadas + "\nNotas actualizadas: " + actualizadas,
+                                            "success");
+                                    }
 
                                 },
                                 error: function(xhr, status) {

@@ -92,9 +92,12 @@ if ($valido) {
     $id_docente = $md->get_docente($id_m, $grado, $jornada, $curso, $ano);
     $d->get_docente_id($id_docente);
 
+    // el periodo se revisa completo desde su primera semana hasta la elegida
+    $semana_inicial = (($periodo - 1) * 8) + 1;
+
     echo "<p>Listado de  notas pendientes de <b>"
         .$cr->materia."</b> del grado <b>"
-        .$gr->nombre_g."</b> de la semana <b>1</b> a la semana <b>$semana</b>, docente <span class='text-danger'>"
+        .$gr->nombre_g."</b> de la semana <b>$semana_inicial</b> a la semana <b>$semana</b>, docente <span class='text-danger'>"
         .ucwords(strtolower($d->nombres))
         ." ".ucwords(strtolower($d->apellidos))."</span></p>";
 

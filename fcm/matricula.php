@@ -319,9 +319,6 @@ class matricula extends curso
         // Ejecuta la consulta.
         $stmt->execute();
 
-        // obtengo el id de la matrícula recién insertada (guardado en $mt->id por set_matricula)
-        $id_matricula = $mt->id;
-
         // Obtiene el resultado de la consulta.
         $result = $stmt->get_result();
 

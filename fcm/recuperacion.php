@@ -350,12 +350,28 @@ $periodo = 0;
 
 							success: function(data) {
 								// respuesta a la carga de notas
-
-								// si hay notas actualizadas
-								if (data.actualizadas > 0) {
-									swal("Succes", "cantidad de actualizadas " + data["actualizadas"]);
-								}
 								console.log(data);
+
+								// notas_mensuales_recuperacion.php devuelve un JSON
+								// con el conteo de notas actualizadas (no inserta registros)
+								var resultado;
+								try {
+									resultado = (typeof data === 'string') ? JSON.parse(data) : data;
+								} catch (e) {
+									swal('Disculpe, existió un problema al leer la respuesta');
+									console.log(e);
+									return;
+								}
+
+								var actualizadas = parseInt(resultado.actualizadas, 10) || 0;
+
+								if (actualizadas === 0) {
+									swal("Sin cambios", "No se actualizaron notas de recuperación", "info");
+								} else {
+									swal("Notas registradas",
+										"Notas actualizadas: " + actualizadas,
+										"success");
+								}
 
 
 							},

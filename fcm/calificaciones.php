@@ -21,7 +21,7 @@ get_rendimiento_alummno_periodo()	$id_a, $id_m, $ano, $id_periodo	Retorna un arr
 get_logro_id()	$id_logro	Busca en la tabla logros y asigna la descripción del logro al objeto.
 get_logro()	$id_a, $id_m, $y, $id_periodo	Obtiene el logro asignado a un alumno en una materia y período.
 get_docente_semana()	$id_docente, $ano, $semana	Cuenta cuántas calificaciones ha ingresado un docente en una semana. Retorna int.
-get_criterio_faltantes()	$id_e, $id_m, $id_s, $p, $year	Retorna un array con los criterios de evaluación que faltan para el alumno en semanas anteriores a $id_s.
+get_criterio_faltantes()	$id_e, $id_m, $id_s, $p, $year	Retorna los criterios de evaluación que le faltan al alumno en las semanas del periodo $p hasta $id_s, leyendo las columnas {semana}{tipo} de c_{year}.
 
 
 METODOS SET
@@ -652,33 +652,102 @@ class calificaciones extends imcrea
     /**
      * @brief Obtiene los criterios de evaluación faltantes para un estudiante.
      *
-     * @param int $id_e     ID del estudiante.
-     * @param int $id_m     ID de la materia.
-     * @param int $id_s     ID de la semana.
-     * @param int $p        Período.
-     * @param int $year     Año lectivo.
-     * @return array Un array de arrays asociativos con los criterios faltantes.
+     * @param int $id_e     Código del alumno.
+     * @param int $id_m     Código de la materia.
+     * @param int $id_s     Numero de la semana hasta donde se revisa (inclusive).
+     * @param int $p        Periodo academico (1 a 4).
+     * @param int $year     Año lectivo (sufijo de la tabla c_{year}).
+     * @return array Criterios faltantes indexados por el nombre de la columna
+     *               de c_{year} (ej. 1A) => array(0 => tipo, 1 => semana).
      *
-     * Esta consulta busca qué calificaciones (según el tipo y semana) faltan para un estudiante
-     * en una materia y período dados. La lógica de la consulta es compleja y podría
-     * ser simplificada.
+     * En c_{year} cada nota es una columna llamada {semana}{tipo}, donde tipo es
+     * la letra del ponderado y va de la A a la J (ej. 1A, 4H, 8J). La tabla
+     * validar dice que letras se exigen en cada semana: las semanas normales
+     * piden de la A a la G, las intermedias (4, 12, 20, 28) agregan el quiz (H)
+     * y las finales de periodo (8, 16, 24, 32) piden E, F, G, I y J.
+     *
+     * Se revisan las semanas del periodo $p, desde la primera hasta $id_s. Una
+     * nota falta cuando su columna esta en NULL, o cuando el alumno todavia no
+     * tiene fila en esa materia.
      */
     public function get_criterio_faltantes($id_e, $id_m, $id_s, $p, $year)
     {
-        $q = "SELECT v.criterio, tipo, id_semana FROM 
-              (SELECT CONCAT(validar, $id_m) AS criterio, tipo, id_semana FROM validar WHERE id_semana < $id_s) AS v LEFT JOIN
-              (SELECT CONCAT(tipo, id_semana, id_materia) AS criterio, c.id_ponderado FROM ponderado AS p INNER JOIN 
-              (SELECT id_alumno, id_semana, id_ponderado, id_materia FROM calificaciones_" . $year . " WHERE year = $year AND periodo = $p AND id_materia = $id_m AND id_semana < $id_s AND id_alumno IN ($id_e)) AS c ON c.id_ponderado = p.id_ponderado) AS n ON n.criterio = v.criterio WHERE n.criterio IS NULL";
+        $id_e = (int) $id_e;
+        $id_m = (int) $id_m;
+        $id_s = (int) $id_s;
+        $p = (int) $p;
+        $year = (int) $year;
 
-        $c = $this->_db->query($q);
         $arr = array();
 
-        while ($a = $c->fetch_array(MYSQLI_ASSOC)) {
-            $criterio = $a['criterio'];
-            $tipo = $a['tipo'];
-            $semana = $a['id_semana'];
-            $arr[$criterio][0] = $tipo;
-            $arr[$criterio][1] = $semana;
+        // semanas que se revisan: de la primera del periodo hasta $id_s
+        $inicio = (($p - 1) * 8) + 1;
+        $fin = min($id_s, $p * 8);
+
+        if ($p < 1 || $fin < $inicio) {
+            error_log("get_criterio_faltantes: la semana $id_s no pertenece al periodo $p");
+            return $arr;
+        }
+
+        // criterios exigidos en esas semanas que ademas existen como columna en
+        // la tabla del año (las columnas cambian de un año a otro)
+        $existentes = $this->get_columnas_c($year);
+        $criterios = array();
+
+        $q = "SELECT id_semana, tipo FROM validar
+              WHERE id_semana BETWEEN $inicio AND $fin
+              ORDER BY id_semana, tipo";
+
+        $c = $this->_db->query($q);
+
+        if (!$c) {
+            error_log("Error en get_criterio_faltantes al leer validar: " . $this->_db->error);
+            return $arr;
+        }
+
+        while ($v = $c->fetch_array(MYSQLI_ASSOC)) {
+            $col = $v['id_semana'] . $v['tipo'];
+            if (isset($existentes[$col])) {
+                $criterios[$col] = array($v['tipo'], (int) $v['id_semana']);
+            }
+        }
+
+        if (empty($criterios)) {
+            return $arr;
+        }
+
+        // notas consignadas al alumno en la materia
+        $campos = array();
+        foreach (array_keys($criterios) as $col) {
+            $campos[] = "`" . $col . "`";
+        }
+
+        $q = "SELECT " . implode(", ", $campos) . "
+              FROM c_" . $year . "
+              WHERE id_alumno = $id_e AND id_materia = $id_m
+              LIMIT 1";
+
+        $notas = array();
+
+        try {
+            $c = $this->_db->query($q);
+            if ($c) {
+                $r = $c->fetch_array(MYSQLI_ASSOC);
+                if ($r) {
+                    $notas = $r;
+                }
+            }
+        } catch (Throwable $e) {
+            error_log("Error en get_criterio_faltantes: " . $e->getMessage());
+            return $arr;
+        }
+
+        // sin fila en la materia faltan todas las notas; con fila, faltan las
+        // columnas en NULL (isset descarta el NULL y conserva la nota 0)
+        foreach ($criterios as $col => $criterio) {
+            if (!isset($notas[$col])) {
+                $arr[$col] = $criterio;
+            }
         }
 
         return $arr;
