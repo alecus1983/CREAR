@@ -145,11 +145,11 @@ if ($semana_final) {
 
                 foreach ($campos_revisar as $letra) {
 
-                    
-                    $columna = ($letra == 'L') ? 'l1_p'.$periodo : $semana.$letra;
+
+                    $columna = ($letra == 'L') ? 'l1_p' . $periodo : $semana . $letra;
                     $nota_enviada = (isset($dato[$letra]) && trim($dato[$letra]) !== '') ? (float) $dato[$letra] : null;
                     $nota_db = (isset($fila_db[$columna]) && !is_null($fila_db[$columna])) ? (float) $fila_db[$columna] : null;
-                    
+
                     if ($nota_enviada !== $nota_db) {
                         $ha_cambiado = true;
                         break;
@@ -179,7 +179,7 @@ if ($semana_final) {
                 // los cuales comienzan con la letra D, seguido por el numero de la semana
 
                 // columna de nota en la base de datos
-                $columna_nota = "D_p" . $periodo;
+                $columna_nota = "D" . strval($semana);
                 // columna de  logros en la base de datos
                 $columna_logro = "l1_p" . strval($periodo);
 
@@ -204,7 +204,7 @@ if ($semana_final) {
                         'id_alumno' => $dato['codigo'],
                         'id_materia' => $id_materia,
                         'docente' => $id_docente,
-                        "'D_p" . strval($periodo) . "'" => $dato['A'],
+                        "'D" . strval($semana) . "'" => $dato['A'],
                         "l1_p" . strval($periodo) => $dato['L']
                     ];
                 }

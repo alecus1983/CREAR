@@ -1090,7 +1090,7 @@ foreach ($list as $e) {
     }
 
     $pdf->Ln(5);
-
+    // titulo del grafico
     $g_titulo = enc("Evolución de la disciplina");
 
     // son las etiquetas en x
@@ -1099,40 +1099,15 @@ foreach ($list as $e) {
     // ciclo de repeticion for
     // para explorar las siete calificaciones parciales de
     // disciplina
-    for ($ss = 1; $ss < 8; $ss++) {
+    for ($ss = 1; $ss < 9; $ss++) {
         // obtengo los atributos de la semana
         $g_semana->get_semana_ano(8 * ($id_periodo - 1) + $ss, $year);
-        // agrego la fecha final al array
 
-        // // 2. Crear el objeto de fecha en PHP
-        // $fecha = new DateTime($g_semana->fin);
-
-        // // 3. Configurar el formateador en español ('es') para obtener "30-agosto"
-        // $formateador = new IntlDateFormatter(
-        //     'es',
-        //     IntlDateFormatter::NONE,
-        //     IntlDateFormatter::NONE,
-        //     null,
-        //     null,
-        //     "d'-'MMMM"
-        // );
-
-        // 4. Imprimir el resultado
-        //echo ucfirst($formateador->format($fecha));
-
+        // agrego una fila al array
         array_push($etiquetas_x, formatearFecha($g_semana->fin));
     }
 
-    // $etiquetas_x = [
-    //     (8 * $id_periodo) + 1,
-    //     (8 * $id_periodo) + 2,
-    //     (8 * $id_periodo) + 3,
-    //     (8 * $id_periodo) + 4,
-    //     (8 * $id_periodo) + 5,
-    //     (8 * $id_periodo) + 6,
-    //     (8 * $id_periodo) + 7
-    // ];
-
+    // inicializo el array para guardar las notas de disciplina
     $nota_disciplina = [];
 
 
@@ -1143,15 +1118,15 @@ foreach ($list as $e) {
         // asigno la nota de recuperacion
         if ($er["id_alumno"] == $e and $er["id_materia"] == 20) {
 
-            $d1 = "D" . strval(8 * ($id_periodo - 1) + 1);
-
-            $nota_disciplina[1] = $er[$d1];
+            // alimento el array de disciplina
+            $nota_disciplina[1] = $er["D" . strval(8 * ($id_periodo - 1) + 1)];
             $nota_disciplina[2] = $er["D" . strval(8 * ($id_periodo - 1) + 2)];
             $nota_disciplina[3] = $er["D" . strval(8 * ($id_periodo - 1) + 3)];
             $nota_disciplina[4] = $er["D" . strval(8 * ($id_periodo - 1) + 4)];
             $nota_disciplina[5] = $er["D" . strval(8 * ($id_periodo - 1) + 5)];
             $nota_disciplina[6] = $er["D" . strval(8 * ($id_periodo - 1) + 6)];
             $nota_disciplina[7] = $er["D" . strval(8 * ($id_periodo - 1) + 7)];
+            $nota_disciplina[8] = $er["D" . strval(8 * ($id_periodo - 1) + 8)];
             break;
         }
     }
@@ -1165,7 +1140,8 @@ foreach ($list as $e) {
             $nota_disciplina[4],
             $nota_disciplina[5],
             $nota_disciplina[6],
-            $nota_disciplina[7]
+            $nota_disciplina[7],
+            $nota_disciplina[8]
         ];
         // crea un grafico de linea
         $pdf->GraficoLinea($g_titulo, $etiquetas_x, $g_notas);

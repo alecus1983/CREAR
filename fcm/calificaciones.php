@@ -875,13 +875,13 @@ class calificaciones extends imcrea
 
 
     // funcion para obtener la disciplina de la semana final
-    public function get_disciplina_semana_final($ano, $id_m, $periodo, $in_alumnos)
+    public function get_disciplina_semana_final($ano, $id_m, $periodo, $semana, $in_alumnos)
     {
 
 
 
         // consulta para obtener los logros y las notas de la semana final de periodo
-        $q = "SELECT id_alumno, l1_p{$periodo}, D_p" . strval($periodo) . " nota
+        $q = "SELECT id_alumno, l1_p{$periodo}, D" . strval($semana) . " nota
               FROM c_{$ano}
               WHERE id_materia = {$id_m} AND id_alumno IN ({$in_alumnos})";
 
