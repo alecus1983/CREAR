@@ -54,13 +54,103 @@ class PDF extends tFPDF
         //Arial italic 8
         $this->SetFont('Arial', '', 8);
         //Número de página
-        $txt = ("Otros servicios: Programas Técnicos , Cursos cortos y Programas tecnológicos");
+        $txt = enc("Otros servicios: Programas Técnicos , Cursos cortos y Programas tecnológicos");
         $this->Cell(0, 5, $txt, 0, 0, 'C');
         $this->Ln(3);
-        $txt = ("Info: Tel 829 602 8443640, Cel.3166288374, WhatsApp. 3164469532, Email:imcreativo@hotmail.com,  www.imcreativo.edu.co ");
+        $txt = enc("Info:  Cel.3166288374, WhatsApp. 3164469532, Email:administrativo@imcreativo.edu.co,  www.imcreativo.edu.co ");
         $this->Cell(0, 5, $txt, 0, 0, 'C');
         //$this->Ln(1);
         //$this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
+    }
+
+    /**
+     * Dibuja un grafico de linea con escala de 0 a 5.
+     *
+     * @param string $titulo    Titulo del grafico.
+     * @param array  $etiquetas Etiquetas del eje X (una por punto).
+     * @param array  $valores   Valores de cada punto; null o 0 = sin nota (no se dibuja).
+     */
+    function GraficoLinea($titulo, $etiquetas, $valores)
+    {
+        // dimensiones del grafico
+        $ancho = 180;
+        $alto = 20;
+        $margen_izq = 8;   // espacio para las etiquetas del eje Y
+        $alto_total = $alto + 16; // titulo + etiquetas del eje X
+
+        // si no cabe en la pagina actual se pasa a la siguiente
+        if ($this->GetY() + $alto_total > $this->PageBreakTrigger) {
+            $this->AddPage();
+        }
+
+        // titulo
+        $this->SetFont('Arial', 'B', 8);
+        $this->Cell($ancho, 5, $titulo, 0, 1, 'L');
+
+        // area de dibujo
+        $x0 = $this->GetX() + $margen_izq;
+        $y0 = $this->GetY() + 2;
+        $w = $ancho - $margen_izq;
+        $h = $alto;
+
+        // lineas guia horizontales de 0 a 5
+        $this->SetFont('Arial', '', 6);
+        $this->SetLineWidth(0.1);
+        for ($v = 0; $v <= 5; $v++) {
+            $y = $y0 + $h - ($v / 5) * $h;
+            $this->SetDrawColor(210, 210, 210);
+            $this->Line($x0, $y, $x0 + $w, $y);
+            $this->Text($x0 - 4, $y + 1, number_format($v, 1, '.', ''));
+        }
+
+        // linea de nota minima aprobatoria (3.0)
+        $y3 = $y0 + $h - (3 / 5) * $h;
+        $this->SetDrawColor(255, 0, 0);
+        $this->Line($x0, $y3, $x0 + $w, $y3);
+
+        // marco del grafico
+        $this->SetDrawColor(0, 0, 0);
+        $this->Rect($x0, $y0, $w, $h);
+
+        // posicion en X de cada punto
+        $n = count($valores);
+        $paso = $w / max($n, 1);
+        $puntos = array();
+        $i = 0;
+        foreach ($valores as $k => $val) {
+            $px = $x0 + $paso * ($i + 0.5);
+            // etiqueta del eje X
+            $etq = $etiquetas[$k] ?? '';
+            $this->Text($px - $this->GetStringWidth($etq) / 2, $y0 + $h + 4, $etq);
+            // solo se grafican las semanas con nota
+            if ($val !== null && $val !== '' && floatval($val) > 0) {
+                $val = min(floatval($val), 5.0);
+                $puntos[] = array($px, $y0 + $h - ($val / 5) * $h, $val);
+            }
+            $i++;
+        }
+
+        // linea que une los puntos
+        $this->SetDrawColor(0, 102, 204);
+        $this->SetLineWidth(0.5);
+        for ($j = 1; $j < count($puntos); $j++) {
+            $this->Line($puntos[$j - 1][0], $puntos[$j - 1][1], $puntos[$j][0], $puntos[$j][1]);
+        }
+
+        // marcadores y valor de cada punto
+        $this->SetFillColor(0, 102, 204);
+        $this->SetFont('Arial', 'B', 6);
+        foreach ($puntos as $pt) {
+            $this->Rect($pt[0] - 0.8, $pt[1] - 0.8, 1.6, 1.6, 'F');
+            $txt = number_format($pt[2], 1, '.', '');
+            $this->Text($pt[0] - $this->GetStringWidth($txt) / 2, $pt[1] - 1.5, $txt);
+        }
+
+        // se restablecen los valores de dibujo
+        $this->SetLineWidth(0.2);
+        $this->SetDrawColor(0, 0, 0);
+        $this->SetFillColor(255, 255, 255);
+        $this->SetY($y0 + $h + 6);
     }
 }
 
@@ -72,6 +162,38 @@ class PDF extends tFPDF
 function enc(string $s): string
 {
     return iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $s) ?: $s;
+}
+
+function formatearFecha($fechaInput)
+{
+    // 1. Crear el objeto DateTime con la fecha recibida
+    $date = new DateTime($fechaInput);
+
+    // 2. Arrays de traducción al español
+    $dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    $meses = [
+        1 => 'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre'
+    ];
+
+    // 3. Extraer las partes de la fecha
+    $numeroDiaSemana = $date->format('w'); // 0 (domingo) a 6 (sábado)
+    $diaMes = $date->format('j');          // 1 a 31
+    $numeroMes = $date->format('n');       // 1 a 12
+    $año = $date->format('Y');             // Año completo (Ej: 2026)
+
+    // 4. Construir la cadena de texto
+    return $diaMes . " de " . $meses[$numeroMes];
 }
 
 
@@ -87,11 +209,16 @@ $gr->get_grado_id($id_grado);
 // asignamos el año
 $mt = new matricula();
 
+// creo un objeto semana
+$g_semana = new semana();
+
 $mt->year = $year;
 $mt->grado = $id_grado;
 $mt->id_jornada = $id_jornada;
 $mt->curso = $id_curso;
 $mt->id_grado = $id_grado;
+
+
 
 // creamos un nuevo listado de estudiantes 
 $list = $mt->get_matriculas_grado_jornada();
@@ -106,11 +233,6 @@ $nivel = $gr->grado;
 // de este grado
 $promovido = $gr->promovido; //$datog['promovido'];
 
-// ================================================================
-// PRE-CARGA OPTIMIZADA — reemplaza miles de queries individuales
-// con un conjunto de bulk queries ejecutadas UNA sola vez.
-// ================================================================
-
 // objeto de la clase jornada
 $jo = new jornada();
 $jo->get_jornada_por_id($id_jornada);
@@ -121,6 +243,13 @@ $md = new matricula_docente();
 $notax = new calificaciones();
 // creo un objeto tipo logro
 $lo = new logro();
+
+// ================================================================
+// PRE-CARGA OPTIMIZADA — reemplaza miles de queries individuales
+// con un conjunto de bulk queries ejecutadas UNA sola vez.
+// ================================================================
+
+
 
 // -------------------------------------------------------------------
 // 1. Cargar áreas y materias del grado UNA SOLA VEZ (fuera del bucle)
@@ -172,6 +301,13 @@ foreach ($tab_calificaciones as $em) {
     // ciclo de repeticion for
     // por cada fila de materias - estudiantes 
     for ($p = 1; $p < 5; $p++) {
+
+        // la materia disciplina (id_materia = 20) tiene una sola nota
+        // por periodo almacenada en las columnas D_p1 ... D_p4
+        if (intval($em["id_materia"]) === 20) {
+            $spot[$em["id_alumno"]][$materias_con_area[$em["id_materia"]]][$em["id_materia"]][$p] = floatval($em["D_p" . $p] ?? 0);
+            continue;
+        }
 
         // se calcula  la cantidad base a sumar
         // a la semana del periodo  1 para desplazarla 
@@ -243,6 +379,24 @@ foreach ($tab_calificaciones as $em) {
 }
 
 
+// notas semanales de disciplina (id_materia = 20) del periodo actual.
+// cada periodo tiene 8 semanas; se grafican las semanas base+1 a base+7
+// (ej. periodo 3: D17 - D23) ya que la semana 8 se consigna en D_p{periodo}
+$base_disc = 8 * ($id_periodo - 1);
+$semanas_disc = [];
+for ($s = $base_disc + 1; $s <= $base_disc + 7; $s++) {
+    $semanas_disc["D" . $s] = "Sem " . $s;
+}
+$disciplina_semanas = [];
+foreach ($tab_calificaciones as $ed) {
+    if (intval($ed["id_materia"]) === 20) {
+        foreach ($semanas_disc as $col => $etq) {
+            $disciplina_semanas[$ed["id_alumno"]][$col] = $ed[$col] ?? null;
+        }
+    }
+}
+
+
 // Establezco el array de  recuperaciones
 foreach ($tab_calificaciones as $er) {
     // ciclo para recorrer los periodos
@@ -306,16 +460,20 @@ foreach ($notas as $ke => $notas_areas) {
 
     // coloco en cero el acumulado para un estudiante
     $acc = 0;
+    // contador de materias
+    $c_materias = 0;
     // recorre las mateias
     foreach ($notas_areas as $nota_materia) {
         // acumulo el acumulado de notas
         foreach ($nota_materia as $nota_periodo) {
             $acc = $nota_periodo[$id_periodo] + $acc;
+            //se incrementa el numero de materias
+            $c_materias++;
         }
     }
 
     // asigno el promedio
-    $promedio[$ke] = $acc / count($nota_materia);
+    $promedio[$ke] = $acc / $c_materias;
 }
 
 //echo var_dump($promeedio);
@@ -931,11 +1089,90 @@ foreach ($list as $e) {
         $pdf->Cell(80, 3, "", 1, 0, 'L');
     }
 
-
-
-    //detalle de cada materia
-
     $pdf->Ln(5);
+
+    $g_titulo = enc("Evolución de la disciplina");
+
+    // son las etiquetas en x
+    $etiquetas_x = [];
+
+    // ciclo de repeticion for
+    // para explorar las siete calificaciones parciales de
+    // disciplina
+    for ($ss = 1; $ss < 8; $ss++) {
+        // obtengo los atributos de la semana
+        $g_semana->get_semana_ano(8 * ($id_periodo - 1) + $ss, $year);
+        // agrego la fecha final al array
+
+        // // 2. Crear el objeto de fecha en PHP
+        // $fecha = new DateTime($g_semana->fin);
+
+        // // 3. Configurar el formateador en español ('es') para obtener "30-agosto"
+        // $formateador = new IntlDateFormatter(
+        //     'es',
+        //     IntlDateFormatter::NONE,
+        //     IntlDateFormatter::NONE,
+        //     null,
+        //     null,
+        //     "d'-'MMMM"
+        // );
+
+        // 4. Imprimir el resultado
+        //echo ucfirst($formateador->format($fecha));
+
+        array_push($etiquetas_x, formatearFecha($g_semana->fin));
+    }
+
+    // $etiquetas_x = [
+    //     (8 * $id_periodo) + 1,
+    //     (8 * $id_periodo) + 2,
+    //     (8 * $id_periodo) + 3,
+    //     (8 * $id_periodo) + 4,
+    //     (8 * $id_periodo) + 5,
+    //     (8 * $id_periodo) + 6,
+    //     (8 * $id_periodo) + 7
+    // ];
+
+    $nota_disciplina = [];
+
+
+    // Establezco el array de  recuperaciones
+    foreach ($tab_calificaciones as $er) {
+        // ciclo para recorrer los periodos
+
+        // asigno la nota de recuperacion
+        if ($er["id_alumno"] == $e and $er["id_materia"] == 20) {
+
+            $d1 = "D" . strval(8 * ($id_periodo - 1) + 1);
+
+            $nota_disciplina[1] = $er[$d1];
+            $nota_disciplina[2] = $er["D" . strval(8 * ($id_periodo - 1) + 2)];
+            $nota_disciplina[3] = $er["D" . strval(8 * ($id_periodo - 1) + 3)];
+            $nota_disciplina[4] = $er["D" . strval(8 * ($id_periodo - 1) + 4)];
+            $nota_disciplina[5] = $er["D" . strval(8 * ($id_periodo - 1) + 5)];
+            $nota_disciplina[6] = $er["D" . strval(8 * ($id_periodo - 1) + 6)];
+            $nota_disciplina[7] = $er["D" . strval(8 * ($id_periodo - 1) + 7)];
+            break;
+        }
+    }
+
+    // si se tienen las notas de disciplina
+    if (isset($nota_disciplina[1])) {
+        $g_notas =  [
+            $nota_disciplina[1],
+            $nota_disciplina[2],
+            $nota_disciplina[3],
+            $nota_disciplina[4],
+            $nota_disciplina[5],
+            $nota_disciplina[6],
+            $nota_disciplina[7]
+        ];
+        // crea un grafico de linea
+        $pdf->GraficoLinea($g_titulo, $etiquetas_x, $g_notas);
+        //detalle de cada materia
+    }
+
+    $pdf->Ln(3);
 
     $pdf->Cell(180, 5, enc('Escala de valoración'), 0, 0, 'L');
     $pdf->Ln(6);
