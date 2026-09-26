@@ -528,7 +528,7 @@ foreach ($list as $e) {
     }
     $pdf->SetTextColor(0);
 
-    $pdf->Ln(7);
+    $pdf->Ln(3);
 
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -1212,7 +1212,7 @@ foreach ($list as $e) {
         }
     }
 
-    $pdf->Ln(10);
+    $pdf->Ln(3);
     $pdf->SetFont('Arial', 'B', 7);
     $pdf->SetTextColor(0);
 
@@ -1295,7 +1295,7 @@ foreach ($list as $e) {
         }
     }
 
-    $pdf->Ln(15);
+    $pdf->Ln(10);
     $pdf->Cell(180, 5, "Observaciones : ", 0, 0, 'L');
 
     $pdf->Ln(5);
@@ -1312,7 +1312,7 @@ foreach ($list as $e) {
 
 
     $pdf->Cell(180, 20, '', 0, 0, 'L');
-    $pdf->Ln(30);
+    $pdf->Ln(15);
     $pdf->Cell(180, 5, "    ________________________          _________________________", 0, 0, 'C');
     $pdf->Ln(3);
     $pdf->Cell(180, 5, "           Rectora                                       Directora de Grupo", 0, 0, 'C');
@@ -1327,5 +1327,5 @@ foreach ($list as $e) {
 
 
 
-$pdf->Output("boletin_" . $gr->grado . "_" . ($jo->jornada) . "_" . date('d-m-Y__H_i_s') . ".pdf", "D");
+$pdf->Output("boletin_" . $gr->grado . "_" . enc($jo->jornada) . "_" . date('d-m-Y__H_i_s') . ".pdf", "D");
 //$pdf->Output("boletin_.pdf");
