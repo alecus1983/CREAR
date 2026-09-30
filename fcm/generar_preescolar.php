@@ -7,7 +7,7 @@
 //  con mysqli sobre calificaciones_{year}) al esquema de objetos
 //  definido en datos.php y a la tabla de notas c_{year}.
 //
-//  En el nuevo esquema las notas de preescolar se guardan asi:
+//  En el esquema las notas de preescolar se guardan asi:
 //     R{periodo}     -> nota de la dimension en el periodo
 //     l1_p{periodo}  -> primer logro  (id de la tabla logros)
 //     l2_p{periodo}  -> segundo logro (id de la tabla logros)
@@ -191,12 +191,12 @@ $lo = new logro();
 $arr_pond_preescolar = array(1 => "R", 2 => "l1_p", 3 => "l2_p", 4 => "l3_p");
 
 // la valoracion del comportamiento (materia 20 - Disciplina) se guarda en
-// la columna D_p{periodo}; la tabla no tiene columna D_p4, de modo que en
+// la columna R de modo que en
 // el cuarto periodo se toma la nota consignada en R4.
-$col_disciplina = ($id_periodo < 4) ? "D_p" . $id_periodo : "R" . $id_periodo;
-$arr_pond_disciplina = ($id_periodo < 4)
-    ? array(1 => "R", 2 => "l1_p", 3 => "l2_p", 4 => "l3_p", 5 => "D_p")
-    : $arr_pond_preescolar;
+$col_disciplina =  "R" . $id_periodo;
+// $arr_pond_disciplina = ($id_periodo < 4)
+//     ? array(1 => "R", 2 => "l1_p", 3 => "l2_p", 4 => "l3_p", 5 => "D_p")
+//     : $arr_pond_preescolar;
 
 // $notas_cache[$id_materia][$id_alumno] = fila con las columnas del periodo
 $notas_cache = array();
@@ -206,7 +206,8 @@ $logros_cache = array();
 foreach ($materias as $id_m => $info_m) {
 
     // la disciplina requiere ademas la columna D_p{periodo}
-    $pond = ($id_m == 20) ? $arr_pond_disciplina : $arr_pond_preescolar;
+    //$pond = ($id_m == 20) ? $arr_pond_disciplina : $arr_pond_preescolar;
+    $pond = $arr_pond_preescolar;
 
     $notas_cache[$id_m] = $cl->get_notas_preescolar($year, $id_m, $id_periodo, $pond, $in_alumnos);
     // texto de todos los logros definidos para la materia

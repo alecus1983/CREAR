@@ -929,6 +929,36 @@ ALTER TABLE imcreati_datam.c_2026 MODIFY COLUMN R4 INT UNSIGNED DEFAULT NULL NUL
 
 
 
+-- update c_2026 set D_p3 = (D17 + D18 +D19+D20+D21+D22+D23+D24)/8 where id_alumno in (select id_alumno from matricula where year = 2026 and id_grado > 9)
+
+select (D17 + D18 +D19+D20+D21+D22+D23+D24)/8 as promerdio 
+,D17, D18 ,D19,D20,D21,D22,D23,D24 from c_2026  
+where id_materia = 20 and 
+id_alumno in (select id_alumno from matricula where year = 2026 and ( id_grado < 7 or id_grado > 9))
+
+-- acutualizacion del promedio de las notas de diciplina
+update c_2026 c set D_p3 = (D17 + D18 +D19+D20+D21+D22+D23+D24)/8   
+where id_materia = 20 and 
+id_alumno in (select id_alumno from matricula where year = 2026 and ( id_grado < 7 or id_grado > 9))
+
+
+select D17, D18 ,D19,D20,D21,D22,D23,D24 from c_2026  
+where id_materia = 20 and 
+D19 is null and
+id_alumno in (select id_alumno from matricula where year = 2026 and ( id_grado < 7 or id_grado > 9))
+
+
+update  c_2026  set D23 = D24
+where id_materia = 20 and 
+D23 is null and
+id_alumno in (select id_alumno from matricula where year = 2026 and ( id_grado < 7 or id_grado > 9))
+
+
+
+
+
+
+
 
 
 

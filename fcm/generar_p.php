@@ -4,6 +4,21 @@ require_once 'datos.php';
 // se crean las siguientes variables
 // con obtenida a travez del formulario formulario_boletines
 
+///////////////////////////////////////////////////////////////
+//                                                           //
+//  ARCHIVO PARA GENRAR BOLETIN DE PRIMARIA Y BACHILLERATO   //
+//                                                           //
+//  Las variables de ingreso son:                            //
+//                                                           //
+//  -  year : corresponde al año lectivo                     //
+//  -  id_perdiodo: codigo del periodo va del 1 al 4         //
+//  -  id_grado: codigo del grado , que proviene de la tabla //
+//               grados.                                     //
+//  -  id_jornada : codigo de la jornada                     //
+//  -  id_curso : codigo del curso                           //
+//                                                           //
+///////////////////////////////////////////////////////////////
+
 $year = $_GET["year"];                // carga el valor  en la variable fecha
 $id_periodo = $_GET["periodos"];
 $id_grado = $_GET["grado"]; // guarda el codigo del grado  en la variable $gradox
