@@ -230,7 +230,7 @@ $g_semana = new semana();
 $mt->year = $year;
 $mt->grado = $id_grado;
 $mt->id_jornada = $id_jornada;
-$mt->curso = $id_curso;
+$mt->id_curso = $id_curso;
 $mt->id_grado = $id_grado;
 
 
@@ -1148,7 +1148,7 @@ foreach ($list as $e) {
 
     // si se tienen las notas de disciplina
     if (isset($nota_disciplina[1])) {
-        $g_notas =  [
+        $g_notas = [
             $nota_disciplina[1],
             $nota_disciplina[2],
             $nota_disciplina[3],

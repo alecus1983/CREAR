@@ -42,7 +42,7 @@ class matricula extends curso
      */
     public $fecha;
 
-
+    public $id_curso;
 
     /**
      * @brief Constructor de la clase `matricula`.
@@ -76,10 +76,10 @@ class matricula extends curso
             $this->id_grado = $dato["id_grado"];
             $this->id_jornada = $dato["id_jornada"];
             $this->year = $dato["year"];
-            $this->mes    = $dato["mes"];
+            $this->mes = $dato["mes"];
             $this->retiro = $dato["retiro"];
             $this->id_curso = $dato["id_curso"];
-            $this->fecha  = $dato["fecha"] ?? null;
+            $this->fecha = $dato["fecha"] ?? null;
 
             // Obtengo los datos adicionales del grado (escolaridad, etc.)
             $this->get_grado_id($this->id_grado);
@@ -151,7 +151,7 @@ class matricula extends curso
             return false;
         }
 
-        $sql  = "UPDATE matricula SET fecha = CURDATE() WHERE id = ?";
+        $sql = "UPDATE matricula SET fecha = CURDATE() WHERE id = ?";
         $stmt = $this->_db->prepare($sql);
         if (!$stmt) {
             return false;
@@ -202,7 +202,8 @@ class matricula extends curso
      */
     public function get_matriculas_grado_jornada()
     {
-        $q = "SELECT * FROM matricula m WHERE year = $this->year AND m.id_jornada = $this->id_jornada AND id_grado = $this->id_grado";
+        $q = "SELECT * FROM matricula m WHERE year = $this->year AND m.id_jornada = $this->id_jornada AND id_grado = $this->id_grado AND  id_curso = $this->id_curso";
+        //echo $q;
         $c = $this->_db->query($q);
 
         $arr = array();
@@ -324,7 +325,7 @@ class matricula extends curso
         // Almacena los IDs de los alumnos en un array.
         $alumnos_ids = [];
         while ($row = $result->fetch_assoc()) {
-            $alumnos_ids[] = (int)$row['id_alumno'];
+            $alumnos_ids[] = (int) $row['id_alumno'];
         }
 
         // Cierra la declaración.
