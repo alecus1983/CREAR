@@ -74,7 +74,7 @@ if ($valido) {
         $html = $html . $alumno->correo;
         $html = $html . "</td>";
         $html = $html . "<td>";
-        $html = $html . '<button type="button" class="btn btn-warning" onclick="flujo_editar_matricula(' . $id["id"] . ', 31);">Editar</button>';
+        $html = $html . '<button type="button" class="btn btn-warning" onclick="flujo_editar_matricula(' . $id["id"] . ', 31, true);">Editar</button>';
         $html = $html . "</td>";
         $html = $html . "<td>";
         $html = $html . '<button type="button" class="btn btn-outline-secondary" onclick="imprimir_matricula(' . $id["id"] . ');">Ver</button>';

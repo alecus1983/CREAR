@@ -490,9 +490,10 @@ function matricular(onSuccess) {
 /**
  * Función que realiza la edición de la matrícula de un alumno.
  * Envía los datos del objeto global 'alumno' al servidor.
+ * Retorna la petición para poder esperar el resultado.
  */
 function editar_matricula() {
-  $.ajax({
+  return $.ajax({
     type: "POST",
     url: "editar_matricula.php",
     dataType: "json",

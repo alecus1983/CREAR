@@ -48,6 +48,58 @@ class acudientes extends imcrea
         }
     }
 
+    /**
+     * Obtiene el id_personas del acudiente vinculado al hijo (el registro más reciente).
+     *
+     * @param int $id_hijo  El id_persona del alumno (hijo).
+     * @return int  El id_personas del acudiente, o 0 si no hay vínculo.
+     */
+    public function get_id_persona_por_hijo(int $id_hijo): int
+    {
+        try {
+            $sql  = "SELECT id_personas FROM acudientes WHERE id_hijo = ? ORDER BY fecha DESC LIMIT 1";
+            $stmt = $this->_db->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception("Error al preparar get_id_persona_por_hijo (acudientes): " . $this->_db->error);
+            }
+            $id_personas = 0;
+            $stmt->bind_param("i", $id_hijo);
+            $stmt->execute();
+            $stmt->bind_result($id_personas);
+            $stmt->fetch();
+            $stmt->close();
+            return (int) $id_personas;
+        } catch (Exception $e) {
+            error_log("Error en get_id_persona_por_hijo (acudientes): " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    /**
+     * Elimina el vínculo acudiente-hijo filtrando por id_hijo (id_persona del alumno).
+     *
+     * @param int $id_hijo  El id_persona del alumno.
+     * @return int|false    Número de filas afectadas o false en caso de error.
+     */
+    public function del_por_hijo(int $id_hijo)
+    {
+        try {
+            $sql  = "DELETE FROM acudientes WHERE id_hijo = ?";
+            $stmt = $this->_db->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception("Error al preparar del_por_hijo (acudientes): " . $this->_db->error);
+            }
+            $stmt->bind_param("i", $id_hijo);
+            $stmt->execute();
+            $rows = $this->_db->affected_rows;
+            $stmt->close();
+            return $rows;
+        } catch (Exception $e) {
+            error_log("Error en del_por_hijo (acudientes): " . $e->getMessage());
+            return false;
+        }
+    }
+
     // Método para insertar un nuevo registro
     public function add($id_personas, $id_hijo, $fecha)
     {

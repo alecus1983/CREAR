@@ -32,6 +32,33 @@ class madres extends imcrea {
         }
     }
 
+    /**
+     * Obtiene el id_personas del madre vinculado al hijo (el registro más reciente).
+     *
+     * @param int $id_hijo  El id_persona del alumno (hijo).
+     * @return int  El id_personas del madre, o 0 si no hay vínculo.
+     */
+    public function get_id_persona_por_hijo(int $id_hijo): int
+    {
+        try {
+            $sql  = "SELECT id_personas FROM madres WHERE id_hijo = ? ORDER BY fecha DESC LIMIT 1";
+            $stmt = $this->_db->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception("Error al preparar get_id_persona_por_hijo (madres): " . $this->_db->error);
+            }
+            $id_personas = 0;
+            $stmt->bind_param("i", $id_hijo);
+            $stmt->execute();
+            $stmt->bind_result($id_personas);
+            $stmt->fetch();
+            $stmt->close();
+            return (int) $id_personas;
+        } catch (Exception $e) {
+            error_log("Error en get_id_persona_por_hijo (madres): " . $e->getMessage());
+            return 0;
+        }
+    }
+
     // Método para insertar un nuevo registro
     public function add($id_personas, $id_hijo, $fecha) {
         try {

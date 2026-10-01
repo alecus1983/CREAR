@@ -318,6 +318,11 @@ function formulario_agregar_persona() {
             // Forzamos visibilidad
             $("#tabla").show();
             console.log("Contenido actual de #tabla: ", $("#tabla").html());
+
+            // al salir del campo identificacion se valida si ya existe
+            $("#ad_identificacion").on("change", function () {
+                verificar_identificacion_persona($(this).val());
+            });
         }
     });
 
@@ -332,6 +337,44 @@ function formulario_agregar_persona() {
     // se coloca el enfoque el div tabla    
     $("#tabla").focus();
 
+}
+
+/**
+ * Verifica en la tabla personas si ya existe una persona con la identificación dada.
+ * Si existe, muestra una ventana emergente de advertencia.
+ *
+ * @param {string} identificacion - Número de identificación a verificar.
+ * @returns {Promise<boolean>} true si ya existe una persona con esa identificación.
+ */
+function verificar_identificacion_persona(identificacion) {
+
+    identificacion = (identificacion || "").trim();
+
+    if (identificacion === "") {
+        return Promise.resolve(false);
+    }
+
+    return new Promise(function (resolve) {
+        $.ajax({
+            type: "POST",
+            url: "verificar_identificacion_persona.php",
+            dataType: "json",
+            data: { identificacion: identificacion },
+            success: function (respuesta) {
+                if (respuesta['status'] == 1) {
+                    swal('Identificación duplicada', 'Ya existe una persona con la identificación ' + identificacion + '.', 'warning');
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            },
+            error: function (xhr) {
+                // si falla la verificacion, add_persona.php vuelve a validar en el servidor
+                console.log(xhr);
+                resolve(false);
+            }
+        });
+    });
 }
 
 // funcion para agregar personas
@@ -439,7 +482,16 @@ function agregar_persona(formulario, personax, ea) {
         });
     }
 
+    // ── PASO 0: Verificar si ya existe una persona con la misma identificación ──
+    verificar_identificacion_persona(persona.identificacion).then(function (existe) {
+        // si ya existe no se agrega la persona (la ventana emergente ya se mostró)
+        if (!existe) {
+            verificar_nombre_e_insertar();
+        }
+    });
+
     // ── PASO 1: Verificar si ya existe una persona con nombre/apellido similar ──
+    function verificar_nombre_e_insertar() {
     $.ajax({
         type: "POST",
         url: "verificar_nombre_persona.php",
@@ -459,7 +511,7 @@ function agregar_persona(formulario, personax, ea) {
 
                 // Mostrar swal de confirmación con la lista de similares
                 swal({
-                    title: '⚠️ Posible estudiante duplicado',
+                    title: '⚠️ Posible persona duplicada',
                     text: 'Ya existe(n) persona(s) con nombre o apellido similar:\n\n' + lista + '\n\n¿Desea continuar y registrar de todas formas?',
                     icon: 'warning',
                     buttons: {
@@ -493,6 +545,7 @@ function agregar_persona(formulario, personax, ea) {
             ejecutar_insercion();
         }
     });
+    }
 
 }
 
@@ -873,7 +926,8 @@ function get_persona(id, personax) {
  */
 function get_persona_alumno(id_alumno, personax) {
     // realizo la consulta de los datos
-    $.ajax({
+    // se retorna la peticion para poder esperar a que lleguen los datos
+    return $.ajax({
         type: "POST",
         url: "get_persona_alumno.php",
         dataType: "json",
@@ -984,41 +1038,21 @@ function seleccionar_persona(id, personax, form) {
 }
 
 /**
- * Función que permite obtener los datos de una persona de acuerdo a su id,
- * vincularla al alumno en la base de datos como padre, y saltar al item del formulario de edición.
- * 
+ * Función que permite obtener los datos de una persona de acuerdo a su id
+ * y saltar al item del formulario de edición.
+ * El vínculo con el alumno (padre, madre o acudiente) se guarda al finalizar
+ * la edición, en guardar_familia_alumno() (paso 48).
+ *
  * @param {number|string} id - El ID de la persona seleccionada.
- * @param {Object} personax - El objeto donde se almacenarán los datos (padre/madre).
+ * @param {Object} personax - El objeto donde se almacenarán los datos (padre/madre/acudiente).
  * @param {number} form - El ítem del formulario al que saltar después de seleccionar.
  */
 function seleccionar_persona_editar(id, personax, form) {
     // Cargo el id de la persona
     personax["id_persona"] = id;
-    // Obtengo los datos de la persona de manera "síncrona" sin bloquear
+    // Obtengo los datos de la persona y salto al siguiente item
     get_persona(id, personax).then(function () {
-        // Vinculo la persona al alumno en la base de datos
-        $.ajax({
-            type: "POST",
-            url: "vincular_padre.php",
-            dataType: "json",
-            data: {
-                id_persona: id,
-                id_hijo: alumno["id_persona"]
-            },
-            success: function (respuesta) {
-                if (respuesta['status'] == 1) {
-                    swal("seleccion", "Se selecciono y vinculo la persona " + id + " con el alumno de código " + alumno["id_persona"], 'success');
-                    // Salto al siguiente item del formulario de edición
-                    flujo_editar_matricula(alumno["id_matricula"], form);
-                } else {
-                    swal('Error', 'No se pudo vincular la persona al alumno: ' + (respuesta['mensaje'] || ''), 'error');
-                }
-            },
-            error: function (xhr, status) {
-                swal('Disculpe, existió un problema en la vinculación');
-                console.log(xhr);
-            }
-        });
+        flujo_editar_matricula(alumno["id_matricula"], form);
     });
 }
 
@@ -1108,7 +1142,8 @@ function get_afiliacion(id_persona, form) {
 function get_direccion(personax, form) {
 
     // solicito datos en ajax
-    $.ajax({
+    // se retorna la peticion para poder esperar a que lleguen los datos
+    return $.ajax({
         type: "POST",
         url: "direccion_persona.php",
         dataType: "json",
@@ -1456,8 +1491,10 @@ function cp_acudiente(personax, ea) {
         return;
     }
 
-    // tomo los datos del padre
-    acudiente = personax;
+    // tomo una copia de los datos del padre o la madre
+    // (una copia y no el mismo objeto, para que al limpiar o cambiar
+    // el acudiente no se modifique tambien el padre o la madre)
+    acudiente = Object.assign({}, personax);
 
     // Redirección condicionada por el parámetro ea
     if (ea == 1) {

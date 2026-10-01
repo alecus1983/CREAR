@@ -288,6 +288,42 @@ class matricula extends curso
     // ---
 
     /**
+     * @brief Busca si el alumno ya tiene una matrícula con el mismo grado, curso y año.
+     *
+     * @param int    $id_alumno    El ID del alumno.
+     * @param int    $id_grado     El ID del grado.
+     * @param string $id_curso     El ID del curso.
+     * @param string $year         El año lectivo.
+     * @param int    $id_excluir   ID de matrícula a ignorar (la que se está editando), 0 para ninguna.
+     * @return int El ID de la matrícula encontrada, o 0 si no existe.
+     */
+    public function existe_matricula_alumno($id_alumno, $id_grado, $id_curso, $year, $id_excluir = 0)
+    {
+        try {
+            $q = "SELECT id FROM matricula WHERE id_alumno = ? AND id_grado = ? AND id_curso = ? AND year = ? AND id <> ? LIMIT 1";
+            $stmt = $this->_db->prepare($q);
+
+            if ($stmt === false) {
+                throw new Exception("Error al preparar la consulta existe_matricula_alumno: " . $this->_db->error);
+            }
+
+            $id_encontrado = 0;
+            $stmt->bind_param("iissi", $id_alumno, $id_grado, $id_curso, $year, $id_excluir);
+            $stmt->execute();
+            $stmt->bind_result($id_encontrado);
+            $stmt->fetch();
+            $stmt->close();
+
+            return (int) $id_encontrado;
+        } catch (Exception $e) {
+            error_log("Error en existe_matricula_alumno: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    // ---
+
+    /**
      * @brief Retorna los IDs de los alumnos de un grado, curso, año y jornada.
      *
      * @param int $id_grado  El ID del grado.

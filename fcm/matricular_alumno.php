@@ -32,6 +32,16 @@ $fecha_matricula = date('Y-m-d');
 // creo objeto matricula
 $mt = new matricula();
 
+// no se permite matricular dos veces al alumno en el mismo grado, curso y año
+$id_existente = $mt->existe_matricula_alumno($id_alumno, $id_grado, $id_curso, $year);
+if ($id_existente > 0) {
+    echo json_encode([
+        'status'  => 0,
+        'message' => 'El estudiante ya se encuentra matriculado en este grado, curso y año (matrícula ' . $id_existente . ')'
+    ]);
+    exit;
+}
+
 // asigno atributos (intval ya aplicado arriba)
 $mt->id_alumno  = $id_alumno;
 $mt->id_grado   = $id_grado;
