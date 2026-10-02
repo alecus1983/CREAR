@@ -861,6 +861,45 @@ function boletin() {
   }
 }
 
+
+
+function boletin_disciplina() {
+
+
+  var year = $("#years").val();
+  // se almacena la variable periodos con el periodo academico
+  // a seleccionar
+  var periodos = $('select#periodos').val();
+  // la variable grados guarda codigo del grado del estudiante
+  var grados = $("#id_g").val();
+  // agrego la jornada
+  var jornada = $("#jornada").val();
+  // describo el curso
+  var curso = $("#id_c").val();
+  // si no ha seleccionado grado
+  if (grados < 0) {
+    swal("Favor seleccione un grado");
+  } else if (periodos < 0) {
+    swal("Favor seleccione un periodo");
+  } else {
+
+    // se almacenan todas las variables dentro
+    // de la variable parametros
+    var parametros = "year=" + year +
+      "&periodos=" +
+      periodos +
+      "&grado=" + grados +
+      "&jornada=" + jornada +
+      "&curso=" + curso;
+
+    console.log("los parametros son : %s", parametros);
+    // abro boletin en una nueva ventana
+    // llamando para ello al archivo cetificado.php
+    window.open("generar_disciplina.php?" + parametros);
+  }
+}
+
+
 // funcion que crea un cuadro de notas por cada alumno de un grado para un determinado año
 function cuadro() {
 

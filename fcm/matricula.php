@@ -214,6 +214,30 @@ class matricula extends curso
         return $arr;
     }
 
+
+    /**
+     * @brief Obtiene una lista de matrículas para un grado y jornada específicos en un año determinado.
+     * @param int $year El año lectivo.
+     * @param int $id_grado El ID del grado.
+     * @param int $id_jornada El ID de la jornada.
+     * @return array Un array de arrays asociativos con los datos de las matrículas.
+     *
+     * Realiza una consulta para obtener todas las matrículas que coincidan con los
+     * parámetros de año, grado y jornada.
+     */
+    public function get_matriculas_jornada()
+    {
+        $q = "SELECT * FROM matricula m WHERE year = $this->year AND m.id_jornada = $this->id_jornada ";
+        $c = $this->_db->query($q);
+
+        $arr = array();
+        while ($r = $c->fetch_array(MYSQLI_ASSOC)) {
+            array_push($arr, $r);
+        }
+
+        return $arr;
+    }
+
     // ---
 
     /**

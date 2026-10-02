@@ -304,7 +304,7 @@ if (isset($_SESSION["id_personas"])) {
                                 <li><a class="dropdown-item" href="#" onclick="avance_notas();">Avance de notas</a>
                                 </li>
                                 <li><a class="dropdown-item" href="#" onclick="boletin();">Boletin por periodo</a></li>
-
+                                <li><a class="dropdown-item" href="#" onclick="boletin_disciplina();">Informe de disciplina por jornada<span style="margin :auto;" class="badge bg-secondary rounded-pill bg-danger">Nuevo</span></a></li>
                                 <li><a class="dropdown-item" href="#" onclick="cuadro();">Cuadro de notas</a></li>
                                 <li><a class="dropdown-item" href="#" onclick="notas_faltantes();">Notas faltantes</a>
                                 <li><a class="dropdown-item" href="#"
