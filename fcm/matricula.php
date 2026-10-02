@@ -321,10 +321,10 @@ class matricula extends curso
      * @param int    $id_excluir   ID de matrícula a ignorar (la que se está editando), 0 para ninguna.
      * @return int El ID de la matrícula encontrada, o 0 si no existe.
      */
-    public function existe_matricula_alumno($id_alumno, $id_grado, $id_curso, $year, $id_excluir = 0)
+    public function existe_matricula_alumno($id_alumno,  $year)
     {
         try {
-            $q = "SELECT id FROM matricula WHERE id_alumno = ? AND id_grado = ? AND id_curso = ? AND year = ? AND id <> ? LIMIT 1";
+            $q = "SELECT id FROM matricula WHERE id_alumno = ? AND year = ? LIMIT 1";
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
@@ -332,7 +332,7 @@ class matricula extends curso
             }
 
             $id_encontrado = 0;
-            $stmt->bind_param("iissi", $id_alumno, $id_grado, $id_curso, $year, $id_excluir);
+            $stmt->bind_param("is", $id_alumno, $year);
             $stmt->execute();
             $stmt->bind_result($id_encontrado);
             $stmt->fetch();

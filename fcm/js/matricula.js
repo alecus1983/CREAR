@@ -94,7 +94,7 @@ function verificar_matricula_duplicada(datos) {
           swal('Matrícula duplicada',
             'El estudiante ya se encuentra matriculado en el grado ' + $("#ac_grado option:selected").text() +
             ', curso ' + $("#ac_curso option:selected").text() + ' del año ' + datos.year +
-            ' (matrícula ' + respuesta['id_matricula'] + '). Seleccione otros valores.',
+            ' (matrícula ' + respuesta['id_matricula'] + '). \n Dirijase al módulo editar matricula para continuar con la edicción.',
             'warning');
           resolve(true);
         } else {
@@ -115,6 +115,12 @@ function verificar_matricula_duplicada(datos) {
 // requiere como parametro de entrada el item del formulario
 
 function gestion_matriculas(item) {
+
+  // datos para verificar si el alumno ya tiene una matricula igual
+  // (el id_alumno se busca a partir de la persona en el servidor)
+  const datos_verificacion = function () {
+    return { id_persona: alumno["id_persona"], year: $("#years").val() };
+  };
 
   // estructura de seleccion
   switch (item) {
@@ -166,6 +172,8 @@ function gestion_matriculas(item) {
 
         return; // Detenemos la carga si no hay alumno seleccionado.
       }
+
+      verificar_matricula_duplicada(datos_verificacion());
 
       //  borro el avance
       $("#avance").html("");
@@ -259,11 +267,7 @@ function gestion_matriculas(item) {
         // agrego botones  atras y siguiente
         $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(5)">atras</button><button type="button" class="btn btn-dark" id="btn-siguiente-6">siguiente</button></div>');
 
-        // datos para verificar si el alumno ya tiene una matricula igual
-        // (el id_alumno se busca a partir de la persona en el servidor)
-        const datos_verificacion = function () {
-          return { id_persona: alumno["id_persona"], year: $("#years").val() };
-        };
+
 
         // al seleccionar el grado o el curso se verifica la matricula
         $("#ac_grado, #ac_curso").on('change', function () {

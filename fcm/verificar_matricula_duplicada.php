@@ -37,7 +37,7 @@ if ($id_alumno <= 0) {
 }
 
 $m = new matricula();
-$id_encontrado = $m->existe_matricula_alumno($id_alumno, $id_grado, $id_curso, $year, $id_matricula);
+$id_encontrado = $m->existe_matricula_alumno($id_alumno,  $year);
 
 if ($id_encontrado > 0) {
     $respuesta['status'] = 1;
