@@ -954,11 +954,11 @@ D23 is null and
 id_alumno in (select id_alumno from matricula where year = 2026 and ( id_grado < 7 or id_grado > 9))
 
 
-select * from imcreati_datam.personas p  where id_personas = 1527
+select * from imcreati_datam.personas p  where id_personas = 1527s
 
 
 
-
+ALTER TABLE imcreati_datam.matricula ADD fecha DATE DEFAULT null NULL;
 
 
 
