@@ -58,7 +58,7 @@ function consultar_matricula(id_matricula) {
 
 /**
  * Verifica en la tabla matricula si el alumno ya tiene una matrícula con el
- * grado (#ac_grado), curso (#ac_curso) y año indicados. Si existe, muestra una
+ * en el año indicados. Si existe, muestra una
  * alerta y marca los campos grado y curso como inválidos.
  *
  * @param {Object} datos - { id_alumno, id_persona, year, id_matricula (a excluir al editar) }

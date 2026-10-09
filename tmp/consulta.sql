@@ -962,3 +962,5 @@ ALTER TABLE imcreati_datam.matricula ADD fecha DATE DEFAULT null NULL;
 
 
 
+
+
