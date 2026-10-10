@@ -573,47 +573,34 @@ function gestion_matriculas(item) {
         //	agrega el formulario de personas
         $("#paginas").load("formulario_agregar_persona.html", function () {
 
-          $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(17)">atras</button><button type="button" class="btn btn-dark" onclick="agregar_persona(19,acudiente,1)">agregar</button></div>');
+          $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(17)">atras</button><button type="button" class="btn btn-dark" onclick="agregar_persona(20,acudiente,1)">agregar</button></div>');
 
         });
 
       });
       break;
 
-    // ACUDIENTE SELECCIONADO
+    // ACUDIENTE REGISTRADO
     case 19:
       $("#avance").html("");
       $("#tabla").html("");
-
-      // PASO 2: Vincular madre como acudiente (si no existe ya)
-      $.ajax({
-        type: "POST",
-        url: "vincular_acudiente_hijo.php",
-        dataType: "json",
-        data: {
-          id_acudiente: acudinte["id_persona"],
-          id_hijo: alumno["id_persona"]
-        },
-        success: function (respAcud) {
-          if (respAcud["status"] == 1) {
-            console.log("Vínculo acudiente-hijo creado (id_acudientes: " + respAcud["id_acudientes"] + ")");
-          } else if (respAcud["status"] == 2) {
-            console.log("Vínculo acudiente-hijo ya existía.");
-          } else {
-            console.warn("No se pudo registrar la madre como acudiente: " + (respAcud["mensaje"] || ""));
-          }
-          // Avanzar siempre al formulario del acudiente
-          $("#avance").load("formulario_matricula_20.html");
-        },
-        error: function (xhr) {
-          console.error("Error AJAX vincular_acudiente_hijo (case 17):", xhr);
-          // Avanzar de todas formas
-          $("#avance").load("formulario_matricula_20.html");
-        }
-      });
-
-      // Cargar formulario_matricula_19.html
+      // Cargar formulario_matricula_19.html, que busca al acudiente entre las
+      // personas registradas; al seleccionarlo salta al resumen (21)
       $("#avance").load("formulario_matricula_19.html", function () {
+
+        $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(17)">atras</button></div>');
+
+      });
+      break;
+
+    // ACUDIENTE SELECCIONADO
+    case 20:
+      $("#avance").html("");
+      $("#tabla").html("");
+
+      // Cargar formulario_matricula_20.html
+      // (el vínculo acudiente-hijo se registra en el paso 21)
+      $("#avance").load("formulario_matricula_20.html", function () {
 
         // cargo el contenido dentro la seccion paginas dentro del formulario
         $("#paginas").html("<p>Se ha selecionado la persona <b>"
@@ -621,13 +608,13 @@ function gestion_matriculas(item) {
           + "</b>, con codigo " + acudiente["id_persona"]
           + ", con identificacion " + acudiente["identificacion"] + "</p>");
 
-        $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(17)">atras</button><button type="button" class="btn btn-dark" onclick="gestion_matriculas(20);">agregar</button></div>');
+        $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(17)">atras</button><button type="button" class="btn btn-dark" onclick="gestion_matriculas(21);">agregar</button></div>');
 
       });
       break;
 
     // RESUMEN DE LA MATRICULA
-    case 20:
+    case 21:
       $("#avance").html("");
       $("#tabla").html("");
 
@@ -651,13 +638,13 @@ function gestion_matriculas(item) {
           cargar_resumen_matricula();
         },
         error: function (xhr) {
-          console.error("Error AJAX vincular_acudiente_hijo (case 20):", xhr);
+          console.error("Error AJAX vincular_acudiente_hijo (case 21):", xhr);
           cargar_resumen_matricula();
         }
       });
 
       function cargar_resumen_matricula() {
-        $("#avance").load("formulario_matricula_20.html", function () {
+        $("#avance").load("formulario_matricula_21.html", function () {
 
           $("#paginas").html("<p>Los datos de la matricula son :</p>");
           $("#paginas").append("<p> <i><h3>Datos del alumno</h3></i></p>");
@@ -701,17 +688,17 @@ function gestion_matriculas(item) {
           $("#paginas").append("<p> identificacion : <b>" + acudiente["identificacion"] + "</b></p>");
 
           $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(17)">atras</button>');
-          $("#paginas").append('<button type="button" class="btn btn-outline-success" onclick="gestion_matriculas(21);">finalizar</button>');
+          $("#paginas").append('<button type="button" class="btn btn-outline-success" onclick="gestion_matriculas(22);">finalizar</button>');
 
-        }); // fin del load formulario_matricula_20.html
+        }); // fin del load formulario_matricula_21.html
       }     // fin de cargar_resumen_matricula()
       break;
 
     // DATOS FINALES
-    case 21:
+    case 22:
       $("#avance").html("");
       $("#tabla").html("");
-      $("#avance").load("formulario_matricula_21.html");
+      $("#avance").load("formulario_matricula_22.html");
 
       swal({
         title: '¿Estás seguro?',
@@ -745,7 +732,7 @@ function gestion_matriculas(item) {
 
         } else {
           swal('Cancelado', 'No se ha realizado ningún cambio.', 'error');
-          gestion_matriculas(19);
+          gestion_matriculas(21);
         }
       });
       break;
@@ -758,8 +745,8 @@ function gestion_matriculas(item) {
 
 
   function cargar_resumen_matricula() {
-    //  cargo el formulario 20 de matricula en el campo avance
-    $("#avance").load("formulario_matricula_20.html", function () {
+    //  cargo el formulario 21 de matricula en el campo avance
+    $("#avance").load("formulario_matricula_21.html", function () {
 
       // cargo el contenido dentro la seccion paginas dentro del formulario
       $("#paginas").html("<p>Los datos de la matricula son :</p>");
@@ -833,9 +820,9 @@ function gestion_matriculas(item) {
       $("#paginas").append("</table>");
       // muestro los botones de aceptar
       $("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(17)">atras</button>');
-      $("#paginas").append('<button type="button" class="btn btn-outline-success" onclick="gestion_matriculas(21);">finalizar</button>');
+      $("#paginas").append('<button type="button" class="btn btn-outline-success" onclick="gestion_matriculas(22);">finalizar</button>');
 
-    }); // fin del load formulario_matricula_20.html
+    }); // fin del load formulario_matricula_21.html
   }   // fin de cargar_resumen_matricula()
   // break;
 

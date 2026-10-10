@@ -1498,8 +1498,8 @@ function cp_acudiente(personax, ea) {
 
     // Redirección condicionada por el parámetro ea
     if (ea == 1) {
-        // va la pagina 19 de gestion matriculas
-        gestion_matriculas(20);
+        // va la pagina 21 de gestion matriculas
+        gestion_matriculas(21);
     } else if (ea == 2) {
         // va la pagina 44 de editar matricula
         flujo_editar_matricula(alumno["id_matricula"], 46);
