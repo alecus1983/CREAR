@@ -189,8 +189,7 @@ function gestion_matriculas(item) {
 
         $("#paginas").html("<p>Se ha selecionado la persona <b>"
           + alumno["nombres"] + " " + alumno["apellidos"]
-          + "</b>, con codigo " + alumno["id_persona"]
-          + ", con identificacion " + alumno["identificacion"] + "</p>");
+          + "</b>, con identificacion " + alumno["identificacion"] + "</p>");
         $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(1)">atras</button><button type="button" class="btn btn-dark" onclick="gestion_matriculas(5);">siguiente</button></div>');
       });
       break;
@@ -424,14 +423,12 @@ function gestion_matriculas(item) {
       //  cargo el formulario 11 de matricula en el campo avance
       $("#avance").load("formulario_matricula_12.html", function () {
         // cargo el contenido dentro la seccion paginas dentro del formulario
-        $("#paginas").html("<p>Se ha selecionado la persona <b>"
+        $("#paginas").html("<p>Se ha selecionado el padre <b>"
           + padre["nombres"] + " " + padre["apellidos"]
-          + "</b>, con codigo " + padre["id_persona"]
-          + ", con identificacion " + padre["identificacion"] + "</p>");
+          + "</b> , con identificacion " + padre["identificacion"] + "</p>");
 
-        $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(8)">atras</button><button type="button" class="btn btn-dark" onclick="gestion_matriculas(13);">agregar</button></div>');
-        //$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(13);">atras</button>');
-        //$("#paginas").append('<button type="button" class="btn btn-dark" onclick="gestion_matriculas(13);">siguiente</button>');
+        $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(8)">atras</button><button type="button" class="btn btn-dark" onclick="gestion_matriculas(13);">aceptar</button></div>');
+
 
       });
       break;
@@ -521,7 +518,7 @@ function gestion_matriculas(item) {
           + "</b>, con codigo " + madre["id_persona"]
           + ", con identificacion " + madre["identificacion"] + "</p>");
 
-        $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(13)">atras</button><button type="button" class="btn btn-dark" onclick="gestion_matriculas(17);">agregar</button></div>');
+        $("#paginas").append('<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2" ><button type="button" class="btn btn-black" onclick="gestion_matriculas(13)">atras</button><button type="button" class="btn btn-dark" onclick="gestion_matriculas(17);">aceptar</button></div>');
 
         //$("#paginas").append('<button type="button" class="btn btn-secondary" onclick="gestion_matriculas(13)">atras</button>');
         //$("#paginas").append('<button type="button" class="btn btn-dark" onclick="gestion_matriculas(17);">siguiente</button>');

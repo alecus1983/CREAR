@@ -110,18 +110,52 @@ class personas extends imcrea
     public function buscar_persona()
     {
         try {
-            $q = "SELECT nombres, apellidos, identificacion, id_personas FROM personas WHERE (nombres LIKE ? AND apellidos LIKE ?) AND identificacion LIKE ? LIMIT 25";
+            // condiciones y parámetros de la consulta, solo se filtra
+            // por los campos que realmente trae el criterio de búsqueda
+            $condiciones = array();
+            $parametros = array();
+            // parámetros usados en el ordenamiento
+            $orden = "";
+            $parametros_orden = array();
+
+            // cada palabra de nombres y apellidos debe coincidir, sin importar
+            // el orden ni los espacios (ej. "carlos juan" encuentra "Juan Carlos")
+            foreach (array('nombres' => $this->nombres, 'apellidos' => $this->apellidos) as $campo => $valor) {
+                $palabras = preg_split('/\s+/u', trim((string) $valor), -1, PREG_SPLIT_NO_EMPTY);
+                foreach ($palabras as $palabra) {
+                    $condiciones[] = "$campo LIKE ?";
+                    $parametros[] = "%" . addcslashes($palabra, '\\%_') . "%";
+                }
+            }
+
+            // la identificación se compara sin puntos, comas, guiones ni espacios
+            $identificacion = preg_replace('/[\s.,\-]+/u', '', (string) $this->identificacion);
+            if ($identificacion !== '') {
+                $col_identificacion = "REPLACE(REPLACE(REPLACE(REPLACE(identificacion, '.', ''), ',', ''), '-', ''), ' ', '')";
+                $condiciones[] = "$col_identificacion LIKE ?";
+                $parametros[] = "%" . addcslashes($identificacion, '\\%_') . "%";
+                // primero la coincidencia exacta y luego las que inician con el número
+                $orden = "($col_identificacion = ?) DESC, ($col_identificacion LIKE ?) DESC, ";
+                $parametros_orden[] = $identificacion;
+                $parametros_orden[] = addcslashes($identificacion, '\\%_') . "%";
+            }
+
+            $q = "SELECT nombres, apellidos, identificacion, id_personas FROM personas";
+            if (count($condiciones) > 0) {
+                $q .= " WHERE " . implode(" AND ", $condiciones);
+            }
+            $q .= " ORDER BY " . $orden . "apellidos, nombres, id_personas LIMIT 25";
+
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
                 throw new Exception("Error al preparar la consulta de búsqueda de persona: " . $this->_db->error);
             }
 
-            $nombres_param = "%" . $this->nombres . "%";
-            $apellidos_param = "%" . $this->apellidos . "%";
-            $identificacion_param = "%" . $this->identificacion . "%";
-
-            $stmt->bind_param("sss", $nombres_param, $apellidos_param, $identificacion_param);
+            $parametros = array_merge($parametros, $parametros_orden);
+            if (count($parametros) > 0) {
+                $stmt->bind_param(str_repeat("s", count($parametros)), ...$parametros);
+            }
             $stmt->execute();
             $result = $stmt->get_result();
 
@@ -376,6 +410,8 @@ class personas extends imcrea
 
             $stmt->bind_param("s", $identificacion);
             $stmt->execute();
+            // se inicializa para que tenga valor aunque fetch no retorne fila
+            $count = 0;
             $stmt->bind_result($count);
             $stmt->fetch();
             $stmt->close();
