@@ -104,10 +104,9 @@ if ($valido) {
         $html = $html . "<button type='button' class='btn btn-info' onclick='crear_certificado($id_matricula);'>Certificado</button>";
         $html = $html . "</td>";
         $html = $html . "<td>";
-        $html = $html . "<button type='button' class='btn btn-warning' onclick='eliminar();'>constancia</button>";
+        $html = $html . "<button type='button' class='btn btn-warning' onclick='constacia(" . intval($alumno->id_alumno) . ", " . intval($year) . ");'>constancia</button>";
         $html = $html . "</td>";
         $html = $html . "</tr>";
-
     }
 
     $html = $html . "</tbody>";
@@ -138,4 +137,3 @@ $respuesta_json = json_encode($respuesta);
 echo $respuesta_json;
 
 //$lista = new $matriculas();
-?>

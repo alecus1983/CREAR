@@ -1175,6 +1175,22 @@ function crear_certificado(matricula) {
   window.open("certificado.php?" + parametros);
 }
 
+// genera la constancia de matricula de un alumno
+// id_alumno : codigo del alumno
+// year : año de la matricula (opcional), si no se envia
+//        se toma la matricula mas reciente del alumno
+function constacia(id_alumno, year) {
+
+  // por el método GET
+  var parametros = "id_alumno=" + id_alumno;
+  if (year) {
+    parametros += "&year=" + year;
+  }
+  // abro la constancia en una nueva ventana
+  // llamando para ello al archivo constancia.php
+  window.open("constancia.php?" + parametros);
+}
+
 // funcion para actualizar el año
 // en el documento HTML
 function funcion_actualizar_ano() {

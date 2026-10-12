@@ -23,6 +23,7 @@ require_once("lista_estudiantes.php");
 require_once("cuadro.php");
 require_once("logros.php");
 require_once("matricula.php");
+require_once("constancias.php");
 require_once("semanas.php");
 require_once("areas.php");
 require_once("materias.php");

@@ -348,6 +348,38 @@ class matricula extends curso
     // ---
 
     /**
+     * @brief Retorna el ID de la matrícula más reciente de un alumno.
+     *
+     * @param int $id_alumno El ID del alumno (u_alumnos.id_alumnos).
+     * @return int El ID de la matrícula encontrada, o 0 si no existe.
+     */
+    public function get_ultima_matricula_alumno($id_alumno)
+    {
+        try {
+            $q = "SELECT id FROM matricula WHERE id_alumno = ? ORDER BY year DESC, id DESC LIMIT 1";
+            $stmt = $this->_db->prepare($q);
+
+            if ($stmt === false) {
+                throw new Exception("Error al preparar la consulta get_ultima_matricula_alumno: " . $this->_db->error);
+            }
+
+            $id_encontrado = 0;
+            $stmt->bind_param("i", $id_alumno);
+            $stmt->execute();
+            $stmt->bind_result($id_encontrado);
+            $stmt->fetch();
+            $stmt->close();
+
+            return (int) $id_encontrado;
+        } catch (Exception $e) {
+            error_log("Error en get_ultima_matricula_alumno: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    // ---
+
+    /**
      * @brief Retorna los IDs de los alumnos de un grado, curso, año y jornada.
      *
      * @param int $id_grado  El ID del grado.
