@@ -110,21 +110,15 @@ $jo_obj->get_jornada_por_id($mt_obj->id_jornada ?? 0);
 $cu_obj = new curso();
 $cu_obj->get_curso_por_id($mt_obj->id_curso ?? 0);
 
-// agregar acudientes
+// acudiente del alumno: solo se imprime si es una persona
+// diferente al padre y a la madre
 $acudiente_obj = new acudientes();
+$id_acudiente = $acudiente_obj->get_id_persona_por_hijo(intval($al_obj->id_persona ?? 0));
 
-// si existe el acudiente
-if ($acudiente_obj->existe_hijo($al_obj->id_persona)) {
-
-    // obtengo todos los objetos de  la tabla acudientes
-    $tab_acudinte = $acudiente_obj->get_all();
-
-    // por cada elemento en la tabla acudinte   
-    foreach ($tab_acudinte as $ac) {
-        if ($ac["id_personas"] == $padre_per->id_persona) {
-            $acudiente = "padre";
-        }
-    }
+$acudiente_per = new personas();
+$imprimir_acudiente = $id_acudiente > 0 && $id_acudiente != $id_padre && $id_acudiente != $id_madre;
+if ($imprimir_acudiente) {
+    $acudiente_per->get_persona_por_id($id_acudiente);
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -532,6 +526,20 @@ if ($id_madre > 0) {
     $pdf->fila('Tipo identificacion', "No aplica", 'Identificacion', "");
     $pdf->fila('Fecha de nacimiento', "No aplica", 'Correo',   "");
     $pdf->fila('Celular', "No aplica", 'Telefono',   "");
+    $pdf->Ln();
+}
+
+// ── Datos del acudiente (si es diferente al padre y a la madre) ──────────────
+if ($imprimir_acudiente) {
+    $pdf->titulo_seccion('Datos del Acudiente');
+    $pdf->SetFillColor(220, 220, 220);
+    $pdf->cell(32, 6, 'Nombre completo', 1, 0, 'L', true);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->cell(158, 6, trim(($acudiente_per->nombres ?? '') . ' ' . ($acudiente_per->apellidos ?? '')), 1, 0, 'L', true);
+    $pdf->Ln();
+    $pdf->fila('Tipo identificacion', tipo_id_nombre($acudiente_per->tipo_identificacion ?? ''), 'Identificacion', $acudiente_per->identificacion ?? '');
+    $pdf->fila('Fecha de nacimiento', $acudiente_per->nacimiento          ?? '', 'Correo',         $acudiente_per->correo         ?? '');
+    $pdf->fila('Celular',             $acudiente_per->celular             ?? '', 'Telefono',        $acudiente_per->telefono       ?? '');
     $pdf->Ln();
 }
 

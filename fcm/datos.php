@@ -218,10 +218,11 @@ class matriculas_year extends imcrea {
         // genero una consulta a la base de datos
         // con el sistado de id de matriculas en un
         // año ordenados por nombre de estudiantes
-        $q2 = $this->_db->query("select id ,a.nombres from  alumnos as a
-                                                      inner join matricula as m on a.id_alumno = m.id_alumno
-                                                      where m.year = $a
-                                                      order by a.nombres");
+        $q2 = $this->_db->query("select m.id, p.nombres from u_alumnos as a
+                                                      inner join personas as p on a.id_personas = p.id_personas
+                                                      inner join matricula as m on a.id_alumnos = m.id_alumno
+                                                      where m.year = " . intval($a) . "
+                                                      order by p.nombres, p.apellidos");
         // guardo el resoltado en un array inicialmente vacio
         $aa = array();
         // exploro el resultado 
