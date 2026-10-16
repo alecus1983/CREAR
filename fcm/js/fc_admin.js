@@ -1202,3 +1202,39 @@ function funcion_actualizar_ano() {
 
 
 }
+
+// funcion que muestra el listado de docentes matriculados
+// en la tabla matricula_docente para el año del campo #years,
+// usa el archivo listado_docentes.php
+// responde en html en el div #avance
+function listado_docentes() {
+
+  // se invoca al metodo ajax para solicitar
+  // el listado de docentes
+  $.ajax({
+    type: "POST",
+    url: "listado_docentes.php",
+    dataType: "json",
+    data: {
+      years: $("#years").val()
+    },
+    // si los datos son correctos entonces ...
+    success: function (respuesta) {
+      // si la respuesta es positiva
+      if (respuesta['status'] == 1) {
+        // coloco la respuesta en html
+        // en el div avance
+        $("#avance").html(respuesta['html']);
+      } else {
+        // si no se ha especificado el año
+        if (respuesta['status'] == 22) { swal('Año', 'Porfavor seleccione un año', 'error'); }
+      }
+    },
+    // si huvo  un error
+    error: function (xhr, status) {
+      swal('Disculpe, existió un problema');
+      console.log(xhr);
+    }
+  });
+
+}

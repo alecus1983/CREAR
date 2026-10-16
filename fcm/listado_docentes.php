@@ -1,36 +1,70 @@
 <?php
+// archivo que obtiene el listado de docentes matriculados
+// en la tabla matricula_docente para el año recibido por POST (years)
+// responde en formato json con las llaves status y html
+
 // archivo de configuracion  de objetos
 require_once("datos.php");
 
-//variables recibidas mediante POST
+//variables de validacion
 $valido = true;
 $err = "";
+//array de respuesta
+$respuesta = array();
 
-$matriculas = new matricula_docente();
-$listado_docentes = $matriculas->listado_docentes(2023);
-
-echo '<table class="table"><thead>';
-echo '<tr>';
-echo '<th scope="col">Docente</th>';
-echo '<th scope="col">Cedula</th>';
-echo '<th scope="col">Contraseña</th>';
-echo '</tr></thead><tbody>';
-
-
-foreach ($listado_docentes as $d) {
-    echo '<tr>';
-    $docente = new docentes();
-    $docente->get_docente_id($d);
-    echo "<td>" . ucwords(strtolower($docente->nombres)) . " " . ucwords(strtolower($docente->apellidos)) . "</td>";
-
-    echo '<td>' . $docente->cedula . '</td>';
-
-    echo '<td>' . $docente->login . '</td>';
-    echo '</tr>';
+// validacion del año
+if (isset($_POST["years"]) && $_POST["years"] !== "" && intval($_POST["years"]) > 0) {
+    $ano = intval($_POST["years"]);
+} else {
+    $valido = false;
+    $respuesta['status'] = 22;
 }
 
-echo "</tbody></table>";
+// si los datos son validos
+if ($valido) {
 
+    $matriculas = new matricula_docente();
+    // docentes con al menos una matricula en el año
+    $listado_docentes = $matriculas->get_docentes_year($ano);
+
+    $html = "<p style ='margin-bottom:1rem'>Listado de docentes matriculados en el año " . $ano . " (" . count($listado_docentes) . " docentes):</p>";
+    $html = $html . "<div class='responsive-table'>";
+    $html = $html . "<div class='table-header'>";
+    $html = $html . "<div class='header-cell'>#</div>";
+    $html = $html . "<div class='header-cell'>Nombres</div>";
+    $html = $html . "<div class='header-cell'>Apellidos</div>";
+    $html = $html . "<div class='header-cell'>D. de identidad</div>";
+    $html = $html . "<div class='header-cell'>Clases asignadas</div>";
+    $html = $html . "</div>";
+    $html = $html . "<div class='table-body'>";
+
+    $i = 1;
+    foreach ($listado_docentes as $d) {
+        $html = $html . "<div class='table-row'>";
+        $html = $html . "<div class='table-cell' data-label='#'>" . $i . "</div>";
+        $html = $html . "<div class='table-cell' data-label='Nombres'>" . htmlspecialchars(ucwords(strtolower($d['nombres']))) . "</div>";
+        $html = $html . "<div class='table-cell' data-label='Apellidos'>" . htmlspecialchars(ucwords(strtolower($d['apellidos']))) . "</div>";
+        $html = $html . "<div class='table-cell' data-label='D. Identidad'>" . htmlspecialchars($d['identificacion']) . "</div>";
+        $html = $html . "<div class='table-cell' data-label='Clases'>" . $d['clases'] . "</div>";
+        $html = $html . "</div>";
+        $i++;
+    }
+
+    // si no hay docentes en el año
+    if (count($listado_docentes) == 0) {
+        $html = $html . "<div class='table-row'><div class='table-cell'>No hay docentes matriculados en el año " . $ano . "</div></div>";
+    }
+
+    $html = $html . "</div>";
+    $html = $html . "</div>";
+
+    $respuesta['html'] = $html;
+    $respuesta['status'] = 1;
+} else {
+    $respuesta['html'] = "";
+}
+
+echo json_encode($respuesta);
 
 // ---------------------------------------------------------------------------
 // EJEMPLO DE USO DE LOS MÉTODOS DE calificaciones QUE CONSULTAN c_{$ano}
@@ -82,4 +116,3 @@ echo "</tbody></table>";
 //   }
 // ---------------------------------------------------------------------------
 
-//$lista = new $matriculas();

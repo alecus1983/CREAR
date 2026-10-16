@@ -320,7 +320,7 @@ if (isset($_SESSION["id_personas"])) {
                             <a class="nav-link dropdown-toggle" id="docentesDropdown" data-bs-toggle="dropdown" href="#"
                                 aria-expanded="false">Gestion Docentes</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="personasDropdown">
-                                <li><a class="dropdown-item" href="#" onclick="listado_dcentes();">Listado docentes</a>
+                                <li><a class="dropdown-item" href="#" onclick="listado_docentes();">Listado docentes</a>
                                 </li>
                             </ul>
                         </li>
