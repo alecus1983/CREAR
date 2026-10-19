@@ -191,10 +191,11 @@ $lo = new logro();
 $arr_pond_preescolar = array(1 => "R", 2 => "l1_p", 3 => "l2_p", 4 => "l3_p");
 
 // la valoracion del comportamiento (materia 20 - Disciplina) se guarda en
-// la columna D_p{periodo}; la tabla no tiene columna D_p4, de modo que en
-// el cuarto periodo se toma la nota consignada en R4.
-$col_disciplina      = ($id_periodo < 4) ? "D_p" . $id_periodo : "R" . $id_periodo;
-$arr_pond_disciplina = ($id_periodo < 4)
+// la columna D_p{periodo}; las tablas de años anteriores no tienen la
+// columna D_p4, en ese caso en el cuarto periodo se toma la nota de R4.
+$existe_dp = isset($cl->get_columnas_c($year)["D_p" . $id_periodo]);
+$col_disciplina      = $existe_dp ? "D_p" . $id_periodo : "R" . $id_periodo;
+$arr_pond_disciplina = $existe_dp
     ? array(1 => "R", 2 => "l1_p", 3 => "l2_p", 4 => "l3_p", 5 => "D_p")
     : $arr_pond_preescolar;
 

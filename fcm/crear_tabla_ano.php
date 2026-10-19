@@ -38,11 +38,10 @@ require_once('conectar.php');
 //   l1_p{periodo} -> codigo del logro (apunta a logros.id_logro)
 //   l2_p{periodo}, l3_p{periodo}
 //
-// OJO: D_p4 no existe a proposito. generarx.php y
-// generar_preescolar.php cuentan con esa ausencia y en el periodo 4
-// caen a R4 / D32; get_columnas_c() en calificaciones.php consulta
-// las columnas reales antes de armar el SQL. No la agregues sin
-// revisar esos tres archivos.
+// NOTA: las tablas de años anteriores pueden no tener D_p4. En ese
+// caso generarx.php toma la disciplina del periodo 4 de R4;
+// get_columnas_c() en calificaciones.php consulta las columnas
+// reales antes de armar el SQL.
 
 /**
  * @brief Arma la lista de columnas de la tabla c_{año}.
@@ -94,10 +93,7 @@ function columnas_c()
         }
 
         // cierre del periodo: disciplina del periodo y logros.
-        // el periodo 4 no lleva D_p4 (ver nota de arriba)
-        if ($periodo < 4) {
-            $cols[] = "`D_p" . $periodo . "` double DEFAULT NULL";
-        }
+        $cols[] = "`D_p" . $periodo . "` double DEFAULT NULL";
 
         // los logros guardan el codigo de la tabla logros
         for ($n = 1; $n <= 3; $n++) {

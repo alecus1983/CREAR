@@ -1364,7 +1364,7 @@ class calificaciones extends imcrea
      *
      * El modelo c_{year} tiene una columna por nota, por eso antes de armar una
      * consulta hay que saber cuales columnas existen realmente en el año
-     * consultado (ej. D_p4 no existe, mientras D_p1 si).
+     * consultado (ej. D_p4 no existe en años anteriores, mientras D_p1 si).
      */
     public function get_columnas_c($ano)
     {

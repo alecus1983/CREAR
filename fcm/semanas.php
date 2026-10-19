@@ -25,12 +25,25 @@ class semana extends imcrea
         // obtengo las caracteristicas de una semana
         $q = "select * from  semanas where year = $ano and semana = $semana";
         $c = $this->_db->query($q);
-        $r = $c->fetch_array(MYSQLI_ASSOC);
+        $r = $c ? $c->fetch_array(MYSQLI_ASSOC) : null;
+
+        // si la semana no esta registrada para el año
+        // limpio los atributos para no conservar datos de una consulta anterior
+        if (!$r) {
+            $this->notas_por_alumno = null;
+            $this->semana = null;
+            $this->year = null;
+            $this->inicio = null;
+            $this->fin = null;
+            return false;
+        }
+
         $this->notas_por_alumno = $r['notas_por_alumno'];
         $this->semana = $r['semana'];
         $this->year = $r['year'];
         $this->inicio = $r['inicio'];
         $this->fin = $r['fin'];
+        return true;
     }
 
     // recupera el listado de semanas para un año

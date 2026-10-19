@@ -960,6 +960,8 @@ select * from imcreati_datam.personas p  where id_personas = 1527s
 
 ALTER TABLE imcreati_datam.matricula ADD fecha DATE DEFAULT null NULL;
 
+ALTER TABLE imcreati_datam.c_2026 ADD COLUMN D_p4 double DEFAULT NULL AFTER D32;
+
 
 
 

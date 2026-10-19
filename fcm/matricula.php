@@ -380,6 +380,43 @@ class matricula extends curso
     // ---
 
     /**
+     * @brief Obtiene todos los alumnos matriculados en un año, en cualquier
+     *        grado y jornada, ordenados por grado, jornada y nombre.
+     *
+     * @param int $year El año lectivo.
+     * @return array Arreglo de filas con id_alumno, id_grado, grado,
+     *               id_jornada, jornada, nombres y apellidos.
+     */
+    public function get_matriculas_ano_ordenadas($year)
+    {
+        $q = "SELECT m.id_alumno, m.id_grado, g.grado, m.id_jornada, j.jornada,
+                     p.nombres, p.apellidos
+              FROM matricula m
+              INNER JOIN personas p ON p.u_alumnos = m.id_alumno
+              LEFT JOIN grados g ON g.id_grado = m.id_grado
+              LEFT JOIN jornada j ON j.id_jornada = m.id_jornada
+              WHERE m.year = ?
+              ORDER BY m.id_grado, m.id_jornada, p.apellidos, p.nombres";
+
+        try {
+            $stmt = $this->_db->prepare($q);
+
+            if ($stmt === false) {
+                throw new Exception("Error al preparar la consulta get_matriculas_ano_ordenadas: " . $this->_db->error);
+            }
+
+            $stmt->bind_param("i", $year);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            error_log("Error en get_matriculas_ano_ordenadas: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ---
+
+    /**
      * @brief Retorna los IDs de los alumnos de un grado, curso, año y jornada.
      *
      * @param int $id_grado  El ID del grado.

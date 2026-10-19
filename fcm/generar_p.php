@@ -1116,10 +1116,16 @@ foreach ($list as $e) {
     // disciplina
     for ($ss = 1; $ss < 9; $ss++) {
         // obtengo los atributos de la semana
-        $g_semana->get_semana_ano(8 * ($id_periodo - 1) + $ss, $year);
+        $num_semana = 8 * ($id_periodo - 1) + $ss;
+        $g_semana->get_semana_ano($num_semana, $year);
 
-        // agrego una fila al array
-        array_push($etiquetas_x, formatearFecha($g_semana->fin));
+        // agrego una fila al array, si la semana no tiene fecha
+        // registrada se usa el numero de la semana como etiqueta
+        if (!empty($g_semana->fin)) {
+            array_push($etiquetas_x, formatearFecha($g_semana->fin));
+        } else {
+            array_push($etiquetas_x, "Semana " . $num_semana);
+        }
     }
 
     // inicializo el array para guardar las notas de disciplina
@@ -1203,7 +1209,7 @@ foreach ($list as $e) {
         }
     }
 
-    $pdf->Ln(3);
+    $pdf->Ln(12);
     $pdf->SetFont('Arial', 'B', 7);
     $pdf->SetTextColor(0);
 

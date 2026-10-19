@@ -230,7 +230,7 @@ if ($semana_final) {
                     'id_alumno' => $dato['codigo'],
                     'id_materia' => $id_materia,
                     'docente' => $id_docente,
-                    "D_p" . strval($periodo) => $dato['A'],
+                    "'D" . strval($semana) . "'" => $dato['A'],
                     "l1_p" . strval($periodo) => $dato['L']
                 ];
             }
@@ -429,13 +429,57 @@ elseif ($semana_intermedia) {
                     'id_alumno' => $dato['codigo'],
                     'id_materia' => $id_materia,
                     'docente' => $id_docente,
-                    "'" . $semana . "A'" => $dato['A']
+                    "'D" . $semana . "'" => $dato['A']
                 ];
             }
         }
     }
 }
 
+
+
+// NOTA DEL PERIODO DE DISCIPLINA
+// cuando se ingresa o actualiza una nota semanal de disciplina (materia 20)
+// la nota del periodo D_p{periodo} se recalcula como el promedio de las
+// notas semanales del periodo (D1-D8 periodo 1, D9-D16 periodo 2, ...)
+// que sean diferentes de cero
+if ($id_materia === 20 && $semana > 0) {
+    // periodo al que pertenece la semana
+    $periodo_disc = intdiv($semana - 1, 8) + 1;
+    $columna_periodo = "D_p" . $periodo_disc;
+
+    // solo si la columna del periodo existe en la tabla del año
+    $columnas_c = $obj_calificaciones->get_columnas_c($ano);
+    if (isset($columnas_c[$columna_periodo])) {
+
+        // calcula el promedio del periodo para un alumno, tomando las notas
+        // de la base de datos y reemplazando la de la semana actual por la enviada
+        $promedio_disciplina = function ($id_alumno, $nota_semana) use ($db_notas, $semana, $periodo_disc) {
+            $suma = 0;
+            $cantidad = 0;
+            for ($s = 8 * ($periodo_disc - 1) + 1; $s <= 8 * $periodo_disc; $s++) {
+                if ($s == $semana) {
+                    $nota = $nota_semana;
+                } else {
+                    $nota = $db_notas[$id_alumno]["D" . $s] ?? null;
+                }
+                // solo cuentan las notas numericas diferentes de cero
+                if (is_numeric($nota) && (float) $nota != 0) {
+                    $suma += (float) $nota;
+                    $cantidad++;
+                }
+            }
+            return ($cantidad > 0) ? round($suma / $cantidad, 1) : null;
+        };
+
+        foreach ($arr_actualizar as $i => $fila) {
+            $arr_actualizar[$i][$columna_periodo] = $promedio_disciplina($fila['id_alumno'], $fila["'D" . $semana . "'"] ?? null);
+        }
+        foreach ($arr_insertar as $i => $fila) {
+            $arr_insertar[$i][$columna_periodo] = $promedio_disciplina($fila['id_alumno'], $fila["'D" . $semana . "'"] ?? null);
+        }
+    }
+}
 
 
 // CICLO DE REPETICION POR ESTUDIANTES

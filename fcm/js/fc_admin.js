@@ -870,31 +870,20 @@ function boletin_disciplina() {
   // se almacena la variable periodos con el periodo academico
   // a seleccionar
   var periodos = $('select#periodos').val();
-  // la variable grados guarda codigo del grado del estudiante
-  var grados = $("#id_g").val();
-  // agrego la jornada
-  var jornada = $("#jornada").val();
-  // describo el curso
-  var curso = $("#id_c").val();
-  // si no ha seleccionado grado
-  if (grados < 0) {
-    swal("Favor seleccione un grado");
-  } else if (periodos < 0) {
+
+  // el informe reporta todos los grados y jornadas del año,
+  // solo se requiere el periodo
+  if (!(periodos >= 1 && periodos <= 4)) {
     swal("Favor seleccione un periodo");
   } else {
 
     // se almacenan todas las variables dentro
     // de la variable parametros
     var parametros = "year=" + year +
-      "&periodos=" +
-      periodos +
-      "&grado=" + grados +
-      "&jornada=" + jornada +
-      "&curso=" + curso;
+      "&periodos=" + periodos;
 
     console.log("los parametros son : %s", parametros);
-    // abro boletin en una nueva ventana
-    // llamando para ello al archivo cetificado.php
+    // abro el informe en una nueva ventana
     window.open("generar_disciplina.php?" + parametros);
   }
 }
