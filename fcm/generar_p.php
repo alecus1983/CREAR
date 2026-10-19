@@ -179,6 +179,12 @@ function enc(string $s): string
     return iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $s) ?: $s;
 }
 
+function floor_decimals($numero, $precision = 1)
+{
+    $factor = pow(10, $precision);
+    return floor($numero * $factor) / $factor;
+}
+
 function formatearFecha($fechaInput)
 {
     // 1. Crear el objeto DateTime con la fecha recibida
@@ -1030,8 +1036,8 @@ foreach ($list as $e) {
                 //echo "<br> datos para area $id_area y materia $id_materia =".$spot_x[$id_area][$id_materia]. "";
             }
 
-
-            $pdf->Cell(20, 3, number_format($ac ?? 0, 1, '.'), 1, 0, 'C', false); // coloca la nota acumulada
+            $abajo = floor_decimals($ac, 1);
+            $pdf->Cell(20, 3, number_format($abajo ?? 0, 1, '.'), 1, 0, 'C', false); // coloca la nota acumulada
             // numero de materia      
             $num_m = $num_m + 1;
             $pdf->Ln(3);
@@ -1057,7 +1063,7 @@ foreach ($list as $e) {
             // incremento las materias perdidas
             // si es menor que tres y diferente
             // de disciplina.
-            if ($mat < 2.95 and $id_m !== 20) {
+            if ($mat < 3 and $id_m !== 20) {
                 //echo "<br>materia perdida  con $mat, en la materia $id_m  para el estudiante $e";
                 $materia_perdidas++;
             }
@@ -1065,29 +1071,33 @@ foreach ($list as $e) {
 
         // echo "<br> Cantidad ".count($spot[$e][$id_area]);
         // promedio del area
-        if (isset($spot[$e][$id_area])) {
-            $avg_a = $avg_a / count($spot[$e][$id_area]);
+        // (se divide por la cantidad de materias del area, igual que en certificado.php)
+        if (!empty($spot_x[$id_area])) {
+            $avg_a = $avg_a / count($spot_x[$id_area]);
         } else {
             $avg_a = 0;
         }
 
         // echo "<br><b>promedio </b> $avg_a";
         // si el promedio del área es menor que tres se incrementa el número de areas perdidas
-        if ($avg_a < 3) {
+        // (convivencia, area 12, no se cuenta)
+        if ($avg_a < 3 and $id_area !== 12) {
             $a_perdidas++;
         }
-        //echo " = ".$avg_a."<br>";
+
 
         // se da formato al numero de areas perdidas
-        $avg_a = number_format($avg_a ?? 0, 1, '.', ''); // se calcula el promedio del area
+        //$avg_a = number_format($avg_a ?? 0, 1, '.', ''); // se calcula el promedio del area
 
         //$avg_at = number_format($avg_at, 1, '.', '');
 
         $pdf->SetFillColor(200, 200, 200); // se define el color de fondo
-        // $pdf->SetFillColor(200, 200, 200); // se coloca el color gris
-        $pdf->Cell(160, 3, enc("Total " . $area), 1, 0, 'L', true);
 
-        $pdf->Cell(20, 3, $avg_a, 1, 0, 'C', true);
+        // valor redondeado por debajo
+        $pdf->Cell(160, 3, enc("Total " . $area), 1, 0, 'L', true);
+        // redondeado por debajo
+        $abajo = floor_decimals($avg_a, 1);
+        $pdf->Cell(20, 3, number_format($abajo ?? 0, 1, '.'), 1, 0, 'C', true);
         $pdf->SetFillColor(255, 255, 255); // se restablece el color blanco
         $pdf->Ln(3);
     }
@@ -1096,7 +1106,7 @@ foreach ($list as $e) {
 
     $pdf->Cell(50, 3, "Promedio: " . number_format($promedio[$e] ?? 0, 1, '.'), 1, 0, 'L');
     // si hay notas perdidas
-    if ($materia_perdidas and $id_periodo == 4) {
+    if (($materia_perdidas or $a_perdidas) and $id_periodo == 4) {
         $pdf->Cell(50, 3, "Materias: " . $num_m . ", perdidas : " . $materia_perdidas, 1, 0, 'L');
         $pdf->Cell(80, 3, "Areas Perdidas: " . $a_perdidas, 1, 0, 'L');
     } else {
@@ -1196,10 +1206,11 @@ foreach ($list as $e) {
 
     // Si estamos en el cuarto periodo 
     if ($id_periodo == 4) {
-        // si la materias perdidas son mas que dos es reprobado
-        if ($materia_perdidas > 2) {
+        // si pierde tres o mas areas es reprobado,
+        // si pierde una o dos es aplazado (mismo criterio que certificado.php)
+        if ($a_perdidas >= 3) {
             $pdf->Cell(180, 8, "REPROBADO", 0, 0, 'C', true);
-        } elseif ($materia_perdidas > 0) {
+        } elseif ($a_perdidas > 0) {
 
             $pdf->Cell(180, 8, "APLAZADO", 0, 0, 'C', true);
         } else {

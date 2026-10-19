@@ -863,6 +863,29 @@ function boletin() {
 
 
 
+// genera los certificados de calificaciones (computados como
+// el cuarto periodo) para el grado, jornada y curso seleccionados
+// llamando al archivo certificado.php
+function certificado() {
+  var year = $("#years").val();
+  var grados = $("#id_g").val();
+  var jornada = $("#jornada").val();
+  var curso = $("#id_c").val();
+
+  if (grados == null || grados < 0) {
+    swal("Datos", "Por favor seleccione un grado", "info");
+  } else {
+    var parametros = "year=" + year +
+      "&grado=" + grados +
+      "&jornada=" + jornada +
+      "&curso=" + curso;
+
+    console.log("los parametros del certificado son : %s", parametros);
+    // abro los certificados en una nueva ventana
+    window.open("certificado.php?" + parametros);
+  }
+}
+
 function boletin_disciplina() {
 
 

@@ -447,70 +447,18 @@ $periodo = 0;
                         // serializo los  campos del criterio L
                         var L = $('.L').serializeArray();
                         var valido = true;
-                        // valido los datos antes de enviarlos
-
-                        $('.A').each(function(a) {
-
-                            if ($(this)[0].value > 5) {
+                        // valido los datos antes de enviarlos:
+                        // ninguna nota de las clases A a J puede ser mayor que 5
+                        // (la clase L no se valida)
+                        $('.A, .B, .C, .D, .E, .F, .G, .H, .I, .J').each(function() {
+                            if (parseFloat($(this).val()) > 5) {
                                 valido = false;
+                                // resalto el campo con el valor invalido
+                                $(this).addClass('is-invalid');
+                            } else {
+                                $(this).removeClass('is-invalid');
                             }
-                        })
-
-                        $(' .B').each(function(a) {
-
-                            if ($(this)[0].value > 5) {
-                                valido = false;
-                            }
-                        })
-
-                        $(' .C').each(function(a) {
-
-                            if ($(this)[0].value > 5) {
-                                valido = false;
-                            }
-                        })
-
-                        $(' .D').each(function(a) {
-
-                            if ($(this)[0].value > 5) {
-                                valido = false;
-                            }
-                        })
-
-                        $('.E').each(function(a) {
-
-                            if ($(this)[0].value > 5) {
-                                valido = false;
-                            }
-                        })
-
-                        $('.F').each(function(a) {
-
-                            if ($(this)[0].value > 5) {
-                                valido = false;
-                            }
-                        })
-
-                        $(' .G').each(function(a) {
-
-                            if ($(this)[0].value > 5) {
-                                valido = false;
-                            }
-                        })
-
-                        $('.H').each(function(a) {
-
-                            if ($(this)[0].value > 5) {
-                                valido = false;
-                            }
-                        })
-
-                        $(' .I').each(function(a) {
-
-                            if ($(this)[0].value > 5) {
-                                valido = false;
-                            }
-                        })
+                        });
 
                         // si los datos son validos
                         if (valido) {
