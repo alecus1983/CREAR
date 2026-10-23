@@ -206,6 +206,8 @@ function gestion_matriculas(item) {
         alumno["direccion_residencia"] = "";
         alumno["barrio"] = "";
         alumno["estrato"] = "";
+        alumno["zona"] = "";
+        alumno["equipo_tecnologico"] = "";
 
         // obtengo la direccion de la persona (peticion asincrona)
         const peticion_direccion = get_direccion(alumno, 2);
@@ -222,13 +224,17 @@ function gestion_matriculas(item) {
               poblarFormularioDireccion(
                 alumno["direccion_residencia"],
                 alumno["barrio"],
-                alumno["estrato"]
+                alumno["estrato"],
+                alumno["zona"],
+                alumno["equipo_tecnologico"]
               );
             } else {
               // Fallback seguro si el script del formulario aún no cargó
               $("#ac_direccion").val(alumno["direccion_residencia"] || "");
               $("#ac_barrio").val(alumno["barrio"] || "");
               $("#ac_estrato").val(String(alumno["estrato"] || "3"));
+              $("#ac_zona").val(String(alumno["zona"] || ""));
+              $("#ac_equipo_tecnologico").val(String(alumno["equipo_tecnologico"] || ""));
             }
           });
 
@@ -999,6 +1005,8 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
   alumno["direccion_residencia"] = "";
   alumno["barrio"] = "";
   alumno["estrato"] = "";
+  alumno["zona"] = "";
+  alumno["equipo_tecnologico"] = "";
 
   // indica si se obtuvieron los datos de la persona del alumno
   let persona_encontrada = false;
@@ -1057,12 +1065,16 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
               poblarFormularioDireccion(
                 alumno["direccion_residencia"],
                 alumno["barrio"],
-                alumno["estrato"]
+                alumno["estrato"],
+                alumno["zona"],
+                alumno["equipo_tecnologico"]
               );
             } else {
               $("#ac_direccion").val(alumno["direccion_residencia"] || "");
               $("#ac_barrio").val(alumno["barrio"] || "");
               $("#ac_estrato").val(String(alumno["estrato"] || "3"));
+              $("#ac_zona").val(String(alumno["zona"] || ""));
+              $("#ac_equipo_tecnologico").val(String(alumno["equipo_tecnologico"] || ""));
             }
 
             // agrego los botones 
@@ -1072,7 +1084,9 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
               const camposAValidar = [
                 { id: 'ac_direccion', name: 'Dirección', type: 'text' },
                 { id: 'ac_barrio', name: 'Barrio', type: 'text' },
-                { id: 'ac_estrato', name: 'Estrato', type: 'select' }
+                { id: 'ac_estrato', name: 'Estrato', type: 'select' },
+                { id: 'ac_zona', name: 'Zona', type: 'select' },
+                { id: 'ac_equipo_tecnologico', name: 'Equipo tecnológico', type: 'select' }
 
               ];
 

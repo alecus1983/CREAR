@@ -1180,6 +1180,8 @@ function get_direccion(personax, form) {
                 personax["direccion_residencia"] = respuesta["direccion_residencia"];
                 personax["estrato"] = respuesta["estrato"];
                 personax["barrio"] = respuesta["barrio"];
+                personax["zona"] = respuesta["zona"];
+                personax["equipo_tecnologico"] = respuesta["equipo_tecnologico"];
                 return 1;
 
             } else {
@@ -1250,6 +1252,18 @@ function validarFormularioDireccion() {
         errores.estrato = 'Debe seleccionar un estrato válido.';
     }
 
+    // Validar Zona (1 = urbana, 2 = rural)
+    const zona = $('#ac_zona').val();
+    if (zona !== '1' && zona !== '2') {
+        errores.zona = 'Seleccione la zona (urbana o rural).';
+    }
+
+    // Validar Equipo tecnológico (1 = celular, 2 = tablet, 3 = computador)
+    const equipo = $('#ac_equipo_tecnologico').val();
+    if (equipo !== '1' && equipo !== '2' && equipo !== '3') {
+        errores.equipo_tecnologico = 'Seleccione el equipo tecnológico.';
+    }
+
     // 5. Mostrar errores si existen
     if (Object.keys(errores).length > 0) {
         esValido = false;
@@ -1282,6 +1296,10 @@ function update_direccion(form, personax, ea) {
     personax["barrio"] = $("#ac_barrio").val();
     // tomo el id
     personax["direccion_residencia"] = $("#ac_direccion").val();
+    // zona: 1 = urbana, 2 = rural
+    personax["zona"] = $("#ac_zona").val();
+    // equipo tecnologico: 1 = celular, 2 = tablet, 3 = computador
+    personax["equipo_tecnologico"] = $("#ac_equipo_tecnologico").val();
 
     // solicito datos en ajax
     $.ajax({

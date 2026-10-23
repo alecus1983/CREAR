@@ -27,6 +27,8 @@ class personas extends imcrea
     public $direccion_residencia;
     public $barrio;
     public $estrato;
+    public $zona; // 1 = urbana, 2 = rural
+    public $equipo_tecnologico; // equipo para la comunicacion virtual: 1 = celular, 2 = tablet, 3 = computador
     public $sisben;
     public $familias_accion;
     public $regimen_salud;
@@ -81,6 +83,8 @@ class personas extends imcrea
         $this->direccion_residencia = '';
         $this->barrio = '';
         $this->estrato = null;
+        $this->zona = null;
+        $this->equipo_tecnologico = null;
         $this->sisben = null;
         $this->familias_accion = null;
         $this->regimen_salud = null;
@@ -224,6 +228,8 @@ class personas extends imcrea
                 $this->direccion_residencia = $a['direccion_residencia'];
                 $this->barrio = $a['barrio'];
                 $this->estrato = $a['estrato'];
+                $this->zona = $a['zona'];
+                $this->equipo_tecnologico = $a['equipo_tecnologico'];
                 $this->sisben = $a['sisben'];
                 $this->familias_accion = $a['familias_accion'];
                 $this->regimen_salud = $a['regimen_salud'];
@@ -649,7 +655,7 @@ class personas extends imcrea
                 throw new InvalidArgumentException("El ID de la persona debe ser un valor numérico.");
             }
 
-            $q = "SELECT direccion_residencia, estrato, barrio FROM personas WHERE id_personas = ?";
+            $q = "SELECT direccion_residencia, estrato, barrio, zona, equipo_tecnologico FROM personas WHERE id_personas = ?";
             $stmt = $this->_db->prepare($q);
 
             if ($stmt === false) {
@@ -772,12 +778,17 @@ class personas extends imcrea
      */
     public function actualizar_direccion_residencia()
     {
-        $query = "UPDATE personas SET direccion_residencia = ?, barrio = ?, estrato = ?  WHERE id_personas = ?";
+        $query = "UPDATE personas SET direccion_residencia = ?, barrio = ?, estrato = ?, zona = ?, equipo_tecnologico = ?  WHERE id_personas = ?";
         //echo $query;
         $stmt = $this->_db->prepare($query);
 
+        // zona (1 = urbana, 2 = rural) y equipo tecnologico (1 = celular, 2 = tablet, 3 = computador)
+        // se guardan como null si no tienen un valor valido
+        $zona = in_array((int) $this->zona, [1, 2], true) ? (int) $this->zona : null;
+        $equipo_tecnologico = in_array((int) $this->equipo_tecnologico, [1, 2, 3], true) ? (int) $this->equipo_tecnologico : null;
+
         // Vincular parámetros
-        $stmt->bind_param("ssii", $this->direccion_residencia, $this->barrio, $this->estrato, $this->id_persona);
+        $stmt->bind_param("ssiiii", $this->direccion_residencia, $this->barrio, $this->estrato, $zona, $equipo_tecnologico, $this->id_persona);
 
         // Ejecutar consulta
         if ($stmt->execute()) {

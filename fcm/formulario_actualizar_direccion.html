@@ -184,7 +184,9 @@
         }
 
         /* Select oculto: mantiene compatibilidad con el código JS existente */
-        #ac_estrato {
+        #ac_estrato,
+        #ac_zona,
+        #ac_equipo_tecnologico {
             display: none;
         }
     </style>
@@ -268,6 +270,61 @@
             </div>
         </div>
 
+        <!-- Fila 3: Zona + Equipo tecnológico -->
+        <div class="row g-3">
+            <div class="col-md-5">
+                <div class="field-group">
+                    <label class="field-label">
+                        <span class="lbl-icon">🌄</span> Zona
+                    </label>
+
+                    <!-- Select oculto: 1 = urbana, 2 = rural -->
+                    <select class="form-control" id="ac_zona" aria-label="Zona">
+                        <option value="" selected></option>
+                        <option value="1">urbana</option>
+                        <option value="2">rural</option>
+                    </select>
+
+                    <!-- Selector visual -->
+                    <div id="zona-visual" class="estrato-grid" data-select="ac_zona">
+                        <button type="button" class="estrato-btn" data-valor="1">Urbana</button>
+                        <button type="button" class="estrato-btn" data-valor="2">Rural</button>
+                    </div>
+
+                    <div class="field-hint">
+                        <span>ℹ️</span> Seleccione la zona del lugar de residencia.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="field-group">
+                    <label class="field-label">
+                        <span class="lbl-icon">💻</span> Equipo tecnológico para la comunicación virtual
+                    </label>
+
+                    <!-- Select oculto: 1 = celular, 2 = tablet, 3 = computador -->
+                    <select class="form-control" id="ac_equipo_tecnologico" aria-label="Equipo tecnológico">
+                        <option value="" selected></option>
+                        <option value="1">celular</option>
+                        <option value="2">tablet</option>
+                        <option value="3">computador</option>
+                    </select>
+
+                    <!-- Selector visual -->
+                    <div id="equipo-visual" class="estrato-grid" data-select="ac_equipo_tecnologico">
+                        <button type="button" class="estrato-btn" data-valor="1">Celular</button>
+                        <button type="button" class="estrato-btn" data-valor="2">Tablet</button>
+                        <button type="button" class="estrato-btn" data-valor="3">Computador</button>
+                    </div>
+
+                    <div class="field-hint">
+                        <span>ℹ️</span> ¿Qué equipo tecnológico utilizó para la comunicación virtual?
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div><!-- /#dir-card -->
 
     <script>
@@ -291,6 +348,38 @@
                 });
             });
 
+            // Selectores visuales de zona y equipo tecnológico:
+            // cada grupo de botones escribe en su <select> oculto (data-select)
+            var gruposOpcion = document.querySelectorAll('#zona-visual, #equipo-visual');
+
+            function syncGrupo(grupo, val) {
+                val = String(val == null ? '' : val);
+                grupo.querySelectorAll('.estrato-btn').forEach(function (btn) {
+                    btn.classList.toggle('active', btn.getAttribute('data-valor') === val);
+                });
+            }
+
+            gruposOpcion.forEach(function (grupo) {
+                var select = document.getElementById(grupo.getAttribute('data-select'));
+                grupo.querySelectorAll('.estrato-btn').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        select.value = btn.getAttribute('data-valor');
+                        syncGrupo(grupo, select.value);
+                        // quita el error de validacion al seleccionar
+                        $(select).removeClass('is-invalid').css('border-color', '');
+                        $(select).siblings('.invalid-feedback').remove();
+                    });
+                });
+            });
+
+            function setOpcion(selectId, grupoId, val) {
+                var select = document.getElementById(selectId);
+                select.value = (val == null) ? '' : String(val);
+                // si el valor no existe en las opciones queda sin seleccionar
+                if (select.value === '' || select.selectedIndex < 0) select.value = '';
+                syncGrupo(document.getElementById(grupoId), select.value);
+            }
+
             // Añade pulso visual a un campo cuando recibe un valor precargado
             function pulseField(id) {
                 var el = document.getElementById(id);
@@ -305,9 +394,9 @@
             }
 
             // ── API pública: llamada desde matricula.js ───────────────────────────
-            // Popula los tres campos de manera SÍNCRONA (sin setTimeout) y aplica
+            // Popula los campos de manera SÍNCRONA (sin setTimeout) y aplica
             // feedback visual inmediato.
-            window.poblarFormularioDireccion = function (direccion, barrio, estrato) {
+            window.poblarFormularioDireccion = function (direccion, barrio, estrato, zona, equipo_tecnologico) {
                 var dEl = document.getElementById('ac_direccion');
                 var bEl = document.getElementById('ac_barrio');
 
@@ -317,6 +406,9 @@
                 var stratoVal = String(estrato || '3');
                 document.getElementById('ac_estrato').value = stratoVal;
                 syncVisual(stratoVal);
+
+                setOpcion('ac_zona', 'zona-visual', zona);
+                setOpcion('ac_equipo_tecnologico', 'equipo-visual', equipo_tecnologico);
             };
 
             // Sincronización puntual del visual (aún expuesta para compatibilidad)

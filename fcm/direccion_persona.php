@@ -29,6 +29,8 @@ if ($valido) {
     $respuesta['direccion_residencia'] = $resp['direccion_residencia'];
     $respuesta['estrato'] = $resp['estrato'];
     $respuesta['barrio'] = $resp['barrio'];
+    $respuesta['zona'] = $resp['zona'];
+    $respuesta['equipo_tecnologico'] = $resp['equipo_tecnologico'];
 
     // agrego el estado de la peticion
     $respuesta['status'] = 1;

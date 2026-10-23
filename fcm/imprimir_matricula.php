@@ -103,6 +103,32 @@ function sexo_nombre($codigo): string
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
+// Helper: convierte el código numérico de zona al nombre (1 = urbana, 2 = rural)
+// ──────────────────────────────────────────────────────────────────────────────
+function zona_nombre($codigo): string
+{
+    $mapa = [
+        1 => 'Urbana',
+        2 => 'Rural',
+    ];
+    return $mapa[(int)$codigo] ?? '';
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Helper: convierte el código numérico del equipo tecnológico al nombre
+// (1 = celular, 2 = tablet, 3 = computador)
+// ──────────────────────────────────────────────────────────────────────────────
+function equipo_tecnologico_nombre($codigo): string
+{
+    $mapa = [
+        1 => 'Celular',
+        2 => 'Tablet',
+        3 => 'Computador',
+    ];
+    return $mapa[(int)$codigo] ?? '';
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
 // Obtener datos del alumno (persona + matrícula académica)
 // ──────────────────────────────────────────────────────────────────────────────
 $al_obj = new alumnos();
@@ -386,6 +412,18 @@ $pdf->Ln();
 // ── Información socioeconómica ───────────────────────────────────────────────
 $pdf->titulo_seccion('Informacion Socioeconomica');
 $pdf->SetFillColor(220, 220, 220);
+$pdf->Cell(12, 6, enc('Zona' !== '' ? 'Zona' . ':' : ''), 1, 0, 'L', true);
+$pdf->SetFillColor(255, 255, 255);
+$pdf->Cell(20, 6, enc(zona_nombre($al_obj->zona ?? '')), 1, 0, 'L', true);
+
+$pdf->SetFillColor(220, 220, 220);
+$pdf->Cell(72, 6, enc('Equipo tecnológico para la comunicación virtual' !== '' ? 'Equipo tecnológico para la comunicación virtual' . ':' : ''), 1, 0, 'L', true);
+$pdf->SetFillColor(255, 255, 255);
+$pdf->Cell(86, 6, enc(equipo_tecnologico_nombre($al_obj->equipo_tecnologico ?? '')), 1, 0, 'L', true);
+
+$pdf->Ln();
+
+$pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(15, 6, enc('Sisben' !== '' ? 'Sisben' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
 $pdf->Cell(10, 6, enc($al_obj->sisben ?? ''), 1, 0, 'L', true);
@@ -441,18 +479,18 @@ $pdf->Cell(10, 6, enc($al_obj->rh ?? ''), 1, 0, 'L', true);
 //$pdf->Cell(10, 6, enc($al_obj->victima_conflicto ?? ''), 1, 0, 'L', true);
 
 $pdf->SetFillColor(220, 220, 220);
-$pdf->Cell(30, 6, enc('Victima del conflicto armado' !== '' ? 'Victima del conflicto armado' . ':' : ''), 1, 0, 'L', true);
+$pdf->Cell(44, 6, enc('Victima del conflicto armado' !== '' ? 'Victima del conflicto armado' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
 if ($al_obj->victima_conflicto) {
-    $pdf->Cell(20, 6, enc('Si'), 1, 0, 'L', true);
+    $pdf->Cell(10, 6, enc('Si'), 1, 0, 'L', true);
 } else {
-    $pdf->Cell(20, 6, enc('No'), 1, 0, 'L', true);
+    $pdf->Cell(10, 6, enc('No'), 1, 0, 'L', true);
 }
 
 $pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(30, 6, enc('Municipio expulsor' !== '' ? 'Municipio expulsor' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(30, 6, enc($al_obj->municipio_expulsor ?? ''), 1, 0, 'L', true);
+$pdf->Cell(52, 6, enc($al_obj->municipio_expulsor ?? ''), 1, 0, 'L', true);
 
 
 $pdf->Ln();
@@ -481,7 +519,7 @@ $pdf->Cell(40, 6, enc($al_obj->capacidad_excepcional ?? ''), 1, 0, 'L', true);
 $pdf->Ln();
 
 $pdf->SetFillColor(220, 220, 220);
-$pdf->Cell(32, 6, enc('Etnia' !== '' ? 'Etnia' . ':' : ''), 1, 0, 'L', true);
+$pdf->Cell(12, 6, enc('Etnia' !== '' ? 'Etnia' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
 
 if ($al_obj->etnia) {
@@ -493,17 +531,12 @@ if ($al_obj->etnia) {
 $pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(23, 6, enc('Tipo de etnia' !== '' ? 'Tipo de etnia' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(30, 6, enc($al_obj->tipo_etnia ?? ''), 1, 0, 'L', true);
+$pdf->Cell(33, 6, enc($al_obj->tipo_etnia ?? ''), 1, 0, 'L', true);
 
 $pdf->SetFillColor(220, 220, 220);
-$pdf->Cell(20, 6, enc('Resguardo' !== '' ? 'Resguardo' . ':' : ''), 1, 0, 'L', true);
+$pdf->Cell(34, 6, enc('Resguardo / Consejo' !== '' ? 'Resguardo / Consejo' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(30, 6, enc($al_obj->resguardo ?? ''), 1, 0, 'L', true);
-
-$pdf->SetFillColor(220, 220, 220);
-$pdf->Cell(15, 6, enc('Consejo' !== '' ? 'Consejo' . ':' : ''), 1, 0, 'L', true);
-$pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(24, 6, enc($al_obj->consejo ?? ''), 1, 0, 'L', true);
+$pdf->Cell(78, 6, enc($al_obj->resguardo_consejo ?? ''), 1, 0, 'L', true);
 
 $pdf->Ln();
 
