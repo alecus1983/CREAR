@@ -14,7 +14,7 @@ class alumnos extends personas
     /**
      * Resumen de los métodos de la clase alumnos:
      *
-     * - __construct(int $codigo): Constructor de la clase. Inicializa los atributos del alumno a partir de su ID.
+     * - __construct(?int $codigo): Constructor de la clase. Si recibe el ID del alumno carga sus datos y los de la persona.
      * - set_alumno(): Crea un nuevo registro de alumno en la base de datos.
      * - update_alumno(): Actualiza los datos de un alumno existente.
      * - buscar_estudiante(string $nombre, string $apellido): Busca estudiantes por nombre y apellido.
@@ -25,18 +25,20 @@ class alumnos extends personas
 
     /**
      * Constructor de la clase.
-     * Requiere el ID del estudiante para cargar sus datos.
+     * Si recibe el ID del estudiante carga sus datos (u_alumnos)
+     * y todos los atributos de la tabla personas.
      *
-     * @param int $codigo El ID del alumno.
+     * @param int|null $id_alumno El ID del alumno (opcional).
      */
-
-    //  constructor de la clase
-
-
-    public function __construct()
+    public function __construct($id_alumno = null)
     {
         // Heredar del constructor padre
         parent::__construct();
+
+        // si se instancia con el codigo del alumno se cargan sus datos
+        if (!empty($id_alumno)) {
+            $this->get_alumno_codigo($id_alumno);
+        }
     }
 
     // funcion que obtiene los parametros de un
@@ -103,7 +105,8 @@ class alumnos extends personas
     }
 
     /**
-     * Obtiene los parametros de la persona a partir del codigo del alumno
+     * Obtiene los parametros del alumno (u_alumnos) y todos los atributos
+     * de la persona (tabla personas) a partir del codigo del alumno
      * 
      * @param int $id_alumno El ID del alumno.
      */
@@ -115,7 +118,7 @@ class alumnos extends personas
             if (!empty($id_alumno)) {
 
                 // 1. Buscar el ID de la persona  asociado al alumno
-                $q = "SELECT id_personas FROM u_alumnos WHERE id_alumnos = ? LIMIT 1";
+                $q = "SELECT id_personas, fecha FROM u_alumnos WHERE id_alumnos = ? LIMIT 1";
                 // prepara la consulta
                 $stmt = $this->_db->prepare($q);
 
@@ -132,6 +135,8 @@ class alumnos extends personas
                 if ($alumno_data) {
                     $this->id_persona = $alumno_data['id_personas'];
                     $this->id_alumno = $id_alumno;
+                    $this->fecha = $alumno_data['fecha'];
+                    // carga todos los atributos de la tabla personas
                     parent::get_persona_por_id($this->id_persona);
                 } else {
                     throw new Exception("No se encontró una persona con el ID proporcionado: " . $id_alumno);

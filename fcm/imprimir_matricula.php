@@ -34,7 +34,14 @@ $fecha_raw    = $_GET['fecha'] ?? date('Y-m-d');
 $mt = new matricula();
 $mt->get_matricula_id($id_matricula);
 
-$id_alumno = $mt->id_alumno;
+// si la matricula no existe no se puede generar el PDF
+if (empty($mt->id_alumno)) {
+    http_response_code(404);
+    echo "No se encontró la matrícula " . $id_matricula . ". Es posible que haya sido eliminada.";
+    exit;
+}
+
+$id_alumno = (int) $mt->id_alumno;
 $fecha_raw = $mt->fecha;
 
 // Si la matrícula no tiene fecha registrada (NULL), grabamos hoy en la BD
@@ -318,7 +325,7 @@ $pdf->Cell(45, 6, enc($al_obj->identificacion ?? ''), 1, 0, 'L', true);
 $pdf->SetFillColor(220, 220, 220);
 $pdf->Cell(35, 6, enc('Fecha de nacimiento' !== '' ? 'Fecha de nacimiento' . ':' : ''), 1, 0, 'L', true);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(23, 6, enc($al_obj->fecha_nacimiento ?? ''), 1, 0, 'L', true);
+$pdf->Cell(23, 6, enc($al_obj->nacimiento ?? ''), 1, 0, 'L', true);
 
 
 $pdf->Ln();
