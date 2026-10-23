@@ -44,6 +44,23 @@
         </div>
 
     </div>
+
+    <div class='row'>
+        <div class='col'>
+            <label for='ad_expedido_en' class='form-label'>expedido en</label>
+            <input class='form-control' id='ad_expedido_en' aria-describedby='expedido_en' maxlength="100">
+            <div id='ayuda_expedido_en' class='form-text'>digite el municipio donde fue expedido el documento.</div>
+        </div>
+        <div class='col'>
+            <label for='ad_sexo' class='form-label'>sexo</label>
+            <select class='form-control' id='ad_sexo'>
+                <option value='' selected>seleccione</option>
+                <option value='1'>femenino</option>
+                <option value='2'>masculino</option>
+            </select>
+            <div id='ayuda_sexo' class='form-text'>seleccione el sexo por favor.</div>
+        </div>
+    </div>
     <div class='row'>
         <div class='col'>
             <label for='ad_correo' class='form-label'>correo personal</label>
@@ -77,9 +94,10 @@
             <input class='form-control' id='ad_nacimiento' aria-describedby='nacimiento' type='date' min='1920-01-01'>
             <div id='ayuda_nacimiento' class='form-text'>seleccione la fecha de nacimiento por favor.</div>
         </div>
-        <div class='col mx-auto justify-content-md'>
-
-
+        <div class='col'>
+            <label for='ad_municipio_nacimiento' class='form-label'>municipio de nacimiento</label>
+            <input class='form-control' id='ad_municipio_nacimiento' aria-describedby='municipio_nacimiento' maxlength="100">
+            <div id='ayuda_municipio_nacimiento' class='form-text'>digite el municipio de nacimiento por favor.</div>
         </div>
     </div>
 

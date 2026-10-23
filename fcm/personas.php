@@ -15,6 +15,9 @@ class personas extends imcrea
     public $identificacion;
     public $tipo_identificacion;
     public $nacimiento;
+    public $expedido_en; // Municipio donde fue expedido el documento
+    public $municipio_nacimiento;
+    public $sexo; // 1 = femenino, 2 = masculino
     public $correo;
     public $i_correo;
     public $celular;
@@ -66,6 +69,9 @@ class personas extends imcrea
         $this->identificacion = '';
         $this->tipo_identificacion = '';
         $this->nacimiento = '';
+        $this->expedido_en = '';
+        $this->municipio_nacimiento = '';
+        $this->sexo = null;
         $this->correo = '';
         $this->i_correo = '';
         $this->celular = '';
@@ -206,6 +212,9 @@ class personas extends imcrea
                 $this->identificacion = $a['identificacion'];
                 $this->tipo_identificacion = $a['tipo_identificacion'];
                 $this->nacimiento = $a['nacimiento'];
+                $this->expedido_en = $a['expedido_en'];
+                $this->municipio_nacimiento = $a['municipio_nacimiento'];
+                $this->sexo = $a['sexo'];
                 $this->correo = $a['correo'];
                 $this->i_correo = $a['i_correo'];
                 $this->celular = $a['celular'];
@@ -428,6 +437,7 @@ class personas extends imcrea
      * Agrega una nueva persona a la base de datos.
      * Requiere que los atributos públicos nombres, apellidos, identificacion, tipo_identificacion,
      * nacimiento, correo, i_correo, celular, telefono estén previamente seteados en el objeto.
+     * expedido_en, municipio_nacimiento y sexo son opcionales.
      *
      * @return bool True si la inserción fue exitosa, false en caso contrario.
      */
@@ -445,8 +455,9 @@ class personas extends imcrea
 
             $q = "INSERT INTO personas
                             (nombres, apellidos, identificacion, tipo_identificacion,
-                             nacimiento, correo, i_correo, celular, telefono)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                             nacimiento, correo, i_correo, celular, telefono,
+                             expedido_en, municipio_nacimiento, sexo)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 
             $stmt = $this->_db->prepare($q);
@@ -456,7 +467,7 @@ class personas extends imcrea
             }
 
             $stmt->bind_param(
-                "ssissssss",
+                "ssissssssssi",
                 $this->nombres,
                 $this->apellidos,
                 $this->identificacion,
@@ -465,7 +476,10 @@ class personas extends imcrea
                 $this->correo,
                 $this->i_correo,
                 $this->celular,
-                $this->telefono
+                $this->telefono,
+                $this->expedido_en,
+                $this->municipio_nacimiento,
+                $this->sexo
             );
 
             $c = $stmt->execute();
@@ -840,6 +854,64 @@ class personas extends imcrea
 
 
         $stmt->bind_param("si", $this->nacimiento, $this->id_persona);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza el municipio donde fue expedido el documento de una persona.
+     */
+    public function actualizar_expedido_en_persona()
+    {
+        $query = "UPDATE personas SET expedido_en = ?  WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+
+        $this->expedido_en = htmlspecialchars(strip_tags($this->expedido_en));
+
+        $stmt->bind_param("si", $this->expedido_en, $this->id_persona);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza el municipio de nacimiento de una persona.
+     */
+    public function actualizar_municipio_nacimiento_persona()
+    {
+        $query = "UPDATE personas SET municipio_nacimiento = ?  WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+
+        $this->municipio_nacimiento = htmlspecialchars(strip_tags($this->municipio_nacimiento));
+
+        $stmt->bind_param("si", $this->municipio_nacimiento, $this->id_persona);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Actualiza el sexo de una persona (1 = femenino, 2 = masculino).
+     */
+    public function actualizar_sexo_persona()
+    {
+        if (!in_array((int) $this->sexo, [1, 2], true)) {
+            return false;
+        }
+
+        $query = "UPDATE personas SET sexo = ?  WHERE id_personas = ?";
+        $stmt = $this->_db->prepare($query);
+
+        $this->sexo = (int) $this->sexo;
+
+        $stmt->bind_param("ii", $this->sexo, $this->id_persona);
 
         if ($stmt->execute()) {
             return true;

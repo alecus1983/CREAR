@@ -962,6 +962,294 @@ ALTER TABLE imcreati_datam.matricula ADD fecha DATE DEFAULT null NULL;
 
 ALTER TABLE imcreati_datam.c_2026 ADD COLUMN D_p4 double DEFAULT NULL AFTER D32;
 
+describe imcreati_datam.c_2026
+
+
+
+
+
+
+
+Select id_alumno , id_materia ,8J, 16j from imcreati_datam.c_2026 where 
+1A> 5 or
+1B> 5 or
+1C> 5 or
+1D> 5 or
+1E> 5 or
+1F> 5 or
+1G> 5 or
+D1> 5 or
+2A> 5 or
+2B> 5 or
+2C> 5 or
+2D> 5 or
+2E> 5 or
+2F> 5 or
+2G> 5 or
+D2> 5 or
+3A> 5 or
+3B> 5 or
+3C> 5 or
+3D> 5 or
+3E> 5 or
+3F> 5 or
+3G> 5 or
+D3> 5 or
+4A> 5 or
+4B> 5 or
+4C> 5 or
+4D> 5 or
+4E> 5 or
+4F> 5 or
+4G> 5 or
+4H> 5 or
+D4> 5 or
+5A> 5 or
+5B> 5 or
+5C> 5 or
+5D> 5 or
+5E> 5 or
+5F> 5 or
+5G> 5 or
+D5> 5 or
+6A> 5 or
+6B> 5 or
+6C> 5 or
+6D> 5 or
+6E> 5 or
+6F> 5 or
+6G> 5 or
+D6> 5 or
+7A> 5 or
+7B> 5 or
+7C> 5 or
+7D> 5 or
+7E> 5 or
+7F> 5 or
+7G> 5 or
+D7> 5 or
+8E> 5 or
+8F> 5 or
+8G> 5 or
+8I> 5 or
+8J> 5 or
+R1> 5 or
+D8> 5 or
+D_p1> 5 or
+9A> 5 or
+9B> 5 or
+9C> 5 or
+9D> 5 or
+9E> 5 or
+9F> 5 or
+9G> 5 or
+D9> 5 or
+10A> 5 or
+10B> 5 or
+10C> 5 or
+10D> 5 or
+10E> 5 or
+10F> 5 or
+10G> 5 or
+D10> 5 or
+11A> 5 or
+11B> 5 or
+11C> 5 or
+11D> 5 or
+11E> 5 or
+11F> 5 or
+11G> 5 or
+D11> 5 or
+12A> 5 or
+12B> 5 or
+12C> 5 or
+12D> 5 or
+12E> 5 or
+12F> 5 or
+12G> 5 or
+12H> 5 or
+D12> 5 or
+13A> 5 or
+13B> 5 or
+13C> 5 or
+13D> 5 or
+13E> 5 or
+13F> 5 or
+13G> 5 or
+D13> 5 or
+14A> 5 or
+14B> 5 or
+14C> 5 or
+14D> 5 or
+14E> 5 or
+14F> 5 or
+14G> 5 or
+D14> 5 or
+15A> 5 or
+15B> 5 or
+15C> 5 or
+15D> 5 or
+15E> 5 or
+15F> 5 or
+15G> 5 or
+D15> 5 or
+16E> 5 or
+16F> 5 or
+16G> 5 or
+16I> 5 or
+16J> 5 or
+R2> 5 or
+D16> 5 or
+D_p2> 5 or
+17A> 5 or
+17B> 5 or
+17C> 5 or
+17D> 5 or
+17E> 5 or
+17F> 5 or
+17G> 5 or
+D17> 5 or
+18A> 5 or
+18B> 5 or
+18C> 5 or
+18D> 5 or
+18E> 5 or
+18F> 5 or
+18G> 5 or
+D18> 5 or
+19A> 5 or
+19B> 5 or
+19C> 5 or
+19D> 5 or
+19E> 5 or
+19F> 5 or
+19G> 5 or
+D19> 5 or
+20A> 5 or
+20B> 5 or
+20C> 5 or
+20D> 5 or
+20E> 5 or
+20F> 5 or
+20G> 5 or
+20H> 5 or
+D20> 5 or
+21A> 5 or
+21B> 5 or
+21C> 5 or
+21D> 5 or
+21E> 5 or
+21F> 5 or
+21G> 5 or
+D21> 5 or
+22A> 5 or
+22B> 5 or
+22C> 5 or
+22D> 5 or
+22E> 5 or
+22F> 5 or
+22G> 5 or
+D22> 5 or
+23A> 5 or
+23B> 5 or
+23C> 5 or
+23D> 5 or
+23E> 5 or
+23F> 5 or
+23G> 5 or
+D23> 5 or
+24E> 5 or
+24F> 5 or
+24G> 5 or
+24I> 5 or
+24J> 5 or
+R3> 5 or
+D24> 5 or
+D_p3> 5 or
+25A> 5 or
+25B> 5 or
+25C> 5 or
+25D> 5 or
+25E> 5 or
+25F> 5 or
+25G> 5 or
+D25> 5 or
+26A> 5 or
+26B> 5 or
+26C> 5 or
+26D> 5 or
+26E> 5 or
+26F> 5 or
+26G> 5 or
+D26> 5 or
+27A> 5 or
+27B> 5 or
+27C> 5 or
+27D> 5 or
+27E> 5 or
+27F> 5 or
+27G> 5 or
+D27> 5 or
+28A> 5 or
+28B> 5 or
+28C> 5 or
+28D> 5 or
+28E> 5 or
+28F> 5 or
+28G> 5 or
+28H> 5 or
+D28> 5 or
+29A> 5 or
+29B> 5 or
+29C> 5 or
+29D> 5 or
+29E> 5 or
+29F> 5 or
+29G> 5 or
+D29> 5 or
+30A> 5 or
+30B> 5 or
+30C> 5 or
+30D> 5 or
+30E> 5 or
+30F> 5 or
+30G> 5 or
+D30> 5 or
+31A> 5 or
+31B> 5 or
+31C> 5 or
+31D> 5 or
+31E> 5 or
+31F> 5 or
+31G> 5 or
+D31> 5 or
+32E> 5 or
+32F> 5 or
+32G> 5 or
+32I> 5 or
+32J> 5 or
+R4> 5 or
+D32> 5 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

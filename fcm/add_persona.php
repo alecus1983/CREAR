@@ -55,6 +55,19 @@ else {
     $respuesta['status'] = 25;
 }
 
+// validacion del sexo: 1 = femenino, 2 = masculino
+if (isset($datos["sexo"]) and in_array($datos["sexo"], array("1", "2"), true)) {
+    $sexo = (int) $datos["sexo"];
+}
+else {
+    $valido = false;
+    $respuesta['status'] = 27;
+}
+
+// campos opcionales: municipio de expedicion del documento y de nacimiento
+$expedido_en = isset($datos["expedido_en"]) ? trim($datos["expedido_en"]) : "";
+$municipio_nacimiento = isset($datos["municipio_nacimiento"]) ? trim($datos["municipio_nacimiento"]) : "";
+
 
 
 // si los datos son validos
@@ -78,6 +91,9 @@ if ($valido) {
         $p->celular = $datos["celular"];
         $p->telefono = $datos["telefono"];
         $p->nacimiento = $nacimiento;
+        $p->expedido_en = $expedido_en;
+        $p->municipio_nacimiento = $municipio_nacimiento;
+        $p->sexo = $sexo;
 
         // agrego la persona
         if ($p->add()) {
@@ -93,6 +109,9 @@ if ($valido) {
             $respuesta['celular'] = $datos["celular"];
             $respuesta['telefono'] = $datos["telefono"];
             $respuesta['nacimiento'] = $nacimiento;
+            $respuesta['expedido_en'] = $expedido_en;
+            $respuesta['municipio_nacimiento'] = $municipio_nacimiento;
+            $respuesta['sexo'] = $sexo;
         }
         else {
             $respuesta['status'] = "20";

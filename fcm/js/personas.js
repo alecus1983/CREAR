@@ -415,6 +415,9 @@ function agregar_persona(formulario, personax, ea) {
     persona.celular = ($("#ad_celular").val() || "");
     persona.telefono = ($("#ad_telefono").val() || "");
     persona.nacimiento = ($("#ad_nacimiento").val() || "");
+    persona.expedido_en = ($("#ad_expedido_en").val() || "").trim();
+    persona.municipio_nacimiento = ($("#ad_municipio_nacimiento").val() || "").trim();
+    persona.sexo = ($("#ad_sexo").val() || "");
 
     /**
      * Función interna que realiza el AJAX de inserción (add_persona.php).
@@ -472,6 +475,9 @@ function agregar_persona(formulario, personax, ea) {
                     }
                     if (respuesta['status'] == 26) {
                         swal('Identificación duplicada', 'La identificación ingresada ya se encuentra registrada en el sistema.', 'warning');
+                    }
+                    if (respuesta['status'] == 27) {
+                        swal('Error', 'Seleccione el sexo (femenino o masculino)', 'error');
                     }
                 }
             },
@@ -555,7 +561,11 @@ function agregar_persona(formulario, personax, ea) {
 // personas y lo envia mendinte ajax
 function actualizar_persona() {
 
-    valida_actualizar_persona();
+    // si el formulario no es valido no se envia
+    if (!valida_actualizar_persona()) {
+        swal('Formulario Incompleto', 'Por favor, corrija los campos marcados en rojo.', 'warning');
+        return;
+    }
 
     // invoco el metodo ajax
     // para solicitar los datos del servidor
@@ -574,7 +584,10 @@ function actualizar_persona() {
             i_correo: $("#ac_i_correo").val(),
             celular: $("#ac_celular").val(),
             telefono: $("#ac_telefono").val(),
-            nacimiento: $("#ac_nacimiento").val()
+            nacimiento: $("#ac_nacimiento").val(),
+            expedido_en: ($("#ac_expedido_en").val() || "").trim(),
+            municipio_nacimiento: ($("#ac_municipio_nacimiento").val() || "").trim(),
+            sexo: $("#ac_sexo").val()
         },
         // si los datos son correctos entonces ...
         success: function (respuesta) {
@@ -608,6 +621,9 @@ function actualizar_persona() {
                 }
                 if (respuesta['status'] == 26) {
                     swal('Semana', 'Porfavor seleccione una semana', 'error');
+                }
+                if (respuesta['status'] == 27) {
+                    swal('Error', 'Seleccione el sexo (femenino o masculino)', 'error');
                 }
             }
         },
@@ -656,9 +672,8 @@ function valida_actualizar_persona() {
     const correo = $('#ac_correo').val().trim();
     // Expresión regular simple para validar el formato de un email.
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (correo === '') {
-        errores.correo = 'El correo electrónico es obligatorio.';
-    } else if (!emailRegex.test(correo)) {
+    // El correo personal es opcional, pero si se escribe, debe ser válido.
+    if (correo !== '' && !emailRegex.test(correo)) {
         errores.correo = 'El formato del correo electrónico no es válido.';
     }
 
@@ -680,6 +695,12 @@ function valida_actualizar_persona() {
         errores.nacimiento = 'La fecha de nacimiento es obligatoria.';
     } else if (new Date(nacimiento) > new Date()) {
         errores.nacimiento = 'La fecha de nacimiento no puede ser en el futuro.';
+    }
+
+    // sexo: 1 = femenino, 2 = masculino
+    const sexo = $('#ac_sexo').val();
+    if (sexo !== '1' && sexo !== '2') {
+        errores.sexo = 'Seleccione el sexo.';
     }
 
 
@@ -1619,6 +1640,13 @@ function validarFormularioPersona() {
                 mostrarError('ad_nacimiento', 'La fecha de nacimiento no es válida.');
                 esValido = false;
             }
+        }
+
+        // 9. Validación de Sexo (ad_sexo): 1 = femenino, 2 = masculino
+        const sexo = $("#ad_sexo").val();
+        if (sexo !== "1" && sexo !== "2") {
+            mostrarError('ad_sexo', 'Seleccione el sexo.');
+            esValido = false;
         }
 
         return esValido;

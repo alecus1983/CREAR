@@ -20,6 +20,17 @@ if($_POST["id_persona"] !== ""){
     $respuesta['status'] = 32;    
 }
 
+// validacion del sexo: 1 = femenino, 2 = masculino (vacio se guarda como null)
+$sexo = null;
+if (isset($_POST["sexo"]) and $_POST["sexo"] !== "") {
+    if (in_array($_POST["sexo"], array("1", "2"), true)) {
+        $sexo = (int) $_POST["sexo"];
+    } else {
+        $valido = false;
+        $respuesta['status'] = 27;
+    }
+}
+
 
 // si los datos son validos
 if ($valido) {
@@ -38,7 +49,10 @@ if ($valido) {
         "i_correo"=>$_POST["i_correo"],
         "telefono"=>$_POST["telefono"],
         "celular"=>$_POST["celular"],
-        "nacimiento"=>$_POST["nacimiento"]            
+        "nacimiento"=>$_POST["nacimiento"],
+        "expedido_en"=>trim($_POST["expedido_en"] ?? ""),
+        "municipio_nacimiento"=>trim($_POST["municipio_nacimiento"] ?? ""),
+        "sexo"=>$sexo
     );
 
     // se acutualiza la persona
@@ -50,7 +64,8 @@ if ($valido) {
 }
 else {
     $respuesta['html'] = "no se puedo actualizar la persona";
-    $respuesta['status'] = 2;
+    // conservo el codigo de error de validacion si existe
+    $respuesta['status'] = $respuesta['status'] ?? 2;
 }
 
 $respuesta_json = json_encode($respuesta);

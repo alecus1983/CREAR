@@ -111,6 +111,25 @@ $html = $html . "</div>";
 
 $html = $html . "<div class='row'>";
 $html = $html . "<div class='col'>";
+$html = $html . "<label for='ac_expedido_en' class='form-label'>expedido en</label>";
+$html = $html . "<input  value = '".htmlspecialchars($persona->expedido_en ?? '', ENT_QUOTES)."' class='form-control' id='ac_expedido_en' aria-describedby='expedido_en' maxlength='100'>";
+$html = $html . "<div id='ayuda_expedido_en' class='form-text'>digite el municipio donde fue expedido el documento.</div>";
+$html = $html . "</div>";
+$html = $html . "<div class='col'>";
+$html = $html . "<label for='ac_sexo' class='form-label'>sexo</label>";
+$html = $html . "<select class='form-control' id='ac_sexo'>";
+// sexo: 1 = femenino, 2 = masculino
+$html = $html . "<option value = ''" . (in_array((int) $persona->sexo, [1, 2], true) ? "" : " selected") . ">seleccione</option>";
+$html = $html . "<option value = '1'" . ($persona->sexo == 1 ? " selected" : "") . ">femenino</option>";
+$html = $html . "<option value = '2'" . ($persona->sexo == 2 ? " selected" : "") . ">masculino</option>";
+$html = $html . "</select>";
+$html = $html . "<div id='ayuda_sexo' class='form-text'>seleccione el sexo por favor.</div>";
+$html = $html . "</div>";
+$html = $html . "</div>";
+
+
+$html = $html . "<div class='row'>";
+$html = $html . "<div class='col'>";
 $html = $html . "<label for='ac_correo' class='form-label'>correo personal</label>";
 $html = $html . "<input  value = '".$persona->correo."' class='form-control' id='ac_correo' aria-describedby='correo' type='email'>";
 $html = $html . "<div id='ayuda_correo' class='form-text'>actualize el  correo por favor.</div>";
@@ -142,6 +161,14 @@ $html = $html . "<label for='ac_nacimiento' class='form-label'>fecha de nacimien
 $html = $html . "<input  class='form-control' id='ac_nacimiento' aria-describedby='nacimiento' type='date' min='1920-01-01' value='".$persona->nacimiento."' >";
 $html = $html . "<div id='ayuda_nacimiento' class='form-text'>seleccione la fecha de nacimiento  por favor.</div>";
 $html = $html . "</div>";
+$html = $html . "<div class='col'>";
+$html = $html . "<label for='ac_municipio_nacimiento' class='form-label'>municipio de nacimiento</label>";
+$html = $html . "<input  value = '".htmlspecialchars($persona->municipio_nacimiento ?? '', ENT_QUOTES)."' class='form-control' id='ac_municipio_nacimiento' aria-describedby='municipio_nacimiento' maxlength='100'>";
+$html = $html . "<div id='ayuda_municipio_nacimiento' class='form-text'>digite el municipio de nacimiento por favor.</div>";
+$html = $html . "</div>";
+$html = $html . "</div>";
+
+$html = $html . "<div class='row'>";
 $html = $html . "<div class='col mx-auto justify-content-md'>";
 $html = $html . "<br>";
 $html = $html . "<button type='button' id='actualizar_persona' class='btn btn-outline-dark' style = 'margin: 5px' onclick='actualizar_persona();'>actualizar </button>";

@@ -84,6 +84,18 @@ function tipo_id_nombre($codigo): string
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
+// Helper: convierte el código numérico de sexo al nombre (1 = femenino, 2 = masculino)
+// ──────────────────────────────────────────────────────────────────────────────
+function sexo_nombre($codigo): string
+{
+    $mapa = [
+        1 => 'Femenino',
+        2 => 'Masculino',
+    ];
+    return $mapa[(int)$codigo] ?? '';
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
 // Obtener datos del alumno (persona + matrícula académica)
 // ──────────────────────────────────────────────────────────────────────────────
 $al_obj = new alumnos();
@@ -308,6 +320,23 @@ $pdf->Cell(35, 6, enc('Fecha de nacimiento' !== '' ? 'Fecha de nacimiento' . ':'
 $pdf->SetFillColor(255, 255, 255);
 $pdf->Cell(23, 6, enc($al_obj->fecha_nacimiento ?? ''), 1, 0, 'L', true);
 
+
+$pdf->Ln();
+
+$pdf->SetFillColor(220, 220, 220);
+$pdf->Cell(22, 6, enc('Expedido en' !== '' ? 'Expedido en' . ':' : ''), 1, 0, 'L', true);
+$pdf->SetFillColor(255, 255, 255);
+$pdf->Cell(48, 6, enc($al_obj->expedido_en ?? ''), 1, 0, 'L', true);
+
+$pdf->SetFillColor(220, 220, 220);
+$pdf->Cell(38, 6, enc('Municipio de nacimiento' !== '' ? 'Municipio de nacimiento' . ':' : ''), 1, 0, 'L', true);
+$pdf->SetFillColor(255, 255, 255);
+$pdf->Cell(52, 6, enc($al_obj->municipio_nacimiento ?? ''), 1, 0, 'L', true);
+
+$pdf->SetFillColor(220, 220, 220);
+$pdf->Cell(12, 6, enc('Sexo' !== '' ? 'Sexo' . ':' : ''), 1, 0, 'L', true);
+$pdf->SetFillColor(255, 255, 255);
+$pdf->Cell(18, 6, enc(sexo_nombre($al_obj->sexo ?? '')), 1, 0, 'L', true);
 
 $pdf->Ln();
 
