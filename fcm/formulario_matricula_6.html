@@ -82,6 +82,65 @@
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-sm-10 col-md-6 col-lg-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="ac_proviene_otra_institucion">
+                            <label class="form-check-label" for="ac_proviene_otra_institucion">
+                                ¿Proviene de otra instituci&oacute;n?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- datos de la institucion de procedencia: se habilitan con el check -->
+                <fieldset id="ac_institucion_anterior_campos" disabled>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-10 col-md-6 col-lg-4">
+                            <label class="Control-label">Nombre de la instituci&oacute;n</label>
+                            <input type="text" id="ac_institucion_anterior" class="form-control" maxlength="150">
+                        </div>
+                        <div class="col-sm-10 col-md-4 col-lg-3">
+                            <label class="Control-label">Tipo</label>
+                            <select id="ac_tipo_institucion" class="form-control">
+                                <option value="" selected>Seleccione...</option>
+                                <option value="Publico">P&uacute;blico</option>
+                                <option value="Privado">Privado</option>
+                                <option value="ICBF">ICBF</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-10 col-md-4 col-lg-3">
+                            <label class="Control-label">Situaci&oacute;n acad&eacute;mica</label>
+                            <select id="ac_situacion_academica" class="form-control">
+                                <option value="" selected>Seleccione...</option>
+                                <option value="Aprobó">Aprob&oacute;</option>
+                                <option value="Reprobó">Reprob&oacute;</option>
+                                <option value="Desertó">Desert&oacute;</option>
+                                <option value="Se trasladó">Se traslad&oacute;</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-10 col-md-6 col-lg-4">
+                            <label class="Control-label">Municipio de la instituci&oacute;n</label>
+                            <input type="text" id="ac_municipio_institucion" class="form-control" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-10 col-md-4 col-lg-3">
+                            <label class="Control-label">Fecha de retiro</label>
+                            <input type="date" id="ac_fecha_retiro" class="form-control">
+                        </div>
+                        <div class="col-sm-10 col-md-6 col-lg-5">
+                            <label class="Control-label">Motivo de retiro</label>
+                            <input type="text" id="ac_motivo_retiro" class="form-control" maxlength="255">
+                        </div>
+                    </div>
+
+                </fieldset>
 
             </form>
 

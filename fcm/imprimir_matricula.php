@@ -408,6 +408,57 @@ $pdf->Cell(30, 6, enc($al_obj->barrio ?? ''), 1, 0, 'L', true);
 
 $pdf->Ln();
 
+// Institución de procedencia
+$proviene = ($mt_obj->proviene_otra_institucion ?? 0) == 1;
+
+$pdf->SetFillColor(220, 220, 220);
+$pdf->Cell(45, 6, enc('Proviene de otra institución:'), 1, 0, 'L', true);
+$pdf->SetFillColor(255, 255, 255);
+$pdf->Cell(10, 6, enc($proviene ? 'Si' : 'No'), 1, 0, 'L', true);
+
+$pdf->SetFillColor(220, 220, 220);
+$pdf->Cell(20, 6, enc('Institución:'), 1, 0, 'L', true);
+$pdf->SetFillColor(255, 255, 255);
+$pdf->Cell(115, 6, enc($proviene ? ($mt_obj->institucion_anterior ?? '') : ''), 1, 0, 'L', true);
+
+$pdf->Ln();
+
+if ($proviene) {
+    // fecha de retiro al estilo dd/mm/YYYY
+    $fecha_retiro_obj = DateTime::createFromFormat('Y-m-d', substr($mt_obj->fecha_retiro ?? '', 0, 10));
+    $fecha_retiro     = $fecha_retiro_obj ? $fecha_retiro_obj->format('d/m/Y') : '';
+
+    $pdf->SetFillColor(220, 220, 220);
+    $pdf->Cell(10, 6, enc('Tipo:'), 1, 0, 'L', true);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->Cell(18, 6, enc($mt_obj->tipo_institucion ?? ''), 1, 0, 'L', true);
+
+    $pdf->SetFillColor(220, 220, 220);
+    $pdf->Cell(33, 6, enc('Situación académica:'), 1, 0, 'L', true);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->Cell(24, 6, enc($mt_obj->situacion_academica ?? ''), 1, 0, 'L', true);
+
+    $pdf->SetFillColor(220, 220, 220);
+    $pdf->Cell(17, 6, enc('Municipio:'), 1, 0, 'L', true);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->Cell(43, 6, enc($mt_obj->municipio_institucion ?? ''), 1, 0, 'L', true);
+
+    $pdf->SetFillColor(220, 220, 220);
+    $pdf->Cell(26, 6, enc('Fecha de retiro:'), 1, 0, 'L', true);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->Cell(19, 6, enc($fecha_retiro), 1, 0, 'L', true);
+
+    $pdf->Ln();
+
+    // el motivo puede ser largo: se imprime en varias lineas si es necesario
+    $motivo = enc($mt_obj->motivo_retiro ?? '');
+    $lineas = max(1, (int) ceil($pdf->GetStringWidth($motivo) / 158));
+    $pdf->SetFillColor(220, 220, 220);
+    $pdf->Cell(28, 6 * $lineas, enc('Motivo de retiro:'), 1, 0, 'L', true);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->MultiCell(162, 6, $motivo, 1, 'L', true);
+}
+
 
 // ── Información socioeconómica ───────────────────────────────────────────────
 $pdf->titulo_seccion('Informacion Socioeconomica');

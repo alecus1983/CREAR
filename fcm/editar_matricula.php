@@ -49,6 +49,8 @@ if (isset($_POST['id_matricula']) && isset($_POST['id_alumno'])) {
     $mt->year = $year;
     $mt->mes = $mes;
     $mt->retiro = 11; // Valor por defecto según matricular_alumno.php
+    // institucion de procedencia: si no proviene de otra institucion se guarda vacio (NULL)
+    $mt->set_institucion_anterior($_POST);
 
     // Ejecutar la actualización
     if ($mt->update_matricula()) {

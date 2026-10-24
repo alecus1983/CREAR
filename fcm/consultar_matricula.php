@@ -38,7 +38,15 @@ if ($valido) {
         "year" => $matricula->year,
         "mes" => $matricula->mes,
         "id_curso" => $matricula->id_curso,
-        "id_escolaridad" => $matricula->id_escolaridad
+        "id_escolaridad" => $matricula->id_escolaridad,
+        // datos de la institucion de procedencia
+        "proviene_otra_institucion" => $matricula->proviene_otra_institucion,
+        "institucion_anterior" => $matricula->institucion_anterior,
+        "tipo_institucion" => $matricula->tipo_institucion,
+        "situacion_academica" => $matricula->situacion_academica,
+        "municipio_institucion" => $matricula->municipio_institucion,
+        "fecha_retiro" => $matricula->fecha_retiro,
+        "motivo_retiro" => $matricula->motivo_retiro
     );
     
     // encapsulo  la respuesta en modo json

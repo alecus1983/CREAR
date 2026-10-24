@@ -1217,8 +1217,57 @@ function update_grado_matricula() {
     // se actualiza la jornada
     alumno.id_jornada = $("#ac_jornada").val();
 
+    // datos de la institucion de procedencia: solo se guardan si se marco el check
+    const proviene = $("#ac_proviene_otra_institucion").is(':checked');
+    alumno.proviene_otra_institucion = proviene ? 1 : 0;
+    alumno.institucion_anterior = proviene ? $("#ac_institucion_anterior").val().trim() : "";
+    alumno.tipo_institucion = proviene ? $("#ac_tipo_institucion").val() : "";
+    alumno.situacion_academica = proviene ? $("#ac_situacion_academica").val() : "";
+    alumno.municipio_institucion = proviene ? $("#ac_municipio_institucion").val().trim() : "";
+    alumno.fecha_retiro = proviene ? $("#ac_fecha_retiro").val() : "";
+    alumno.motivo_retiro = proviene ? $("#ac_motivo_retiro").val().trim() : "";
+
     // salida por consola
     console.log("los datos del alumono son " + alumno.id_escolaridad + " codigo del grado " + alumno.id_grado + " codigo del curso" + alumno.id_curso);
+}
+
+/**
+ * Muestra en el formulario los datos de la institucion de procedencia
+ * guardados en el objeto alumno y habilita los campos segun el check.
+ * Se usa en el paso 6 de matricula y en el paso 32 de edicion.
+ */
+function mostrar_institucion_anterior() {
+    $("#ac_proviene_otra_institucion").prop('checked', alumno.proviene_otra_institucion == 1);
+    $("#ac_institucion_anterior").val(alumno.institucion_anterior);
+    $("#ac_tipo_institucion").val(alumno.tipo_institucion);
+    $("#ac_situacion_academica").val(alumno.situacion_academica);
+    $("#ac_municipio_institucion").val(alumno.municipio_institucion);
+    $("#ac_fecha_retiro").val(alumno.fecha_retiro);
+    $("#ac_motivo_retiro").val(alumno.motivo_retiro);
+    $("#ac_institucion_anterior_campos").prop('disabled', alumno.proviene_otra_institucion != 1);
+
+    // el check habilita o deshabilita los campos de la institucion de procedencia
+    $("#ac_proviene_otra_institucion").on('change', function () {
+        $("#ac_institucion_anterior_campos").prop('disabled', !this.checked);
+    });
+}
+
+/**
+ * Campos de la institucion de procedencia que se deben validar:
+ * solo se exigen si el alumno proviene de otra institucion.
+ *
+ * @returns {Array} campos en el formato de validarFormulario().
+ */
+function campos_institucion_anterior() {
+    if (!$("#ac_proviene_otra_institucion").is(':checked')) {
+        return [];
+    }
+    return [
+        { id: 'ac_institucion_anterior', name: 'Nombre de la institución', type: 'text' },
+        { id: 'ac_tipo_institucion', name: 'Tipo', type: 'select' },
+        { id: 'ac_situacion_academica', name: 'Situación académica', type: 'select' },
+        { id: 'ac_municipio_institucion', name: 'Municipio de la institución', type: 'text' }
+    ];
 }
 
 /**

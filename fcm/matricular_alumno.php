@@ -51,6 +51,9 @@ $mt->retiro     = 11;
 $mt->id_curso   = $id_curso;
 $mt->year       = $year;  // año lectivo seleccionado por el usuario
 
+// institucion de procedencia: si no proviene de otra institucion se guarda vacio (NULL)
+$mt->set_institucion_anterior($_POST);
+
 // ejecuto la matricula
 if ($mt->set_matricula()) {
     // $mt->id fue asignado internamente por set_matricula() tras el INSERT

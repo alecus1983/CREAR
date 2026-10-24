@@ -128,6 +128,14 @@ function gestion_matriculas(item) {
     // 1. INFORMACION DEL ESTUDIANTE
 
     case 1: // cargo el primer formulario de matricula
+      // se limpian los datos de la institucion de procedencia del alumno anterior
+      alumno.proviene_otra_institucion = 0;
+      alumno.institucion_anterior = "";
+      alumno.tipo_institucion = "";
+      alumno.situacion_academica = "";
+      alumno.municipio_institucion = "";
+      alumno.fecha_retiro = "";
+      alumno.motivo_retiro = "";
       $("#avance").html("");
       $("#tabla").html("");
       loaderShow();
@@ -279,6 +287,9 @@ function gestion_matriculas(item) {
           verificar_matricula_duplicada(datos_verificacion());
         });
 
+        // restauro los datos de la institucion de procedencia si ya se habian diligenciado
+        mostrar_institucion_anterior();
+
         $("#btn-siguiente-6").on('click', function () {
           const camposAValidar = [
             { id: 'ac_jornada', name: 'Jornada', type: 'select' },
@@ -286,6 +297,9 @@ function gestion_matriculas(item) {
             { id: 'ac_grado', name: 'Grado', type: 'select' },
             { id: 'ac_curso', name: 'Curso', type: 'select' }
           ];
+
+          // si proviene de otra institucion se exigen sus datos principales
+          camposAValidar.push(...campos_institucion_anterior());
 
           if (validarFormulario(camposAValidar)) {
             // no se permite continuar si ya existe una matricula igual
@@ -1025,6 +1039,17 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
   });
   // asigno el codigo al alumno
   alumno["id_alumno"] = r["id_alumno"];
+  // al iniciar la edicion (desde el listado) se cargan los datos guardados de la
+  // institucion de procedencia; en los pasos siguientes se conservan los editados
+  if (cargar_familia) {
+    alumno.proviene_otra_institucion = r["proviene_otra_institucion"] == 1 ? 1 : 0;
+    alumno.institucion_anterior = r["institucion_anterior"] || "";
+    alumno.tipo_institucion = r["tipo_institucion"] || "";
+    alumno.situacion_academica = r["situacion_academica"] || "";
+    alumno.municipio_institucion = r["municipio_institucion"] || "";
+    alumno.fecha_retiro = r["fecha_retiro"] || "";
+    alumno.motivo_retiro = r["motivo_retiro"] || "";
+  }
   // asigno el codigo de la matricula
   alumno["id_matricula"] = r["id"];
   // asigno el año de la matricula para no perderlo al editar
@@ -1136,6 +1161,8 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
           $("#ac_grado").val(r["id_grado"]);
           $("#ac_curso").val(r["id_curso"]);
 
+          // datos de la institucion de procedencia
+          mostrar_institucion_anterior();
 
           // Se reemplaza el botón original por uno que primero valida
           $("#paginas").append('<button type="button" class="btn btn-secondary">atras</button>');
@@ -1163,6 +1190,9 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
               { id: 'ac_grado', name: 'Grado', type: 'select' },
               { id: 'ac_curso', name: 'Curso', type: 'select' }
             ];
+
+            // si proviene de otra institucion se exigen sus datos principales
+            camposAValidar.push(...campos_institucion_anterior());
 
             if (validarFormulario(camposAValidar)) {
               // no se permite continuar si ya existe otra matricula igual

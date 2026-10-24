@@ -230,7 +230,15 @@ let alumno = {
   antecedentes_patologicos_morbilidad: "",
   ips: "",
   rh: "",
-  tipo_sangre: ""
+  tipo_sangre: "",
+  // datos de la institucion de procedencia (tabla matricula)
+  proviene_otra_institucion: 0,
+  institucion_anterior: "",
+  tipo_institucion: "",
+  situacion_academica: "",
+  municipio_institucion: "",
+  fecha_retiro: "",
+  motivo_retiro: ""
 };
 
 // objeto persona

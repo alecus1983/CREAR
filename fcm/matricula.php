@@ -45,6 +45,20 @@ class matricula extends curso
     public $id_curso;
 
     /**
+     * Datos de la institucion de procedencia del alumno.
+     * proviene_otra_institucion: 1 si el alumno viene de otra institucion, 0 si no.
+     * tipo_institucion: Publico, Privado o ICBF.
+     * situacion_academica: Aprobó, Reprobó, Desertó o Se trasladó.
+     */
+    public $proviene_otra_institucion = 0;
+    public $institucion_anterior;
+    public $tipo_institucion;
+    public $situacion_academica;
+    public $municipio_institucion;
+    public $fecha_retiro;
+    public $motivo_retiro;
+
+    /**
      * @brief Constructor de la clase `matricula`.
      *
      * Inicializa la clase `imcrea` padre para establecer la conexión a la base de datos.
@@ -81,6 +95,15 @@ class matricula extends curso
             $this->id_curso = $dato["id_curso"];
             $this->fecha = $dato["fecha"] ?? null;
 
+            // datos de la institucion de procedencia
+            $this->proviene_otra_institucion = $dato["proviene_otra_institucion"] ?? 0;
+            $this->institucion_anterior = $dato["institucion_anterior"] ?? null;
+            $this->tipo_institucion = $dato["tipo_institucion"] ?? null;
+            $this->situacion_academica = $dato["situacion_academica"] ?? null;
+            $this->municipio_institucion = $dato["municipio_institucion"] ?? null;
+            $this->fecha_retiro = $dato["fecha_retiro"] ?? null;
+            $this->motivo_retiro = $dato["motivo_retiro"] ?? null;
+
             // Obtengo los datos adicionales del grado (escolaridad, etc.)
             $this->get_grado_id($this->id_grado);
         }
@@ -101,8 +124,10 @@ class matricula extends curso
         // La columna es DATE, por eso no se guarda la hora (formato 2026-08-31).
         $this->fecha = date('Y-m-d');
         // consulta SQL con prepared statement
-        $sql = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, id_curso, mes, retiro, year, fecha)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, id_curso, mes, retiro, year, fecha,
+                    proviene_otra_institucion, institucion_anterior, tipo_institucion,
+                    situacion_academica, municipio_institucion, fecha_retiro, motivo_retiro)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Prepara el statement 
         $stmt = $this->_db->prepare($sql);
@@ -112,7 +137,7 @@ class matricula extends curso
         }
         // Vincula los parámetros a la consulta preparada
         $stmt->bind_param(
-            'iiiiiiis',
+            'iiiiiiisissssss',
             $this->id_alumno,
             $this->id_grado,
             $this->id_jornada,
@@ -120,7 +145,14 @@ class matricula extends curso
             $this->mes,
             $this->retiro,
             $this->year,
-            $this->fecha
+            $this->fecha,
+            $this->proviene_otra_institucion,
+            $this->institucion_anterior,
+            $this->tipo_institucion,
+            $this->situacion_academica,
+            $this->municipio_institucion,
+            $this->fecha_retiro,
+            $this->motivo_retiro
         );
 
         // Ejecuta el statement
@@ -174,18 +206,75 @@ class matricula extends curso
      */
     public function update_matricula()
     {
-        $texto = "UPDATE matricula SET 
-                  id_alumno = $this->id_alumno, 
-                  id_grado = $this->id_grado, 
-                  id_jornada = $this->id_jornada, 
-                  id_curso = $this->id_curso, 
-                  mes = $this->mes, 
-                  retiro = $this->retiro, 
-                  year = $this->year 
-                  WHERE id = $this->id";
+        $sql = "UPDATE matricula SET
+                  id_alumno = ?,
+                  id_grado = ?,
+                  id_jornada = ?,
+                  id_curso = ?,
+                  mes = ?,
+                  retiro = ?,
+                  year = ?,
+                  proviene_otra_institucion = ?,
+                  institucion_anterior = ?,
+                  tipo_institucion = ?,
+                  situacion_academica = ?,
+                  municipio_institucion = ?,
+                  fecha_retiro = ?,
+                  motivo_retiro = ?
+                  WHERE id = ?";
 
-        $consulta = $this->_db->query($texto);
-        return $consulta;
+        $stmt = $this->_db->prepare($sql);
+        if (!$stmt) {
+            return false;
+        }
+        $stmt->bind_param(
+            'iiiiiiiissssssi',
+            $this->id_alumno,
+            $this->id_grado,
+            $this->id_jornada,
+            $this->id_curso,
+            $this->mes,
+            $this->retiro,
+            $this->year,
+            $this->proviene_otra_institucion,
+            $this->institucion_anterior,
+            $this->tipo_institucion,
+            $this->situacion_academica,
+            $this->municipio_institucion,
+            $this->fecha_retiro,
+            $this->motivo_retiro,
+            $this->id
+        );
+        $resultado = $stmt->execute();
+        $stmt->close();
+        return $resultado;
+    }
+
+    /**
+     * @brief Asigna los datos de la institucion de procedencia recibidos por POST.
+     * @param array $post Los datos recibidos (normalmente $_POST).
+     *
+     * Si el alumno no proviene de otra institucion los campos quedan en NULL.
+     * El tipo y la situacion academica solo se aceptan si son valores del selector,
+     * y la fecha de retiro solo si es una fecha valida (YYYY-MM-DD).
+     */
+    public function set_institucion_anterior(array $post)
+    {
+        $proviene = intval($post['proviene_otra_institucion'] ?? 0) === 1 ? 1 : 0;
+        $tipos_validos       = ['Publico', 'Privado', 'ICBF'];
+        $situaciones_validas = ['Aprobó', 'Reprobó', 'Desertó', 'Se trasladó'];
+        $tipo_institucion    = trim($post['tipo_institucion'] ?? '');
+        $situacion_academica = trim($post['situacion_academica'] ?? '');
+        $fecha_retiro        = trim($post['fecha_retiro'] ?? '');
+        $fecha_retiro_obj    = DateTime::createFromFormat('Y-m-d', $fecha_retiro);
+
+        $this->proviene_otra_institucion = $proviene;
+        $this->institucion_anterior  = $proviene ? (mb_substr(trim($post['institucion_anterior'] ?? ''), 0, 150) ?: null) : null;
+        $this->tipo_institucion      = ($proviene && in_array($tipo_institucion, $tipos_validos, true)) ? $tipo_institucion : null;
+        $this->situacion_academica   = ($proviene && in_array($situacion_academica, $situaciones_validas, true)) ? $situacion_academica : null;
+        $this->municipio_institucion = $proviene ? (mb_substr(trim($post['municipio_institucion'] ?? ''), 0, 100) ?: null) : null;
+        $this->fecha_retiro          = ($proviene && $fecha_retiro_obj && $fecha_retiro_obj->format('Y-m-d') === $fecha_retiro) ? $fecha_retiro : null;
+        $this->motivo_retiro         = $proviene ? (mb_substr(trim($post['motivo_retiro'] ?? ''), 0, 255) ?: null) : null;
     }
 
     // ---
