@@ -151,6 +151,10 @@ $gr_obj->get_grado_id($mt_obj->id_grado ?? 0);
 $jo_obj = new jornada();
 $jo_obj->get_jornada_por_id($mt_obj->id_jornada ?? 0);
 
+// Modalidad
+$mo_obj = new modalidad();
+$mo_obj->get_modalidad_por_id($mt_obj->id_modalidad ?? 0);
+
 // Curso
 $cu_obj = new curso();
 $cu_obj->get_curso_por_id($mt_obj->id_curso ?? 0);
@@ -242,12 +246,20 @@ class PDF extends tFPDF
      *
      * @param string $titulo  Texto del encabezado de sección
      */
-    function titulo_seccion(string $titulo): void
+    function titulo_seccion(string $titulo, string $derecha = ''): void
     {
         $this->SetFillColor(40, 40, 40);
         $this->SetTextColor(255, 255, 255);
         $this->SetFont('Arial', 'B', 9);
-        $this->Cell(190, 6, enc(' ' . strtoupper($titulo)), 1, 1, 'L', true);
+        if ($derecha === '') {
+            $this->Cell(190, 6, enc(' ' . strtoupper($titulo)), 1, 1, 'L', true);
+        } else {
+            // texto adicional alineado a la derecha, en la misma franja del titulo
+            $x = $this->GetX();
+            $this->Cell(190, 6, enc(' ' . strtoupper($titulo)), 1, 0, 'L', true);
+            $this->SetX($x);
+            $this->Cell(190, 6, enc($derecha . ' '), 0, 1, 'R');
+        }
         $this->SetTextColor(0, 0, 0);
         $this->SetFont('Arial', '', 9);
     }
@@ -307,7 +319,9 @@ $yn = static function ($v): string {
 };
 
 // ── Datos de la matrícula ────────────────────────────────────────────────────
-$pdf->titulo_seccion('Datos de la Matrícula');
+// junto al titulo se imprimen el año lectivo y la modalidad guardados en la matricula
+$pdf->titulo_seccion('Datos de la Matrícula',
+    'Año: ' . ($mt_obj->year ?? '') . '    Modalidad: ' . ($mo_obj->modalidad ?: 'Sin definir'));
 // $pdf->fila('No. Matrícula', (string)$id_matricula,  'Fecha',   $fecha);
 // $pdf->fila('Año lectivo',   (string)($mt_obj->year ?? ''), 'Grado', $gr_obj->grado ?? '');
 // $pdf->fila('Jornada',       $jo_obj->jornada ?? '',  'Curso',   $cu_obj->curso ?? '');

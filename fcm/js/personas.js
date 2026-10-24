@@ -1216,6 +1216,8 @@ function update_grado_matricula() {
     alumno.id_curso = $("#ac_curso").val();
     // se actualiza la jornada
     alumno.id_jornada = $("#ac_jornada").val();
+    // se actualiza la modalidad
+    alumno.id_modalidad = $("#ac_modalidad").val();
 
     // datos de la institucion de procedencia: solo se guardan si se marco el check
     const proviene = $("#ac_proviene_otra_institucion").is(':checked');

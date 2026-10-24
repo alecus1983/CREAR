@@ -128,7 +128,8 @@ function gestion_matriculas(item) {
     // 1. INFORMACION DEL ESTUDIANTE
 
     case 1: // cargo el primer formulario de matricula
-      // se limpian los datos de la institucion de procedencia del alumno anterior
+      // se limpian la modalidad y los datos de la institucion de procedencia del alumno anterior
+      alumno.id_modalidad = "";
       alumno.proviene_otra_institucion = 0;
       alumno.institucion_anterior = "";
       alumno.tipo_institucion = "";
@@ -273,6 +274,8 @@ function gestion_matriculas(item) {
         loaderHide();
         // llamo a la funcion de listar jornadas
         lista_jornadas("#ac_jornada");
+        // cargo las modalidades desde la tabla modalidad
+        lista_modalidades("#ac_modalidad");
         // llamo a la funcion lista escolaridad
         // en el camobo  
         lista_escolaridad("#ac_escolaridad");
@@ -287,7 +290,8 @@ function gestion_matriculas(item) {
           verificar_matricula_duplicada(datos_verificacion());
         });
 
-        // restauro los datos de la institucion de procedencia si ya se habian diligenciado
+        // restauro la modalidad y los datos de la institucion de procedencia si ya se habian diligenciado
+        $("#ac_modalidad").val(alumno.id_modalidad);
         mostrar_institucion_anterior();
 
         $("#btn-siguiente-6").on('click', function () {
@@ -295,7 +299,8 @@ function gestion_matriculas(item) {
             { id: 'ac_jornada', name: 'Jornada', type: 'select' },
             { id: 'ac_escolaridad', name: 'Escolaridad', type: 'select' },
             { id: 'ac_grado', name: 'Grado', type: 'select' },
-            { id: 'ac_curso', name: 'Curso', type: 'select' }
+            { id: 'ac_curso', name: 'Curso', type: 'select' },
+            { id: 'ac_modalidad', name: 'Modalidad', type: 'select' }
           ];
 
           // si proviene de otra institucion se exigen sus datos principales
@@ -742,7 +747,7 @@ function gestion_matriculas(item) {
 
           $("#paginas").append(
             '<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2">' +
-            '<button type="button" class="btn btn-dark" onclick="gestion_matriculas(1)">Nueva Matrícula</button>' +
+            '<button type="button" class="btn btn-dark" onclick="aviso_year_matricula($(\'#years\').val()); gestion_matriculas(1)">Nueva Matrícula</button>' +
             '<button type="button" class="btn btn-outline-success" ' +
             'onclick="imprimir_matricula(alumno[\'ultima_matricula_id\'])">' +
             'Ver PDF Matrícula' +
@@ -1042,6 +1047,9 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
   // al iniciar la edicion (desde el listado) se cargan los datos guardados de la
   // institucion de procedencia; en los pasos siguientes se conservan los editados
   if (cargar_familia) {
+    // aviso si la matricula es del año en curso y ya es agosto o despues
+    aviso_year_matricula(r["year"]);
+    alumno.id_modalidad = r["id_modalidad"] || "";
     alumno.proviene_otra_institucion = r["proviene_otra_institucion"] == 1 ? 1 : 0;
     alumno.institucion_anterior = r["institucion_anterior"] || "";
     alumno.tipo_institucion = r["tipo_institucion"] || "";
@@ -1149,6 +1157,8 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
           loaderHide();
           // llamo a la funcion de listar jornadas
           lista_jornadas("#ac_jornada");
+          // cargo las modalidades desde la tabla modalidad
+          lista_modalidades("#ac_modalidad");
           // llamo a la funcion lista escolaridad
           // en el camobo  
           lista_escolaridad("#ac_escolaridad");
@@ -1161,7 +1171,8 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
           $("#ac_grado").val(r["id_grado"]);
           $("#ac_curso").val(r["id_curso"]);
 
-          // datos de la institucion de procedencia
+          // modalidad y datos de la institucion de procedencia
+          $("#ac_modalidad").val(alumno.id_modalidad);
           mostrar_institucion_anterior();
 
           // Se reemplaza el botón original por uno que primero valida
@@ -1175,7 +1186,8 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
               { id: 'ac_jornada', name: 'Jornada', type: 'select' },
               { id: 'ac_escolaridad', name: 'Escolaridad', type: 'select' },
               { id: 'ac_grado', name: 'Grado', type: 'select' },
-              { id: 'ac_curso', name: 'Curso', type: 'select' }
+              { id: 'ac_curso', name: 'Curso', type: 'select' },
+              { id: 'ac_modalidad', name: 'Modalidad', type: 'select' }
             ];
 
             // si proviene de otra institucion se exigen sus datos principales
@@ -1529,6 +1541,16 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
                   $("#paginas").html("<p>Se ha completado la matricula del alumno ");
                   $("#paginas").append(alumno["nombres"] + " " + alumno["apellidos"] + " </p>");
 
+                  // boton para ver el PDF de la matricula editada
+                  $("#paginas").append(
+                    '<div style="padding-top: 10px;" class="d-flex justify-content-end mb-3 gap-2">' +
+                    '<button type="button" class="btn btn-outline-success" ' +
+                    'onclick="imprimir_matricula(alumno[\'id_matricula\'])">' +
+                    'Ver PDF Matrícula' +
+                    '</button>' +
+                    '</div>'
+                  );
+
                   // Confirmar que la información ha sido procesada correctamente
                   swal(
                     'Agregado!',
@@ -1589,6 +1611,24 @@ function update_afiliaciones(ea) {
  *
  * @param {number} [id_matricula] - ID de la matrícula en la tabla matricula.
  */
+/**
+ * Muestra un aviso cuando se matricula o edita un estudiante en el año en curso
+ * y ya es agosto o un mes posterior: a esa altura lo usual es que la matricula
+ * corresponda al año lectivo siguiente.
+ *
+ * @param {number|string} year - Año de la matricula.
+ */
+function aviso_year_matricula(year) {
+  const hoy = new Date();
+  // getMonth() va de 0 (enero) a 11 (diciembre): agosto es 7
+  if (parseInt(year, 10) === hoy.getFullYear() && hoy.getMonth() >= 7) {
+    swal('Verifique el año',
+      'La matrícula corresponde al año en curso (' + year + ') y ya estamos en agosto o después. '
+      + 'Si la matrícula es para el próximo año lectivo, seleccione el año ' + (hoy.getFullYear() + 1) + '.',
+      'warning');
+  }
+}
+
 function imprimir_matricula(id_matricula) {
   // Construir los parámetros de la URL para el generador de PDF
   const params = new URLSearchParams({

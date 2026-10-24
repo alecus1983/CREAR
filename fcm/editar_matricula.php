@@ -34,6 +34,8 @@ if (isset($_POST['id_matricula']) && isset($_POST['id_alumno'])) {
     $mt->year = $year;
     $mt->mes = $mes;
     $mt->retiro = 11; // Valor por defecto según matricular_alumno.php
+    // modalidad de estudio: codigo de la tabla modalidad
+    $mt->set_modalidad($_POST['id_modalidad'] ?? 0);
     // institucion de procedencia: si no proviene de otra institucion se guarda vacio (NULL)
     $mt->set_institucion_anterior($_POST);
 

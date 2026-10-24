@@ -39,6 +39,7 @@ if ($valido) {
         "mes" => $matricula->mes,
         "id_curso" => $matricula->id_curso,
         "id_escolaridad" => $matricula->id_escolaridad,
+        "id_modalidad" => $matricula->id_modalidad,
         // datos de la institucion de procedencia
         "proviene_otra_institucion" => $matricula->proviene_otra_institucion,
         "institucion_anterior" => $matricula->institucion_anterior,

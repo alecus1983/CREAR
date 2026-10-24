@@ -283,7 +283,7 @@ if (isset($_SESSION["id_personas"])) {
                                 </li>
                                 <li><a class="dropdown-item" href="#" onclick="matricula_docente();">Asignar Clases</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#" onclick="gestion_matriculas(1);">Matricular
+                                <li><a class="dropdown-item" href="#" onclick="aviso_year_matricula($('#years').val()); gestion_matriculas(1);">Matricular
                                         Alumno</a>
                                 </li>
                                 <li><a class="dropdown-item" href="#"

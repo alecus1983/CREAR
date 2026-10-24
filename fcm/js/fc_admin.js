@@ -231,6 +231,8 @@ let alumno = {
   ips: "",
   rh: "",
   tipo_sangre: "",
+  // modalidad de estudio: codigo de la tabla modalidad (llave foranea en matricula)
+  id_modalidad: "",
   // datos de la institucion de procedencia (tabla matricula)
   proviene_otra_institucion: 0,
   institucion_anterior: "",
@@ -689,6 +691,22 @@ function listado_matricula_grado() {
   });
 }
 
+// filtra las filas del listado de estudiantes matriculados
+// segun el texto escrito en el campo de busqueda
+function filtrar_matriculados() {
+  const texto = ($("#filtro_matriculados").val() || "").toLowerCase().trim();
+  const filas = $("#tabla_matriculados tr");
+
+  filas.each(function () {
+    $(this).toggle($(this).text().toLowerCase().indexOf(texto) > -1);
+  });
+
+  $("#total_matriculados").text(filas.filter(":visible").length + " de " + filas.length + " estudiantes");
+}
+
+// el listado se carga por ajax, por eso el evento se delega en document
+$(document).on("input", "#filtro_matriculados", filtrar_matriculados);
+
 // funcion que muestra la lista de estudiantes  matriculados
 // durante un año
 function listado_estudiantes_matriculados() {
@@ -710,6 +728,8 @@ function listado_estudiantes_matriculados() {
         //swal('Datos actualizados');
         //$("#calificador").html(respuesta);
         $("#avance").html(respuesta['html']);
+        // muestro el total de estudiantes en el listado
+        filtrar_matriculados();
       } else {
 
         if (respuesta['status'] == 22) {
@@ -1097,6 +1117,29 @@ function obtener_pdf() {
 }
 
 // agrega las jornadas disponibles
+// carga en el selector id las modalidades de la tabla modalidad
+function lista_modalidades(id) {
+
+  $.ajax({
+    type: "POST",
+    async: false,
+    url: "lista_modalidades.php",
+    dataType: "json",
+
+    success: function (respuesta) {
+      respuesta.forEach((element) => {
+        $(id).append($("<option>", { value: element[0], text: element[1] }));
+      });
+    },
+    error: function (xhr, status) {
+      swal('Disculpe, existió un problema al cargar las modalidades' + status);
+      console.log(xhr);
+    }
+
+  });
+
+}
+
 function lista_jornadas(id) {
 
   $.ajax({

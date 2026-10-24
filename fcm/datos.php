@@ -14,6 +14,7 @@ require_once("u_alumnos.php");
 require_once("u_docentes.php");
 require_once("docentes.php");
 require_once("jornada.php");
+require_once("modalidad.php");
 require_once("grados.php");
 require_once("curso.php");
 require_once("matricula_docente.php");

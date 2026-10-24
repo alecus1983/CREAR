@@ -51,6 +51,9 @@ $mt->retiro     = 11;
 $mt->id_curso   = $id_curso;
 $mt->year       = $year;  // año lectivo seleccionado por el usuario
 
+// modalidad de estudio: codigo de la tabla modalidad
+$mt->set_modalidad($_POST['id_modalidad'] ?? 0);
+
 // institucion de procedencia: si no proviene de otra institucion se guarda vacio (NULL)
 $mt->set_institucion_anterior($_POST);
 

@@ -45,6 +45,12 @@ class matricula extends curso
     public $id_curso;
 
     /**
+     * @var int|null $id_modalidad
+     * @brief Clave foránea a la tabla modalidad (Presencial, Virtual, Por ciclos, Híbrida).
+     */
+    public $id_modalidad;
+
+    /**
      * Datos de la institucion de procedencia del alumno.
      * proviene_otra_institucion: 1 si el alumno viene de otra institucion, 0 si no.
      * tipo_institucion: Publico, Privado o ICBF.
@@ -94,6 +100,7 @@ class matricula extends curso
             $this->retiro = $dato["retiro"];
             $this->id_curso = $dato["id_curso"];
             $this->fecha = $dato["fecha"] ?? null;
+            $this->id_modalidad = $dato["id_modalidad"] ?? null;
 
             // datos de la institucion de procedencia
             $this->proviene_otra_institucion = $dato["proviene_otra_institucion"] ?? 0;
@@ -124,10 +131,10 @@ class matricula extends curso
         // La columna es DATE, por eso no se guarda la hora (formato 2026-08-31).
         $this->fecha = date('Y-m-d');
         // consulta SQL con prepared statement
-        $sql = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, id_curso, mes, retiro, year, fecha,
+        $sql = "INSERT INTO matricula (id_alumno, id_grado, id_jornada, id_curso, mes, retiro, year, fecha, id_modalidad,
                     proviene_otra_institucion, institucion_anterior, tipo_institucion,
                     situacion_academica, municipio_institucion, fecha_retiro, motivo_retiro)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Prepara el statement 
         $stmt = $this->_db->prepare($sql);
@@ -137,7 +144,7 @@ class matricula extends curso
         }
         // Vincula los parámetros a la consulta preparada
         $stmt->bind_param(
-            'iiiiiiisissssss',
+            'iiiiiiisiissssss',
             $this->id_alumno,
             $this->id_grado,
             $this->id_jornada,
@@ -146,6 +153,7 @@ class matricula extends curso
             $this->retiro,
             $this->year,
             $this->fecha,
+            $this->id_modalidad,
             $this->proviene_otra_institucion,
             $this->institucion_anterior,
             $this->tipo_institucion,
@@ -214,6 +222,7 @@ class matricula extends curso
                   mes = ?,
                   retiro = ?,
                   year = ?,
+                  id_modalidad = ?,
                   proviene_otra_institucion = ?,
                   institucion_anterior = ?,
                   tipo_institucion = ?,
@@ -228,7 +237,7 @@ class matricula extends curso
             return false;
         }
         $stmt->bind_param(
-            'iiiiiiiissssssi',
+            'iiiiiiiiissssssi',
             $this->id_alumno,
             $this->id_grado,
             $this->id_jornada,
@@ -236,6 +245,7 @@ class matricula extends curso
             $this->mes,
             $this->retiro,
             $this->year,
+            $this->id_modalidad,
             $this->proviene_otra_institucion,
             $this->institucion_anterior,
             $this->tipo_institucion,
@@ -248,6 +258,19 @@ class matricula extends curso
         $resultado = $stmt->execute();
         $stmt->close();
         return $resultado;
+    }
+
+    /**
+     * @brief Asigna la modalidad de estudio.
+     * @param int $id_modalidad Código de la modalidad (tabla modalidad).
+     *
+     * Si el código no existe en la tabla modalidad, la modalidad queda en NULL.
+     */
+    public function set_modalidad($id_modalidad)
+    {
+        $md = new modalidad();
+        $md->get_modalidad_por_id($id_modalidad);
+        $this->id_modalidad = $md->id_modalidad > 0 ? (int) $md->id_modalidad : null;
     }
 
     /**
