@@ -1168,21 +1168,8 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
           $("#paginas").append('<button type="button" class="btn btn-secondary">atras</button>');
           $("#paginas").append('<button id="32-siguiente" class="btn btn btn-dark" >Siguiente</button>');
 
-          // datos para verificar si el alumno ya tiene otra matricula igual
-          // (se excluye la matricula que se esta editando)
-          const datos_verificacion = function () {
-            return {
-              id_alumno: alumno["id_alumno"],
-              id_matricula: alumno["id_matricula"],
-              year: r["year"]
-            };
-          };
-
-          // al seleccionar el grado o el curso se verifica la matricula
-          $("#ac_grado, #ac_curso").on('change', function () {
-            verificar_matricula_duplicada(datos_verificacion());
-          });
-
+          // al editar no se verifica si la matricula ya existe: es la misma
+          // matricula que se esta editando (la verificacion aplica a matriculas nuevas)
           $("#32-siguiente").on('click', function () {
             const camposAValidar = [
               { id: 'ac_jornada', name: 'Jornada', type: 'select' },
@@ -1195,14 +1182,9 @@ function flujo_editar_matricula(id_matricula, item, cargar_familia) {
             camposAValidar.push(...campos_institucion_anterior());
 
             if (validarFormulario(camposAValidar)) {
-              // no se permite continuar si ya existe otra matricula igual
-              verificar_matricula_duplicada(datos_verificacion()).then(function (existe) {
-                if (!existe) {
-                  // Si la validación es exitosa, se actualizan los datos y se procede al siguiente paso
-                  update_grado_matricula(); // actualiza el grado dentro de las matriculas
-                  flujo_editar_matricula(alumno["id_matricula"], 33); // Ir al siguiente paso
-                }
-              });
+              // Si la validación es exitosa, se actualizan los datos y se procede al siguiente paso
+              update_grado_matricula(); // actualiza el grado dentro de las matriculas
+              flujo_editar_matricula(alumno["id_matricula"], 33); // Ir al siguiente paso
             }
           });
         });

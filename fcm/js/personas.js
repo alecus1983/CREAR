@@ -1244,13 +1244,24 @@ function mostrar_institucion_anterior() {
     $("#ac_municipio_institucion").val(alumno.municipio_institucion);
     $("#ac_fecha_retiro").val(alumno.fecha_retiro);
     $("#ac_motivo_retiro").val(alumno.motivo_retiro);
-    $("#ac_institucion_anterior_campos").prop('disabled', alumno.proviene_otra_institucion != 1);
-
-    // el check habilita o deshabilita los campos de la institucion de procedencia
-    $("#ac_proviene_otra_institucion").on('change', function () {
-        $("#ac_institucion_anterior_campos").prop('disabled', !this.checked);
-    });
+    habilitar_institucion_anterior(alumno.proviene_otra_institucion == 1);
 }
+
+/**
+ * Habilita o deshabilita los campos de la institucion de procedencia.
+ *
+ * @param {boolean} habilitar - true si el alumno proviene de otra institucion.
+ */
+function habilitar_institucion_anterior(habilitar) {
+    $("#ac_institucion_anterior_campos").prop('disabled', !habilitar)
+        .find('input, select').prop('disabled', !habilitar);
+}
+
+// el check habilita o deshabilita los campos de la institucion de procedencia.
+// Se delega en document porque el formulario se carga dinamicamente con .load()
+$(document).on('change', '#ac_proviene_otra_institucion', function () {
+    habilitar_institucion_anterior(this.checked);
+});
 
 /**
  * Campos de la institucion de procedencia que se deben validar:

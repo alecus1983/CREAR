@@ -44,8 +44,8 @@ if (isset($_SESSION["id_personas"])) {
 
     <script src="./js/sweetalert.min.js"></script>
     <script src="./js/jquery-3.5.1.min.js"></script>
-    <script src="./js/fc_admin.js"></script>
-    <script src="./js/personas.js"></script>
+    <script src="./js/fc_admin.js?v=<?= filemtime(__DIR__ . "/js/fc_admin.js") ?>"></script>
+    <script src="./js/personas.js?v=<?= filemtime(__DIR__ . "/js/personas.js") ?>"></script>
     <script src="./js/grados.js"></script>
     <script src="./js/notas.js"></script>
     <script src="./js/semanas.js"></script>
@@ -53,7 +53,7 @@ if (isset($_SESSION["id_personas"])) {
     <script src="./js/escolaridad.js"></script>
     <script src="./js/jornada.js"></script>
     <script src="./js/materias.js"></script>
-    <script src="./js/matricula.js"></script>
+    <script src="./js/matricula.js?v=<?= filemtime(__DIR__ . "/js/matricula.js") ?>"></script>
     <script src="js/areas.js"></script>
     <script src="js/cursos.js"></script>
     <script src="../boostrap/css/bootstrap.css" type="text/css"></script>
